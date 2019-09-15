@@ -2363,7 +2363,7 @@ ul#foo4 {
 }
 .filterPopup .selected-filters .actions.current{
 	width: 50%;
-  padding: 0 18px 30px;
+  padding: 0 18px;
 }
 #narrow-by-list li div dd ol{
 	padding: 10px;
@@ -2391,6 +2391,51 @@ ul#foo4 {
   width: 100%;
   height: 32px;
   display: block;
+}
+.filterPopup #narrow-by-list dd{
+	width: 100%;
+	flex: 0 0 100%;
+	max-width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+.filterPopup #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
+	width: 100%;
+}
+.filterPopup .pop-up-cover {
+	width: 100%;
+}
+.filterPopup #narrow-by-list li div dd ol {
+	padding: 15px 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -15px;
+	margin-left: -15px;
+}
+.filterPopup #narrow-by-list li div dd {
+	display: block!important;
+	position: relative;
+	top:auto;
+	left: auto;
+	border: none;
+}
+.filterPopup #narrow-by-list{
+	padding: 50px 10px 0;
+	margin-left:0;
+}
+.filterPopup #narrow-by-list li div dt {
+	cursor: pointer;
+	background: #292929 !important;
+	border: none;
+	color: white;
+	width: auto;
+	padding: 5px 10px;
+}
+.filterPopup #narrow-by-list li {
+	min-width: 100%;
+}
+.filterPopup #narrow-by-list ol li {
+	min-width: 140px;
 }
 /*filter popup end----------------------------------*/
 

@@ -291,40 +291,7 @@
   	color: #fff;
   }
   /* Catalog Filter CSS */
-  .filterPopup .pop-up-cover {
-    width: 100%;
-  }
-  #narrow-by-list li div dd ol {
-    padding: 15px 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-  }
-  #narrow-by-list li div dd {
-    display: block!important;
-    position: relative;
-    top:auto;
-    left: auto;
-    border: none;
-  }
-  #narrow-by-list{
-  	padding: 30px 10px;
-    margin-left:0;
-  }
-  #narrow-by-list li div dt {
-    cursor: pointer;
-    background: #0000008c!important;
-    border: none;
-    color: white;
-    width: auto;
-  }
-  #narrow-by-list li {
-    min-width: 100%;
-  }
-  #narrow-by-list ol li {
-    min-width: 140px;
-  }
+
   .m-filter-checkboxes{
     display: flex;
   }
@@ -337,16 +304,7 @@
   .common-filter {
     display: flex;
   }
-  #narrow-by-list dd{
-    width: 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  #narrow-by-list li div dd, .optionfilter, #narrow-by-list .filtru-style_of_jewelry-dtn dd{
-    width: 100%;
-  }
+
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -628,9 +586,6 @@
   }
   #narrow-by-list ol li{
     min-width: 50% !important;
-  }
-  #narrow-by-list{
-    padding: 0 10px !important;
   }
 }
 
