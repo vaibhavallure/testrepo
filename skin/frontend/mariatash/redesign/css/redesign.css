@@ -714,9 +714,7 @@ nav.mariatash-header {
 }
 
 .m-filter-checkboxes li {
-    float: none !important;
     display: flex;
-    margin-top: 5px;
 }
 /* @media (max-width: 576px) {
     .catalog .item,
@@ -1272,7 +1270,7 @@ ul.swatch .swatch-item a {
 }
 
 .filter-common-div{
-  top:341px;
+  top: 360px;
 }
 
 .category-products {
@@ -2090,7 +2088,7 @@ button#signin-btn-popup {
   top: 14.5px;
   right: 14.5px;
 }
-.invalid-login, #register-msg{
+.invalid-login, #register-msg, #resetpassword_msg_div{
 	position: absolute;
   top: -25px;
 	color: #830000;
@@ -2288,9 +2286,28 @@ span#popup_loader_register {
   height: auto;
 }
 
+/* BREADCRUM */
+.breadcrumbs li strong{
+	font-weight: 500;
+}
+.breadcrumbs li span{
+	position: absolute;
+  top: 1px;
+  right: 10px;
+}
+.home span {
+  font-family: urw-din-xlight;
+}
+.breadcrumbs li{
+	padding-right: 25px;
+}
+.breadcrumbs > .row {
+  padding-left: 19px;
+}
+
 /* Product Details CSS */
 ul#foo4 {
-    min-width: 100%;
+  min-width: 100%;
 }
 
 /* Temperory */
@@ -2301,96 +2318,86 @@ ul#foo4 {
   visibility: hidden;
 }
 .select-currency.main-nav-link-dropdown img:first-child {
-    display: none;
+  display: none;
 }
 .cms-faqs .col-left.sidebar {
-    display: none;
+  display: none;
 }
 
 /*filter popup-----------------------------------------------------*/
-.filterPopup #narrow-by-list li div dt {
-    cursor: pointer;
-    background: #0000008c!important;
-    border: none;
-    color: white;
-    width: auto;
-}
-.filterPopup #narrow-by-list li div dd {
- display: block!important;
-    position: relative;
-    top:auto;
-    left: auto;
-    border: none;
-}
-.filterPopup .close div{
-    background-image: url("../images/redesign/login-cross.png");
-    width: 25px;
-    height: 26px;
-    background-size: 100%;
-}
-.filterPopup #narrow-by-list{
-    display: block!important;
-    margin-left: auto;
-}
-.filterPopup ul#narrow-by-list li{
-    float: none;
-}
-.filterPopup .filtru-price .m-filter-slider {
-    margin-left: 10px;
-    margin-top: 11px;
-    margin-bottom: 50px;
-}
-.filterPopup .m-slider-selected-value{
-    width: 245px;
-}
-.filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    margin-top: 50px;
-}
-.filterPopup .selected-filters{
-width: 100%;
-    position: static;
-    top:auto;
-    left: auto;
-}
-.filterPopup .selected-filters .currently{
-    display: none;
-}
-.filterPopup .selected-filters .actions.current{
-    width: 50%;
-    text-align: center;
-    padding: 10px;
-    margin: auto;
-    text-align: center;
+
+.filterPopup .modal-body{
+	padding: 0
 }
 
+.filterPopup .close div{
+  background-image: url("../images/redesign/login-cross.png");
+  width: 25px;
+  height: 26px;
+  background-size: 100%;
+}
+#narrow-by-list li{
+  float: none;
+	padding: 0;
+	margin-bottom: 10px;
+}
+.filterPopup .filtru-price .m-filter-slider {
+  margin-left: 10px;
+  margin-top: 11px;
+  margin-bottom: 50px;
+}
+.filterPopup .m-slider-selected-value{
+  width: 245px;
+}
+.filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+  margin-top: 20px;
+}
+.filterPopup .selected-filters{
+	width: 100%;
+  position: static;
+  top:auto;
+  left: auto;
+}
+.filterPopup .selected-filters .currently{
+  display: none;
+}
+.filterPopup .selected-filters .actions.current{
+	width: 50%;
+  padding: 0 18px 30px;
+}
+#narrow-by-list li div dd ol{
+	padding: 10px;
+}
 .filterPopup .selected-filters .actions.current a{
-    text-align: center;
-    display: block;
-    background: gray;
-    width: 100px;
-    color: white;
+	text-align: center;
+  background: #fff;
+  width: 100px;
+  height: 32px;
+  vertical-align: middle;
+  padding: 5px;
+  border: 1px solid #292929;
 }
 .filterButton:before{
-    content: '';
-    background-image: url(../images/filter.png);
-    width: 32px;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    height: 33px;
-    position: absolute;
+  content: '';
+  background-image: url(../images/filter.png);
+  width: 20px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 30px;
+  position: absolute;
 }
 .filterButton{
-    padding-left: 10px;
-    width: 100%;
-    height: 32px;
-    display: block;
+  padding-left: 10px;
+  width: 100%;
+  height: 32px;
+  display: block;
 }
 /*filter popup end----------------------------------*/
 
 
 
 /*product detail page-------------------------------------------*/
-.col1-layout .product-view .product-shop{
+/* .col1-layout .product-view .product-shop{
     float: none;
     width: auto;
     margin-left: auto;
@@ -2409,7 +2416,7 @@ width: 100%;
 }
 .containerImage img, .thumb img{
     background: transparent!important;
-}
+} */
 
 
 /*select*/

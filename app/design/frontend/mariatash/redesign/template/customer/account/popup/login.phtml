@@ -3,8 +3,8 @@
         <form class="form-signin" action="<?php echo $this->getPostActionUrl() ?>" method="post" id="popup-login-form">
             <div class="pop-title modal-header">
                 <a href="#close" title="Close" class="close exit-large">
-                  <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
-                </a>
+                  <img class="d-lg-block d-md-block d-none" src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="x">
+                  <img class="d-block d-lg-none d-md-none" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-grey.png'); ?>" alt="x">                </a>
                 <h1><?php echo $this->__("Login to My Account")?></h1>
             </div>
             <div class="body modal-body">

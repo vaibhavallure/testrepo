@@ -127,12 +127,6 @@
   .menu-head span a, .mobile-sub_menu .image-text h6 {
     color: #000 !important;
   }
-  /* .catalog-category-view nav.homepage-menu.navbar {
-    background: transparent;
-  } */
-  #narrow-by-list{
-    display: none;
-  }
   .footer .footlinks li:first-child{
     margin-left: 0;
   }
@@ -296,7 +290,63 @@
   	background: transparent;
   	color: #fff;
   }
-  /*Different Footer Finish*/
+  /* Catalog Filter CSS */
+  .filterPopup .pop-up-cover {
+    width: 100%;
+  }
+  #narrow-by-list li div dd ol {
+    padding: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  #narrow-by-list li div dd {
+    display: block!important;
+    position: relative;
+    top:auto;
+    left: auto;
+    border: none;
+  }
+  #narrow-by-list{
+  	padding: 30px 10px;
+    margin-left:0;
+  }
+  #narrow-by-list li div dt {
+    cursor: pointer;
+    background: #0000008c!important;
+    border: none;
+    color: white;
+    width: auto;
+  }
+  #narrow-by-list li {
+    min-width: 100%;
+  }
+  #narrow-by-list ol li {
+    min-width: 140px;
+  }
+  .m-filter-checkboxes{
+    display: flex;
+  }
+  .m-filter-checkboxes li {
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 25%;
+  }
+  .common-filter {
+    display: flex;
+  }
+  #narrow-by-list dd{
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  #narrow-by-list li div dd, .optionfilter, #narrow-by-list .filtru-style_of_jewelry-dtn dd{
+    width: 100%;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -308,17 +358,12 @@
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
-  #narrow-by-list li div dt{
-    width: 104px;
-  }
+
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
-  }
-  #narrow-by-list {
-    margin-left: 0;
   }
   .navbar-toggler{
     top: 25px;
@@ -376,6 +421,13 @@
   }
   .social-media ul {
     padding-left: 22px;
+  }
+  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    padding: 0 58px 30px;
+  }
+  .filterPopup .selected-filters .actions.current{
+  	width: 50%;
+    padding: 0 18px 0px;
   }
 }
 
@@ -478,8 +530,8 @@
     margin: 16px 0 0;
   }
   .pop-title h1{
-    margin-top: 40px;
-    margin-bottom: 22px;
+    margin-top: 30px;
+    margin-bottom: 25px;
   }
   .pop-title a{
     right: 15px;
@@ -495,7 +547,7 @@
     margin: 17px 0 25px;
   }
   .input-form{
-    margin-bottom: 13px;
+    margin-bottom: 18px;
   }
   .pop-up-button-set, .popupResetPasswordModel .pop-up-button-set {
     margin-bottom: 50px;
@@ -506,7 +558,7 @@
   .input-form input{
     height: 35px !important;
   }
-  .invalid-login, #register-msg{
+  .invalid-login, #register-msg, #resetpassword_msg_div{
     top:-18px;
   }
   .eye-image{
@@ -573,6 +625,12 @@
   }
   .footlinks {
     padding: 0 20px;
+  }
+  #narrow-by-list ol li{
+    min-width: 50% !important;
+  }
+  #narrow-by-list{
+    padding: 0 10px !important;
   }
 }
 
