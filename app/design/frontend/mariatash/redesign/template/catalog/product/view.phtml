@@ -316,7 +316,7 @@ if ($_product->getSizeSample() == 1) {
         </div>
 
         <div class="row">
-        <div class="product-view-left col-8">
+        <div class="product-view-left col-12 col-md-7 col-lg-8">
             <div class="product-img-box">
                 <div id="galleria" class="mediaGallery">
                     <?php echo $this->getChildHtml('media') ?>
@@ -392,7 +392,7 @@ if ($_product->getSizeSample() == 1) {
             </script>
         </div>
 
-        <div class="col-4 pr-5 product-shop <?php echo $_product->getTypeId() ?>">
+        <div class="col-12 col-md-5 col-lg-4 pr-5 product-shop <?php echo $_product->getTypeId() ?>">
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
@@ -511,7 +511,7 @@ if ($_product->getSizeSample() == 1) {
         var stockFlowControl;
         productAddToCartForm.submit = function (button, form) {
         var instru = jQuery('.special-inst-product').val();
-        console.log(instru);
+        //console.log(instru);
 	    <?php
 	     //$_POST['"product-"'.'$_product->getId()']= document.write(instru);
 	    //Mage::getSingleton('core/session')->setData("product-".$_product->getId(),instru);
@@ -534,7 +534,7 @@ if ($_product->getSizeSample() == 1) {
 
             //new code -allure
             jQuery('.main-container .required-entry:not(.selectboxit)').each(function () {
-                console.log("Add to Cart")
+                //console.log("Add to Cart")
                 if (!jQuery(this).val()) {
                     hasErrors = true;
                     jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(this).parent());

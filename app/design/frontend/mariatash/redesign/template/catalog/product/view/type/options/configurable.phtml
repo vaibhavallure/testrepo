@@ -19,27 +19,33 @@ if ($_product->getSizeSample() == 1) {
 <?php if ($_product->isSaleable() && count($_attributes)):?>
     <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
     <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
-    <dl>
+    <div class="row">
         <?php foreach($_attributes as $_attribute): ?>
             <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
-            <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
-                <div class="input-box">
+            <div class=" col-12 <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
+                <div class="input-box row">
+                    <div class="col-4">
                     <label class="required"><?php echo ($label)? $label: $_attribute->getLabel() ?>: </label>
-                    <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
-                        <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
+                    </div>
+                    <div class="col-8">
+                        <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
+
+                        <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="display: none">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
                     <?php else:?>
-                        <div class="styled attribute_select_default" id="<?php echo $_attribute->getAttributeId() ?>" style="width: 150px !important">
-                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
+                        <div class=" attribute_select_default " id="<?php echo $_attribute->getAttributeId() ?>">
+                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select" >
                                 <option><?php echo $this->__('Select an Option') ?></option>
                             </select>
                         </div>
                     <?php endif;?>
+
+                    </div>
                 </div>
-            </dd>
+            </div>
         <?php endforeach; ?>
-    </dl>
+    </div>
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
@@ -277,7 +283,7 @@ if ($_product->getSizeSample() == 1) {
                     <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
                 </div>
             <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
-                <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>
+<!--                <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>-->
             <?php endif; ?>
             <?php
             endif;

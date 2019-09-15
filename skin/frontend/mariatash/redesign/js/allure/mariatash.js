@@ -1,72 +1,5 @@
 jQuery(document).ready(function() {
 
-    if (jQuery('.owl-carousel').length) {
-        jQuery('#owl-one, #owl-two').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: false,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                600: {
-                    items: 2,
-                },
-                992: {
-                    items: 4,
-                },
-                1200: {
-                    items: 4,
-                }
-            }
-        });
-        jQuery('#insta-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: false,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                600: {
-                    items: 2,
-                },
-                992: {
-                    items: 4,
-                },
-                1200: {
-                    items: 5,
-                }
-            }
-        });
-    }
-
-    jQuery(".left-arrow.one").click(function(e) {
-        jQuery('#owl-one').trigger('next.owl.carousel');
-    });
-
-    jQuery(".right-arrow.one").click(function() {
-        jQuery('#owl-one').trigger('prev.owl.carousel');
-    });
-
-    jQuery(".left-arrow.two").click(function(e) {
-        jQuery('#owl-two').trigger('next.owl.carousel');
-    });
-
-    jQuery(".right-arrow.two").click(function() {
-        jQuery('#owl-two').trigger('prev.owl.carousel');
-    });
-
-    jQuery(".left-arrow.insta").click(function() {
-        jQuery('#insta-carousel').trigger('next.owl.carousel');
-    });
-
-    jQuery(".right-arrow.insta").click(function() {
-        jQuery('#insta-carousel').trigger('prev.owl.carousel');
-    });
-
 
     jQuery(".mobile-sub_menu .menu-head").click(function(){
         jQuery(this).find("a").toggleClass('active');
@@ -74,9 +7,7 @@ jQuery(document).ready(function() {
     });
 
 
-    var defaultcolrSwatch = 'silver';
-    var defaultorientation = 'left';
-    var defaultNumber = '1';
+
     var headerHeight = jQuery(".mariatash-header").outerHeight();
     jQuery('.open-navigation').css("padding-top", headerHeight);
 
@@ -114,118 +45,7 @@ jQuery(document).ready(function() {
         jQuery('.open-navigation').css("padding-top", headerHeight);
     });
 
-    jQuery(".navbar-nav .nav-link, .open-navigation").hover(function() {
-            jQuery('.open-navigation').css("display", "block");
-            jQuery('.mariatash-header').addClass('dark-header');
-        },
-        function() {
-            jQuery('.open-navigation').css("display", "none");
-            jQuery('.mariatash-header').removeClass('dark-header');
-        });
 
-    jQuery('.catalog .swatch-item').click(function() {
-        jQuery("#catalog-item-image").attr("src", "images/catalog-item-" + jQuery(this).attr("data") + '.png');
-
-        if (jQuery(this).hasClass('active-swatch')) {} else {
-            (jQuery('.catalog .swatch-item').removeClass('active-swatch'));
-            (jQuery(this).addClass('active-swatch'));
-        }
-    });
-
-    jQuery('.product-details-flow .swatch-item').click(function() {
-        defaultcolrSwatch = jQuery(this).attr("data");
-        changeImage();
-        if (jQuery(this).hasClass('active-swatch')) {} else {
-            (jQuery('.product-details-flow .swatch-item').removeClass('active-swatch'));
-            (jQuery(this).addClass('active-swatch'));
-        }
-    });
-
-    jQuery('.thumbnail-items').click(function() {
-        jQuery("#product-image").attr("src", "images/product" + jQuery(this).attr("data") + '-' + defaultcolrSwatch + '-' + defaultorientation + '.png');
-        if ((jQuery(this).attr("data") == "3") || (jQuery(this).attr("data") == "4")) {
-            jQuery("#product-image").attr("src", "images/thumb3" + '-product-image' + '.png')
-        }
-        if (jQuery(this).hasClass('active-thumbnail')) {} else {
-            (jQuery('.thumbnail-items').removeClass('active-thumbnail'));
-            (jQuery(this).addClass('active-thumbnail'));
-        }
-    });
-
-    jQuery('.orientation-option input').click(function() {
-        if (jQuery('input[name=orientation]:checked').val() == "left") {
-            defaultorientation = 'left';
-        } else {
-            defaultorientation = 'right';
-        }
-        changeImage();
-    });
-
-    jQuery('.add-to-cart').click(function() {
-        jQuery('.add-to-cart').html("<i class='fa fa-circle-o-notch fa-spin'></i> adding");
-        setTimeout(function() {
-            jQuery('.add-to-cart').html("<i class='fa fa-check'></i> added");
-        }, 2000);
-
-        setTimeout(function() {
-            jQuery('.add-to-cart').html("add to cart");
-        }, 3500);
-    });
-
-    jQuery('.steps-header').click(function() {
-        jQuery('#' + jQuery(this).attr('data')).toggle();
-        jQuery('#' + jQuery(this).attr('data')).parent().toggleClass('active-step');
-    });
-
-    jQuery('.shipping-return-header').click(function() {
-        var clikId = jQuery(this).prop('data');
-        if (jQuery('#' + clikId).length) {
-            console.log('if');
-            jQuery('#' + jQuery(this).attr('data')).toggle();
-        } else {
-            console.log('else');
-            jQuery('.shipping-return-content').hide();
-            jQuery('#' + jQuery(this).attr('data')).toggle();
-        }
-        // jQuery('.shipping-return-content').hide();
-        // jQuery('#' + jQuery(this).attr('data')).toggle();
-        // jQuery('#' + jQuery(this).attr('data')).parent().toggleClass('active-accordian');
-    });
-
-    jQuery('#view-password').click(function() {
-        if (jQuery('#inputPassword').prop('type') === 'password') {
-            jQuery('#inputPassword').prop('type', 'text');
-        } else {
-            jQuery('#inputPassword').prop('type', 'password');
-        }
-
-    });
-
-    var options = [];
-    jQuery('.dropdown-menu a').on('click', function(event) {
-        var jQuerytarget = jQuery(event.currentTarget),
-            val = jQuerytarget.attr('data-value'),
-            jQueryinp = jQuerytarget.find('input'),
-            idx;
-        if ((idx = options.indexOf(val)) > -1) {
-            options.splice(idx, 1);
-            setTimeout(function() { jQueryinp.prop('checked', false) }, 0);
-        } else {
-            options.push(val);
-            setTimeout(function() { jQueryinp.prop('checked', true) }, 0);
-        }
-        jQuery(event.target).blur();
-        return false;
-    });
-
-    function changeImage() {
-        (jQuery('.thumbnail-items').removeClass('active-thumbnail'));
-        (jQuery('#thumb1').parent().addClass('active-thumbnail'));
-
-        jQuery("#thumb1").attr("src", "images/product1-" + defaultcolrSwatch + '-' + defaultorientation + '.png');
-        jQuery("#thumb2").attr("src", "images/product2-" + defaultcolrSwatch + '-' + defaultorientation + '.png');
-        jQuery("#product-image").attr("src", "images/product" + defaultNumber + '-' + defaultcolrSwatch + '-' + defaultorientation + '.png');
-    }
 
 
 
@@ -318,10 +138,49 @@ jQuery(document).ready(function() {
         }
     }
     /*filter popup end---------------------------------*/
+
+
+
+    /* product detail page js-----------------------------------------*/
+
+    /*convert select into */
+
+    //jQuery('#optionid').on("change",function () {
+      //  console.log("changed---------------");
+        jQuery(function () {
+            var i=1;
+            jQuery('.product-custom-option, .change_select').each(function (index, element) {
+                jQuery(this).parent()
+                    .after()
+                    .append("<div class='chooseList'><ul></ul></div>");
+
+                var select_id=jQuery(this).attr("id");
+                jQuery(element).each(function (idx, elm) {
+                    jQuery('option', elm).each(function (id, el) {
+                        if(el.value!="")
+                            jQuery('.chooseList ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'">' + el.text + '</li>');
+                    });
+                });
+                i++;
+            });
+            jQuery('.chooseList ul li').on('click', function () {
+                var selected_id = jQuery(this).data("select_id");
+                var option_value = jQuery(this).data("option_value");
+                jQuery('.chooseList ul li').removeClass("active");
+                jQuery(this).addClass("active");
+                jQuery('#'+selected_id+'').val(option_value).trigger('change');
+            });
+            jQuery('.product-custom-option,.change_select').hide();
+        });
+
+    //});
+
+
 });
 
 function myFunction(x) {
     x.classList.toggle("change");
     //jQuery('.mariatash-header').toggleClass('black-bg');
 }
+
 
