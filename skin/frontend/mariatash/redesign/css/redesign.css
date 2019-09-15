@@ -2397,7 +2397,7 @@ ul#foo4 {
 
 
 /*product detail page-------------------------------------------*/
-/* .col1-layout .product-view .product-shop{
+ .col1-layout .product-view .product-shop{
     float: none;
     width: auto;
     margin-left: auto;
@@ -2416,8 +2416,10 @@ ul#foo4 {
 }
 .containerImage img, .thumb img{
     background: transparent!important;
-} */
-
+}
+.catalog-product-view .breadcrumbs{
+    display: none;
+}
 
 /*select*/
 .chooseList ul li {
