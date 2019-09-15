@@ -309,7 +309,7 @@
     border: none;
   }
   #narrow-by-list{
-  	padding: 30px 50px;
+  	padding: 30px 10px;
     margin-left:0;
   }
   #narrow-by-list li div dt {
@@ -421,6 +421,13 @@
   }
   .social-media ul {
     padding-left: 22px;
+  }
+  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    padding: 0 58px 30px;
+  }
+  .filterPopup .selected-filters .actions.current{
+  	width: 50%;
+    padding: 0 18px 0px;
   }
 }
 
