@@ -2436,7 +2436,9 @@ ul#foo4 {
 }
 .filterPopup #narrow-by-list ol li {
 	min-width: 140px;
+	padding: 0;
 }
+
 /*filter popup end----------------------------------*/
 
 

@@ -19267,9 +19267,9 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	margin-left: -46px;
 }
 
-.mb-mana-catalogsearch-leftnav .currently {
+/* .mb-mana-catalogsearch-leftnav .currently {
 	float: left;
-}
+} */
 
 /* #selected_filters_actives {
 	overflow: hidden;
@@ -19324,9 +19324,9 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	margin-top: 56px;
 } */
 
-.mb-mana-catalogsearch-leftnav .currently {
+/* .mb-mana-catalogsearch-leftnav .currently {
 	float: left;
-}
+} */
 
 .mb-mana-catalogsearch-leftnav .selected-filters {
 	position: absolute;

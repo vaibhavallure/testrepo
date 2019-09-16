@@ -522,6 +522,9 @@
   .eye-image{
     top: 11.5px;
   }
+  .m-filter-checkboxes label {
+    font-size: 11px !important;
+  }
 }
 
 /* Mobile Portrait */
