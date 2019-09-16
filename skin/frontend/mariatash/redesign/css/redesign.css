@@ -2487,8 +2487,8 @@ ul#foo4 {
 
 
 /*product media*/
-.containerThumb .thumb img{
-    /* width: 74px;
+/*.containerThumb .thumb img{
+     width: 74px;
     height: 74px;
     overflow: hidden;
     border:1px dotted gray;
@@ -2541,4 +2541,16 @@ ul#foo4 {
     100% {
         opacity: 1;
     }
+}
+
+
+/*celebrity page--------------------------------------*/
+.celebrity-img{
+    width: 320px;
+    height: 320px;
+    background-size: cover!important;
+    cursor: pointer;
+}
+.celebrity-img:hover {
+    box-shadow: 2px 2px 8px black;
 }
