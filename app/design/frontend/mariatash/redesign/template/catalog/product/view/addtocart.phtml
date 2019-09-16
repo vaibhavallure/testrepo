@@ -31,9 +31,35 @@
     <div class="add-to-cart">
     	<div class="add-to-cart-left">
 			<?php if (!$_product->isGrouped() && $_product->getTypeId() != 'giftcards') { ?>
-                <div>
+                <div class="col-12">
+                    <div>
                     <label for="qty" style="min-width: 85px !important"><?php echo $this->__('Quantity') ?>:</label>
-                    <input type="text" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
+                    </div>
+                   <div class="row">
+                    <div class="minus_qty col-4">-</div>
+                    <div class="total_qty col-4"><?php echo $this->getProductDefaultQty() * 1 ?></div>
+                    <div class="plus_qty col-4 ">+</div>
+                    <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
+                    </div>
+                    <script>
+                        var qtyObj=jQuery('#qty');
+
+                        jQuery(".minus_qty").on("click",function () {
+                            var currunt_qty=parseInt(qtyObj.val());
+                            if(currunt_qty>1)
+                                currunt_qty--;
+                            qtyObj.val(currunt_qty);
+                            jQuery(".total_qty").html(currunt_qty);
+                        });
+                        jQuery(".plus_qty").on("click",function () {
+                            var currunt_qty=parseInt(qtyObj.val());
+                            if(currunt_qty<=10)
+                                currunt_qty++;
+                            qtyObj.val(currunt_qty);
+                            jQuery(".total_qty").html(currunt_qty);
+                        });
+                    </script>
+
                 </div>
                  <script>
 						   jQuery(document).ready(function(){
@@ -123,4 +149,5 @@
 <?php endif; ?>
 <?php echo $this->getChildHtml('product_type_data_extra') ?>
 <?php //echo $this->getPriceHtml($_product) ?>
+
 
