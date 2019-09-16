@@ -45,11 +45,8 @@
     </div> -->
     <div class="block-content">
       <div class="selected-filters">
-      <?php echo $this->getStateHtml() ?>
+      <?php //echo $this->getStateHtml() ?>
 
-      <?php if ($this->getLayer()->getState()->getFilters()): ?>
-          <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
-      <?php endif; ?>
       </div>
 
 
@@ -115,6 +112,11 @@
                 <?php endif; ?>
 				<?php //if($i++ == 2) break?>
                 <?php endforeach; ?>
+                <?php if ($this->getLayer()->getState()->getFilters()): ?>
+                <li>
+              <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                </li>
+                <?php endif; ?>
             </ul>
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>

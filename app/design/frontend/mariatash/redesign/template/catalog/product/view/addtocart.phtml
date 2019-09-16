@@ -35,14 +35,6 @@
                     <label for="qty" style="min-width: 85px !important"><?php echo $this->__('Quantity') ?>:</label>
                     <input type="text" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
                 </div>
-               <?php /*?> <div id="stockErr" class="validation-advice stockerr" style="display: none"></div>
-                <select name="qty" id="qty" class="required-entry qty-select">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select><?php */?>
                  <script>
 						   jQuery(document).ready(function(){
                                 jQuery("select#qty").selectBoxIt({aggressiveChange: true});
@@ -124,9 +116,9 @@
 ?>
 <?php if($giftcard): ?>
 <?php if ($_product->isAvailable()): ?>
-    <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability for this model:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
+    <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
 <?php else: ?>
-    <p class="availability out-of-stock" style="width: 300px;"><?php echo $this->__('Availability for this model:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+    <p class="availability out-of-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
 <?php endif; ?>
 <?php endif; ?>
 <?php echo $this->getChildHtml('product_type_data_extra') ?>
