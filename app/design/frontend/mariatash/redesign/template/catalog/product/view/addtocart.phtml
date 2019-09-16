@@ -31,9 +31,35 @@
     <div class="add-to-cart">
     	<div class="add-to-cart-left">
 			<?php if (!$_product->isGrouped() && $_product->getTypeId() != 'giftcards') { ?>
-                <div>
+                <div class="col-12">
+                    <div>
                     <label for="qty" style="min-width: 85px !important"><?php echo $this->__('Quantity') ?>:</label>
-                    <input type="text" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
+                    </div>
+                   <div class="row">
+                    <div class="minus_qty col-4">-</div>
+                    <div class="total_qty col-4"><?php echo $this->getProductDefaultQty() * 1 ?></div>
+                    <div class="plus_qty col-4 ">+</div>
+                    <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
+                    </div>
+                    <script>
+                        var qtyObj=jQuery('#qty');
+
+                        jQuery(".minus_qty").on("click",function () {
+                            var currunt_qty=parseInt(qtyObj.val());
+                            if(currunt_qty>1)
+                                currunt_qty--;
+                            qtyObj.val(currunt_qty);
+                            jQuery(".total_qty").html(currunt_qty);
+                        });
+                        jQuery(".plus_qty").on("click",function () {
+                            var currunt_qty=parseInt(qtyObj.val());
+                            if(currunt_qty<10)
+                                currunt_qty++;
+                            qtyObj.val(currunt_qty);
+                            jQuery(".total_qty").html(currunt_qty);
+                        });
+                    </script>
+
                 </div>
                  <script>
 						   jQuery(document).ready(function(){
@@ -50,11 +76,91 @@
                 <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
             <?php } ?>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+        <!--availability message-->
+
+        <?php
+        /**
+         * Magento
+         *
+         * NOTICE OF LICENSE
+         *
+         * This source file is subject to the Academic Free License (AFL 3.0)
+         * that is bundled with this package in the file LICENSE_AFL.txt.
+         * It is also available through the world-wide-web at this URL:
+         * http://opensource.org/licenses/afl-3.0.php
+         * If you did not receive a copy of the license and are unable to
+         * obtain it through the world-wide-web, please send an email
+         * to license@magentocommerce.com so we can send you a copy immediately.
+         *
+         * DISCLAIMER
+         *
+         * Do not edit or add to this file if you wish to upgrade Magento to newer
+         * versions in the future. If you wish to customize Magento for your
+         * needs please refer to http://www.magentocommerce.com for more information.
+         *
+         * @category    design
+         * @package     base_default
+         * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+         * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+         */
+        ?>
+        <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
+
+        <?php $_product = $this->getProduct() ?>
+        <?php
+        //if ( $_product->getTypeId() != 'giftcards'):  old code(teamwork changes the attribute set)
+
+        //new code - ALR -- aws12
+        $skuStr = $_product->getSku();
+        $skuArr = explode("|", $skuStr);
+        $sku = $skuArr[0];
+        $giftcard = 1;
+        if ($sku == "STORECARD") {
+            $giftcard = 0;
+        }
+        if ($sku == "gift") {
+            $giftcard = 0;
+        }
+        ?>
+        <?php if($giftcard): ?>
+            <?php if ($_product->isAvailable()): ?>
+                <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
+            <?php else: ?>
+                <p class="availability out-of-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php echo $this->getChildHtml('product_type_data_extra') ?>
+        <?php //echo $this->getPriceHtml($_product) ?>
+<!------------------message end --------->
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
         <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button" onclick="productAddToCartForm.submit(this,this.form)" style="margin-bottom: 0px;">
             <span><span><?php echo $buttonTitle ?></span></span>
         </button>
-        <?php echo $this->getChildHtml('', true, true) ?>
+        <?php //echo $this->getChildHtml('', true, true) ?>
 
     </div>
 <?php endif; ?>
@@ -70,57 +176,6 @@
     });
 </script>
 <?php } ?>
-<?php
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    design
- * @package     base_default
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-?>
-<?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
 
-<?php $_product = $this->getProduct() ?>
-<?php 
-    //if ( $_product->getTypeId() != 'giftcards'):  old code(teamwork changes the attribute set)
 
-    //new code - ALR -- aws12
-    $skuStr = $_product->getSku();
-    $skuArr = explode("|", $skuStr);
-    $sku = $skuArr[0];
-    $giftcard = 1;
-    if ($sku == "STORECARD") {
-        $giftcard = 0;
-    }
-    if ($sku == "gift") {
-        $giftcard = 0;
-    }
-?>
-<?php if($giftcard): ?>
-<?php if ($_product->isAvailable()): ?>
-    <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
-<?php else: ?>
-    <p class="availability out-of-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
-<?php endif; ?>
-<?php endif; ?>
-<?php echo $this->getChildHtml('product_type_data_extra') ?>
-<?php //echo $this->getPriceHtml($_product) ?>
 
