@@ -26,19 +26,19 @@
 ?>
 
 <?php $_product = $this->getProduct(); ?>
-<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php $buttonTitle = $this->__('Add to Bag'); ?>
 <?php if ($_product->isSaleable()): ?>
     <div class="add-to-cart">
     	<div class="add-to-cart-left">
 			<?php if (!$_product->isGrouped() && $_product->getTypeId() != 'giftcards') { ?>
-                <div class="col-12">
+                <div class="">
                     <div>
-                    <label for="qty" style="min-width: 85px !important"><?php echo $this->__('Quantity') ?>:</label>
+                    <label class="product-attribute-name" for="qty"><?php echo $this->__('Quantity') ?></label>
                     </div>
                    <div class="row">
-                    <div class="minus_qty col-4">-</div>
-                    <div class="total_qty col-4"><?php echo $this->getProductDefaultQty() * 1 ?></div>
-                    <div class="plus_qty col-4 ">+</div>
+                    <div class="minus_qty col-1">-</div>
+                    <div class="total_qty col-1"><?php echo $this->getProductDefaultQty() * 1 ?></div>
+                    <div class="plus_qty col-1">+</div>
                     <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
                     </div>
                     <script>
@@ -135,9 +135,9 @@
         ?>
         <?php if($giftcard): ?>
             <?php if ($_product->isAvailable()): ?>
-                <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
+                <p class="availability in-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
             <?php else: ?>
-                <p class="availability out-of-stock" style="width: 300px;"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+                <p class="availability out-of-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
             <?php endif; ?>
         <?php endif; ?>
         <?php echo $this->getChildHtml('product_type_data_extra') ?>
@@ -157,7 +157,7 @@
 
 
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
-        <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button" onclick="productAddToCartForm.submit(this,this.form)" style="margin-bottom: 0px;">
+        <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button" onclick="productAddToCartForm.submit(this,this.form)">
             <span><span><?php echo $buttonTitle ?></span></span>
         </button>
         <?php //echo $this->getChildHtml('', true, true) ?>
@@ -176,6 +176,3 @@
     });
 </script>
 <?php } ?>
-
-
-

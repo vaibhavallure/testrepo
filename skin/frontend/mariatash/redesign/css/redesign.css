@@ -6,6 +6,7 @@ h1{
 	font-size: 22px;
 	letter-spacing: Normal;
 	text-align: Left;
+	color: rgba(40,40,40,0.9);
 }
 
 .cms-page-view h1, .category-press h1{
@@ -109,8 +110,7 @@ h3{
 }
 
 .border-style-one{
-	border: 0.25px solid
-	rgba(41,41,41,0.90);
+	border: 0.25px solid rgba(41,41,41,0.90);
 }
 
 .border-style-two{
@@ -152,6 +152,13 @@ h3{
 	color: rgba(41,41,41,0.60) !important;
 	letter-spacing: 0.5px !important;
 	text-decoration: underline !important;
+}
+
+.product-attribute-name{
+	font-family: urw-din-bold;
+	font-size: 13px;
+	color: rgba(40,40,40,0.6);
+	letter-spacing: 1px;
 }
 
 .pop-up-button{
@@ -865,7 +872,7 @@ ul.swatch .swatch-item a {
 
 /* product details page*/
 
-.product-details-box {
+/* .product-details-box {
     background-color: #f7f7f7;
     padding-bottom: 42px;
 }
@@ -912,7 +919,7 @@ ul.swatch .swatch-item a {
 
 .product-details-box ul.swatch .swatch-item:last-child {
     padding-right: 0!important
-}
+} */
 
 .label {
     font-weight: 700;
@@ -2448,6 +2455,17 @@ ul#foo4 {
 .containerImage img{
 	display: flex;
 	margin: 0 auto;
+}
+.image_carousel img{
+	width: 120px;
+  height: 120px;
+}
+.catalog-product-view .regular-price span {
+  font-size: 22px;
+  font-family: urw-din-xlight;
+}
+.product-shop .add-to-links .link-wishlist{
+	background: url(../images/bg-ad-fav.png) left center no-repeat;
 }
  /* .col1-layout .product-view .product-shop{
     float: none;

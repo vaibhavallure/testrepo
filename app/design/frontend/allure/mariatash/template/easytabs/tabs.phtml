@@ -74,7 +74,7 @@ $tabHtml = array();
 						                $tab_title = $_tab['title'];
 						                if(!empty($tab_title)){
 						                    $attr = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product', $tab_title);
-						
+
 						                    if(!empty($attr)){
 						                        $tab_title = $attr->getFrontendLabel();
 						                    }
@@ -82,7 +82,7 @@ $tabHtml = array();
 						                if(empty($tab_title)){
 						                    $tab_title = uc_words(str_replace('_', ' ', $_tab['title']));
 						                }
-						
+
 						                $tab_is_custom = strpos($_tab['alias'], 'custom');
 						                $tab_is_cms = strpos($_tab['alias'], 'cms');
 						                if ($tab_is_custom === 0) {
@@ -109,7 +109,7 @@ $tabHtml = array();
 		                </a>
 		            </li>
                 </ul>
-	    		
+
                 <div class="padder tab-content">
 				    <?php foreach ($this->getTabs() as $_index => $_tab): ?>
 				        <?php //if ($this->getChildHtml($_tab['alias'])): ?>
@@ -120,7 +120,7 @@ $tabHtml = array();
 				        <?php endif; ?>
 				    <?php endforeach; ?>
 				</div>
-	    		
+
             </div>
         </div>
     </div>
