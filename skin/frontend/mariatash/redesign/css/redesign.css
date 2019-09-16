@@ -2475,6 +2475,23 @@ ul#foo4 {
 .chooseList ul li.active {
     border-bottom: 2px solid black;
 }
+/*select end*/
+
+
+/*product media*/
+.containerThumb .thumb img{
+    width: 74px;
+    height: 74px;
+    overflow: hidden;
+    border:1px dotted gray;
+    margin-bottom: 5px;
+}
+.containerThumb .thumb img:hover{
+    border:1px solid black;
+    border-bottom: 3px solid black;
+    margin-bottom: 5px;
+}
+
 
 
 
