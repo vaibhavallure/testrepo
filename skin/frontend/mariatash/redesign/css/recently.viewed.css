@@ -69,7 +69,7 @@ a.next span,
 .pagination a span {
 	display: none;
 }
-.clearfix {
+/* .clearfix {
 	float: none;
 	clear: both;
-}
+} */

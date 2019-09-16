@@ -392,70 +392,72 @@ if ($_product->getSizeSample() == 1) {
             </script>
         </div>
 
-        <div class="col-12 col-md-5 col-lg-4 pr-5 product-shop <?php echo $_product->getTypeId() ?>">
-            <div class="product-name">
-                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-            </div>
-            <?php $category='';?>
-			<?php if(Mage::registry('current_category')):?>
-				<?php $category=Mage::registry('current_category')->getName();?>
-			<?php endif;?>
-			<input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
-            <?php //echo $this->getPriceHtml($_product) ?>
-            <div id="ajax-price"><?php echo $this->getPriceHtml($_product) ?></div>
+        <div class="col-lg-4 product-shop <?php echo $_product->getTypeId() ?>">
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="product-name col-12">
+                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                </div>
+                    <?php $category='';?>
+        			          <?php if(Mage::registry('current_category')):?>
+        				              <?php $category=Mage::registry('current_category')->getName();?>
+        			                 <?php endif;?>
+    			                        <input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
+                                  <?php //echo $this->getPriceHtml($_product) ?>
+                <div id="ajax-price" class="col-12"><?php echo $this->getPriceHtml($_product) ?></div>
+                <div class="product-collateral col-12">
+                    <?php if (!$this->hasOptions()): ?>
+                        <div id="product-options-wrapper" class="product-options"></div>
+                          <div class="product-options-bottom">
+                              <?php if ($_product->isSaleable()): ?>
+                                  <?php echo $this->getChildHtml('addtocart') ?>
+                              <?php elseif (!$_product->isAvailable()): ?>
+                                  <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
+                                  <span>
+                                     <span><?php echo $this->__('Out of stock') ?></span>
+                                  </span>
+                                  </button>
+                                  <?php echo $this->getChildHtml('alert_urls') ?>
+                              <?php endif; ?>
+                              <?php echo $this->getChildHtml('addto') ?>
+                              <?php echo $this->getChildHtml('product_type_data') ?>
+                          </div>
+                    <?php endif; ?>
 
-            <div class="product-collateral">
-                <?php if (!$this->hasOptions()): ?>
-                    <div id="product-options-wrapper" class="product-options"></div>
-                    <div class="product-options-bottom">
-                        <?php if ($_product->isSaleable()): ?>
-                            <?php echo $this->getChildHtml('addtocart') ?>
-                        <?php elseif (!$_product->isAvailable()): ?>
-                            <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
-                            <span>
-                               <span><?php echo $this->__('Out of stock') ?></span>
-                            </span>
-                            </button>
-                            <?php echo $this->getChildHtml('alert_urls') ?>
-                        <?php endif; ?>
-                        <?php echo $this->getChildHtml('addto') ?>
+                    <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                        <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                         <?php echo $this->getChildHtml('product_type_data') ?>
-                    </div>
-                <?php endif; ?>
+                    <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
+                        <button id="sign-up-out-of-stock" class="button sign-up-out-of-stock" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
+                         <span>
+                            <span><?php echo $this->__('Out of stock') ?></span>
+                         </span>
+                        </button>
+                        <?php echo $this->getChildHtml('alert_urls') ?>
+                    <?php endif;?>
 
-                <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
-                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-                    <?php echo $this->getChildHtml('product_type_data') ?>
-                <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
-                    <button id="sign-up-out-of-stock" class="button sign-up-out-of-stock" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
-                     <span>
-                        <span><?php echo $this->__('Out of stock') ?></span>
-                     </span>
-                    </button>
-                    <?php echo $this->getChildHtml('alert_urls') ?>
-                <?php endif;?>
+    				<?php //echo $this->getChildHtml('special_instruction')?>
 
-				<?php //echo $this->getChildHtml('special_instruction')?>
+    		       <?php if ($_product->getShowSpecialInstruction()):?>
+    				<div class="product-special-instructions">
+    					<div class="special-instruction-label">
+    						<label>Special Instructions:</label>
+    					</div>
+    					<div class="special-instruction-textarea">
+    						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
+    						<br/>
+                  <div style="float: left; height: 30px">(</div>
+                  <div style="width: 250px">Special requests might delay your order due to production time)</div>
+    					</div>
+    				</div>
+    				<?php endif;?>
 
-		       <?php if ($_product->getShowSpecialInstruction()):?>
-				<div class="product-special-instructions">
-					<div class="special-instruction-label">
-						<label>Special Instructions:</label>
-					</div>
-					<div class="special-instruction-textarea">
-						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
-						<br/>
-                        <div style="float: left; height: 30px">(</div>
-                        <div style="width: 250px">Special requests might delay your order due to production time)</div>
-					</div>
-				</div>
-				<?php endif;?>
-
-                <?php echo $this->getChildHtml('product_additional_data') ?>
-            </div>
+                    <?php echo $this->getChildHtml('product_additional_data') ?>
+                </div>
 
             <?php if ($_product->getShortDescription()): ?>
-                <div class="short-description">
+                <div class="short-description col-12">
                     <h2><?php echo $this->__('Quick Overview') ?></h2>
 
                     <div
@@ -467,6 +469,9 @@ if ($_product->getSizeSample() == 1) {
             <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
                 <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
             <?php endif;?>
+          </div>
+          </div>
+        </div>
         </div>
         </div>
 
@@ -481,7 +486,7 @@ if ($_product->getSizeSample() == 1) {
             <?php endforeach;?>
         </div>
 
-        <div class="clearer"></div>
+        <div class="clearer col-12"></div>
 
     </form>
     <script type="text/javascript">
