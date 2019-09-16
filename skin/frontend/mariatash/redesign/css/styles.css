@@ -19175,13 +19175,13 @@ ol.m-filter-css-checkboxes li a.m-checkbox-unchecked, ol.m-filter-css-checkboxes
 	padding: 0;
 } */
 
-ul#narrow-by-list li {
+/* ul#narrow-by-list li {
 	float: left;
-	/* max-width: 300px; */
+	/* max-width: 300px; 
 	padding-left: 8px;
-	/* min-height: 20px; */
+	/* min-height: 20px;
 	position: relative;
-}
+} */
 
 /* ul#narrow-by-list li ol li {
 	width: 96%;

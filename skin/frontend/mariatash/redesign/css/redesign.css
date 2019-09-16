@@ -1854,7 +1854,6 @@ div#narrow-by-list {
 #narrow-by-list li div dd{
   position: absolute;
   top: 29px;
-  left: 8px;
   height: auto;
   cursor: pointer;
   z-index: 2;
@@ -2337,9 +2336,11 @@ ul#foo4 {
   background-size: 100%;
 }
 #narrow-by-list li{
-  float: none;
+  float: left;
 	padding: 0;
 	margin-bottom: 10px;
+	z-index: 2;
+	padding-left: 8px;
 }
 .filterPopup .filtru-price .m-filter-slider {
   margin-left: 10px;
