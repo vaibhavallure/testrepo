@@ -2501,7 +2501,12 @@ ul#foo4 {
     font-weight: bold;
 }
 
+/*instagram slider*/
 
+.image_carousel .item.product-view-instagram-item, .image_carousel .item.product-view-instagram-item img{
+    height: 200px;
+    width: 200px;
+}
 
 
 
