@@ -1796,10 +1796,13 @@ overflow: hidden;
 }
 .swatches{
   padding: 5px 4px 0 0px;
+	display: flex;
+  justify-content: flex-end;
 }
 .swatches li{
   width: 18px !important;
   height: 18px !important;
+	margin-left: 5px;
 }
 .colorSelector.tipped-create.active::after {
   content: '';
