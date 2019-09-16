@@ -84,12 +84,12 @@ audio, canvas, video {
 	transparent;
 }
 
-.catalog-product-view .containerThumb .thumb a {
+/* .catalog-product-view .containerThumb .thumb a {
 	display: block;
 	float: left;
 	width: 74px;
 	height: 97px;
-}
+} */
 
 .sendfriend-product-send button.button span span, .ecp-tattoo-index-send button.button span span,
 .ecp-celebrities-index-send button.button span span {
@@ -7784,11 +7784,11 @@ div.styled {
 }
 
 /* Product Shop */
-.col1-layout .product-view .product-shop {
+/* .col1-layout .product-view .product-shop {
 	float: left;
 	width: 445px;
 	margin-left: 42px;
-}
+} */
 
 .col2-left-layout .product-view .product-shop, .col2-right .product-view .product-shop
 {
@@ -19177,7 +19177,7 @@ ol.m-filter-css-checkboxes li a.m-checkbox-unchecked, ol.m-filter-css-checkboxes
 
 /* ul#narrow-by-list li {
 	float: left;
-	/* max-width: 300px; 
+	/* max-width: 300px;
 	padding-left: 8px;
 	/* min-height: 20px;
 	position: relative;
