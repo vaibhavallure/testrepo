@@ -422,7 +422,7 @@ if ($_product->getSizeSample() == 1) {
                               <?php endif; ?>
                               <?php echo $this->getChildHtml('addto') ?>
                               <?php echo $this->getChildHtml('product_type_data') ?>
-                </div>
+                          </div>
                     <?php endif; ?>
 
                     <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
@@ -447,8 +447,8 @@ if ($_product->getSizeSample() == 1) {
     					<div class="special-instruction-textarea">
     						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
     						<br/>
-                            <div style="float: left; height: 30px">(</div>
-                            <div style="width: 250px">Special requests might delay your order due to production time)</div>
+                  <div style="float: left; height: 30px">(</div>
+                  <div style="width: 250px">Special requests might delay your order due to production time)</div>
     					</div>
     				</div>
     				<?php endif;?>
