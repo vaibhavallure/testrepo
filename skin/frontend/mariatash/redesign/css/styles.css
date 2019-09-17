@@ -13996,7 +13996,7 @@ body.quickview-index-index {
 }
 
 /* Clears ================================================================================ */
-.category-celebrity-clientele .outfit-product:after,
+/* .category-celebrity-clientele .outfit-product:after,
 .ecp-celebrities-index-index .outfit-product:after, .clearer:after,
 .header-container:after, .header-container .top-container:after,
 .header:after, .top-bar:after, .quick-access:after, .form-search:after,
@@ -14028,7 +14028,7 @@ body.quickview-index-index {
 	line-height: 0;
 	height: 0;
 	overflow: hidden;
-}
+} */
 /* ======================================================================================= */
 @media only screen and (max-width:1500px) {
 	.shippingtextheader {

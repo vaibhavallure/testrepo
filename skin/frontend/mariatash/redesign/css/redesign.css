@@ -154,6 +154,11 @@ h3{
 	text-decoration: underline !important;
 }
 
+.quantity-count{
+	font-family: urw-din-regular;
+	font-size: 18px;
+}
+
 .product-attribute-name{
 	font-family: urw-din-bold;
 	font-size: 13px;

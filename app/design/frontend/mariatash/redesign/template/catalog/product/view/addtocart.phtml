@@ -36,9 +36,9 @@
                     <label class="product-attribute-name" for="qty"><?php echo $this->__('Quantity') ?></label>
                     </div>
                    <div class="row">
-                    <div class="minus_qty col-1">-</div>
-                    <div class="total_qty col-1"><?php echo $this->getProductDefaultQty() * 1 ?></div>
-                    <div class="plus_qty col-1">+</div>
+                    <div class="minus_qty col-1"><span class="quantity-count">-</span></div>
+                    <div class="total_qty col-1"><span class="quantity-count"><?php echo $this->getProductDefaultQty() * 1 ?></span></div>
+                    <div class="plus_qty col-1"><span class="quantity-count">+</span></div>
                     <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
                     </div>
                     <script>
@@ -135,9 +135,9 @@
         ?>
         <?php if($giftcard): ?>
             <?php if ($_product->isAvailable()): ?>
-                <p class="availability in-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
+                <p class="availability in-stock info-text-two"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
             <?php else: ?>
-                <p class="availability out-of-stock"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+                <p class="availability out-of-stock info-text-two"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
             <?php endif; ?>
         <?php endif; ?>
         <?php echo $this->getChildHtml('product_type_data_extra') ?>
@@ -157,8 +157,8 @@
 
 
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
-        <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button" onclick="productAddToCartForm.submit(this,this.form)">
-            <span><span><?php echo $buttonTitle ?></span></span>
+        <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)">
+            <?php echo $buttonTitle ?>
         </button>
         <?php //echo $this->getChildHtml('', true, true) ?>
 
