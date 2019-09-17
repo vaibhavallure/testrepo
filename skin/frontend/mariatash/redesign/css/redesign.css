@@ -243,6 +243,8 @@ a:hover{
 ul, ol{
 	list-style: none;
 }
+/* STANDARD CSS ENDED */
+
 
 /*Checkout Left Section (Steps)*/
 .checkout-step-name {
@@ -2246,16 +2248,16 @@ ul#foo4 {
   background: #f2f2f2;
 }
 .catalog-product-view .for-space-to-bottom {
-    height: 127px;
+  height: 127px;
 }
 .catalog-product-view .homepage-menu.mariatash-header{
 	background: rgba(40,40,40,0.9);
 }
 .containerImage img, .thumb img{
-    background: transparent!important;
+  background: transparent!important;
 }
 .catalog-product-view .breadcrumbs{
-    display: none;
+  display: none;
 }
 
 /*select*/
