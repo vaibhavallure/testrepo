@@ -19,22 +19,23 @@ if ($_product->getSizeSample() == 1) {
 <?php if ($_product->isSaleable() && count($_attributes)):?>
     <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
     <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
+    <hr>
     <div class="row">
         <?php foreach($_attributes as $_attribute): ?>
             <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
-            <div class=" col-12 <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
+            <div class="swatch-section col-12 <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
                 <div class="input-box row">
-                    <div class="col-4">
+                    <div class="col">
                     <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                     </div>
-                    <div class="col-8">
+                    <div class="col">
                         <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
 
                         <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="display: none">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
                     <?php else:?>
-                        <div class=" attribute_select_default " id="<?php echo $_attribute->getAttributeId() ?>">
+                        <div class="attribute_select_default row justify-content-end m-0" id="<?php echo $_attribute->getAttributeId() ?>">
                             <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select" >
                                 <option><?php echo $this->__('Select an Option') ?></option>
                             </select>
@@ -46,6 +47,7 @@ if ($_product->getSizeSample() == 1) {
             </div>
         <?php endforeach; ?>
     </div>
+    <hr>
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);

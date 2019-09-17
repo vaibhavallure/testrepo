@@ -243,6 +243,12 @@ a:hover{
 ul, ol{
 	list-style: none;
 }
+hr{
+	margin-top: 10px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #D4D4D4;
+}
 /* STANDARD CSS ENDED */
 
 
@@ -2259,6 +2265,25 @@ ul#foo4 {
 .catalog-product-view .breadcrumbs{
   display: none;
 }
+.product-shop {
+  margin-top: 71px;
+}
+.product-name {
+  margin-bottom: 22px;
+}
+.catalog-product-view .amconf-images-container img {
+  width: 23px;
+  height: 23px;
+	margin-right: 19px;
+}
+.catalog-product-view .amconf-images-container img:last-child {
+  margin-right: 0;
+}
+.amconf-images-container {
+  justify-content: flex-end;
+  display: flex;
+}
+/* ppp */
 
 /*select*/
 .chooseList ul li {
