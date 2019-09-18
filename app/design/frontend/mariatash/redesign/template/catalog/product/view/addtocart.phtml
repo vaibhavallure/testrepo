@@ -135,9 +135,9 @@
         ?>
         <?php if($giftcard): ?>
             <?php if ($_product->isAvailable()): ?>
-                <p class="availability in-stock info-text-two"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
+                <p class="availability in-stock info-text-two col-12"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
             <?php else: ?>
-                <p class="availability out-of-stock info-text-two"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+                <p class="availability out-of-stock info-text-two col-12"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
             <?php endif; ?>
         <?php endif; ?>
         <?php echo $this->getChildHtml('product_type_data_extra') ?>

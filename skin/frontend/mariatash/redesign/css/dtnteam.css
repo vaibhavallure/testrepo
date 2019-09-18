@@ -23,11 +23,9 @@
     margin: 10px 10px 0 0;
 }
 .size_chart a{ text-decoration: underline;}
-.get_size_sample{
+/* .get_size_sample{
     margin: 10px 10px 0 0;
     float: left;
-}
+} */
 .get_size_sample a{ text-decoration: underline;cursor: pointer; }
 .product-shop .product-collateral .sample{ float:left;}
-
-

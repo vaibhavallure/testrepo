@@ -286,7 +286,7 @@ if ($_product->getSizeSample() == 1) {
         $category = Mage::getModel('catalog/category')->load($cid);
         ?>
         <h1><?php //echo $category->getName(); ?></h1></div>
-    <div class="product-essential col-12">
+    <div class="product-essential col-12 p-0">
     <?php if ($showSampleForm): ?>
         <div style="display: none;">
             <form class="w-100" action="<?php echo $this->getSubmitUrl($sampleProduct) ?>" method="post"
@@ -314,164 +314,165 @@ if ($_product->getSizeSample() == 1) {
         	<input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
         	<input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
         </div>
-
-        <div class="row">
-        <div class="product-view-left col-12 col-md-7 col-lg-8">
-            <div class="product-img-box">
-                <div id="galleria" class="mediaGallery">
-                    <?php echo $this->getChildHtml('media') ?>
-                </div>
-            </div>
-
-            <!--//SOCIAL MEDIA////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-            <div class="social-mt" id="social-mt">
-                <script>!function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (!d.getElementById(id)) {
-                            js = d.createElement(s);
-                            js.id = id;
-                            js.src = "//platform.twitter.com/widgets.js";
-                            fjs.parentNode.insertBefore(js, fjs);
-                        }
-                    }(document, "script", "twitter-wjs");</script>
-
-                <script type="text/javascript">
-                    jQuery("a#iframe").fancybox({
-                        'transitionIn': 'elastic',
-                        'transitionOut': 'elastic',
-                        'type': 'iframe',
-                        'scrolling': 'no',
-                        'speedIn': 600,
-                        'speedOut': 200,
-                        'minHeight': 510,
-                        'maxHeight': 510,
-                        'height': 510,
-                        'width': 420,
-                        'overlayShow': false,
-                        'wrapCSS': 'send-email-popup',
-                        'overflow': 'hidden'
-                    });
-                </script>
-
-                <div class="fb-share-button" data-href="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>" data-width="450"></div>
-                <a href="https://twitter.com/share" class="twitter-share-button" data-text="<?=$_helper->productAttribute($_product, $_product->getName(), 'name');?>" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none">Tweet</a>
-                <div class="pinterest_button" id="pinterest-button-load">
-                    <?php
-                    $_pinlink['url'] = $_product->getProductUrl();
-                    $_pinlink['media'] = $this->helper('catalog/image')->init($_product, 'image')->__toString();
-                    //$_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name') . " - " . strip_tags($_product->getDescription());
-                    $_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name');
-                    ?>
-                    <a href="http://pinterest.com/pin/create/button/?<?=http_build_query($_pinlink);?>" class="pin-it-button"></a>
-                </div>
-                <div id="mail" style="display: inline-block">
-                    <div class="button mail"><a id="iframe"
-                                                href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>">
-                            <div class="emailBtn"><img id="imgMail"
-                                                       src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/><span
-                                    class="share">Email</span></div>
-                        </a></div>
-                </div>
-                <div id="print" style="display: block">
-                    <div class="button print"><a href="#" onclick="javascript:print();">
-                            <div class="printBtn"><img id="imgPrint"
-                                                       src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/><span
-                                    class="share">Print</span></div>
-                        </a></div>
-                </div>
-            </div>
-            <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-            <script>
-
-                function emailFriend() {
-                    var urlEmltoFriend = '<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>';
-                    window.location = urlEmltoFriend;
-
-                }
-
-            </script>
-        </div>
-
-        <div class="col-lg-4 product-shop <?php echo $_product->getTypeId() ?>">
+        <div class="col-12 product-detail-parent">
           <div class="row">
-            <div class="col-12">
+            <div class="product-view-left col-lg-8">
+                <div class="product-img-box">
+                    <div id="galleria" class="mediaGallery">
+                        <?php echo $this->getChildHtml('media') ?>
+                    </div>
+                </div>
+
+                <!--//SOCIAL MEDIA////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <div class="social-mt" id="social-mt">
+                    <script>!function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "//platform.twitter.com/widgets.js";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, "script", "twitter-wjs");</script>
+
+                    <script type="text/javascript">
+                        jQuery("a#iframe").fancybox({
+                            'transitionIn': 'elastic',
+                            'transitionOut': 'elastic',
+                            'type': 'iframe',
+                            'scrolling': 'no',
+                            'speedIn': 600,
+                            'speedOut': 200,
+                            'minHeight': 510,
+                            'maxHeight': 510,
+                            'height': 510,
+                            'width': 420,
+                            'overlayShow': false,
+                            'wrapCSS': 'send-email-popup',
+                            'overflow': 'hidden'
+                        });
+                    </script>
+
+                    <div class="fb-share-button" data-href="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>" data-width="450"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="<?=$_helper->productAttribute($_product, $_product->getName(), 'name');?>" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none">Tweet</a>
+                    <div class="pinterest_button" id="pinterest-button-load">
+                        <?php
+                        $_pinlink['url'] = $_product->getProductUrl();
+                        $_pinlink['media'] = $this->helper('catalog/image')->init($_product, 'image')->__toString();
+                        //$_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name') . " - " . strip_tags($_product->getDescription());
+                        $_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name');
+                        ?>
+                        <a href="http://pinterest.com/pin/create/button/?<?=http_build_query($_pinlink);?>" class="pin-it-button"></a>
+                    </div>
+                    <div id="mail" style="display: inline-block">
+                        <div class="button mail"><a id="iframe"
+                                                    href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>">
+                                <div class="emailBtn"><img id="imgMail"
+                                                           src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/><span
+                                        class="share">Email</span></div>
+                            </a></div>
+                    </div>
+                    <div id="print" style="display: block">
+                        <div class="button print"><a href="#" onclick="javascript:print();">
+                                <div class="printBtn"><img id="imgPrint"
+                                                           src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/><span
+                                        class="share">Print</span></div>
+                            </a></div>
+                    </div>
+                </div>
+                <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <script>
+
+                    function emailFriend() {
+                        var urlEmltoFriend = '<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>';
+                        window.location = urlEmltoFriend;
+
+                    }
+
+                </script>
+            </div>
+
+            <div class="col-lg-3 offset-lg-1 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
               <div class="row">
-                <div class="product-name col-12">
-                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-                </div>
-                    <?php $category='';?>
-        			          <?php if(Mage::registry('current_category')):?>
-        				              <?php $category=Mage::registry('current_category')->getName();?>
-        			                 <?php endif;?>
-    			                        <input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
-                                  <?php //echo $this->getPriceHtml($_product) ?>
-                <div id="ajax-price" class="col-12"><?php echo $this->getPriceHtml($_product) ?></div>
-                <div class="product-collateral col-12">
-                    <?php if (!$this->hasOptions()): ?>
-                        <div id="product-options-wrapper" class="product-options"></div>
-                          <div class="product-options-bottom">
-                              <?php if ($_product->isSaleable()): ?>
-                                  <?php echo $this->getChildHtml('addtocart') ?>
-                              <?php elseif (!$_product->isAvailable()): ?>
-                                  <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
-                                  <span>
-                                     <span><?php echo $this->__('Out of stock') ?></span>
-                                  </span>
-                                  </button>
-                                  <?php echo $this->getChildHtml('alert_urls') ?>
-                              <?php endif; ?>
-                              <?php echo $this->getChildHtml('addto') ?>
-                              <?php echo $this->getChildHtml('product_type_data') ?>
-                          </div>
-                    <?php endif; ?>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="product-name col-12">
+                        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    </div>
+                        <?php $category='';?>
+            			          <?php if(Mage::registry('current_category')):?>
+            				              <?php $category=Mage::registry('current_category')->getName();?>
+            			                 <?php endif;?>
+        			                        <input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
+                                      <?php //echo $this->getPriceHtml($_product) ?>
+                    <div id="ajax-price" class="col-12"><?php echo $this->getPriceHtml($_product) ?></div>
+                    <div class="product-collateral col-12">
+                        <?php if (!$this->hasOptions()): ?>
+                            <div id="product-options-wrapper" class="product-options"></div>
+                              <div class="product-options-bottom">
+                                  <?php if ($_product->isSaleable()): ?>
+                                      <?php echo $this->getChildHtml('addtocart') ?>
+                                  <?php elseif (!$_product->isAvailable()): ?>
+                                      <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
+                                      <span>
+                                         <span><?php echo $this->__('Out of stock') ?></span>
+                                      </span>
+                                      </button>
+                                      <?php echo $this->getChildHtml('alert_urls') ?>
+                                  <?php endif; ?>
+                                  <?php echo $this->getChildHtml('addto') ?>
+                                  <?php echo $this->getChildHtml('product_type_data') ?>
+                              </div>
+                        <?php endif; ?>
 
-                    <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
-                        <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-                        <?php echo $this->getChildHtml('product_type_data') ?>
-                    <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
-                        <button id="sign-up-out-of-stock" class="button sign-up-out-of-stock" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
-                         <span>
-                            <span><?php echo $this->__('Out of stock') ?></span>
-                         </span>
-                        </button>
-                        <?php echo $this->getChildHtml('alert_urls') ?>
-                    <?php endif;?>
+                        <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                            <?php echo $this->getChildHtml('product_type_data') ?>
+                        <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
+                            <button id="sign-up-out-of-stock" class="button sign-up-out-of-stock" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
+                             <span>
+                                <span><?php echo $this->__('Out of stock') ?></span>
+                             </span>
+                            </button>
+                            <?php echo $this->getChildHtml('alert_urls') ?>
+                        <?php endif;?>
 
-    				<?php //echo $this->getChildHtml('special_instruction')?>
+        				<?php //echo $this->getChildHtml('special_instruction')?>
 
-    		       <?php if ($_product->getShowSpecialInstruction()):?>
-    				<div class="product-special-instructions">
-    					<div class="special-instruction-label">
-    						<label>Special Instructions:</label>
-    					</div>
-    					<div class="special-instruction-textarea">
-    						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
-                  <div>(Special requests might delay your order due to production time)</div>
-    					</div>
-    				</div>
-    				<?php endif;?>
+        		       <?php if ($_product->getShowSpecialInstruction()):?>
+        				<div class="product-special-instructions col-12">
+        					<div class="special-instruction-label">
+        						<label>Special Instructions:</label>
+        					</div>
+        					<div class="special-instruction-textarea">
+        						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
+                      <div>(Special requests might delay your order due to production time)</div>
+        					</div>
+        				</div>
+        				<?php endif;?>
 
-                    <?php echo $this->getChildHtml('product_additional_data') ?>
-                </div>
+                        <?php echo $this->getChildHtml('product_additional_data') ?>
+                    </div>
 
-            <?php if ($_product->getShortDescription()): ?>
-                <div class="short-description col-12">
-                    <h2><?php echo $this->__('Quick Overview') ?></h2>
+                <?php if ($_product->getShortDescription()): ?>
+                    <div class="short-description col-12">
+                        <h2><?php echo $this->__('Quick Overview') ?></h2>
 
-                    <div
-                        class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
-                </div>
-            <?php endif;?>
+                        <div
+                            class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                    </div>
+                <?php endif;?>
 
-            <?php //echo $this->getChildHtml('other');?>
-            <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
-                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-            <?php endif;?>
+                <?php //echo $this->getChildHtml('other');?>
+                <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif;?>
+              </div>
+              </div>
+            </div>
+            </div>
           </div>
-          </div>
-        </div>
-        </div>
-        </div>
+      </div>
 
         <div class="product-collateral col-12">
             <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
