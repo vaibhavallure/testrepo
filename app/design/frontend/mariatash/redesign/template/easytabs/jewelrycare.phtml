@@ -6,13 +6,13 @@ $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
 $attributeSetModel->load($product->getAttributeSetId());
 $attributeSetName  = $attributeSetModel->getAttributeSetName();
 if((strcasecmp($attributeSetName, 'appeal') != 0 && strcasecmp($attributeSetName, 'apparel') != 0) && $attrCode){
-	$attribute = $product->getResource()->getAttribute($attrCode);        
-	if ($attribute) {            
+	$attribute = $product->getResource()->getAttribute($attrCode);
+	if ($attribute) {
 		$content = $attribute->getFrontend()->getValue($product);
 		if(!empty($content)){
-			echo '<div class="product-specs">'
+			echo '<div class="product-specs"><p class="para-normal">'
 				. $_helper->productAttribute($this->getProduct(), $content, $attrCode)
-				. '</div>';
+				. '</p></div>';
 		}else{
                         echo $this->getLayout()->createBlock('cms/block')->setBlockId('jewelry_care')->toHtml();
                 }

@@ -15,12 +15,19 @@ h1{
   letter-spacing: 0;
 }
 
-h2, h3, h4{
+h2, h3{
 	font-family: urw-din;
 }
 
 h3{
 	font-size: 15px;
+}
+
+h4{
+	font-family: urw-din-regular;
+	font-size: 13px;
+	color: rgba(41,41,41,0.60);
+	letter-spacing: 1px;
 }
 
 .qty-buttons{
@@ -159,7 +166,7 @@ h3{
 	font-size: 18px;
 }
 
-.product-attribute-name{
+.product-attribute-name, ul.tabs li.active h4{
 	font-family: urw-din-bold;
 	font-size: 13px;
 	color: rgba(40,40,40,0.6);
@@ -2251,7 +2258,7 @@ ul#foo4 {
   font-family: urw-din-xlight;
 }
 .product-shop .add-to-links .link-wishlist{
-	background: url(../images/bg-ad-fav.png) left center no-repeat;
+	background: url(../images/redesign/wish-star.png) left center no-repeat;
 }
 .product-detail-parent {
   background: #f2f2f2;
@@ -2294,7 +2301,16 @@ button#addtocart {
   height: 51px;
   text-transform: uppercase;
 }
-
+.product-special-instructions{
+	clear: both;
+}
+.link-wishlist{
+	padding: 2px 0 0 24px
+}
+ul.tabs {
+  padding-inline-start: 15px;
+	margin-bottom: 0;
+}
 /* ppp */
 
 /*select*/

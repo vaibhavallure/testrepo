@@ -33,7 +33,7 @@
 <?php $_description = $this->getProduct()->getDescription(); ?>
 <?php if ($_description): ?>
     <div class="std">
-        <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?>
+        <p class="para-normal"><?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?></p>
     </div>
 <?php endif; ?>
 <!-- ADDED: Table with attributes with parameter "Visible on Product View Page on Front-end" set to Yes -->
@@ -46,7 +46,7 @@ foreach($attributes as $attribute){
         if($attrCode){
             $product = $this->getProduct();
             $attribute = $product->getResource()->getAttribute($attrCode);
-            
+
             if (isset($attribute)) {
                 $content = $attribute->getFrontend()->getValue($product);
                 if(!empty($content) && (strcasecmp($content, 'yes')!=0 && strcasecmp($content, 'no')!=0)){

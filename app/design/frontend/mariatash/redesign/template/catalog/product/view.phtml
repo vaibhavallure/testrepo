@@ -7,7 +7,8 @@
  *
  * This source file is subject to the Academic Free License (AFL 3.0)
  * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
+ * It is also
+ le through the world-wide-web at this URL:
  * http://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
@@ -324,7 +325,7 @@ if ($_product->getSizeSample() == 1) {
                 </div>
 
                 <!--//SOCIAL MEDIA////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-                <div class="social-mt" id="social-mt">
+                <!-- <div class="social-mt" id="social-mt">
                     <script>!function (d, s, id) {
                             var js, fjs = d.getElementsByTagName(s)[0];
                             if (!d.getElementById(id)) {
@@ -379,7 +380,7 @@ if ($_product->getSizeSample() == 1) {
                                         class="share">Print</span></div>
                             </a></div>
                     </div>
-                </div>
+                </div> -->
                 <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <script>
 
@@ -442,11 +443,11 @@ if ($_product->getSizeSample() == 1) {
         		       <?php if ($_product->getShowSpecialInstruction()):?>
         				<div class="product-special-instructions row">
         					<div class="special-instruction-label col-12">
-        						<label>Special Instructions:</label>
+        						<label class="info-text-two">Special Instructions:</label>
         					</div>
         					<div class="special-instruction-textarea col-12">
-        						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
-                      <div>(Special requests might delay your order due to production time)</div>
+        						<input type="text" name="gift-special-instruction" class="special-inst-product input-patern" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
+                      <div class="info-text-three">(Special requests might delay your order due to production time)</div>
         					</div>
         				</div>
         				<?php endif;?>
@@ -460,7 +461,7 @@ if ($_product->getSizeSample() == 1) {
                         <h2><?php echo $this->__('Quick Overview') ?></h2>
 
                         <div
-                            class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                            class="std"><p class="para-normal"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></p></div>
                       </div>
                     </div>
                 <?php endif;?>

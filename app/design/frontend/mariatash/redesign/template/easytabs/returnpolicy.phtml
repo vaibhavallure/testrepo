@@ -21,9 +21,9 @@ if ($attrCode) {
         $content = $attribute->getFrontend()->getValue($product);
         $content = trim($content);
         if (!empty($content)) {
-            echo '<div class="product-specs">'
+            echo '<div class="product-specs"><p class="para-normal">'
                 . $_helper->productAttribute($this->getProduct(), $content, $attrCode)
-                . '</div>';
+                . '</p></div>';
         } elseif ($hasCategory) {
             echo $catValue;
         } else {
