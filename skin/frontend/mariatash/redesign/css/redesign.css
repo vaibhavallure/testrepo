@@ -1970,7 +1970,7 @@ span#popup_loader_register {
 	width: 229px;
 }
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup  {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup  {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -2129,11 +2129,12 @@ ul#foo4 {
 	padding: 0
 }
 
-.filterPopup .close div{
+.filterPopup .close div,.celebPopup .close div{
   background-image: url("../images/redesign/login-cross.png");
   width: 25px;
   height: 26px;
   background-size: 100%;
+
 }
 #narrow-by-list li{
   float: left;
@@ -2375,7 +2376,67 @@ ul.tabs {
     height: 320px;
     background-size: cover!important;
     cursor: pointer;
+    transition: .2s;
 }
+
 .celebrity-img:hover {
     box-shadow: 2px 2px 8px black;
 }
+
+.celebPopup .pop-up-cover{
+    width: 80%;
+    height: 80%;
+}
+.celebPopup .modal-body
+{
+    padding: 0px;
+}
+.celebPopup .close{
+    z-index: 2;
+}
+.celebPopup .product-info {
+    position: absolute;
+    bottom: 0;
+}
+.celebPopup .prev {
+    content: "";
+    background-image: url("../images/Popup-side-arrow.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    height: 50px;
+    width: 25px;
+    transform: rotate(180deg);
+    cursor: pointer;
+}
+.celebPopup .next {
+    content: "";
+    background-image: url(../images/Popup-side-arrow.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    height: 50px;
+    width: 25px;
+    cursor: pointer;
+}
+.celebPopup .next.disBtn {
+    background-image: url(../images/popup-light-arrow.png);
+    cursor: auto;
+    transform: rotate(180deg);
+}
+.celebPopup .prev.disBtn {
+    background-image: url(../images/popup-light-arrow.png);
+    cursor: auto;
+    transform: rotate(0deg);
+}
+.celeb-loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+
