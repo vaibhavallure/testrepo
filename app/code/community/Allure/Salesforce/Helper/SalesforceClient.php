@@ -1223,6 +1223,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                     }
 
                     $weight = $product->getData('weight');
+                    $stoneWeightClassification = $product->getData('stone_weight_classification');
+                    $barcode = $product->getData('barcode');
 
                     $metalColor = $product->getMetal();
                     $taxClassId = $product->getTaxClassId();
@@ -1273,8 +1275,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         "Vendor_Item_No__c" => $product->getVendorItemNo(),
                         "Location__c" => $attributeSetName,
                         "Custom_Stock_Status__c" => $customStockStatus,
-                        "Weight__c" => $weight,
-                        // "Category__c" => //DON'T THINK SO
+                        "Weight__c" => $weight
                     );
 
                     //var_dump($request);die;
@@ -1357,6 +1358,15 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         $placement = $product->getOptionLabel("placement", $placement);
                         $request["PLACEMENT__c"] = $placement;
                     }
+
+                    if($stoneWeightClassification) {
+                        $request['Gemstone_Weight__c'] = $stoneWeightClassification;
+                    }
+
+                    if($barcode) {
+                        $request['UPC__c'] = $barcode;
+                    }
+
 
                     if ($material) {
                         $tMaterial = array();
