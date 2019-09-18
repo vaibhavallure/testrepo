@@ -87,4 +87,59 @@ class Ecp_Celebrities_IndexController extends Mage_Core_Controller_Front_Action
                 ->addException($e, $this->__('Some emails were not sent.'));
         }
     }
+
+
+
+
+
+    /*new functionality ------------------------------------------------*/
+    public function getPopupAction()
+    {
+        $data=array();
+        $data['name']=$this->getCeleb()->getCelebrityName();
+        $data['des']=$this->getCeleb()->getDescription();
+        $i=0;
+        foreach ($this->getCelebrityOutfits() as $outfit) {
+             $data["outfit"][$i]['id']=$outfit->getId();
+             $data["outfit"][$i]['img']=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $outfit->getOutfitImage();
+             $data["outfit"][$i]['product']=$this->getAllOutfitProductsArray($outfit);
+      $i++;
+         }
+         echo json_encode($data);
+    }
+    public function getCelebrityOutfits() {
+        $celebrityOutfit = Mage::getModel('ecp_celebrities/outfits')->getCollection()
+            ->addFieldToFilter('celebrity_id', $this->getCelebId())
+            ->addFieldToFilter('status',1);
+        return $celebrityOutfit;
+    }
+    public function getAllOutfitProducts($outfit) {
+        return Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('size_sample')
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('entity_id', explode(',', $outfit->getRelatedProducts()))
+            ->addAttributeToFilter('visibility' , array('neq'=>Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE));
+    }
+
+    public function getAllOutfitProductsArray($outfit)
+    {
+        $i=0;
+        foreach ($this->getAllOutfitProducts($outfit) as $product)
+        {
+           $data[$i]["id"]=$product->getId();
+           $data[$i]["name"]=$product->getName();
+           $i++;
+        }
+
+        return $data;
+    }
+
+    public function getCelebId()
+    {
+        return $this->getRequest()->getParam("id");
+    }
+    public function getCeleb()
+    {
+        return Mage::getModel('ecp_celebrities/celebrities')->load($this->getCelebId());
+    }
 }

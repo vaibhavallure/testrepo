@@ -105,4 +105,16 @@ class Ecp_Celebrities_Block_Celebrities extends Mage_Core_Block_Template {
         );
         return $addToCart;
     }
+
+    /*new functions------------------------------------*/
+    protected function getCelebritiesCol() {
+        $collection = Mage::getModel('ecp_celebrities/celebrities')->getCollection();
+        $collection->getSelect()->order('ordering ASC');
+        $collection->addFieldToFilter('status',1);
+        return $collection;
+    }
+    public function getPopUpActionUrl()
+    {
+        return $this->getUrl('*/index/getPopup', array('_secure' => true));
+    }
 }

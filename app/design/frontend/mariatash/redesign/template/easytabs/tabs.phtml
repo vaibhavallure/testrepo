@@ -58,52 +58,58 @@ if($iEasyTabGroupId > 0){
 }*/
 $tabHtml = array();
 ?>
-<ul class="tabs">
-    <?php $i = 0; ?>
-    <?php foreach ($this->getTabs() as $_index => $_tab): ?>
-        <?php $tabHtml[$_tab['alias']] = $this->getChildHtml($_tab['alias']) ?>
-        <?php //if ($this->getChildHtml($_tab['alias']) && strlen(strip_tags(trim($this->getChildHtml($_tab['alias'])))) > 0): ?>
-        <?php if ($tabHtml[$_tab['alias']] && strlen(strip_tags(trim($tabHtml[$_tab['alias']])))): ?>
-            <?php
-                $tab_title = $_tab['title'];
-                if(!empty($tab_title)){
-                    $attr = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product', $tab_title);
+<div class="pdp-tabs row">
+  <div class="col-12">
+    <ul class="tabs row">
+        <?php $i = 0; ?>
+        <?php foreach ($this->getTabs() as $_index => $_tab): ?>
+            <?php $tabHtml[$_tab['alias']] = $this->getChildHtml($_tab['alias']) ?>
+            <?php //if ($this->getChildHtml($_tab['alias']) && strlen(strip_tags(trim($this->getChildHtml($_tab['alias'])))) > 0): ?>
+            <?php if ($tabHtml[$_tab['alias']] && strlen(strip_tags(trim($tabHtml[$_tab['alias']])))): ?>
+                <?php
+                    $tab_title = $_tab['title'];
+                    if(!empty($tab_title)){
+                        $attr = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product', $tab_title);
 
-                    if(!empty($attr)){
-                        $tab_title = $attr->getFrontendLabel();
+                        if(!empty($attr)){
+                            $tab_title = $attr->getFrontendLabel();
+                        }
                     }
-                }
-                if(empty($tab_title)){
-                    $tab_title = uc_words(str_replace('_', ' ', $_tab['title']));
-                }
+                    if(empty($tab_title)){
+                        $tab_title = uc_words(str_replace('_', ' ', $_tab['title']));
+                    }
 
-                $tab_is_custom = strpos($_tab['alias'], 'custom');
-                $tab_is_cms = strpos($_tab['alias'], 'cms');
-                if ($tab_is_custom === 0) {
-                    $tab_is_tmp_id = substr($_tab['alias'], 6);
-                    $tab_is_custom_id = (!empty($tab_is_tmp_id)) ? $tab_is_tmp_id : '';
-                    $tab_title = Mage::getStoreConfig('easy_tabs/custom/customtabname' . $tab_is_custom_id);
-                } elseif ($tab_is_cms === 0) {
-                    $tab_is_tmp_id = substr($_tab['alias'], 3);
-                    $tab_is_custom_id = (!empty($tab_is_tmp_id)) ? $tab_is_tmp_id : '';
-                    $tab_title = Mage::getStoreConfig('easy_tabs/customcms/tabnamecms' . $tab_is_custom_id);
-                }
-            ?>
-            <li id="product_tabs_<?php echo $_tab['alias'] ?>" <?php echo !$i ? 'class="active first"' : ''; ?>>
-                <a href="#"><?php echo $tab_title; ?></a>
-            </li>
-            <?php $i++; ?>
-        <?php endif; ?>
-    <?php endforeach; ?>
-</ul>
-<div class="padder">
+                    $tab_is_custom = strpos($_tab['alias'], 'custom');
+                    $tab_is_cms = strpos($_tab['alias'], 'cms');
+                    if ($tab_is_custom === 0) {
+                        $tab_is_tmp_id = substr($_tab['alias'], 6);
+                        $tab_is_custom_id = (!empty($tab_is_tmp_id)) ? $tab_is_tmp_id : '';
+                        $tab_title = Mage::getStoreConfig('easy_tabs/custom/customtabname' . $tab_is_custom_id);
+                    } elseif ($tab_is_cms === 0) {
+                        $tab_is_tmp_id = substr($_tab['alias'], 3);
+                        $tab_is_custom_id = (!empty($tab_is_tmp_id)) ? $tab_is_tmp_id : '';
+                        $tab_title = Mage::getStoreConfig('easy_tabs/customcms/tabnamecms' . $tab_is_custom_id);
+                    }
+                ?>
+                <li class="col" id="product_tabs_<?php echo $_tab['alias'] ?>" <?php echo !$i ? 'class="active first"' : ''; ?>>
+                    <a class="row" href="#"><h4><?php echo $tab_title; ?></h4></a>
+                </li>
+                <?php $i++; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+  </div>
+</div>
+<hr>
+<div class="padder row">
     <?php foreach ($this->getTabs() as $_index => $_tab): ?>
         <?php //if ($this->getChildHtml($_tab['alias'])): ?>
         <?php if ($tabHtml[$_tab['alias']]): ?>
-            <div id="product_tabs_<?php echo $_tab['alias'] ?>_contents"><?php /*echo $this->getChildHtml($_tab['alias']);*/ echo $tabHtml[$_tab['alias']] ?></div>
+            <div class="col-12" id="product_tabs_<?php echo $_tab['alias'] ?>_contents"><?php /*echo $this->getChildHtml($_tab['alias']);*/ echo $tabHtml[$_tab['alias']] ?></div>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
+<hr>
 <script type="text/javascript">
     var EasyTabs = Class.create();
     EasyTabs.prototype = {

@@ -1,411 +1,183 @@
-<script type="text/javascript">// <![CDATA[
-    (function (w, d, load) {
-        var script,
-            first = d.getElementsByTagName('SCRIPT')[0],
-            n = load.length,
-            i = 0,
-            go = function () {
-                for (i = 0; i < n; i = i + 1) {
-                    script = d.createElement('SCRIPT');
-                    script.type = 'text/javascript';
-                    script.async = true;
-                    script.src = load[i];
-                    first.parentNode.insertBefore(script, first);
-                }
-            }
-        if (w.attachEvent) {
-            w.attachEvent('onload', go);
-        } else {
-            w.addEventListener('load', go, false);
-        }
-    }(window, document,
-            ['//assets.pinterest.com/js/pinit.js']
-        ));
-    // ]]>
-</script>
-<script type="text/javascript">
-    jQuery("a.iframe").fancybox({
-        'transitionIn': 'elastic',
-        'transitionOut': 'elastic',
-        'type': 'iframe',
-        'scrolling': 'no',
-        'speedIn': 600,
-        'speedOut': 200,
-        'minHeight': 510,
-        'maxHeight': 510,
-        'height': 510,
-        'width': 420,
-        'overlayShow': false,
-        'wrapCSS': 'send-email-popup',
-        'overflow': 'hidden'
-    });
-</script>
-<script>!function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (!d.getElementById(id)) {
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }
-}(document, "script", "twitter-wjs");</script>
-<?php
-$celebrity = $this->getCelebrities();
-$outfits = $this->getCelebrityOutfits();
-$celebrity_url = Mage::getBaseUrl('web').$celebrity->getUrl();
-$celebrityEmailShare = Mage::getUrl('ecpcelebrities/index/send', array("page" => $celebrity->getUrl()));
-?>
-
-<div class="page-title celebrity-title">
-    <h1><?php echo $this->__('CELEBRITY CLIENTELE') ?></h1>
-</div>
-
-<?php echo $this->getLayout()->createBlock('ecp_celebrities/carrousel')->setBlockId('celebritiesCarrousel')->toHTML();
-$firstElement = true;?>
-<div class="celeb_wrapper">
-<script type="text/javascript">
-    var productAddToCartForm = new Array();
-</script>
-
-<?php if (!$outfits->getSize()): ?>
-    <div class="celeb">
-        <div class="img_celeb">
-            <img class="d" src="<?php echo $this->getImageUrl($celebrity->getDefaultImage()) ?>"/>
-
-            <div class="social-mt">
-                <div class="fb-share-button" data-href="<?=$celebrity_url;?>" data-width="450"></div>
-
-                <?php /*<div id="twitter<?php echo $celebrity->getCelebrityId(); ?>" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="Maria Tash Celebrities <?php echo $celebrity->getCelebrityName(); ?>" data-count="none"></div> */?>
-                <a href="https://twitter.com/share" id="twitter<?php echo $celebrity->getCelebrityId(); ?>" class="twitter-share-button" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="<?php echo $celebrity->getCelebrityName(); ?> is wearing Venus by Maria Tash" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none">Tweet</a>
-                <div id="pinit<?php echo $celebrity->getCelebrityId(); ?>">
-                    <a data-pin-config="beside" data-pin-do="buttonPin" href="//pinterest.com/pin/create/button/?url=<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>?imgcelebritiesfb=<?php echo $celebrity->getCelebrityId(); ?>&fb=1&media=<?php echo $this->getImageUrl($celebrity->getDefaultImage()) ?>&description=<?php echo $celebrity->getCelebrityName() ?>"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" alt=""/></a>
-                </div>
-                <div id="mail<?php echo $celebrity->getCelebrityId(); ?>">
-                    <div class="button mail">
-                        <a class="iframe" href="<?=$celebrityEmailShare;?>">
-                            <div class="emailBtn"><img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/><span class="share">Email</span></div>
-                        </a>
-                    </div>
-                </div>
-                <div id="print<?php echo $celebrity->getCelebrityId(); ?>">
-                    <div class="button print">
-                        <a href="#" onclick="javascript:print();">
-                            <div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/><span class="share">Print</span></div>
-                        </a>
-                    </div>
-                </div>
+<div class="container celebrities">
+    <div class="row">
+        <div class="col-12 ">
+            <div class="row">
+                <?php $counter=1; foreach($this->getCelebritiesCol() as $celebrity):
+                    if($celebrity->getStatus()==1):?>
+                        <?php $active = ($this->getCurrentCelebrityId() == $celebrity->getId()) ? 'class="active"' : '' ?>
+                        <div class="col-12 col-md-6 col-lg-4 mb-5 celeb-img-block" data-celeb_id="<?= $celebrity->getId() ?>" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
+                            <div id="celebId_<?= $celebrity->getId() ?>" class="celebrity-img" style="background: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>);" data-id="<?= $celebrity->getId() ?>"></div>
+                        </div>
+                    <?php endif; endforeach; ?>
             </div>
-        </div>
-
-        <div class="content_celeb">
-            <div class="celeb_block">
-                <h3><?php echo $celebrity->getCelebrityName() ?></h3>
-            </div>
-            <?php echo $celebrity->getDescription(); ?>
-            <p class="no-products-celeb-mt"><?php echo $this->__('There are no products matching the selection'); ?></p>
         </div>
     </div>
 
-    <script type="text/javascript">
-        function windowOpn(url) {
-            window.open(url, "mywindow", "menubar=1,resizable=1,width=700,height=350");
-        }
-        function sharePinit(celebId) {
-            jQuery('#pinit' + celebId).click(function () {
-                windowOpn('http://pinterest.com/pin/create/button/?url=<?php echo Mage::helper('core/url')->getCurrentUrl();?>&imgpressfb=' + celebId + '&fb=1&media=' + jQuery('.img_celeb img').attr('src') + '&description=Next%20stop%3A%20Pinterest');
-            });
-        }
-
-        /*jQuery('document').ready(function () {
-            //TWITTER
-            jQuery('#twitter' +<?php //echo $celebrity->getCelebrityId();?>).share({
-                share: { twitter: true },
-                url: '<?php //echo Mage::helper('core/url')->getCurrentUrl(); ?>',
-                enableHover: false,
-                enableTracking: true,
-                template: '<a class="boxx" href="#"><div class="count" href="#">{total}</div><div class="share"><span></span>Tweet</div></a>',
-                buttons: { twitter: {via: 'mariatash'}},
-                click: function (api, options) {
-                    api.simulateClick();
-                    api.openPopup('twitter');
-                }
-            });
-        });*/
-    </script>
-
-<?php else: ?>
-
-    <?php
-    $first = true;
-    foreach ($outfits as $outfit): ?>
-        <div class="celeb">
-            <div class="img_celeb">
-                <?php if ($first): ?>
-                    <?php /*$celebId = $celebrity->getCelebrityId();*/ $celebId = 0; ?>
-                    <img id="img_<?php echo $outfit->getCelebrityOutfitId(); ?>" class="g change_meta_og_image" src="<?php echo $this->getImageUrl($outfit->getOutfitImage()) ?>"/>
-                    <br />
-                    <div class="social-mt">
-                        <div class="fb-share-button" data-href="<?=$celebrity_url.'?celebrityoutfitid='.$outfit->getCelebrityOutfitId();?>" data-width="450"></div>
-                        <?php /*<div id="twitter<?php echo $outfit->getCelebrityOutfitId(); ?>" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="Maria Tash Celebrities <?php echo $celebrity->getCelebrityName(); ?>"></div> */?>
-                        <a href="https://twitter.com/share" id="twitter<?php echo $outfit->getCelebrityOutfitId(); ?>" class="twitter-share-button" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="<?php echo $celebrity->getCelebrityName(); ?> is wearing Venus by Maria Tash" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none">Tweet</a>
-                        <div id="pinit<?php echo $outfit->getCelebrityOutfitId(); ?>">
-                            <a data-pin-config="beside" href="javascript:;" data-pin-do="buttonPin" onclick="sharePinit('<?php echo $outfit->getCelebrityOutfitId(); ?>')">
-                            <div class="count" href="#">0</div>
-                            <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png"/></a>
-                        </div>
-                        <div id="mail<?php echo $outfit->getCelebrityOutfitId(); ?>">
-                            <div class="button mail">
-                                <a class="iframe" href="<?=$celebrityEmailShare.'?celebrityoutfitid='.$outfit->getCelebrityOutfitId();?>">
-                                    <div class="emailBtn">
-                                        <img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/>
-                                        <span class="share">Email</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="print<?php echo $outfit->getCelebrityOutfitId(); ?>">
-                            <div class="button print">
-                                <a href="#" onclick="javascript:print();">
-                                    <div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/><span class="share">Print</span></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                <?php else: ?>
-                    <?php $celebId = 0; ?>
-                    <img id="img_<?php echo $outfit->getCelebrityOutfitId(); ?>" class="p change_meta_og_image" src="<?php echo $this->getImageUrl($outfit->getOutfitImage()) ?>"/>
-
-                    <div class="social-mt">
-                        <div class="fb-share-button" data-href="<?=$celebrity_url.'?celebrityoutfitid='.$outfit->getCelebrityOutfitId();?>" data-width="450"></div>
-                        <?php /*<div id="twitter<?php echo $outfit->getCelebrityOutfitId(); ?>" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="Maria Tash Celebrities <?php echo $celebrity->getCelebrityName(); ?>"></div> */?>
-                        <a href="https://twitter.com/share" id="twitter<?php echo $outfit->getCelebrityOutfitId(); ?>" class="twitter-share-button" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="<?php echo $celebrity->getCelebrityName(); ?> is wearing Venus by Maria Tash" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none">Tweet</a>
-                        <div id="pinit<?php echo $outfit->getCelebrityOutfitId(); ?>">
-                            <a data-pin-config="beside" href="javascript:;" data-pin-do="buttonPin" onclick="sharePinit('<?php echo $outfit->getCelebrityOutfitId(); ?>')">
-                            <div class="count" href="#">0</div>
-                            <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png"/></a>
-                        </div>
-                        <div id="mail<?php echo $outfit->getCelebrityOutfitId(); ?>">
-                            <div class="button mail">
-                                <a class="iframe" href="<?=$celebrityEmailShare.'?celebrityoutfitid='.$outfit->getCelebrityOutfitId();?>">
-                                    <div class="emailBtn">
-                                        <img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/>
-                                        <span class="share">Email</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="print<?php echo $outfit->getCelebrityOutfitId(); ?>">
-                            <div class="button print">
-                                <a href="#" onclick="javascript:print();">
-                                    <div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/><span class="share">Print</span></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <?php $first = false; ?>
+    <div id="openModal" class="celebPopup"> <!--do not remove celebPopup class-->
+        <div class="pop-up-cover">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <div></div>
+                </a>
             </div>
-
-            <div class="content_celeb">
-                <?php if ($firstElement): ?>
-                    <div class="celeb_block">
-                        <h3><?php echo $celebrity->getCelebrityName() ?></h3>
+            <div class="body modal-body p-5 h-100">
+                <div class="row h-100">
+                    <div class="col-12 h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-md-5 col-lg-5 h-100">
+                                <div class="celeb-img w-100 h-100"></div>
+                            </div>
+                            <div class="col-12 col-md-7 col-lg-7">
+                                <div class="">
+                                    <h3 class="celeb-title"></h3><!--do not remove celeb-title class-->
+                                </div>
+                                <div class="para-norm celeb-info"> <!--do not remove celeb-info class-->
+                                </div>
+                                <div class="product-info"><!--do not remove product-info class-->
+                                    <ul class="p-0">
+                                        <li class="product-name"></li>
+                                        <li class="quick_link"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <?php echo Mage::helper('cms')->getPageTemplateProcessor()->filter($celebrity->getDescription()); ?>
-                <?php endif; ?>
-                <?php $firstElement = false; ?>
-
-                <script type="text/javascript">
-                    jQuery('document').ready(function () {
-                        //TWITTER
-                        /*jQuery('#twitter' +<?php //echo $outfit->getCelebrityOutfitId();?>).share({
-                            share: { twitter: true },
-                            url: '<?php //echo Mage::helper('core/url')->getCurrentUrl(); ?>',
-                            enableHover: false,
-                            enableTracking: true,
-                            template: '<a class="boxx" href="#"><div class="count" href="#">{total}</div><div class="share"><span></span>Tweet</div></a>',
-                            buttons: { twitter: {via: 'mariatash'}},
-                            click: function (api, options) {
-                                api.simulateClick();
-                                api.openPopup('twitter');
-                            }
-                        });*/
-                    });
-
-                    function windowOpn(url) {
-                        window.open(url, "mywindow", "menubar=1,resizable=1,width=700,height=350");
-                    }
-
-                    function sharePinit(celebOutfitId) {
-                        jQuery('#pinit' + celebOutfitId).click(function () {
-//                            console.log(jQuery('#img_' + celebOutfitId).attr('src'));
-                            windowOpn('http://pinterest.com/pin/create/button/?url=<?php echo Mage::helper('core/url')->getCurrentUrl();?>&imgcelebritiesfb=' + celebOutfitId + '&fb=1&media=' + jQuery('#img_' + celebOutfitId).attr('src') + '&description=' + '<?php echo $celebrity->getCelebrityName() ?> is wearing Venus by Maria Tash. Find your look.');
-                        });
-                    }
-
-                </script>
-                <?php if ($outfit->getStatus() == 1) {
-                    $products = $this->getAllOutfitProducts($outfit);
-                } else {
-                    $products = array();
-                } ?>
-                <div><?php if (count($products) <= 0):
-                        echo $this->__('There are no products matching the selection');
-                    else: ?></div>
-            <?php foreach ($products as $product):
-                if ($product->isSaleable()):?>
-                    <div class="outfit-product">
-                        <?php
-                        $showSampleForm = false;
-                        if ($product->getSizeSample() == 1) {
-                            $showSampleForm = true;
-                            $sampleProduct = Mage::getModel('catalog/product')->getCollection()
-                                ->addAttributeToFilter('type_id', 'customproduct')
-                                ->getFirstItem();
-                            $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
-                        }
-                        ?>
-                        <?php if ($showSampleForm): ?>
-                            <div style="display: none;">
-                                <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($sampleProduct) ?>" method="post" id="product_addtocart_form_sample_<?php echo $sampleProduct->getId() ?>" <?php if ($sampleProduct->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-                                    <input type="hidden" name="product_sample" value="<?php echo $sampleProduct->getId() ?>"/>
-                                    <input type="hidden" name="related_product" id="related-products-field" value=""/>
-                                    <input type="hidden" value="1"/>
-                                    <input type="hidden" name="qty_sample" id="qty_sample" maxlength="12" value="1"/>
-                                    <button type="button" title="SIZE SAMPLE" class="button" id="sample-button" onclick="addToShoppingCart(this,this.form)"><span><span>SIZE SAMPLE</span></span></button>
-                                </form>
-                            </div>
-                        <?php endif; ?>
-                        <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($product); ?>" method="post" id="product_addtocart_form_<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId(); ?>" class="product_addtocart_celebrities_form" <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> >
-                            <?php $product = Mage::getModel('catalog/product')->load($product->getId()) ?>
-                            <div class="image_thumb_celeb">
-                                <a href="<?php echo $product->getProductUrl() ?>">
-                                    <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(74, 96) ?>"/>
-                                </a>
-                            </div>
-                            <div class="product-shop">
-                                <div class="product-name">
-                                    <a href="<?php echo $product->getProductUrl() ?>">
-                                        <h1><?php echo $product->getName() ?></h1>
-                                    </a>
-                                </div>
-                                <?php echo $this->getProductPriceBlock($product)->toHtml() ?>
-                                <div class="outfit-short-description">
-                                    <div class="std"><?php echo $this->helper('catalog/output')->productAttribute($product, nl2br($product->getShortDescription()), 'short_description') ?></div>
-                                </div>
-                                <?php if ($product->getTypeId() == 'configurable' && 1==2): ?>
-                                    <script type="text/javascript">
-                                        var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig($product) ?>);
-                                    </script>
-                                    <div class="product-collateral">
-                                        <div id="product-options-wrapper" class="product-options">
-                                            <?php echo $this->getAttributesBlocks($product)->toHtml() ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                                <div class="product-options-bottom">
-                                    <?php //echo $this->getAddToCartBlock($product)->toHtml() ?>
-                                    <?php //echo $this->getAddToBlock($product)->toHtml() ?>
-                                    <button class="fancybox fancybox.iframe button piercing-gallery-btn-quickview" id='product-quickview-<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId(); ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => $product->getId())) ?>"><span><span>BUY</span></span></button>
-                                </div>
-                            </div>
-                        </form>
-                        <script type="text/javascript">
-                            jQuery.noConflict();
-                            jQuery('#product-quickview-<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId(); ?>').attr('rel', 'gallery').fancybox({
-                                openEffect  : 'none',
-                                closeEffect : 'none',
-                                nextEffect  : 'none',
-                                prevEffect  : 'none',
-                                padding     : 0,
-                                mouseWheel	: false,
-                                loop		: false,
-                                helpers		: {
-                                    title	: null
-                                },
-                                margin      : [20, 60, 20, 60], // Increase left/right margin
-                                width		: 785,
-                                height		: 515
-                            });
-
-                            jQuery("#product_addtocart_form_<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId(); ?> .add-to-cart .button").attr('onclick',"productAddToCartForm[<?php echo $product->getId() ?>].submit(this,this.form)");
-                            jQuery("#product_addtocart_form_<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId(); ?> .add-to-cart #button-sample").attr('onclick',"doClick()");
-                        </script>
-                        <script type="text/javascript">
-                            //jQuery("#product_addtocart_form_<?php echo $product->getId()?> .add-to-cart .button").attr('onclick', "productAddToCartForm[<?php echo $product->getId()?>].submit(this,this.form)");
-                            //jQuery("#product_addtocart_form_<?php echo $product->getId()?> .add-to-links .link-wishlist").attr('onclick', "productAddToCartForm[<?php echo $product->getId()?>].submitLight(null, '<?php echo $this->helper('wishlist')->getAddUrl($product) ?>')");
-
-                            //jQuery("#product_addtocart_form_<?php echo $product->getId()?> select.size-attribute").removeClass('size-attribute').addClass('size-attribute-<?php echo $product->getId()?>');
-                            //jQuery('select.size-attribute-
-                            //<?php echo $product->getId()?>').customStyle();
-
-                            //jQuery("#product_addtocart_form_<?php echo $product->getId()?> .add-to-cart #button-sample").attr('onclick', "doClick()");
-                            //<![CDATA[
-                            productAddToCartForm[<?php echo $product->getId() . $outfit->getCelebrityOutfitId();?>] = new VarienForm('product_addtocart_form_<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId();?>');
-                            productAddToCartForm[<?php echo $product->getId() . $outfit->getCelebrityOutfitId();?>].submit = function (button, form) {
-                                jQuery('.ajax-error-messages').hide();
-                                jQuery('.ajax-error-messages').html('');
-
-                                if (jQuery('#product_addtocart_form_<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId();?> select.color-attribute').val() != '') {
-                                    if (this.validator.validate()) {
-                                        if (jQuery('#qty').val() > 0 && jQuery('#qty').val() != '') {
-                                            addToShoppingCart(button, form);
-                                        }
-                                    }
-                                } else {
-                                    jQuery('.ajax-error-messages').show();
-                                    jQuery('.ajax-error-messages').html('This is a required field.');
-                                }
-                            }.bind(productAddToCartForm[<?php echo $product->getId() . $outfit->getCelebrityOutfitId();?>]);
-
-                            productAddToCartForm[<?php echo $product->getId() . $outfit->getCelebrityOutfitId();?>].submitLight = function (button, url, form) {
-                                jQuery('.ajax-error-messages').hide();
-                                jQuery('.ajax-error-messages').html('');
-
-                                if (jQuery('#product_addtocart_form_<?php echo $product->getId() . '_' . $outfit->getCelebrityOutfitId();?> select.color-attribute').val() != '') {
-                                    if (this.validator.validate()) {
-                                        if (jQuery('#qty').val() > 0 && jQuery('#qty').val() != '') {
-                                            this.form.action = url;
-                                            this.form.submit();
-//                                    location.href= url;
-                                        }
-                                    }
-                                } else {
-                                    jQuery('.ajax-error-messages').show();
-                                    jQuery('.ajax-error-messages').html('This is a required field.');
-                                }
-                            }.bind(productAddToCartForm[<?php echo $product->getId() . $outfit->getCelebrityOutfitId();?>]);
-                            //]]
-
-                            if (jQuery('.product-options-bottom').prev('.outfit-short-description')) {
-                                var divExpress = jQuery('.product-options-bottom').prev('.outfit-short-description');
-                                var divBueno = jQuery(divExpress).next();
-
-                                jQuery(divBueno).css('margin-top', '20px');
-                                jQuery(divBueno).show();
-                            }
-                        </script>
-                    </div>
-                <?php endif; endforeach; ?>
-            <?php endif; ?>
+                </div>
+            </div>
+            <div class="prev" data-current="0"></div>
+            <div class="next" data-current="0"></div>
+            <div class="celeb-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
             </div>
         </div>
-    <?php endforeach; ?>
-<?php endif; ?>
+    </div>
 </div>
+<script>
 
+    var popupActionUrl="<?= $this->getPopUpActionUrl() ?>";
+    var product_info="";
+    var current_outfits="";
+    var current_outfits_length="";
 
-<script type="text/javascript">
-    jQuery('document').ready(function () {
-        jQuery('.img_celeb').live('mouseover', function(){
-            var src = jQuery(this).find('img.change_meta_og_image').attr("src");
-            jQuery('meta[property=og\\:image]').attr('content', src);
-        });
+    jQuery(".celebrity-img").on('click',function(){
+        clear();
+        jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto"});
+        jQuery(".celeb-loader").show();
+        var celebId=jQuery(this).attr("data-id");
+        jQuery.post(popupActionUrl,
+            {
+                id: celebId
+            },
+            function(data, status){
+                var response=JSON.parse(data);
+                jQuery(".celeb-title").html(response.name);
+                jQuery(".celeb-info").html(response.des);
+
+                var outfit=response.outfit;
+                current_outfits=outfit;
+                current_outfits_length=current_outfits.length;
+                 setData(0);
+                jQuery(".celebPopup .next,.celebPopup .prev").attr("data-celebId",celebId);
+                jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",0);
+                jQuery(".celeb-loader").hide();
+                setButtons(celebId);
+            });
     });
 
-    function send() {
-        emailWindow = window.open("<?php echo Mage::getUrl('ecpcelebrities/index/send',array("page"=>$celebrity->getUrl())) ?>", "mywindow", "location=1,status=1,scrollbars=1,width=700,height=600");
-        //emailWindow.moveTo(0, 0);
-    }
+    jQuery(".celebPopup .close").on('click',function(){
+        jQuery(".celeb-loader").hide();
+        jQuery(".celebPopup").css({"opacity":"0","pointer-events":"none"});
+    });
+    jQuery(".celebPopup .next").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var next_id=current_id+1;
+        if(current_outfits_length>1 && current_outfits_length>(next_id))
+        {
+            setData(next_id);
 
+            if(current_outfits_length!=next_id && next_id!=0)
+                jQuery(".celebPopup .next,.celebPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-celebid"));
+
+            jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",next_id);
+        }else {
+            nextCeleb(jQuery(this).attr("data-celebId"));
+        }
+    });
+    jQuery(".celebPopup .prev").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var prev_id=current_id-1;
+
+        if(current_outfits_length>1 && 0<=prev_id)
+        {
+            setData(prev_id);
+
+            if(current_outfits_length!=prev_id && prev_id!=0)
+                jQuery(".celebPopup .next,.celebPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-celebid"));
+
+            jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",prev_id);
+        }
+        else {
+            prevCeleb(jQuery(this).attr("data-celebId"));
+        }
+    });
+
+    function setProduct(item) {
+        product_info+='<li>\n' +
+            ' <div class="product-name">'+item["name"]+'</div>\n' +
+            ' <div class="quick_link"><a href="#">Quick View</a></div>\n' +
+            '  </li>';
+    }
+    function setImg(img) {
+        jQuery(".celeb-img").css({"background-image":"url("+img+")","background-size":"cover"});
+    }
+    function clear() {
+        jQuery(".celeb-title").html("");
+        jQuery(".celeb-info").html("");
+        clearOutfit();
+    }
+    function clearOutfit() {
+        jQuery(".celeb-img").css({"background-image":"","background-size":""});
+        jQuery(".product-info ul").html("");
+       }
+    function setData(data_id) {
+        clearOutfit();
+        setImg(current_outfits[data_id]['img']);
+        var products=current_outfits[data_id]['product'];
+        if(products!=null) {
+            current_outfits[data_id]['product'].forEach(setProduct);
+            jQuery(".product-info ul").html(product_info);
+        }
+        product_info="";
+    }
+    function nextCeleb(id) {
+     var celebId="#celebId_"+id;
+     var element=jQuery(celebId);
+     var nextCelebId= jQuery(celebId).parent('.celeb-img-block').next().attr("data-celeb_id");
+     jQuery("#celebId_"+nextCelebId).trigger("click");
+    }
+    function prevCeleb(id) {
+        var celebId="#celebId_"+id;
+        var element=jQuery(celebId);
+        var nextCelebId= jQuery(celebId).parent('.celeb-img-block').prev().attr("data-celeb_id");
+        jQuery("#celebId_"+nextCelebId).trigger("click");
+    }
+    function setButtons(id) {
+        var celebId="#celebId_"+id;
+
+        if(jQuery(celebId).parent('.celeb-img-block').next().length)
+        jQuery(".celebPopup .next").removeClass("disBtn");
+        else
+        jQuery(".celebPopup .next").addClass("disBtn");
+
+
+        if(jQuery(celebId).parent('.celeb-img-block').prev().length)
+        jQuery(".celebPopup .prev").removeClass("disBtn");
+        else
+        jQuery(".celebPopup .prev").addClass("disBtn");
+
+    }
 </script>

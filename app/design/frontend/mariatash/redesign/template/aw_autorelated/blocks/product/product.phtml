@@ -1,3 +1,5 @@
+<div id="recent-view-ajax"></div>
+
 <?php
 /**
  * aheadWorks Co.
@@ -26,7 +28,6 @@
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
 ?>
-<?php echo $this->getChildHtml("instagram_product_post");?>
 <?php
 $_size = ($this->getRelatedProducts()->getProductQty()) ? $this->getRelatedProducts()->getProductQty() : Mage::getStoreConfig('awautorelated/general/pcount');
 $abstractBlock = $this->helper('awautorelated')->getAbstractProductBlock();
@@ -157,3 +158,6 @@ if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE
         }
     </script>
 <?php endif; ?>
+
+
+<?php echo $this->getChildHtml("instagram_product_post");?>

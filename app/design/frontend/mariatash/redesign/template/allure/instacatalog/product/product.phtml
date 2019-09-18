@@ -1,3 +1,4 @@
+
 <?php
 $_product = Mage::registry('current_product');
 $collection = $this->getInstagramPostCollection();
@@ -8,10 +9,10 @@ $childProductArr = $this->getChildProductArray();
 
 <?php if (($collection && $collection->getSize())) : ?>
 <div class="block-title">
-	<strong><span><?php echo $this->__('As seen on instagram') ?></span></strong>
+	<strong><span><?php echo $this->__('on instagram') ?></span></strong>
 </div>
-<div class="image_carousel">
-	<ul id="foo6" style="overflow: hidden">
+<div class="image_carousel col-12">
+	<ul id="foo6" class="pl-5 pr-5" style="overflow: hidden">
        <?php
             $shareBaseUrl = Mage::getBaseUrl('web') . "instacatalog/feed/shareview/id/";
             $productArr = $this->getInstagramHotspotProducts();

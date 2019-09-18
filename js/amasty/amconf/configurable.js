@@ -172,11 +172,11 @@ Product.Config.prototype.configureElement = function(element)
 
     this.reloadOptionLabels(element);
     if(element.value){
-        console.log('ELELEMENT VALUE');
-        console.log(element.value);
+        //console.log('ELELEMENT VALUE');
+        //console.log(element.value);
         this.state[element.config.id] = element.value;
-        console.log('Next Setting');
-        console.log(element.nextSetting);
+        //console.log('Next Setting');
+        //console.log(element.nextSetting);
         if(element.nextSetting){
             element.nextSetting.disabled = false;
             this.fillSelect(element.nextSetting);
@@ -261,12 +261,12 @@ Product.Config.prototype.configureImage = function(event){
     optionId = element.id.replace(/[a-z-]*/, '');
 
     var options = this.getAttributeOptions(attributeId);
-    console.log('OPTION IN CONFIGURE IMG');
+    /*console.log('OPTION IN CONFIGURE IMG');
     console.log(options);
-    console.log('Attribute ID in Config IMG');
+    console.log('`Attribute ID in Config IMG');
     console.log(attributeId);
     console.log('Option ID in Config IMG');
-    console.log(optionId);
+    console.log(optionId);*/
     for (var i = 0; i < options.length; i ++) {
         if (options[i].id && options[i].id == optionId) {
             if (typeof options[i].stock_status_text !== 'undefined') {
