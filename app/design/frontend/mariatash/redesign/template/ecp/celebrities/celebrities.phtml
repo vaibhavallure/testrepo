@@ -1,15 +1,149 @@
 <div class="container celebrities">
-<div class="row">
-    <div class="col-12 ">
-        <div class="row">
-            <?php $counter=1; foreach($this->getCelebritiesCol() as $celebrity):
+    <div class="row">
+        <div class="col-12 ">
+            <div class="row">
+                <?php $counter=1; foreach($this->getCelebritiesCol() as $celebrity):
                     if($celebrity->getStatus()==1):?>
                         <?php $active = ($this->getCurrentCelebrityId() == $celebrity->getId()) ? 'class="active"' : '' ?>
-                        <div class="col-12 col-md-6 col-lg-4 mb-5" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" onclick="setCelebrity(this);" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
-                        <div class="celebrity-img" style="background: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>);"></div>
+                        <div class="col-12 col-md-6 col-lg-4 mb-5 celeb-img-block" data-celeb_id="<?= $celebrity->getId() ?>" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
+                            <div id="celebId_<?= $celebrity->getId() ?>" class="celebrity-img" style="background: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>);" data-id="<?= $celebrity->getId() ?>"></div>
                         </div>
                     <?php endif; endforeach; ?>
+            </div>
+        </div>
     </div>
+
+    <div id="openModal" class="celebPopup"> <!--do not remove celebPopup class-->
+        <div class="pop-up-cover">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body p-5 h-100">
+                <div class="row h-100">
+                    <div class="col-12 h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-md-5 col-lg-5 h-100">
+                                <div class="celeb-img w-100 bg-dark h-100"></div>
+                            </div>
+                            <div class="col-12 col-md-7 col-lg-7">
+                                <div class="">
+                                    <h3 class="celeb-title"></h3><!--do not remove celeb-title class-->
+                                </div>
+                                <div class="para-norm celeb-info"> <!--do not remove celeb-info class-->
+                                </div>
+                                <div class="product-info"><!--do not remove product-info class-->
+                                    <ul class="p-0">
+                                        <li class="product-name"></li>
+                                        <li class="quick_link"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prev" data-current="0"></div>
+            <div class="next" data-current="0"></div>
+        </div>
     </div>
 </div>
-</div>
+<script>
+
+    var popupActionUrl="<?= $this->getPopUpActionUrl() ?>";
+    var product_info="";
+    var current_outfits="";
+    var current_outfits_length="";
+
+    jQuery(".celebrity-img").on('click',function(){
+        clear();
+        jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto"});
+        var celebId=jQuery(this).attr("data-id");
+        jQuery.post(popupActionUrl,
+            {
+                id: celebId
+            },
+            function(data, status){
+                var response=JSON.parse(data);
+                jQuery(".celeb-title").html(response.name);
+                jQuery(".celeb-info").html(response.des);
+
+                var outfit=response.outfit;
+                current_outfits=outfit;
+                current_outfits_length=current_outfits.length;
+                 setData(0);
+                jQuery(".celebPopup .next,.celebPopup .prev").attr("data-celebId",celebId);
+                jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",0);
+
+            });
+    });
+
+    jQuery(".celebPopup .close").on('click',function(){
+        jQuery(".celebPopup").css({"opacity":"0","pointer-events":"none"});
+    });
+    jQuery(".celebPopup .next").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var next_id=current_id+1;
+        if(current_outfits_length>1 && current_outfits_length>(next_id))
+        {
+            setData(next_id);
+            jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",next_id);
+        }else {
+            nextCeleb(jQuery(this).attr("data-celebId"));
+        }
+    });
+    jQuery(".celebPopup .prev").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var prev_id=current_id-1;
+        if(current_outfits_length>1 && 0<=prev_id)
+        {
+            setData(prev_id);
+            jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",prev_id);
+        }
+        else {
+            prevCeleb(jQuery(this).attr("data-celebId"));
+        }
+    });
+
+    function setProduct(item) {
+        product_info+='<li>\n' +
+            ' <div class="product-name">'+item["name"]+'</div>\n' +
+            ' <div class="quick_link"><a href="#">Quick View</a></div>\n' +
+            '  </li>';
+    }
+    function setImg(img) {
+        jQuery(".celeb-img").css({"background-image":"url("+img+")","background-size":"cover"});
+    }
+    function clear() {
+        jQuery(".celeb-title").html("");
+        jQuery(".celeb-info").html("");
+        clearOutfit();
+    }
+    function clearOutfit() {
+        jQuery(".celeb-img").css({"background-image":"","background-size":""});
+        jQuery(".product-info ul").html("");
+       }
+    function setData(data_id) {
+        clearOutfit();
+        setImg(current_outfits[data_id]['img']);
+        var products=current_outfits[data_id]['product'];
+        if(products!=null) {
+            current_outfits[data_id]['product'].forEach(setProduct);
+            jQuery(".product-info ul").html(product_info);
+        }
+        product_info="";
+    }
+    function nextCeleb(id) {
+     var celebId="#celebId_"+id;
+     var element=jQuery(celebId);
+     var nextCelebId= jQuery(celebId).parent('.celeb-img-block').next().attr("data-celeb_id");
+     jQuery("#celebId_"+nextCelebId).trigger("click");
+    }
+    function prevCeleb(id) {
+        var celebId="#celebId_"+id;
+        var element=jQuery(celebId);
+        var nextCelebId= jQuery(celebId).parent('.celeb-img-block').prev().attr("data-celeb_id");
+        jQuery("#celebId_"+nextCelebId).trigger("click");
+    }
+</script>
