@@ -25,7 +25,7 @@
                     <div class="col-12 h-100">
                         <div class="row h-100">
                             <div class="col-12 col-md-5 col-lg-5 h-100">
-                                <div class="celeb-img w-100 bg-dark h-100"></div>
+                                <div class="celeb-img w-100 h-100"></div>
                             </div>
                             <div class="col-12 col-md-7 col-lg-7">
                                 <div class="">
@@ -80,6 +80,7 @@
                 jQuery(".celebPopup .next,.celebPopup .prev").attr("data-celebId",celebId);
                 jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",0);
                 jQuery(".celeb-loader").hide();
+                setButtons(celebId);
             });
     });
 
@@ -93,6 +94,12 @@
         if(current_outfits_length>1 && current_outfits_length>(next_id))
         {
             setData(next_id);
+
+            if(current_outfits_length!=next_id && next_id!=0)
+                jQuery(".celebPopup .next,.celebPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-celebid"));
+
             jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",next_id);
         }else {
             nextCeleb(jQuery(this).attr("data-celebId"));
@@ -101,9 +108,16 @@
     jQuery(".celebPopup .prev").on("click",function () {
         var current_id=parseInt(jQuery(this).attr("data-current"));
         var prev_id=current_id-1;
+
         if(current_outfits_length>1 && 0<=prev_id)
         {
             setData(prev_id);
+
+            if(current_outfits_length!=prev_id && prev_id!=0)
+                jQuery(".celebPopup .next,.celebPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-celebid"));
+
             jQuery(".celebPopup .next,.celebPopup .prev").attr("data-current",prev_id);
         }
         else {
@@ -150,5 +164,20 @@
         var element=jQuery(celebId);
         var nextCelebId= jQuery(celebId).parent('.celeb-img-block').prev().attr("data-celeb_id");
         jQuery("#celebId_"+nextCelebId).trigger("click");
+    }
+    function setButtons(id) {
+        var celebId="#celebId_"+id;
+
+        if(jQuery(celebId).parent('.celeb-img-block').next().length)
+        jQuery(".celebPopup .next").removeClass("disBtn");
+        else
+        jQuery(".celebPopup .next").addClass("disBtn");
+
+
+        if(jQuery(celebId).parent('.celeb-img-block').prev().length)
+        jQuery(".celebPopup .prev").removeClass("disBtn");
+        else
+        jQuery(".celebPopup .prev").addClass("disBtn");
+
     }
 </script>

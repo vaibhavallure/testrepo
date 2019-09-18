@@ -2407,9 +2407,20 @@ button#addtocart {
     width: 25px;
     cursor: pointer;
 }
+.celebPopup .next.disBtn {
+    background-image: url(../images/popup-light-arrow.png);
+    cursor: auto;
+    transform: rotate(180deg);
+}
+.celebPopup .prev.disBtn {
+    background-image: url(../images/popup-light-arrow.png);
+    cursor: auto;
+    transform: rotate(0deg);
+}
 .celeb-loader{
     position: absolute;
     top: 50%;
     left: 50%;
 }
+
 
