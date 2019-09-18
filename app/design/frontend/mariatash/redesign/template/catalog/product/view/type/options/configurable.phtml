@@ -34,6 +34,7 @@ if ($_product->getSizeSample() == 1) {
                         <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="display: none">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
+
                     <?php else:?>
                         <div class="attribute_select_default row justify-content-end m-0" id="<?php echo $_attribute->getAttributeId() ?>">
                             <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select" >
@@ -44,10 +45,11 @@ if ($_product->getSizeSample() == 1) {
 
                     </div>
                 </div>
+<hr>
             </div>
+
         <?php endforeach; ?>
     </div>
-    <hr>
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
@@ -296,7 +298,7 @@ if ($_product->getSizeSample() == 1) {
                 <div class="content-sample-already-in-cart display_none">You can only add one sample to your cart</div>
             </div>
             <div class="get_size_sample">
-                <a class="fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+                <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
             </div>
 
             <div id="inline" style="display: none;">

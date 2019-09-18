@@ -408,8 +408,8 @@ if ($_product->getSizeSample() == 1) {
                     <div id="ajax-price" class="col-12"><?php echo $this->getPriceHtml($_product) ?></div>
                     <div class="product-collateral col-12">
                         <?php if (!$this->hasOptions()): ?>
-                            <div id="product-options-wrapper" class="product-options"></div>
-                              <div class="product-options-bottom">
+                            <div id="product-options-wrapper" class="product-options row"></div>
+                              <div class="product-options-bottom row">
                                   <?php if ($_product->isSaleable()): ?>
                                       <?php echo $this->getChildHtml('addtocart') ?>
                                   <?php elseif (!$_product->isAvailable()): ?>
@@ -440,11 +440,11 @@ if ($_product->getSizeSample() == 1) {
         				<?php //echo $this->getChildHtml('special_instruction')?>
 
         		       <?php if ($_product->getShowSpecialInstruction()):?>
-        				<div class="product-special-instructions col-12">
-        					<div class="special-instruction-label">
+        				<div class="product-special-instructions row">
+        					<div class="special-instruction-label col-12">
         						<label>Special Instructions:</label>
         					</div>
-        					<div class="special-instruction-textarea">
+        					<div class="special-instruction-textarea col-12">
         						<input type="text" name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
                       <div>(Special requests might delay your order due to production time)</div>
         					</div>
@@ -455,11 +455,13 @@ if ($_product->getSizeSample() == 1) {
                     </div>
 
                 <?php if ($_product->getShortDescription()): ?>
-                    <div class="short-description col-12">
+                    <div class="short-description row">
+                      <div class="col-12">
                         <h2><?php echo $this->__('Quick Overview') ?></h2>
 
                         <div
                             class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                      </div>
                     </div>
                 <?php endif;?>
 
