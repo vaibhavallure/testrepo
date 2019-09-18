@@ -46,7 +46,7 @@ $currentLook = $looks[$slidePos];
 
         jQuery('div#carousel').click(function(){
             jQuery('a#play').trigger('click');
-        }); 
+        });
 
         jQuery('#prev, #next').click(function(){
             jQuery('#prev, #next').removeClass('currentAction');
@@ -60,7 +60,7 @@ $currentLook = $looks[$slidePos];
 
         <?php if(count($main)>0): ?>
         carrioul();
-        
+
         <?php endif; ?>
         jQuery('.caroufredsel_wrapper').addClass('caroufredsel_wrapper2').removeClass('caroufredsel_wrapper');
         jQuery('a.iframemail').fancybox({
@@ -130,7 +130,7 @@ jQuery(document).ready(function(){
 		jQuery('#product-marker-'+id).removeClass('active');
 		jQuery(this).find('.fs-overlink-text').css("display","none");
 	});
-	
+
 
 	jQuery('.accordtion-sub-menu').click(function(){
 		var menu=jQuery(this).attr('id');
@@ -140,7 +140,7 @@ jQuery(document).ready(function(){
 		jQuery('.pier-shop-look-'+menu).css("display","block");
 
 		changeLinks();
-	}); 
+	});
 
 	jQuery('.ui-accordion-header').click(function(){
 		var menu=jQuery(this).attr('data-menu');
@@ -149,8 +149,8 @@ jQuery(document).ready(function(){
 		jQuery('.pier-shop-look-'+menu).css("display","block");
 
 		changeLinks();
-		
-	}); 
+
+	});
 });
 
 var changeLinks = function(){
@@ -163,7 +163,7 @@ var changeLinks = function(){
 	jQuery(".gallery-looks .products-look").removeClass('active');
 	jQuery("#look-products-"+id).removeClass('inactive');
 	jQuery("#look-products-"+id).addClass('active');
-	
+
 	carrioul();
 }
 
@@ -190,7 +190,7 @@ var carrioul = function(){
         // var newImageUrl = jQuery('#carousel img:first-child').attr('src');
         // jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
 //        jQuery('#inner #prev').css({ opacity: 0.5 });
-//           
+//
             try {
                 FB.XFBML.parse();
             }
@@ -201,17 +201,17 @@ var carrioul = function(){
         onBefore: function () {
             var currentAction = jQuery('a.currentAction');
             jQuery('#prev, #next').removeClass('currentAction');
-            
+
             var lookId = jQuery('div#carousel img.carrousel-images').first().next().attr('data-item-id');
             //allure
             var itemIdx = jQuery('div#carousel img.carrousel-images').first().attr('index');
 			var totalCount = jQuery('div#carousel img.carrousel-images').first().attr('data-total-count');
             if(currentAction.attr('id') == 'prev') {
                 lookId = jQuery('div#carousel img.carrousel-images').first().attr('data-item-id');
-				//allure 
+				//allure
                 itemIdx = jQuery('div#carousel img.carrousel-images').first().attr('index');
                 var totalCount = jQuery('div#carousel img.carrousel-images').first().attr('data-total-count');
-                
+
             }
 
           //allure code start ####
@@ -220,7 +220,7 @@ var carrioul = function(){
            }
             changeOptions(lookId);
           //allure code end ####
-            
+
             jQuery('div.gallery-looks div.products-look').each(function () {
                 jQuery(this).addClass('inactive');
                 jQuery(this).removeClass('active');
@@ -239,7 +239,7 @@ var carrioul = function(){
 
             //allure
             var totalCount = jQuery('div#carousel img.carrousel-images').first().attr('data-total-count');
-                
+
             if(itemIdx!=null && itemIdx!="undefined")
             jQuery('#slide-count').html(itemIdx + ' of '+totalCount);
             //jQuery('#slide-count').html(itemIdx + ' of <?//=count($looks);?>');
@@ -281,12 +281,12 @@ function changeOptions(itemID){
 		var menu = jQuery('#carrousel-item-'+itemID).attr('data-menu-name');
 		jQuery('.accordtion-sub-menu').removeClass('menu-active');
 		jQuery('#'+menu).addClass('menu-active');
-		
+
 		jQuery('div.gallery-looks div.products-look').each(function () {
 	        jQuery(this).addClass('inactive');
 	        jQuery(this).removeClass('active');
 	    });
-	
+
 		jQuery("div#look-products-" + itemID).addClass('active');
 	    jQuery("div#look-products-" + itemID).removeClass('inactive');
 	}
@@ -298,7 +298,7 @@ function changeOptions(itemID){
     <div class="top-bar"><?php echo $this->getBreadcrumbs(); ?></div>
     <script>
         jQuery.noConflict();
-        jQuery('div.header-container').append(jQuery('div.top-bar'));               
+        jQuery('div.header-container').append(jQuery('div.top-bar'));
     </script>
 <?php endif; ?>
 <div class="piercing-gallery-mt1">
@@ -308,14 +308,14 @@ function changeOptions(itemID){
 
     <div id="messages_product_view"></div>
 
-    
+
     <div class="navigation-menu">
         <div id="accordion">
             <?php foreach ($main as $cat2=>$cat1): ?>
             <?php foreach ($cat1 as $key1=>$value1): ?>
                 <H3 data-menu="<?php echo str_replace(' ', '-', $key1)?>"><?php echo strtoupper($key1); ?></H3>
                 <div>
-                    <?php 
+                    <?php
                         foreach ($value1 as $location=>$ar1):
                             ?>
                             <div class="accordtion-sub-menu" id="<?php echo str_replace(' ', '-', $location);?>" <?php //if ($current_location == $location['id']) echo "class='current_location'" ?> >
@@ -330,7 +330,7 @@ function changeOptions(itemID){
         </div>
         <div style="display: none;" class="banner-c-code"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_message_block')->toHtml(); ?></div>
     </div>
-    
+
 
     <?php if(count($main)>0): ?>
     <div class="content" >
@@ -340,7 +340,7 @@ function changeOptions(itemID){
                     <a id="prev" href="#">PREV</a>
                     <div id="carousel" >
                         <?php $x = 1; ?>
-                        
+
                         <?php $arrrr = array();
                         	 $pnt = "";
                         	 $size = 0;
@@ -349,11 +349,11 @@ function changeOptions(itemID){
                         <?php foreach ($main as $aa=>$bb): ?>
                         <?php foreach ($bb as $cc=>$dd): ?>
                          <?php foreach ($dd as $ee=>$ff): ?>
-                          <?php 
+                          <?php
                           $x = 1;
                           foreach ($ff as $gg=>$hh):
                           		$arrrr = $hh;
-                          		
+
                           		$size  = count($ff);
                           		$_options = json_decode($hh['hotspots']);
                           		$points = "";
@@ -365,14 +365,14 @@ function changeOptions(itemID){
                           			$product1 = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
                           			$productName = $product1->getName();
                           			$productId = $product1->getId();
-                          		
+
                           			$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
                           			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
                           			$productUrl = $product1->getProductUrl();
                           			if(!is_null($parentId)){
                           				$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
                           			}
-                          		
+
                           			$points .= '<a data-original-url="'.$productUrl.'"';
                           			$points .= ' href="'.$productUrl.'" target="_blank">';
                           			$points .= '<div id="fs_overlink_'.$productId."_".$hh['entity_id'].'" class="fs-overlink" ';
@@ -382,7 +382,7 @@ function changeOptions(itemID){
                           			$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
                           			$points .= '<div class="fs-arrow-up"></div>';
                           			$points .= 'Shop it // " '.$productName.'</div></div></a>';
-                          		
+
                           			$productsLinks .=  '<div class="fs-text-link-container">
                 										<a class="fs-link fs-text-product fs-link-list" data-link-id="'.$productId.'" href="'.$productUrl.'">
                   										Shop it // '.$productName.'
@@ -391,33 +391,33 @@ function changeOptions(itemID){
               											</div>';
                           		}
                           ?>
-	                       <img data-total-count="<?php echo $size?>" id="carrousel-item-<?php echo $hh['entity_id']?>" src="<?=$hh['standard_resolution'];?>" class="carrousel-images <?php echo " pier-shop-look-".str_replace(' ', '-', $cc)." pier-shop-look-".str_replace(' ', '-', $ee)?>" index="<?=$x;?>" 
+	                       <img data-total-count="<?php echo $size?>" id="carrousel-item-<?php echo $hh['entity_id']?>" src="<?=$hh['standard_resolution'];?>" class="carrousel-images <?php echo " pier-shop-look-".str_replace(' ', '-', $cc)." pier-shop-look-".str_replace(' ', '-', $ee)?>" index="<?=$x;?>"
 	                       	data-item-id="<?=$hh['entity_id'];?>" data-item-name="<?=$hh['entity_id'];?>" data-menu-name="<?php echo str_replace(' ', '-', $ee)?>"
 	                       	alt="" title="" width="640" height="640" border="0" style="display:<?php echo ($firstCat)?"block":"none"?>"/>
-	                       
-	                       
-	                       <?php 
+
+
+	                       <?php
 	                       		$pnt .= '<span class="shop-look-product-mark" id="product-marker-'.$hh["entity_id"].'">'.$points.'</span>';
 	                       ?>
-	                       
+
 	                       <?php $x++; ?>
 	                    <?php endforeach; ?>
 	                    <?php endforeach; ?>
-	                    <?php 
+	                    <?php
 	                    $firstCat = false;
 	                    endforeach; ?>
 	                    <?php endforeach; ?>
-                        
+
                     </div>
                     <input type="hidden" id="carouselcount" name="carouselcount" value="<?=count($arrrr);?>" />
                     <a id="play" href="#">PLAY</a>
                     <a id="next" href="#">NEXT</a>
                     <span id="slide-count"><?=($slidePos>0)?$slidePos:1;?> <!-- of --> <?//=count($arrrr);?></span>
-                	
+
                 	<span id="shop-look-product-marker">
                 		<?php echo $pnt;?>
                 	</span>
-                	
+
                 </div>
 
                 <div class="social-media-try-on">
@@ -466,17 +466,17 @@ function changeOptions(itemID){
                 <div class="title-products-looks"><h3><?php echo $this->__('PURCHASE THIS LOOK') ?></h3></div>
                     <?php $first = true;
                   //  foreach ($looks as $look): ?>
-                  
-                  
+
+
                    <?php foreach ($main as $aa=>$bb): ?>
                         <?php foreach ($bb as $cc=>$dd): ?>
                          <?php foreach ($dd as $ee=>$ff): ?>
                           <?php foreach ($ff as $gg=>$hh):
                           $points = json_decode($hh['hotspots']);
                           ?>
-                  
-                  
-                  
+
+
+
                     <div class="products-look <?php echo $first ? 'active' : 'inactive' ?>" id="look-products-<?php echo $hh['entity_id'] ?>">
                         <?php if (empty($points)): ?>
                         <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>-->
@@ -504,11 +504,11 @@ function changeOptions(itemID){
                                     </form>
                                 </div>
         <?php endif; ?>
-        
+
         <?php
         	$sku = $products1->text;
         	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku); ?>
-                            <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($product); ?>" method="post" id="product_addtocart_form_<?php echo $product->getId() . '_' . $hh['entity_id']; ?>" 
+                            <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($product); ?>" method="post" id="product_addtocart_form_<?php echo $product->getId() . '_' . $hh['entity_id']; ?>"
                               data-product-id="<?php echo $product->getId()."_".$hh['entity_id']?>" class="product_addtocart_celebrities_form" <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> >
         <?php //$product = Mage::getModel('catalog/product')->load($product->getId()) ?>
                                 <div class="image_thumb_celeb">
@@ -518,17 +518,17 @@ function changeOptions(itemID){
                                 </div>
                                 <div class="product-shop">
                                     <div class="product-name">
-                                    
-                                    <?php 
+
+                                    <?php
                                     $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
                                     $parentId1 = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
                                     $productUrl = $product->getProductUrl();
                                     if(!is_null($parentId1)){
                                     	$productUrl = Mage::getModel("catalog/product")->load($parentId1)->getProductUrl();
                                     }
-                                    
+
                                     ?>
-                                    
+
                                         <a href="<?php echo $productUrl ?>">
                                             <h1><?php echo $product->getName() ?></h1>
                                         </a>
@@ -544,7 +544,7 @@ function changeOptions(itemID){
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                    <div class="product-options-bottom">
+                                    <div class="product-options-bottom row">
                                         <?php // echo $this->getAddToCartBlock($product)->toHtml()  ?>
                                         <?php $quickviewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId())); ?>
                                         <?php $quickviewUrl = preg_replace('|http(s)?\:|', '', $quickviewUrl); ?>
@@ -604,7 +604,7 @@ function changeOptions(itemID){
     <div class="content" >
         <div id="wrapper">
          <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>--><?php echo $this->__('There are no products matching the selection') ?></p>
-            
+
         </div>
     </div>
     <?php endif ?>

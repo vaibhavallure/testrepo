@@ -14953,21 +14953,21 @@ li.item h2.product-name {text-align: center;}
 	margin-left: 26px;
 }
 
-::-webkit-input-placeholder { /* WebKit browsers */
+/* ::-webkit-input-placeholder { /* WebKit browsers
 	color: #3f4048;
 }
 
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+:-moz-placeholder { /* Mozilla Firefox 4 to 18
 	color: #3f4048;
 }
 
-::-moz-placeholder { /* Mozilla Firefox 19+ */
+::-moz-placeholder { /* Mozilla Firefox 19+
 	color: #3f4048;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10+ */
+:-ms-input-placeholder { /* Internet Explorer 10+
 	color: #3f4048;
-}
+} */
 
 .checkout-multishipping-address-newshipping .selectboxit-container .selectboxit,
 .checkout-multishipping-address-newshipping .selectboxit-container .selectboxit-options,
@@ -15095,11 +15095,6 @@ li.item h2.product-name {text-align: center;}
 
 .display_none {
 	display: none;
-}
-
-.block-viewed li.recentview {
-	/*background: url('../images/background/img_recentview_bg.jpg') repeat-x top left;*/
-
 }
 
 .cart_price {
@@ -15251,11 +15246,6 @@ li.item h2.product-name {text-align: center;}
 }
 
 /*Color Attribute On Product Page*/
-.product-view .product-shop .product-options dl {
-	float: none;
-	width: 100%;
-	margin: 0 0 0 -4px;
-}
 
 .styled select.no-display {
 	display: none !important;
