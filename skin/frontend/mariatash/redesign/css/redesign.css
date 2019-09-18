@@ -2317,8 +2317,21 @@ button#addtocart {
 ul.tabs {
   padding-inline-start: 15px;
 	margin-bottom: 0;
+	margin-top: 48px;
 }
-
+li#product_tabs_rpolicy_tabbed {
+  text-align: center;
+}
+table.data-table, .data-table tr {
+  display: grid;
+	margin-top: 5px;
+}
+.data-table td {
+  margin-bottom: 10px;
+}
+.add-to-cart .availability {
+  margin: 24px 0 25px;
+}
 /* ppp */
 
 /*select*/
@@ -2333,9 +2346,6 @@ ul.tabs {
 }
 .chooseList ul li.active {
   border-bottom: 2px solid black;
-}
-.catalog-product-view ul {
-  padding-left: 0;
 }
 .chooseList {  /* col-12 CSS */
   -ms-flex: 0 0 100%;

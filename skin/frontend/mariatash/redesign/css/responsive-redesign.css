@@ -626,6 +626,16 @@
 .custom-container {
     max-width: 1178px !important;
     margin: 0 auto;
+  }
+}
+@media (min-width:1030px) and (max-width:1200px){
+.div-row {
+  width: 1500px;
+  overflow-x: scroll;
+ }
+ .inner-box{
+   margin-left: 70px;
+ }
 }
 
 /* Big Screen Laptops */

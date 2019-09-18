@@ -91,8 +91,8 @@ $tabHtml = array();
                         $tab_title = Mage::getStoreConfig('easy_tabs/customcms/tabnamecms' . $tab_is_custom_id);
                     }
                 ?>
-                <li class="col" id="product_tabs_<?php echo $_tab['alias'] ?>" <?php echo !$i ? 'class="active first"' : ''; ?>>
-                    <a class="row" href="#"><h4><?php echo $tab_title; ?></h4></a>
+                <li class="col p-0" id="product_tabs_<?php echo $_tab['alias'] ?>" <?php echo !$i ? 'class="active first"' : ''; ?>>
+                    <a class="" href="#"><h4 class="text-uppercase"><?php echo $tab_title; ?></h4></a>
                 </li>
                 <?php $i++; ?>
             <?php endif; ?>
@@ -109,7 +109,6 @@ $tabHtml = array();
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
-<hr>
 <script type="text/javascript">
     var EasyTabs = Class.create();
     EasyTabs.prototype = {
