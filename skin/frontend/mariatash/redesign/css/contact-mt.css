@@ -22,9 +22,6 @@
 .conact-us-body .contact-us-banner strong {
     font: 32px/32px dinmittelschriftregular;
 }
-.conact-us-body .contact-us-banner p {
-    height: 40px;
-}
 .conact-us-body .other-contact-options {
     float: right;
     height: auto;
@@ -35,10 +32,6 @@
 .conact-us-body .contact-us-form {
     float: left;
     height: auto;
-    width: 45%;
-    border-right: 1px solid #CFCFD0;
-    background: #CFCFD1;
-    padding: 25px;
 }
 .conact-us-body .contact-us-form .field {
     float: left;
@@ -48,8 +41,6 @@
 }
 .conact-us-body .contact-us-form input {
     float: left;
-    width: 212px;
-    border: medium none;
     height: 20px;
 }
 .conact-us-body .contact-us-form .validation-advice {
@@ -62,7 +53,6 @@
 .conact-us-body .contact-us-form textarea {
     height: 80px;
     resize: none;
-    width: 202px;
 }
 .conact-us-body .other-contact-options > table {
     border: 1px solid #000000;
