@@ -171,6 +171,12 @@ h4{
 	font-size: 13px;
 	color: rgba(40,40,40,0.6);
 	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.size-option, .chooseList ul li {
+  font-size: 18px;
+  font-family: urw-din-xlight;
 }
 
 .pop-up-button{
@@ -2312,31 +2318,53 @@ ul.tabs {
   padding-inline-start: 15px;
 	margin-bottom: 0;
 }
+
 /* ppp */
 
 /*select*/
-.chooseList ul li {
-    display: inline-block;
-    padding: 5px;
-    border-bottom: 1px solid gray;
-    cursor: pointer;
+.chooseList ul li { /*col CSS*/
+  display: inline-block;
+  cursor: pointer;
+	-ms-flex-preferred-size: 0;
+	flex-basis: 0;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+	max-width: 100%;
 }
 .chooseList ul li.active {
-    border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }
-
+.catalog-product-view ul {
+  padding-left: 0;
+}
+.chooseList {  /* col-12 CSS */
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.chooseList ul { /*row CSS*/
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin-right: -15px;
+	margin-left: -15px;
+	padding-left: 0; /*For ul*/
+}
 /*qty section*/
 
 .minus_qty,.plus_qty{
-    cursor: pointer;
-    font-weight: bold;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 /*instagram slider*/
 
 .image_carousel .item.product-view-instagram-item, .image_carousel .item.product-view-instagram-item img{
-    height: 200px;
-    width: 200px;
+  height: 200px;
+  width: 200px;
 }
 
 
@@ -2438,5 +2466,3 @@ ul.tabs {
     top: 50%;
     left: 50%;
 }
-
-
