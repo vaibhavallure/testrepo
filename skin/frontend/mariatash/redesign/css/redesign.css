@@ -322,7 +322,7 @@ input, select, textarea{
   height: 42px !important;
   padding: 9px 20px !important;
   border-radius: 0 !important;
-	font-size: 13px;
+	font-size: 13px !important;
   letter-spacing: 0;
   font-family: urw-din-light;
 	box-shadow: 0 0 0 0 !important;
