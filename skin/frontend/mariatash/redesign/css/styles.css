@@ -780,57 +780,57 @@ ul#tld_r_ul li:hover {
 
 .box-awautorelated2 .image_carousel .caroufredsel_wrapper, .block-viewed .image_carousel .caroufredsel_wrapper
 {
-	width: 100%;
+	/*width: 100%;*/
 }
 
 .box-awautorelated2 .image_carousel img, .block-viewed .image_carousel img
 {
-	border: none;
+	/*border: none;*/
 }
 
 .box-awautorelated2 .image_carousel #foo3 li, .block-viewed .image_carousel #foo3 li
 {
-	margin: 0;
-	margin-right: 8px;
+	/*margin: 0;*/
+	/*margin-right: 8px;*/
 }
 
 .box-awautorelated2 .image_carousel a.prev, .block-viewed .image_carousel a.prev,
 .galleryFull .controls div.prev {
-	left: 0;
+	/*left: 0;*/
 }
 
 .box-awautorelated2 .image_carousel a.next, .block-viewed .image_carousel a.next,
 .galleryFull .controls div.next {
-	right: 0;
+	/*right: 0;*/
 }
 
 .box-awautorelated2 .image_carousel a.prev, .box-awautorelated2 .image_carousel a.next,
 .block-viewed .image_carousel a.prev, .block-viewed .image_carousel a.next,
 .galleryFull .controls div.prev, .galleryFull .controls div.next {
-	width: 26px;
+	/*width: 26px;
 	height: 35px;
 	top: 50%;
 	margin-top: -18px;
-	right: 0px;
+	right: 0px;*/
 }
 
 .block-viewed .image_carousel a.prev, .block-viewed .image_carousel a.next
 {
-	width: 26px;
+	/*width: 26px;
 	height: 35px;
 	top: 50%;
-	margin-top: -18px;
+	margin-top: -18px;*/
 }
 
 .box-awautorelated2 .image_carousel .caroufredsel_wrapper, .block-viewed .image_carousel .caroufredsel_wrapper
 {
-	width: 100%;
+	/*width: 100%;*/
 }
 
 .caroufredsel_wrapper {
-	padding: 0;
-	margin: -1px 0 1px;
-	left: 0;
+	/*padding: 0;*/
+	/*margin: -1px 0 1px;*/
+	/*left: 0;*/
 }
 
 .caroufredsel_wrapper { /*background:#CCC;*/

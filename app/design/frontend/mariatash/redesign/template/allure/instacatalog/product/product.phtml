@@ -8,11 +8,13 @@ $childProductArr = $this->getChildProductArray();
 ?>
 
 <?php if (($collection && $collection->getSize())) : ?>
-<div class="block-title">
-	<strong><span><?php echo $this->__('on instagram') ?></span></strong>
-</div>
-<div class="image_carousel col-12">
-	<ul id="foo6" class="pl-5 pr-5" style="overflow: hidden">
+
+    <div class="insta-main">
+    <div class="image_carousel">
+    <div class="block-title text-uppercase mb-3">
+        <strong><span><?php echo $this->__('on instagram') ?></span></strong>
+    </div>
+	<ul id="foo6"  style="overflow: hidden">
        <?php
             $shareBaseUrl = Mage::getBaseUrl('web') . "instacatalog/feed/shareview/id/";
             $productArr = $this->getInstagramHotspotProducts();
@@ -120,14 +122,14 @@ $childProductArr = $this->getChildProductArray();
 			</div></li>
    <?php endforeach;?>
         </ul>
-	<div class="clearfix"></div>
-	<a class="prev" id="foo6_prev" href="#"><span>prev</span></a> <a
-		class="next" id="foo6_next" href="#"><span>next</span></a>
 
-	<div class="pagination" id="foo6_pag"></div>
 </div>
+        <div class="clearfix"></div>
+        <a class="prev" id="foo6_prev" href="#"><span>prev</span></a> <a
+                class="next" id="foo6_next" href="#"><span>next</span></a>
 
-
+        <div class="pagination" id="foo6_pag"></div>
+    </div>
 <div id="instagram-view-container">
 	<div id="showcase"
 		class="fs-wide-timeline  fs-desktop fs-prepended-detail"

@@ -1,10 +1,6 @@
-/* .image_carousel {
-	padding: 15px 0 15px 40px;
-	position: relative;
-} */
+
 .image_carousel img {
 	padding:0;
-	/*margin: 7px;*/
 	display: block;
 	float: left;
 }
@@ -12,34 +8,27 @@ a.prev,
 a.next,
 .galleryFull .controls .prev,
 .galleryFull .controls .next{
-	background: url(../images/miscellaneous_sprite.png) no-repeat transparent;
+	background: url(../images/Popup-side-arrow.png) no-repeat transparent;
 	width: 45px;
-	height: 50px;
+	height: 100px;
 	display: block;
 	position: absolute;
-	top: 85px;
+	top:30%;
 }
 a.prev,
 .galleryFull .controls .prev {
-	left: -22px;
-	background-position: 0 0;
+	left: 5%;
+transform: rotate(180deg);
 }
-a.prev:hover,
-.galleryFull .controls .prev:hover {
-	background-position: 0 -50px;
-}
+
 a.prev.disabled {
 	background-position: 0 -100px !important;
 }
 a.next,
 .galleryFull .controls .next {
-	right: -22px;
-	background-position: -50px 0;
+	right: 5%;
 }
-a.next:hover,
-.galleryFull .controls .next:hover {
-	background-position: -50px -50px;
-}
+
 a.next.disabled {
 	background-position: -50px -100px !important;
 }
