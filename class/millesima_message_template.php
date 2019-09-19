@@ -264,6 +264,12 @@ class Millesima_Message_Template extends Millesima_Abstract
                     $astdesc = $_POST["astdesc"];
                     $asterisquedesc = $ressourceClass->getRessourceValue($country,'ast_description',$vardates);
                 }
+
+                $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/informations_importantes/ressources_codepromobandeau.php";
+                if (file_exists($filename)){
+                    require($filename);
+                }
+
                 $textalign = $_POST["align_desc"];
 				$btn = $_POST["desctypebtn"];
 				$proprietesDesc = array("url" => $url,
@@ -460,6 +466,29 @@ class Millesima_Message_Template extends Millesima_Abstract
                 $oSmarty->assign('w_wallet', $_POST["w_wallet"]);
             }
 
+            /* Promotion card */
+
+            if(isset($_POST["isPromotionCard"]) && $_POST["isPromotionCard"]) {
+                $isPromotionCard = $data['isPromotionCard'];
+                $promotionCardDescription = $data['promotionCardDescription-' . $country];
+                $promotionCardDiscountCode = $data['promotionCardDiscountCode'];
+                $promotionCardImageLink = $data['promotionCardImageLink'];
+
+
+                //mise au format des dates pour Gmail
+                $promotionCardDateStart = new DateTime('NOW');
+                $promotionCardDateStart = $promotionCardDateStart->format('c');
+                $promotionCardDateEnd = DateTime::createFromFormat('d/m/Y',  $data['datevalide']);
+                $promotionCardDateEnd =  $promotionCardDateEnd->format('c');
+
+                $oSmarty->assign('isPromotionCard', $isPromotionCard);
+                $oSmarty->assign('promotionCardDescription', $promotionCardDescription);
+                $oSmarty->assign('promotionCardDiscountCode', $promotionCardDiscountCode);
+                $oSmarty->assign('promotionCardImageLink', $promotionCardImageLink);
+                $oSmarty->assign('promotionCardDateStart', $promotionCardDateStart);
+                $oSmarty->assign('promotionCardDateEnd', $promotionCardDateEnd);
+
+            }
 
             /* Gestion CGV */
 			if(isset($cgv2) && $cgv2 && in_array($country, $cgvexceptions)){
@@ -478,7 +507,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             }
 			
             /* FDPO */
-            if($cgv == 'livraison'){
+
                 $fdpo = array(
                     'titre'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo', $vardates),
                     'ssphrase'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo_ssphrase', $vardates),
@@ -491,8 +520,8 @@ class Millesima_Message_Template extends Millesima_Abstract
                 if(isset($data["fdpo_conditions"]) && $data["fdpo_conditions"]){
                     $oSmarty->assign("fdpo_conditions",$data["fdpo_conditions"]);
                 }
-            }
-			
+
+
 			
 			/* Gestion Trigger */ 
 			/*if($data["tpl"] == "trigger_responsive"){
@@ -684,21 +713,33 @@ class Millesima_Message_Template extends Millesima_Abstract
         $article->primeur=$data["_1Prim0Liv"];
         $article->image=$data["Image"];
         $article->url_image_full=$data["URL_Image_Full"];
-        $article->url_image_thumb=$data["URL_Image_Thumb"];;
+        $article->url_image_thumb=$data["URL_Image_Thumb"];
 
         $article->quantite=$data["quantite"];
         $article->boiscarton=$data["BoisCarton"];
 		if($article->pays == 'F' || $article->pays == 'B' || $article->pays == 'L' || $article->pays == 'SF' ){
-            $article->boiscarton = str_replace('Une', 'La', $article->boiscarton);
-            $article->boiscarton = str_replace('Un', 'Le', $article->boiscarton);
+            $article->boiscarton = str_replace('Une', '', $article->boiscarton);
+            $article->boiscarton = str_replace('Un', '', $article->boiscarton);
+            $article->boiscarton = str_replace('carton', 'Carton', $article->boiscarton);
+            $article->boiscarton = str_replace('caisse', 'Caisse', $article->boiscarton);
         }
         if($article->pays == 'Y'){
-            $article->boiscarton = str_replace('Una', 'La', $article->boiscarton);
+            $article->boiscarton = str_replace('Una', '', $article->boiscarton);
+            $article->boiscarton = str_replace('Un', '', $article->boiscarton);
+            $article->boiscarton = str_replace('cassa', 'Cassa', $article->boiscarton);
+            $article->boiscarton = str_replace('cartone', 'Cartone', $article->boiscarton);
         }
 		if($article->pays == 'P'){
             $article->boiscarton = str_replace('cartao', 'cart&atilde;o', $article->boiscarton);
         }
-		
+
+        if($article->pays == 'E'){
+            $article->boiscarton = str_replace('Una', '', $article->boiscarton);
+            $article->boiscarton = str_replace('caja', 'Caja', $article->boiscarton);
+        }
+
+
+
         $article->conditionnementpluriel=utf8_encode($data["Libelle_Cond_pluriel"]);
         $article->conditionnementsingulier=utf8_encode($data["Libelle_Cond_singulier"]);
         if($article->quantite == 1){

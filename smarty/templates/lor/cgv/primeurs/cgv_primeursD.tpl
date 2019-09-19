@@ -1,0 +1,1 @@
+<a href="https://www.millesima.de/cgv.html#cgv5" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Verkaufs - und Lieferbedingungen Primeurweine - Deutschland</a>

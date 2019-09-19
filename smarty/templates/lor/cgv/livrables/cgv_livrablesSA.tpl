@@ -1,0 +1,1 @@
+<a href="https://de.millesima.ch/cgv.html" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Verkaufs - und Lieferbedingungen lieferbare Weine - Schweiz</a>

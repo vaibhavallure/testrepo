@@ -1,0 +1,2 @@
+Fotografias e ilustrações não contratuais. <br>Sob reserva de erros tipográficos. O excesso de consumo de álcool é perigoso para a saúde.
+<br>O excesso de consumo de álcool é perigoso para a saúde. Deve ser consumido e apreciado com moderação. A venda de álcool é proibida a menores.

@@ -1,0 +1,1 @@
+<a href="https://www.millesima.at/cgv.html" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Verkaufs - und Lieferbedingungen lieferbare Weine - Österreich</a>

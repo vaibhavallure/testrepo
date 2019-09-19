@@ -1,0 +1,1 @@
+<a href="https://www.millesima.sg/cgv.html" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Terms and Conditions for wines available now to Singapore</a>

@@ -1,0 +1,1 @@
+<p style="text-align:center;font-size:12px;line-height:23px;"><a href="https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~" style="color:#000000;"><span style="color:#000000">I want to be withdrawn from the mailing list</span></a></p>

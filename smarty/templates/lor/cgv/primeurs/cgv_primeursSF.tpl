@@ -1,0 +1,1 @@
+<a href="https://fr.millesima.ch/cgv.html#answer6" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Consulter les conditions de vente Primeurs en Suisse</a>

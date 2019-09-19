@@ -106,6 +106,7 @@ function getCode($typebrief){
                                             <label for="tpl">Template à utiliser</label>
                                             <!--<select class="form-control" name="tpl" size="1" id="tpl" onchange="if(this.selectedIndex == 1){document.getElementById('block-trigger').style.display='block';}else{document.getElementById('block-trigger').style.display='none';}">-->
                                             <select class="form-control" name="tpl" size="1" id="tpl">
+                                                <option value="lor">lor</option>
                                                 <option value="template_responsive">Template Responsive</option>
                                                 <option value="trigger_responsive">Trigger Responsive</option>
                                                 <option value="new_template">New template</option>
@@ -520,7 +521,7 @@ function getCode($typebrief){
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="codecouleur">Couleur du thème</label>
-                                            <input type="text" size="7" id="codecouleur" name="codecouleur" placeholder="#" value="#a60d0d" class="form-control">
+                                            <input type="text" size="7" id="codecouleur" name="codecouleur" placeholder="#" value="#9C9487" class="form-control">
                                             <p class="help-block">utilisée pour le thème et la validité<br />rouge par défaut : #a60d0d - couleur primeurs : #806031</p>
                                         </div>
                                     </div>
@@ -1185,6 +1186,170 @@ function getCode($typebrief){
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Promotion Card</h3>
+                            </div>
+                            <div class="box-body" >
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="margin-left:10px">
+                                            <label>Affichage :</label>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type=radio name="isPromotionCard" id="isPromotionCard" value="1" onchange="reduceBox(true,'block-promotion-card');">
+                                                    oui
+                                                </label>
+                                                <label>
+                                                    <input type=radio name="isPromotionCard" id="isNotPromotionCard" value="0" onchange="reduceBox(false,'block-promotion-card');"checked>
+                                                    non
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body" id="block-promotion-card" style="display:none;">
+                            <div class="col-md-6" >
+                                <div class="form-group">
+                                    <label>
+                                        Encadré Vert :
+                                    </label>
+                                    <div class="input-group F">
+                                        <input name="promotionCardDescription-F" id="promotionCardDescriptionF" type="text" placeholder="Encadré Vert France" value="" class="form-control pays-input" onkeyup="copyContent('F', 'promotionCardDescription')">
+                                        <span class="input-group-addon F">
+                                                F
+                                            </span>
+                                    </div>
+                                    <div class="input-group B">
+                                        <input name="promotionCardDescription-B" id="promotionCardDescriptionB" type="text" placeholder="Encadré Vert Belgique" value="" class="form-control pays-input" onkeyup="copyContent('B', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                B
+                                            </span>
+                                    </div>
+
+                                    <div class="input-group L">
+                                        <input name="ppromotionCardDescription-L" id="promotionCardDescriptionL" type="text" placeholder="Encadré Vert Luxembourg" value="" class="form-control pays-input" onkeyup="copyContent('L', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                L
+                                            </span>
+                                    </div>
+                                    <div class="input-group D">
+                                        <input name="promotionCardDescription-D"  id="promotionCardDescriptionD" type="text" placeholder="Encadré Vert Allemagne" value="" class="form-control pays-input" onkeyup="copyContent('D', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                D
+                                            </span>
+                                    </div>
+                                    <div class="input-group O">
+                                        <input name="promotionCardDescription-O" id="promotionCardDescriptionO" type="text" placeholder="Encadré Vert Autriche" value="" class="form-control pays-input" onkeyup="copyContent('O', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                O
+                                            </span>
+                                    </div>
+                                    <div class="input-group SA">
+                                        <input name="promotionCardDescription-SA" id="promotionCardDescriptionSA" type="text" placeholder="Encadré Vert Suisse Allemande" value="" class="form-control pays-input" onkeyup="copyContent('SA', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                SA
+                                            </span>
+                                    </div>
+                                    <div class="input-group SF">
+                                        <input name="promotionCardDescription-SF" id="promotionCardDescriptionSF" type="text" placeholder="Encadré Vert Suisse Fran&ccedil;aise" value="" class="form-control pays-input" onkeyup="copyContent('SF', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                SF
+                                            </span>
+                                    </div>
+                                    <div class="input-group G">
+                                        <input name="promotionCardDescription-G" id="promotionCardDescriptionG" type="text" placeholder="Encadré Vert Grande Bretagne" value="" class="form-control pays-input" onkeyup="copyContent('G', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                G
+                                            </span>
+                                    </div>
+                                    <div class="input-group I">
+                                        <input name="promotionCardDescription-I" id="promotionCardDescriptionI" type="text" placeholder="Encadré Vert Irelande" value="" class="form-control pays-input" onkeyup="copyContent('I', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                I
+                                            </span>
+                                    </div>
+                                    <div class="input-group Y">
+                                        <input name="promotionCardDescription-Y" id="promotionCardDescriptionY" type="text" placeholder="Encadré Vert Italie" value="" class="form-control pays-input" onkeyup="copyContent('Y', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                Y
+                                            </span>
+                                    </div>
+                                    <div class="input-group E">
+                                        <input name="promotionCardDescription-E" id="promotionCardDescriptionE" type="text" placeholder="Encadré Vert Espagne" value="" class="form-control pays-input" onkeyup="copyContent('E', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                E
+                                            </span>
+                                    </div>
+                                    <div class="input-group P">
+                                        <input name="promotionCardDescription-P" id="promotionCardDescriptionP" type="text" placeholder="Encadré Vert Portugal" value="" class="form-control pays-input" onkeyup="copyContent('P', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                P
+                                            </span>
+                                    </div>
+                                    <div class="input-group H">
+                                        <input name="promotionCardDescription-H" id="promotionCardDescriptionH" type="text" placeholder="Encadré Vert Hong Kong" value="" class="form-control pays-input" onkeyup="copyContent('H', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                H
+                                            </span>
+                                    </div>
+                                    <div class="input-group SG">
+                                        <input name="promotionCardDescription-SG" id="promotionCardDescriptionSG" type="text" placeholder="Encadré Vert Singapour" value="" class="form-control pays-input" onkeyup="copyContent('SG', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                SG
+                                            </span>
+                                    </div>
+                                    <div class="input-group U">
+                                        <input name="promotionCardDescription-U" id="promotionCardDescriptionU" type="text" placeholder="Encadré Vert USA" value="" class="form-control" onkeyup="copyContent('U', 'promotionCardDescription')">
+                                        <span class="input-group-addon">
+                                                U
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="block-promotion-card">
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-left:15px;">
+                                        <label for="code">Code Promo</label>
+                                        <input name="promotionCardDiscountCode" type="text" id="promotionCardDiscountCode" class="form-control">
+                                        <p class="help-block">(Commun à tous les pays)</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" >
+                                <div class="radio">
+                                    <h3 class="box-title" style="display: inline-block;max-width: 100%;margin-bottom: 5px;font-weight: 700;font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 14px;margin-left: 30px;">Image</h3>
+                                    <label>
+                                        <input type=radio name="isPromotionCardImage" value="1" onchange="reduceBox(true,'promotionCardImageLink');" checked>
+                                        oui
+                                    </label>
+                                    <label>
+                                        <input type=radio name="isPromotionCardImage" value="0" onchange="reduceBox(false,'promotionCardImageLink');">
+                                        non
+                                    </label>
+
+                                </div>
+                                </div>
+                                <div class="row" id="promotionCardImageLink" id="block-promotion-card">
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="margin-left:15px;">
+                                            <label for="promotionCardImageLink">Lien image</label>
+                                            <input name="promotionCardImageLink" type="text" id="promotionCardImageLink" class="form-control">
+                                            <p class="help-block">(Commun à tous les pays)</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                    </div>
+                </div>
+
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,2 @@
+This offer is only available to private individuals; it is not available to importers or distributors. <br>E&OE. Photos and illustrations non contractual.<br>
+Abuse of alcohol is dangerous for health. Be able to drink and appreciate with moderation. The sale of alcohol is prohibited to minors.

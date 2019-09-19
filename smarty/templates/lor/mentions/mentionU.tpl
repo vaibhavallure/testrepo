@@ -1,0 +1,2 @@
+Not valid simultaneously with other special offers.<br>Photos and illustrations non contractual.<br>
+Abuse of alcohol is dangerous for health. Be able to drink and appreciate with moderation. <br>The sale of alcohol is prohibited to minors.

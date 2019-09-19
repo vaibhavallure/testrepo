@@ -1,0 +1,1 @@
+<a href="https://www.millesima.es/cgv.html" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Consulte nuestras condiciones generales de venta en Espa&ntilde;a</a>

@@ -1,0 +1,1 @@
+<a href="https://www.millesima.pt/cgv.html" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Condi&ccedil;&otilde;es gerais de venda dos vinhos dispon&iacute;veis</a>

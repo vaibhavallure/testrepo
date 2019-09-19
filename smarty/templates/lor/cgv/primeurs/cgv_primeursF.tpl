@@ -1,0 +1,1 @@
+<a href="https://www.millesima.fr/cgv.html#answer5" style="color:#ffffff;line-height:18px;display:block;text-decoration:none;outline:none">Consulter les conditions de vente Primeurs en France m&eacute;tropolitaine</a>
