@@ -35,51 +35,36 @@ class Ecp_Press_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()
     {
-    	
-    	/*
-    	 * Load an object by id 
-    	 * Request looking like:
-    	 * http://site.com/press?id=15 
-    	 *  or
-    	 * http://site.com/press/id/15 	
-    	 */
-    	/* 
-		$press_id = $this->getRequest()->getParam('id');
-
-  		if($press_id != null && $press_id != '')	{
-			$press = Mage::getModel('ecp_press/press')->load($press_id)->getData();
-              
-                        
-		} else {
-			$press = null;
-		}	
-		
-    	 * If no param we load a the last created item
-    	 */ 
-    	/*
-    	if($press == null) {
-			$resource = Mage::getSingleton('core/resource');
-			$read= $resource->getConnection('core_read');
-			$pressTable = $resource->getTableName('press');
-			
-			$select = $read->select()
-			   ->from($pressTable,array('press_id','title','content','status'))
-			   ->where('status',1)
-			   ->order('created_time DESC') ;
-			   
-			$press = $read->fetchRow($select);
-		}
-		Mage::register('press', $press);
-		*/
-
-			
 		$this->loadLayout();     
 		$this->renderLayout();
     }
-    
-    public function sendAction(){
-        Mage::register('page',$this->getRequest()->getParam('page'));
-        $this->loadLayout();
-        $this->renderLayout();
+    public function getPressAction()
+    {
+        $page=$this->getRequest()->getParam("page");
+        $collection = Mage::getModel('ecp_press/press')->getCollection()
+            ->addFieldToSelect('image_one')
+            ->addFieldToSelect('press_id')
+            ->addFilter('status', 1)
+            ->setOrder('publish_date');
+        $collection->setCurPage($page);
+        $collection->setPageSize(9);
+
+        if($collection->getLastPageNumber()>=$page) {
+            echo json_encode($collection->getData());
+        }
+    }
+    public function getPopupAction()
+    {
+        $press_id=$this->getRequest()->getParam("id");
+        $press=Mage::getModel('ecp_press/press')->load($press_id);
+
+        $data['title']=$press->getTitle();
+        $data['publish_date']=date("F d, Y",strtotime($press->getPublishDate()));
+
+        $dataArr=array_filter($press->getData());
+        unset($dataArr['image_one']);
+        $images = array_filter($dataArr,function ($key){ return(strpos($key,'image_') !== false);}, ARRAY_FILTER_USE_KEY);
+        $data['img']=array_values($images);
+        echo json_encode($data);
     }
 }
