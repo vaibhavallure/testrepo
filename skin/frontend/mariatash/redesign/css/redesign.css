@@ -172,7 +172,7 @@ h4{
 
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
-  width: 996px;
+  width: 996px !important;
   height: 670px;
 }
 .big-popup-image {
@@ -180,7 +180,7 @@ h4{
   width: 393px;
 }
 .big-popup-body {
-    padding: 48px 93px;
+    padding: 48px 93px !important;
 }
 .product-attribute-name, ul.tabs li.active h4{
 	font-family: urw-din-bold;
