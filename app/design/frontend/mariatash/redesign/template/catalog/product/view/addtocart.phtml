@@ -49,14 +49,14 @@
                             if(currunt_qty>1)
                                 currunt_qty--;
                             qtyObj.val(currunt_qty);
-                            jQuery(".total_qty").html(currunt_qty);
+                            jQuery(".total_qty span").html(currunt_qty);
                         });
                         jQuery(".plus_qty").on("click",function () {
                             var currunt_qty=parseInt(qtyObj.val());
                             if(currunt_qty<10)
                                 currunt_qty++;
                             qtyObj.val(currunt_qty);
-                            jQuery(".total_qty").html(currunt_qty);
+                            jQuery(".total_qty span").html(currunt_qty);
                         });
                     </script>
 
@@ -136,9 +136,9 @@
         <?php if($giftcard): ?>
           <div class="row">
             <?php if ($_product->isAvailable()): ?>
-                <p class="availability in-stock info-text-two col-12"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('In stock') ?></span></p>
+                <p class="availability in-stock info-text-two col-12"><?php echo $this->__('Availability:') ?> <span class="info-text-three"><?php echo $this->__('In stock') ?></span></p>
             <?php else: ?>
-                <p class="availability out-of-stock info-text-two col-12"><?php echo $this->__('Availability:') ?> <span><?php echo $this->__('Out of stock') ?></span></p>
+                <p class="availability out-of-stock info-text-two col-12"><?php echo $this->__('Availability:') ?> <span class="info-text-three"><?php echo $this->__('Out of stock') ?></span></p>
             <?php endif; ?>
           </div>
         <?php endif; ?>

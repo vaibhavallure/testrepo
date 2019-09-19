@@ -118,6 +118,7 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/redesign.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/responsive-redesign.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/fonts/fonts.css</stylesheet></action>
+                 <action method="addCss"><stylesheet>css/zStyles.css</stylesheet></action>
                 <action method="addItem"><type>skin_js</type><name>js/allure/allure_alerts.js</name></action>
 
 

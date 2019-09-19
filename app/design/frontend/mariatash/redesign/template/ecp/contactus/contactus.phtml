@@ -1,102 +1,124 @@
-<div class="conact-us-body">
-    <div class="contact-us-banner">
-        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contact_us_banner')->toHtml(); ?>
+ <div class="second-header-image">
+        <img src="<?php echo $this->getSkinUrl('images/contact-head-image.png'); ?>" alt="banner image" class="img-responsive"> 
     </div>
-    <div class="contact-us-form">
-        <form action="<?php echo  preg_replace("/^http:/i", "https:",$this->getSubmitUrl()) ?>" method="post" id="contact-us-form">
-           	<?php echo $this->getBlockHtml('formkey');?>
-            <div class="field">
-                <label><?php echo $this->__('First Name') ?><em>*</em></label>
-                <input type="text" name="firstname" id="contact_first_name" title="<?php echo $this->__('first_name') ?>" class="input-text required-entry" />
+<div class="contact-us-wrapper" id="container-cu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                 <h1 class="mb-4">Contact Us</h1>
+                <div class="conact-us-body">
+                    <div class="contact-us-banner">
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contact_us_banner')->toHtml(); ?>
+                    </div>
+                    <div class="contact-us-form">
+                        <form action="<?php echo  preg_replace("/^http:/i", "https:",$this->getSubmitUrl()) ?>" method="post" id="contact-us-form">
+                            <?php echo $this->getBlockHtml('formkey');?>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="field">
+                                        <input type="text" name="firstname" id="contact_first_name" title="<?php echo $this->__('first_name') ?>" class="input-text required-entry input-patern" placeholder="First Name" />
+                                    </div>
+                                    <div class="field">
+                                        <input type="text" name="lastname" id="contact_last_name" title="<?php echo $this->__('last_name') ?>" class="input-text required-entry input-patern" placeholder="Last Name"/>
+                                    </div>
+
+                                    <div class="field">
+                                        <input type="text" name="email" id="email_address" title="<?php echo $this->__('email_address') ?>" class="input-text validate-email required-entry input-patern" placeholder="Email Address"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 flex-col">
+                                    <div class="field">
+                                        <input type="text" name="subject" id="subject" title="<?php echo $this->__('subject') ?>" class="input-text required-entry input-patern" placeholder="Subject Line"/>
+                                    </div>
+                                    <div class="field fl-two">
+                                        <textarea name="details" id="details" title="<?php  echo $this->__('details') ?>" class="input-text required-entry input-patern" placeholder="Details"></textarea>
+                                        <!--<textarea name="details" id="details"></textarea>-->
+                                    </div>
+                                </div>
+                              
+                                    <div class="col-lg-6"></div>
+                                    <div class="col-lg-6">
+                                       <div class="field custom_recaptcha">
+                                        <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit');?>
+                                    </div>
+                                   <div class="buttn-wrapper">
+                                        <button type="button" class="dark-button customButton" onclick="contactusForm.submit(this.form)" ><span>Submit</span></button>
+                                   </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="field">
-                <label><?php echo $this->__('Last Name') ?><em>*</em></label>
-                <input type="text" name="lastname" id="contact_last_name" title="<?php echo $this->__('last_name') ?>" class="input-text required-entry" />
+            <a id="success" title="Success message" href="#success-message" style="display:none"></a>
+            <div id="success-message" class="success" style="display:none">    
             </div>
-            <div class="field">
-                <label><?php echo $this->__('Email Address') ?><em>*</em></label>
-                <input type="text" name="email" id="email_address" title="<?php echo $this->__('email_address') ?>" class="input-text validate-email required-entry" />
-            </div>
-            <div class="field">
-                <label><?php echo $this->__('Subject') ?><em>*</em></label>
-                <input type="text" name="subject" id="subject" title="<?php echo $this->__('subject') ?>" class="input-text required-entry" />
-            </div>
-            <div class="field">
-                <label><?php echo $this->__('Details') ?><em>*</em></label>
-                <textarea name="details" id="details" title="<?php  echo $this->__('details') ?>" class="input-text required-entry"></textarea>
-                <!--<textarea name="details" id="details"></textarea>-->
-            </div>
-             <div class="field custom_recaptcha">
-                <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit');?>
-            </div>
-              
-            <button type="button" class="button-conact-us" onclick="contactusForm.submit(this.form)" ><span>Submit</span></button>
-        </form>
-    </div>
-    <div class="other-contact-options">
-        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('other_contact_options')->toHtml(); ?>
-    </div>
-</div>
-<a id="success" title="Success message" href="#success-message" style="display:none"></a>
-<div id="success-message" class="success" style="display:none">    
-</div>
-<script type="text/javascript">
-    jQuery.noConflict();
-    var contactusForm = new VarienForm('contact-us-form');
-    contactusForm.submit = function(form) {
-        if (this.validator.validate()) {
-            var datos="";
-            jQuery("form#"+form.id+" input").each(function(){
-                 if(datos == "")
-                     datos += '"'+this.name+'":"'+this.value+'"'
-                 else
-                     datos += ',"'+this.name+'":"'+this.value+'"';
-            });
-            datos += ',"details":"'+jQuery("form#"+form.id+" textarea").val()+'"';
-            var dataSend = JSON.parse("{"+datos+"}");
-            jQuery.getJSON(form.action,dataSend,function(data){
-                if(data.success){
-                    jQuery("form#"+form.id+" input").each(function(){
-                        this.value="";
-                    });
-                    jQuery("form#"+form.id+" textarea").each(function(){
-                        this.value="";
-                    });
-                    var text = "Dear "+data.firstname+"<br>Thank you for contacting Maria Tash team. We will review your concern and one of our customer service representatives will contact you soon.</br>"+
-                        "Sincerely,</br>Maria Tash team";
-                    jQuery("div#success-message").html(text);
-                    jQuery('a#success').trigger('click');
+            <script type="text/javascript">
+                jQuery.noConflict();
+                var contactusForm = new VarienForm('contact-us-form');
+                contactusForm.submit = function(form) {
+                    if (this.validator.validate()) {
+                        var datos="";
+                        jQuery("form#"+form.id+" input").each(function(){
+                           if(datos == "")
+                               datos += '"'+this.name+'":"'+this.value+'"'
+                           else
+                               datos += ',"'+this.name+'":"'+this.value+'"';
+                       });
+                        datos += ',"details":"'+jQuery("form#"+form.id+" textarea").val()+'"';
+                        var dataSend = JSON.parse("{"+datos+"}");
+                        jQuery.getJSON(form.action,dataSend,function(data){
+                            if(data.success){
+                                jQuery("form#"+form.id+" input").each(function(){
+                                    this.value="";
+                                });
+                                jQuery("form#"+form.id+" textarea").each(function(){
+                                    this.value="";
+                                });
+                                var text = "Dear "+data.firstname+"<br>Thank you for contacting Maria Tash team. We will review your concern and one of our customer service representatives will contact you soon.</br>"+
+                                "Sincerely,</br>Maria Tash team";
+                                jQuery("div#success-message").html(text);
+                                jQuery('a#success').trigger('click');
                     //setTimeout('parent.jQuery.fancybox.close()',5000);
                 }
             })
-        }
-    }
-    
-    jQuery('a#success').fancybox({
-        openEffect  : 'none',
-        closeEffect : 'none',
-        nextEffect  : 'none',
-        prevEffect  : 'none',
-        padding     : 0,
-        mouseWheel  : false,
-        loop	    : false,
-        helpers	    : {
-			title	: null            
-        },
+                    }
+                }
+
+                jQuery('a#success').fancybox({
+                    openEffect  : 'none',
+                    closeEffect : 'none',
+                    nextEffect  : 'none',
+                    prevEffect  : 'none',
+                    padding     : 0,
+                    mouseWheel  : false,
+                    loop        : false,
+                    helpers     : {
+                        title   : null            
+                    },
         margin      : [20, 60, 20, 60], // Increase left/right margin
         width       : 485,
-        height	    : 515,
+        height      : 515,
         afterLoad: function () {
-     		<!-- Google Code for Contact Us Conversion Page -->
-        	var google_conversion_id = 1004306925;
-        	var google_conversion_language = "en";
-        	var google_conversion_format = "3";
-        	var google_conversion_color = "ffffff";
-        	var google_conversion_label = "auswCJbfvmUQ7YPy3gM";
-        	var google_remarketing_only = false;
-        	jQuery.getScript("//www.googleadservices.com/pagead/conversion.js");
-        	//$("#image").attr('src', "//www.googleadservices.com/pagead/conversion/1004306925/?label=auswCJbfvmUQ7YPy3gM&amp;guid=ON&amp;script=0").css('display','inline');
+            <!-- Google Code for Contact Us Conversion Page -->
+            var google_conversion_id = 1004306925;
+            var google_conversion_language = "en";
+            var google_conversion_format = "3";
+            var google_conversion_color = "ffffff";
+            var google_conversion_label = "auswCJbfvmUQ7YPy3gM";
+            var google_remarketing_only = false;
+            jQuery.getScript("//www.googleadservices.com/pagead/conversion.js");
+            //$("#image").attr('src', "//www.googleadservices.com/pagead/conversion/1004306925/?label=auswCJbfvmUQ7YPy3gM&amp;guid=ON&amp;script=0").css('display','inline');
 
         }
     });
 </script>
+</div>
+<div class="col-lg-5">
+    <div class="other-contact-options mt-2">
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('other_contact_options')->toHtml(); ?>
+    </div>
+</div>
+</div>
+
+</div>
+</div>

@@ -102,7 +102,7 @@ if($_product->isConfigurable()){
 <input type="hidden" value="<?php echo $_product->getId()?>" id="product-configurable-hidden" />
 <ul class="add-to-links col-6 float-left">
 <?php if ($this->helper('wishlist')->isAllow()) : ?>
-    <li class="row"><a onclick="validateFave()" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+    <li class="row justify-content-end"><a onclick="validateFave()" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
 <span id='ajax_loading' style='display:none'><img src='<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif')?>'/></span>
 <div class='faveSuccess' style='display:none;'></div>
 	<script type="text/javascript">

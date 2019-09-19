@@ -27,10 +27,12 @@
 
 <?php /* @var $this Mage_Catalog_Block_Product_View_Options_Type_Select */ ?>
 <?php $_option = $this->getOption() ?>
-<div class="custom-options">
-<dt class="post-lengthds-lbl"><label<?php if ($_option->getIsRequire()) echo ' class="required product-attribute-name"' ?>><?php echo  $this->escapeHtml($_option->getTitle()).':' ?></label></dt>
-<dd<?php if ($_option->decoratedIsLast){?> class=" post-lengthds-lbl-options last"<?php }?>>
-    <div class="input-box">
+<div class="row">
+<div class="custom-options col-12">
+<dt class="post-lengthds-lbl row"><label<?php if ($_option->getIsRequire()) echo ' class="required product-attribute-name col-12"' ?>><?php echo  $this->escapeHtml($_option->getTitle()).':' ?></label></dt>
+<dd<?php if ($_option->decoratedIsLast){?> class=" post-lengthds-lbl-options last row"<?php }?>>
+  <div class="col-12 p-0">
+    <div class="input-box row">
         <?php echo $this->getValuesHtml() ?>
         <?php if ($_option->getIsRequire()): ?>
             <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX): ?>
@@ -38,6 +40,8 @@
             <?php endif; ?>
         <?php endif;?>
     </div>
+  </div>
 </dd>
+</div>
 </div>
 <hr>
