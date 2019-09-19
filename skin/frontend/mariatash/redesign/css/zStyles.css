@@ -86,6 +86,7 @@
 }
 .locations-wrapper .img-wrap img{
 	height: 100%;
+	cursor: pointer;
 }
 .locations-wrapper .section .text-wrap{
 	padding-left: 30px;
@@ -104,8 +105,27 @@
 	margin-bottom: 31px;
 }
 .mid{
-		padding-left: 4rem;
-	}
+	padding-left: 4rem;
+}
+#locationPopup .modal-dialog{
+	z-index: 9999;
+	max-width: 843px;
+}
+#locationPopup .modal-content{
+	padding: 96px;
+}
+#locationPopup .modal-header,
+#locationPopup .modal-body{
+	padding: 0;
+}
+.cms-store-locations-html .modal-backdrop{
+	background-color: rgba(41, 41, 41, 0.6);
+}
+#locationPopup .close{
+	position: absolute;
+	right: 24px;
+	top: 24px;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -121,15 +141,18 @@
 	}
 }
 @media(max-width:991px){
+	#locationPopup .modal-content{
+		padding: 51px;
+	}
 	.mid{
 		padding-left: 15px;
 	}
-		.section .text-wrap{
-			width: 100%;
-			text-align: left!important;
-			padding:0!important;
-			padding-top: 40px!important;
-		}
+	.section .text-wrap{
+		width: 100%;
+		text-align: left!important;
+		padding:0!important;
+		padding-top: 40px!important;
+	}
 	.section-even .text-wrap{
 		order: 2;
 		width: 100%;
