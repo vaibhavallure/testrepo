@@ -671,6 +671,7 @@
   .celebPopup .next, .celebPopup .prev{
     top: 40%;
     height: 55px;
+    width: 20px;
   }
   .celebPopup .prev{
     left: 6px;
