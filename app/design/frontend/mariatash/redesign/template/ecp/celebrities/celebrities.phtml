@@ -9,7 +9,7 @@
                 <?php $counter=1; foreach($this->getCelebritiesCol() as $celebrity):
                     if($celebrity->getStatus()==1):?>
                         <?php $active = ($this->getCurrentCelebrityId() == $celebrity->getId()) ? 'class="active"' : '' ?>
-                        <div class="col-12 col-md-6 col-lg-4 mb-5 celeb-img-block" data-celeb_id="<?= $celebrity->getId() ?>" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
+                        <div class="col-12 col-md-6 col-lg-4 celeb-img-block" data-celeb_id="<?= $celebrity->getId() ?>" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
                             <div id="celebId_<?= $celebrity->getId() ?>" class="celebrity-img" style="background: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>);" data-id="<?= $celebrity->getId() ?>"></div>
                         </div>
                     <?php endif; endforeach; ?>
