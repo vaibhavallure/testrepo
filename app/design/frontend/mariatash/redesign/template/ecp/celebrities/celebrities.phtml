@@ -9,7 +9,7 @@
                 <?php $counter=1; foreach($this->getCelebritiesCol() as $celebrity):
                     if($celebrity->getStatus()==1):?>
                         <?php $active = ($this->getCurrentCelebrityId() == $celebrity->getId()) ? 'class="active"' : '' ?>
-                        <div class="col-12 col-md-6 col-lg-4 mb-5 celeb-img-block" data-celeb_id="<?= $celebrity->getId() ?>" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
+                        <div class="col-12 col-md-6 col-lg-4 celeb-img-block" data-celeb_id="<?= $celebrity->getId() ?>" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>  >
                             <div id="celebId_<?= $celebrity->getId() ?>" class="celebrity-img" style="background: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>);" data-id="<?= $celebrity->getId() ?>"></div>
                         </div>
                     <?php endif; endforeach; ?>
@@ -27,14 +27,15 @@
             </div>
             <div class="body modal-body big-popup-body col-12">
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="celeb-img big-popup-image"></div>
+                    <div class="col-lg-6 popup-left-section">
+                        <div class="celeb-img big-popup-image row"></div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 popup-right-section">
+                      <div class="row">
                         <div class=" big-popup-title">
-                            <h3 class="celeb-title"></h3><!--do not remove celeb-title class-->
+                            <h1 class="celeb-title text-uppercase"></h1><!--do not remove celeb-title class-->
                         </div>
-                        <div class="para-norm celeb-info"> <!--do not remove celeb-info class-->
+                        <div class="para-normal celeb-info"> <!--do not remove celeb-info class-->
                         </div>
                         <div class="product-info"><!--do not remove product-info class-->
                             <ul class="p-0">
@@ -42,6 +43,7 @@
                                 <li class="quick_link"></li>
                             </ul>
                         </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -129,8 +131,8 @@
 
     function setProduct(item) {
         product_info+='<li>\n' +
-            ' <div class="product-name">'+item["name"]+'</div>\n' +
-            ' <div class="quick_link"><a href="#">Quick View</a></div>\n' +
+            ' <div class="product-name info-text-two">'+item["name"]+'</div>\n' +
+            ' <div class="quick_link link-button"><a href="#">Quick View</a></div>\n' +
             '  </li>';
     }
     function setImg(img) {
