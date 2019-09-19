@@ -2457,7 +2457,7 @@ ul.tabs li:nth-child(3){
 
 /*celebrity page--------------------------------------*/
 .ecp-celebrities-index-index .simple-page-title {
-	margin: 24px 0 46px;
+	margin: 24px 0 46px !important;
 }
 .celebrity-img{
   width: 320px;
