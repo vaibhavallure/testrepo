@@ -1,4 +1,8 @@
-<div class="container celebrities">
+<p class="category-image"><img src="https://mariatash-design.allureinc.dev/media/catalog/category/catalog.jpg" alt="Jewelry" title="Jewelry"></p>
+<div id="category-title" class="page-title category-title simple-page-title">
+    <h1>Celebrity Clientele</h1>
+</div>
+<div class="container celebrities press-custom-container">
     <div class="row">
         <div class="col-12 ">
             <div class="row">
@@ -14,32 +18,29 @@
     </div>
 
     <div id="openModal" class="celebPopup"> <!--do not remove celebPopup class-->
-        <div class="pop-up-cover">
+        <div class="pop-up-cover big-popup-cover col-12">
+          <div class="row">
             <div class="pop-title modal-header">
                 <a href="#close" title="Close" class="close exit-large">
                     <div></div>
                 </a>
             </div>
-            <div class="body modal-body p-5 h-100">
-                <div class="row h-100">
-                    <div class="col-12 h-100">
-                        <div class="row h-100">
-                            <div class="col-12 col-md-5 col-lg-5 h-100">
-                                <div class="celeb-img w-100 h-100"></div>
-                            </div>
-                            <div class="col-12 col-md-7 col-lg-7">
-                                <div class="">
-                                    <h3 class="celeb-title"></h3><!--do not remove celeb-title class-->
-                                </div>
-                                <div class="para-norm celeb-info"> <!--do not remove celeb-info class-->
-                                </div>
-                                <div class="product-info"><!--do not remove product-info class-->
-                                    <ul class="p-0">
-                                        <li class="product-name"></li>
-                                        <li class="quick_link"></li>
-                                    </ul>
-                                </div>
-                            </div>
+            <div class="body modal-body big-popup-body col-12">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="celeb-img big-popup-image"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class=" big-popup-title">
+                            <h3 class="celeb-title"></h3><!--do not remove celeb-title class-->
+                        </div>
+                        <div class="para-norm celeb-info"> <!--do not remove celeb-info class-->
+                        </div>
+                        <div class="product-info"><!--do not remove product-info class-->
+                            <ul class="p-0">
+                                <li class="product-name"></li>
+                                <li class="quick_link"></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -49,6 +50,7 @@
             <div class="celeb-loader" style="display: none">
                 <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
             </div>
+          </div>
         </div>
     </div>
 </div>

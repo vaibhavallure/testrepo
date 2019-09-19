@@ -2759,10 +2759,10 @@ p.required {
 }
 
 /* Page Heading */
-.page-title h1, .page-title h2 {
+/* .page-title h1, .page-title h2 {
 	color: #38393D;
 	margin: 0 0 10px;
-}
+} */
 
 .customer-account-login .page-title h2, .checkout-multishipping-login .page-title h2
 {
@@ -4610,12 +4610,12 @@ textarea:focus, input:focus {
 }
 /********** Navigation > */
 /* ======================================================================================= */
-.discover-mt-navigation-menu {
+/* .discover-mt-navigation-menu {
 	background: none repeat scroll 0 0 #CFCFD0;
 	height: 31px;
-	/*    width: 960px;*/
+	/*    width: 960px;
 	margin: 0 0 0 -20px;
-}
+} */
 
 .discover-mt-navigation-menu .discover-mt-navigation-menu>ul {
 	height: 30px;
@@ -4623,7 +4623,7 @@ textarea:focus, input:focus {
 	width: auto;
 }
 
-.discover-mt-navigation-menu li.discover-mt-navigation {
+/* .discover-mt-navigation-menu li.discover-mt-navigation {
 	float: left;
 	font: 12px/29px dinmittelschriftregular;
 	height: 30px;
@@ -4631,11 +4631,11 @@ textarea:focus, input:focus {
 	text-transform: uppercase;
 	width: auto;
 	cursor: pointer;
-}
+} */
 
-.discover-mt-navigation-menu li.discover-mt-navigation:hover {
+/* .discover-mt-navigation-menu li.discover-mt-navigation:hover {
 	color: #906E39;
-}
+} */
 
 .discover-mt-navigation-menu .discover-mt-navigation.current-active {
 	color: #906E39;

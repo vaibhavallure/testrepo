@@ -1,3 +1,6 @@
+/*=====================*/
+/*CONTACT US*/
+/*=====================*/
 .cms-contact-us .page-title{
 	display: none;
 }
@@ -58,12 +61,110 @@
 .details{
 	padding-bottom: 2.5rem;
 }
+/*=====================*/
+/*STORE LOCATIONS*/
+/*=====================*/
+.cms-store-locations-html .page-title{
+	display: none;
+}
+.cms-store-locations-html .footer{
+	padding-top: 0!important;
+	margin-top: 60px;
+}
+.locations-wrapper{
+	padding-bottom: 180px;
+}
+.locations-wrapper .section,
+.locations-wrapper .section-even{
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 48px;
+}
+.locations-wrapper .img-wrap{
+	width: 793px;
+	height: 472px;
+}
+.locations-wrapper .img-wrap img{
+	height: 100%;
+	cursor: pointer;
+}
+.locations-wrapper .section .text-wrap{
+	padding-left: 30px;
+}
+.locations-wrapper .section-even .text-wrap{
+	padding-right: 30px;
+	text-align: right;
+}
+.locations-wrapper p{
+	font-size: 15px;
+	margin-bottom: 0;
+}
+.tel{display: inline-block;}
+.popups{
+	margin-top: 70px;
+	margin-bottom: 31px;
+}
+.mid{
+	padding-left: 4rem;
+}
+#locationPopup .modal-dialog{
+	z-index: 9999;
+	max-width: 843px;
+}
+#locationPopup .modal-content{
+	padding: 96px;
+}
+#locationPopup .modal-header,
+#locationPopup .modal-body{
+	padding: 0;
+}
+.cms-store-locations-html .modal-backdrop{
+	background-color: rgba(41, 41, 41, 0.6);
+}
+#locationPopup .close{
+	position: absolute;
+	right: 24px;
+	top: 24px;
+}
+/*=====================*/
+/*MEDIA QUERIES*/
+/*=====================*/
+@media(max-width: 1200px){
+	.locations-wrapper .img-wrap{
+		max-width: 400px;
+		height: auto;
+	}
+}
 @media(min-width:1024px ){
 	.other-contact-options{
 		margin-bottom: 235px;
 	}
 }
 @media(max-width:991px){
+	#locationPopup .modal-content{
+		padding: 51px;
+	}
+	.mid{
+		padding-left: 15px;
+	}
+	.section .text-wrap{
+		width: 100%;
+		text-align: left!important;
+		padding:0!important;
+		padding-top: 40px!important;
+	}
+	.section-even .text-wrap{
+		order: 2;
+		width: 100%;
+		text-align: left!important;
+		padding:0!important;
+		padding-top: 40px!important;
+	}
+	.locations-wrapper .section,
+	.locations-wrapper .section-even{
+		flex-direction: column;
+		align-items: flex-start;
+	}
 	.other-contact-options{
 		margin-bottom: 40px;
 	}
@@ -81,7 +182,13 @@
 }
 
 @media (min-width: 1800px){
-#container-cu {
-	margin-top: 130px;
+	#container-cu {
+		margin-top: 130px;
+	}
 }
+
+@media(max-width: 480px){
+	.locations-wrapper .img-wrap{
+		width: 100%;
+	}
 }

@@ -9,7 +9,7 @@ h1{
 	color: rgba(40,40,40,0.9);
 }
 
-.cms-page-view h1, .category-press h1{
+.cms-page-view h1, .category-press h1, .simple-page-title h1{
   font-size: 30px;
   text-transform: none;
   letter-spacing: 0;
@@ -166,6 +166,22 @@ h4{
 	font-size: 18px;
 }
 
+.simple-page-title h1{
+	text-align: center;
+}
+
+/* BIG POPUP COMMON CSS */
+.big-popup-cover {
+  width: 996px !important;
+  height: 670px;
+}
+.big-popup-image {
+  height: 574.4px;
+  width: 393px;
+}
+.big-popup-body {
+    padding: 48px 93px !important;
+}
 .product-attribute-name, ul.tabs li.active h4{
 	font-family: urw-din-bold;
 	font-size: 13px;
@@ -570,7 +586,7 @@ nav.mariatash-header {
   margin-top: 5px;
 }
 
-.catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom{
+.catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom{
   height:320px;
 }
 
@@ -2374,6 +2390,25 @@ table.data-table, .data-table tr {
 	margin-bottom: 0px;
   line-height: 5px;
 }
+ul.tabs li:first-child {
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+ul.tabs li:nth-child(2){
+	-ms-flex: 0 0 33.333333%;
+	 flex: 0 0 33.333333%;
+	 max-width: 33.333333%;
+}
+ul.tabs li:nth-child(3){
+	-ms-flex: 0 0 41.666667%;
+  flex: 0 0 41.666667%;
+  max-width: 41.666667%;
+}
+.discover-mt-navigation-menu {
+  display: none;
+}
+
 /*qty section*/
 
 .minus_qty,.plus_qty{
@@ -2420,25 +2455,15 @@ table.data-table, .data-table tr {
 
 
 /*celebrity page--------------------------------------*/
+.ecp-celebrities-index-index .simple-page-title {
+	margin: 24px 0 46px;
+}
 .celebrity-img{
-    width: 320px;
-    height: 320px;
-    background-size: cover!important;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.celebrity-img:hover {
-    box-shadow: 2px 2px 8px black;
-}
-
-.celebPopup .pop-up-cover{
-    width: 80%;
-    height: 80%;
-}
-.celebPopup .modal-body
-{
-    padding: 0px;
+  width: 320px;
+  height: 320px;
+  background-size: cover !important;
+  cursor: pointer;
+	margin: 0 auto;
 }
 .celebPopup .close{
     z-index: 2;
@@ -2557,4 +2582,3 @@ table.data-table, .data-table tr {
     top: 50%;
     left: 50%;
 }
-
