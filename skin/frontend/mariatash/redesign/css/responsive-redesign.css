@@ -329,6 +329,9 @@
   .padder {
     margin-bottom: 90px;
   }
+  .container.celebrities{
+    padding: 0 60px 120px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -473,6 +476,9 @@
   }
   #jewelry .special-menu img {
     width: 200px !important;
+  }
+  .container.celebrities {
+    padding: 0 20px 60px;
   }
 }
 
@@ -645,6 +651,13 @@
   }
   .social-media ul {
     padding-left: 15px;
+  }
+  .celeb-img-block{
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .container.celebrities{
+    padding: 0 45px 120px;
   }
 }
 
