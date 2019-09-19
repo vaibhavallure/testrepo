@@ -130,10 +130,7 @@
 /*MEDIA QUERIES*/
 /*=====================*/
 @media(max-width: 1200px){
-	.locations-wrapper .img-wrap{
-		max-width: 400px;
-		height: auto;
-	}
+	
 }
 @media(min-width:1024px ){
 	.other-contact-options{
@@ -168,6 +165,14 @@
 	.other-contact-options{
 		margin-bottom: 40px;
 	}
+}
+@media(max-width: 1024px){
+	.locations-wrapper .img-wrap{
+		max-width: 100%;
+		height: auto;
+	}
+}
+@media(max-width: 767px){
 	.contact-us-wrapper .custom_recaptcha{
 		display: flex;
 		justify-content: center;
@@ -180,7 +185,6 @@
 		margin-bottom: 30px;
 	}
 }
-
 @media (min-width: 1800px){
 	#container-cu {
 		margin-top: 130px;
