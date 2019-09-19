@@ -49,14 +49,14 @@
                             if(currunt_qty>1)
                                 currunt_qty--;
                             qtyObj.val(currunt_qty);
-                            jQuery(".total_qty").html(currunt_qty);
+                            jQuery(".total_qty span").html(currunt_qty);
                         });
                         jQuery(".plus_qty").on("click",function () {
                             var currunt_qty=parseInt(qtyObj.val());
                             if(currunt_qty<10)
                                 currunt_qty++;
                             qtyObj.val(currunt_qty);
-                            jQuery(".total_qty").html(currunt_qty);
+                            jQuery(".total_qty span").html(currunt_qty);
                         });
                     </script>
 

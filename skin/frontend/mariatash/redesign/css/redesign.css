@@ -1976,7 +1976,7 @@ span#popup_loader_register {
 	width: 229px;
 }
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup  {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -2135,7 +2135,7 @@ ul#foo4 {
 	padding: 0
 }
 
-.filterPopup .close div,.celebPopup .close div{
+.filterPopup .close div,.celebPopup .close div,.pressPopup .close div{
   background-image: url("../images/redesign/login-cross.png");
   width: 25px;
   height: 26px;
@@ -2254,7 +2254,7 @@ ul#foo4 {
 /*product detail page-------------------------------------------*/
 .containerImage img{
 	display: flex;
-	margin: 0 auto;
+	margin: 98px auto 0;
 }
 .image_carousel img{
 	width: 120px;
@@ -2317,8 +2317,28 @@ button#addtocart {
 ul.tabs {
   padding-inline-start: 15px;
 	margin-bottom: 0;
+	margin-top: 48px;
 }
-
+li#product_tabs_rpolicy_tabbed {
+  text-align: center;
+}
+table.data-table, .data-table tr {
+  display: grid;
+	margin-top: 5px;
+}
+.data-table td {
+  margin-bottom: 10px;
+}
+.add-to-cart .availability {
+  margin: 24px 0 25px;
+}
+.thumb.thumb1 img{
+	margin-top: 153px;
+}
+.thumb img{
+	border: 1px solid rgba(41,41,41,0.9);
+	margin-top: 10px;
+}
 /* ppp */
 
 /*select*/
@@ -2334,15 +2354,12 @@ ul.tabs {
 .chooseList ul li.active {
   border-bottom: 2px solid black;
 }
-.catalog-product-view ul {
-  padding-left: 0;
-}
 .chooseList {  /* col-12 CSS */
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 6px;
+  padding-left: 4px;
 }
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
@@ -2351,7 +2368,11 @@ ul.tabs {
 	flex-wrap: wrap;
 	margin-right: -15px;
 	margin-left: -15px;
-	padding-left: 0; /*For ul*/
+}
+.post-lengthds-lbl-options {
+  margin-top: 11px;
+	margin-bottom: 0px;
+  line-height: 5px;
 }
 /*qty section*/
 
@@ -2466,3 +2487,74 @@ ul.tabs {
     top: 50%;
     left: 50%;
 }
+
+/*press page--------------------------------------------*/
+.press-img{
+    width: 322px;
+    height: 433px;
+    background-size: 100% 100%!important;
+    cursor: pointer;
+    transition: .2s;
+    background-color: grey;
+    background-repeat: no-repeat;
+}
+.press-img:hover {
+    box-shadow: 2px 2px 8px black;
+}
+.scroll-loader{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+.pressPopup .pop-up-cover{
+    width: 500px;
+    height: 800px;
+}
+.pressPopup .modal-body
+{
+    padding: 0px;
+}
+.pressPopup .close{
+    z-index: 2;
+}
+.pressPopup .prev {
+    content: "";
+    background-image: url("../images/Popup-side-arrow.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    height: 50px;
+    width: 25px;
+    transform: rotate(180deg);
+    cursor: pointer;
+}
+.pressPopup .next {
+    content: "";
+    background-image: url(../images/Popup-side-arrow.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    height: 50px;
+    width: 25px;
+    cursor: pointer;
+}
+.pressPopup .next.disBtn {
+    background-image: url(../images/popup-light-arrow.png);
+    cursor: auto;
+    transform: rotate(180deg);
+}
+.pressPopup .prev.disBtn {
+    background-image: url(../images/popup-light-arrow.png);
+    cursor: auto;
+    transform: rotate(0deg);
+}
+.press-loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+

@@ -35,6 +35,7 @@
     <div class="std">
         <p class="para-normal"><?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?></p>
     </div>
+    <hr>
 <?php endif; ?>
 <!-- ADDED: Table with attributes with parameter "Visible on Product View Page on Front-end" set to Yes -->
 <?php
@@ -61,7 +62,7 @@ foreach($attributes as $attribute){
 ?>
 <?php if($showTable): ?>
 <table class="data-table">
-    <caption>Item Specifications</caption>
+    <caption class="product-attribute-name">Specifications</caption>
 <?php
 
 foreach($attributes as $attribute){
@@ -80,8 +81,8 @@ foreach($attributes as $attribute){
                         //aws02 - end
                         if($visibility){
                             echo '<tr style="display:'.$visibility.'">
-                                        <th>' . $attribute->getData('store_label') . '</th>
-                                        <td>' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
+                                        <th class="info-text-two">' . $attribute->getData('store_label') . '</th>
+                                        <td class="para-normal">' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
                                       </tr>';
                         }
                     }
