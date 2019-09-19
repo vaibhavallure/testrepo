@@ -329,12 +329,8 @@
   .padder {
     margin-bottom: 90px;
   }
-  .container.celebrities{
-    padding: 0 60px 120px;
-  }
   .celeb-info{
     margin-top: 9px;
-    padding-bottom: 120px;
   }
   .celebPopup .product-info {
     position: relative;
@@ -429,6 +425,12 @@
   .big-popup-image{
     height: 874.4px;
     width: 100%;
+  }
+  .container.celebrities{
+    padding: 0 60px 120px;
+  }
+  .big-popup-cover{
+    height: 996px;
   }
 }
 
@@ -650,6 +652,9 @@
     height: 352.4px;
     width: 100%;
     margin: 0 auto;
+  }
+  .container.celebrities{
+    padding: 0 40px 120px;
   }
 }
 
