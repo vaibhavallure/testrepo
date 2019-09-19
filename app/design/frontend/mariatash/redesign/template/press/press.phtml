@@ -1,506 +1,205 @@
-<!--<div id="publishImage" style="display:none;"></div>-->
-<style>
-.fb-share-button span,
-.fb-share-button iframe {
-    width: 55px !important;
-    height: 25px !important;
-}
-</style>
-<script type="text/javascript">// <![CDATA[
-    (function(w, d, load) {
-        var script,
-                first = d.getElementsByTagName('SCRIPT')[0],
-                n = load.length,
-                i = 0,
-                go = function() {
-            for (i = 0; i < n; i = i + 1) {
-                script = d.createElement('SCRIPT');
-                script.type = 'text/javascript';
-                script.async = true;
-                script.src = load[i];
-                first.parentNode.insertBefore(script, first);
-            }
-        }
-        if (w.attachEvent) {
-            w.attachEvent('onload', go);
-        } else {
-            w.addEventListener('load', go, false);
-        }
-    }(window, document,
-            ['//assets.pinterest.com/js/pinit.js']
-            ));
-// ]]></script>
-<script type="text/javascript">
-
-    var miVar = 0;
-    function isTouch() {
-        var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
-        return iOS;
-    }
-
-    function hideEmailToFriendPopup() {
-        jQuery('iframe#send-mail').hide();
-        jQuery('#emailToFriendOverlay').hide();
-    }
-
-    function windowOpn(url) {
-        window.open(url, "mywindow", "menubar=1,resizable=1,width=700,height=450");
-    }
-
-    jQuery(document).ready(function() {
-        jQuery('<div id="emailToFriendOverlay"></div>').appendTo('body');
-        jQuery('<img src="" id="current-press-cover" style="display: none"/>').appendTo('body');
-        jQuery('.images-press').show();
-
-        jQuery('html').click(function() {
-            hideEmailToFriendPopup();
-        });
-
-        jQuery('.mail').click(function(event) {
-            event.stopPropagation();
-        });
-
-        jQuery('.emailBtn').click(function(event) {
-            send(jQuery(this).attr('rel'));
-        });
-
-        jQuery('.prev').css('opacity', '.13');
-        jQuery('body').removeClass('categorypath-discover-maria-tash-press-html');
-        jQuery('body').addClass('categorypath-discover-maria-tash-press-html-w');
-
-        /*jQuery('.fancybox').click(function(){
-         //console.info( '.pressGallery'+jQuery(this).attr('data') );
-         imageSrc = jQuery('.pressGallery'+jQuery(this).attr('data')+' :eq(0) img').attr('src');
-         jQuery('#publishImage').text( imageSrc );
-
-         //console.info('------ '+jQuery('.pressGallery'+jQuery(this).attr('data')).length);
-         if( jQuery('.pressGallery'+jQuery(this).attr('data')).length >= 1 ){
-         //            fancyboxBeforeUpdate(jQuery(this).attr('data'), 0);
-         //            jQuery.fancybox.update();
-         showHideShareButtons(jQuery(this).attr('data'), 1);//2
-         sharePinit(jQuery(this).attr('data'), 1);
-         shareLikeTwitter(jQuery(this).attr('data'), 1);//2
-         shareLikeFb(jQuery(this).attr('data'), 1);
-         }
-         else {
-         jQuery( '#foo3_next'+jQuery(this).attr('data') ).hide();
-         jQuery( '#foo3_prev'+jQuery(this).attr('data') ).hide();
-         //            fancyboxBeforeUpdate(jQuery(this).attr('data'),0);
-         //            jQuery.fancybox.update();
-         showHideShareButtons(jQuery(this).attr('data'),0);
-         sharePinit(jQuery(this).attr('data'),0);
-         shareLikeTwitter(jQuery(this).attr('data'),0);
-         shareLikeFb(jQuery(this).attr('data'), 0);
-         }
-         });*/
-
-        var numPress = jQuery('ul.gallery').length - 1;
-        for (num = 0; num <= numPress; num++) {
-            if (jQuery('#gallery' + num + ' li').length == 1) {
-                jQuery('#foo3_prev' + num + ', #foo3_next' + num).remove();
-            }
-        }
-
-        jQuery(".fancybox").fancybox({
-            afterLoad: function() {
-                if (!isTouch()) {
-                    jQuery('div.fancybox-wrap').mouseover(function() {
-                        jQuery('div.fancybox-wrap').find('a.next, a.prev').css('display', 'block');
-                    });
-
-                    jQuery('div.fancybox-wrap').mouseout(function() {
-                        jQuery('div.fancybox-wrap').find('a.next, a.prev').css('display', 'none');
-                    });
-                }
-            },
-            onUpdate: function() {
-                jQuery('body').addClass('showtitle');
-                var newImageUrl = jQuery('.fancybox-inner .gallery img:first-child').attr('src');
-                jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
-
-            },
-            afterShow: function() {
-                if (isTouch()) jQuery('div.fancybox-wrap').find('a.next, a.prev').show();
-                jQuery('.social-mt').hide();
-                var press = parseInt(jQuery('.fancybox-inner .press:first').attr('id').substr(4));
-                imageSrc = jQuery('.pressGallery' + press + ':first img').attr('src');
-                jQuery('#current-press-cover').attr('src', imageSrc);
-                var pressSheets = jQuery('.pressGallery' + press).length;
-                if (pressSheets > 1) {
-                    updateImageNum(press, 1);
-                    fancyboxBeforeUpdate(press, 0);
-                    jQuery.fancybox.update();
-                    showHideShareButtons(press, 1);
-                    sharePinit(press, 1);
-                    shareLikeTwitter(press, 1);
-                    shareLikeFb(press, 1);
-                } else if (pressSheets == 1) {
-                    var sheet = parseInt(jQuery('.pressGallery' + press + ' img').attr('data')) == 1 ? 0 : 1;
-                    updateImageNum(press, 1);
-                    fancyboxBeforeUpdate(press, 0);
-                    jQuery.fancybox.update();
-                    showHideShareButtons(press, sheet);
-                    sharePinit(press, sheet);
-                    shareLikeTwitter(press, sheet);
-                    shareLikeFb(press, sheet);
-                }
-            },
-            afterClose: function() {
-                jQuery('#send-mail').hide();
-                // miVar = 3;
-
-                //console.info(miVar);
-                jQuery('ul.gallery li').each(function(index) {
-                    jQuery('#counterClick' + index).text('0');
-                    if (jQuery(this).hasClass('re-set')) {
-                        //alert(index+' == '+0);
-                        jQuery(this).eq(0).css('display', 'block');
-                        jQuery('.fancybox-wrap').mouseover(function() {
-                            jQuery('.prev, .next').show();
-                        }).mouseout(function() {
-                            jQuery('.prev, .next').hide();
-                        });
-                    }
-                    else {
-                        jQuery(this).css('display', 'none');
-                    }
-                });
-                jQuery('.next').css('opacity', '1');
-                jQuery('.prev').css('opacity', '.13');
-                jQuery('body').removeClass('showtitle');
-            },
-            fitToView: true,
-            scrolling: 'no',
-            autoSize: true,
-            closeClick: false,
-            openEffect: 'none',
-            closeEffect: 'none'
-        });
-
-<?php
-$pressId = Mage::app()->getRequest()->getParam('press');
-if (!empty($pressId)) {
-    ?>
-            jQuery('#fancybox<?php echo Mage::app()->getRequest()->getParam('press'); ?>').trigger('click');
-    <?php
-}
-?>
-    });
-    function updateImageNum(press, num) {
-        jQuery('#presspopup-title-' + press + ' span:first').text(num);
-    }
-
-    function fancyboxBeforeUpdate(press, itemIndex) {
-        var imgWidth = jQuery('.pressGallery' + press + ' :eq(' + itemIndex + ') img').width();
-        if (imgWidth) {
-            jQuery('#data' + press + ' p:first').css('max-width', imgWidth + 'px');
-            jQuery('#data' + press).css('width', (imgWidth + 42) + 'px');
-        }
-    }
-
-    function showHideShareButtons(press, sheet) {
-        jQuery('#social-mt' + press + '-' + sheet).show();
-        return;
-        for (i = 1; i <= 4; i++) {
-            if (i == sheet) {
-                jQuery('#social-mt' + press + '-' + sheet).show();
-            }
-        }
-    }
-
-    function nextImage(numImg) {
-        var elements = jQuery('ul li.pressGallery' + numImg).length - 1;
-        if (parseInt(jQuery('#counterClick' + numImg).text()) < elements) {
-            jQuery('.social-mt').hide();
-            jQuery('li.pressGallery' + numImg).each(function(index) {
-                var currentImageIndex = parseInt(jQuery('#counterClick' + numImg).text());
-                if (index == currentImageIndex + 1) {
-                    updateImageNum(numImg, index + 1);
-                    jQuery(this).css('display', 'block');
-                    imageSrc = jQuery('li.pressGallery' + numImg + ' :eq(' + index + ') img').attr('src');
-                    jQuery('#current-press-cover').attr('src', imageSrc);
-                    fancyboxBeforeUpdate(numImg, index);
-                    jQuery.fancybox.update();
-                    var val = index + 1;
-                    showHideShareButtons(numImg, val);
-                    sharePinit(numImg, val);
-                    shareLikeTwitter(numImg, val);
-                    shareLikeFb(numImg, val);
-                }
-                else {
-                    jQuery(this).css('display', 'none');
-                }
-            });
-            jQuery('#foo3_next' + numImg).css("opacity", "1");
-            jQuery('#foo3_prev' + numImg).css('opacity', '1');
-            counterClick = parseInt(jQuery('#counterClick' + numImg).text()) + 1;
-            jQuery('#counterClick' + numImg).text(counterClick);
-            //console.info(parseInt(jQuery( '#counterClick'+numImg).text())+' > '+elements);
-            if (parseInt(jQuery('#counterClick' + numImg).text()) == elements) {
-                jQuery('#foo3_next' + numImg).css('cursor', 'default');
-                jQuery('#foo3_next' + numImg).css('opacity', '.13');
-                jQuery('#foo3_prev' + numImg).css('opacity', '1');
-            }
-        }
-    }
-
-    function prevImage(numImg) {
-        if (parseInt(jQuery('#counterClick' + numImg).text()) > 0) {
-            jQuery('.social-mt').hide();
-            jQuery('li.pressGallery' + numImg).each(function(index) {
-                countClick = parseInt(jQuery('#counterClick' + numImg).text()) - 1;
-                if (index == countClick) {
-                    updateImageNum(numImg, index + 1);
-                    jQuery(this).css('display', 'block');
-                    imageSrc = jQuery('li.pressGallery' + numImg + ' :eq(' + index + ') img').attr('src');
-                    jQuery('#current-press-cover').attr('src', imageSrc);
-                    fancyboxBeforeUpdate(numImg, index);
-                    jQuery.fancybox.update();
-                    var val = index + 1;
-                    showHideShareButtons(numImg, val);
-                    sharePinit(numImg, val);
-                    shareLikeTwitter(numImg, val);
-                    shareLikeFb(numImg, val);
-                }
-                else {
-                    if (countClick >= 0) {
-                        jQuery(this).css('display', 'none');
-                    }
-                }
-            });
-            var counterClick = parseInt(jQuery('#counterClick' + numImg).text()) - 1;
-            counterClick = counterClick > 0 ? counterClick : 0;
-            jQuery('#counterClick' + numImg).text(counterClick);
-            jQuery('#foo3_prev' + numImg).css("opacity", "1");
-            jQuery('#foo3_next' + numImg).css("opacity", "1");
-
-            if (parseInt(jQuery('#counterClick' + numImg).text()) == 0) {
-                jQuery('#foo3_prev' + numImg).css('opacity', '.13');
-                jQuery('#foo3_next' + numImg).css("opacity", "1");
-            }
-        }
-    }
-
-    function windowOpn(url) {
-        window.open(url, "mywindow", "menubar=1,resizable=1,width=700,height=350");
-    }
-
-    function shareLikeFb(press, sheet) {
-        //console.log('fb' + press + '-' + sheet);
-        FB.XFBML.parse(document.getElementById('fb' + press + '-' + sheet));
-        //FB.XFBML.parse();
-    }
-
-    function sharePinit(press, sheet) {
-        /*jQuery('#pinit'+press+'-'+sheet).click(function(){
-         windowOpn('http://pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl(); ?>?imgpressfb='+press+'-'+sheet+'&fb=1&media='+jQuery('#publishImage').text()+'&description=Press Gallery');
-         });   */
-    }
-
-    function shareLikeTwitter(press, sheet) {
-        //TWITTER
-        jQuery('#twitter' + press + '-' + sheet).sharrre({
-            share: {twitter: true},
-            url: jQuery(this).attr('data-url'),
-            enableHover: false,
-            enableTracking: true,
-            template: '<a class="boxx" href="#"><div class="count" href="#">{total}</div><div class="share"><span></span>Tweet</div></a>',
-            buttons: {twitter: {via:'venus_mariatash', hashtags:'mariatash'}},
-            click: function(api, options) {
-                api.simulateClick();
-                api.openPopup('twitter');
-            }
-        });
-    }
-
-    function getParam(name) {
-        var regexS = "[\\?&]" + name + "=([^&#]*)";
-        var regex = new RegExp(regexS);
-        var tmpURL = window.location.href;
-        var results = regex.exec(tmpURL);
-        if (results == null)
-            return "";
-        else
-            return results[1];
-    }
-
-    window.onload = function() {
-        if (getParam('imgpressfb').length > 0) {
-            var elements = getParam('imgpressfb').split('-');
-            jQuery("#fancybox" + elements[0]).trigger('click');
-        }
-    }
-
-</script>
-
-<div class="press-custom-container">
-  <div class="second-header-image">
-    <img class="w-100" src="https://mariatash-design.allureinc.dev/media/wysiwyg/catalog.jpg" alt="">
-  </div>
-  <div class="press-title col-12 text-center">
-    <div class="row justify-content-center">
-      <h1 class="">Press Features</h1>
-    </div>
-  </div>
-  <?php $collection = Mage::getModel('ecp_press/press')->getCollection()->addFilter('status', 1)->setOrder('publish_date'); ?>
-  <div class="ecp-press-index-index col-12">
-      <div class="press-list row">
+<div class="container press">
+    <div class="row">
         <div class="col-12">
-          <ul class="images-press row" style="display:none;">
-              <?php $i = 0; ?>
-              <?php foreach ($collection as $item) {
-                  $numImages = 1; ?>
-                  <li class="col text-center"><a class="fancybox" href="#data<?php echo $i; ?>" id="fancybox<?php echo $i; ?>" data="<?php echo $i; ?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>"/></a></li>
-                  <div id="data<?php echo $i; ?>" class="press" style="display:none">
-                  <!-- <p style="text-align:left;"><//?php echo $item->getTitle() . ' ' . $item->getDescription() .' ';
-
-                  $date = date_create($item->getPublishDate());
-                  echo date_format($date, 'd/M/Y'); ?></p> -->
-                  <?php if(!empty($item->getOriginalLink())):?>
-                  <p style="text-align:left; margin-bottom: 10px;"><a target="_blank" href='<?php echo $item->getOriginalLink()?>'><?php echo $item->getOriginalName() ?></a></p>
-                  <?php endif;?>
-                      <div class="navi">
-                          <a href="#" id="foo3_prev<?php echo $i; ?>" onclick="prevImage(<?php echo $i; ?>);" class="prev disabled" style="display: none;"><span>prev</span></a>
-                          <ul class="gallery" id="gallery<?php echo $i; ?>">
-                              <?php if ($item->getImageOne() != '' && $item->getImageTwo() == '') { ?>
-                                  <li class="pressGallery<?php echo $i; ?> re-set" style="text-align:center;">
-                                      <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>" data="1"/>
-                                  </li>
-      <?php } else { ?>
-                                  <?php if ($item->getImageTwo() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?> re-set" style="text-align:center;"><!-- re-set -->
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTwo(); ?>" data="2"/>
-                                      </li>
-                                  <?php } ?>
-                                  <?php if ($item->getImageTree() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTree(); ?>" data="3"/>
-                                      </li><!-- 666,868-->
-                                  <?php } ?>
-                                  <?php if ($item->getImageFour() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFour(); ?>" data="4"/>
-                                      </li>
-                                 <?php } ?>
-                                 <?php if ($item->getImageFive() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFive(); ?>" data="5"/>
-                                      </li>
-                                  <?php } ?>
-                                  <?php if ($item->getImageSix() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSix(); ?>" data="6"/>
-                                      </li>
-                                  <?php } ?>
-                                  <?php if ($item->getImageSeven() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSeven(); ?>" data="7"/>
-                                      </li>
-                                  <?php } ?>
-                                  <?php if ($item->getImageEight() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageEight(); ?>" data="8"/>
-                                      </li>
-                                  <?php } ?>
-                                  <?php if ($item->getImageNine() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageNine(); ?>" data="9"/>
-                                      </li>
-                                  <?php } ?>
-                                  <?php if ($item->getImageTen() != '') {
-                                      $numImages++; ?>
-                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTen(); ?>" data="10"/>
-                                      </li>
-                                  <?php } ?>
-      <?php } ?>
-                          </ul>
-                          <a href="#" id="foo3_next<?php echo $i; ?>" onclick="nextImage(<?php echo $i; ?>);" class="next" style="display: none;"><span>next</span></a>
-                      </div>
-                      <!--p style="text-align:center;"><?php echo $item->getDescription(); ?></p-->
-                      <script type="text/javascript">
-         //vertical align gallery buttons
-         var top = ((jQuery('.pressGallery' + '<?php echo $i; ?> img').eq(0).height()) / 2) - 25;
-         jQuery('.pressGallery' + '<?php echo $i; ?> img').css('top', top);
-                      </script>
-                      <div class="presspopup-bottom">
-                              <span class="number_img" id="presspopup-title-<?php echo $i ?>"><span></span> of <?php echo ($numImages - 1) <= 1 ? '1 Image' : ($numImages - 1) . ' Images' ?></span>
-                              <?php for ($counter = 0; $counter < $numImages; $counter++) { ?>
-                              <div class="social-mt" id="social-mt<?php echo $i; ?>-<?php echo $counter; ?>" style="display:none;">
-                                  <div id="fb<?php echo $i; ?>-<?php echo $counter; ?>" class="fb-share-button" data-layout="button" data-href="<?=$this->helper('core/url')->getCurrentUrl().'?fb=1&imgpressfb='.$i.'-'.$counter.'-'.$item->getId();?>" data-width="450"></div>
-                                  <div id="twitter<?php echo $i; ?>-<?php echo $counter; ?>" data-url="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>?imgpressfb=<?php echo $i; ?>-<?php echo $counter; ?>-<?php echo $item->getId(); ?>&fb=1" data-text="Venus by Maria Tash was featured in <?=$item->getTitle();?>" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none"></div>
-
-                                  <?php
-                                  switch ($counter) {
-                                      case 0: $_image = $item->getImageOne();
-                                          break;
-                                      case 1: $_image = $item->getImageTwo();
-                                          break;
-                                      case 2: $_image = $item->getImageTree();
-                                          break;
-                                      case 3: $_image = $item->getImageFour();
-                                          break;
-                                  }
-                                  ?>
-
-                                  <div id="pinit<?php echo $i . '-' . $counter; ?>">
-                                      <a id='pinBtn' data-pin-config='beside' data-pin-do="buttonPin" href="//pinterest.com/pin/create/button/?url=<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $_image; ?>&media=<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $_image; ?>&description=Venus by Maria Tash featured in <?=$item->getTitle();?>">Pin it</a>
-                                  </div>
-
-                                 <!--div id="pinit<?php echo $i; ?>-<?php echo $counter; ?>">
-                                     <a data-pin-config="above" href="javascript:;"  data-pin-do="buttonPin"/>
-                                         <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png"/>
-                                     </a>
-                                 </div-->
-                                  <!-- <a class="iframe" href="<?php echo Mage::getUrl('tattoo/index/send');?>?page=<?=urlencode($this->helper('core/url')->getCurrentUrl().'?fb=1&imgpressfb='.$i.'-'.$counter.'-'.$item->getId());?>&img=<?=urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/press/".$_image);?>&type=tattoo"> -->
-                                  <div id="mail">
-                                      <div class="button mail">
-                                          <a href="javascript:;">
-                                              <div class="emailBtn" rel="<?=urlencode($this->helper('core/url')->getCurrentUrl()).'%3Fimgpressfb%3D'.$i.'-'.$counter.'-'.$item->getId();?>|<?=urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/press/".$_image);?>">
-                                                  <img id="imgMail" src="<?=$this->getSkinUrl('images/social_networking_iconpack/email_32.png');?>" />
-                                                  <span class="share">Email</span>
-                                              </div>
-                                          </a>
-                                      </div>
-                                  </div>
-                                  <div id="print"><div class="button print"><a href="#" onclick="javascript:print();"><div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>" /><span class="share">Print</span></div></a></div></div>
-                              </div>
-      <?php } ?>
-                      </div>
-                      <p id="counterClick<?php echo $i; ?>" style="display: none">0</p>
-                  </div>
-      <?php $i++; ?>
-  <?php } ?>
-          </ul>
+            <div class="row main-press-block">
+                <?php foreach($this->getPressCol() as $press):
+                    if($press->getStatus()==1):?>
+                        <div class="col-12 col-md-6 col-lg-4 mb-5 press-img-block" data-press_id="<?= $press->getId() ?>" >
+                            <div id="pressId_<?= $press->getId() ?>" class="press-img" style="background: url(<?php echo $this->getImagePath()."".$press->getImageOne(); ?>);" data-id="<?= $press->getId() ?>"></div>
+                        </div>
+                    <?php endif; endforeach; ?>
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
+    <div class="scroll-loader" style="display: none">
+        <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
+    </div>
+
+    <div id="openModal" class="pressPopup"> <!--do not remove pressPopup class-->
+        <div class="pop-up-cover">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body p-5 h-100">
+                <div class="row h-100">
+                    <div class="col-12 h-100">
+                        <div class="row h-100">
+                            <div class="col-12 h-100">
+                                <div class="p-img w-100 h-100 bg-dark"></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-left press_title">my title</div>
+                                    <div class="col-6 text-right press_publish_date">jan 2, 2019</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prev" data-current="0"></div>
+            <div class="next" data-current="0"></div>
+            <div class="press-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
+            </div>
+        </div>
+    </div>
 </div>
-<!--script type="text/javascript" src="<?php echo $this->getSkinUrl('js/pinit.js'); ?>"></script-->
 
-<iframe frameborder="0" id="send-mail" allowTransparency="true" frameBorder="0" src="" width="380" height="465" style="position: absolute; top:20px; left: 50px; display: none; border: none;"></iframe>
+<script>
+    /*press list loading-------------------------------------*/
+    var pressActionUrl="<?= $this->getPressActionUrl() ?>";
+    var current_page=2;
+    var mediaPath="<?= $this->getImagePath() ?>";
+    var lastPage=<?= $this->getLastPage() ?>;
 
-<script type="text/javascript">
-    function send(url) {
-        var data = url.split('|');
-        url = data[0]; img = data[1];
-        var $loading = jQuery("#send-mail");
-        var windowH = jQuery(window).height();
-        var windowW = jQuery(window).width();
-        jQuery('#emailToFriendOverlay').show();
-        $loading.css({
-            position: "fixed",
-            left: ((windowW - $loading.outerWidth()) / 2 + jQuery(document).scrollLeft()),
-            top: ((windowH - $loading.outerHeight()) / 2), //+ jQuery(document).scrollTop()
-            'z-index': 999999
-        }).attr('src', '<?php echo Mage::getUrl('tattoo/index/send'); ?>?page=' + url + '&img=' + img + '&type=press').load(function(){jQuery(this).show().unbind('load')});
+    jQuery(window).on("scroll", function() {
+
+        var scrollHeight = jQuery(document).height();
+        var scrollPosition = jQuery(window).height() + jQuery(window).scrollTop();
+        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+            console.log(current_page,lastPage);
+            if(current_page<=lastPage) {
+                  load();
+            }
+        }
+    });
+
+    function load() {
+        jQuery(".scroll-loader").show();
+        jQuery.post(pressActionUrl,
+            {
+                page: current_page
+            },
+            function(data, status){
+                setList(JSON.parse(data));
+                jQuery(".scroll-loader").hide();
+                current_page++;
+            });
     }
+    function setList(data) {
+        var list="";
+        data.forEach(function (item,key) {
+            var press_id=item['press_id'];
+            var image_one=item['image_one'];
+
+            list+='<div class="col-12 col-md-6 col-lg-4 mb-5 press-img-block" data-press_id="'+press_id+'" >\n' +
+                '<div id="pressId_'+press_id+'" class="press-img" style="background: url('+mediaPath+''+image_one+');" data-id="'+press_id+'"></div>\n' +
+                '</div>';
+        });
+        jQuery(".main-press-block").append(list);
+    }
+
+    /*press list loading end-------------------------------------*/
+
+    var popupActionUrl="<?= $this->getPopUpActionUrl() ?>";
+    var current_images="";
+    var current_images_length="";
+
+    jQuery('.main-press-block').on('click', '.press-img',function(){
+        clearPage();
+        jQuery(".pressPopup").css({"opacity": "1", "pointer-events": "auto"});
+        jQuery(".press-loader").show();
+        var pressId=jQuery(this).attr("data-id");
+        jQuery.post(popupActionUrl,
+            {
+                id: pressId
+            },
+            function(data, status){
+                var response=JSON.parse(data);
+                jQuery(".press_title").html(response.title);
+                jQuery(".press_publish_date").html(response.publish_date);
+
+                var images=response.img;
+                current_images=images;
+                current_images_length=current_images.length;
+                setImage(0);
+                jQuery(".pressPopup .next,.pressPopup .prev").attr("data-pressId",pressId);
+                jQuery(".pressPopup .next,.pressPopup .prev").attr("data-current",0);
+                jQuery(".press-loader").hide();
+                setButtons(pressId);
+            });
+    });
+
+    function clearPage() {
+        jQuery(".p-img").css({"background-image":"","background-size":""});
+        jQuery(".press_title").html("");
+        jQuery(".press_publish_date").html("");
+    }
+    function setImage(data_id) {
+        var img = mediaPath+""+current_images[data_id];
+        jQuery(".p-img").css({"background-image":"url("+img+")","background-size":"cover"});
+    }
+
+    jQuery(".pressPopup .next").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var next_id=current_id+1;
+        if(current_images_length>1 && current_images_length>(next_id))
+        {
+            setImage(next_id);
+
+            if(current_images_length!=next_id && next_id!=0)
+                jQuery(".pressPopup .next,.pressPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-pressId"));
+
+            jQuery(".pressPopup .next,.pressPopup .prev").attr("data-current",next_id);
+        }else {
+            nextPress(jQuery(this).attr("data-pressId"));
+        }
+    });
+    jQuery(".pressPopup .prev").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var prev_id=current_id-1;
+
+        if(current_images_length>1 && 0<=prev_id)
+        {
+            setImage(prev_id);
+
+            if(current_images_length!=prev_id && prev_id!=0)
+                jQuery(".pressPopup .next,.pressPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-pressId"));
+
+            jQuery(".pressPopup .next,.pressPopup .prev").attr("data-current",prev_id);
+        }
+        else {
+            prevPress(jQuery(this).attr("data-pressId"));
+        }
+    });
+
+
+    function nextPress(id) {
+        var pressId="#pressId_"+id;
+        var nextPressId= jQuery(pressId).parent('.press-img-block').next().attr("data-press_id");
+        jQuery(".main-press-block #pressId_"+nextPressId).trigger("click");
+    }
+    function prevPress(id) {
+        var pressId="#pressId_"+id;
+        var nextPressId= jQuery(pressId).parent('.press-img-block').prev().attr("data-press_id");
+        jQuery("#pressId_"+nextPressId).trigger("click");
+    }
+    function setButtons(id) {
+        var pressId="#pressId_"+id;
+
+        if(jQuery(pressId).parent('.press-img-block').next().length) {
+            jQuery(".pressPopup .next").removeClass("disBtn");
+        }
+         else {
+            jQuery(".pressPopup .next").addClass("disBtn");
+        }
+
+        if(jQuery(pressId).parent('.press-img-block').prev().length)
+            jQuery(".pressPopup .prev").removeClass("disBtn");
+        else
+            jQuery(".pressPopup .prev").addClass("disBtn");
+
+    }
+
+    jQuery(".pressPopup .close").on('click',function(){
+        jQuery(".pressPopup").css({"opacity":"0","pointer-events":"none"});
+    });
+
 </script>
