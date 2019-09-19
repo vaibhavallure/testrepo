@@ -2358,8 +2358,8 @@ table.data-table, .data-table tr {
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 6px;
+  padding-left: 4px;
 }
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
@@ -2368,7 +2368,11 @@ table.data-table, .data-table tr {
 	flex-wrap: wrap;
 	margin-right: -15px;
 	margin-left: -15px;
-	padding-left: 0; /*For ul*/
+}
+.post-lengthds-lbl-options {
+  margin-top: 11px;
+	margin-bottom: 0px;
+  line-height: 5px;
 }
 /*qty section*/
 
