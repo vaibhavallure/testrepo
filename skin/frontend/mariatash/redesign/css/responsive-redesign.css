@@ -670,8 +670,13 @@
   }
   .celebPopup .next, .celebPopup .prev{
     top: 40%;
-    left: 6px;
     height: 55px;
+  }
+  .celebPopup .prev{
+    left: 6px;
+  }
+  .celebPopup .next{
+    right: 6px;
   }
   .big-popup-body{
     padding: 28px 33px !important;
