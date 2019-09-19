@@ -170,6 +170,18 @@ h4{
 	text-align: center;
 }
 
+/* BIG POPUP COMMON CSS */
+.big-popup-cover {
+  width: 996px;
+  height: 670px;
+}
+.big-popup-image {
+  height: 574.4px;
+  width: 393px;
+}
+.big-popup-body {
+    padding: 48px 93px;
+}
 .product-attribute-name, ul.tabs li.active h4{
 	font-family: urw-din-bold;
 	font-size: 13px;
@@ -2449,22 +2461,9 @@ ul.tabs li:nth-child(3){
 .celebrity-img{
   width: 320px;
   height: 320px;
-  background-size: cover!important;
+  background-size: cover !important;
   cursor: pointer;
 	margin: 0 auto;
-}
-
-.celebrity-img:hover {
-    box-shadow: 2px 2px 8px black;
-}
-
-.celebPopup .pop-up-cover{
-    width: 80%;
-    height: 80%;
-}
-.celebPopup .modal-body
-{
-    padding: 0px;
 }
 .celebPopup .close{
     z-index: 2;
@@ -2583,4 +2582,3 @@ ul.tabs li:nth-child(3){
     top: 50%;
     left: 50%;
 }
-
