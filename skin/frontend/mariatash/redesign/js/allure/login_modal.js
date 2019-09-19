@@ -261,8 +261,8 @@ function openDelMyAccountModal(){
     unScrollBody();
 };
 function scrollBody() {
-    jQuery("body").css({"position":"static","overflow":"auto","width":"100%"});
+    jQuery("body").css({"position":"static","overflow":"auto","width":"auto"});
 }
 function unScrollBody() {
-    jQuery("body").css({"position":"fixed","overflow":"hidden","width":"auto"});
+    jQuery("body").css({"position":"fixed","overflow":"hidden","width":"100%"});
 }
