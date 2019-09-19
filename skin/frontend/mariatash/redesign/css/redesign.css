@@ -2273,10 +2273,10 @@ ul#foo4 {
 	display: flex;
 	margin: 98px auto 0;
 }
-.image_carousel img{
+/*.image_carousel img{
 	width: 120px;
   height: 120px;
-}
+}*/
 .catalog-product-view .regular-price span {
   font-size: 22px;
   font-family: urw-din-xlight;
@@ -2605,4 +2605,25 @@ ul.tabs li:nth-child(3){
     position: absolute;
     top: 50%;
     left: 50%;
+}
+.insta-main,.recently-view,.you_may_like{
+    position: relative;
+    width: 100%;
+    margin: 30px 0px;
+}
+.you_may_like{
+    margin: 30px 0px 100px;
+}
+.insta-main .image_carousel,.recently-view .image_carousel,.you_may_like .image_carousel{
+    width: 80%;
+    overflow: hidden;
+    position: relative;
+    margin: auto
+}
+ .block-viewed #foo2 li img,.image_carousel #foo4 li img{
+    background: #f2f2f2!important;
+}
+.you_may_like #foo4 li {
+    display: block;
+    margin: 0 9px 0 0;
 }
