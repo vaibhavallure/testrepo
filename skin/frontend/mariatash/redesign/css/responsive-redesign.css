@@ -337,6 +337,9 @@
     bottom: 0;
     margin-top: 30px;
   }
+  .big-popup-body{
+    padding: 28px 93px !important;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
