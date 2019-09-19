@@ -329,9 +329,6 @@
   .padder {
     margin-bottom: 90px;
   }
-  .celeb-info{
-    margin-top: 9px;
-  }
   .celebPopup .product-info {
     position: relative;
     bottom: 0;
@@ -434,6 +431,12 @@
   }
   .big-popup-cover{
     height: 996px;
+  }
+  .celebPopup .next, .celebPopup .prev{
+    top: 47%;
+  }
+  .celeb-info{
+    margin-top: 30px;
   }
 }
 
