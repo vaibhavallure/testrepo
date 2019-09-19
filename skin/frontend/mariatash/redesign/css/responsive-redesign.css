@@ -332,6 +332,15 @@
   .container.celebrities{
     padding: 0 60px 120px;
   }
+  .celeb-info{
+    margin-top: 9px;
+    padding-bottom: 120px;
+  }
+  .celebPopup .product-info {
+    position: relative;
+    bottom: 0;
+    margin-top: 30px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -416,6 +425,10 @@
   .filterPopup .selected-filters .actions.current{
   	width: 50%;
     padding: 0 18px 0px;
+  }
+  .big-popup-image{
+    height: 874.4px;
+    width: 100%;
   }
 }
 
@@ -629,6 +642,15 @@
   .product-shop > .row {
     padding: 0 20px !important;
   }
+  .big-popup-image {
+    height: 434.4px;
+    width: 100%;
+  }
+  .big-popup-image {
+    height: 352.4px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 
 /* Mobile landscape */
@@ -658,6 +680,13 @@
   }
   .container.celebrities{
     padding: 0 45px 120px;
+  }
+  .big-popup-image {
+    height: 707.4px;
+    width: 100%;
+  }
+  .big-popup-body {
+    padding: 48px 83px !important;
   }
 }
 
