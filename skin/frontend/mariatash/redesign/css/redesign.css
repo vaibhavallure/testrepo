@@ -2536,6 +2536,7 @@ ul.tabs li:nth-child(3){
   position: absolute;
   top: 50%;
   left: 50%;
+	transform: translate(-50%, -50%);
 }
 .container.celebrities {
 	padding: 0 15px 60px;
@@ -2596,8 +2597,9 @@ ul.tabs li:nth-child(3){
 }
 .press-loader{
     position: absolute;
-    top: 50%;
+		top: 56%;
     left: 50%;
+    transform: translate(-50%, -50%);
 }
 .insta-main,.recently-view,.you_may_like{
     position: relative;
