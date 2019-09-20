@@ -10850,7 +10850,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .customer-address-form .main, .newsletter-manage-index .main,
 .customer-paymentinfo-index .main {
 	padding: 0 0 30px 0;
-	position: relative;
+	position: static;
 }
 
 .sales-order-shipment {
@@ -10866,7 +10866,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 }
 
 .sales-order-shipment .main-container, .sales-order-view .main-container,
-.customer-account-index .main-container, .sales-order-history .main-container,
+ .sales-order-history .main-container,
 .wishlist-index-share .main-container, .wishlist-index-index .main-container,
 .customer-account-edit .main-container, .customer-address-index .main-container,
 .customer-address-form .main-container, .newsletter-manage-index .main-container,

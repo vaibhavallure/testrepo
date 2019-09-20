@@ -662,7 +662,7 @@ div.tab button.active {
 .mt-new-myaccount-submenu{
 	display: table-cell;
     height: 100%;
-    padding-left: 20px;
+    /*padding-left: 20px;*/
     width: 50%;
 }
 
@@ -746,7 +746,7 @@ div.a-column.a-span-last {
 /*new myaccount dashbord end*/
 
 .mt-myaccount-new .page-title.myaccount-page-tilte{
-	padding-left: 20px;
+	/*padding-left: 20px;*/
 }
 
 .mt-myaccount-new .page-title h3{
