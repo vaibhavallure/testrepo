@@ -435,11 +435,17 @@
   .celebPopup .next, .celebPopup .prev{
     top: 47%;
   }
+  .celebPopup .next {
+    right: 18px;
+  }
+  .celebPopup .prev{
+    left: 18px;
+  }
   .celeb-info{
     margin-top: 30px;
   }
   .big-popup-body {
-    padding: 28px 33px !important;
+    padding: 28px 75px !important;
   }
 }
 
