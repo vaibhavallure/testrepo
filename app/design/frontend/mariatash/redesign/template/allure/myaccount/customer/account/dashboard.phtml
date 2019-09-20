@@ -24,108 +24,177 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<div class="second-header-image">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+</div>
+
 <div class="dashboard">
-
-	<div class="mt-new-myaccount-banner">
-    	<div class="mt-myaccount-banner-ya">
-    		<div class="banner-ya-img">
-				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+	<div class="container">
+		<div class="mt-new-myaccount-dashbord">
+			<div class="page-title myaccount-page-tilte">
+				<h1>
+					<?php
+					$isSidebar = true;
+					$request = Mage::app()->getRequest();
+					if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
+					{ 
+						echo $this->__('My Wishlist');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderview'){
+						echo $this->__('My Orders');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderinvoice'){
+						echo $this->__('My Orders');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderhistory'){
+						echo $this->__('My Orders');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesordershipment'){
+						echo $this->__('My Orders');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountedit'){
+						echo $this->__('Account Information');
+					}elseif($request->getModuleName().$request->getControllerName() == 'customeraddress'){
+						echo $this->__('Address Book');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'newslettermanageindex'){
+						echo $this->__('Newsletter');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customerpaymentinfoindex'){
+						echo $this->__('My Saved Cards');
+					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'myaccountindexindex'){
+						$isSidebar = true;
+					}else{
+						$session = Mage::getSingleton('customer/session');
+						$name = "Guest";
+						if($session->isLoggedIn()){
+							$customer = $session->getCustomer();
+							$name = $customer->getFirstname();
+						}
+						echo "Welcome, ".$name;
+						$isSidebar = false;
+					} ?>
+				</h1>
 			</div>
-    	</div>
-    </div>
-	
-    <div class="mt-new-myaccount-dashbord">
-    	<div class="mt-new-myaccount-menu">
-    		<div class="mt-new-myaccount-submenu">
-    			<a href="<?php echo Mage::getUrl('myaccount')?>">
-    				<div class="a-box ya-card--rich">
-    					<div class="a-box-inner">
-						    <div class="a-row">
-						        <div class="a-column a-span3">
-						            <img class="myaccount-dashbord-img mt-product-img" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/diamond.png')?>">
-						        </div>
-						        <div class="a-column a-span9 a-span-last">
-						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
-						                My Products
-						            </h2>
-						            <span class="a-color-secondary">Track, return, or buy things again</span>
-						        </div>
-						    </div>
+			<div class="mt-new-myaccount-menu">
+				<div class="flex-row">
+					<div class="flex-item">
+						<a href="<?php echo Mage::getUrl('myaccount')?>">
+						<div class="img-wrap">
+							<img src="<?php echo $this->getSkinUrl('images/sample.png'); ?>" class="img-responsive">
+						</div>
+						<div class="text-wrap">
+							MY PRODUCTS
+						</div>
+					</a>
+					</div>
+					<div class="flex-item">
+						<a href="<?php echo Mage::getUrl('customer/account/edit')?>">
+						<div class="img-wrap">
+							<img src="<?php echo $this->getSkinUrl('images/sample.png'); ?>" class="img-responsive">
+						</div>
+						<div class="text-wrap">
+							LOGIN & SECURITY
+						</div>
+					</a>
+					</div>
+					<div class="flex-item">
+						<a href="<?php echo Mage::getUrl('customer/address')?>">
+						<div class="img-wrap">
+							<img src="<?php echo $this->getSkinUrl('images/sample.png'); ?>" class="img-responsive">
+						</div>
+						<div class="text-wrap">
+							ADDRESSES
+						</div>
+					</a>
+					</div>
+					<div class="flex-item">
+						<a href="<?php echo Mage::getUrl('customer/paymentinfo')?>">
+						<div class="img-wrap">
+							<img src="<?php echo $this->getSkinUrl('images/sample.png'); ?>" class="img-responsive">
+						</div>
+						<div class="text-wrap">
+							PAYMENT OPTIONS
 						</div>
 					</div>
-    			</a>
-    		</div>
-    		
-    		<div class="mt-new-myaccount-submenu">
-    			<a href="<?php echo Mage::getUrl('customer/account/edit')?>">
-    				<div class="a-box ya-card--rich">
-    					<div class="a-box-inner">
-						    <div class="a-row">
-						        <div class="a-column a-span3">
-						            <img class="myaccount-dashbord-img mt-login" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/sign-in-lock.png')?>">
-						        </div>
-						        <div class="a-column a-span9 a-span-last">
-						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
-						                Login & security
-						            </h2>
-						            <span class="a-color-secondary">Edit login, name, and mobile number</span>
-						        </div>
-						    </div>
-						</div>
-					</div>
-    			</a>
-    		</div>
-    	</div>
-    	<div class="mt-new-myaccount-menu">
-    		<div class="mt-new-myaccount-submenu">
-    			<a href="<?php echo Mage::getUrl('customer/address')?>">
-    				<div class="a-box ya-card--rich">
-    					<div class="a-box-inner">
-						    <div class="a-row">
-						        <div class="a-column a-span3">
-						            <img class="myaccount-dashbord-img mt-address" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/pin_1.png')?>">
-						        </div>
-						        <div class="a-column a-span9 a-span-last">
-						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
-						                Addresses
-						            </h2>
-						            <span class="a-color-secondary">Edit addresses for orders and gifts</span>
-						        </div>
-						    </div>
-						</div>
-					</div>
-    			</a>
-    		</div>
-    		
-    		<div class="mt-new-myaccount-submenu">
-    			<a href="<?php echo Mage::getUrl('customer/paymentinfo')?>">
-    				<div class="a-box ya-card--rich">
-    					<div class="a-box-inner">
-						    <div class="a-row">
-						        <div class="a-column a-span3">
-						            <img class="myaccount-dashbord-img mt-pay" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/Payments.png')?>">
-						        </div>
-						        <div class="a-column a-span9 a-span-last">
-						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
-						                Payment options
-						            </h2>
-						            <span class="a-color-secondary">Edit or add payment methods</span>
-						        </div>
-						    </div>
-						</div>
-					</div>
-    			</a>
-    		</div>
-    	</div>
-    </div>
+				</a>
+				</div>
 
-    
+				<!-- <div class="mt-new-myaccount-submenu">
+					<a href="<?php echo Mage::getUrl('customer/account/edit')?>">
+						<div class="a-box ya-card--rich">
+							<div class="a-box-inner">
+								<div class="a-row">
+									<div class="a-column a-span3">
+										<img class="myaccount-dashbord-img mt-login" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/sign-in-lock.png')?>">
+									</div>
+									<div class="a-column a-span9 a-span-last">
+										<h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+											Login & security
+										</h2>
+										<span class="a-color-secondary">Edit login, name, and mobile number</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div> -->
+			</div>
+			<!-- <div class="mt-new-myaccount-menu">
+				<div class="mt-new-myaccount-submenu">
+					<a href="<?php echo Mage::getUrl('customer/address')?>">
+						<div class="a-box ya-card--rich">
+							<div class="a-box-inner">
+								<div class="a-row">
+									<div class="a-column a-span3">
+										<img class="myaccount-dashbord-img mt-address" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/pin_1.png')?>">
+									</div>
+									<div class="a-column a-span9 a-span-last">
+										<h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+											Addresses
+										</h2>
+										<span class="a-color-secondary">Edit addresses for orders and gifts</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="mt-new-myaccount-submenu">
+					<a href="<?php echo Mage::getUrl('customer/paymentinfo')?>">
+						<div class="a-box ya-card--rich">
+							<div class="a-box-inner">
+								<div class="a-row">
+									<div class="a-column a-span3">
+										<img class="myaccount-dashbord-img mt-pay" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/Payments.png')?>">
+									</div>
+									<div class="a-column a-span9 a-span-last">
+										<h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+											Payment options
+										</h2>
+										<span class="a-color-secondary">Edit or add payment methods</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> -->
+		</div>
+
+	</div>
 </div>
 
 
 <script>
 	jQuery(document).ready(function(){
-		var myprofileheight = jQuery(".addresses-primary").height();
-		jQuery('.box-my-profile .box-content').css("height", myprofileheight);
+		// var myprofileheight = jQuery(".addresses-primary").height();
+		// jQuery('.box-my-profile .box-content').css("height", myprofileheight);
+
+		if (jQuery(window).width() >= 992){
+			var nav_height=jQuery('header').outerHeight();
+			jQuery('.dashboard').css("margin-top",nav_height/2);
+		}
+	});
+
+	jQuery(window).bind("load resize scroll",function(e){
+		if (jQuery(window).width() >= 992){
+			var nav_height=jQuery('header').outerHeight();
+			jQuery('.dashboard').css("margin-top",nav_height/2);
+		}
 	});
 </script>
