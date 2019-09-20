@@ -12,7 +12,7 @@ $entities = array(
 
 $installer->addAttribute('quote_address', 'no_signature_delivery',
     array(
-        'type' => Varien_Db_Ddl_Table::TYPE_TINYINT,
+        'type' => Varien_Db_Ddl_Table::TYPE_SMALLINT,
         'visible' => true,
         'required' => false,
         'default' => 0
