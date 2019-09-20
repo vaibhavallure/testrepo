@@ -166,6 +166,10 @@ h4{
 	font-size: 18px;
 }
 
+.simple-page-title{
+margin: 24px 0 46px !important;
+}
+
 .simple-page-title h1{
 	text-align: center;
 }
@@ -2461,9 +2465,6 @@ ul.tabs li:nth-child(3){
 
 
 /*celebrity page--------------------------------------*/
-.ecp-celebrities-index-index .simple-page-title {
-	margin: 24px 0 46px !important;
-}
 .celebrity-img{
   width: 320px;
   height: 320px;
@@ -2532,28 +2533,25 @@ ul.tabs li:nth-child(3){
   top: 50%;
   left: 50%;
 }
-.celeb-img-block{
-	margin-bottom: 19px;
-}
 .container.celebrities {
 	padding: 0 15px 60px;
 }
-.celeb-img-block {
+.celeb-img-block, .press-img-block {
   margin-bottom: 18px;
 	padding: 0;
 }
 /*press page--------------------------------------------*/
+.category-press .top-bar {
+  display: none;
+}
 .press-img{
     width: 322px;
     height: 433px;
     background-size: 100% 100%!important;
     cursor: pointer;
-    transition: .2s;
     background-color: grey;
     background-repeat: no-repeat;
-}
-.press-img:hover {
-    box-shadow: 2px 2px 8px black;
+		margin: 0 auto;
 }
 .scroll-loader{
     position: fixed;
