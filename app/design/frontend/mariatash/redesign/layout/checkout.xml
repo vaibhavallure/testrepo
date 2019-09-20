@@ -128,6 +128,10 @@ will be rendered on all checkout pages
         <!--<remove name="right"/>-->
         <remove name="left"/>
         
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/multiship.css</stylesheet></action>
+        </reference>
+        
         <reference name="right">
             <action method="unsetChildren"></action>
             <block type="checkout/cart" name="checkout.cart">
@@ -233,6 +237,7 @@ Multi address shipping checkout address page
                 <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+            	<block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/billing_select.phtml"/>
             </block>
         </reference>
     </checkout_multishipping_addresses>
@@ -250,12 +255,14 @@ Multi address shipping checkout shipping information
                 <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
-
+				<!-- <action method="addAddressRender"><type>address</type><block>allure_redesigncheckout/address</block><template>checkout/multishipping/address/shipping_address.phtml</template></action>
+ -->
                 <block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">
                     <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
                     <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
                     <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
                 </block>
+                <block type="checkout/multishipping_address_select" name="checkout_shipping_address_select" template="checkout/multishipping/address/shipping_address.phtml"/>
             </block>
         </reference>
     </checkout_multishipping_shipping>
@@ -298,7 +305,8 @@ Multi address shipping checkout overview
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addRowItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/overview/item.phtml</template></action>
                 <action method="addRowItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/overview/item.phtml</template></action>
-                <block type="checkout/multishipping_payment_info" name="payment_info">
+               	<action method="addGiftItemRender"><type>gift</type><block>allure_redesigncheckout/giftmessage</block><template>checkout/multishipping/giftmessage.phtml</template></action>
+				<block type="checkout/multishipping_payment_info" name="payment_info">
                     <action method="setInfoTemplate"><method></method><template></template></action>
                 </block>
                 <block type="checkout/agreements" name="checkout.multishipping.agreements" as="agreements" template="checkout/multishipping/agreements.phtml"/>

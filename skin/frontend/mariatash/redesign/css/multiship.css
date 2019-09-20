@@ -1,0 +1,53 @@
+.multiple-checkout .col2-set .col-1.col-narrow
+{
+	max-width: 260px;
+}
+
+.checkout-multishipping-overview .multiple-checkout form div.col2-set div.col-1, 
+.multiple-checkout .col2-set .col-1.col-narrow
+{
+	max-width: 260px;
+}
+
+.input-text.qty{
+	width: auto;
+}
+
+#checkoutSteps .multiple-checkout .col2-set .gift-messages p.control label {
+    font-size: 13px;
+    display: inline-block;
+    max-height: 16px;
+}
+
+#checkoutSteps .multiple-checkout .col2-set .gift-messages p.control {
+    border-bottom: none;
+    clear: both;
+}
+
+#checkoutSteps .multiple-checkout .col2-set .gift-messages p.control label span {
+    font-size: 11px;
+    line-height: 18px;
+    position: relative;
+    top: -3px;
+    left: 0;
+    padding: 0;
+    background: transparent;
+}
+
+#checkout_multishipping_form #multiship-addresses-table select{
+	width: 200px;
+}
+
+.overview-address-item .product-image img,
+#multiship-addresses-table .product-image img
+{
+	background: linear-gradient(to bottom, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
+}
+
+.multiple-checkout select{
+	width: 50%;
+}
+
+#shipping_method_form .col2-set {
+    border-bottom: none;
+}

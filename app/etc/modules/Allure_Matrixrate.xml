@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_Matrixrate>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Allure_Matrixrate>
+  </modules>
+</config>

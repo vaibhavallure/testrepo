@@ -115,6 +115,6 @@ class Ecp_Celebrities_Block_Celebrities extends Mage_Core_Block_Template {
     }
     public function getPopUpActionUrl()
     {
-        return $this->getUrl('*/index/getPopup', array('_secure' => true));
+        return $this->getUrl('celebrities/index/getPopup', array('_secure' => true));
     }
 }
