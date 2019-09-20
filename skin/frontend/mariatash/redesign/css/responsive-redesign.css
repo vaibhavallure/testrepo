@@ -447,6 +447,9 @@
   .big-popup-body {
     padding: 28px 75px !important;
   }
+  .ecp-celebrities-index-index .simple-page-title {
+    margin: 0 0 46px !important;
+  }
 }
 
 
@@ -509,6 +512,9 @@
   }
   .container.celebrities {
     padding: 0 20px 60px;
+  }
+  .ecp-celebrities-index-index .for-space-to-bottom {
+    height: 240px;
   }
 }
 
@@ -687,6 +693,9 @@
   }
   .big-popup-body{
     padding: 28px 33px !important;
+  }
+  .ecp-celebrities-index-index .simple-page-title{
+    margin: 20px 0 36px !important;
   }
 }
 
