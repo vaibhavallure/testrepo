@@ -10,17 +10,17 @@
  * http://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    design
  * @package     base_default
- * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -29,48 +29,39 @@
  * Multishipping checkout billing information
  *
  * @see Mage_Checkout_Block_Multishipping_Billing
+ * @var Mage_Checkout_Block_Multishipping_Billing $this
  */
-$quote = Mage::getModel('checkout/cart')->getQuote();
-$codeExists = ($quote->getCouponCode())
-    ? true
-    : false;
 ?>
-<div class="page-title">
-    <h1>Secure Checkout  - ship to multiple addresses</h1>
-</div>
+<?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
+<?php $cnt = 1;?>
 <ol id="checkoutSteps" class="opc">
-    <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();
-    $cont = 1;
-    foreach ($steps as $_step): ?>
-        <?php if($_step->getLabel()=='Billing Information'): ?>
-            <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section allow active" >
+    <?php foreach ($steps as $stepKey => $_step): ?>
+        <?php if($stepKey == 'multishipping_billing'): ?>
+            <li id="opc-<?= $stepKey ?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
                 <div class="step-title">
-                    <span class="number"><?php echo $cont ?></span>
-                    <h2><?php echo $_step->getLabel() ?></h2>
+                    <span class="number"><?php echo $cnt ?></span>
+                    <h2><?= $_step->getLabel() ?></h2>
                 </div>
                 <div class="multiple-checkout">
-                    <!--<div class="page-title">
-                        <h1><?php // echo $this->__('Billing Information') ?></h1>
-                    </div>-->
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-                    <script src="<?php echo Mage::getBaseUrl('js') ?>varien/payment.js" type="text/javascript"></script>
-                    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="multishipping-billing-form">
+                    <script src="<?= Mage::getBaseUrl('js') ?>varien/payment.js" type="text/javascript"></script>
+                    <form action="<?= $this->getPostActionUrl() ?>" method="post" id="multishipping-billing-form">
                         <div class="col2-set">
                             <div class="col-1 col-narrow">
                                 <div class="box">
                                     <div class="box-title">
-                                        <h2><?php echo $this->__('Billing Address') ?> <span class="separator">|</span> <a href="<?php echo $this->getSelectAddressUrl() ?>"><?php echo $this->__('Change') ?></a></h2>
+                                        <h2><?= $this->__('Billing Address') ?> <span class="separator">|</span> <a href="<?php echo $this->getSelectAddressUrl() ?>"><?php echo $this->__('Change') ?></a></h2>
                                     </div>
                                     <div class="box-content">
                                         <?php $_address=$this->getAddress() ?>
-                                        <address><?php echo $_address->format('html') ?></address>
+                                        <address><?= $_address->format('html') ?></address>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-2 col-wide">                                
                                 <div class="box">
                                     <div class="box-title">
-                                        <h2><?php echo $this->__('Payment Method') ?></h2>
+                                        <h2><?= $this->__('Payment Method') ?></h2>
                                     </div>
                                     <div class="box-content">
                                         <div class="tool-tip" id="payment-tool-tip" style="display:none;">
@@ -78,8 +69,8 @@ $codeExists = ($quote->getCouponCode())
                                             <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
                                         </div>
                                         <!-- Payment methods forms list -->                                       
-                                        <?php echo $this->getChildHtml('methods') ?>                                        
-                                        <?php echo $this->getChildHtml('checkout_billing_items') ?>
+                                        <?= $this->getChildHtml('methods') ?>                                        
+                                        <?= $this->getChildHtml('checkout_billing_items') ?>
                                     </div>
                                 </div>
                             </div>
@@ -88,6 +79,7 @@ $codeExists = ($quote->getCouponCode())
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shipping Information') ?></a></p>
                             <button class="button continue" type="submit" title="<?php echo $this->__('Continue') ?>" class="button"><span><span><?php echo $this->__('Continue') ?></span></span></button>
                         </div>
+						<?= $this->getBlockHtml("formkey") ?>
                     </form>
                     <script type="text/javascript">
                     //<![CDATA[
@@ -122,28 +114,30 @@ $codeExists = ($quote->getCouponCode())
                 </div>
             </li>
         <?php else: ?>
-            <?php if($_step->getLabel() == 'Select Addresses'):?>
-                <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section" >
-                    <a href="<?php echo $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>"><div class="step-title">
-                            <span class="number"><?php echo $cont ?></span>
-                            <h2><?php echo $this->__('Select Address') ?></h2>
-                </li>
+        	<li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
+            <?php if($stepKey == 'multishipping_addresses'):?>
+            	<a href="<?php echo $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
+               		<div class="step-title">
+                    	<span class="number"><?php echo $cnt ?></span>
+                        <h2><?= $this->__($_step->getLabel()) ?></h2>
+                  	</div>
+             	</a>
+            <?php elseif($stepKey == 'multishipping_shipping'):?>
+                <a href="<?= $this->getBaseUrl().'checkout/multishipping/shipping/'; ?>">
+                	<div class="step-title">
+                    	<span class="number"><?php echo $cnt ?></span>
+                    	<h2><?= $_step->getLabel()?></h2>
+                	</div>
+                </a>
             <?php else:?>
-            <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section" >
-                <?php if($cont < 3) { ?>
-                <a href="<?php echo ($cont == 1) ? $this->getBaseUrl() .'checkout/multishipping/addresses/' : $this->getBaseUrl().'checkout/multishipping/shipping/'; ?>"><div class="step-title">
-                    <span class="number"><?php echo $cont ?></span>
-                    <h2><?php echo ($_step->getLabel()!='Shipping Information')? $_step->getLabel() : $this->__('SHIPPING METHOD AND GIFT OPTIONS'); ?></h2>
-                </div></a>
-                <?php } else { ?>
-                <div class="step-title">
-                    <span class="number"><?php echo $cont ?></span>
-                    <h2><?php echo $_step->getLabel() ?></h2>
-                </div>
-                <?php } ?>
-            </li>
+            	<div class="step-title">
+                	<span class="number"><?php echo $cnt ?></span>
+                   	<h2><?= $_step->getLabel()?></h2>
+              	</div>
             <?php endif; ?>
+            </li>
+            
         <?php endif; ?>
-    <?php $cont+=1; ?>
+    <?php $cnt++; ?>
     <?php endforeach; ?>
 </ol>

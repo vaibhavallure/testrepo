@@ -1,0 +1,120 @@
+<?php
+/**
+ * 
+ * @author allure
+ *
+ */
+require_once ('app/code/core/Mage/Checkout/controllers/MultishippingController.php');
+class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_MultishippingController
+{
+    /**
+     * Multishipping checkout after the shipping page
+     */
+    public function shippingPostAction()
+    {
+        if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
+            $this->_redirect('*/*/shipping');
+            return;
+        }
+        /* echo "<pre>";
+        print_r($this->getRequest()->getParams());die; */
+        $shippingMethods = $this->getRequest()->getPost('shipping_method');
+        try {
+            Mage::dispatchEvent(
+                'checkout_controller_multishipping_shipping_post',
+                array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
+                );
+            Mage::dispatchEvent(
+                'checkout_controller_multishipping_shipping_signature_post',
+                array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
+                );
+            $this->_getCheckout()->setShippingMethods($shippingMethods);
+            $this->_getState()->setActiveStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_BILLING
+                );
+            $this->_getState()->setCompleteStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
+                );
+            $this->_redirect('*/*/billing');
+        }
+        catch (Exception $e) {
+            $this->_getCheckoutSession()->addError($e->getMessage());
+            $this->_redirect('*/*/shipping');
+        }
+    }
+    
+    /**
+     * Multishipping checkout after the overview page
+     */
+    public function overviewPostAction()
+    {
+        if (!$this->_validateFormKey()) {
+            $this->_forward('backToAddresses');
+            return;
+        }
+        
+        if (!$this->_validateMinimumAmount()) {
+            return;
+        }
+        
+        try {
+            Mage::dispatchEvent(
+                'checkout_controller_multishipping_overview_giftmessage_post',
+                array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
+                );
+            echo "<pre>";
+            print_r($this->getRequest()->getParams());die;
+            if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
+                $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
+                if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
+                    $this->_getCheckoutSession()->addError($this->__('Please agree to all Terms and Conditions before placing the order.'));
+                    $this->_redirect('*/*/billing');
+                    return;
+                }
+            }
+            
+            $payment = $this->getRequest()->getPost('payment');
+            $paymentInstance = $this->_getCheckout()->getQuote()->getPayment();
+            if (isset($payment['cc_number'])) {
+                $paymentInstance->setCcNumber($payment['cc_number']);
+            }
+            if (isset($payment['cc_cid'])) {
+                $paymentInstance->setCcCid($payment['cc_cid']);
+            }
+            $this->_getCheckout()->createOrders();
+            $this->_getState()->setActiveStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_SUCCESS
+                );
+            $this->_getState()->setCompleteStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW
+                );
+            $this->_getCheckout()->getCheckoutSession()->clear();
+            $this->_getCheckout()->getCheckoutSession()->setDisplaySuccess(true);
+            $this->_redirect('*/*/success');
+        } catch (Mage_Payment_Model_Info_Exception $e) {
+            $message = $e->getMessage();
+            if ( !empty($message) ) {
+                $this->_getCheckoutSession()->addError($message);
+            }
+            $this->_redirect('*/*/billing');
+        } catch (Mage_Checkout_Exception $e) {
+            Mage::helper('checkout')
+            ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
+            $this->_getCheckout()->getCheckoutSession()->clear();
+            $this->_getCheckoutSession()->addError($e->getMessage());
+            $this->_redirect('*/cart');
+        }
+        catch (Mage_Core_Exception $e) {
+            Mage::helper('checkout')
+            ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
+            $this->_getCheckoutSession()->addError($e->getMessage());
+            $this->_redirect('*/*/billing');
+        } catch (Exception $e) {
+            Mage::logException($e);
+            Mage::helper('checkout')
+            ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
+            $this->_getCheckoutSession()->addError($this->__('Order place error.'));
+            $this->_redirect('*/*/billing');
+        }
+    }
+}
