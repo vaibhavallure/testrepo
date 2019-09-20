@@ -421,7 +421,7 @@ if ($_product->getSizeSample() == 1) {
                                       </button>
                                       <?php echo $this->getChildHtml('alert_urls') ?>
                                   <?php endif; ?>
-                                  <?php echo $this->getChildHtml('addto') ?>
+                                  <?php // echo $this->getChildHtml('addto') ?>
                                   <?php echo $this->getChildHtml('product_type_data') ?>
                               </div>
                         <?php endif; ?>
@@ -440,7 +440,10 @@ if ($_product->getSizeSample() == 1) {
 
         				<?php //echo $this->getChildHtml('special_instruction')?>
 
-        		       <?php if ($_product->getShowSpecialInstruction()):?>
+        		       <?php if ($_product->getShowSpecialInstruction()):
+                           $customer = Mage::getSingleton('customer/session')->getCustomer();
+                           if($customer->getGroupId()==2):
+                           ?>
         				<div class="product-special-instructions row">
         					<div class="special-instruction-label col-12">
         						<label class="product-attribute-name">Special Instructions</label>
@@ -450,7 +453,9 @@ if ($_product->getSizeSample() == 1) {
                       <div class="info-text-three">(Special requests might delay your order due to production time)</div>
         					</div>
         				</div>
-        				<?php endif;?>
+        				<?php
+        				endif;
+        				endif;?>
 
                         <?php echo $this->getChildHtml('product_additional_data') ?>
                     </div>

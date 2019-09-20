@@ -329,6 +329,14 @@
   .padder {
     margin-bottom: 90px;
   }
+  .celebPopup .product-info {
+    position: relative;
+    bottom: 0;
+    margin-top: 30px;
+  }
+  .big-popup-body{
+    padding: 28px 93px !important;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -414,6 +422,25 @@
   	width: 50%;
     padding: 0 18px 0px;
   }
+  .big-popup-image{
+    height: 874.4px;
+    width: 100%;
+  }
+  .container.celebrities{
+    padding: 0 60px 120px;
+  }
+  .big-popup-cover{
+    height: 996px;
+  }
+  .celebPopup .next, .celebPopup .prev{
+    top: 47%;
+  }
+  .celeb-info{
+    margin-top: 30px;
+  }
+  .big-popup-body {
+    padding: 28px 33px !important;
+  }
 }
 
 
@@ -473,6 +500,9 @@
   }
   #jewelry .special-menu img {
     width: 200px !important;
+  }
+  .container.celebrities {
+    padding: 0 20px 60px;
   }
 }
 
@@ -623,6 +653,35 @@
   .product-shop > .row {
     padding: 0 20px !important;
   }
+  .big-popup-image {
+    height: 434.4px;
+    width: 100%;
+  }
+  .big-popup-image {
+    height: 352.4px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .container.celebrities{
+    padding: 0 40px 120px;
+  }
+  .big-popup-cover{
+    height: 550px;
+  }
+  .celebPopup .next, .celebPopup .prev{
+    top: 40%;
+    height: 55px;
+    width: 20px;
+  }
+  .celebPopup .prev{
+    left: 6px;
+  }
+  .celebPopup .next{
+    right: 6px;
+  }
+  .big-popup-body{
+    padding: 28px 33px !important;
+  }
 }
 
 /* Mobile landscape */
@@ -645,6 +704,20 @@
   }
   .social-media ul {
     padding-left: 15px;
+  }
+  .celeb-img-block{
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .container.celebrities{
+    padding: 0 45px 120px;
+  }
+  .big-popup-image {
+    height: 707.4px;
+    width: 100%;
+  }
+  .big-popup-body {
+    padding: 48px 83px !important;
   }
 }
 

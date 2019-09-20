@@ -178,6 +178,7 @@ h4{
 .big-popup-image {
   height: 574.4px;
   width: 393px;
+	margin: 0 auto;
 }
 .big-popup-body {
     padding: 48px 93px !important;
@@ -2272,10 +2273,10 @@ ul#foo4 {
 	display: flex;
 	margin: 98px auto 0;
 }
-.image_carousel img{
+/*.image_carousel img{
 	width: 120px;
   height: 120px;
-}
+}*/
 .catalog-product-view .regular-price span {
   font-size: 22px;
   font-family: urw-din-xlight;
@@ -2456,7 +2457,7 @@ ul.tabs li:nth-child(3){
 
 /*celebrity page--------------------------------------*/
 .ecp-celebrities-index-index .simple-page-title {
-	margin: 24px 0 46px;
+	margin: 24px 0 46px !important;
 }
 .celebrity-img{
   width: 320px;
@@ -2465,54 +2466,77 @@ ul.tabs li:nth-child(3){
   cursor: pointer;
 	margin: 0 auto;
 }
-.celebPopup .close{
-    z-index: 2;
-}
-.celebPopup .product-info {
-    position: absolute;
-    bottom: 0;
-}
-.celebPopup .prev {
-    content: "";
-    background-image: url("../images/Popup-side-arrow.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    height: 50px;
-    width: 25px;
-    transform: rotate(180deg);
-    cursor: pointer;
-}
-.celebPopup .next {
-    content: "";
-    background-image: url(../images/Popup-side-arrow.png);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    height: 50px;
-    width: 25px;
-    cursor: pointer;
-}
-.celebPopup .next.disBtn {
-    background-image: url(../images/popup-light-arrow.png);
-    cursor: auto;
-    transform: rotate(180deg);
-}
-.celebPopup .prev.disBtn {
-    background-image: url(../images/popup-light-arrow.png);
-    cursor: auto;
-    transform: rotate(0deg);
-}
-.celeb-loader{
-    position: absolute;
-    top: 50%;
-    left: 50%;
+.popup-right-section {
+  border-bottom: 1px solid #D0D0D0;
+	padding: 0 30px 0 26px;
 }
 
+.celebPopup .close{
+  z-index: 2;
+}
+.celebPopup .product-info {
+  position: absolute;
+  bottom: 0;
+}
+.ecp-celebrities-index-index .product-name {
+  margin-bottom: 7px;
+	letter-spacing: 1.08px;
+}
+.quick_link {
+  margin-bottom: 21px;
+}
+.celeb-info {
+  margin-top: 9px;
+}
+.celebPopup .prev {
+  content: "";
+  background-image: url("../images/Popup-side-arrow.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 293px;
+  left: 24px;
+  height: 95px;
+  width: 40px;
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+.celebPopup .next {
+  content: "";
+  background-image: url(../images/Popup-side-arrow.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 293px;
+  right: 24px;
+  height: 95px;
+  width: 40px;
+  cursor: pointer;
+}
+.celebPopup .next.disBtn {
+  background-image: url(../images/popup-light-arrow.png);
+  cursor: auto;
+  transform: rotate(180deg);
+}
+.celebPopup .prev.disBtn {
+  background-image: url(../images/popup-light-arrow.png);
+  transform: rotate(0deg);
+}
+.celeb-loader{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.celeb-img-block{
+	margin-bottom: 19px;
+}
+.container.celebrities {
+	padding: 0 15px 60px;
+}
+.celeb-img-block {
+  margin-bottom: 18px;
+	padding: 0;
+}
 /*press page--------------------------------------------*/
 .press-img{
     width: 322px;
@@ -2581,4 +2605,25 @@ ul.tabs li:nth-child(3){
     position: absolute;
     top: 50%;
     left: 50%;
+}
+.insta-main,.recently-view,.you_may_like{
+    position: relative;
+    width: 100%;
+    margin: 30px 0px;
+}
+.you_may_like{
+    margin: 30px 0px 100px;
+}
+.insta-main .image_carousel,.recently-view .image_carousel,.you_may_like .image_carousel{
+    width: 80%;
+    overflow: hidden;
+    position: relative;
+    margin: auto
+}
+ .block-viewed #foo2 li img,.image_carousel #foo4 li img{
+    background: #f2f2f2!important;
+}
+.you_may_like #foo4 li {
+    display: block;
+    margin: 0 9px 0 0;
 }

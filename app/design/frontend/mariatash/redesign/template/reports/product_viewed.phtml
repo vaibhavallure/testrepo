@@ -27,14 +27,14 @@
 ?>
 <?php if ($_products = $this->getRecentlyViewedProducts()): ?>
 
-    <div class="block block-list block-viewed">
-        <div class="block-title">
-            <strong><span><?php echo $this->__('Recently Viewed') ?></span></strong>
-        </div>
-        <div class="block-content">
+    <div class="block block-list block-viewed w-100">
+
+        <div class="block-content recently-view">
 
             <div class="image_carousel">
-                <div <?php if (count($_products) > 4 ): ?>style=""<?php endif; ?>>
+                <div class="block-title text-uppercase mb-3">
+                    <strong><span><?php echo $this->__('Recently Viewed') ?></span></strong>
+                </div>
                 <ul id="foo2" style="overflow: hidden;">
                     <?php foreach ($_products as $_item): ?>
                         <li style="width: 234px; height: 305px" class="item recentview">
@@ -45,11 +45,12 @@
                     <?php endforeach; ?>
                 </ul>
                 <div class="clearfix"></div>
-                <a class="prev" id="foo2_prev" href="#"><span>prev</span></a>
-                <a class="next" id="foo2_next" href="#"><span>next</span></a>
-                <div class="pagination" id="foo2_pag"></div>
-                </div>
+
+
             </div>
+            <a class="prev" id="foo2_prev" href="#"><span>prev</span></a>
+            <a class="next" id="foo2_next" href="#"><span>next</span></a>
+            <div class="pagination" id="foo2_pag"></div>
             <script type="text/javascript">
                 jQuery.noConflict();
 
