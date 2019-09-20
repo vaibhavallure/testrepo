@@ -615,6 +615,8 @@ nav.mariatash-header {
 }
 .container-footlinks {
   background: rgba(41, 41, 41, 0.5);
+	width: 100%;
+  margin: 0;
 }
 .footer {
   padding-top: 60px;
@@ -637,7 +639,7 @@ nav.mariatash-header {
   margin-right: 26px;
 }
 .footer .footlinks li:first-child {
-  margin-left: 56px;
+  margin-left: 40px;
 }
 .footer-items a {
   color: #fff;
