@@ -22,12 +22,14 @@
  * @package     base_default
  * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *
+ * @var Mage_GiftMessage_Block_Message_Inline $this
  */
 ?>
 <?php 
-	$quote = Mage::getSingleton('checkout/session')->getQuote();
+	/* $quote = Mage::getSingleton('checkout/session')->getQuote();
 	$this->setEntity($quote);
-	$this->setItems($quote->getAllVisibleItems());
+	$this->setItems($quote->getAllVisibleItems()); */
 ?>
 <?php $hasGiftMessages = ($this->getItemsHasMesssages() || $this->getEntityHasMessage()); ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>charcount.js"></script>
@@ -257,8 +259,8 @@ billing.onSave = function(evt){
     <div class="gift-messages">
         <h3><?php echo $this->__('Delivery Signature Option.'); ?></h3>
         <p class="control">
-            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" class="checkbox" checked="checked" />
-            <label for="no_signature_delivery"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="    color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>
+            <input type="checkbox" name="no_signature_delivery[<?= $this->getEntity()->getId()?>]" id="no_signature_delivery_<?= $this->getEntity()->getId()?>" value="1" class="checkbox" checked="checked" />
+            <label for="no_signature_delivery_<?= $this->getEntity()->getId()?>"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="    color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>
             <span class="signature_message" style ="display: none;"><?php echo $this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.'); ?></span>
         </p>
     </div>
