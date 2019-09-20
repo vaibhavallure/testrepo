@@ -270,6 +270,9 @@ a{
 a:hover{
 	text-decoration: none;
 }
+a:focus {
+	outline: none;
+}
 ul, ol{
 	list-style: none;
 }
