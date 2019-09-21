@@ -54,7 +54,7 @@
             var select_id=jQuery(this).attr("id");
             jQuery(this).parent()
                 .after()
-                .append("<div class='chooseList' id='chooseList"+select_id+"'><ul></ul></div>");
+                .append("<div class='chooseList' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
 
             var select_id=jQuery(this).attr("id");
             jQuery(element).each(function (idx, elm) {
@@ -73,5 +73,6 @@
             jQuery('#'+selected_id+'').val(option_value).trigger('change');
         });
         jQuery('.product-custom-option').hide();
+        jQuery('.chooseList').slideDown(1000);
     });
 </script>
