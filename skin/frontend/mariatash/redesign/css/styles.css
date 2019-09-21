@@ -759,12 +759,12 @@ ul#tld_r_ul li:hover {
 	margin: 0 9px 0 0;
 }
 
-#foo3 li img {
+/* #foo3 li img {
 	width: 175px;
-	/*  height:175px;*/
+	/*  height:175px;
 	display: block;
 	margin: 0;
-}
+} */
 
 .box-awautorelated2 #foo3 li img, .block-viewed #foo2 li img {
 	width: auto;
