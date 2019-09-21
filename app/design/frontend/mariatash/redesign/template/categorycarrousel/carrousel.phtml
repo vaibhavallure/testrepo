@@ -113,11 +113,11 @@ jQuery(window).resize(function() {
     }
     ?>
 
-    <h1 style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
+    <h1 class="catalog-product-name-display" style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
 </div>
 <?php $_collection = $this->getCategories() ?>
-<div class="cartilage-section col-12">
-<div class="caroufredsel_wrapper row">
+<div class="cartilage-section w-100 position-relative">
+<div class="caroufredsel_wrapper" >
 	<?php if(count($_collection)) { ?>
     <ul id="foo3">
 		<?php $i = 1;?>
