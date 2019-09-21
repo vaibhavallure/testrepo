@@ -813,9 +813,9 @@ ul#tld_r_ul li:hover {
 }
 
 
-#prev3 {
+/* #prev3 {
 	position: relative;
-	/*  top:40%;*/
+	/*  top:40%;
 	right: 1px;
 	z-index: 9999999;
 	width: 26px;
@@ -826,12 +826,12 @@ ul#tld_r_ul li:hover {
 	cursor: pointer;
 	margin-top: -100px;
 	margin-right: -1px;
-}
+} */
 
-#prev3:hover {
+/* #prev3:hover {
 	text-indent: -999999px;
 	background: url(../images/gray_next.png) no-repeat 0 -35px;
-}
+} */
 
 #prev3.disabled {
 	cursor: default;
@@ -845,11 +845,11 @@ ul#tld_r_ul li:hover {
 	background: url(../images/gray_prev.png) no-repeat 0 -35px;
 }
 
-#next3 {
+/* #next3 {
 	position: absolute;
 	float: left;
 	/*  top:40%;*/
-	/*  left:-50px;*/
+	/*  left:-50px;
 	z-index: 106;
 	width: 26px;
 	height: 35px;
@@ -863,7 +863,7 @@ ul#tld_r_ul li:hover {
 #next3:hover {
 	text-indent: -999999px;
 	background: url(../images/gray_prev.png) no-repeat 0 -35px;
-}
+} */
 /*
   -------------------------------------------------------------------------------*/
 

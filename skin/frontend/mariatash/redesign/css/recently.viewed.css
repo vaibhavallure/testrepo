@@ -4,8 +4,8 @@
 	display: block;
 	float: left;
 }
-a.prev,
-a.next,
+.prev,
+.next,
 .galleryFull .controls .prev,
 .galleryFull .controls .next{
 	background: url(../images/Popup-side-arrow.png) no-repeat transparent;
