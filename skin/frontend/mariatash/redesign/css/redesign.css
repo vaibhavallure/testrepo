@@ -2443,20 +2443,21 @@ ul.tabs li:nth-child(3){
 
 /*Cartilage CSS*/
 .top-container.thumbnail-image {
-  width: 80%;
+  width: 85.8%;
   overflow: hidden;
   position: relative;
   margin: auto;
 }
 #foo3 li {
-  width: 234px;
-  height: 305px;
-  float: left;
-  list-style: none;
-}
-#foo3 li img {
   width: 195px;
   height: 217px;
+  float: left;
+  list-style: none;
+	margin-right: 9px;
+}
+#foo3 li img {
+  width: 100%;
+  height: 100%;
   display: block;
   margin: 0;
 
