@@ -2376,6 +2376,9 @@ ul#foo4 {
 .product-view .product-shop .product-options label.required{
 	display: inline-block !important;
 }
+.post-lengthds-lbl-options .product-custom-option{
+display: none;
+}
 button#addtocart {
   width: 163px;
   height: 51px;
