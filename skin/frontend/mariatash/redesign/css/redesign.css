@@ -2421,15 +2421,27 @@ table.data-table, .data-table tr {
 .chooseList ul li { /*col CSS*/
   display: inline-block;
   cursor: pointer;
-	-ms-flex-preferred-size: 0;
-	flex-basis: 0;
-	-ms-flex-positive: 1;
-	flex-grow: 1;
 	max-width: 100%;
+
+	padding: 0px;
 }
-.chooseList ul li.active {
+.chooseList ul li span,.chooseList ul li h3{
+display: block;
+	width: max-content;
+	padding: 10px 0px;
+}
+.chooseList ul li{
+padding: 0px 10px 0px 0px;
+}
+.chooseList ul li:first-child{
+padding-left: 0px;
+}
+.chooseList ul li.active span{
   border-bottom: 2px solid black;
 }
+/*.chooseList ul li.label{
+	border-bottom: 2px solid black;
+}*/
 .chooseList {  /* col-12 CSS */
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
@@ -2442,8 +2454,10 @@ table.data-table, .data-table tr {
 	display: flex;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-	margin-right: -15px;
-	margin-left: -15px;
+/*	margin-right: -15px;
+	margin-left: -15px;*/
+	padding: 0px;
+	border-bottom: 1px solid #D4D4D4;
 }
 .post-lengthds-lbl-options {
   margin-top: 11px;

@@ -44,7 +44,7 @@
 </dd>
 </div>
 </div>
-<hr>
+<!--<hr>-->
 
 <script>
     jQuery(function () {
@@ -60,7 +60,7 @@
             jQuery(element).each(function (idx, elm) {
                 jQuery('option', elm).each(function (id, el) {
                     if(el.value!="")
-                        jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'">' + el.text + '</li>');
+                        jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="col"><span>' + el.text + '</span></li>');
                 });
             });
             i++;

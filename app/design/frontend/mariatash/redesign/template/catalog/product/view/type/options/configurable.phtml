@@ -49,7 +49,9 @@ if ($_product->getSizeSample() == 1) {
 
                     </div>
                 </div>
-<hr>
+                    <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
+                    <hr>
+                    <?php endif; ?>
             </div>
 
         <?php endforeach; ?>
@@ -153,11 +155,11 @@ if ($_product->getSizeSample() == 1) {
                         var attr_id=jQuery(this).attr("data-attr_id");
                         var selectlabel=jQuery('#label-attr'+attr_id).html();
                         jQuery('#label-attr'+attr_id).hide();
-                        jQuery('#chooseList'+select_id+' ul:last').append('<li  class="label">'+selectlabel+'</li>');
+                        jQuery('#chooseList'+select_id+' ul:last').append('<li  class="label col">'+selectlabel+'</li>');
                         jQuery(element).each(function (idx, elm) {
                             jQuery('option', elm).each(function (id, el) {
                                 if(el.value!="")
-                                    jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="option">' + el.text + '</li>');
+                                    jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="option col"><span>' + el.text + '</span></li>');
                             });
                         });
                         i++;
