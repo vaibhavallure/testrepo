@@ -623,9 +623,10 @@ nav.mariatash-header {
   margin: 0;
 }
 .footer {
-  padding-top: 60px;
+  padding-top: 60px !important;
   height: 60px;
   z-index: 1;
+	padding: 0;
 }
 .footer .footer-item-list a {
   color: #fff;
@@ -2368,6 +2369,9 @@ table.data-table, .data-table tr {
 .thumb img{
 	border: 1px solid rgba(41,41,41,0.9);
 	margin-top: 10px;
+}
+.add-to-links {
+  margin-top: 14px;
 }
 /* ppp */
 
