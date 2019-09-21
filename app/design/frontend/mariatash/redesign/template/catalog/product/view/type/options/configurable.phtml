@@ -25,19 +25,23 @@ if ($_product->getSizeSample() == 1) {
             <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
             <div class="swatch-section col-12 <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
                 <div class="input-box row">
+                    <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
                     <div class="col">
                     <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                     </div>
                     <div class="col">
-                        <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
 
                         <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="display: none">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
 
                     <?php else:?>
+                        <div class="col">
+                            <div id="label-attr<?php echo $_attribute->getAttributeId() ?>">
+                                <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
+                            </div>
                         <div class="attribute_select_default row justify-content-end m-0" id="<?php echo $_attribute->getAttributeId() ?>">
-                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select" >
+                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select d-none" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
                                 <option><?php echo $this->__('Select an Option') ?></option>
                             </select>
                         </div>
@@ -137,6 +141,36 @@ if ($_product->getSizeSample() == 1) {
                 endif;
                 ?>
 
+
+                jQuery(function () {
+                    var i=1;
+                    jQuery('.change_select').each(function (index, element) {
+                        var select_id=jQuery(this).attr("id");
+
+                        jQuery(this).parent()
+                            .after()
+                            .append("<div class='chooseList' id='chooseList"+select_id+"'><ul></ul></div>");
+                        var attr_id=jQuery(this).attr("data-attr_id");
+                        var selectlabel=jQuery('#label-attr'+attr_id).html();
+                        jQuery('#label-attr'+attr_id).hide();
+                        jQuery('#chooseList'+select_id+' ul:last').append('<li  class="label">'+selectlabel+'</li>');
+                        jQuery(element).each(function (idx, elm) {
+                            jQuery('option', elm).each(function (id, el) {
+                                if(el.value!="")
+                                    jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="option">' + el.text + '</li>');
+                            });
+                        });
+                        i++;
+                    });
+                    jQuery('.chooseList ul li.option').on('click', function () {
+                        var selected_id = jQuery(this).data("select_id");
+                        var option_value = jQuery(this).data("option_value");
+                        jQuery(this).parent().find("li").removeClass("active");
+                        jQuery(this).addClass("active");
+                        jQuery('#'+selected_id+'').val(option_value).trigger('change');
+                    });
+                    jQuery('.change_select').hide();
+                });
 
             });
     </script>
