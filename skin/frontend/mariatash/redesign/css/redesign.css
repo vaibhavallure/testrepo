@@ -2484,12 +2484,6 @@ ul.tabs li:nth-child(3){
 }
 
 /*Cartilage CSS*/
-.top-container.thumbnail-image {
-  width: 85.8%;
-  overflow: hidden;
-  position: relative;
-  margin: auto;
-}
 #foo3 li {
   width: 195px;
   height: 217px;
@@ -2502,7 +2496,15 @@ ul.tabs li:nth-child(3){
   height: 100%;
   display: block;
   margin: 0;
-
+}
+#foo3{
+	width: 1225px;
+}
+.caroufredsel_wrapper.row{
+	width: 85.8%;
+  margin: auto;
+	overflow: hidden;
+  position: relative;
 }
 
 /*----------------------------------------------------------------*/
