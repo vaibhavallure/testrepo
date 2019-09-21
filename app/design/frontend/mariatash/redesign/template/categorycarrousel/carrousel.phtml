@@ -116,6 +116,7 @@ jQuery(window).resize(function() {
     <h1 style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
 </div>
 <?php $_collection = $this->getCategories() ?>
+<div class="cartilage-section">
 <div class="caroufredsel_wrapper">
 	<?php if(count($_collection)) { ?>
     <ul id="foo3">
@@ -128,7 +129,9 @@ jQuery(window).resize(function() {
             </li>
         <?php endforeach; ?>
     </ul>
-	<div class="prev" id="prev3"></div>
-	<div class="next" id="next3"></div>
+
 	<?php } ?>
+</div>
+<div class="prev" id="prev3"></div>
+<div class="next" id="next3"></div>
 </div>

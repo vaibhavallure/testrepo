@@ -2059,7 +2059,7 @@ span#popup_loader_register {
 .prev,
 .galleryFull .controls .prev {
 	left: 5%;
-transform: rotate(180deg);
+	transform: rotate(180deg);
 }
 
 .prev.disabled {
