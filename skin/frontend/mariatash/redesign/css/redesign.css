@@ -2056,27 +2056,27 @@ span#popup_loader_register {
 	position: absolute;
 	top:30%;
 }
-a.prev,
+.prev,
 .galleryFull .controls .prev {
 	left: 5%;
 transform: rotate(180deg);
 }
 
-a.prev.disabled {
+.prev.disabled {
 	background-position: 0 -100px !important;
 }
-a.next,
+.next,
 .galleryFull .controls .next {
 	right: 5%;
 }
-a.next.disabled {
+.next.disabled {
 	background-position: -50px -100px !important;
 }
-a.prev.disabled, a.next.disabled {
+.prev.disabled, a.next.disabled {
 	cursor: default;
 }
-a.prev span,
-a.next span,
+.prev span,
+.next span,
 .galleryFull .controls .prev span,
 .galleryFull .controls .next span{
 	display: none;
