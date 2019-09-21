@@ -2039,6 +2039,48 @@ span#popup_loader_register {
 .product-view .product-shop .padder h1, .product-view .product-shop .product-options .required, .product-view .product-shop .short-description {
     display: none;
 }
+/*Old from recently.viewd.css*/
+.image_carousel img {
+	padding:0;
+	display: block;
+	float: left;
+}
+.prev,
+.next,
+.galleryFull .controls .prev,
+.galleryFull .controls .next{
+	background: url(../images/Popup-side-arrow.png) no-repeat transparent;
+	width: 45px;
+	height: 100px;
+	display: block;
+	position: absolute;
+	top:30%;
+}
+.prev,
+.galleryFull .controls .prev {
+	left: 5%;
+	transform: rotate(180deg);
+}
+
+.prev.disabled {
+	background-position: 0 -100px !important;
+}
+.next,
+.galleryFull .controls .next {
+	right: 5%;
+}
+.next.disabled {
+	background-position: -50px -100px !important;
+}
+.prev.disabled, a.next.disabled {
+	cursor: default;
+}
+.prev span,
+.next span,
+.galleryFull .controls .prev span,
+.galleryFull .controls .next span{
+	display: none;
+}
 
 /* Press Page CSS */
 .press-custom-container{
@@ -2456,12 +2498,6 @@ ul.tabs li:nth-child(3){
 }
 
 /*Cartilage CSS*/
-.top-container.thumbnail-image {
-  width: 85.8%;
-  overflow: hidden;
-  position: relative;
-  margin: auto;
-}
 #foo3 li {
   width: 195px;
   height: 217px;
@@ -2474,7 +2510,15 @@ ul.tabs li:nth-child(3){
   height: 100%;
   display: block;
   margin: 0;
-
+}
+#foo3{
+	width: 1225px;
+}
+.caroufredsel_wrapper.row{
+	width: 85.8%;
+  margin: auto;
+	overflow: hidden;
+  position: relative;
 }
 
 /*----------------------------------------------------------------*/
