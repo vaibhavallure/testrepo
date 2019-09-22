@@ -2513,6 +2513,12 @@ ul.tabs li:nth-child(3){
   height: 100%;
   display: block;
   margin: 0;
+	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+ 	filter: grayscale(100%);
+}
+#foo3 li img:hover {
+  -webkit-filter: grayscale(0%);
+  filter: grayscale(0%);
 }
 #foo3{
 	width: 1225px;
