@@ -1529,6 +1529,10 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
     overflow: hidden;
 }
+.products-grid li.item a{
+	display: block;
+	overflow: hidden;
+}
 .products-grid2 li.item {
 overflow: hidden;
 }
@@ -1541,18 +1545,18 @@ overflow: hidden;
   width: 100%;
   height: auto;
 	background: #eee;
-  transition: transform .2s;
+  transition: transform .3s;
 }
 .catalog-common-grid .product-image img:hover{
-  -ms-transform: scale(1.5); /* IE 9 */
-  -webkit-transform: scale(1.5); /* Safari 3-8 */
-  transform: scale(1.5);
+  -ms-transform: scale(1.3); /* IE 9 */
+  -webkit-transform: scale(1.3); /* Safari 3-8 */
+  transform: scale(1.3);
 }
 .catalog-grid-image{
   background: #eee;
 }
 .catalog-grid-image:hover, .products-grid li.item:hover .catalog-grid-image{
-  background: #fff;
+  /*background: #fff;*/
 }
 .mobile-main_menu{
   background: #292929;
