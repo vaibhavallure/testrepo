@@ -20,29 +20,29 @@ jQuery(document).ready(function() {
 
 function mycarousel_initCallback(carousel) {
     jQuery('#prev3').bind('click', function() {
-        carousel.next();
+        carousel.prev();
         return false;
     });
 
     jQuery('#next3').bind('click', function() {
-        carousel.prev();
+        carousel.next();
         return false;
     });
 };
 
 function mycarousel_buttonNextCallback(carousel, button, enabled) {
     if(enabled){
-        jQuery("#prev3").css('opacity',1);
+        jQuery("#next3").css('opacity',1);
     }else{
-        jQuery("#prev3").css('opacity',0.13);
+        jQuery("#next3").css('opacity',0.13);
     }
 };
 
 function mycarousel_buttonPrevCallback(carousel, button, enabled) {
     if(enabled){
-        jQuery("#next3").css('opacity',1);
+        jQuery("#prev3").css('opacity',1);
     }else{
-        jQuery("#next3").css('opacity',0.13);
+        jQuery("#prev3").css('opacity',0.13);
     }
 };
 
