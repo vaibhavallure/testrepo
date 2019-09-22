@@ -83,7 +83,7 @@ jQuery(window).resize(function() {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        #narrow-by-list { margin-top: 61px; }
+                        #narrow-by-list { margin-top: 70px; }
                         #narrow-by-list li div dd { top: 93px !important; }
                 </style>';
         }
@@ -99,7 +99,8 @@ jQuery(window).resize(function() {
         echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        #narrow-by-list{margin-top: 64px;}
+                        #narrow-by-list{margin-top: 70px;
+                        #narrow-by-list li div dd { top: 93px !important; }
                   </style>';
     }
     ?>
@@ -115,8 +116,7 @@ jQuery(window).resize(function() {
         <?php foreach($_collection as $category): ?>
             <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="active"' : '' ?>
             <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
-                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h3 <?php echo $active; ?>><?php echo $category->getName(); ?></h3></a>
+                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
             </li>
         <?php endforeach; ?>
     </ul>

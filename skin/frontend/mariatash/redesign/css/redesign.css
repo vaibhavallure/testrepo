@@ -2499,6 +2499,8 @@ ul.tabs li:nth-child(3){
   float: left;
   list-style: none;
 	margin-right: 9px;
+	position: relative;
+	text-align: center;
 }
 #foo3 li img {
   width: 100%;
@@ -2514,6 +2516,12 @@ ul.tabs li:nth-child(3){
 }
 #foo3{
 	width: 1225px;
+}
+#foo3 li h4{
+	position: absolute;
+	top: 19px;
+	z-index: 1;
+	text-transform: uppercase;
 }
 .caroufredsel_wrapper{
 	width: 84.5%;
@@ -2532,10 +2540,15 @@ ul.tabs li:nth-child(3){
 }
 .catalog-product-name-display {
   margin-left: 7.6%;
-	margin-top: 35px;
+	margin-top: 32px;
+	font-size: 30px;
 }
 .cartilage-section {
-  margin-top: 75px;
+  margin-top: 76px;
+}
+#total_item_counts_holder {
+  margin-top: 5px;
+	margin-left: 14px;
 }
 
 
