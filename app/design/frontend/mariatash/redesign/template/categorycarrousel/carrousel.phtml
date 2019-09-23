@@ -86,6 +86,14 @@ jQuery(window).resize(function() {
                         #narrow-by-list { margin-top: 70px; }
                         #narrow-by-list li div dd { top: 99px !important; }
                         .filterButton:before {top: -310px !important; left: 61px !important;}
+                        @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
+                          .filterButton:before{
+                            left: 79px !important;
+                            }
+                            .catalog-product-name-display{
+                              margin-top: 20px;
+                            }
+                          }
                 </style>';
         }
     }
@@ -103,6 +111,7 @@ jQuery(window).resize(function() {
                         #narrow-by-list{margin-top: 70px;
                         #narrow-by-list li div dd { top: 99px !important; }
                         .filterButton:before {top: -310px !important; left: 61px !important;}
+                        @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){.filterButton:before{left: 79px !important;}}
                   </style>';
     }
     ?>

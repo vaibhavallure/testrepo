@@ -133,9 +133,6 @@
   .second-header-image{
     display: none;
   }
-  .footer{
-    padding: 0 15px;
-  }
   .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
     background: rgba(41,41,41)
   }
@@ -455,6 +452,12 @@
   }
   .ecp-celebrities-index-index .simple-page-title {
     margin: 0 0 46px !important;
+  }
+  .catalog-product-name-display{
+    padding-left: 77px;
+  }
+  .breadcrumbs {
+    padding-left: 39px;
   }
 }
 
