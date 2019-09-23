@@ -261,7 +261,7 @@ class Allure_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model_
                             $regionId = $regionCodesToIds[$countryCodesToIds[$csvLine[0]]][$csvLine[1]];
                         }
 
-						if (count($csvLine)==10) {
+						if (count($csvLine)==11) {
 							// we are searching for postcodes in ranges & including cities
 							if ($csvLine[2] == '*' || $csvLine[2] == '') {
 								$city = '';
@@ -296,7 +296,7 @@ class Allure_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model_
 								$csvLine[6] = (float)$csvLine[6];
 							}
 
-							$data[] = array('website_id'=>$websiteId, 'dest_country_id'=>$countryId, 'dest_region_id'=>$regionId, 'dest_city'=>$city, 'dest_zip'=>$zip, 'dest_zip_to'=>$zip_to, 'condition_name'=>$conditionName, 'condition_from_value'=>$csvLine[5],'condition_to_value'=>$csvLine[6], 'price'=>$csvLine[7], 'delivery_type'=>$csvLine[8], 'is_signature'=>$csvLine[9]);
+							$data[] = array('website_id'=>$websiteId, 'dest_country_id'=>$countryId, 'dest_region_id'=>$regionId, 'dest_city'=>$city, 'dest_zip'=>$zip, 'dest_zip_to'=>$zip_to, 'condition_name'=>$conditionName, 'condition_from_value'=>$csvLine[5],'condition_to_value'=>$csvLine[6], 'price'=>$csvLine[7], 'shipping_name'=>$csvLine[8], 'is_signature'=>$csvLine[9],'is_international'=>$csvLine[10]);
 
 						}
 						else {
@@ -321,7 +321,7 @@ class Allure_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model_
 							} else {
 								$csvLine[4] = (float)$csvLine[4];
 							}
-							$data[] = array('website_id'=>$websiteId, 'dest_country_id'=>$countryId, 'dest_region_id'=>$regionId,  'dest_city'=>$city,'dest_zip'=>$zip,'dest_zip_to'=>$zip_to,  'condition_name'=>$conditionName, 'condition_from_value'=>$csvLine[3],'condition_to_value'=>$csvLine[4], 'price'=>$csvLine[5], 'delivery_type'=>$csvLine[6], 'is_signature'=>$csvLine[7]);
+							$data[] = array('website_id'=>$websiteId, 'dest_country_id'=>$countryId, 'dest_region_id'=>$regionId,  'dest_city'=>$city,'dest_zip'=>$zip,'dest_zip_to'=>$zip_to,  'condition_name'=>$conditionName, 'condition_from_value'=>$csvLine[3],'condition_to_value'=>$csvLine[4], 'price'=>$csvLine[5], 'shipping_name'=>$csvLine[6], 'is_signature'=>$csvLine[7],'is_international'=>$csvLine[8]);
 						}
 
 
@@ -343,7 +343,7 @@ class Allure_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model_
                         try {
                            $connection->insert($table, $dataLine);
                         } catch (Exception $e) {
-                            $exceptions[] = Mage::helper('shipping')->__('Duplicate Row #%s (Country "%s", Region/State "%s", City "%s", Zip From "%s", Zip To "%s", Delivery Type "%s", Value From "%s" and Value To "%s")', ($k+1), $dataDetails[$k]['country'], $dataDetails[$k]['region'], $dataLine['dest_city'], $dataLine['dest_zip'],  $dataLine['dest_zip_to'], $dataLine['delivery_type'], $dataLine['condition_from_value'], $dataLine['condition_to_value']);
+                            $exceptions[] = Mage::helper('shipping')->__('Duplicate Row #%s (Country "%s", Region/State "%s", City "%s", Zip From "%s", Zip To "%s", Delivery Type "%s", Value From "%s" and Value To "%s")', ($k+1), $dataDetails[$k]['country'], $dataDetails[$k]['region'], $dataLine['dest_city'], $dataLine['dest_zip'],  $dataLine['dest_zip_to'], $dataLine['shipping_name'], $dataLine['condition_from_value'], $dataLine['condition_to_value']);
                         }
                     }
                 }

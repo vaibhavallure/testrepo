@@ -148,13 +148,13 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 				$method->setCarrier('matrixrate');
 				$method->setCarrierTitle($this->getConfigData('title'));
 
-				$method->setMethod('matrixrate_'.$rate['pk'].'#'.$rate['is_signature']);
+				$method->setMethod('matrixrate_'.$rate['pk'].'#'.$rate['is_signature'].'#'.$rate['is_international']);
 
-				$method->setMethodTitle(Mage::helper('matrixrate')->__($rate['delivery_type']));
+				$method->setMethodTitle(Mage::helper('matrixrate')->__($rate['shipping_name']));
 
 				$shippingPrice = $this->getFinalPriceWithHandlingFee($rate['price']);
 				$method->setCost($rate['cost']);
-				$method->setDeliveryType($rate['delivery_type']);
+				$method->setShippingName($rate['shipping_name']);
         		
 				$method->setPrice($shippingPrice);
 

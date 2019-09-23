@@ -11,7 +11,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
      *
      * @return array
      */
-    public function getGroupedAllShippingRates()
+    /* public function getGroupedAllShippingRates()
     {
         $rates = array();
         foreach ($this->getShippingRatesCollection() as $rate) {
@@ -35,7 +35,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
         }
         uasort($rates, array($this, '_sortRates'));
         return $rates;
-    }
+    } */
     
     
     /**

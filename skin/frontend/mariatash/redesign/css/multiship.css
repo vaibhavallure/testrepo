@@ -51,3 +51,7 @@
 #shipping_method_form .col2-set {
     border-bottom: none;
 }
+
+#multiship-addresses-table{
+	display: block;
+}
