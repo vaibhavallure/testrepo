@@ -26,11 +26,9 @@
  * @var Mage_Checkout_Block_Multishipping_Address_Select $this
  */
 ?>
-<div class="shipping-address-select">
-    <select class="ship-select">
+<select class="ship-select">
     	<?php foreach ($this->getAddressCollection() as $_address):?>
     	<option value="<?= $_address->getId()?>"><?= $_address->format('oneline')?></option>
     	<?php endforeach;?>
     	<option value="new">New Address</option>
-    </select>
-</div>
+</select>

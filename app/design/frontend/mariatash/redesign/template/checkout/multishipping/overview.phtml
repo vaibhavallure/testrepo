@@ -94,11 +94,13 @@
                                             </div>
                                         </div>
                                         
+                                        <?php if($_address->getNoSignatureDelivery()):?>
                                         <div class="box">
                                         	<div class="box-content">
                                         		<p><?= $this->__('Signature required upon delivery.')?></p>
                                         	</div>
                                         </div>
+                                        <?php endif;?>
                                         
                                         <div class="box">
                                         	<div class="box-content">

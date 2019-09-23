@@ -179,4 +179,20 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
         }
         return $this;
     }
+    
+    public function changeShippingAddress($data)
+    {
+        $customerAddrId = $data["customer_address"];
+        $addressId = $data["address_id"];
+        $address = $this->getCustomer()->getAddressById($customerAddrId);
+        if ($address->getId()) {
+            $quoteAddress = Mage::getModel('sales/quote_address')->load($addressId);
+            if($quoteAddress->getId()){
+                $quoteAddress->importCustomerAddress($address);
+                $quoteAddress->save();
+                $this->save();
+            }
+        }
+        Mage::dispatchEvent('checkout_type_multishipping_set_shipping_items', array('quote'=>$this->getQuote()));
+    }
 }

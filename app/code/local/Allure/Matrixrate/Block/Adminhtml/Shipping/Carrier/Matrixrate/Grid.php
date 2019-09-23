@@ -58,14 +58,19 @@ class Allure_Matrixrate_Block_Adminhtml_Shipping_Carrier_Matrixrate_Grid extends
             'index'     => 'price',
         ));
         
-        $this->addColumn('delivery_type', array(
-            'header'    => Mage::helper('adminhtml')->__('Delivery Type'),
-            'index'     => 'delivery_type',
+        $this->addColumn('shipping_name', array(
+            'header'    => Mage::helper('adminhtml')->__('Shipping Name'),
+            'index'     => 'shipping_name',
         ));
         
         $this->addColumn('is_signature', array(
             'header'    => Mage::helper('adminhtml')->__('Is Signature'),
             'index'     => 'is_signature',
+        ));
+        
+        $this->addColumn('is_international', array(
+            'header'    => Mage::helper('adminhtml')->__('Is International'),
+            'index'     => 'is_international',
         ));
 
         return Mage_Adminhtml_Block_Widget_Grid::_prepareColumns();

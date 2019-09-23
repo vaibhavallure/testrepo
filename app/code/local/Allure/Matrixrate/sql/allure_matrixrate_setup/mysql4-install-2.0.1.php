@@ -20,10 +20,11 @@ CREATE TABLE {$this->getTable('shipping_matrixrate')} (
   condition_to_value decimal(12,4) NOT NULL default '0.0000',
   price decimal(12,4) NOT NULL default '0.0000',
   cost decimal(12,4) NOT NULL default '0.0000',
-  delivery_type varchar(255) NOT NULL default '',
-  is_signature tinyint NOT NULL default 0, 
+  shipping_name varchar(255) NOT NULL default '',
+  is_signature tinyint NOT NULL default 0,
+  is_international tinyint NOT NULL default 0,
   PRIMARY KEY(`pk`),
-  UNIQUE KEY `dest_country` (`website_id`,`dest_country_id`,`dest_region_id`,`dest_city`,`dest_zip`,`dest_zip_to`,`condition_name`,`condition_from_value`,`condition_to_value`,`delivery_type`,`is_signature`)
+  UNIQUE KEY `dest_country` (`website_id`,`dest_country_id`,`dest_region_id`,`dest_city`,`dest_zip`,`dest_zip_to`,`condition_name`,`condition_from_value`,`condition_to_value`,`shipping_name`,`is_signature`,`is_international`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

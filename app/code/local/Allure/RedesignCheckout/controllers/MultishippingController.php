@@ -7,6 +7,18 @@
 require_once ('app/code/core/Mage/Checkout/controllers/MultishippingController.php');
 class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_MultishippingController
 {
+    
+    public function changeShippingAddressAction()
+    {
+        $requestData = $this->getRequest()->getParams();
+        try {
+            $this->_getCheckout()->changeShippingAddress($requestData);
+        }catch (Exception $e){
+            $this->_getCheckoutSession()->addError($e->getMessage());
+        }
+        $this->_redirect('*/*/shipping');
+    }
+    
     /**
      * Multishipping checkout after the shipping page
      */
@@ -16,8 +28,6 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             $this->_redirect('*/*/shipping');
             return;
         }
-        /* echo "<pre>";
-        print_r($this->getRequest()->getParams());die; */
         $shippingMethods = $this->getRequest()->getPost('shipping_method');
         try {
             Mage::dispatchEvent(
