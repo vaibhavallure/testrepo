@@ -1683,7 +1683,7 @@ div#narrow-by-list {
   top: 330px;
 }
 #narrow-by-list{
-  margin-left: 64px;
+  margin-left: 104px;
 }
 #narrow-by-list li div dd{
   position: absolute;
@@ -2175,10 +2175,6 @@ span#popup_loader_register {
 .breadcrumbs li{
 	padding-right: 25px;
 }
-.breadcrumbs > .row {
-  padding-left: 19px;
-}
-
 /* Product Details CSS */
 ul#foo4 {
   min-width: 100%;
@@ -2540,10 +2536,10 @@ ul.tabs li:nth-child(3){
   right: 2.7%;
 }
 .breadcrumbs {
-  margin-left: 5.4%;
+  padding-left: 71px;
 }
 .catalog-product-name-display {
-  margin-left: 7.6%;
+  padding-left: 109px;
 	margin-top: 32px;
 	font-size: 30px;
 }
