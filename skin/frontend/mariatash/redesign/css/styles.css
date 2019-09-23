@@ -900,7 +900,7 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 }
 
 .mt-myaccount-new .col2-left-layout .col-main {
-	width: 81% !important;
+	/*width: 81% !important;*/
 }
 
 .col2-right-layout .col-right {
@@ -1010,11 +1010,11 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	margin-bottom: -3px !important;
 }
 
-.customer-account-edit .input-box {
+/*.customer-account-edit .input-box {
 	clear: none;
 	width: 243px;
 	margin-left: 170px;
-}
+}*/
 
 .customer-account-edit .form-subscribe-mt .input-box {
 	margin-left: 0;
@@ -10666,7 +10666,7 @@ checkout-payment-method-load
 	left: -175px;
 }
 
-.customer-account-index .col-main, .customer-account-edit .col-main,
+.customer-account-index .col-main,
 .customer-address-index .col-main, .sales-order-history .col-main,
 .wishlist-index-index .col-main, .newsletter-manage-index  .col-main {
 	width: 80%;
@@ -10803,7 +10803,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 .sales-order-view .col2-left-layout .col-main, .customer-account-index .col2-left-layout .col-main,
 .sales-order-history .col2-left-layout .col-main, .wishlist-index-index .col2-left-layout .col-main,
-.customer-account-edit .col2-left-layout .col-main,
 .customer-address-index .col2-left-layout .col-main,
 .customer-address-form .col2-left-layout .col-main,
 .newsletter-manage-index .col2-left-layout .col-main, .sales-order-view .col2-right-layout .col-main,
@@ -10844,7 +10843,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .sales-order-shipment .main-container, .sales-order-view .main-container,
  .sales-order-history .main-container,
 .wishlist-index-share .main-container, .wishlist-index-index .main-container,
-.customer-account-edit .main-container, .customer-address-index .main-container,
+.customer-address-index .main-container,
 .customer-address-form .main-container, .newsletter-manage-index .main-container,
 .sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
 	margin: 0 auto;
@@ -10859,7 +10858,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 /********** < Dashboard */
 .my-account {
 	margin: 0;
-	min-height: 650px;
+	/*min-height: 650px;*/
 }
 
 .my-account .welcome-msg {
@@ -10987,7 +10986,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 
 .my-account .box .box-title h3, .my-account .box .box-title h4,
-.my-account .page-title h1, .my-account .order-items h2.table-caption,
+ .my-account .order-items h2.table-caption,
 .mt-addresses-additional h2 {
 	float: left;
 	margin: 0;
@@ -10997,10 +10996,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	text-transform: uppercase;
 	font-family: Arial, Arial, Helvetica, sans-serif;
 	color: #3f4048;
-}
-
-.my-account .page-title h1 {
-	line-height: 1.5;
 }
 
 .customer-account-index .my-account .box .box-title h3 {
