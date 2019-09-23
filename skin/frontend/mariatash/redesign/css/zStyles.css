@@ -244,8 +244,8 @@
 	font-size: 30px;
 }
 .login_security .my-account li.control input:checked+label,
-.my-account li.control label,
-.my-account li.control input:checked+label{
+.login_security .my-account li.control label,
+.login_security .my-account li.control input:checked+label{
 	background: none;
 }
 .login_security .form-list{
@@ -342,6 +342,82 @@
     text-transform: capitalize!important;
     color: rgba(41, 41, 41, 0.9)!important;
 
+}
+
+/*=====================*/
+/*MY ACCOUNT-my addresses*/
+/*=====================*/
+.my_addresses h1{
+	font-size: 30px;
+}
+.my_addresses ol,
+.my_addresses ol li{
+	padding: 0!important;
+}
+.my_addresses .mt-myaccount-address-primary-div{
+	display: flex;
+}
+.my_addresses .addresses-primary address{
+	background: transparent;
+	border:none;
+	padding-left: 0;
+	text-transform: capitalize;
+	font-weight: normal;
+}
+.my_addresses ol .item h3{
+	text-transform: uppercase!important;
+	font-family: urw-din-regular;
+}
+.add-primary{
+	order: 2;
+}
+.my_addresses #add-new-addresss{
+	background: transparent;
+	border:none;
+	padding-left: 0;
+}
+.my_addresses #additional-addresses{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	padding: 0;
+}
+.my_addresses #additional-addresses li{
+	width: 50%;
+}
+.ship-primary{
+	width: 32%;
+}
+
+.my_addresses #additional-addresses li:nth-of-type(odd){
+	width: 30%;
+}
+.my_addresses #additional-addresses li:nth-of-type(even){
+	width: 70%;
+	padding-left: 20px;
+}
+.mt-addresses-additional li.item p{
+	float: none;
+}
+.my_addresses. mt-addresses-additional li.item p{
+	position: static!important;
+	float: none;
+	text-align: left!important;
+}
+.my_addresses .mt-additional-address-btns button.button.btn-2{
+	float: left;
+}
+.my_addresses .btn-1,
+.my_addresses .btn-2{
+	background: transparent;
+	border:none;
+	padding-left: 0;
+	text-decoration: underline;
+	 color: rgba(41, 41, 41, 0.9);
+	 letter-spacing: 0.5px;
+}
+#additional-addresses address{
+	text-transform: capitalize;
 }
 /*=====================*/
 /*MEDIA QUERIES*/

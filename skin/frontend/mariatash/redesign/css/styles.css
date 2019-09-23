@@ -10666,8 +10666,7 @@ checkout-payment-method-load
 	left: -175px;
 }
 
-.customer-account-index .col-main,
-.customer-address-index .col-main, .sales-order-history .col-main,
+.customer-account-index .col-main,.sales-order-history .col-main,
 .wishlist-index-index .col-main, .newsletter-manage-index  .col-main {
 	width: 80%;
 }
@@ -10803,14 +10802,11 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 .sales-order-view .col2-left-layout .col-main, .customer-account-index .col2-left-layout .col-main,
 .sales-order-history .col2-left-layout .col-main, .wishlist-index-index .col2-left-layout .col-main,
-.customer-address-index .col2-left-layout .col-main,
 .customer-address-form .col2-left-layout .col-main,
 .newsletter-manage-index .col2-left-layout .col-main, .sales-order-view .col2-right-layout .col-main,
 .customer-account-index .col2-right-layout .col-main,
 .sales-order-history .col2-right-layout .col-main,
 .wishlist-index-index .col2-right-layout .col-main,
-.customer-account-edit .col2-right-layout .col-main,
-.customer-address-index .col2-right-layout .col-main,
 .customer-address-form .col2-right-layout .col-main,
 .newsletter-manage-index .col2-right-layout .col-main {
 	width: 784px;
@@ -10843,7 +10839,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .sales-order-shipment .main-container, .sales-order-view .main-container,
  .sales-order-history .main-container,
 .wishlist-index-share .main-container, .wishlist-index-index .main-container,
-.customer-address-index .main-container,
 .customer-address-form .main-container, .newsletter-manage-index .main-container,
 .sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
 	margin: 0 auto;
@@ -11084,10 +11079,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	padding: 0 10px;
 }
 
-.my-account .box {
-	float: left;
-	width: 100%;
-}
 
 .my-account .box h3 {
 	text-transform: uppercase;
@@ -11359,16 +11350,14 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	overflow: visible;
 }
 
-.my-account .addresses-list .col-1 {
-	width: 48%;
-}
+
 
 .customer-account-index .my-account .addresses-list .col-1 {
 	width: 267px;
 }
 
 .customer-address-index .my-account .addresses-list .col-1 {
-	width: 383px;
+	/*width: 383px;*/
 	margin-right: 5px;
 }
 
@@ -11511,11 +11500,11 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	font-weight: bold;
 }
 
-.mt-addresses-additional {
+/*.mt-addresses-additional {
 	position: relative;
 	overflow: hidden;
 }
-
+*/
 .mt-addresses-additional h2 {
 	background: #D1D1D1;
 	padding: 8px 10px;

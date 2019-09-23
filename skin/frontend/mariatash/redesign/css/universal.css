@@ -6,7 +6,6 @@
 */
 
 .customer-account-index .col-main,
-.customer-address-index .col-main,
 .sales-order-history .col-main,
 .wishlist-index-index .col-main,
 .newsletter-manage-index .col-main {
@@ -38,7 +37,6 @@
 }
 
 .customer-address-index .my-account .box .addresses-primary h3 {
-	font-weight: normal;
 	font-size: 15px;
 }
 
@@ -49,7 +47,7 @@
 .customer-address-index .my-account .addresses-list .col-1{
 	margin-right: 0px;
 }
-.customer-address-index .my-account .addresses-list .col-1,
+
 .my-account .addresses-list .col-2 {
 	width: 50%;
 }
@@ -69,14 +67,14 @@
     margin-bottom: 5px;
 }
 
-.addresses-list address,
+/*.addresses-list address,
 .mt-addresses-additional address {
 	line-height: 20px;
     font-size: 13px;
     border: 1px solid #ccc;
     padding: 10px;
     font-weight: 600;
-}
+}*/
 .additional-addresses td.item:first-child .item-inner-container {
     border-right: none;
 }
@@ -93,10 +91,10 @@
     margin-bottom: 0px ! important;
     margin-right: 10px;
 }
-.mt-additional-address-btns button.button.btn-2 {
+/*.mt-additional-address-btns button.button.btn-2 {
 	float: right ! important;
 	margin-bottom: 0px ! important;
-}
+}*/
 
 .mt-additional-address-btns button.button .mt-btn-name{
 	font-size: 10px;
@@ -1078,13 +1076,13 @@ padding: 0 0 8px 0;
     margin-top: 9px;
 }
 
-#additional-addresses .additional-address-links{
+/*#additional-addresses .additional-address-links{
     position: absolute;
     left: 10px;
     bottom: 45px;
     right: 0;
     text-align: right;
-}
+}*/
 #additional-addresses td.item .item-inner-container {
     margin: 0 10px 0px 0;
     padding: 0 0 0px 0;
@@ -1461,18 +1459,18 @@ width: 63%;
 	clear: both;
 }
 
-ul#primary-address-list,
+/*ul#primary-address-list,
 ul#additional-addresses{
 	display: flex;
 	flex-wrap:wrap;
 	justify-content:space-around;
-}
+}*/
 
-ul#primary-address-list li,
+/*ul#primary-address-list li,
 ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
-}
+}*/
 
 ul#primary-address-list li .item-inner-container,
 ul#additional-addresses li .item-inner-container{
@@ -1480,8 +1478,7 @@ ul#additional-addresses li .item-inner-container{
  position: relative;
 }
 
-ul#primary-address-list li .item-inner-container address,
-ul#additional-addresses li .item-inner-container address{
+ul#primary-address-list li .item-inner-container address{
 	 height: 80%;
 	 line-height: 20px;
 	 font-size: 13px;
@@ -1773,10 +1770,6 @@ width: 245px;
 
 .mt-myaccount-address-primary-div{
 	clear: both;
-}
-
-.mt-myaccount-add-new-address-btn-div{
-	float: right;
 }
 
 .mt-myaccount-page .block-layered-nav-bg{
