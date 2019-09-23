@@ -173,7 +173,7 @@ $mode  = $this->getMode();
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
                                 <div class="grid-mt-w col-12">
                                   <div class="row">
-                                    <div class="col-9">
+                                    <div class="col-8">
                                       <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
                                           <a  id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                               title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
@@ -183,7 +183,7 @@ $mode  = $this->getMode();
                                         <span id="link-qv-<?php echo $_product->getId(); ?>"><?php echo $quickViewUrl; ?></span>
                                         <span id="link-pv-<?php echo $_product->getId(); ?>"><?php echo $productUrl; ?></span>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-4">
                                       <div class="priceCategory default " id="default-price-<?php echo $_product->getEntityId(); ?>">
                                           <p><?= $this->getPriceHtml($_product) ?></p>
                                       </div>
@@ -297,7 +297,7 @@ $mode  = $this->getMode();
                                   <div class="row justify-content-between">
                                         <div class="col-12">
                                           <div class="row list-mt-upper">
-                                            <div class="col-9">
+                                            <div class="col-8">
                                               <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
                                                   <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                                      title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
@@ -307,7 +307,7 @@ $mode  = $this->getMode();
                                                 <span id="link-qv-<?php echo $_product->getId(); ?>" ><?php echo $quickViewUrl; ?></span>
                                                 <span id="link-pv-<?php echo $_product->getId(); ?>" ><?php echo $productUrl; ?></span>
                                             </div> -->
-                                            <div class="col-3">
+                                            <div class="col-4">
                                               <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>">
                                                 <p class="m-0"><?= $this->getPriceHtml($_product) ?></p>
                                               </div>
