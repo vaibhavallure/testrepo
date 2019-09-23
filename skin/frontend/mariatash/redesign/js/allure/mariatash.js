@@ -145,43 +145,6 @@ jQuery(document).ready(function() {
     }
     /*filter popup end---------------------------------*/
 
-
-
-    /* product detail page js-----------------------------------------*/
-
-    /*convert select into */
-
-    //jQuery('#optionid').on("change",function () {
-      //  console.log("changed---------------");
-        jQuery(function () {
-            var i=1;
-            jQuery('.product-custom-option, .change_select').each(function (index, element) {
-                jQuery(this).parent()
-                    .after()
-                    .append("<div class='chooseList'><ul></ul></div>");
-
-                var select_id=jQuery(this).attr("id");
-                jQuery(element).each(function (idx, elm) {
-                    jQuery('option', elm).each(function (id, el) {
-                        if(el.value!="")
-                            jQuery('.chooseList ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'">' + el.text + '</li>');
-                    });
-                });
-                i++;
-            });
-            jQuery('.chooseList ul li').on('click', function () {
-                var selected_id = jQuery(this).data("select_id");
-                var option_value = jQuery(this).data("option_value");
-                jQuery('.chooseList ul li').removeClass("active");
-                jQuery(this).addClass("active");
-                jQuery('#'+selected_id+'').val(option_value).trigger('change');
-            });
-            jQuery('.product-custom-option,.change_select').hide();
-        });
-
-    //});
-
-
 });
 
 function myFunction(x) {

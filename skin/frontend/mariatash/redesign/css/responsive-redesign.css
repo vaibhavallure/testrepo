@@ -133,9 +133,6 @@
   .second-header-image{
     display: none;
   }
-  .footer{
-    padding: 0 15px;
-  }
   .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
     background: rgba(41,41,41)
   }
@@ -337,6 +334,10 @@
   .big-popup-body{
     padding: 28px 93px !important;
   }
+  .popup-below-content {
+    margin-top: 8px;
+    padding: 0 36px 0px 35px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -348,7 +349,9 @@
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
-
+  .caroufredsel_wrapper{
+    width: 79%;
+  }
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
@@ -426,7 +429,7 @@
     height: 874.4px;
     width: 100%;
   }
-  .container.celebrities{
+  .container.celebrities, .container.press{
     padding: 0 60px 120px;
   }
   .big-popup-cover{
@@ -435,11 +438,26 @@
   .celebPopup .next, .celebPopup .prev{
     top: 47%;
   }
+  .celebPopup .next {
+    right: 18px;
+  }
+  .celebPopup .prev{
+    left: 18px;
+  }
   .celeb-info{
     margin-top: 30px;
   }
   .big-popup-body {
-    padding: 28px 33px !important;
+    padding: 28px 75px !important;
+  }
+  .ecp-celebrities-index-index .simple-page-title {
+    margin: 0 0 46px !important;
+  }
+  .catalog-product-name-display{
+    padding-left: 77px;
+  }
+  .breadcrumbs {
+    padding-left: 39px;
   }
 }
 
@@ -471,9 +489,6 @@
   .five-col{
     width: 33.33%;
   }
-  #narrow-by-list{
-    margin-left: 0;
-  }
   #narrow-by-list li div dt {
     width: 161.4px;
   }
@@ -501,8 +516,11 @@
   #jewelry .special-menu img {
     width: 200px !important;
   }
-  .container.celebrities {
+  .container.celebrities, .container.press {
     padding: 0 20px 60px;
+  }
+  .ecp-celebrities-index-index .for-space-to-bottom {
+    height: 240px;
   }
 }
 
@@ -620,7 +638,7 @@
     margin-right: 10px;
   }
   .pop-up-cover{
-    width: 92%;
+    width: 92% !important;
   }
   .input-form input{
     width: 100%;
@@ -665,22 +683,40 @@
   .container.celebrities{
     padding: 0 40px 120px;
   }
-  .big-popup-cover{
+  .big-popup-cover, .pressPopup .pop-up-cover{
     height: 550px;
   }
-  .celebPopup .next, .celebPopup .prev{
+  .celebPopup .next, .celebPopup .prev, .pressPopup .next, .pressPopup .prev{
     top: 40%;
     height: 55px;
     width: 20px;
   }
-  .celebPopup .prev{
+  .celebPopup .prev, .pressPopup .prev{
     left: 6px;
   }
-  .celebPopup .next{
+  .celebPopup .next, .pressPopup .next{
     right: 6px;
   }
   .big-popup-body{
     padding: 28px 33px !important;
+  }
+  .ecp-celebrities-index-index .simple-page-title{
+    margin: 20px 0 36px !important;
+  }
+  .press-popup-image {
+    background-size: 100% !important;
+    width: 100%;
+    height: 436px;
+    background-repeat: no-repeat;
+  }
+  .popup-below-content{
+    padding: 0 14px 0px 15px !important;
+  }
+  .pressPopup .modal-body{
+    padding-top: 50px !important;
+  }
+  .caroufredsel_wrapper{
+    width: 47%;
   }
 }
 
@@ -705,7 +741,7 @@
   .social-media ul {
     padding-left: 15px;
   }
-  .celeb-img-block{
+  .celeb-img-block, .press-img-block{
     flex: 0 0 50%;
     max-width: 50%;
   }
@@ -718,6 +754,9 @@
   }
   .big-popup-body {
     padding: 48px 83px !important;
+  }
+  .caroufredsel_wrapper{
+    width: 82%;
   }
 }
 

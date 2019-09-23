@@ -166,9 +166,7 @@ html {
 /*
  * Addresses outline displayed oddly in Chrome
  */
-a:focus {
-	outline: thin dotted;
-}
+
 
 /*
  * Improves readability when focused and also mouse hovered in all browsers
@@ -608,25 +606,25 @@ ul#tld_r_ul li:hover {
 }
 
 /* ======Carrusel top category WZR=========== */
-#foo3 {
+/* #foo3 {
 	padding: 0;
 	margin: 0;
 	left: 0;
-}
+} */
 
-#foo3 ul {
+/* #foo3 ul {
 	overflow: hidden;
 	left: 0;
 	float: left;
 	padding-left: -35px;
 	position: absolute;
-}
+} */
 
-#foo3 li {
+/* #foo3 li {
 	position: relative;
-}
+} */
 
-#foo3 li h3 {
+/* #foo3 li h3 {
 	font-size: 13px;
 	color: #38393c;
 	font-family: dinmittelschriftregular;
@@ -634,26 +632,26 @@ ul#tld_r_ul li:hover {
 	top: 0;
 	display: block;
 	width: 175px;
-	height: 175px; /*margin-top:-175px;*/
+	height: 175px; /*margin-top:-175px;
 	background: url(../images/a-li-subcat.png) repeat 0 0;
 	text-align: center;
 	padding-top: 148px;
 	line-height: 22px;
 	text-transform: uppercase;
 	font-weight: normal;
-}
+} */
 
-#foo3 li h3 a {
+/* #foo3 li h3 a {
 	text-decoration: none;
 	color: #38393c;
 	padding: 0 10px;
-}
+} */
 
-#foo3 li a, #foo3 li a:hover {
+/* #foo3 li a, #foo3 li a:hover {
 	text-decoration: none;
-}
+} */
 
-#foo3 li h3.active, #foo3 li h3:hover {
+/* #foo3 li h3.active, #foo3 li h3:hover {
 	font-size: 13px;
 	color: #fff;
 	font-family: dinmittelschriftregular;
@@ -661,14 +659,14 @@ ul#tld_r_ul li:hover {
 	top: 0;
 	display: block;
 	width: 175px;
-	height: 175px; /*margin-top:-175px;*/
+	height: 175px; /*margin-top:-175px;
 	background: url(../images/a-li-subcat1.png) repeat 0 0;
 	text-align: center;
 	padding-top: 148px;
-}
+} */
 
-#foo3 li {
-	/*display:inline-block;*/
+/* #foo3 li {
+	/*display:inline-block;
 	float: left;
 	list-style: none;
 	margin: 0;
@@ -678,7 +676,7 @@ ul#tld_r_ul li:hover {
 	cursor: pointer;
 	height: 175px;
 	overflow: hidden;
-}
+} */
 
 /*Carousel slider on category page*/
 .carousel-slider {
@@ -761,12 +759,12 @@ ul#tld_r_ul li:hover {
 	margin: 0 9px 0 0;
 }
 
-#foo3 li img {
+/* #foo3 li img {
 	width: 175px;
-	/*  height:175px;*/
+	/*  height:175px;
 	display: block;
 	margin: 0;
-}
+} */
 
 .box-awautorelated2 #foo3 li img, .block-viewed #foo2 li img {
 	width: auto;
@@ -814,32 +812,10 @@ ul#tld_r_ul li:hover {
 	right: 0px;*/
 }
 
-.block-viewed .image_carousel a.prev, .block-viewed .image_carousel a.next
-{
-	/*width: 26px;
-	height: 35px;
-	top: 50%;
-	margin-top: -18px;*/
-}
 
-.box-awautorelated2 .image_carousel .caroufredsel_wrapper, .block-viewed .image_carousel .caroufredsel_wrapper
-{
-	/*width: 100%;*/
-}
-
-.caroufredsel_wrapper {
-	/*padding: 0;*/
-	/*margin: -1px 0 1px;*/
-	/*left: 0;*/
-}
-
-.caroufredsel_wrapper { /*background:#CCC;*/
-
-}
-
-#prev3 {
+/* #prev3 {
 	position: relative;
-	/*  top:40%;*/
+	/*  top:40%;
 	right: 1px;
 	z-index: 9999999;
 	width: 26px;
@@ -850,12 +826,12 @@ ul#tld_r_ul li:hover {
 	cursor: pointer;
 	margin-top: -100px;
 	margin-right: -1px;
-}
+} */
 
-#prev3:hover {
+/* #prev3:hover {
 	text-indent: -999999px;
 	background: url(../images/gray_next.png) no-repeat 0 -35px;
-}
+} */
 
 #prev3.disabled {
 	cursor: default;
@@ -869,11 +845,11 @@ ul#tld_r_ul li:hover {
 	background: url(../images/gray_prev.png) no-repeat 0 -35px;
 }
 
-#next3 {
+/* #next3 {
 	position: absolute;
 	float: left;
 	/*  top:40%;*/
-	/*  left:-50px;*/
+	/*  left:-50px;
 	z-index: 106;
 	width: 26px;
 	height: 35px;
@@ -887,7 +863,7 @@ ul#tld_r_ul li:hover {
 #next3:hover {
 	text-indent: -999999px;
 	background: url(../images/gray_prev.png) no-repeat 0 -35px;
-}
+} */
 /*
   -------------------------------------------------------------------------------*/
 
@@ -4893,12 +4869,12 @@ textarea:focus, input:focus {
 /* Block: Layered Navigation */
 
 
-.block-layered-nav p.block-subtitle {
+/* .block-layered-nav p.block-subtitle {
 	margin-bottom: 0;
 	text-transform: uppercase;
 	font-size: 12px;
 	display: none;
-}
+} */
 
 /* Block: Cart */
 .top-links {
@@ -14564,9 +14540,9 @@ li.item h2.product-name {text-align: center;}
 	margin-bottom: 8px;  /*19px;*/
 }
 
-.caroufredsel_wrapper {
+/* .caroufredsel_wrapper {
 	margin: 0 auto !important;
-}
+} */
 
 .banner-c-code p strong {
 	font-size: 17px !important;
@@ -15396,9 +15372,9 @@ li.item h2.product-name {text-align: center;}
 	width: 204px !important;
 }
 
-#narrow-by-list .filtru-style_of_jewelry-dtn dd {
+/* #narrow-by-list .filtru-style_of_jewelry-dtn dd {
 	width: 180px;
-}
+} */
 
 #narrow-by-list .filtru-price dd {
 	width: 150px;
@@ -15475,9 +15451,9 @@ li.item h2.product-name {text-align: center;}
 }
 
 /* style category images */
-.thumbnail-image .caroufredsel_wrapper {
+/* .thumbnail-image .caroufredsel_wrapper {
 	margin-top: 240px !important;
-}
+} */
 
 .thumbnail-image div.main div.col-main div.category-title {
 	display: none;
@@ -15487,7 +15463,7 @@ li.item h2.product-name {text-align: center;}
 	margin-top: 85px !important;
 }
 
-.thumbnail-image .mb-mana-catalog-leftnav .block-layered-nav-bg {
+/* .thumbnail-image .mb-mana-catalog-leftnav .block-layered-nav-bg {
 	top: -71px !important;
 }
 
@@ -15505,7 +15481,7 @@ li.item h2.product-name {text-align: center;}
 
 .lt-ie9 .with-category-image .toolbar-top .toolbar {
 	top: -80px;
-}
+} */
 
 .with-category-image-bleed #productsContainer-wrapper {
 	margin-top: 302px;
@@ -15977,11 +15953,7 @@ li.item h2.product-name {text-align: center;}
 	padding: 8px 0 0 0;
 }
 
-.block-layered-nav-bg {
-	position: absolute;
-}
-
-.isBleed .block-layered-nav-bg {
+/* .isBleed .block-layered-nav-bg {
 	background: #cfcfd1;
 	position: absolute;
 	top: -75px !important;
@@ -15992,7 +15964,7 @@ li.item h2.product-name {text-align: center;}
 
 .lt-ie9 .isBleed .block-layered-nav-bg {
 	top: -70px !important;
-}
+} */
 
 .catalogsearch-result-index .block-layered-nav-bg {
 	top: 232px;
@@ -16129,18 +16101,17 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	top: -48px !important;
 }
 
-.mb-category-products .toolbar-bottom .toolbar, .mb-search-result .toolbar-bottom .toolbar
-{
+.mb-category-products .toolbar-bottom .toolbar, .mb-search-result .toolbar-bottom .toolbar{
 	top: 130px;
 	z-index: 100;
 }
 
-.mb-mana-catalogsearch-leftnav .selected-filters {
+/* .mb-mana-catalogsearch-leftnav .selected-filters {
 	position: absolute;
 	top: 44px;
 	left: 20px;
 	z-index: -1;
-}
+} */
 /**
  * @category    Mana
  * @package     ManaPro_FilterColors

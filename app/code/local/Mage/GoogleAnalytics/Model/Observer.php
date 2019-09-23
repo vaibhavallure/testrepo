@@ -58,7 +58,11 @@ class Mage_GoogleAnalytics_Model_Observer
         }
         // #MT-680 Skip allure orders in Google Analytics
         if(!empty($orderIds)){
-            $order= Mage::getModel('sales/order')->load($orderIds);
+            $orderId = $orderIds;
+            if(is_array($orderIds)){
+                $orderId = $orderIds[0];
+            }
+            $order= Mage::getModel('sales/order')->load($orderId);
             if(!is_null($order->getId())){
                 if ((strpos($order->getCustomerEmail(), 'allure') !== false) ||( strtolower($order->getCouponCode())==strtolower('4uWruyuc')))
                 {

@@ -1,10 +1,14 @@
-<div class="container press">
+<p class="category-image"><img src="https://mariatash-design.allureinc.dev/media/catalog/category/catalog.jpg" alt="Jewelry" title="Jewelry"></p>
+<div id="category-title" class="page-title category-title simple-page-title">
+    <h1>Press Features</h1>
+</div>
+<div class="container press press-custom-container">
     <div class="row">
         <div class="col-12">
             <div class="row main-press-block">
                 <?php foreach($this->getPressCol() as $press):
                     if($press->getStatus()==1):?>
-                        <div class="col-12 col-md-6 col-lg-4 mb-5 press-img-block" data-press_id="<?= $press->getId() ?>" >
+                        <div class="col-12 col-md-6 col-lg-4 press-img-block" data-press_id="<?= $press->getId() ?>" >
                             <div id="pressId_<?= $press->getId() ?>" class="press-img" style="background: url(<?php echo $this->getImagePath()."".$press->getImageOne(); ?>);" data-id="<?= $press->getId() ?>"></div>
                         </div>
                     <?php endif; endforeach; ?>
@@ -22,17 +26,17 @@
                     <div></div>
                 </a>
             </div>
-            <div class="body modal-body p-5 h-100">
-                <div class="row h-100">
-                    <div class="col-12 h-100">
-                        <div class="row h-100">
-                            <div class="col-12 h-100">
-                                <div class="p-img w-100 h-100 "></div>
-                            </div>
+            <div class="body modal-body big-popup-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
                             <div class="col-12">
+                                <div class="p-img press-popup-image"></div>
+                            </div>
+                            <div class="col-12 popup-below-content">
                                 <div class="row">
-                                    <div class="col-6 text-left press_title">my title</div>
-                                    <div class="col-6 text-right press_publish_date">jan 2, 2019</div>
+                                    <div class="col-6 text-left press_title info-text-three">my title</div>
+                                    <div class="col-6 text-right press_publish_date info-text-three">jan 2, 2019</div>
                                 </div>
                             </div>
                         </div>

@@ -10,7 +10,7 @@ implements Mage_Shipping_Model_Carrier_Interface
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
         //$arr = array('onepage','sales_order','sales_order_create','cart');
-        $arr = array('onepage','sales_order','sales_order_create','cart','paypal','express');
+        $arr = array('onepage','sales_order','sales_order_create','cart','paypal','express','multishipping');
         $controllerName = Mage::app()->getRequest()->getControllerName();
         if(in_array($controllerName, $arr)){
             return false;

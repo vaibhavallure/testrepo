@@ -11,7 +11,7 @@ class Ecp_Celebrities_Block_Celebrities extends Mage_Core_Block_Template {
     protected $_celebrity = null;
     
     public function __construct(){
-        if(!Mage::registry('celebrities')) {
+        /*if(!Mage::registry('celebrities')) {
             $collection = Mage::getModel('ecp_celebrities/celebrities')->getCollection();
             $collection->getSelect()->order('ordering ASC');
             $collection->addFieldToFilter('status',1);
@@ -19,7 +19,7 @@ class Ecp_Celebrities_Block_Celebrities extends Mage_Core_Block_Template {
             Mage::register('celebrities',$collection->addFieldToFilter('status',1)->getFirstItem());
 			$celebrity = $collection->addFieldToFilter('status',1)->getFirstItem();
 			Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $celebrity->getUrl());
-        }
+        }*/
     }
 
     public function _prepareLayout() {
@@ -115,6 +115,6 @@ class Ecp_Celebrities_Block_Celebrities extends Mage_Core_Block_Template {
     }
     public function getPopUpActionUrl()
     {
-        return $this->getUrl('*/index/getPopup', array('_secure' => true));
+        return $this->getUrl('celebrities/index/getPopup', array('_secure' => true));
     }
 }

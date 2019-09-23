@@ -10,15 +10,18 @@ umask(0);
 Mage::app();
 echo "<pre>";
 
-$order = Mage::getModel('sales/order')->load(437297);
-var_dump($order->getCouponCode());
-
-var_dump($order->getCouponRuleName());
-
-
-die;
+//$order = Mage::getModel('sales/order')->load(437297);
+//var_dump($order->getCouponCode());
+//
+//var_dump($order->getCouponRuleName());
+//
+//
+//die;
 
 $product = Mage::getModel('catalog/product')->load(49132);
+$stoneWeightClassification = $product->getData('stone_weight_classification');
+$barcode = $product->getData('barcode');
+var_dump($barcode);die;
 var_dump($product->getData('weight'));die;
 
 //$sd = Mage::getModel('eav/attribute_option_value')->load(1129);

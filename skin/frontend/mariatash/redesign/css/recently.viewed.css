@@ -1,46 +1,4 @@
 
-.image_carousel img {
-	padding:0;
-	display: block;
-	float: left;
-}
-a.prev,
-a.next,
-.galleryFull .controls .prev,
-.galleryFull .controls .next{
-	background: url(../images/Popup-side-arrow.png) no-repeat transparent;
-	width: 45px;
-	height: 100px;
-	display: block;
-	position: absolute;
-	top:30%;
-}
-a.prev,
-.galleryFull .controls .prev {
-	left: 5%;
-transform: rotate(180deg);
-}
-
-a.prev.disabled {
-	background-position: 0 -100px !important;
-}
-a.next,
-.galleryFull .controls .next {
-	right: 5%;
-}
-
-a.next.disabled {
-	background-position: -50px -100px !important;
-}
-a.prev.disabled, a.next.disabled {
-	cursor: default;
-}
-a.prev span,
-a.next span,
-.galleryFull .controls .prev span,
-.galleryFull .controls .next span{
-	display: none;
-}
 .pagination {
 	text-align: center;
 }
