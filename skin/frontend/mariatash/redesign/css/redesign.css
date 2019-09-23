@@ -717,17 +717,13 @@ nav.mariatash-header {
 }
 
 .products-grid .product-name a {
-    font-size: 13px;
+    font-size: 14px;
 		color: rgba(41,41,41,1);
     font-family: urw-din-xlight;
 }
 .catalog-common-grid .price-box {
     text-align: right;
     margin-right: 3px;
-}
-
-.btn-quickview{
-	   text-transform: uppercase;
 }
 
 .list-mt-w .actions {
@@ -1532,6 +1528,7 @@ input[type="checkbox"]:checked+label:before {
 .products-grid li.item a{
 	display: block;
 	overflow: hidden;
+	border-radius: 0;
 }
 .products-grid2 li.item {
 overflow: hidden;
@@ -1641,14 +1638,17 @@ overflow: hidden;
   cursor: pointer;
 }
 .swatches{
-  padding: 5px 4px 0 0px;
+  padding: 14px 4px 0 0px;
 	display: flex;
   justify-content: flex-end;
 }
 .swatches li{
   width: 18px !important;
   height: 18px !important;
-	margin-left: 5px;
+	margin-left: 12px;
+}
+.swatches li:first-child{
+	margin-left: 0;
 }
 .colorSelector.tipped-create.active::after {
   content: '';
@@ -1661,8 +1661,8 @@ overflow: hidden;
   top: -5px;
 }
 .regular-price .price, .old-price .price, .special-price .price{
-  font-size: 13px;
-  font-family: urw-din-regular;
+  font-size: 14px;
+  font-family: urw-din-xlight;
   white-space: nowrap !important;
   letter-spacing: 1px;
 }
@@ -1684,6 +1684,7 @@ div#narrow-by-list {
 }
 #narrow-by-list{
   margin-left: 64px;
+	margin-top: 73px;
 }
 #narrow-by-list li div dd{
   position: absolute;
@@ -1717,6 +1718,12 @@ div#narrow-by-list {
 .piercing_options{
   text-align: center;
   padding: 0;
+}
+.catalog-category-view .light-button {
+  width: 128px;
+  height: 33px;
+	text-transform: uppercase;
+	padding: 5px;
 }
 
 .cms-page-view .top-bar {
@@ -2351,7 +2358,7 @@ ul#foo4 {
   margin-top: 71px;
 }
 .product-name {
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 .catalog-product-view .amconf-images-container img {
   width: 23px;
@@ -2537,6 +2544,7 @@ ul.tabs li:nth-child(3){
 }
 .breadcrumbs {
   padding-left: 71px;
+	margin-top: 3px;
 }
 .catalog-product-name-display {
   padding-left: 109px;
