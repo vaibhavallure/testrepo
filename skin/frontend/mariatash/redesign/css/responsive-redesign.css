@@ -352,7 +352,9 @@
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
-
+  .caroufredsel_wrapper{
+    width: 79%;
+  }
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
@@ -713,6 +715,9 @@
   .pressPopup .modal-body{
     padding-top: 50px !important;
   }
+  .caroufredsel_wrapper{
+    width: 47%;
+  }
 }
 
 /* Mobile landscape */
@@ -749,6 +754,9 @@
   }
   .big-popup-body {
     padding: 48px 83px !important;
+  }
+  .caroufredsel_wrapper{
+    width: 82%;
   }
 }
 
