@@ -3,7 +3,7 @@ jQuery(document).ready(function() {
 
         if (jQuery(window).width() >= 992){
             var nav_height=jQuery('header').outerHeight();
-            jQuery('.login_security').css("margin-top",nav_height/2);
+            jQuery('.login_security,.my_addresses').css("margin-top",nav_height/2);
         }
 
 
@@ -156,9 +156,9 @@ function myFunction(x) {
 jQuery(window).bind("load resize scroll",function(e){
         if (jQuery(window).width() >= 992){
             var nav_height=jQuery('header').outerHeight();
-            jQuery('.login_security').css("margin-top",nav_height/2 +20);
+            jQuery('.login_security,.my_addresses').css("margin-top",nav_height/2 +20);
         }
         else{
-            jQuery('.login_security').css("margin-top",'0px');
+            jQuery('.login_security,.my_addresses').css("margin-top",'0px');
         }
     });

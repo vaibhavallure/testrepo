@@ -33,7 +33,10 @@
 			<?php if (!$_product->isGrouped() && $_product->getTypeId() != 'giftcards') { ?>
                 <div class="col-12">
                     <div class="row">
-                    <label class="product-attribute-name col-12" for="qty"><?php echo $this->__('Quantity') ?></label>
+                        <label class="product-attribute-name col-4" for="qty"><?php echo $this->__('Quantity') ?></label>
+                        <?php if($_product->getItemSoldSingly() || $_product->getItemSoldSingly()==NULL):?>
+                        <label class="info-text-three col-6" for="qty"><?php echo $this->__('Item Sold Singly.') ?></label>
+                        <?php endif;?>
                     </div>
                    <div class="row">
                     <div class="minus_qty col-1"><span class="quantity-count">-</span></div>

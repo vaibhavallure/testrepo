@@ -56,12 +56,12 @@
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
     }
 ?>
-<!-- <div id="category-title" class="page-title category-title <//?php echo ($_category->getCategoryBleed()) ? ' category-bleed' : ''?>">
-    <//?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
-        <a href="<//?php echo $this->getRssLink() ?>" class="link-rss"><//?php echo $this->__('Subscribe to RSS Feed') ?></a>
-	    <//?php endif; ?>
-        <h1 style="color:<//?php echo $_category->getCategoryColorTitle() ?>"><//?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
-</div> -->
+ <div id="category-title" class="page-title category-title <?php echo ($_category->getCategoryBleed()) ? ' category-bleed' : ''?>">
+    <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
+        <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
+	    <?php endif; ?>
+        <h1 style="color:<?php echo $_category->getCategoryColorTitle() ?>"><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+</div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
 <?php if($_imgUrl): ?>
