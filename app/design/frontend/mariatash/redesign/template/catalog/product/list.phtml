@@ -136,8 +136,8 @@ $mode  = $this->getMode();
                             ->addAttributeToFilter('visibility', 4);
 
                 if($products->getSize() > 30) : ?>
-                    <div class="toolbar">
-                        <span><?php echo $products->getSize(); ?> Items</span>
+                    <div class="toolbar d-none">
+                        <span id="total_item_counts"><?php echo $products->getSize(); ?> Items</span>
                     </div>
                 <?php endif; ?>
             <?php endif; ?>

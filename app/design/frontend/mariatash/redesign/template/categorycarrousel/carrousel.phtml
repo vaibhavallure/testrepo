@@ -20,29 +20,29 @@ jQuery(document).ready(function() {
 
 function mycarousel_initCallback(carousel) {
     jQuery('#prev3').bind('click', function() {
-        carousel.next();
+        carousel.prev();
         return false;
     });
 
     jQuery('#next3').bind('click', function() {
-        carousel.prev();
+        carousel.next();
         return false;
     });
 };
 
 function mycarousel_buttonNextCallback(carousel, button, enabled) {
     if(enabled){
-        jQuery("#prev3").css('opacity',1);
+        jQuery("#next3").css('opacity',1);
     }else{
-        jQuery("#prev3").css('opacity',0.13);
+        jQuery("#next3").css('opacity',0.13);
     }
 };
 
 function mycarousel_buttonPrevCallback(carousel, button, enabled) {
     if(enabled){
-        jQuery("#next3").css('opacity',1);
+        jQuery("#prev3").css('opacity',1);
     }else{
-        jQuery("#next3").css('opacity',0.13);
+        jQuery("#prev3").css('opacity',0.13);
     }
 };
 
@@ -77,22 +77,15 @@ jQuery(window).resize(function() {
                         div.main div.col-main div.category-title {display: none;}
                         .caroufredsel_wrapper {margin-top: 240px !important}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        .mb-mana-catalog-leftnav .block-layered-nav-bg {top: -65px !important;}
-						            .mb-category-products .toolbar-top .toolbar {top: -65px !important;}
-                        .toolbar .sorter {margin-top: -28px !important;}
-                        .toolbar-top {top: 36px;}
                   </style>';
         }
         else {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
-                        .caroufredsel_wrapper {margin-top: 250px !important;}
-                        p.category-image { position:absolute; top:260px; height: 240px; left:0; width:100%; z-index:-1; overflow: hidden; }
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        .mb-mana-catalog-leftnav .block-layered-nav-bg {top: -65px !important;}
-						            .mb-category-products .toolbar-top .toolbar {top: -65px !important;}
-                        .toolbar .sorter {margin-top: -28px !important;}
-                        .toolbar-top {top: 36px;}
+                        #narrow-by-list { margin-top: 70px; }
+                        #narrow-by-list li div dd { top: 99px !important; }
+                        .filterButton:before {top: -310px !important; left: 61px !important;}
                 </style>';
         }
     }
@@ -107,31 +100,31 @@ jQuery(window).resize(function() {
         echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        .mb-mana-catalog-leftnav .block-layered-nav-bg {top: -65px !important;}
-						            .mb-category-products .toolbar-top .toolbar {top: -65px !important;}
-                        .toolbar .sorter {margin-top: -28px !important;}
-                        .toolbar-top {top: 36px;}
+                        #narrow-by-list{margin-top: 70px;
+                        #narrow-by-list li div dd { top: 99px !important; }
+                        .filterButton:before {top: -310px !important; left: 61px !important;}
                   </style>';
     }
     ?>
 
-    <h1 style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
+    <h1 class="catalog-product-name-display" style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
 </div>
 <?php $_collection = $this->getCategories() ?>
-<div class="caroufredsel_wrapper">
+<div class="cartilage-section w-100 position-relative">
+<div class="caroufredsel_wrapper" >
 	<?php if(count($_collection)) { ?>
     <ul id="foo3">
 		<?php $i = 1;?>
         <?php foreach($_collection as $category): ?>
             <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="active"' : '' ?>
             <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
-                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h3 <?php echo $active; ?>><?php echo $category->getName(); ?></h3></a>
+                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
             </li>
         <?php endforeach; ?>
     </ul>
-	<div id="prev3"></div>
-	<div id="next3"></div>
+
 	<?php } ?>
 </div>
-
+<div class="prev" id="prev3"></div>
+<div class="next" id="next3"></div>
+</div>

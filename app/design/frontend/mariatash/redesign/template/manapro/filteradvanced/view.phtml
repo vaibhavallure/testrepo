@@ -117,6 +117,9 @@
               <div class="actions"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
                 </li>
                 <?php endif; ?>
+                <li id="total_item_counts_holder">
+                    <span class="info-text-two"></span>
+                </li>
             </ul>
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>
@@ -143,5 +146,7 @@
                 jQuery('.'+parent_class+' .m-show-less-action').click();
             }
         });
+
+        jQuery("#total_item_counts_holder span").html(jQuery("#total_item_counts").html());
     });
 </script>
