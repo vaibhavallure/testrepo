@@ -2539,8 +2539,8 @@ ul.tabs li:nth-child(3){
 /*instagram slider*/
 
 .image_carousel .item.product-view-instagram-item, .image_carousel .item.product-view-instagram-item img{
-  height: 222px;
-  width: 222px;
+  height: 222.5px;
+  width: 222.5px;
 }
 
 /*Cartilage CSS*/
