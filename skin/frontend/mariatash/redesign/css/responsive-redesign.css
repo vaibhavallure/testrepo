@@ -465,6 +465,21 @@
   .breadcrumbs {
     padding-left: 39px;
   }
+  .filterButton:before{
+    left: 19px !important;
+    }
+  .category-products {
+    margin-top: 0px;
+  }
+  .filterButton:before{
+    top: -80px;
+  }
+  .catalog-category-view .category-title{
+    margin-bottom: 0 !important;
+  }
+  .cartilage-section {
+    margin-top: 28px;
+  }
 }
 
 

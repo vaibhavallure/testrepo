@@ -87,10 +87,13 @@ jQuery(window).resize(function() {
                         .filterButton:before {top: -270px !important; left: 61px !important;}
                         @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
                           .filterButton:before{
-                            left: 79px !important;
-                            }
+                            top: -321px !important;
+                          }
                             .category-products{
                               margin-top: 0px;
+                            }
+                            .catalog-category-view .category-title{
+                              margin-top: 0;
                             }
                           }
                           @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
@@ -139,10 +142,19 @@ jQuery(window).resize(function() {
                               margin-top: 0;
                             }
                             .filterButton:before{
-                              top: -322px !important;
+                              top: -315px !important;
                             }
                             .filterButton:before {
                               left: 10px !important;
+                            }
+                            .thumbnail-image #productsContainer-wrapper{
+                              margin-top: 25px !important;
+                            }
+                            .catalog-category-view .category-title{
+                              margin-top: 0px;
+                            }
+                            .catalog-product-name-display{
+                              margin-top: 10px;
                             }
                           }
                 </style>';
