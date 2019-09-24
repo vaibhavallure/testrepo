@@ -136,11 +136,33 @@ jQuery(window).resize(function() {
                             .filterButton:before{
                               top: -270px !important;
                             }
-
-
                           }
-                          @media (max-width:1024px){
-
+                          @media (max-width:767px){
+                            .breadcrumbs :last-child {
+                              padding-right: 0;
+                            }
+                            .mb-breadcrumbs ul {
+                              padding: 0;
+                              display: inline-block;
+                            }
+                            .catalog-category-view .category-title {
+                              padding-left: 0 !important;
+                            }
+                            .catalog-category-view .mb-category-products .category-title h1{
+                              text-align: center;
+                            }
+                            .category-products{
+                              margin-top: 0;
+                            }
+                            .filterButton:before{
+                              top: -84px;
+                            }
+                            .breadcrumbs{
+                              padding: 0 15px;
+                            }
+                            .catalog-category-view .category-title{
+                              margin-bottom: 0 !important;
+                            }
                           }
                 </style>';
         }
