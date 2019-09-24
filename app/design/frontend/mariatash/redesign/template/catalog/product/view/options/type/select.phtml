@@ -54,13 +54,13 @@
             var select_id=jQuery(this).attr("id");
             jQuery(this).parent()
                 .after()
-                .append("<div class='chooseList' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
+                .append("<div class='chooseList col-12' id='chooseList"+select_id+"' style='display: none'><ul class='row'></ul></div>");
 
             var select_id=jQuery(this).attr("id");
             jQuery(element).each(function (idx, elm) {
                 jQuery('option', elm).each(function (id, el) {
                     if(el.value!="")
-                        jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="col"><span>' + el.text + '</span></li>');
+                        jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="col-3"><span>' + el.text + '</span></li>');
                 });
             });
             i++;

@@ -37,9 +37,9 @@
                 </div>
                 <ul id="foo2" style="overflow: hidden;">
                     <?php foreach ($_products as $_item): ?>
-                        <li style="width: 234px; height: 305px" class="item recentview">
+                        <li style="width: 280px; height: 362px" class="item recentview">
                             <a href="<?php echo $this->getProductUrl($_item) ?>">
-                                <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(234,305) ?>" alt="<?php echo $_item->getName() ?>" />
+                                <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(280,362) ?>" alt="<?php echo $_item->getName() ?>" />
                             </a>
                         </li>
                     <?php endforeach; ?>
