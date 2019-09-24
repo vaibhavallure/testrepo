@@ -339,7 +339,8 @@ function shareLikeTwitter(){
 
             jQuery('#thumbRepo img').each(function(number){
                  if(jQuery(this).attr('viewon') == 1) {
-                    if(numImages < 5)
+
+                     if(numImages < 5)
                         jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" ><div class="url-caption">VIEW ON MODEL</div><img src="'+jQuery(this).attr('src')+'" /></a>');
                     else {
                         jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
@@ -347,15 +348,20 @@ function shareLikeTwitter(){
                     counterJs++;
                 } else {
                      if( videoCounter  == 0 ){
-                        if(number <= 3){
-                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                         if(counterJs==0)
+                             var activeClass="class='active'";
+                         else
+                             var activeClass="";
+
+                         if(number <= 3){
+                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" '+activeClass+'><img src="'+jQuery(this).attr('src')+'" /></a>');
                             counterJs++;
                         }
 
                      }
                      else{
                          if(number <= 3){
-                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" '+activeClass+'><img src="'+jQuery(this).attr('src')+'" /></a>');
                             counterJs++;
                          }
                     }
