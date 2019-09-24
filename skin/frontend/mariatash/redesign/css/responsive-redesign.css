@@ -361,7 +361,7 @@
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
-  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
+  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
   .navbar-toggler{
@@ -485,8 +485,8 @@
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
-  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 227px;
+  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
+    top: 257px;
   }
   .about-designer{
     padding: 0 26px;
