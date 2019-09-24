@@ -2498,7 +2498,17 @@ ul.tabs li.active h4 {
   max-width: 100%;
 	margin-top: 19px;
 	border-bottom: 1px solid #d8d8d8;
-
+}
+.post-lengthds-lbl-options .chooseList {
+  padding: 0 45px;
+	border-bottom: none;
+	margin-top: 0;
+}
+.post-lengthds-lbl-options .chooseList ul{
+	border-bottom: 1px solid #d8d8d8;
+}
+.post-lengthds-lbl-options .chooseList li {
+  padding: 0;
 }
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
