@@ -344,6 +344,10 @@
   .category-image-bleed{ /* Head Image */
     display: none;
   }
+  ul.tabs li{
+    flex: 0 0 33.33% !important;
+    max-width: 33.33% !important;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -789,6 +793,10 @@
   }
   .containerImage {
     overflow-y: hidden;
+  }
+  .image_carousel .item.product-view-instagram-item{
+    height: auto;
+    width: auto;
   }
 }
 

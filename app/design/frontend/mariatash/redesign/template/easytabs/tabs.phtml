@@ -59,7 +59,7 @@ if($iEasyTabGroupId > 0){
 $tabHtml = array();
 ?>
 <div class="pdp-tabs row">
-  <div class="col-12">
+  <div class="col-12 tab-section p-0">
     <ul class="tabs row">
         <?php $i = 0; ?>
         <?php foreach ($this->getTabs() as $_index => $_tab): ?>
@@ -100,7 +100,6 @@ $tabHtml = array();
     </ul>
   </div>
 </div>
-<hr>
 <div class="padder row">
     <?php foreach ($this->getTabs() as $_index => $_tab): ?>
         <?php //if ($this->getChildHtml($_tab['alias'])): ?>

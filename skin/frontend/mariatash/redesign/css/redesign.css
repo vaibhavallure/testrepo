@@ -2447,11 +2447,29 @@ table.data-table, .data-table tr {
 }
 .thumb .active img{
 	border: 1px solid rgba(41,41,41,0.9);
-border-bottom-width: 3px;
+	border-bottom-width: 3px;
 	transition: .5s;
 }
 .add-to-links {
   margin-top: 14px;
+}
+.pdp-tabs {
+  padding: 0 15px;
+}
+.tab-section{
+	border-bottom: 1px solid #d8d8d8;
+}
+ul.tabs li.active h4 {
+  border-bottom: 2px solid #000;
+  padding-bottom: 21px;
+  margin: 0;
+	width: max-content;
+}
+.padder {
+  margin-top: 17px;
+}
+.padder .std {
+  margin-bottom: 20px;
 }
 /* ppp */
 
