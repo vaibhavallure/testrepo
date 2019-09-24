@@ -2383,9 +2383,15 @@ ul#foo4 {
   margin-bottom: 16px;
 }
 .catalog-product-view .amconf-images-container img {
-  width: 23px;
-  height: 23px;
+  width: 25px;
+  height: 25px;
 	margin-right: 19px;
+	padding: 3px;
+}
+
+.catalog-product-view .amconf-images-container img.amconf-image-selected
+{
+	border:1px solid gray;
 }
 .catalog-product-view .amconf-images-container img:last-child {
   margin-right: 0;
@@ -2435,6 +2441,9 @@ table.data-table, .data-table tr {
 .thumb img{
 	border: 1px solid rgba(41,41,41,0.9);
 	margin-top: 10px;
+}
+.thumb .active img{
+	border-bottom: 3px solid rgba(41,41,41,0.9);
 }
 .add-to-links {
   margin-top: 14px;
@@ -2763,3 +2772,4 @@ ul.tabs li:nth-child(3){
     display: block;
     margin: 0 9px 0 0;
 }
+
