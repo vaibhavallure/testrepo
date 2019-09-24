@@ -1,53 +1,52 @@
 <?php
-    $currentFilterStore = $this->getCurrentFilterStore();
-    $currentSort        = $this->getCurrentFilterSortOrder();
-    $stores             = $this->getAllStores();
-    $storeArr           = $this->getStoreListArray();
-    $sortOderArr        = $this->getSortOrderArray();
+$currentFilterStore = $this->getCurrentFilterStore();
+$currentSort        = $this->getCurrentFilterSortOrder();
+$stores             = $this->getAllStores();
+$storeArr           = $this->getStoreListArray();
+$sortOderArr        = $this->getSortOrderArray();
 ?>
 <div class="block-layered-nav-bg">
 	<div class="block block-layered-nav mb-mana-catalogsearch-leftnav">
 		<div class="block-content">
-			<ul id=narrow-by-list-new>
-				<li class="filter-label-list"><span>Narrow By: </span></li>
+			<ul id="narrow-by-list-new" class="p-0">
+				<!-- <li class="filter-label-list"><span>Narrow By: </span></li> -->
 				<li class="myaccount-filter-store-list purchase-order-filter">
-     				<div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
-        				<dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"ALL STORES"?></dt>
-           				<dd class="myaccount-filter-store odd" style="display: none;">
-		   					<div class="filter_name"></div>
-							<ol class="myaccount-filter-item">
-								<li>
-									<dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
-									<?php foreach ($stores as $store) :?>
-        									<dd value="<?php echo $store->getId()?>"
-        								        <?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
-        										<?php echo $store->getName()?>
-        									</dd>
-            						<?php endforeach;?>
-            					</li>
-							</ol>
-						</dd>
-        			</div>
-  				</li>
+         <div class="optionfilter input-patern" style="display: block;overflow: hidden;cursor: pointer;">
+          <dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"All Stores"?></dt>
+          <dd class="myaccount-filter-store odd" style="display: none;">
+            <div class="filter_name"></div>
+            <ol class="myaccount-filter-item">
+              <li >
+               <dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
+               <?php foreach ($stores as $store) :?>
+                 <dd value="<?php echo $store->getId()?>"
+                  <?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
+                  <?php echo $store->getName()?>
+                </dd>
+              <?php endforeach;?>
+            </li>
+          </ol>
+        </dd>
+      </div>
+    </li>
+    
+    <li class="myaccount-filter-sort-order-list purchase-order-filter">
+     <div class="optionfilter input-patern" style="display: block;overflow: hidden;cursor: pointer;">
+      <dt class="odd"><?php echo ($currentSort!='')?$sortOderArr[$currentSort]:"SORT BY"?></dt>
+      <dd class="myaccount-filter-sort-order odd" style="display: none;">
+        <div class="filter_name"></div>
+        <ol class="myaccount-filter-item">
+          <li>
+            <?php foreach ($sortOderArr as $key=>$name):?>
+              <dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
+            <?php endforeach;?>
+          </li>
+        </ol>
+      </dd>
+    </div>
+  </li>
   
-  				<li class="myaccount-filter-sort-order-list purchase-order-filter">
-     				<div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
-        				<dt class="odd"><?php echo ($currentSort!='')?$sortOderArr[$currentSort]:"SORT BY"?></dt>
-           				<dd class="myaccount-filter-sort-order odd" style="display: none;">
-		   					<div class="filter_name"></div>
-							<ol class="myaccount-filter-item">
-								<li>
-            						<?php foreach ($sortOderArr as $key=>$name):?>
-            						<dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
-            						<?php endforeach;?>
-            	            	</li>
-            				</ol>
-						</dd>
-        			</div>
-  				</li>
-  				
-  			</ul>
-  		</div>
-  	</div>
+</ul>
 </div>
-  
+</div>
+</div>

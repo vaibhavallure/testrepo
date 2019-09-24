@@ -6,8 +6,6 @@
 */
 
 .customer-account-index .col-main,
-.customer-account-edit .col-main,
-.customer-address-index .col-main,
 .sales-order-history .col-main,
 .wishlist-index-index .col-main,
 .newsletter-manage-index .col-main {
@@ -32,14 +30,13 @@
 	margin-bottom: 19px;
 }
 
-.my-account .page-title h1,
+
 .my-account .box .box-title h3{
 	font-weight: 600;
 	font-size: 16px;
 }
 
 .customer-address-index .my-account .box .addresses-primary h3 {
-	font-weight: normal;
 	font-size: 15px;
 }
 
@@ -50,7 +47,7 @@
 .customer-address-index .my-account .addresses-list .col-1{
 	margin-right: 0px;
 }
-.customer-address-index .my-account .addresses-list .col-1,
+
 .my-account .addresses-list .col-2 {
 	width: 50%;
 }
@@ -70,14 +67,14 @@
     margin-bottom: 5px;
 }
 
-.addresses-list address,
+/*.addresses-list address,
 .mt-addresses-additional address {
 	line-height: 20px;
     font-size: 13px;
     border: 1px solid #ccc;
     padding: 10px;
     font-weight: 600;
-}
+}*/
 .additional-addresses td.item:first-child .item-inner-container {
     border-right: none;
 }
@@ -94,10 +91,10 @@
     margin-bottom: 0px ! important;
     margin-right: 10px;
 }
-.mt-additional-address-btns button.button.btn-2 {
+/*.mt-additional-address-btns button.button.btn-2 {
 	float: right ! important;
 	margin-bottom: 0px ! important;
-}
+}*/
 
 .mt-additional-address-btns button.button .mt-btn-name{
 	font-size: 10px;
@@ -130,18 +127,18 @@
 
 .customer-account-edit .my-account .form-list li .input-box input.input-text {
 	/*height: 30px;*/
-    width: 85% !important;
+    /*width: 85% !important;*/
 }
 
-.customer-account-edit .input-box {
+/*.customer-account-edit .input-box {
     width: 88%;
     margin-left: 21%;
-}
+}*/
 
-.customer-account-edit .my-account li.control{
+/*.customer-account-edit .my-account li.control{
 	margin-left: 21%;
 	margin-top: 0px;
-}
+}*/
 .customer-account-edit .my-account li.control label{
 	padding: 4px 0 3px 30px;
 
@@ -171,9 +168,9 @@ div.tab button {
 
 
 /* Change background color of buttons on hover */
-div.tab button:hover {
+/*div.tab button:hover {
     background-color: #ddd;
-}
+}*/
 
 /* Create an active/current tablink class */
 div.tab button.active {
@@ -186,7 +183,7 @@ div.tab button.active {
 .tabcontent {
     display: none;
     padding: 0px 12px;
-   background: #d1d1d1;
+  /* background: #d1d1d1;*/
 }
 
 .tabcontent.active {
@@ -330,7 +327,7 @@ div.tab button.active {
 
 .myaccount-index-index .main-container {
     margin: 0 auto;
-    width: 980px;
+/*    width: 980px;*/
 }
 
 .myaccount-index-index .main-container>.page-title {
@@ -806,7 +803,7 @@ div.a-column.a-span-last {
 }
 
 .mt-new-purchase fieldset{
-	margin: -17px 0px 0px 0px;
+	/*margin: -17px 0px 0px 0px;*/
     padding: 0px;
 }
 
@@ -828,12 +825,12 @@ div.a-column.a-span-last {
 
 .customer-paymentinfo-index .page-title > h1,
 .customer-address-index .page-title > h1,
-.customer-account-edit .page-title > h1,
+/*.customer-account-edit .page-title > h1,*/
 .myaccount-index-index .page-title > h1{
 	display: none;
 }
 
-.my-account .page-title > h1,
+/*.my-account .page-title > h1,
 .my-account > h3,
 .my-account .box .box-title > h3{
 	font-size: 16px;
@@ -842,15 +839,12 @@ div.a-column.a-span-last {
     text-transform: uppercase;
     font-family: dinmittelschriftregular;
 }
-
-.my-account .page-title > h1,
+*/
 .my-account > h3{
 	margin-bottom: 10px;
 }
 
-.customer-account-edit .my-account .fieldset {
-	margin-top: 10px;
-}
+
 .customer-account-edit .my-account .form-list label {
     padding: 5px 5px 5px 0;
     text-align: left;
@@ -1082,13 +1076,13 @@ padding: 0 0 8px 0;
     margin-top: 9px;
 }
 
-#additional-addresses .additional-address-links{
+/*#additional-addresses .additional-address-links{
     position: absolute;
     left: 10px;
     bottom: 45px;
     right: 0;
     text-align: right;
-}
+}*/
 #additional-addresses td.item .item-inner-container {
     margin: 0 10px 0px 0;
     padding: 0 0 0px 0;
@@ -1277,26 +1271,20 @@ width: 63%;
 
 .tabcontent .block-layered-nav-bg {
     position: relative;
-    top: -18px;
-    border-bottom: 9px solid #DEDEDE;
+/*    top: -18px;*/
+    /*border-bottom: 9px solid #DEDEDE;*/
 }
 
 .tabcontent .block-layered-nav-bg .block-content{
-	position: absolute;
+	/*position: absolute;*/
 	width: 100%;
 }
 
-.tabcontent .myaccount-filter-store-list.purchase-order-filter{
-	width: 35%;
-	float: left;
+/*.tabcontent .myaccount-filter-store-list.purchase-order-filter{
 	padding-top: 7px;
 	margin-right: 20px;
-}
+}*/
 
-.tabcontent .myaccount-filter-item{
-	text-align: left;
-    padding-left: 6px;
-}
 
 .tabcontent .selected-sort-type,
 .tabcontent .selected-store{
@@ -1305,8 +1293,8 @@ width: 63%;
 
 
 .tabcontent .myaccount-filter-sort-order-list.purchase-order-filter{
-	width: 35%;
-	float: left;
+	/*width: 35%;*/
+/*	float: left;*/
 	padding-top: 7px;
 }
 
@@ -1471,18 +1459,18 @@ width: 63%;
 	clear: both;
 }
 
-ul#primary-address-list,
+/*ul#primary-address-list,
 ul#additional-addresses{
 	display: flex;
 	flex-wrap:wrap;
 	justify-content:space-around;
-}
+}*/
 
-ul#primary-address-list li,
+/*ul#primary-address-list li,
 ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
-}
+}*/
 
 ul#primary-address-list li .item-inner-container,
 ul#additional-addresses li .item-inner-container{
@@ -1490,8 +1478,7 @@ ul#additional-addresses li .item-inner-container{
  position: relative;
 }
 
-ul#primary-address-list li .item-inner-container address,
-ul#additional-addresses li .item-inner-container address{
+ul#primary-address-list li .item-inner-container address{
 	 height: 80%;
 	 line-height: 20px;
 	 font-size: 13px;
@@ -1785,10 +1772,6 @@ width: 245px;
 	clear: both;
 }
 
-.mt-myaccount-add-new-address-btn-div{
-	float: right;
-}
-
 .mt-myaccount-page .block-layered-nav-bg{
 	z-index: 1;
 }
@@ -1807,10 +1790,10 @@ width: 245px;
 	margin-top: 1px;
 }
 
-.mt-myaccount-page .tablinks{
+/*.mt-myaccount-page .tablinks{
 	width: 20%;
 }
-
+*/
 .manage-payment-method .tablinks{
 	width: 30%;
 }
