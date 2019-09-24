@@ -181,7 +181,7 @@
 	justify-content: space-between;
 }
 .acc-products-wrapper .tabcontent {
-	border-top: 1px solid rgba(41, 41, 41, 0.9);
+	border-top: 1px solid #dedede;
 	margin-top: -2px;
 }
 .myaccount-index-index .tab button{
@@ -203,7 +203,8 @@
 	height: 78px;
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid rgba(41, 41, 41, 0.9);
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 0;
 }
 .acc-products-wrapper #narrow-by-list-new li{
 	position: relative;
@@ -235,6 +236,65 @@
 	background-size: 15%!important;
 	background-position: right;
 	margin-right: 10px;
+}
+.acc-products-wrapper table{
+	margin-top: 0
+}
+.acc-products-wrapper table.data-table, 
+.acc-products-wrapper .data-table tr{
+	display: table;
+	margin-top: 0;
+}
+.acc-products-wrapper table h2 a{
+	font-size: 22px!important;
+	font-weight: normal!important;
+}
+.acc-products-wrapper table h2{
+	padding-top: 0;
+}
+.acc-products-wrapper .mt-new-purchase .cart-table .cart_col2{
+	vertical-align: top;
+	width: 100%;
+}
+.acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
+	margin-bottom: 0;
+}
+.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
+	width: 102px;
+	height: 102px;
+	object-fit: cover;
+	background: transparent;
+}
+.acc-products-wrapper table tr{
+	padding-top: 22px!important;
+    padding-bottom: 22px!important;
+    border-collapse: separate;
+}
+.purchase-store-name{
+	width: 100%;
+}
+.flex-box{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.acc-products-wrapper table .para-normal{
+	font-size: 15px;
+}
+.acc-products-wrapper table .para-bold{
+	font-size: 18px;
+}
+.mt-new-purchase .mt-purchase-btn button{
+	width: 164px;
+	height: 34px;
+	text-transform: uppercase;
+}
+.desc-cell{
+	padding-left: 30px;
+	width:100%;
+}
+.acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
+	padding-right: 97px;
 }
 /*=====================*/
 /*MY ACCOUNT - login & security*/
@@ -502,7 +562,7 @@
 /*=====================*/
 @media(min-width: 1200px){
 	.acc-products-wrapper .container{
-		padding: 0 115px;
+		padding: 0 150px;
 	}
 }
 @media(min-width:1024px ){

@@ -773,23 +773,23 @@ div.a-column.a-span-last {
     background: linear-gradient(to bottom, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
 }
 
-#myaccount-shopping-cart-table tr td .product-image {
+/*#myaccount-shopping-cart-table tr td .product-image {
     padding: 8px;
     display: inline-block;
-}
+}*/
 
 #myaccount-shopping-cart-table .cart_col3,
 #myaccount-shopping-cart-table .cart_col4,
 #myaccount-shopping-cart-table .cart_col5,
 #myaccount-shopping-cart-table .cart_col6 {
     /* vertical-align: middle; */
-    padding: 8px 8px 0px 0px;
+   /* padding: 8px 8px 0px 0px;*/
     text-align: right;
 }
 
-#myaccount-shopping-cart-table .cart_col6 .mt-purchase-btn{
+/*#myaccount-shopping-cart-table .cart_col6 .mt-purchase-btn{
 	padding-bottom: 10px;
-}
+}*/
 
 #myaccount-shopping-cart-table tr td img {
 	width: 116px;
@@ -1173,10 +1173,10 @@ width: 63%;
    color: #3f4048;
 }
 
-#myaccount-shopping-cart-table tr td .product-image {
+/*#myaccount-shopping-cart-table tr td .product-image {
    padding: 8px 8px 5px 8px;
    display: inline-block;
-}
+}*/
 
 
 .my-account .data-table tbody th, .my-account .data-table tbody td:first-child{
@@ -1222,11 +1222,11 @@ width: 63%;
 }
 
 .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
-	background-color: #d1d1d1;
+/*	background-color: #d1d1d1;*/
    /*  padding: 0px 20px; */
     border-radius: 3px;
     position: absolute;
-    bottom: 15px;
+    bottom: 0;
 }
 
 .mt-new-purchase .cart-table .cart_col4 .qty-wrap{
@@ -1326,9 +1326,9 @@ width: 63%;
     margin: 7px 0px 7px 8px;
     line-height: 22px;
 }
-.my-account .data-table tbody th, .my-account .data-table tbody td{
+/*.my-account .data-table tbody th, .my-account .data-table tbody td{
 	padding: 6px 0 0 0;
-}
+}*/
 
 /* #new-mt-saved-card #billing-new-address-form li,
 .myaccount-add-payment-form #billing-new-address-form li {

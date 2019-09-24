@@ -11182,7 +11182,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 {
 	width: 120px;
 	padding-right: 0px;
-	padding-bottom: 2px;
+/*	padding-bottom: 2px;*/
 }
 
 .my-account .data-table tfoot strong {
