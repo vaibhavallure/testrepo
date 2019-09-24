@@ -22,6 +22,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
      */
     public function setShippingItemsInformation($info)
     {
+        Mage::log($info,Zend_Log::DEBUG,"abc.log",true);
         if (is_array($info)) {
             $allQty = 0;
             $itemsInfo = array();
@@ -46,12 +47,13 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             foreach ($info as $itemData){
                 foreach ($itemData as $quoteItemId => $data) {
                     $qty = isset($giftQty[$quoteItemId][$data["address"]]) ? 0 : $giftQty[$quoteItemId][$data["address"]] ;
-                    if($data["is_gift_item"]){
-                        $giftQty[$quoteItemId][$data["address"]] = $giftQty[$quoteItemId][$data["address"]] + 1;
+                    if(isset($data["is_gift_item"])){
+                        if($data["is_gift_item"]){
+                            $giftQty[$quoteItemId][$data["address"]] = $giftQty[$quoteItemId][$data["address"]] + 1;
+                        }
                     }
                 }
             }
-            Mage::log($giftQty,Zend_Log::DEBUG,"abc.log",true);
             
             foreach ($info as $itemData) {
                 foreach ($itemData as $quoteItemId => $data) {
@@ -95,9 +97,11 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         
                         $_item->setIsGiftItem(0);
                         if(isset($itemsInfo[$_item->getId()]["is_gift_item"])){
-                            $_item->setIsGiftItem(1);
-                            if( isset($giftQty[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]) ){
-                                $_item->setGiftItemQty($giftQty[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]);
+                            if($itemsInfo[$_item->getId()]["is_gift_item"]){
+                                $_item->setIsGiftItem(1);
+                                if( isset($giftQty[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]) ){
+                                    $_item->setGiftItemQty($giftQty[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]);
+                                }
                             }
                         }
                         
@@ -162,11 +166,12 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 } else {
                     $quoteItem->setIsGiftItem(0);
                     if(isset($data["is_gift_item"])){
-                        $quoteItem->setIsGiftItem(1);
-                    }
-                    
-                    if(isset($data["gift_qty"])){
-                        $quoteItem->setGiftItemQty($data["gift_qty"]);
+                        if($data["is_gift_item"]){
+                            $quoteItem->setIsGiftItem(1);
+                            if(isset($data["gift_qty"])){
+                                $quoteItem->setGiftItemQty($data["gift_qty"]);
+                            }
+                        }
                     }
                     
                     $quoteAddress->addItem($quoteItem, $qty);
@@ -184,7 +189,23 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
     {
         $customerAddrId = $data["customer_address"];
         $addressId = $data["address_id"];
-        $address = $this->getCustomer()->getAddressById($customerAddrId);
+        $addresses = $this->getQuote()->getAllShippingAddresses();
+        $requestParams = array();
+        $index = 0;
+        foreach ($addresses as $address) {
+            foreach ($address->getAllVisibleItems() as $item){
+                $requestParams[$index] = array(
+                    $item->getQuoteItemId() => array(
+                        "qty" => $item->getQty(),
+                        "is_gift_item" => $item->getIsGiftItem(),
+                        "address" => ($addressId == $address->getId()) ? $customerAddrId : $address->getCustomerAddressId()
+                    )
+                ); 
+            }
+            $index++;
+        }
+        $this->setShippingItemsInformation($requestParams);
+        /* $address = $this->getCustomer()->getAddressById($customerAddrId);
         if ($address->getId()) {
             $quoteAddress = Mage::getModel('sales/quote_address')->load($addressId);
             if($quoteAddress->getId()){
@@ -193,6 +214,6 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 $this->save();
             }
         }
-        Mage::dispatchEvent('checkout_type_multishipping_set_shipping_items', array('quote'=>$this->getQuote()));
+        Mage::dispatchEvent('checkout_type_multishipping_set_shipping_items', array('quote'=>$this->getQuote())); */
     }
 }
