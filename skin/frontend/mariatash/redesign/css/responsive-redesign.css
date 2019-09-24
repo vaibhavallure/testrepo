@@ -774,6 +774,22 @@
   .caroufredsel_wrapper{
     width: 47%;
   }
+  .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
+    width: 68%;
+  }
+  .image_carousel .item.product-view-instagram-item img{
+    height: auto;
+    width: 120px;
+  }
+  .product-collateral .prev {
+    left: 8px;
+  }
+  .product-collateral .next {
+    right: 8px;
+  }
+  .containerImage {
+    overflow-y: hidden;
+  }
 }
 
 /* Mobile landscape */

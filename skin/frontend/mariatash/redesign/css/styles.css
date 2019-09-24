@@ -16337,10 +16337,10 @@ input.m-slider {
 	height: 265px;
 }
 
-.image_carousel .item.product-view-instagram-item , .image_carousel .item.product-view-instagram-item img{
+/* .image_carousel .item.product-view-instagram-item , .image_carousel .item.product-view-instagram-item img{
 	width: 120px;
 	height: 120px;
-}
+} */
 
 .image_carousel .item.product-view-instagram-item{
 	margin: 0px 8px 0px 0px;
