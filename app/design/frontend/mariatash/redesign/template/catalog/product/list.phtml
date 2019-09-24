@@ -169,7 +169,7 @@ $mode  = $this->getMode();
                                    href="<?php echo $productUrl; ?>"
                                    class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>" class="productimg"
                                                            src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(450, 585); ?>"
-                                                           width="314" height="409"
+                                                           width="277" height="352"
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
                                 <div class="grid-mt-w col-12">
                                   <div class="row">
@@ -193,10 +193,10 @@ $mode  = $this->getMode();
                                         <?php if ($_product->getIsSalable()): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                               <div class="col">
-                                                <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm dark-button"
+                                                <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm light-button"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
-                                                   title="<?php echo $this->__('quick view') ?>"><span class="text-white"><?php echo $this->__('quick view') ?></span>
+                                                   title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
                                                  </a>
                                                </div>
                                                <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
@@ -241,7 +241,7 @@ $mode  = $this->getMode();
                                                     <?php endif;?>
                                                 </div>
                                             <?php else: ?>
-                                                <a class="fancybox fancybox.iframe button btn-quickview dark-button"
+                                                <a class="fancybox fancybox.iframe button btn-quickview light-button"
                                                 id='product-quickview-<?php echo $_product->getId() ?>'
                                                 href="<?php echo $quickViewUrl; ?>"
                                                 title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
@@ -293,7 +293,7 @@ $mode  = $this->getMode();
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
 
 
-                                <div class="list-mt-w p-1">
+                                <div class="list-mt-w">
                                   <div class="row justify-content-between">
                                         <div class="col-12">
                                           <div class="row list-mt-upper">
@@ -327,10 +327,10 @@ $mode  = $this->getMode();
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                                 <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
                                                 <div class="col">
-                                                  <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm dark-button"
+                                                  <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm light-button"
                                                      id='product-quickview-<?php echo $_product->getId() ?>'
                                                      href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
-                                                     title="<?php echo $this->__('quick view') ?>"><span class="text-white"><?php echo $this->__('quick view') ?></span>
+                                                     title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
                                                    </a>
                                                </div>
                                                 <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
@@ -376,7 +376,7 @@ $mode  = $this->getMode();
                                                 </div>
 
                                             <?php else: ?>
-                                                <a class="fancybox fancybox.iframe button btn-quickview dark-button"
+                                                <a class="fancybox fancybox.iframe button btn-quickview light-button"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>

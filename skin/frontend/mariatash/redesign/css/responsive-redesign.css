@@ -338,6 +338,12 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
+  .catalog-category-view .category-title{
+    padding-left: 77px !important;
+  }
+  .category-image-bleed{ /* Head Image */
+    display: none;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -355,7 +361,7 @@
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
-  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
+  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
   .navbar-toggler{
@@ -459,13 +465,28 @@
   .breadcrumbs {
     padding-left: 39px;
   }
+  .filterButton:before{
+    left: 19px !important;
+    }
+  .category-products {
+    margin-top: 0px;
+  }
+  .filterButton:before{
+    top: -80px;
+  }
+  .catalog-category-view .category-title{
+    margin-bottom: 0 !important;
+  }
+  .cartilage-section {
+    margin-top: 28px;
+  }
 }
 
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
-  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 227px;
+  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
+    top: 257px;
   }
   .about-designer{
     padding: 0 26px;
@@ -602,6 +623,35 @@
   }
   .m-filter-checkboxes label {
     font-size: 11px !important;
+  }
+  .breadcrumbs :last-child {
+    padding-right: 0;
+  }
+  .breadcrumbs ul {
+    padding: 0;
+    display: inline-block;
+  }
+  .catalog-category-view .category-title {
+    padding-left: 0 !important;
+  }
+  .catalog-category-view .category-title h1{
+    text-align: center;
+  }
+  .category-products{
+    margin-top: 0;
+  }
+  .filterButton:before{
+    top: -84px !important;
+  }
+  .breadcrumbs{
+    padding: 0 15px;
+    text-align: center;
+  }
+  .catalog-category-view .category-title{
+    margin-bottom: 0 !important;
+  }
+  .cartilage-section {
+    margin-top: 28px;
   }
 }
 
