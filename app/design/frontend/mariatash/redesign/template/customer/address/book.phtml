@@ -42,9 +42,9 @@
     <?php 
         $request = Mage::app()->getRequest();
         if($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountindex'): ?>
-            <a href="<?php echo $this->getBaseUrl()."customer/address/" ?>"><?php echo $this->__('Edit') ?></a>
+            <a class="link-button"> href="<?php echo $this->getBaseUrl()."customer/address/" ?>"><?php echo $this->__('Edit') ?></a>
         <?php else: ?>
-            <a href="<?php echo $this->getAddAddressUrl() ?>"><?php echo $this->__('Add New Address') ?></a>
+            <a class="link-button"> href="<?php echo $this->getAddAddressUrl() ?>"><?php echo $this->__('Add New Address') ?></a>
         <?php endif; ?>   
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
@@ -63,8 +63,8 @@
                     <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
                 <p>
-                    <a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
-                    <a href="#" class="link-remove mt-default-addr-delete-link" onclick="confirmBox('<?php echo $this->__("Are you sure you want to delete this address?") ?>',function() {
+                    <a class="link-button mr-3" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                    <a class="link-button" href="#" class="link-remove mt-default-addr-delete-link" onclick="confirmBox('<?php echo $this->__("Are you sure you want to delete this address?") ?>',function() {
                             deleteAddress('<?php echo $billAddrId ?>');
                     },'DELETE')"><?php echo $this->__('Delete') ?></a>
                 </p>
@@ -88,8 +88,8 @@
                     <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
                 <p>
-                    <a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
-                    <a href="#" class="link-remove mt-default-addr-delete-link" onclick="
+                    <a class="link-button" href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                    <a href="#" class="link-remove mt-default-addr-delete-link link-button" onclick="
                            confirmBox('<?php echo $this->__("Are you sure you want to delete this address?") ?>',function() {
                              deleteAddress('<?php echo $shipAddrId ?>');
                              },'DELETE')

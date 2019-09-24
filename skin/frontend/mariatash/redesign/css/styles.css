@@ -964,9 +964,9 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	float: right; /* width:60%;*/
 }
 
-.customer-address-form .form-list li.wide .input-box input.input-text {
+/*.customer-address-form .form-list li.wide .input-box input.input-text {
 	width: 92%;
-}
+}*/
 
 .customer-address-form #street_2 {
 
@@ -1020,14 +1020,14 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	margin-left: 0;
 }
 
-.customer-address-form .input-box {
+/*.customer-address-form .input-box {
 	clear: none;
 	width: 245px;
 	float: right;
 	right: 335px;
 	position: relative;
 }
-
+*/
 .checkout-multishipping-address-editbilling .input-box {
 	clear: none;
 	width: 250px;
@@ -1180,7 +1180,6 @@ div.account-create div.fieldset ul.form-list li.fields {
 
 .customer-account-edit label.required, .wishlist-index-share label.required,
 .account-login label.required, .account-create label.required,
-.customer-address-form label.required,
 .checkout-multishipping-address-editbilling label.required,
 .paypal-express-review label.required, #checkout-step-billing .form-list li label.required,
 #checkout-step-shipping .form-list li label.required,
@@ -8157,10 +8156,6 @@ ol#checkoutSteps.opc li.section, ol#checkoutSteps.opc li.active {
 	margin: 3px 0 0 1px;
 }
 
-.my-account li.control label, .shipp .control label {
-	padding: 2px 0 2px 30px;
-	background: url(../images/checkbox-login.png) no-repeat 0 0;
-}
 
 .my-account li.control  input:checked+label, .shipp .control input:checked+label
 {
@@ -10802,7 +10797,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 .sales-order-view .col2-left-layout .col-main, .customer-account-index .col2-left-layout .col-main,
 .sales-order-history .col2-left-layout .col-main, .wishlist-index-index .col2-left-layout .col-main,
-.customer-address-form .col2-left-layout .col-main,
 .newsletter-manage-index .col2-left-layout .col-main, .sales-order-view .col2-right-layout .col-main,
 .customer-account-index .col2-right-layout .col-main,
 .sales-order-history .col2-right-layout .col-main,
@@ -10839,7 +10833,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .sales-order-shipment .main-container, .sales-order-view .main-container,
  .sales-order-history .main-container,
 .wishlist-index-share .main-container, .wishlist-index-index .main-container,
-.customer-address-form .main-container, .newsletter-manage-index .main-container,
+.newsletter-manage-index .main-container,
 .sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
 	margin: 0 auto;
 	width: 960px;
