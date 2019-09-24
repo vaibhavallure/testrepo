@@ -1639,7 +1639,7 @@ overflow: hidden;
   cursor: pointer;
 }
 .swatches{
-  padding: 13px 4px 0 0px;
+  padding: 9px 7px 0 0px;
 	display: flex;
   justify-content: flex-end;
 }
@@ -1647,6 +1647,7 @@ overflow: hidden;
   width: 20px !important;
   height: 20px !important;
 	margin-left: 12px;
+	position: relative;
 }
 .swatches li:first-child{
 	margin-left: 0;
@@ -1668,8 +1669,8 @@ overflow: hidden;
   height: 26px;
   border-radius: 100%;
   position: absolute;
-  left: -5px;
-  top: -5px;
+  left: -3px;
+  top: -3px;
 }
 .regular-price .price, .old-price .price, .special-price .price{
   font-size: 14px;
@@ -2774,4 +2775,3 @@ ul.tabs li:nth-child(3){
     display: block;
     margin: 0 9px 0 0;
 }
-

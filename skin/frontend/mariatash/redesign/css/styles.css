@@ -5463,7 +5463,7 @@ textarea:focus, input:focus {
 }
 
 /* .products-grid2 .three-in-row .item {
-	/* width: 33.3%; 
+	/* width: 33.3%;
 	padding: 0.5%;
 }
 
@@ -15420,12 +15420,12 @@ li.item h2.product-name {text-align: center;}
 	margin-top: 10px;
 }
 
-.catalog-category-view  .actions .super_attribute ul li:hover,
+/* .catalog-category-view  .actions .super_attribute ul li:hover,
 .catalogsearch-result-index .actions .super_attribute ul li:hover,
 .catalog-category-view  .actions .super_attribute ul li.active,
 .catalogsearch-result-index .actions .super_attribute ul li.active {
 	border: 1px solid #c2c2c4;
-}
+} */
 
 .categorypath-discover-maria-tash-celebrity-clientele-html.fancybox-lock  .fancybox-inner,
 .categorypath-discover-maria-tash-celebrity-clientele-html.fancybox-lock  .fancybox-wrap
