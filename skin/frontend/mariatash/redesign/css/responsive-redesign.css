@@ -543,6 +543,12 @@
   .ecp-celebrities-index-index .for-space-to-bottom {
     height: 240px;
   }
+  .product-shop {
+    margin-top: 71px;
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 30%;
+  }
 }
 
 /* ALl Mobiles */
