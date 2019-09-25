@@ -14851,8 +14851,8 @@ li.item h2.product-name {text-align: center;}
 }
 
 .quickview-index-index {
-	width: 785px !important;
-	min-width: 785px !important;
+	/*width: 785px !important;
+	min-width: 785px !important;*/
 }
 
 .catalog-category-view .fancybox-nav {
