@@ -42,12 +42,11 @@
                     <div class="minus_qty col-1"><span class="quantity-count">-</span></div>
                     <div class="total_qty col-1"><span class="quantity-count"><?php echo $this->getProductDefaultQty() * 1 ?></span></div>
                     <div class="plus_qty col-1"><span class="quantity-count">+</span></div>
-                    <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
                     </div>
                     <script>
-                        var qtyObj=jQuery('#qty');
 
                         jQuery(".minus_qty").on("click",function () {
+                            var qtyObj=jQuery('#qty');
                             var currunt_qty=parseInt(qtyObj.val());
                             if(currunt_qty>1)
                                 currunt_qty--;
@@ -55,7 +54,10 @@
                             jQuery(".total_qty span").html(currunt_qty);
                         });
                         jQuery(".plus_qty").on("click",function () {
+                            var qtyObj=jQuery('#qty');
                             var currunt_qty=parseInt(qtyObj.val());
+                            console.log("currunt_qty",currunt_qty);
+
                             if(currunt_qty<10)
                                 currunt_qty++;
                             qtyObj.val(currunt_qty);
@@ -164,7 +166,8 @@
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
         <div class="col-6 float-left">
           <div class="row">
-            <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)">
+              <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
+              <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)">
                 <?php echo $buttonTitle ?>
             </button>
         <?php //echo $this->getChildHtml('', true, true) ?>
