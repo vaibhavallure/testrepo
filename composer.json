@@ -1,0 +1,12 @@
+{
+    "name": "millesima/emailing",
+    "description": "Millesima's email template factory",
+    "type": "project",
+    "require": {
+        "smarty/smarty": "^3.1",
+        "slim/slim": "~2.6",
+        "phpoffice/phpspreadsheet": "^1.9",
+        "almasaeed2010/adminlte": "~2.4"
+    },
+    "minimum-stability": "stable"
+}

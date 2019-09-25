@@ -7,7 +7,15 @@
  *
  * If you are using Composer, you can skip this step.
  */
-require 'library/Slim/Slim.php';
+require __DIR__ . '/vendor/autoload.php';
+//Slim\Slim::registerAutoloader();
+$app = new Slim\Slim(array(
+    'debug' => true,
+    'displayErrorDetails' => true,
+    //'log.level' => \Slim\Log::EMERGENCY,
+    'templates.path' => './templates'
+));
+
 include 'class/millesima_abstract.php';
 include 'class/millesima_brief.php';
 include 'class/millesima_message.php';
@@ -19,11 +27,6 @@ include 'class/millesima_messagedata.php';
 include 'class/millesima_tinyclues.php';
 include 'class/millesima_textmaster.php';
 include 'class/millesima_ressource.php';
-
-\Slim\Slim::registerAutoloader();
-$app = new \Slim\Slim(array(
-    'templates.path' => './templates'
-));
 
 /////////////////////  Route Page  ////////////////////////////////////////
 $app->get('/view/home','getHomeView');
