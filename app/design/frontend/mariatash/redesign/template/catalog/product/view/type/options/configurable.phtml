@@ -1,22 +1,22 @@
-<?php
-$_optionId = $this->getRequest()->getParam('optionId','');
-$_product    = $this->getProduct();
-$_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
-$attribute_label='';
-//echo "<pre>";
-//print_r($_attributes->getData());
-?>
-<?php
-$showSampleForm = false;
-if ($_product->getSizeSample() == 1) {
+  <?php
+  $_optionId = $this->getRequest()->getParam('optionId','');
+  $_product    = $this->getProduct();
+  $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+  $attribute_label='';
+  //echo "<pre>";
+  //print_r($_attributes->getData());
+  ?>
+  <?php
+  $showSampleForm = false;
+  if ($_product->getSizeSample() == 1) {
     $showSampleForm = true;
     $sampleProduct = Mage::getModel('catalog/product')->getCollection()
         ->addAttributeToFilter('type_id', 'customproduct')
         ->getFirstItem();
     $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
-}
-?>
-<?php if ($_product->isSaleable() && count($_attributes)):?>
+  }
+  ?>
+  <?php if ($_product->isSaleable() && count($_attributes)):?>
     <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
     <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
     <hr>
@@ -137,7 +137,7 @@ if ($_product->getSizeSample() == 1) {
                 $finalPrice=round($child[$this->getRequest()->getParam("child")]->finalPrice);
                 $cur=substr($productdetail->template,0,1);
              */   ?>
-//                jQuery('#product-price-<?//= $_product->getId() ?>//').html("<?//= $productdetail->template."".$finalPrice?>//");
+  //                jQuery('#product-price-<?//= $_product->getId() ?>//').html("<?//= $productdetail->template."".$finalPrice?>//");
                 <?php
 
                 endif;
@@ -145,40 +145,47 @@ if ($_product->getSizeSample() == 1) {
 
 
                 jQuery(function () {
-                    var i=1;
-                    jQuery('.change_select').each(function (index, element) {
-                        var select_id=jQuery(this).attr("id");
+  var i=1;
+  jQuery('.change_select').each(function (index, element) {
+  var select_id=jQuery(this).attr("id");
+  var attr_id=jQuery(this).attr("data-attr_id");
+  var selectlabel=jQuery('#label-attr'+attr_id).html();
+  var selectlabel2=jQuery('#label-attr'+attr_id+' h3').html();
+  var attrClass=selectlabel2.toLowerCase();
+  attrClass=attrClass.replace(" ","-");
 
-                        jQuery(this).parent()
-                            .after()
-                            .append("<div class='chooseList' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
-                        var attr_id=jQuery(this).attr("data-attr_id");
-                        var selectlabel=jQuery('#label-attr'+attr_id).html();
-                        jQuery('#label-attr'+attr_id).hide();
-                        jQuery('#chooseList'+select_id+' ul:last').append('<li  class="label col">'+selectlabel+'</li>');
-                        jQuery(element).each(function (idx, elm) {
-                            jQuery('option', elm).each(function (id, el) {
-                                if(el.value!="")
-                                    jQuery('#chooseList'+select_id+' ul:last').append('<li data-select_id="'+select_id+'" data-option_value="'+el.value+'" class="option col"><span>' + el.text + '</span></li>');
-                            });
-                        });
-                        i++;
-                    });
-                    jQuery('.chooseList ul li.option').on('click', function () {
-                        var selected_id = jQuery(this).data("select_id");
-                        var option_value = jQuery(this).data("option_value");
-                        jQuery(this).parent().find("li").removeClass("active");
-                        jQuery(this).addClass("active");
-                        jQuery('#'+selected_id+'').val(option_value).trigger('change');
-                    });
-                    jQuery('.change_select').hide();
-                });
+  jQuery(this).parent()
+  .after()
+  .append("<div class='chooseList col-12 "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul class='row p-0'></ul></div>");
+  var selectlabel=jQuery('#label-attr'+attr_id).html();
+  jQuery('#label-attr'+attr_id).hide();
+  var j=1;
+  jQuery('#chooseList'+select_id+' ul:last').append('<li class="label li-'+j+'">'+selectlabel+'</li>');
+  jQuery(element).each(function (idx, elm) {
+  jQuery('option', elm).each(function (id, el) {
+  if(el.value!="") {
+  j++;
+  jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option col li-'+j+'"><span>' + el.text.toLowerCase() + '</span></li>');
+  }
+  });
+  });
+  i++;
+  });
+  jQuery('.chooseList ul li.option').on('click', function () {
+  var selected_id = jQuery(this).data("select_id");
+  var option_value = jQuery(this).data("option_value");
+  jQuery(this).parent().find("li").removeClass("active");
+  jQuery(this).addClass("active");
+  jQuery('#'+selected_id+'').val(option_value).trigger('change');
+  });
+  jQuery('.change_select').hide();
+  });
                 jQuery('.chooseList').slideDown(1000);
 
             });
     </script>
-<?php endif;?>
-<script type="text/javascript">
+  <?php endif;?>
+  <script type="text/javascript">
     jQuery(document).ready(function(){
         var default_attribute = jQuery('.attribute_select_default').html();
         var count_attribute   = jQuery('#count_attriute').val();
@@ -198,9 +205,9 @@ if ($_product->getSizeSample() == 1) {
             }
         }
     });
-</script>
+  </script>
 
-<?php if (1 == 1): ?>
+  <?php if (1 == 1): ?>
     <script type="text/javascript">
         Validation.add('greatherzerocustom', '<?php echo $this->__('Please enter a valid quantity');?>', function (myInput) {
             if (/^\d+$/.test(myInput)) {
@@ -324,7 +331,7 @@ if ($_product->getSizeSample() == 1) {
                     <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
                 </div>
             <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
-<!--                <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>-->
+  <!--                <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>-->
             <?php endif; ?>
             <?php
             endif;
@@ -343,8 +350,8 @@ if ($_product->getSizeSample() == 1) {
             </div>
         <?php endif; ?>
     </div>
-<?php endif; ?>
-<script type="text/javascript">
+  <?php endif; ?>
+  <script type="text/javascript">
     var win=null;
     function printIt(printThis)
     {
@@ -394,4 +401,4 @@ if ($_product->getSizeSample() == 1) {
         }
 
     });
-</script>
+  </script>

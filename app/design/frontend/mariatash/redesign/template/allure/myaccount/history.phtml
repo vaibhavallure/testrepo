@@ -34,13 +34,13 @@
             </a>
         </td>
         
-        <td class="a-left" style="padding-left:18px;">
+        <td class="a-left">
             <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
                <?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
             </a>
         </td>
                     
-        <td class="a-left" style="padding-left:15px;">
+        <td class="a-left">
             <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
                <?php //echo $_order->getStatusLabel() ?>
                <?php $status = $orderStatusArr[$_order->getState()]?$orderStatusArr[$_order->getState()]:$orderStatusArr1[$_order->getState()]?>
@@ -48,9 +48,9 @@
             </a>
         </td>
                     
-        <td class="a-left" style="padding-left:10px;">
+        <td class="a-left">
             <span class="nobr">
-            	<a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
+            	<a class="link-button" onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
             		<?php echo $this->__('View Order') ?>
             	</a>
                 <?php /*<span class="separator">|</span><a href="<?php echo $this->getTrackUrl($_order) ?>"><?php echo $this->__('Track Order') ?></a>&nbsp;*/ ?>

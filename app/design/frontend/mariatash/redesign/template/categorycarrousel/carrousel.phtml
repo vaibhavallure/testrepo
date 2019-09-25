@@ -83,14 +83,18 @@ jQuery(window).resize(function() {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        #narrow-by-list { margin-top: 70px; }
+                        #narrow-by-list { margin-top: 72px; }
                         .filterButton:before {top: -270px !important; left: 61px !important;}
                         @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
                           .filterButton:before{
-                            left: 79px !important;
-                            }
+                            top: -321px !important;
+                            left: 19px !important;
+                          }
                             .category-products{
                               margin-top: 0px;
+                            }
+                            .catalog-category-view .category-title{
+                              margin-top: 0;
                             }
                           }
                           @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
@@ -102,9 +106,13 @@ jQuery(window).resize(function() {
                           @media (max-width:1023px){
                             .catalog-product-name-display{
                               margin-top: 20px;
+                              padding-left: 0 !important;
                             }
                             #narrow-by-list li div dd{
                               top: 0 !important;
+                            }
+                            .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
+                              top: 237px !important;
                             }
                           }
                           @media (max-width:767px) and (orientation:portrait){
@@ -113,9 +121,6 @@ jQuery(window).resize(function() {
                             }
                             .filterButton:before{
                               left: 41px !important;
-                            }
-                            .breadcrumbs {
-                              padding-left: 0;
                             }
                             .category-products{
                               margin-top: 0;
@@ -135,11 +140,26 @@ jQuery(window).resize(function() {
                             .filterButton:before{
                               top: -270px !important;
                             }
-
-
                           }
-                          @media (max-width:1024px){
-
+                          @media (max-width:767px){
+                            .category-products{
+                              margin-top: 0;
+                            }
+                            .filterButton:before{
+                              top: -315px !important;
+                            }
+                            .filterButton:before {
+                              left: 10px !important;
+                            }
+                            .thumbnail-image #productsContainer-wrapper{
+                              margin-top: 25px !important;
+                            }
+                            .catalog-category-view .category-title{
+                              margin-top: 0px;
+                            }
+                            .catalog-product-name-display{
+                              margin-top: 10px;
+                            }
                           }
                 </style>';
         }
@@ -155,7 +175,7 @@ jQuery(window).resize(function() {
         echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        #narrow-by-list{margin-top: 70px;
+                        #narrow-by-list{margin-top: 72px;
                         #narrow-by-list li div dd { top: 99px !important; }
                         .filterButton:before {top: -270px !important; left: 61px !important;}
                         @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){.filterButton:before{left: 79px !important;}}

@@ -169,7 +169,7 @@ $mode  = $this->getMode();
                                    href="<?php echo $productUrl; ?>"
                                    class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>" class="productimg"
                                                            src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(450, 585); ?>"
-                                                           width="314" height="409"
+                                                           width="277" height="352"
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
                                 <div class="grid-mt-w col-12">
                                   <div class="row">
@@ -376,7 +376,7 @@ $mode  = $this->getMode();
                                                 </div>
 
                                             <?php else: ?>
-                                                <a class="fancybox fancybox.iframe button btn-quickview dark-button"
+                                                <a class="fancybox fancybox.iframe button btn-quickview light-button"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>

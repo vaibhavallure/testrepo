@@ -174,6 +174,11 @@ margin: 24px 0 46px !important;
 	text-align: center;
 }
 
+/* .custom-select-digits{
+	font-family: urw-din-xlight;
+	font-size: 18px;
+} */
+
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
   width: 996px !important;
@@ -1511,10 +1516,10 @@ input[type="checkbox"]:checked+label:before {
   position: absolute;
   bottom: 1px;
 }
-.grid-mt-w{
+/* .grid-mt-w{
 	bottom: 15px;
 	position: absolute;
- }
+ } */
 .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover {
   background: transparent;
 }
@@ -1531,9 +1536,9 @@ input[type="checkbox"]:checked+label:before {
 	overflow: hidden;
 	border-radius: 0;
 }
-.products-grid2 li.item {
+/* .products-grid2 li.item {
 overflow: hidden;
-}
+} */
 .catalog-common-grid{
   padding: 0;
   /* margin-top: 13px; */
@@ -1639,7 +1644,7 @@ overflow: hidden;
   cursor: pointer;
 }
 .swatches{
-  padding: 13px 4px 0 0px;
+  padding: 9px 7px 0 0px;
 	display: flex;
   justify-content: flex-end;
 }
@@ -1647,16 +1652,20 @@ overflow: hidden;
   width: 20px !important;
   height: 20px !important;
 	margin-left: 12px;
+	position: relative;
 }
 .swatches li:first-child{
 	margin-left: 0;
 }
-.catalog-category-view .mb-category-products .category-title{
+.catalog-category-view .category-title{
 	padding-left: 109px;
 	margin-top: 35px;
 }
 .catalog-category-view .mb-category-products .category-title h1 {
   font-size: 30px;
+}
+#productsContainer-wrapper {
+    text-align: center;
 }
 .colorSelector.tipped-create.active::after {
   content: '';
@@ -1665,8 +1674,8 @@ overflow: hidden;
   height: 26px;
   border-radius: 100%;
   position: absolute;
-  left: -5px;
-  top: -5px;
+  left: -3px;
+  top: -3px;
 }
 .regular-price .price, .old-price .price, .special-price .price{
   font-size: 14px;
@@ -1683,9 +1692,9 @@ overflow: hidden;
 .list-mt-upper {
   min-height: 39px;
 }
-.products-grid2 li.item{
+/* .products-grid2 li.item{
   padding: 5px;
-}
+} */
 div#narrow-by-list {
   position: absolute;
   top: 330px;
@@ -1743,7 +1752,10 @@ div#narrow-by-list {
 	box-shadow: none;
 }
 .cms-page-view .top-bar {
-    display: none;
+  display: none;
+}
+#narrow-by-list .actions{
+	margin-top: 4px;
 }
 /* Designer Page */
 .second-header-image{
@@ -2344,10 +2356,6 @@ ul#foo4 {
 	display: flex;
 	margin: 98px auto 0;
 }
-/*.image_carousel img{
-	width: 120px;
-  height: 120px;
-}*/
 .catalog-product-view .regular-price span {
   font-size: 22px;
   font-family: urw-din-xlight;
@@ -2357,6 +2365,7 @@ ul#foo4 {
 }
 .product-detail-parent {
   background: #f2f2f2;
+	padding-bottom: 15px;
 }
 .catalog-product-view .for-space-to-bottom {
   height: 127px;
@@ -2438,11 +2447,29 @@ table.data-table, .data-table tr {
 }
 .thumb .active img{
 	border: 1px solid rgba(41,41,41,0.9);
-border-bottom-width: 3px;
+	border-bottom-width: 3px;
 	transition: .5s;
 }
 .add-to-links {
   margin-top: 14px;
+}
+.pdp-tabs {
+  padding: 0 15px;
+}
+.tab-section{
+	border-bottom: 1px solid #d8d8d8;
+}
+ul.tabs li.active h4 {
+  border-bottom: 2px solid #000;
+  padding-bottom: 21px;
+  margin: 0;
+	width: max-content;
+}
+.padder {
+  margin-top: 17px;
+}
+.padder .std {
+  margin-bottom: 20px;
 }
 /* ppp */
 
@@ -2451,42 +2478,58 @@ border-bottom-width: 3px;
   display: inline-block;
   cursor: pointer;
 	max-width: 100%;
-
 	padding: 0px;
 }
-.chooseList ul li span,.chooseList ul li h3{
-display: block;
+.chooseList ul li span{
+	display: block;
 	width: max-content;
-	padding: 10px 0px;
+	padding: 0px 0 27px 0;
 }
 .chooseList ul li{
-padding: 0px 10px 0px 0px;
-}
-.chooseList ul li:first-child{
-padding-left: 0px;
+	padding: 0px 10px 0px 0px;
 }
 .chooseList ul li.active span{
   border-bottom: 2px solid black;
+	font-family: urw-din-medium;
 }
-/*.chooseList ul li.label{
-	border-bottom: 2px solid black;
-}*/
 .chooseList {  /* col-12 CSS */
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
-  padding-right: 6px;
-  padding-left: 4px;
+	margin-top: 19px;
+	border-bottom: 1px solid #d8d8d8;
+}
+.post-lengthds-lbl-options .chooseList {
+  padding: 0 45px;
+	border-bottom: none;
+	margin-top: 0;
+}
+.post-lengthds-lbl-options .chooseList ul{
+	border-bottom: 1px solid #d8d8d8;
+}
+.post-lengthds-lbl-options .chooseList li {
+  padding: 0;
 }
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-/*	margin-right: -15px;
-	margin-left: -15px;*/
-	padding: 0px;
-	border-bottom: 1px solid #D4D4D4;
+	margin-bottom: 0;
+}
+.chooseList ul li span {
+  line-height: 1;
+	text-transform: capitalize;
+}
+.chooseList .label{
+	width: 100%;
+	margin-bottom: 12px;
+}
+.placement .label {
+  width: 50%;
+}
+.swatch-section{
+	margin-top: 1px;
 }
 .post-lengthds-lbl-options {
   margin-top: 11px;
@@ -2511,6 +2554,9 @@ ul.tabs li:nth-child(3){
 .discover-mt-navigation-menu {
   display: none;
 }
+/* .product-options dl.last {
+  border-bottom: 1px solid #d8d8d8;
+} */
 
 /*qty section*/
 
@@ -2522,8 +2568,8 @@ ul.tabs li:nth-child(3){
 /*instagram slider*/
 
 .image_carousel .item.product-view-instagram-item, .image_carousel .item.product-view-instagram-item img{
-  height: 200px;
-  width: 200px;
+  height: 222.5px;
+  width: 222.5px;
 }
 
 /*Cartilage CSS*/
@@ -2574,12 +2620,11 @@ ul.tabs li:nth-child(3){
 	margin-top: 3px;
 }
 .catalog-product-name-display {
-  padding-left: 109px;
 	margin-top: 32px;
 	font-size: 30px;
 }
 .cartilage-section {
-  margin-top: 76px;
+  margin-top: 78px;
 }
 #total_item_counts_holder {
   margin-top: 5px;
@@ -2748,13 +2793,10 @@ ul.tabs li:nth-child(3){
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.insta-main,.recently-view,.you_may_like{
+.insta-main, .recently-view, .you_may_like{
     position: relative;
     width: 100%;
-    margin: 30px 0px;
-}
-.you_may_like{
-    margin: 30px 0px 100px;
+    margin: 59px 0 0;
 }
 .insta-main .image_carousel,.recently-view .image_carousel,.you_may_like .image_carousel{
     width: 80%;
@@ -2769,6 +2811,7 @@ ul.tabs li:nth-child(3){
     display: block;
     margin: 0 9px 0 0;
 }
+
 
 .fancybox-type-iframe{
 	position: fixed!important;
@@ -2796,3 +2839,4 @@ ul.tabs li:nth-child(3){
 	height: 26px;
 	background-size: 100%;
 }
+
