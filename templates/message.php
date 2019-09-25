@@ -57,7 +57,7 @@ function getCode($typebrief){
             </select>
         </div>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Messages</li>
             <li class="active">Creation</li>
         </ol>
@@ -84,7 +84,7 @@ function getCode($typebrief){
                 </div><!-- /.box -->
             </div>
             <?php endif?>
-            <form id="form1" name="form1" method="post" action="/emailing/view/message/create" role="form">
+            <form id="form1" name="form1" method="post" action="/view/message/create" role="form">
                 <input type="hidden" name="brief_id" id="brief_id" value="">
                 <div class="row">
                     <div class="col-md-6">

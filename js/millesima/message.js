@@ -8,7 +8,7 @@
 
 function getMessageHtmlLocal() {
     $.ajax({
-        url: '/emailing/view/ajax/message_getlocalhtml/'+$('input[class=messageid]:checked').val(),
+        url: '/view/ajax/message_getlocalhtml/'+$('input[class=messageid]:checked').val(),
         type: 'GET',
         dataType: "json",
         success: function(data)
@@ -30,7 +30,7 @@ function getBriefInfoMessage(this_select) {
     }
     showloading();
     $.ajax({
-        url: '/emailing/view/ajax/message_getBriefInfo/'+this_select.value,
+        url: '/view/ajax/message_getBriefInfo/'+this_select.value,
         type: 'GET',
         dataType: "json",
         success: function(data) {
@@ -229,7 +229,7 @@ function getMessageSaveInfo(this_select) {
     showloading();
 
     $.ajax({
-        url: '/emailing/view/ajax/message_getMessageSaveInfo/'+this_select.value,
+        url: '/view/ajax/message_getMessageSaveInfo/'+this_select.value,
         type: 'GET',
         dataType: "json",
         success: function(data)

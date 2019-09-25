@@ -12,7 +12,7 @@ $html = $this->data['html'];
             Action Message
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Action Message</li>
         </ol>
     </section>
@@ -46,7 +46,7 @@ $html = $this->data['html'];
                     </div>
 
                         <div class="row">
-                            <form id="form1" name="form1" method="post" action="/emailing/view/message_action" role="form">
+                            <form id="form1" name="form1" method="post" action="/view/message_action" role="form">
                             <div class="col-md-6">
                                 <div class="box-body">
                                     <table id="message_list" class="table table-bordered table-striped dataTable" aria-describedby="message_list">

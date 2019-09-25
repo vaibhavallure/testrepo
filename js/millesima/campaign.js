@@ -27,7 +27,7 @@ $('document').ready(
                 } else {
                     showloading();
                     $.ajax({
-                        url: '/emailing/view/ajax/campaign/'+message,
+                        url: '/view/ajax/campaign/'+message,
                         type: 'GET',
                         dataType: "json",
                         success: function(data)
@@ -64,7 +64,7 @@ function countSegment() {
         selected.push(segmentName+'_'+segmentId);
     });
     $.ajax({
-        url: '/emailing/view/ajax/segment_count/'+selected,
+        url: '/view/ajax/segment_count/'+selected,
         type: 'GET',
         dataType: "json",
         success: function(data)
@@ -98,7 +98,7 @@ function sendCampagneReel() {
     });
 
     $.ajax({
-        url: '/emailing/view/ajax/send_reel/',
+        url: '/view/ajax/send_reel/',
         type: 'POST',
         data: selected,
         success: function(data)
@@ -180,7 +180,7 @@ function searchCampaign(){
         html += '</tbody>';
         tableau.innerHTML = html;
         $.ajax({
-            url: '/emailing/view/ajax/campaign_search/'+code,
+            url: '/view/ajax/campaign_search/'+code,
             type: 'GET',
             dataType: "json",
             success: function(data)

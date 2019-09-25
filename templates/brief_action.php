@@ -50,7 +50,7 @@ if($button == 'Modifier'){
         </h1>
         <?php if(isset($brief['id'])){
             echo '<p style="text-align: center;">';
-            $url = "/emailing/view/traduction/checkbybrief/".$brief['id'];
+            $url = "/view/traduction/checkbybrief/".$brief['id'];
             echo "<a href=$url>";
             echo '<input type="button" class="button-brief btn btn-primary" value="Voir les traductions">';
             echo '</a>';
@@ -58,7 +58,7 @@ if($button == 'Modifier'){
         }?>
 
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Brief</li>
             <li class="active">Création</li>
         </ol>
@@ -85,7 +85,7 @@ if($button == 'Modifier'){
                 </div><!-- /.box -->
             </div>
         <?php endif;?>
-        <form id="form1" name="form1" method="post" action="/emailing/view/brief/action" role="form" onsubmit="return validateForm();">
+        <form id="form1" name="form1" method="post" action="/view/brief/action" role="form" onsubmit="return validateForm();">
             <input type="hidden" name="id" id="id" value="<?php echo (isset($brief['id']) ? $brief['id'] : '') ?>">
             <input type="hidden" name="button" id="button" value="<?php echo $button?>">
             <div class="row">
@@ -667,7 +667,7 @@ if($button == 'Modifier'){
             name = 'iospart';
         }
         $.ajax({
-            url: '/emailing/view/ajax/brief_info/'+name,
+            url: '/view/ajax/brief_info/'+name,
             type: 'GET',
             dataType: "json",
             success: function(data)
@@ -707,7 +707,7 @@ if($button == 'Modifier'){
 				info['typebrief'] = elmValue;
 				var ret = false;
 				$.ajax({
-					url: '/emailing/view/ajax/verif_brief/',
+					url: '/view/ajax/verif_brief/',
 					type: 'POST',
 					data: info,
 					dataType: "json",

@@ -15,7 +15,7 @@ $html = $this->data['html'];
             Gestion Segment
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Segment</li>
         </ol>
     </section>
@@ -47,7 +47,7 @@ $html = $this->data['html'];
                     <div class="box-header">
                         <h3 class="box-title">Création Segment</h3>
                     </div>
-                    <form id="form1" name="form1" enctype='multipart/form-data' method="post" action="/emailing/view/segment/create" role="form">
+                    <form id="form1" name="form1" enctype='multipart/form-data' method="post" action="/view/segment/create" role="form">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="nomdusegment">Nom du segment</label>
@@ -92,7 +92,7 @@ $html = $this->data['html'];
                     <div class="box-header">
                         <h3 class="box-title">Mise à jour Segment</h3>
                     </div>
-                    <form id="form2" name="form2" method="post" action="/emailing/view/segment/update" role="form">
+                    <form id="form2" name="form2" method="post" action="/view/segment/update" role="form">
                         <div class="box-body">
                             <input name="miseasegmentdolist" type="hidden" id="hiddenField" value="true" />
                             <input name="createsegmentdolist" type="hidden" id="hiddenField" value="false" />
@@ -108,7 +108,7 @@ $html = $this->data['html'];
                     <div class="box-header">
                         <h3 class="box-title">Envoi segment tinyclues (iosliv - iosprim)</h3>
                     </div>
-                    <form id="form3" name="form3" method="post" action="/emailing/view/segment/tinyclues" role="form">
+                    <form id="form3" name="form3" method="post" action="/view/segment/tinyclues" role="form">
                         <div class="box-body">
                             <p class="help-block">Récupère les fichiers csv sur le sftp de tinyclues qui se termine par la date choisie, puis les traites (dédoublonnage, envoi dolist ...)</p>
                             <div class="input-group bootstrap-datepicker">

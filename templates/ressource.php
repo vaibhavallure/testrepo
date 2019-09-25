@@ -11,7 +11,7 @@ $html = $this->data['html'];
             Gestion des ressouces
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Ressouces</li>
         </ol>
     </section>
@@ -45,7 +45,7 @@ $html = $this->data['html'];
                             <h3 class="box-title">Gestion Ressource</h3>
                         </div>
                         <div class="col-md-6">
-                            <form id="filter_form" name="filter_form" method="post" action="/emailing/view/ressource" role="form">
+                            <form id="filter_form" name="filter_form" method="post" action="/view/ressource" role="form">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <select class="form-control" name="store_filter" size="1" id="store_filter" onChange="submit();">
@@ -105,12 +105,12 @@ $html = $this->data['html'];
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             </form>
-                            <form id="form2" name="form2" method="post" action="/emailing/view/ressource_action" role="form">
+                            <form id="form2" name="form2" method="post" action="/view/ressource_action" role="form">
                                 <button type="submit" name="creation" id="creation" class="btn btn-primary" value="create">Nouvelle ressource</button>
                             </form>
                         </div>
                     </div>
-                    <form id="form1" name="form1" method="post" action="/emailing/view/ressource_action" role="form">
+                    <form id="form1" name="form1" method="post" action="/view/ressource_action" role="form">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box-body">

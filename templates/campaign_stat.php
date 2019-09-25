@@ -8,7 +8,7 @@ $campaignList = $this->data['campaignList'];
             Dernières campagnes envoyés chez Dolist (30 jours)
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Campagnes envoyés à Dolist</li>
         </ol>
     </section>

@@ -14,7 +14,7 @@ $html = $this->data['html'];
             Gestion Campagne
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Campagne</li>
         </ol>
     </section>
@@ -46,7 +46,7 @@ $html = $this->data['html'];
                     <div class="box-header">
                         <h3 class="box-title">Création Campagne</h3>
                     </div>
-                    <form id="form1" name="form1" method="post" action="/emailing/view/campaign/create" role="form">
+                    <form id="form1" name="form1" method="post" action="/view/campaign/create" role="form">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="box-body">
@@ -195,7 +195,7 @@ $html = $this->data['html'];
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <form id="form1" name="form1" method="post" action="/emailing/view/campaign/sendforbat" role="form">
+                                    <form id="form1" name="form1" method="post" action="/view/campaign/sendforbat" role="form">
                                         <div class="form-group">
                                             <label for="campaignidbat">Campagne</label>
                                             <input name="campaignidbat" type="text" id="campaignidbat" value="" class="form-control">
@@ -214,7 +214,7 @@ $html = $this->data['html'];
                                     </form>
                                 </div>
                                  <div class="col-xs-5">
-                                    <form id="form1" name="form1" method="post" action="/emailing/view/campaign/sendforreel" role="form">
+                                    <form id="form1" name="form1" method="post" action="/view/campaign/sendforreel" role="form">
                                         <div class="form-group">
                                             <label for="campaignidclient">Campagne</label>
                                             <input name="campaignidreel" type="text" id="campaignidreel" value="" class="form-control">

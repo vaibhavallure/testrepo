@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- jQuery 2.1.3 -->
 <script src="<?php  echo $this->data['url'];?>js/default/jQuery-2.1.3.min.js"></script>
+<!-- <script src="/vendor/almasaeed2010/adminlte/bower_components/jquery/dist/jquery.slim.js"></script> -->
 <!-- Bootstrap 3.3.2 JS -->
 <script src="<?php  echo $this->data['url'];?>js/default/bootstrap.min.js" type="text/javascript"></script>
 <!-- InputMask -->
@@ -59,13 +60,15 @@
     <link href="<?php  echo $this->data['url'];?>css/default/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php  echo $this->data['url'];?>css/default/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print'/>
     <!-- Theme style -->
-    <link href="<?php  echo $this->data['url'];?>css/default/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="/vendor/almasaeed2010/adminlte/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-    <link href="<?php  echo $this->data['url'];?>css/default/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="/vendor/almasaeed2010/adminlte/dist/css/skins/_all-skins.css" rel="stylesheet" type="text/css" />
     <!-- bootstrap time picker -->
-    <link href="<?php  echo $this->data['url'];?>css/default/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/vendor/almasaeed2010/adminlte/bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js" rel="stylesheet" type="text/css" />
     <!-- bootstrap date picker -->
-    <link href="<?php  echo $this->data['url'];?>css/default/datepicker3.css" rel="stylesheet" type="text/css" />
+    <link href="/vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js" rel="stylesheet" type="text/css" />
     <!-- Millesima fancybox -->
     <link href="<?php  echo $this->data['url'];?>css/default/jquery.fancybox.css" rel="stylesheet" type="text/css" />
 
@@ -91,7 +94,7 @@
 <div class="wrapper">
 <header class="main-header">
     <!-- Logo -->
-    <a href="/emailing/view/home" class="logo">Selligent</a>
+    <a href="/view/home" class="logo">Selligent</a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -111,62 +114,62 @@
         <ul class="sidebar-menu">
             <li class="header">MENU NAVIGATION</li>
             <li class="active treeview">
-                <a href="/emailing/view/home">
+                <a href="/view/home">
                     <i class="fa fa-dashboard"></i> <span>Tableau de Bord</span>
                 </a>
 
             </li>
             <li class="treeview">
-                <a href="/emailing/view/brief">
+                <a href="/view/brief">
                     <i class="fa fa-file-text-o"></i>
                     <span>Briefs</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu menu-open" style="display: block;">
-                    <li><a href="/emailing/view/brief"><i class="fa fa-calendar"></i>Gestion des briefs</a></li>
-                    <li><a href="/emailing/view/brief/create"><i class="fa fa-edit"></i>Création d'un brief</a></li>
+                    <li><a href="/view/brief"><i class="fa fa-calendar"></i>Gestion des briefs</a></li>
+                    <li><a href="/view/brief/create"><i class="fa fa-edit"></i>Création d'un brief</a></li>
                 </ul>
             </li>
             <li class="treeview">
-                <a href="/emailing/view/traduction">
+                <a href="/view/traduction">
                     <i class="fa fa-comments-o"></i>
                     <span>Traduction</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu menu-open" style="display: block;">
-                    <li><a href="/emailing/view/traduction"><i class="fa fa-caret-right"></i>Traduction Brief</a></li>
+                    <li><a href="/view/traduction"><i class="fa fa-caret-right"></i>Traduction Brief</a></li>
                 </ul>
             </li>
             <li class="treeview">
-                <a href="/emailing/view/message">
+                <a href="/view/message">
                     <i class="fa fa-envelope"></i>
                     <span>Messages</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu menu-open" style="display: block;">
-                    <li><a href="/emailing/view/message"><i class="fa fa-edit"></i>Création des messages</a></li>
-                    <li><a href="/emailing/view/message_action"><i class="fa fa-archive"></i>Gestion des messages</a></li>
+                    <li><a href="/view/message"><i class="fa fa-edit"></i>Création des messages</a></li>
+                    <li><a href="/view/message_action"><i class="fa fa-archive"></i>Gestion des messages</a></li>
                 </ul>
             </li>
             <li class="treeview">
-                <a href="/emailing/view/segment">
+                <a href="/view/segment">
                     <i class="fa fa-group"></i> <span>Segments</span>
                 </a>
             </li>
             <li class="treeview">
-                <a href="/emailing/view/campaign">
+                <a href="/view/campaign">
                     <i class="fa fa-paper-plane-o"></i>
                     <span>Campagnes</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu menu-open" style="display: block;">
-                    <li><a href="/emailing/view/campaign_create"><i class="fa fa-edit"></i>Création d'une campagne</a></li>
+                    <li><a href="/view/campaign_create"><i class="fa fa-edit"></i>Création d'une campagne</a></li>
 
-                    <li><a href="/emailing/view/campaign_stat"><i class="fa fa-edit"></i>Statistiques des campagnes</a></li>
+                    <li><a href="/view/campaign_stat"><i class="fa fa-edit"></i>Statistiques des campagnes</a></li>
                 </ul>
             </li>
             <li class="treeview">
-                <a href="/emailing/view/ressource">
+                <a href="/view/ressource">
                     <i class="fa fa-paper-plane-o"></i>
                     <span>Gestion Des Ressources</span>
                     <i class="fa fa-angle-left pull-right"></i>

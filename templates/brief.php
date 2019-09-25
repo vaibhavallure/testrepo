@@ -57,7 +57,7 @@ function getCode($typebrief){
                 <?php
 
                 $name = getCode($brief['typebrief']);
-                $url = 'http://srv-zend:8000/emailing/view/brief/check/'.$brief['id']; //prod
+                $url = '/view/brief/check/'.$brief['id']; //prod
                 //$url = 'http://192.168.11.100:8000/emailing/view/brief/check/'.$brief['id']; //local
 
 
@@ -122,7 +122,7 @@ function getCode($typebrief){
             Gestion Brief
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Brief</li>
             <li class="active">Création</li>
         </ol>
@@ -174,7 +174,7 @@ function getCode($typebrief){
                             <h4 class="box-title">Actions</h4>
                         </div>
                         <div class="box-body">
-                            <form id="form1" name="form1" method="post" action="/emailing/view/brief/create" role="form">
+                            <form id="form1" name="form1" method="post" action="/view/brief/create" role="form">
                                 <div class="action_brief">
                                     <button type="submit" class="button-brief btn btn-primary bg-purple" style="background-color: #7d689e;color: #FFF;" name="creation" value="create"  >Création</button>
                                 </div>
@@ -182,7 +182,7 @@ function getCode($typebrief){
                         </div>
                     </div>
                 </div>
-                <form id="form4" name="form4" method="post" action="/emailing/view/brief/action" role="form">
+                <form id="form4" name="form4" method="post" action="/view/brief/action" role="form">
                     <div class="col-md-9">
                         <div class="box box-primary">
                             <div class="box-body no-padding">

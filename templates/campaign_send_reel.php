@@ -13,7 +13,7 @@ $html = $this->data['html'];
             Envoi Campagne Réel
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Envoi Campagne Réel</li>
         </ol>
     </section>

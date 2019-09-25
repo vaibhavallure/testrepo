@@ -13,7 +13,7 @@ $html = $this->data['html'];
             Envoi Campagne BAT
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Envoi Campagne Bat</li>
         </ol>
     </section>
@@ -45,7 +45,7 @@ $html = $this->data['html'];
                     <div class="box-header">
                         <h3 class="box-title">Envoi Campagne BAT</h3>
                     </div>
-                    <form id="form1" name="form1" method="post" action="/emailing/view/campaign_action" role="form">
+                    <form id="form1" name="form1" method="post" action="/view/campaign_action" role="form">
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="box-body">

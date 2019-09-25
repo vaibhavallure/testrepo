@@ -12,7 +12,7 @@ $title = $this->data['title'];
             Gestion des ressouces
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Ressouces</li>
         </ol>
     </section>
@@ -38,7 +38,7 @@ $title = $this->data['title'];
             </div><!-- /.box -->
         </div>
         <?php endif?>
-        <form id="form1" name="form1" method="post" action="/emailing/view/ressource_action" role="form">
+        <form id="form1" name="form1" method="post" action="/view/ressource_action" role="form">
             <input name="id" type="hidden" id="id" class="form-control" value="<?php echo ((isset($data['id'])) ? $data['id'] : '') ?>">
 
             <div class="row">
@@ -202,7 +202,7 @@ $title = $this->data['title'];
         info['endnull'] = document.getElementById('endnull').checked;
         info['end_date'] = document.getElementById('end_date').value;
         $.ajax({
-            url: '/emailing/view/ajax/ressource_info/',
+            url: '/view/ajax/ressource_info/',
             type: 'POST',
             data: info,
             dataType: "json",

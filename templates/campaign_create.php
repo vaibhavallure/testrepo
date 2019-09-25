@@ -13,7 +13,7 @@ $html = $this->data['html'];
             Création Campagne
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Campagne Creation</li>
         </ol>
     </section>
@@ -46,7 +46,7 @@ $html = $this->data['html'];
                         <h3 class="box-title">Création Campagne</h3>
 						<p>Seuls les messages créés depuis moins de 30 jours sont affichés.</p>
                     </div>
-                    <form id="form1" name="form1" method="post" action="/emailing/view/campaign_create" role="form">
+                    <form id="form1" name="form1" method="post" action="/view/campaign_create" role="form">
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="box-body">

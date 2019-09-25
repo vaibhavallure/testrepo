@@ -58,7 +58,7 @@ function getCode($typebrief){
             </select>
         </div>
         <ol class="breadcrumb">
-            <li><a href="/emailing/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="/view/home"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Messages</li>
             <li class="active">Creation</li>
         </ol>
@@ -85,7 +85,7 @@ function getCode($typebrief){
             </div><!-- /.box -->
         </div>
         <?php endif?>
-        <form id="form1" name="form1" method="post" action="/emailing/view/traduction/action" role="form">
+        <form id="form1" name="form1" method="post" action="/view/traduction/action" role="form">
             <input type="hidden" name="brief_id" id="brief_id" value="<?php echo (isset($briefInfo['id']) ? $briefInfo['id'] : '') ?>">
             <input type="hidden" name="lang_id" id="lang_id" value="<?php echo (isset($trad['pays']) ? $trad['pays'] : '') ?>">
             <input type="hidden" name="is_textmaster" id="is_textmaster" value="<?php echo (isset($trad['is_textmaster']) ? $trad['is_textmaster'] : 0) ?>">

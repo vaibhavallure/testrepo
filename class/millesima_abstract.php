@@ -615,7 +615,7 @@ class Millesima_Abstract{
             $objetBrief = $brief['objfr'];
 			$objet = 'Validation BAT FR '.$codeBrief .' : '.$themeBrief;
             $message ='Voici le BAT France : ';
-            $message .='<a target="_blank" href="http://srv-zend:8000/emailing/fichiers/emailings/'.$codeBrief.'/F'.$codeBrief.'.html">F'.$codeBrief.'.html</a>'. '<br />';
+            $message .='<a target="_blank" href="/fichiers/emailings/'.$codeBrief.'/F'.$codeBrief.'.html">F'.$codeBrief.'.html</a>'. '<br />';
             $message .= '<br />';
             $message .='Objet : « <strong>'.$objetBrief .'</strong> »<br />';
 

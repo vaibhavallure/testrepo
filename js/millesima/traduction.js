@@ -1,7 +1,7 @@
 function getBriefInfoTrad(this_select) {
     showloading();
     $.ajax({
-        url: '/emailing/view/ajax/message_getBriefInfo/'+this_select.value,
+        url: '/view/ajax/message_getBriefInfo/'+this_select.value,
         type: 'GET',
         dataType: "json",
         success: function(data)
@@ -215,7 +215,7 @@ function saveTraductionAction(){
         showPopUp("Veuillez selectionner une Langue")
     } else {
         $.ajax({
-            url: '/emailing/view/ajax/trad_save/',
+            url: '/view/ajax/trad_save/',
             type: 'POST',
             data: $("#form1").serialize(),
             success: function(data)
@@ -267,7 +267,7 @@ function invalidTraductionForm(){
     showloading();
 
     $.ajax({
-        url: '/emailing/view/ajax/trad_inv/',
+        url: '/view/ajax/trad_inv/',
         type: 'POST',
         data: $("#form2").serialize(),
         success: function(data)
@@ -302,7 +302,7 @@ function setLangTrad(this_select,nboffsup) {
 function getTradExist(id,lang,nboffsup){
     showloading();
     $.ajax({
-        url: '/emailing/view/ajax/trad_getExist/'+id+'-'+lang,
+        url: '/view/ajax/trad_getExist/'+id+'-'+lang,
         type: 'GET',
         dataType: "json",
         success: function(data)
