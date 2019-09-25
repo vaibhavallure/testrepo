@@ -72,8 +72,9 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 'checkout_controller_multishipping_overview_giftmessage_post',
                 array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
                 );
-            echo "<pre>";
-            print_r($this->getRequest()->getParams());die;
+            /* echo "<pre>";
+            print_r($this->getRequest()->getParams());
+            die; */
             if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
                 if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
@@ -92,9 +93,9 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 $paymentInstance->setCcCid($payment['cc_cid']);
             }
             $this->_getCheckout()->createOrders();
-            $this->_getState()->setActiveStep(
+            /* $this->_getState()->setActiveStep(
                 Mage_Checkout_Model_Type_Multishipping_State::STEP_SUCCESS
-                );
+                ); */
             $this->_getState()->setCompleteStep(
                 Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW
                 );
