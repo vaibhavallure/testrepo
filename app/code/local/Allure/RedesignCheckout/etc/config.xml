@@ -33,6 +33,11 @@
         	<allure_redesigncheckout>
 				<class>Allure_RedesignCheckout_Model</class>
 			</allure_redesigncheckout>
+			<shipping>
+				<rewrite>
+					<shipping>Allure_RedesignCheckout_Model_Shipping_Shipping</shipping>
+				</rewrite>
+			</shipping>
 			<checkout>
 				<rewrite>
 					<type_multishipping>Allure_RedesignCheckout_Model_Checkout_Type_Multishipping</type_multishipping>
@@ -118,4 +123,24 @@
             </checkout_controller_multishipping_overview_giftmessage_post>
    		</events>
    	</frontend>
+   	<admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Allure_RedesignCheckout before="Mage_Adminhtml">Allure_RedesignCheckout_Adminhtml</Allure_RedesignCheckout>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+   	<adminhtml>
+        <layout>
+            <updates>
+                <allure_redesigncheckout>
+                    <file>allure/redesign.xml</file>
+                </allure_redesigncheckout>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>

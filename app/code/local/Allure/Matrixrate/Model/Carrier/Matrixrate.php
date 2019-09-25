@@ -58,6 +58,12 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
             return false;
         }
         
+        $arr = array('sales_order','sales_order_create','sales_shipping');
+        $controllerName = Mage::app()->getRequest()->getControllerName();
+        if(in_array($controllerName, $arr)){
+            return false;
+        }
+        
         // exclude Virtual products price from Package value if pre-configured
         if (!$this->getConfigFlag('include_virtual_price') && $request->getAllItems()) {
             foreach ($request->getAllItems() as $item) {
