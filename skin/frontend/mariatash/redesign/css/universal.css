@@ -358,7 +358,7 @@ div.tab button.active {
 
 .myaccount-index-index #my-orders-table th{
 	line-height: 18px;
-	border-bottom: 1px solid #ccc ! important;
+/*	border-bottom: 1px solid #ccc ! important;*/
 }
 
 .myaccount-index-index  #myaccount-shopping-cart-table thead
@@ -899,12 +899,6 @@ div.a-column.a-span-last {
     overflow-x: hidden;
 }
 
-.my-account .mt-my-orders .box .box-content {
-	/* overflow-y: auto;
-    height: 300px; */
-    margin-top: -17px;
-}
-
 .mt-my-wishlist  #wishlist-table .w-remove a ,
 .mt-my-cart #shopping-cart-table .w-remove a:link {
     background: url(../images/wish-x-remove.png) no-repeat 0px 7px;
@@ -1087,13 +1081,13 @@ padding: 0 0 8px 0;
     margin: 0 10px 0px 0;
     padding: 0 0 0px 0;
 }
-.my-account .data-table thead, .my-account .data-table tr{
-    /* background: none !important; */
+/*.my-account .data-table thead, .my-account .data-table tr{
+     background: none !important; 
     padding: 7px 0px 7px 0px;
     background: #d1d1d1;
     border-bottom: 9px solid #DEDEDE;
 }
-
+*/
 
 
 .block-account .block-content ul li strong{
@@ -1640,10 +1634,6 @@ width: 245px;
 	text-decoration: none;
 }
 
-#new-mt-myproduct-openorders #box-history{
-	margin-top: -10px;
-}
-
 .mt-my-wishlist #wishlist-table-overlay .mt-wishlist-extra-cls{
 	overflow: hidden;
 	padding: 8px;
@@ -1812,8 +1802,7 @@ width: 245px;
 	padding: 0px 10px 10px 10px;
 }
 #new-mt-myproduct-openorders .no-order-msg{
-	padding: 5px 10px 10px 10px;
-    background-color: #d1d1d1;
+	padding: 5px 10px 10px 0;
 }
 
 #new-mt-myproduct-cart .cart-empty{
@@ -1896,10 +1885,10 @@ li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active 
 	float: left;
 }
 
-.complete-order-view #my-orders-table{
+/*.complete-order-view #my-orders-table{
 	background: #cfcfd1;
 	margin-top: -18px;
-}
+}*/
 
 .mt-custom-order-info{
 	border-bottom: 9px solid #DEDEDE;
