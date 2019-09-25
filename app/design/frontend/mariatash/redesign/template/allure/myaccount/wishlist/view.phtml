@@ -28,8 +28,8 @@
             <div id="wishlist-table-overlay">
             	<div class="box-content">
             		<div class="mt-wishlist-table">
-	                	<table class="data-table" id="wishlist-table">
-	                   		 <thead class="shop-titles">
+	                	<table class="data-table" id="wishlist-table" style="width: 100%">
+	                   		 <thead class="shop-titles d-none">
 	                        	<tr>
 			                         <th colspan="2">
 			                                PRODUCT
@@ -59,14 +59,14 @@
 			                                <?php echo $this->getChildHtml('items');?>
 			                                <script type="text/javascript">decorateTable('wishlist-table')</script>
 			                        <?php else: ?>
-			                            <tr><td colspan="7"><p class="wishlist-empty"><?php echo $this->__('You have no items in your wishlist.') ?></p></td></tr>
+			                            <tr style="width: 100%;"><td colspan="7"><p class="wishlist-empty"><?php echo $this->__('You have no items in your wishlist.') ?></p></td></tr>
 			                        <?php endif ?>
 	                    	</tbody>
 	                	</table>
 	                	
 	                	<?php if ($this->hasWishlistItems()): ?>
 	                		<div class="mt-wishlist-extra-cls">
-	        					<button onclick="openShareForm();" class="button mt-wishlist-share-btn">Share Wishlist</button>
+	        					<button onclick="openShareForm();" class="dark-button share_btn mt-3">Share Wishlist</button>
 	        				</div>
 	        			 <?php endif ?>
 	        			 

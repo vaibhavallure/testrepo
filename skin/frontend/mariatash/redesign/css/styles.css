@@ -964,9 +964,9 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	float: right; /* width:60%;*/
 }
 
-.customer-address-form .form-list li.wide .input-box input.input-text {
+/*.customer-address-form .form-list li.wide .input-box input.input-text {
 	width: 92%;
-}
+}*/
 
 .customer-address-form #street_2 {
 
@@ -1020,14 +1020,14 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	margin-left: 0;
 }
 
-.customer-address-form .input-box {
+/*.customer-address-form .input-box {
 	clear: none;
 	width: 245px;
 	float: right;
 	right: 335px;
 	position: relative;
 }
-
+*/
 .checkout-multishipping-address-editbilling .input-box {
 	clear: none;
 	width: 250px;
@@ -1180,7 +1180,6 @@ div.account-create div.fieldset ul.form-list li.fields {
 
 .customer-account-edit label.required, .wishlist-index-share label.required,
 .account-login label.required, .account-create label.required,
-.customer-address-form label.required,
 .checkout-multishipping-address-editbilling label.required,
 .paypal-express-review label.required, #checkout-step-billing .form-list li label.required,
 #checkout-step-shipping .form-list li label.required,
@@ -5464,7 +5463,7 @@ textarea:focus, input:focus {
 }
 
 /* .products-grid2 .three-in-row .item {
-	/* width: 33.3%; 
+	/* width: 33.3%;
 	padding: 0.5%;
 }
 
@@ -8157,10 +8156,6 @@ ol#checkoutSteps.opc li.section, ol#checkoutSteps.opc li.active {
 	margin: 3px 0 0 1px;
 }
 
-.my-account li.control label, .shipp .control label {
-	padding: 2px 0 2px 30px;
-	background: url(../images/checkbox-login.png) no-repeat 0 0;
-}
 
 .my-account li.control  input:checked+label, .shipp .control input:checked+label
 {
@@ -10800,9 +10795,8 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	box-sizing: border-box;
 }
 
-.sales-order-view .col2-left-layout .col-main, .customer-account-index .col2-left-layout .col-main,
+
 .sales-order-history .col2-left-layout .col-main, .wishlist-index-index .col2-left-layout .col-main,
-.customer-address-form .col2-left-layout .col-main,
 .newsletter-manage-index .col2-left-layout .col-main, .sales-order-view .col2-right-layout .col-main,
 .customer-account-index .col2-right-layout .col-main,
 .sales-order-history .col2-right-layout .col-main,
@@ -10836,10 +10830,10 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	font-size: 13px;
 }
 
-.sales-order-shipment .main-container, .sales-order-view .main-container,
+.sales-order-shipment .main-container,
  .sales-order-history .main-container,
 .wishlist-index-share .main-container, .wishlist-index-index .main-container,
-.customer-address-form .main-container, .newsletter-manage-index .main-container,
+.newsletter-manage-index .main-container,
 .sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
 	margin: 0 auto;
 	width: 960px;
@@ -10997,11 +10991,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	margin-right: 15px;
 	font-family: dinmittelschriftregular;
 	font-size: 16px;
-}
-
-.sales-order-view .my-account div.page-title h1, .sales-order-view .my-account div.page-title a
-{
-	font-size: 13px;
 }
 
 .my-account .order-items h2.table-caption {
@@ -11188,7 +11177,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 {
 	width: 120px;
 	padding-right: 0px;
-	padding-bottom: 2px;
+/*	padding-bottom: 2px;*/
 }
 
 .my-account .data-table tfoot strong {
@@ -11248,9 +11237,9 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 }
 
-.my-wishlist .data-table tbody td:nth-child(2) {
+/*.my-wishlist .data-table tbody td:nth-child(2) {
 	width: 200px;
-}
+}*/
 
 .my-wishlist .data-table tbody td:nth-child(4) {
 	width: 163px;
@@ -15149,19 +15138,19 @@ li.item h2.product-name {text-align: center;}
 	display: inline-block;
 }
 
-#wishlist-table td {
+/*#wishlist-table td {
 	padding: 14px 0 8px 10px;
 }
-
+*/
 #wishlist-table td.add-to-cart-alt {
 	margin-left: 10px;
 }
 
-#wishlist-table td:first-child {
+/*#wishlist-table td:first-child {
 	padding-top: -6px;
 	width: 85px;
 }
-
+*/
 #wishlist-table td:first-child, #wishlist-table td:last-child {
 	padding-left: 10px;
 }
@@ -15426,12 +15415,12 @@ li.item h2.product-name {text-align: center;}
 	margin-top: 10px;
 }
 
-.catalog-category-view  .actions .super_attribute ul li:hover,
+/* .catalog-category-view  .actions .super_attribute ul li:hover,
 .catalogsearch-result-index .actions .super_attribute ul li:hover,
 .catalog-category-view  .actions .super_attribute ul li.active,
 .catalogsearch-result-index .actions .super_attribute ul li.active {
 	border: 1px solid #c2c2c4;
-}
+} */
 
 .categorypath-discover-maria-tash-celebrity-clientele-html.fancybox-lock  .fancybox-inner,
 .categorypath-discover-maria-tash-celebrity-clientele-html.fancybox-lock  .fancybox-wrap
@@ -16343,10 +16332,10 @@ input.m-slider {
 	height: 265px;
 }
 
-.image_carousel .item.product-view-instagram-item , .image_carousel .item.product-view-instagram-item img{
+/* .image_carousel .item.product-view-instagram-item , .image_carousel .item.product-view-instagram-item img{
 	width: 120px;
 	height: 120px;
-}
+} */
 
 .image_carousel .item.product-view-instagram-item{
 	margin: 0px 8px 0px 0px;

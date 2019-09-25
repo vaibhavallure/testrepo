@@ -181,7 +181,7 @@
 	justify-content: space-between;
 }
 .acc-products-wrapper .tabcontent {
-	border-top: 1px solid rgba(41, 41, 41, 0.9);
+	border-top: 1px solid #dedede;
 	margin-top: -2px;
 }
 .myaccount-index-index .tab button{
@@ -203,7 +203,8 @@
 	height: 78px;
 	display: flex;
 	align-items: center;
-	border-bottom: 1px solid rgba(41, 41, 41, 0.9);
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 0;
 }
 .acc-products-wrapper #narrow-by-list-new li{
 	position: relative;
@@ -235,6 +236,141 @@
 	background-size: 15%!important;
 	background-position: right;
 	margin-right: 10px;
+}
+.acc-products-wrapper table{
+	margin-top: 0
+}
+.acc-products-wrapper table.data-table, 
+.acc-products-wrapper .data-table tr{
+	display: table;
+	margin-top: 0;
+}
+.acc-products-wrapper table h2 a{
+	font-size: 22px!important;
+	font-weight: normal!important;
+}
+.acc-products-wrapper table h2{
+	padding-top: 0;
+}
+.acc-products-wrapper .mt-new-purchase .cart-table .cart_col2{
+	vertical-align: top;
+	width: 100%;
+}
+.acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
+	margin-bottom: 0;
+}
+.acc-products-wrapper #myaccount-shopping-cart-table tr td img,
+.acc-products-wrapper .mt-my-wishlist table tr td img{
+	width: 102px;
+	height: 102px;
+	object-fit: cover;
+	background: transparent;
+}
+.acc-products-wrapper table tr{
+	padding-top: 22px!important;
+	padding-bottom: 22px!important;
+	border-collapse: separate;
+}
+.purchase-store-name{
+	width: 100%;
+}
+.flex-box{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.acc-products-wrapper table .para-normal{
+	font-size: 15px;
+}
+.acc-products-wrapper table .para-bold{
+	font-size: 18px;
+}
+.mt-new-purchase .mt-purchase-btn button{
+	width: 164px;
+	height: 34px;
+	text-transform: uppercase;
+}
+.desc-cell{
+	padding-left: 30px;
+	width:100%;
+}
+.acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
+	padding-right: 97px;
+}
+/*=====================*/
+/*WISHLIST*/
+/*=====================*/
+.acc-products-wrapper .mt-my-wishlist .line-w-mt{
+	width: 100%;
+}
+.acc-products-wrapper .mt-my-wishlist .product-w-mt{
+	padding-right: 20px;
+	vertical-align: top;
+}
+.acc-products-wrapper .mt-my-wishlist .product-w-mt .price{
+	display: inline-block;
+	margin-right: 30px;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: urw-din-regular;
+}
+.acc-products-wrapper .mt-my-wishlist .myaccount-update-wishlist-btn{
+		border: 0.5px solid rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 1.5px;
+	text-align: center;
+	background: #fff;
+	text-transform: uppercase;
+}
+.acc-products-wrapper .mt-my-wishlist .myaccount-wishlist-move-to-cart{
+		background: rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: #FFFFFF;
+	letter-spacing: 1.5px;
+	text-align: center;
+	outline: none;
+	border: transparent;
+	border-radius: 0;
+	text-transform: uppercase;
+}
+.acc-products-wrapper .mt-my-wishlist .product-w-mt .fprice .price{
+	font-size: 18px;
+	font-weight: bold;
+	font-family: urw-din-regular;
+	margin-right: 6px!important;
+}
+.acc-products-wrapper .mt-my-wishlist .qty-wrap input{
+	background: transparent!important;
+	padding: 0!important;
+	width: 35px!important;
+	height: 35px!important;
+	border:none!important;
+}
+.minus-btn,.plus-btn,.qty-wrap input{
+	background: transparent;
+	border:none;
+	font-family: urw-din-regular;
+    font-size: 18px;
+    font-weight: bold;
+    font-size: 18px!important;
+}
+.plus_icon,.minus_icon{
+	margin: 0!important;
+	height: 36px;
+    display: flex;
+    align-items: center;
+}
+.acc-products-wrapper .mt-my-wishlist .cart-cell button{
+	width: 164px;
+	height: 37px;
+}
+.share_btn{
+	width: 170px;
+	height: 37px;
+	text-transform: uppercase;
 }
 /*=====================*/
 /*MY ACCOUNT - login & security*/
@@ -272,12 +408,14 @@
 	opacity: 0.9!important;
 
 }
-.login_security .fields input{
+.login_security .fields input,
+.fields .fields input{
 	width: 100%;
 	background: transparent;
 	
 }
-.login_security .fields .input-box{
+.login_security .fields .input-box,
+.list-form .fields .input-box{
 	position: relative;
 	width: 323px;
 }
@@ -290,14 +428,16 @@
 	padding-bottom: 0!important;
 	margin-bottom: 0!important;
 }
-.login_security .field{
+.login_security .field,
+.new_address .field{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0!important;
 	margin-top: 22px;
 }
-.login_security .field em{
+.login_security .field em,
+.new_addres .field em{
 	display: none;
 }
 .login_security .fieldset{
@@ -307,7 +447,9 @@
 .login_security .one{
 	margin-bottom: 0;
 }
-.login_security .list-form .fields .field{
+.login_security .list-form .fields .field,
+.new_address .list-form .fields .field,
+{
 	justify-content: flex-end;
 }
 .save_button{
@@ -338,9 +480,9 @@
 	text-decoration: underline;
 	margin-right: 0!important;
 	font-weight: normal!important;
-    font-family: urw-din-regular!important;
-    text-transform: capitalize!important;
-    color: rgba(41, 41, 41, 0.9)!important;
+	font-family: urw-din-regular!important;
+	text-transform: capitalize!important;
+	color: rgba(41, 41, 41, 0.9)!important;
 
 }
 
@@ -349,6 +491,7 @@
 /*=====================*/
 .my_addresses h1{
 	font-size: 30px;
+	margin-bottom: 30px;
 }
 .my_addresses ol,
 .my_addresses ol li{
@@ -356,6 +499,7 @@
 }
 .my_addresses .mt-myaccount-address-primary-div{
 	display: flex;
+	border-bottom: 1px solid rgba(41, 41, 41, 0.9);
 }
 .my_addresses .addresses-primary address{
 	background: transparent;
@@ -363,6 +507,13 @@
 	padding-left: 0;
 	text-transform: capitalize;
 	font-weight: normal;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.54;
+	letter-spacing: 0.5px;
+	color: rgba(41, 41, 41, 0.9);
+	font-family: urw-din-light;
 }
 .my_addresses ol .item h3{
 	text-transform: uppercase!important;
@@ -381,19 +532,22 @@
 	justify-content: space-between;
 	flex-wrap: wrap;
 	padding: 0;
+	border-bottom: 0.8px solid rgba(41, 41, 41, 0.9);
 }
 .my_addresses #additional-addresses li{
 	width: 50%;
+	border-bottom: 0.3px solid rgba(41, 41, 41, 0.9);
+	padding-top: 20px;
 }
 .ship-primary{
-	width: 32%;
+	width: 42%;
 }
 
 .my_addresses #additional-addresses li:nth-of-type(odd){
-	width: 30%;
+	width: 40%;
 }
 .my_addresses #additional-addresses li:nth-of-type(even){
-	width: 70%;
+	width: 60%;
 	padding-left: 20px;
 }
 .mt-addresses-additional li.item p{
@@ -413,18 +567,84 @@
 	border:none;
 	padding-left: 0;
 	text-decoration: underline;
-	 color: rgba(41, 41, 41, 0.9);
-	 letter-spacing: 0.5px;
+	color: rgba(41, 41, 41, 0.9);
+	letter-spacing: 0.5px;
 }
 #additional-addresses address{
 	text-transform: capitalize;
+	font-weight: 300;
+	line-height: 1.54;
+	letter-spacing: 0.5px;
+	color: rgba(41, 41, 41, 0.9);
+	font-family: urw-din-light;
+}
+/*=====================*/
+/*ADD NEW ADDRESS*/
+/*=====================*/
+.new_address h1{
+	font-size: 30px;
+}
+.new_address .form-list{
+	padding-left: 0;
+}
+.new_address .fieldset{
+	padding: 0!important;
+}
+.new_address .wide{
+	display: flex!important;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 24px!important;
+	padding: 0!important;
+}
+.new_address .input-box{
+	width: 323px;
+}
+.new_address .fields{
+	padding: 0!important;
+}
+.new_address .fields label,
+.new_address .wide label{
+	text-transform: uppercase;
+	font-weight: bold;
+	margin-bottom: 0!important;
+}
+.new_address .input-box input,
+.new_address select{
+	width: 100%!important;
+	background-color: transparent;
+}
+.new_address #phone,.new_address #country{
+	border: 0.25px solid rgba(41,41,41,0.90)!important;
+}
+.new_address em{
+	display: none;
+}
+
+.new_address .control{
+	text-align: right;
+}
+.new_address .control label{
+	position: relative;
+}
+.new_address .form-list li.control{
+	width: 323px;
+	margin: 9px 0;
+	text-align: left;
+	float: right;
+}
+/*=====================*/
+/*PRODUCT RECEIPTS*/
+/*=====================*/
+.receipts h1{
+	font-size: 30px;
 }
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
 @media(min-width: 1200px){
 	.acc-products-wrapper .container{
-		padding: 0 115px;
+		padding: 0 150px;
 	}
 }
 @media(min-width:1024px ){
@@ -516,17 +736,38 @@
 	.locations-wrapper .img-wrap{
 		width: 100%;
 	}
-	.login_security .field{
+	.login_security .field,
+	.new_address .field,
+	.new_address .wide{
 		flex-direction: column;
 		align-items: flex-start;
 	}
-	.login_security .fields .input-box{
+	.login_security .fields .input-box,
+	.new_address .fields .input-box,
+	.new_address .wide .input-box{
 		width: 100%;
+	}
+	.login_security .field label,
+	.new_address .field label,
+	.new_address .wide label{
+		margin-bottom: 10px!important;
+	}
+	.new_address .form-list li.control{
+		width: 100%;
+	}
+	.save_button{
+		float: left!important;
 	}
 }
 
 @media(min-width: 1300px){
 	.login_security{
 		padding-left: 248px;
+	}
+	.my_addresses .container{
+		padding: 0 232px;
+	}
+	.new_address .container{
+		padding-left: 153px;
 	}
 }
