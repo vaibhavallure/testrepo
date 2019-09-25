@@ -90,16 +90,16 @@ if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE
     <div class="you_may_like">
     <div class="image_carousel">
         <div class="block-title text-uppercase mb-3">
-            <strong><span><?php echo $this->__('You may also like') ?></span></strong>
+            <span class="para-bold"><?php echo $this->__('You may also like') ?></span>
         </div>
         <ul id="foo4" style="overflow: hidden;">
             <?php foreach ($collection as $product): ?>
                 <?php
                     $product = Mage::getModel('catalog/product')->load($product->getId());
                 ?>
-                <li class="item" style="width: 234px; height: 305px">
+                <li class="item" style="width: 280px; height: 362px">
                     <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $product->getId() ?>' href="<?php echo $product->getProductUrl() ?>">
-                        <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(234,305); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" />
+                        <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(280,362); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" />
                     </a>
                 </li>
             <?php endforeach; ?>
@@ -160,5 +160,4 @@ if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE
         }
     </script>
 <?php endif; ?>
-
-
+<div class="for-bottom-space p-5"></div>

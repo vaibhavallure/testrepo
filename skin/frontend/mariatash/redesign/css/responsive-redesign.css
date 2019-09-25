@@ -344,6 +344,10 @@
   .category-image-bleed{ /* Head Image */
     display: none;
   }
+  ul.tabs li{
+    flex: 0 0 33.33% !important;
+    max-width: 33.33% !important;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -542,6 +546,12 @@
   }
   .ecp-celebrities-index-index .for-space-to-bottom {
     height: 240px;
+  }
+  .product-shop {
+    margin-top: 71px;
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 30%;
   }
 }
 
@@ -767,6 +777,26 @@
   }
   .caroufredsel_wrapper{
     width: 47%;
+  }
+  .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
+    width: 68%;
+  }
+  .image_carousel .item.product-view-instagram-item img{
+    height: auto;
+    width: 120px;
+  }
+  .product-collateral .prev {
+    left: 8px;
+  }
+  .product-collateral .next {
+    right: 8px;
+  }
+  .containerImage {
+    overflow-y: hidden;
+  }
+  .image_carousel .item.product-view-instagram-item{
+    height: auto;
+    width: auto;
   }
 }
 
