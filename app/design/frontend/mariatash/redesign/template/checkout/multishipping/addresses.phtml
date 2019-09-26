@@ -32,6 +32,8 @@
  * @var Mage_Checkout_Block_Multishipping_Addresses $this
  */
 ?>
+<?php $redesignHelper = Mage::helper("redesign_checkout");?>
+<?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
 <ol id="checkoutSteps" class="opc">
@@ -74,6 +76,7 @@
                     <tbody>
                     <?php foreach ($this->getItems() as $_index => $_item): ?>
                         <?php if ($_item->getQuoteItem()) :?>
+                        <?php //if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
                         <tr>
                         	<td>
                         		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
@@ -100,8 +103,8 @@
                                 </div>
                                 <div class="gift-messages">
                                  	<p class="control">
-                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
-                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (0.00).</span></label>
+                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
                                    </p>
                                 </div>
                             </div>

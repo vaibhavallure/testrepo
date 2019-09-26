@@ -7,38 +7,6 @@
 class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Universalcustomers_Model_Sales_Quote_Address
 {
     /**
-     * Retrieve all grouped shipping rates
-     *
-     * @return array
-     */
-    /* public function getGroupedAllShippingRates()
-    {
-        $rates = array();
-        foreach ($this->getShippingRatesCollection() as $rate) {
-            if (!$rate->isDeleted() && $rate->getCarrierInstance()) {
-                if (!isset($rates[$rate->getCarrier()])) {
-                    $rates[$rate->getCarrier()] = array();
-                }
-                
-                if($rate->getCarrier() == "matrixrate"){
-                    $methodArr = explode("#",$rate->getMethod());
-                    if(count($methodArr) == 2){
-                        if($methodArr[1] == 0){
-                            continue;
-                        }
-                    }
-                }
-                
-                $rates[$rate->getCarrier()][] = $rate;
-                $rates[$rate->getCarrier()][0]->carrier_sort_order = $rate->getCarrierInstance()->getSortOrder();
-            }
-        }
-        uasort($rates, array($this, '_sortRates'));
-        return $rates;
-    } */
-    
-    
-    /**
      * Add item to address
      *
      * @param   Mage_Sales_Model_Quote_Item_Abstract $item
@@ -57,6 +25,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
             //set item is gift item or not
             $addressItem->setIsGiftItem($item->getIsGiftItem());
             $addressItem->setGiftItemQty($item->getGiftItemQty());
+            $addressItem->setIsGiftWrap($item->getIsGiftWrap());
             
             $this->getItemsCollection()->addItem($addressItem);
             
@@ -69,6 +38,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
                     //set item is gift item or not
                     $addressChildItem->setIsGiftItem($item->getIsGiftItem());
                     $addressChildItem->setGiftItemQty($item->getGiftItemQty());
+                    $addressChildItem->setIsGiftWrap($item->getIsGiftWrap());
                     
                     $this->getItemsCollection()->addItem($addressChildItem);
                 }
@@ -80,6 +50,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
                 //set item is gift item or not
                 $addressItem->setIsGiftItem($item->getIsGiftItem());
                 $addressItem->setGiftItemQty($item->getGiftItemQty());
+                $addressItem->setIsGiftWrap($item->getIsGiftWrap());
                 
                 $this->getItemsCollection()->addItem($addressItem);
             }
