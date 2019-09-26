@@ -21,8 +21,21 @@ class Millesima_Api_To_Selligente{
      * function to create client
      */
     public function getClientIndividual(){
-		$wsdl = "individual.xml";
-        $client = new soapclient($wsdl,array('cache_wsdl' => WSDL_CACHE_NONE));
+        $opts = array(
+            'http' => array(
+                'user_agent' => 'PHPSoapClient'
+            )
+        );
+        $context = stream_context_create($opts);
+             $soapClientOptions = array(
+                 'stream_context' => $context,
+                 'cache_wsdl' => WSDL_CACHE_NONE
+             );
+        $wsdlUrl = 'https://avanci.emsecure.net/automation/Individual.asmx?WSDL';
+        $client = new SoapClient($wsdlUrl);
+
+
+       // $client = new soapclient($wsdl,array('cache_wsdl' => WSDL_CACHE_NONE));
         //$client = new soapclient(self::URL_SOAP_INDIVIDUAL);
 		
         $header = new SoapHeader(
@@ -38,8 +51,19 @@ class Millesima_Api_To_Selligente{
     }
 
     public function getClientBroadcast(){
-		$wsdl = "broadcast.xml";
-        $client = new soapclient($wsdl,array('cache_wsdl' => WSDL_CACHE_NONE));
+        $opts = array(
+            'http' => array(
+                'user_agent' => 'PHPSoapClient'
+            )
+        );
+        $context = stream_context_create($opts);
+        $soapClientOptions = array(
+            'stream_context' => $context,
+            'cache_wsdl' => WSDL_CACHE_NONE
+        );
+        $wsdlUrl = 'https://avanci.emsecure.net/automation/Broadcast.asmx?WSDL';
+        $client = new SoapClient($wsdlUrl, $soapClientOptions);
+
         //$client = new soapclient(self::URL_SOAP_BROADCAST);
         $header  =new SoapHeader(
             'http://tempuri.org/',
