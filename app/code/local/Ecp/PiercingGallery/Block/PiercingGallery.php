@@ -18,7 +18,7 @@
  * Do not edit or add to this file if you wish to upgrade to newer
  * versions in the future. If you wish to customize for your
  * needs please refer to Entrepids Event-Observer for more information.
- * 
+ *
  * @category    Ecp
  * @package     Ecp_PiercingGallery
  * @copyright   Copyright (c) 2010 Entrepids Inc. (http://www.entrepids.com)
@@ -37,24 +37,24 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
 
     private $_piercingCategories = array();
     private $_currentLevel = 0;
-    
+
     public function _prepareLayout()
     {
         return parent::_prepareLayout();
     }
-    
-    public function getPiercingGallery()     
-    { 
+
+    public function getPiercingGallery()
+    {
         if (!$this->hasData('piercinggallery')) {
             $this->setData('piercinggallery', Mage::registry('piercinggallery'));
         }
         return $this->getData('piercinggallery');
-        
+
     }
-    
+
     public function _init(){
         $this->_currentLevel = 0;
-        
+
         $piercingCat = Mage::getModel('catalog/category')->getCollection()->addAttributeToFilter('name','PIERCING')->getData();
 
         $piercingSubCat = Mage::getModel('catalog/category')->getCollection()
@@ -72,7 +72,7 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
 
             $locations = Mage::getModel('catalog/category')->getCollection()
                 ->addAttributeToSelect('*')->addFieldToFilter('parent_id',$subcategory['entity_id'])->addAttributeToSort('position', 'ASC');
-            
+
             foreach($locations as $location){
 
                 $current = Mage::registry('current_piercing_location');
@@ -80,23 +80,23 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
                     Mage::register('current_piercing_location',$location->getId());
                     $this->_currentLevel = $contador2;
                 }
-                
+
                 $contador++;
-                
+
                 if(Mage::registry('current_piercing_location')==$location->getId()){
                     $this->_currentLevel = $contador2;
                 }
-                    
+
                 $this->_piercingCategories[$subcategory['name']]['locationtype'][$location->getId()] = array();
                 $this->_piercingCategories[$subcategory['name']]['locationtype'][$location->getId()]['name'] = $location->getName();
                 $this->_piercingCategories[$subcategory['name']]['locationtype'][$location->getId()]['id'] = $location->getEntityId();
-                                                
+
             }
-            
+
             $contador2++;
         }
     }
-    
+
     public function getLooksByLocation($locationId){
 //        $looks = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addFieldToFilter('parent_id',$location->getId());
        $looks = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addFieldToFilter('parent_id',$locationId)
@@ -104,10 +104,10 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
            ->addFieldToFilter('include_in_menu',1)
            ->addAttributeToSort('position','asc');
        $array = array();
-       
+
        foreach($looks as $look){
             $productsLooks = array();
-            
+
             $productsLooks['name'] = $look->getName();
             $productsLooks['img'] = $look->getImageUrl();
             $productsLooks['id'] = $look->getId();
@@ -117,23 +117,23 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
             $products = $look->getProductCollection()
                     ->addAttributeToFilter('visibility' , array('neq'=>Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE));
             $arrayProducts = array();
-            
-            foreach ($products as $product) {                 
+
+            foreach ($products as $product) {
                  $arrayProducts[] = $product;
             }
-            
+
             $productsLooks['products'] = $arrayProducts;
             $array[] = $productsLooks;
 //            $this->_piercingCategories[$subcategory['name']]['locationtype'][$location->getName()]['looks'][$look->getName()]['products'] = $productsLooks;
         }
-        
+
         return $array;
     }
-    
+
     public function getCategoriesArray(){
         if(empty($this->_piercingCategories))
             $this->_init();
-        
+
         return $this->_piercingCategories;
     }
 
@@ -143,55 +143,55 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
         Mage::register('product',$product);
         Mage::register('current_product',$product);
         return $this->getLayout()->createBlock(
-                'Mage_Catalog_Block_Product_Price', 
-                'price', 
+                'Mage_Catalog_Block_Product_Price',
+                'price',
                 array('template' => 'catalog/product/price.phtml')
         );
     }
-    
+
     public function getJsonConfig($product){
         $productView = $this->getLayout()->createBlock(
-                'Mage_Catalog_Block_Product_View', 
-                'product_view', 
+                'Mage_Catalog_Block_Product_View',
+                'product_view',
                 array('template' => '')
         )->setProduct($product);
-        
+
         return $productView->getJsonConfig();
     }
-    
+
     public function getAttributesBlocks($product) {
         $options = $this->getLayout()->createBlock(
-                'Mage_Catalog_Block_Product_View_Type_Configurable', 
-                'options_configurable', 
+                'Mage_Catalog_Block_Product_View_Type_Configurable',
+                'options_configurable',
                 array('template' => 'catalog/product/view/type/options/configurable.phtml')
         );
-        
+
         $options->setProduct($product);
         return $options;
     }
-    
+
     public function getAddToCartBlock($product){
         $addToCart = $this->getLayout()->createBlock(
-                'Mage_Catalog_Block_Product_View', 
-                'options_configurable', 
+                'Mage_Catalog_Block_Product_View',
+                'options_configurable',
                 array('template' => 'catalog/product/view/addtocart.phtml')
         );
         return $addToCart;
     }
-    
+
     public function getAddToBlock($product){
         $addToCart = $this->getLayout()->createBlock(
-                'Mage_Catalog_Block_Product_View', 
-                'options_configurable', 
+                'Mage_Catalog_Block_Product_View',
+                'options_configurable',
                 array('template' => 'catalog/product/view/addto.phtml')
         );
         return $addToCart;
     }
-    
+
     public function getCurrentLevel(){
         return $this->_currentLevel;
     }
-    
+
     public function getBreadcrumbs(){
         $tmp = $this->getLayout()->getBlock('breadcrumbs');
         $piercing = Mage::getModel('catalog/category')->load(Mage::getStoreConfig('ecp_piercinggallery/piercinggallery/piercing_category_id'));
@@ -208,5 +208,5 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
         }
         return $this->getLayout()->getBlock('breadcrumbs')->toHtml();
     }
-    
+
 }
