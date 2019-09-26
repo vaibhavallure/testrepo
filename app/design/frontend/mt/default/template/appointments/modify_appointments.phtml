@@ -9,6 +9,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 	$model = Mage::registry('appointment_modified');
 	$apt_id = $model->getId();
 	$apt_email = $model->getEmail();
+	$store=$model->getStoreId();
 	//$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
 	//$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();	
 
@@ -187,7 +188,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				         <button type="button" class="button" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
 				    </div>
 				    <div class="apt-modify-buttons-set">
-				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*',array('id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*',array('id'=>$apt_id,'email'=>$apt_email,'store'=>$store)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
 				    </div>
 				    
 				   	<div class="apt-buttons-set">
