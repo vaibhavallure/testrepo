@@ -7,7 +7,6 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
     {
         $post_data = $this->getFormattedPostData();
 
-
         /*------------------notification setting start ----------------------*/
         $oldAppointment = null;
         $oldCustomersCollection = null;
@@ -140,9 +139,12 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
         $post_data['appointment_start'] = strtotime($post_data['app_date'] . ' ' . $post_data['appointment_start']);
         $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
 
+        $post_data['appointment_end'] = explode(':',$post_data['appointment_end']);
+        $post_data['appointment_end'][1] -= 1;
+        $post_data['appointment_end'] = implode(':',$post_data['appointment_end']);
         $post_data['appointment_end'] = $post_data['app_date'] . " " . $post_data['appointment_end'];
         $post_data['appointment_end'] = strtotime($post_data['appointment_end']);
-        $post_data['appointment_end'] = date('Y-m-d H:i:s', $post_data['appointment_end']);
+        $post_data['appointment_end'] = date('Y-m-d H:i:59', $post_data['appointment_end']);
 
         $booking_date = Mage::getModel('core/date')->date('Y-m-d H:i:s');
         $post_data['booking_time'] = $booking_date;

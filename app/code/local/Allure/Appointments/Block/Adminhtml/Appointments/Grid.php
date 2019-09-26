@@ -76,11 +76,11 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'index'  => 'piercing_qty'
 		));
 
-        $this->addColumn('no_of_piercing', array(
-            'header' => $helper->__('No of Piercings'),
-            'index'  => 'no_of_piercing',
-            'renderer' => 'appointments/adminhtml_render_piercing'
-        ));
+//        $this->addColumn('no_of_piercing', array(
+//            'header' => $helper->__('No of Piercings'),
+//            'index'  => 'no_of_piercing',
+//            'renderer' => 'appointments/adminhtml_render_piercing'
+//        ));
 
         $this->addColumn('no_of_checkup', array(
             'header' => $helper->__('No of Checkups'),
