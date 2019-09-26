@@ -80,8 +80,9 @@ foreach ($customers as $customer):
 <input  type="hidden" name="customer[<?= $count ?>][id]"   value="<?= $customer->getId() ?>">
 
 <div class="field" id="reg_form">
-    <div class="regDiv" id="customer_info_div" >
-        <div id="customer_info_1">
+    <div class="regDiv">
+        <div id="customer_info_div" >
+        <div id="customer_info_<?= $count ?>">
             <h6>Customer: <?= $count ?></h6>
             <div class="fieldDiv">
                 <label><?= $this->__('First Name')?>*:</label><br/>
@@ -106,6 +107,10 @@ foreach ($customers as $customer):
                 <div><input type="checkbox" name="customer[<?= $count ?>][noti_sms]" title="" value="2" class="notifyRadio" <?php if($customer->getSmsNotification()=='1'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
             </div>
         </div>
+    </div>
+    <div class="">
+        <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
+    </div>
 
     </div>
     <?php
@@ -114,7 +119,8 @@ foreach ($customers as $customer):
     else: ?>
 
     <div class="field" id="reg_form">
-        <div class="regDiv" id="customer_info_div" >
+        <div class="regDiv"  >
+            <div id="customer_info_div">
             <div id="customer_info_1">
                 <h6>Customer: 1</h6>
                 <div class="fieldDiv">
@@ -140,13 +146,13 @@ foreach ($customers as $customer):
                     <div><input type="checkbox" name="customer[1][noti_sms]" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
                 </div>
             </div>
-
+            </div>
+            <div class="">
+                <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
+            </div>
         </div>
         <?php endif; ?>
 
-        <div class="">
-            <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
-        </div>
         <div class="createaccDiv" >
             <div id="appointment-pricing">
                 <?php echo $this->getChildHtml('appointments_piercing_pricing')?>
@@ -154,7 +160,13 @@ foreach ($customers as $customer):
 
         </div>
     </div>
+    <script>country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";</script>
     <script src="<?php echo $this->getSkinUrl('js/allure/appointments/popupCustomerInfo.js');?>"></script>
+    <style>
+        input.apt_phone {
+            width: 70%;
+        }
+    </style>
 <?php else:?>
 
     <style>

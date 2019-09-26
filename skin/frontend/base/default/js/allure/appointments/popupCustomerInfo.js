@@ -1,8 +1,9 @@
-;
+var country_code;
+
 jQuery(document).ready(function () {
 
     jQuery('.minusBtn').on('click',function(){
-        if(jQuery('#customers_info_yes').length !== 0 && jQuery('#customers_info_yes').length !== null) {
+        if(jQuery('#customer_info_div').length !== 0 && jQuery('#customer_info_div').length !== null) {
             var cnt = jQuery('#count').val();
             cnt++;
             if(cnt > 1) {
@@ -14,16 +15,57 @@ jQuery(document).ready(function () {
     });
 
     jQuery('.plusBtn').on('click',function(){
-        if(jQuery('#customers_info_yes').length !== 0 && jQuery('#customers_info_yes').length !== null) {
+        if(jQuery('#customer_info_div').length !== 0 && jQuery('#customer_info_div').length !== null) {
             var cnt = jQuery('#count').val();
             if(cnt > 1) {
                 addCustomer(cnt);
             }
         }
     })
+
+    telephoneAdd('#phone_1');
+
+
+
 });
 
+var telephoneAdd = function (id) {
 
+
+    Allure.UtilPath = "js/phone_validation/utils.js";
+
+    //initialize itel tel input
+    var input = document.querySelector(id)
+    var iti = window.intlTelInput(input, {
+        autoFormat: false,
+        autoHideDialCode: false,
+        autoPlaceholder: false,
+        nationalMode: false,
+        utilsScript: Allure.UtilPath
+    });
+
+    // take phone number and check if it exist
+    // if it does not exist then
+    // first check if we can get Geo Location based Country Code if its there then set it
+    // otherwise set default as country as 'us'
+    // Magento module - Allure/GeoLocation
+    var phone = jQuery(id).val();
+    //console.log('[signing_register.phtml] length',phone.length)
+    if(phone.length <= 0){
+
+        if (country_code == undefined || country_code == null || country_code == "") {
+            country_code = "us"
+        }
+
+        iti.setCountry(country_code.toLowerCase());
+    } else if (phone.charAt(0) != '+') {
+        iti.setCountry(country_code.toLowerCase());
+    }
+
+    //custom validator for itel tel input
+    //FileName - intel-tel-validation.js
+    allureIntlTelValidate(jQuery(id),iti);
+}
 var removeCustomer = function (id) {
     jQuery('#customer_info_'+id).remove();
 }
@@ -54,6 +96,10 @@ var addCustomer = function (id) {
 <div><input type="checkbox" name="customer[${id}][noti_sms]" title="" value="2" class="notifyRadio" ><p>By Text Message - Message and Data Rates May Apply</p></div>
 </div>
 </div>`;
-    console.log(id);
-    jQuery('#customer_info_div').append(customerDiv);
+
+
+    if(jQuery('#customer_info_'+id).length === 0 ) {
+        jQuery('#customer_info_div').append(customerDiv);
+        telephoneAdd('#phone_'+id);
+    }
 }
