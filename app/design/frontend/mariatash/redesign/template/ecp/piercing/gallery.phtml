@@ -1,419 +1,134 @@
 <?php
-$categories = $this->getCategoriesArray();
-$current_location = Mage::registry('current_piercing_location');
-$looks = $this->getLooksByLocation($current_location);
-$baseUrl = preg_replace('|https?\:\/\/|', '//', Mage::getBaseUrl());
-
-$currentUrl = Mage::getSingleton('core/url')->parseUrl(Mage::helper('core/url')->getCurrentUrl());
-$path = $currentUrl->getPath();
-if(substr($path, 0, 1) == '/') {
-    $path = substr($path, 1);
-}
-
-//if ($current_location) {
-//    $url = Mage::getBaseUrl() . 'ecppiercinggallery/index/index/locationtype/' . $current_location .'/';
-//} else {
-    $url = $this->helper('core/url')->getCurrentUrl();
-//}
-
-$url = explode('?', trim($url));
-
-$slide = 0;
-if (isset($url[1])) {
-	$slide = preg_replace('/\D/', '', $url[1]);
-}
-$currentSildeId=$slide;
-$slidePos = -1;
-
-if(!empty($slide) && !empty($looks)):
-    foreach($looks AS $key=>$look):
-        if($look['id'] == $slide) $slidePos = $key;
-    endforeach;
-endif;
-if($slidePos < 0) $slide = $slidePos = 0;
-$url = $url[0];
-$currentLook = $looks[$slidePos];
+ $current_location ="497"; Mage::registry('current_piercing_location');
+ $looks = $this->getLooksByLocation($current_location);
 
 ?>
-<script type="text/javascript">// <![CDATA[
-    /*(function (w, d, load) {
-        var script,
-        first = d.getElementsByTagName('SCRIPT')[0],
-        n = load.length,
-        i = 0,
-        go = function () {
-            for (i = 0; i < n; i = i + 1) {
-                script = d.createElement('SCRIPT');
-                script.type = 'text/javascript';
-                script.async = true;
-                script.src = load[i];
-                first.parentNode.insertBefore(script, first);
-            }
-        }
-        if (w.attachEvent) {
-            w.attachEvent('onload', go);
-        } else {
-            w.addEventListener('load', go, false);
-        }
-    }(window, document,
-    ['//assets.pinterest.com/js/pinit.js']
-));*/
-    // ]]></script>
-
-<script>
-    jQuery(document).ready(function(){
-        //jQuery('select').not('select+span').customStyle();
-        jQuery('p.note-msg').remove();
-
-        jQuery('div#carousel').click(function(){
-            jQuery('a#play').trigger('click');
-        }); 
-
-        jQuery('#prev, #next').click(function(){
-            jQuery('#prev, #next').removeClass('currentAction');
-            jQuery(this).addClass('currentAction');
-        });
-
-        jQuery("#accordion").accordion({
-            collapsible: true,
-            active: <?php echo $this->getCurrentLevel() ?>
-        });
-
-        <?php if(count($looks)>0): ?>
-        jQuery('#carousel').carouFredSel({
-            prev: '#prev',
-            next: '#next',
-            circular: true,
-            infinite: true,
-            auto: {
-                button: '#play',
-                timeoutDuration: <?= Mage::getStoreConfig('ecp_piercinggallery/piercinggallery/timing')*1000 ?>,
-                pauseOnEvent: 'resume',
-                progress: {
-                    updater: function(){
-                        console.log('Progress');
-                    }
-                }
-            },
-            items: {
-                start : <?=$slidePos;?>
-            },
-            onCreate: function (data) {
-                // var newImageUrl = jQuery('#carousel img:first-child').attr('src');
-                // jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
-//                jQuery('#inner #prev').css({ opacity: 0.5 });
-//                   
-                    try {
-                        FB.XFBML.parse();
-                    }
-                    catch(ex){}
-            },
-            scroll: {
-                fx: 'fade',
-                onBefore: function () {
-                    var currentAction = jQuery('a.currentAction');
-                    jQuery('#prev, #next').removeClass('currentAction');
-                    
-                    var lookId = jQuery('div#carousel img.carrousel-images').first().next().attr('data-item-id');
-                    var url=jQuery(location).attr('href');
-                 
-                    var sURLVariables = url.split('?');
-                    if(sURLVariables.size()>=2){
-                        sURLVariables=sURLVariables[1].split('-');
-                        lookId=sURLVariables[1];
-                    }
-                    if(currentAction.attr('id') == 'prev') {
-                      
-                        lookId = jQuery('div#carousel img.carrousel-images').first().attr('data-item-id');
-                    }
-                    if(currentAction.attr('id') == 'next') {
-                        
-                        lookId = jQuery('div#carousel img.carrousel-images').first().next().attr('data-item-id');
-                    }
-                    
-                  jQuery('div.gallery-looks div.products-look').each(function () {
-                        jQuery(this).addClass('inactive');
-                        jQuery(this).removeClass('active');
-                    });
-                    setTimeout(function() {
-                        jQuery("div#look-products-" + lookId).addClass('active');
-                        jQuery("div#look-products-" + lookId).removeClass('inactive');
-                    }, 300); 
-                },
-                onAfter: function (data) {
-                    var itemID = jQuery(data.items.visible[0]).attr('data-item-id');
-                    var itemIdx = jQuery(data.items.visible[0]).attr('index');
-                    var imgTitle = jQuery(data.items.visible[0]).attr('data-item-name');
-                    var imgSrc = data.items.visible[0].src;
-                    var slidePath = '<?=$url;?>?look-' + itemID;
-
-                    jQuery('#slide-count').html(itemIdx + ' of <?=count($looks);?>');
-                    history.pushState(null, null, slidePath);
-
-                    var fbIframePath = jQuery('#fb-share_pierce iframe').attr('src');
-                    if(!!fbIframePath){
-                        fbIframePath = fbIframePath.replace(/href=.*?\&/i, 'href=' + encodeURIComponent(slidePath) + '&');
-                        jQuery('#fb-share_pierce iframe').attr('src', fbIframePath);
-                    }
-
-                    var twIframePath = jQuery('#tw-share').attr('src');
-                    twIframePath = twIframePath.replace(/url=.*?\&/i, 'url=' + encodeURIComponent(slidePath) + '&');
-                    twIframePath = twIframePath.replace(/text=.*?\&/i, 'text=' + imgTitle + '&');
-                    jQuery('#tw-share').attr('src', twIframePath);
-
-                    var mailLinkUrl = slidePath.replace('<?= $baseUrl ?>', '');
-                        mailLinkUrl = mailLinkUrl.replace('http:', '');
-                        mailLinkUrl = mailLinkUrl.replace('https:', '');
-
-                    jQuery('.pinterest-share-btn').attr('href', '//pinterest.com/pin/create/button/?url=' + slidePath + '&description=' + encodeURIComponent(imgTitle) + '&media=' + encodeURIComponent(imgSrc));
-                    jQuery('#mail>.mail>a').attr('href', '<?= $baseUrl ?>celebrities/index/send/?type=piercing&page=' + mailLinkUrl + '&img=' + encodeURIComponent(imgSrc));
-                }
-            }
-
-        });
-        <?php endif; ?>
-        jQuery('.caroufredsel_wrapper').addClass('caroufredsel_wrapper2').removeClass('caroufredsel_wrapper');
-        jQuery('a.iframemail').fancybox({
-            'transitionIn': 'elastic',
-            'transitionOut': 'elastic',
-            'type': 'iframe',
-            'scrolling': 'no',
-            'speedIn': 600,
-            'speedOut': 200,
-            'minHeight': 510,
-            'maxHeight': 510,
-            'height': 510,
-            'width': 450,
-            'overlayShow': false,
-            'wrapCSS': 'send-email-popup',
-            'overflow': 'hidden'
-        });
-    });
-    var productAddToCartForm = new Array();
-
-    function send(){
-    <?php $url2send = str_replace(Mage::getBaseUrl(),'',Mage::helper('core/url')->getCurrentUrl()); ?>
-    emailWindow = window.open("<?php echo Mage::getUrl('ecpcelebrities/index/send'); ?>?page=<?php echo $url2send; ?>", "mywindow", "location=1,status=1,scrollbars=1,width=700,height=600");
-        //emailWindow = window.open("<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($this) ?>", "mywindow", "location=1,status=1,scrollbars=1,width=700,height=600");
-        //emailWindow.moveTo(0, 0);
-    }
-
-</script>
-
-<?php if (!Mage::registry('current_category')): ?>
-    <div class="top-bar"><?php echo $this->getBreadcrumbs(); ?></div>
-    <script>
-        jQuery.noConflict();
-        jQuery('div.header-container').append(jQuery('div.top-bar'));               
-    </script>
-<?php endif; ?>
-<div class="piercing-gallery-mt1">
-    <?php if (!Mage::registry('current_category')): ?>
-        <h3><?php echo Mage::getModel('catalog/category')->load(Mage::getStoreConfig('ecp_piercinggallery/piercinggallery/piercing_gallery_category_id'))->getName(); ?></h3>
-    <?php endif; ?>
-
-    <div id="messages_product_view"></div>
-
-    <div class="navigation-menu">
-        <div id="accordion">
-            <?php foreach ($categories as $cat): ?>
-                <H3><?php echo $cat['name']; ?></H3>
-                <div>
-                    <?php if (!empty($cat['locationtype'])):
-                        foreach ($cat['locationtype'] as $location):
-                            ?>
-                            <div id="<?php echo $location['id'];?>" <?php if ($current_location == $location['id']) echo "class='current_location'" ?> >
-                                <a onclick="setLocation('<?php echo $this->getUrl('ecppiercinggallery/index/', array('locationtype' => $location['id'])) ?>')" >
-                                    <?php echo $location['name']; ?>
-                                </a>
-                            </div>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="banner-c-code"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_message_block')->toHtml(); ?></div>
-    </div>
-
-    <?php if(count($looks)>0): ?>
-    <div class="content" >
-        <div id="wrapper">
-            <div class="carousel-content">
-                <div id="inner">
-                    <a id="prev" href="#">PREV</a>
-                    <div id="carousel" >
-                        <?php $x = 1; ?>
-                        <?php foreach ($looks as $look): ?>
-                            <img src="<?=$look['img'];?>" class="carrousel-images" index="<?=$x;?>" data-item-id="<?=$look['id'];?>" data-item-name="<?=$look['name'];?>" alt="" title="" width="600" height="400" border="0" />
-                            <?php $x++; ?>
-                        <?php endforeach; ?>
-                    </div>
-                    <input type="hidden" id="carouselcount" name="carouselcount" value="<?=count($looks);?>" />
-                    <a id="play" href="#">PLAY</a>
-                    <a id="next" href="#">NEXT</a>
-                    <span id="slide-count"><?=($slidePos>0)?$slidePos:1;?> of <?=count($looks);?></span>
-                </div>
-
-                <div class="social-media-try-on">
-                    <div id="shareme-look-products-<?php //echo $look['id'] ?>" class="social-media-divs" data-url="" data-id="" data-title="" data-descr="" data-url-tmp="" data-text="">
-
-                        <div data-width="450" data-href="<?=$url;?><?=(!empty($slide))?'?look-'.$slide:'';?>" class="fb-share-button" id="fb-share_pierce" data-width="450"></div>
-
-                        <iframe
-                            id="tw-share"
-                            src="https://platform.twitter.com/widgets/tweet_button.html?url=<?=$url;?><?=(!empty($slide))?'?look-'.$slide:'';?>&text=<?=$currentLook['name']?>&hashtags=mariatash&via=venus_mariatash&count=none"
-                            width="55"
-                            height="20"
-                            title="Twitter Tweet Button"
-                            style="border: 0; overflow: hidden;">
-                        </iframe>
-
-                        <a href="//pinterest.com/pin/create/button/?url=<?=$url;?><?=(!empty($slide))?'?look-'.$slide:'';?>&description=<?=urlencode($currentLook['name']);?>&media=<?=$currentLook['img'];?>" target="_blank" data-pin-do="buttonPin" data-pin-config="above" class="pinterest-share-btn">
-                            <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
-                        </a>
-
-                        <div id="mail">
-                            <div class="button mail">
-                                <a href="<?=$baseUrl;?>celebrities/index/send/?type=piercing&page=<?=$path;?>&img=<?=$currentLook['img'];?>" class="iframemail">
-                                    <div class="emailBtn">
-                                        <img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png');?>" />
-                                        <span class="share">Email</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="print">
-                            <div class="button print">
-                                <a href="#" onclick="javascript:print();">
-                                    <div class="printBtn">
-                                        <img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg');?>" />
-                                        <span class="share">Print</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-looks">
-                <div class="title-products-looks"><h3><?php echo $this->__('PURCHASE THIS LOOK') ?></h3></div>
-                    <?php 
-                    $first = true;
-                    if($currentSildeId){
-                        $first = FALSE;
-                    }
-                    foreach ($looks as $look): ?>
- 					<?php 
-                    if($currentSildeId==$look['id']){
-                        $first = true;
-                    }?>
-                    <div class="products-look <?php echo $first ? 'active' : 'inactive' ?>" id="look-products-<?php echo $look['id'] ?>">
-                        <?php if (empty($look['products'])): ?>
-                        <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>--><?php echo $this->__('There are no products matching the selection') ?></p>
-                        <?php endif; ?>
-                        <?php foreach ($look['products'] as $product): ?>
-                            <?php
-                            $showSampleForm = false;
-                            if ($product->getSizeSample() == 1) {
-                                $showSampleForm = true;
-                                $sampleProduct = Mage::getModel('catalog/product')->getCollection()
-                                        ->addAttributeToFilter('type_id', 'customproduct')
-                                        ->getFirstItem();
-                                $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
-                            }
-                            ?>
-        <?php if ($showSampleForm): ?>
-                                <div style="display: none;">
-                                    <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($sampleProduct) ?>" method="post" id="product_addtocart_form_sample_<?php echo $sampleProduct->getId() . '_' . $look['id']; ?>" <?php if ($sampleProduct->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-                                        <input type="hidden" name="product_sample" value="<?php echo $sampleProduct->getId() ?>" />
-                                        <input type="hidden" name="related_product" id="related-products-field" value="" />
-                                        <input type="hidden" value="1" />
-                                        <input type="hidden" name="qty_sample" id="qty_sample" maxlength="12" value="1" />
-                                        <button type="button" title="SIZE SAMPLE" class="button" id="sample-button" onclick="addToShoppingCart(this,this.form)"><span><span>SIZE SAMPLE</span></span></button>
-                                    </form>
-                                </div>
-        <?php endif; ?>
-                            <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($product); ?>" method="post" id="product_addtocart_form_<?php echo $product->getId() . '_' . $look['id']; ?>" class="product_addtocart_celebrities_form" <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> >
-        <?php $product = Mage::getModel('catalog/product')->load($product->getId()) ?>
-                                <div class="image_thumb_celeb">
-                                    <a href="<?php echo $product->getProductUrl() ?>">
-                                        <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(74, 96) ?>"/>
-                                    </a>
-                                </div>
-                                <div class="product-shop">
-                                    <div class="product-name">
-                                        <a href="<?php echo $product->getProductUrl() ?>">
-                                            <h1><?php echo $product->getName() ?></h1>
-                                        </a>
-                                    </div>
-                                    <?php echo $this->getProductPriceBlock($product)->toHtml() ?>
-                                    <?php if ($product->getTypeId() == 'configurable' && 1==2): ?>
-                                        <script type="text/javascript">
-                                            var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig($product) ?>);
-                                        </script>
-                                        <div class="product-collateral">
-                                            <div id="product-options-wrapper" class="product-options">
-                                            <?php echo $this->getAttributesBlocks($product)->toHtml() ?>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="product-options-bottom">
-                                        <?php // echo $this->getAddToCartBlock($product)->toHtml()  ?>
-                                        <?php $quickviewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId())); ?>
-                                        <?php $quickviewUrl = preg_replace('|http(s)?\:|', '', $quickviewUrl); ?>
-                                        <button class="fancybox fancybox.iframe button piercing-gallery-btn-quickview" id='product-quickview-<?php echo $product->getId() . '_' . $look['id']; ?>' href="<?= $quickviewUrl ?>"><span><span>BUY</span></span></button>
-                                    </div>
-                                </div>
-                            </form>
-                            <script type="text/javascript">
-                                jQuery.noConflict();
-                                jQuery('#product-quickview-<?php echo $product->getId() . '_' . $look['id']; ?>').attr('rel', 'gallery').fancybox({
-                                    openEffect  : 'none',
-                                    closeEffect : 'none',
-                                    nextEffect  : 'none',
-                                    prevEffect  : 'none',
-                                    padding     : 0,
-                                    mouseWheel  : false,
-                                    loop        : false,
-                                    helpers     : {
-                                        title   : null
-                                    },
-                                    margin      : [20, 60, 20, 60], // Increase left/right margin
-                                    width       : 785,
-                                    height      : 515
-                                });
-
-                                jQuery("#product_addtocart_form_<?php echo $product->getId() . '_' . $look['id']; ?> .add-to-cart .button").attr('onclick',"productAddToCartForm[<?php echo $product->getId() ?>].submit(this,this.form)");
-                                jQuery("#product_addtocart_form_<?php echo $product->getId() . '_' . $look['id']; ?> .add-to-cart #button-sample").attr('onclick',"doClick()");
-                                //<![CDATA[
-                                productAddToCartForm[<?php echo $product->getId() ?>] = new VarienForm('product_addtocart_form_<?php echo $product->getId() . '_' . $look['id']; ?>');
-                                productAddToCartForm[<?php echo $product->getId() ?>].submit = function(button, form) {
-                                    if (this.validator.validate()) {
-                                        addToShoppingCart(button,form);
-                                    }
-                                }.bind(productAddToCartForm[<?php echo $product->getId() ?>]);
-                                //]]
-                            </script>
-
-                            <script type="text/javascript">
-                                jQuery(document).ready(function(){
-                                    jQuery('.price-box').css('display','block');
-                                });
-                            </script>
-    <?php endforeach; ?>
-                    </div>
-                    <?php $first = false;
-endforeach; ?>
-            </div>
-        </div>
-    </div>
-    <?php else: ?>
-    <div class="content" >
-        <div id="wrapper">
-         <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>--><?php echo $this->__('There are no products matching the selection') ?></p>
-            
-        </div>
-    </div>
-    <?php endif ?>
+<div class="shop_by_look">
+<div id="shop_by_look-title" class="page-title category-title simple-page-title">
+    <h1>Shop by Look</h1>
 </div>
+<div class="container celebrities press-custom-container">
+    <div class="row">
+        <div class="col-12 ">
+            <div class="row">
+                <?php $counter=1; foreach($looks as $look):
+                    ?><div class="col-12 col-md-6 col-lg-4 celeb-img-block" id="<?php echo $counter; $counter++ ?>"  >
+                            <div  class="shop_by_look-img" style="background: url(<?=$look['img'];?>);" data-img="<?=$look['img'];?>" data-product_count="<?= count($look['products'])?>">
+                                <div class="products d-none">
+                                    <?php
+                                     $i=1;
+                                    foreach ($look['products'] as $product): ?>
+                                        <?php $product = Mage::getModel('catalog/product')->load($product->getId());
+                                        $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId()));
+                                        ?>
+                                        <li class="row">
+                                        <div class="product_img col-3">
+                                            <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(74, 96) ?>"/>
+                                        </div>
+                                        <div class="product_details col-9">
+                                        <div class="product-name info-text-two"><?= $product->getName()?></div>
+                                        <div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="<?= $quickViewUrl ?>sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
+                                            <div class="quick_link link-button d-block d-xs-block d-md-block d-lg-none d-xl-none"><a href="<?= $product->getProductUrl() ?>" >Buy</a></div>
+                                        </div>
+                                    </li>
+                                    <?php
+                                    $i++;
+                                    endforeach; ?>
+                                </div>
+                            </div>
+                    </div>
+                    <?php  endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="openModal" class="celebPopup"> <!--do not remove celebPopup class-->
+    <div class="pop-up-cover big-popup-cover col-12">
+        <div class="row">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body big-popup-body col-12">
+                <div class="row">
+                    <div class="col-lg-6 popup-left-section">
+                        <div class="celeb-img big-popup-image row"></div>
+                    </div>
+                    <div class="col-lg-6 popup-right-section">
+                        <div class="row">
+                            <div class=" big-popup-title d-lg-block d-none">
+                                <h1 class="celeb-title text-uppercase"></h1><!--do not remove celeb-title class-->
+                            </div>
+                            <div class="para-normal celeb-info"> <!--do not remove celeb-info class-->
+                            </div>
+                            <div class="product-info"><!--do not remove product-info class-->
+                                <ul class="p-0 col-12">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="celeb-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".shop_by_look-img").on('click', function () {
+            jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto","z-index":"9999"});
+            jQuery(".celeb-loader").show();
+            setImg(jQuery(this).attr("data-img"));
+            if(parseInt(jQuery(this).attr('data-product_count'))>4)
+                jQuery(".shop_by_look .product-info").addClass("scroll");
+            else
+                jQuery(".shop_by_look .product-info").removeClass("scroll");
+
+            jQuery(".shop_by_look .product-info ul").html(jQuery(this).find(".products").html());
+            jQuery(".celeb-loader").hide();
+
+        });
+
+        function setImg(img) {
+            jQuery(".celeb-img").css({"background-image": "url(" + img + ")", "background-size": "cover"});
+        }
+
+        jQuery(".celebPopup .close").on('click', function () {
+            jQuery(".celeb-loader").hide();
+            jQuery(".celebPopup").css({"opacity": "0", "pointer-events": "none"});
+        });
+        jQuery("#category-title").html("");
+    });
+
+    jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'yes',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
+
+        afterLoad: function(current, previous) {
+
+        }
+    });
+</script>

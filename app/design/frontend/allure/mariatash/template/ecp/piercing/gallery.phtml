@@ -234,7 +234,7 @@ $currentLook = $looks[$slidePos];
                                 </div>
         <?php endif; ?>
                             <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($product); ?>" method="post" id="product_addtocart_form_<?php echo $product->getId() . '_' . $look['id']; ?>" class="product_addtocart_celebrities_form" <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> >
-        <?php $product = Mage::getModel('catalog/product')->load($product->getId()) ?>
+                            <?php $product = Mage::getModel('catalog/product')->load($product->getId()) ?>
                                 <div class="image_thumb_celeb">
                                     <a href="<?php echo $product->getProductUrl() ?>">
                                         <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(74, 96) ?>"/>

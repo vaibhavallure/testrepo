@@ -2839,4 +2839,33 @@ ul.tabs li:nth-child(3){
 	height: 26px;
 	background-size: 100%;
 }
+/*-----------------shop by look------------*/
+.shop_by_look-img,.shop_by_look .big-popup-image {
+	width: 322px;
+	height: 433px;
+	background-size: cover !important;
+	cursor: pointer;
+	margin: 0 auto;
+}
+.shop_by_look .big-popup-cover{
+	width: 750px!important;
+	height: 530px;
+}
+.shop_by_look .big-popup-body{
+	padding: 48px 46px 48px 49px!important;
+}
 
+.shop_by_look .product_img img{
+	border: 1px solid #D0D0D0;
+}
+.shop_by_look .product-info.scroll
+{
+	height: 433px;
+	overflow: auto;
+}
+.shop_by_look .product-info ul li{
+	margin-bottom: 5px;
+}
+.shop_by_look .product-info .product_details{
+	padding: 10px;
+}
