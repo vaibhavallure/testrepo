@@ -37,7 +37,7 @@
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
 <div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc p-0">
+<ol id="checkoutSteps" class="opc col-lg-8 col-12">
 <?php foreach ($steps as $stepKey => $_step): ?>
 	<?php if($stepKey == "multishipping_addresses"):?>
 	<li id="opc-<?= $stepKey?>" class="section allow active">
@@ -57,7 +57,7 @@
                            	</p>
                        	</div>
                     </div>
-                    <button data-action="add-new-customer-address" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Enter a New Address')) ?>" class="button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Enter a New Address') ?></span></span></button>
+                    <button data-action="add-new-customer-address" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
                 </div>
                 <input type="hidden" name="continue" value="0" id="can_continue_flag" />
                 <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
@@ -154,7 +154,7 @@
     <h1>Secure Checkout - ship to multiple addresses</h1>
 </div>
 <div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc p-0">
+<ol id="checkoutSteps" class="opc col-lg-8 col-12">
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();
     $cont = 1;
     foreach ($steps as $_step): ?>

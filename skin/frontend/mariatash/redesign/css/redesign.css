@@ -329,6 +329,9 @@ hr{
 .checkout-multishipping-addresses .control input:checked+label{
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
+.gift-messages label:before {
+  content: none !important;
+}
 /*Checkout Right Section (Sidebar)*/
 .side-box{
 	background-color: #f3f3f3;
