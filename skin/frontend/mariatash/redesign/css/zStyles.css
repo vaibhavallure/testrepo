@@ -810,9 +810,13 @@ th,td{
     font-family: urw-din-xlight;
     color: rgba(41,41,41,0.90);
 }
+
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
+@media(min-width: 481px){
+	.list-form .field{float: right;}
+}
 @media(min-width: 1200px){
 	.acc-products-wrapper .container{
 		padding: 0 150px;
