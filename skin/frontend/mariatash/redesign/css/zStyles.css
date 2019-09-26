@@ -666,8 +666,88 @@
 .receipts h1{
 	font-size: 30px;
 }
+.receipts .page-title{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.receipts .order-date{
+	padding-left: 0;
+}
 th,td{
 	font-family: urw-din-regular!important;
+}
+.receipts .order-info-box{
+	display: flex;
+}
+.receipts .col-wrap{
+	width: 32%;
+}
+.receipts .order-date{
+	margin-top: 0px;
+	margin-bottom: 32px;
+}
+.receipts address{
+	text-transform: capitalize;
+	line-height: 20px!important
+}
+.receipts .box-payment th,td{
+	font-family: urw-din-light!important;
+}
+.mt-myaccount-new .order-items table th,
+.mt-myaccount-new .order-items table td{
+	background: white;
+	border:none;
+	text-align: right;
+	padding-right: 20px;
+}
+.mt-myaccount-new .order-items table tr{
+	border:none!important;
+}
+.mt-myaccount-new .order-details table tbody{
+	border-top:1px solid #d1d1d1;
+	border-bottom:1px solid #d1d1d1;
+}
+.mt-myaccount-new .order-details .odd{
+	border:none!important;
+
+}
+.mt-myaccount-new .order-details .odd td{
+	font-family: urw-din-bold!important;
+	font-size: 13px;
+	line-height: 1.54;
+	letter-spacing: 0.5px;
+	padding-bottom: 0;
+}
+.mt-myaccount-new .order-details .odd .last{
+	font-family: urw-din-light!important;
+	font-size: 13px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 0.5px;
+	line-height: 20px;
+}
+.mt-myaccount-new .order-details .odd .total-subtotal td{
+	padding-top: 14px;
+}
+.mt-myaccount-new .order-details .odd .total-grand_total .last .price{
+	font-family: urw-din-bold!important;
+}
+.mt-myaccount-new .order-items table th{
+	text-transform: uppercase;
+	padding-bottom: 14px;
+	font-size: 13px;
+	color: rgba(41, 41, 41, 0.6);
+}
+.mt-myaccount-new .order-items table td h4{
+	margin: 0;
+	font-size: 13px;
+}
+.print-price br{display: none;}
+#back-to-url{
+	text-decoration: underline;
+}
+.table{
+	max-width: 792px;
 }
 /*=====================*/
 /*MEDIA QUERIES*/
@@ -731,6 +811,16 @@ th,td{
 	}
 }
 @media(max-width: 767px){
+	.receipts .col-wrap{
+		width: 100%;
+	}
+	.receipts .page-title{
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.receipts .page-title a{
+		margin-left: 0
+	}
 	.acc-products-wrapper #purchase-history,
 	.acc-products-wrapper .mt-wishlist-table{
 		overflow-x: auto;
@@ -779,6 +869,16 @@ th,td{
 	}
 }
 @media(max-width: 576px){
+	.receipts .col-wrap{
+		width: 100%;
+	}
+	.mt-myaccount-new  .order-details .container{
+		overflow-x: auto;
+	}
+	.table{
+		width: 130%;
+		overflow-x: auto;
+	}
 	.dashboard .flex-row .flex-item{
 		width: 100%;
 		margin-top: 20px;
@@ -786,6 +886,10 @@ th,td{
 	}
 }
 @media(max-width: 480px){
+	.receipts .order-info-box{
+		flex-direction: column;
+		margin-bottom: 20px!important;
+	}
 	.acc-products-wrapper #myaccount-shopping-cart-table,
 	.acc-products-wrapper #wishlist-table{
 		display: block;
