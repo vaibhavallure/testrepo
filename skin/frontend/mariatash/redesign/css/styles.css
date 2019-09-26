@@ -2396,14 +2396,14 @@ p.required {
 	float: left;
 }
 
-.checkout-multishipping-address-editaddress .page-title,
+/* .checkout-multishipping-address-editaddress .page-title,
 .checkout-multishipping-address-editshipping .page-title,
 .checkout-multishipping-addresses .page-title,
 .checkout-multishipping-shipping .page-title,
 .checkout-multishipping-billing  .page-title,
 .checkout-multishipping-overview .page-title {
 	margin-top: 14px;
-}
+} */
 
 .checkout-onepage-success .page-title h1 {
 	font: 32px/32px dinmittelschriftregular;
