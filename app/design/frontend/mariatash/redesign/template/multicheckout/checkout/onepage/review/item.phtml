@@ -36,27 +36,27 @@ $typeId = $_item->getProduct()->getTypeId();
 
     <td class="cart_col1">
 
-        <div class="productname"><h2 class="product-name">
+        <div class="productname"><h1 class="product-name">
             <?php if ($this->hasProductUrl()):?>
                 <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
             <?php else: ?>
                 <?php echo $this->escapeHtml($this->getProductName()) ?>
             <?php endif; ?>
-        </h2>
+        </h1>
         <?php if ($_options = $this->getOptionList()):?>
             <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
             <div class="product-options" style="display:none;">-->
             <div class="item-options">
                 <?php foreach ($_options as $_option) : ?>
                     <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                    <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                    <div><span class="para-three"><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
                         <?php if (isset($_formatedOptionValue['full_view'])): ?>
                             <?php echo $_formatedOptionValue['full_view'] ?>
                         <?php else: ?>
                             <?php echo $_formatedOptionValue['value'] ?>
                         <?php endif; ?>
                     </div>
-                <?php endforeach; ?>
+                <?php endforeach; ?></span>
             </div>
             <!--</div>-->
         <?php endif;?>
@@ -184,7 +184,7 @@ $typeId = $_item->getProduct()->getTypeId();
 </tr>
 
 <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-<?php if(!empty($message)): ?>  
+<?php if(!empty($message)): ?>
 <tr class="messages">
         <td colspan="6">
             <div class="item-msg">
@@ -201,4 +201,3 @@ $typeId = $_item->getProduct()->getTypeId();
         }
     });
 </script>
-

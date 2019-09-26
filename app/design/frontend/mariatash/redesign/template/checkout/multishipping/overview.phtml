@@ -28,21 +28,22 @@
 ?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
+<div class="container row mx-auto p-0">
 <ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_overview'): ?>
             <li id="opc-<?= $stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
-                <div class="step-title">
+                <div class="step-title checkout-step-name col-12">
                     <span class="number"><?= $cnt ?></span>
-                    <h2><?= $_step->getLabel() ?></h2>
+                    <h3><?= $_step->getLabel() ?></h3>
                 </div>
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?= $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
 						<?= $this->getBlockHtml("formkey") ?>
-                        
+
                         <?php foreach ($this->getShippingAddresses() as $_index => $_address): ?>
-                        	
+
                         	<table class="data-table overview-address-item" id="overview-address-item-<?= $_address->getId()?>">
                         		<tbody>
                         	<?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
@@ -50,7 +51,7 @@
                             	<tr>
                             		<td>
                                 		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
-                                		<?php 
+                                		<?php
                                 		if ($option = $_item->getOptionByCode('simple_product')) {
                                 		    $_product = $option->getProduct();
                                 		}
@@ -61,9 +62,9 @@
                                 	</td>
                                 	<td>
                                 		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
-                                		
+
                                 		<div class="box"></div>
-                                		
+
                                 		<div class="box">
                                             <div class="box-title">
                                                 <h4><?= $this->__('Shipping To') ?></h4>
@@ -74,7 +75,7 @@
                                                 </address>
                                             </div>
                                     	</div>
-                                    	
+
                                     	<div class="box">
                                             <div class="box-title">
                                                 <h4><?= $this->__('Shipping Method') ?></h4>
@@ -93,7 +94,7 @@
                                                 <?php endif; ?>
                                             </div>
                                         </div>
-                                        
+
                                         <?php if($_address->getNoSignatureDelivery()):?>
                                         <div class="box">
                                         	<div class="box-content">
@@ -101,19 +102,19 @@
                                         	</div>
                                         </div>
                                         <?php endif;?>
-                                        
+
                                         <div class="box">
                                         	<div class="box-content">
                                         		<p><?= $this->__('Quantity: ')?><?= $this->escapeHtml($_item->getQty())?></p>
                                         	</div>
                                         </div>
-                                        
+
                                         <div class="box">
                                         	<div class="box-content">
                                         		<p><?= $this->helper('checkout')->formatPrice($_item->getbaseRowTotal())?></p>
                                         	</div>
                                         </div>
-                                        
+
                                         <div class="box">
                                         	<div class="box-content">
                                         		<?php if($_item->getIsGiftItem()):?>
@@ -122,7 +123,7 @@
                                         		<?php endif;?>
                                         	</div>
                                         </div>
-                                        
+
                                 	</td>
                             	</tr>
                             	<?php endif;?>
@@ -130,9 +131,9 @@
                             	</tbody>
                             </table>
                             <script type="text/javascript">decorateTable('overview-address-item-<?= $_address->getId()?>')</script>
-                        
+
                         <?php endforeach; ?>
-							
+
                         <div id="checkout-review-submit">
                         <?php echo $this->getChildHtml('agreements') ?>
                         	<div class="place-order">
@@ -153,7 +154,7 @@
                         	<p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Billing Information') ?></a></p>
                        	</div>
             		</form>
-                       
+
                         <script type="text/javascript">
                         //<![CDATA[
                             var submitted = false;
@@ -190,34 +191,35 @@
         	<li id="opc-<?= $stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
             <?php if($stepKey == 'multishipping_addresses'):?>
             	<a href="<?php echo $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
-                	<div class="step-title">
+                	<div class="step-title checkout-step-name col-12">
                     	<span class="number"><?= $cnt ?></span>
-                        <h2><?= $this->__($_step->getLabel()) ?></h2>
+                        <h3><?= $this->__($_step->getLabel()) ?></h3>
                    	</div>
                 </a>
             <?php elseif($stepKey == 'multishipping_shipping'):?>
                 <a href="<?= $this->getBaseUrl().'checkout/multishipping/shipping/'; ?>">
-                	<div class="step-title">
+                	<div class="step-title checkout-step-name col-12">
                     	<span class="number"><?= $cnt ?></span>
-                    	<h2><?= $_step->getLabel()?></h2>
+                    	<h3><?= $_step->getLabel()?></h3>
                 	</div>
                 </a>
             <?php elseif($stepKey == 'multishipping_billing'):?>
                 <a href="<?= $this->getBaseUrl().'checkout/multishipping/billing/'; ?>">
-                	<div class="step-title">
+                	<div class="step-title checkout-step-name col-12">
                     	<span class="number"><?= $cnt ?></span>
-                    	<h2><?= $_step->getLabel()?></h2>
+                    	<h3><?= $_step->getLabel()?></h3>
                 	</div>
                 </a>
             <?php else:?>
-            	<div class="step-title">
+            	<div class="step-title checkout-step-name col-12">
                 	<span class="number"><?= $cnt ?></span>
-                   	<h2><?= $_step->getLabel()?></h2>
+                   	<h3><?= $_step->getLabel()?></h3>
               	</div>
             <?php endif; ?>
             </li>
-            
+
         <?php endif; ?>
     <?php $cnt++; ?>
     <?php endforeach; ?>
 </ol>
+</div>

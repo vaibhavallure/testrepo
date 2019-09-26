@@ -165,13 +165,13 @@ if (!$videoUrl && $secondVideoUrl)
 <?php $count = count($gallery); ?>
 <?php if ( $count >= 1 ): ?>
         <?php $counter = 1; ?>
-        <div id="imageRepo">
+        <div id="imageRepo" class="d-none">
             <?php foreach ($gallery as $_image): ?>
                 <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
                 <?php $counter++; ?>
             <?php endforeach; ?>
         </div>
-        <div id="thumbRepo">
+        <div id="thumbRepo" class="d-none">
             <?php foreach ($gallery as $_image): ?>
                 <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(74,96); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>" viewon="<?php echo $_image->getViewon() ?>"/>
                 <?php $counter++; ?>
@@ -305,7 +305,7 @@ function sharePinit(){
 
 function shareLikeTwitter(){
     //TWITTER
-    jQuery('#twitter').sharrre({
+   /* jQuery('#twitter').sharrre({
         share: { twitter: true },
         enableHover: false,
         enableTracking: true,
@@ -315,7 +315,7 @@ function shareLikeTwitter(){
               api.simulateClick();
               api.openPopup('twitter');
         }
-    });
+    });*/
 }
 
 	jQuery(document).ready(function(){

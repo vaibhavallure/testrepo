@@ -1052,12 +1052,12 @@ bottom: 35px;
 	vertical-align: middle;
 }
 
-.minus_icon {
+/* .minus_icon {
     margin-right: 5px;
 }
 .plus_icon {
     margin-left: -1px;
-}
+} */
 
 .customer-account-edit .buttons-set p.required {
     margin-left: 15px;
@@ -1519,10 +1519,10 @@ margin-right: 10px;
 }
 
 
-.buttons-set button, .buttons-set p.required {
+/* .buttons-set button, .buttons-set p.required {
    margin-right: 12px;
    float: left;
-}
+} */
 #wishlist-table td:first-child, #wishlist-table td:last-child{
    padding-left: 0;
 }
@@ -1539,21 +1539,21 @@ margin-right: 10px;
 	text-transform: uppercase;
 }
 
-#discount-gift-cart, #discount-coupon-form{
+/* #discount-gift-cart, #discount-coupon-form{
    float: left;
    padding-left: 8px;
-}
-.cart-mt .discount #activateGiftCard .input-box input#giftcard_code{
+} */
+/* .cart-mt .discount #activateGiftCard .input-box input#giftcard_code{
    left: 88px;
 }
 .cart-mt .discount #activateGiftCard .buttons-set button{
 	left: 212px;
-}
+} */
 
-.myaccount-index-index .my-account .mt-myaccount-promo .buttons-set button,
+/* .myaccount-index-index .my-account .mt-myaccount-promo .buttons-set button,
 .cart-mt .discount #activateGiftCard .buttons-set button{
 	padding-left: 10px;
-}
+} */
 
 #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
    width: 99% !important;

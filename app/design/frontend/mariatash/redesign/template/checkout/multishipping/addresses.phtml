@@ -32,15 +32,18 @@
  * @var Mage_Checkout_Block_Multishipping_Addresses $this
  */
 ?>
+<?php $redesignHelper = Mage::helper("redesign_checkout");?>
+<?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
-<ol id="checkoutSteps" class="opc">
+<div class="container row mx-auto p-0">
+<ol id="checkoutSteps" class="opc p-0">
 <?php foreach ($steps as $stepKey => $_step): ?>
 	<?php if($stepKey == "multishipping_addresses"):?>
 	<li id="opc-<?= $stepKey?>" class="section allow active">
-		<div class="step-title">
+		<div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $cnt ?></span>
-            <h2><?php echo $this->__($_step->getLabel()) ?></h2>
+            <h3><?php echo $this->__($_step->getLabel()) ?></h3>
         </div>
 		<?php echo $this->getMessagesBlock()->toHtml() ?>
         <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
@@ -74,10 +77,11 @@
                     <tbody>
                     <?php foreach ($this->getItems() as $_index => $_item): ?>
                         <?php if ($_item->getQuoteItem()) :?>
+                        <?php //if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
                         <tr>
                         	<td>
                         		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
-                        		<?php 
+                        		<?php
                         		if ($option = $_item->getOptionByCode('simple_product')) {
                         		    $_product = $option->getProduct();
                         		}
@@ -100,8 +104,8 @@
                                 </div>
                                 <div class="gift-messages">
                                  	<p class="control">
-                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
-                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (0.00).</span></label>
+                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
                                    </p>
                                 </div>
                             </div>
@@ -130,15 +134,16 @@
 	</li>
 	<?php else:?>
 	<li id="opc-<?= $stepKey?>" class="section">
-		<div class="step-title">
+		<div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $cnt ?></span>
-            <h2><?= $_step->getLabel()?></h2>
+            <h3><?= $_step->getLabel()?></h3>
         </div>
 	</li>
 	<?php endif;?>
 	<?php $cnt++; ?>
 <?php endforeach;?>
 </ol>
+</div>
 
 
 
@@ -148,15 +153,16 @@
 <div class="page-title">
     <h1>Secure Checkout - ship to multiple addresses</h1>
 </div>
-<ol id="checkoutSteps" class="opc">
+<div class="container row mx-auto p-0">
+<ol id="checkoutSteps" class="opc p-0">
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();
     $cont = 1;
-    foreach ($steps as $_step): ?>     
+    foreach ($steps as $_step): ?>
         <?php if($_step->getLabel()=='Select Addresses'): ?>
     <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section allow active" >
-        <div class="step-title">
+        <div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $cont ?></span>
-            <h2><?php echo $this->__('Select Address') ?></h2>
+            <h3><?php echo $this->__('Select Address') ?></h3>
         </div>
         <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
                 <div class="multiple-checkout">
@@ -200,15 +206,16 @@
     </li>
         <?php else: ?>
     <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section" >
-        <div class="step-title">
+        <div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $cont ?></span>
-            <h2><?php echo ($_step->getLabel()!='Shipping Information')? $_step->getLabel() : $this->__('SHIPPING METHOD AND GIFT OPTIONS'); ?></h2>
+            <h3><?php echo ($_step->getLabel()!='Shipping Information')? $_step->getLabel() : $this->__('SHIPPING METHOD AND GIFT OPTIONS'); ?></h3>
         </div>
     </li>
         <?php endif; ?>
     <?php $cont+=1; ?>
     <?php endforeach; ?>
 </ol>
+</div>
 <?php endif;?>
 
 <script type="text/javascript">
