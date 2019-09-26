@@ -75,13 +75,12 @@ if ($session->isLoggedIn()) {
 <?php endif;?>
 <?php
 $count=1;
-    if($customers):
-foreach ($customers as $customer):
-?>
-<input  type="hidden" name="customer[<?= $count ?>][id]"   value="<?= $customer->getId() ?>">
-
+    if($customers):?>
 <div class="field" id="reg_form">
     <div class="regDiv">
+<?php foreach ($customers as $customer):?>
+<input  type="hidden" name="customer[<?= $count ?>][id]"   value="<?= $customer->getId() ?>">
+
         <div id="customer_info_div" >
         <div id="customer_info_<?= $count ?>">
             <h6>Customer: <?= $count ?></h6>
@@ -109,15 +108,15 @@ foreach ($customers as $customer):
             </div>
         </div>
     </div>
+
+    <?php
+    $count++;
+    endforeach;?>
     <div class="">
         <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
     </div>
-
     </div>
-    <?php
-    $count++;
-    endforeach;
-    else: ?>
+    <?php else: ?>
 
     <div class="field" id="reg_form">
         <div class="regDiv"  >
