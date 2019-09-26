@@ -48,6 +48,7 @@
                     <script src="<?= Mage::getBaseUrl('js') ?>varien/payment.js" type="text/javascript"></script>
                     <form action="<?= $this->getPostActionUrl() ?>" method="post" id="multishipping-billing-form">
                         <div class="col2-set">
+                        	<?php if(0):?>
                             <div class="col-1 col-narrow">
                                 <div class="box">
                                     <div class="box-title">
@@ -59,7 +60,12 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <div class="col-2 col-wide">
+=======
+                            <?php endif;?>
+                            <div class="col-2 col-wide">                                
+>>>>>>> 3a9365eeadf76cde3212e6d0d6e80602174170e9
                                 <div class="box">
                                     <div class="box-title">
                                         <h2><?= $this->__('Payment Method') ?></h2>

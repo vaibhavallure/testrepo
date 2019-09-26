@@ -1657,7 +1657,7 @@ overflow: hidden;
   text-align: left;
 }
 .catalog-category-view .actions .super_attribute ul li, .catalogsearch-result-index .actions .super_attribute ul li
-,.catalog-product-view .amconf-images-container img
+,.catalog-product-view .amconf-images-container img,.quickview-index-index .amconf-images-container img
 {
   border-radius: 100%;
   cursor: pointer;
@@ -2408,18 +2408,18 @@ ul#foo4 {
 .product-name {
   margin-bottom: 16px;
 }
-.catalog-product-view .amconf-images-container img {
+.catalog-product-view .amconf-images-container img,.quickview-index-index .amconf-images-container img  {
   width: 25px;
   height: 25px;
 	margin-right: 19px;
 	padding: 3px;
 }
 
-.catalog-product-view .amconf-images-container img.amconf-image-selected
+.catalog-product-view .amconf-images-container img.amconf-image-selected,.quickview-index-index .amconf-images-container img.amconf-image-selected
 {
 	border:1px solid gray;
 }
-.catalog-product-view .amconf-images-container img:last-child {
+.catalog-product-view .amconf-images-container img:last-child ,.quickview-index-index .amconf-images-container img:last-child {
   margin-right: 0;
 }
 .amconf-images-container {
@@ -2860,4 +2860,62 @@ table thead {
 }
 .w-remove .info-text-three, .ad-to-fav .info-text-three{
 	text-decoration: underline;
+}
+
+
+.fancybox-type-iframe{
+	position: fixed!important;
+}
+.quickview-index-index  .hide-for-quickview
+{
+	display: none;
+}
+.quickview-index-index, .fancybox-opened .fancybox-skin{
+	background: #f2f2f2!important;
+}
+.quickview-index-index .col1-layout .product-view .product-img-box{
+	width: 100%;
+}
+.quickview-index-index #galleria{
+	width: 100%;
+}
+.fancybox-overlay{
+	position: fixed!important;
+	background: #1f1e1e61!important;
+}
+.fancybox-lock .fancybox-sample-size .fancybox-close {
+	background-image: url(../images/redesign/login-cross.png);
+	width: 25px;
+	height: 26px;
+	background-size: 100%;
+}
+/*-----------------shop by look------------*/
+.shop_by_look-img,.shop_by_look .big-popup-image {
+	width: 322px;
+	height: 433px;
+	background-size: cover !important;
+	cursor: pointer;
+	margin: 0 auto;
+}
+.shop_by_look .big-popup-cover{
+	width: 750px!important;
+	height: 530px;
+}
+.shop_by_look .big-popup-body{
+	padding: 48px 46px 48px 49px!important;
+}
+
+.shop_by_look .product_img img{
+	border: 1px solid #D0D0D0;
+}
+.shop_by_look .product-info.scroll
+{
+	height: 433px;
+	overflow: auto;
+}
+.shop_by_look .product-info ul li{
+	margin-bottom: 5px;
+}
+.shop_by_look .product-info .product_details{
+	padding: 10px;
 }

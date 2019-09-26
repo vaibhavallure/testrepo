@@ -96,11 +96,18 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         $_item->setQty($qty);
                         
                         $_item->setIsGiftItem(0);
+                        $_item->setIsGiftWrap(0);
                         if(isset($itemsInfo[$_item->getId()]["is_gift_item"])){
                             if($itemsInfo[$_item->getId()]["is_gift_item"]){
                                 $_item->setIsGiftItem(1);
                                 if( isset($giftQty[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]) ){
                                     $_item->setGiftItemQty($giftQty[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]);
+                                }
+                                
+                                if(isset($itemsInfo[$_item->getId()]["is_gift_wrap"])){
+                                    if($itemsInfo[$_item->getId()]["is_gift_wrap"]){
+                                        $_item->setIsGiftWrap(1);
+                                    }
                                 }
                             }
                         }
@@ -115,9 +122,10 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             }
             
             //set billing address
-            if(isset($info["billing_address_id"])){
+            $params = Mage::app()->getRequest()->getParams();
+            if(isset($params["billing_address_id"])){
                 Mage::getModel('checkout/type_multishipping')
-                ->setQuoteCustomerBillingAddress($info["billing_address_id"]);
+                ->setQuoteCustomerBillingAddress($params["billing_address_id"]);
             }
             
             $this->save();
@@ -165,11 +173,19 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $quoteAddressItem->setQty((int)($quoteAddressItem->getQty()+$qty));
                 } else {
                     $quoteItem->setIsGiftItem(0);
+                    $quoteItem->setIsGiftWrap(0);
+                    $quoteItem->setGiftItemQty(0);
                     if(isset($data["is_gift_item"])){
                         if($data["is_gift_item"]){
                             $quoteItem->setIsGiftItem(1);
                             if(isset($data["gift_qty"])){
                                 $quoteItem->setGiftItemQty($data["gift_qty"]);
+                            }
+                            
+                            if(isset($data["is_gift_wrap"])){
+                                if($data["is_gift_wrap"]){
+                                    $quoteItem->setIsGiftWrap(1);
+                                }
                             }
                         }
                     }

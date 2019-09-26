@@ -110,7 +110,7 @@ function addToShoppingCart(button, formId, relode=false) {
                  //allure code end
 
                 //var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
-                var dataSend = JSON.parse(stringJSON);
+                //var dataSend = JSON.parse(stringJSON);
                 var urlAdd2Cart = jQuery("#product_addtocart_form").attr('action');
             } else {
                 if (jQuery("#" + formId.id).attr('class') == "product_addtocart_celebrities_form") {

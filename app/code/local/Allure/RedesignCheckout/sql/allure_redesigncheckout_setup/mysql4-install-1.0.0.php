@@ -45,5 +45,32 @@ $itemOptions = array(
 foreach ($itemEntities as $entity) {
     $installer->addAttribute($entity, 'is_gift_item', $itemOptions);
     $installer->addAttribute($entity, 'gift_item_qty', $itemOptions);
+    $installer->addAttribute($entity, 'is_gift_wrap', $itemOptions);
+    $installer->addAttribute($entity, 'gift_wrap_qty', $itemOptions);
 }
+
+$installer->addAttribute("shipment", "prefered_shipping_code", array(
+    'type'          => 'varchar',
+    'label'         => 'Shipping Code',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+$installer->addAttribute("shipment", "prefered_shipping_description", array(
+    'type'          => 'varchar',
+    'label'         => 'Shipping Description',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+$installer->addAttribute("shipment", "prefered_shipping_price", array(
+    'type'          => 'decimal',
+    'label'         => 'Shipping Price',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> 0.0
+));
+
 $installer->endSetup();

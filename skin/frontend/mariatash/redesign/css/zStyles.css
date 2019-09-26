@@ -259,7 +259,8 @@
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	margin-bottom: 0;
 }
-.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
+.acc-products-wrapper #myaccount-shopping-cart-table tr td img,
+.acc-products-wrapper .mt-my-wishlist table tr td img{
 	width: 102px;
 	height: 102px;
 	object-fit: cover;
@@ -267,8 +268,8 @@
 }
 .acc-products-wrapper table tr{
 	padding-top: 22px!important;
-    padding-bottom: 22px!important;
-    border-collapse: separate;
+	padding-bottom: 22px!important;
+	border-collapse: separate;
 }
 .purchase-store-name{
 	width: 100%;
@@ -296,6 +297,108 @@
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	padding-right: 97px;
 }
+/*=====================*/
+/*WISHLIST*/
+/*=====================*/
+.acc-products-wrapper .mt-my-wishlist .line-w-mt{
+	width: 100%;
+}
+.acc-products-wrapper .mt-my-wishlist .product-w-mt{
+	padding-right: 20px;
+	vertical-align: top;
+}
+.acc-products-wrapper .mt-my-wishlist .product-w-mt .price{
+	display: inline-block;
+	margin-right: 30px;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: urw-din-regular;
+}
+.acc-products-wrapper .mt-my-wishlist .myaccount-update-wishlist-btn{
+	border: 0.5px solid rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 1.5px;
+	text-align: center;
+	background: #fff;
+	text-transform: uppercase;
+}
+.acc-products-wrapper .mt-my-wishlist .myaccount-wishlist-move-to-cart{
+	background: rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: #FFFFFF;
+	letter-spacing: 1.5px;
+	text-align: center;
+	outline: none;
+	border: transparent;
+	border-radius: 0;
+	text-transform: uppercase;
+}
+.acc-products-wrapper .mt-my-wishlist .product-w-mt .fprice .price{
+	font-size: 18px;
+	font-weight: bold;
+	font-family: urw-din-regular;
+	margin-right: 6px!important;
+}
+.acc-products-wrapper .mt-my-wishlist .qty-wrap input{
+	background: transparent!important;
+	padding: 0!important;
+	width: 35px!important;
+	height: 35px!important;
+	border:none!important;
+}
+.minus-btn,.plus-btn,.qty-wrap input{
+	background: transparent;
+	border:none;
+	font-family: urw-din-regular;
+	font-size: 18px;
+	font-weight: bold;
+	font-size: 18px!important;
+}
+.plus_icon,.minus_icon{
+	margin: 0!important;
+	height: 36px;
+	display: flex;
+	align-items: center;
+}
+.acc-products-wrapper .mt-my-wishlist .cart-cell button{
+	width: 164px;
+	height: 37px;
+}
+.share_btn{
+	width: 170px;
+	height: 37px;
+	text-transform: uppercase;
+}
+/*=====================*/
+/*OPEN ORDERS*/
+/*=====================*/
+.acc-products-wrapper #new-mt-myproduct-openorders table,
+.acc-products-wrapper #new-mt-myproduct-openorders table tr,
+.acc-products-wrapper #new-mt-myproduct-receipts table,
+.acc-products-wrapper #new-mt-myproduct-receipts table tr{
+	width: 100%;
+	background: white;
+}
+.acc-products-wrapper #new-mt-myproduct-openorders table thead tr,
+.acc-products-wrapper #new-mt-myproduct-receipts table thead tr{
+	padding-top: 8px!important;
+	padding-bottom: 0px!important;
+}
+.acc-products-wrapper #new-mt-myproduct-openorders table tbody tr,
+.acc-products-wrapper #new-mt-myproduct-receipts table tbody tr{
+	padding: 0!important
+}
+.acc-products-wrapper #new-mt-myproduct-openorders table th,
+.acc-products-wrapper #new-mt-myproduct-openorders table td,
+.acc-products-wrapper #new-mt-myproduct-receipts table th,
+.acc-products-wrapper #new-mt-myproduct-receipts table td{
+	width: 16.666%;
+	text-align: center;
+}
+
 /*=====================*/
 /*MY ACCOUNT - login & security*/
 /*=====================*/
@@ -558,6 +661,15 @@
 	float: right;
 }
 /*=====================*/
+/*PRODUCT RECEIPTS*/
+/*=====================*/
+.receipts h1{
+	font-size: 30px;
+}
+th,td{
+	font-family: urw-din-regular!important;
+}
+/*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
 @media(min-width: 1200px){
@@ -619,6 +731,32 @@
 	}
 }
 @media(max-width: 767px){
+	.acc-products-wrapper #purchase-history,
+	.acc-products-wrapper .mt-wishlist-table{
+		overflow-x: auto;
+	}
+	.acc-products-wrapper #myaccount-shopping-cart-table,
+	.acc-products-wrapper #wishlist-table{
+		display: block;
+		width: 150%!important;
+		overflow: auto;
+	}
+	.acc-products-wrapper #new-mt-myproduct-openorders table th, 
+	.acc-products-wrapper #new-mt-myproduct-openorders table td,
+	.acc-products-wrapper #new-mt-myproduct-receipts table th,
+	.acc-products-wrapper #new-mt-myproduct-receipts table td{
+		width: 115px;
+	}
+	.acc-products-wrapper #new-mt-myproduct-openorders .open-order-view,
+	.acc-products-wrapper #new-mt-myproduct-receipts .complete-order-view{
+		overflow-x: auto;
+	}
+	.acc-products-wrapper #new-mt-myproduct-openorders table,
+	.acc-products-wrapper #new-mt-myproduct-receipts table{
+		display: block;
+		width: 200%;
+		overflow: auto;
+	}
 	.dashboard .mt-new-myaccount-dashbord{
 		padding: 0;
 		padding-bottom: 40px;
@@ -648,6 +786,15 @@
 	}
 }
 @media(max-width: 480px){
+	.acc-products-wrapper #myaccount-shopping-cart-table,
+	.acc-products-wrapper #wishlist-table{
+		display: block;
+		width: 250%!important;
+		overflow: auto;
+	}
+	.acc-products-wrapper #new-mt-myproduct-openorders table th, .acc-products-wrapper #new-mt-myproduct-openorders table td{
+		width: 80px;
+	}
 	.dashboard .mt-new-myaccount-dashbord{
 		padding: 0;
 	}

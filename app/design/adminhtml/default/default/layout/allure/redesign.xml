@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+	<adminhtml_sales_order_shipment_new>
+		<reference name="form">
+			 <action method="setTemplate">
+                <template>allure/redesign/sales/shipment/form.phtml</template>
+            </action>
+			<block type="allure_redesigncheckout/adminhtml_shippingMethod" name="allure_shipping_methods" template="allure/redesign/sales/shipment/shipping_method.phtml" />
+		</reference>
+	</adminhtml_sales_order_shipment_new>
+</layout>

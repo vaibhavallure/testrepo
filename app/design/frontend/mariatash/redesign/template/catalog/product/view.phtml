@@ -482,7 +482,7 @@ if ($_product->getSizeSample() == 1) {
           </div>
       </div>
 
-        <div class="product-collateral col-12">
+        <div class="product-collateral col-12 hide-for-quickview">
             <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
                 <div class="row box-collateral <?php echo "box-{$alias}" ?>">
                     <?php if ($title = $this->getChildData($alias, 'title')): ?>
@@ -497,6 +497,11 @@ if ($_product->getSizeSample() == 1) {
 
     </form>
     <script type="text/javascript">
+
+        var SKIN_URL = '<?php echo $this->getSkinUrl() ?>';
+        var sourceOfReq='<?php echo Mage::app()->getRequest()->getParam('sourceOfReq')?>';
+
+
         if(jQuery('#sign-up-out-of-stock').length > 0){
             document.getElementById("sign-up-out-of-stock").addEventListener("click", signUp);
         }
@@ -562,7 +567,21 @@ if ($_product->getSizeSample() == 1) {
 
                     stockFlowControl = 1;
                     if (jQuery('#qty').val() > 0 && jQuery('#qty').val() != '' && (stockFlowControl == 1)) {
-                        addToShoppingCart(button, form);
+
+
+                        if(sourceOfReq=="quickview")
+                        {
+                            jQuery('.blockUI').append('<div class="fancybox-loading"></div>');
+                            jQuery('.blockUI .fancybox-loading').append('<div></div>');
+                            jQuery('.blockUI .fancybox-loading div').append('<p class="loader" id="loading_mask_loader"></p>');
+                            jQuery('.blockUI').show();
+                            addToShoppingCartFromQuickView(button, form);
+                        }
+                        else {
+                            addToShoppingCart(button, form);
+                        }
+
+
                     } else {
                         jQuery('.stockerr').html('Maximum amount available is ' + stockAmt);
                         jQuery('.stockerr').show("inline");
@@ -869,6 +888,7 @@ jQuery(document).ready(function(){
 <!--Hotjar Virtual Page View Code-->
 <script>
     jQuery( document ).ready(function() {
+
         // hj('vpv', '/product-detail/');
     });
 </script>
