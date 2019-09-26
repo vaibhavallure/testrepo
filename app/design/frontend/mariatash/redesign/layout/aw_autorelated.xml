@@ -57,9 +57,9 @@
             <block type="awautorelated/blocks" name="awarp.content.under.native" after="awarp.content.instead.native"/>
         </reference>
     </catalog_product_view>
-    <checkout_cart_index>
+    <!-- <checkout_cart_index>
         <reference name="right">
             <block type="awautorelated/blocks" name="awarp.shc.before.content" before="-"/>
         </reference>
-    </checkout_cart_index>
+    </checkout_cart_index> -->
 </layout>

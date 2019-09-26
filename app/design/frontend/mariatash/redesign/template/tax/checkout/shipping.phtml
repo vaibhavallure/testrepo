@@ -33,7 +33,7 @@
     <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
          <?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->getExcludeTaxLabel()).'</span>' ?>
     </td>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right">
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
     </td>
 </tr>
@@ -41,7 +41,7 @@
     <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
         <?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->getIncludeTaxLabel()).'</span>' ?>
     </td>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right">
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
     </td>
 </tr>
@@ -50,20 +50,20 @@
     <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
         <?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->getTotal()->getTitle()).'</span>' ?>
     </td>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right">
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
         <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
     </td>
 </tr>
 <?php else:?>
 <tr id="mt-shipping">
-    <?php   
+    <?php
     $multiShip = $this->getShippingExcludeTax();
     if($this->getRequest()->getActionName() == 'refreshtotals') {
     $totalShip = $this->getShippingExcludeTax();
     $totalsObj = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-    
+
     if(isset($totalsObj['shipping'])&& $totalsObj['shipping']->getValue()) {
-            $ship = $totalsObj['shipping']->getValue(); 
+            $ship = $totalsObj['shipping']->getValue();
     }
     if($ship >= $totalShip){
         $multiShip = $ship;
@@ -73,11 +73,10 @@
     }
     ?>
     <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
-        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-method-fancybox" style="color: #3f4048; cursor: pointer;"'; } else { echo 'style="color: #3f4048; text-decoration: none; cursor: normal;"'; }?> class="mt-shipping-method"><?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->escapeHtml($this->getTotal()->getTitle())).'</span>' ?></a>
+        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-method-fancybox"'; } else {  }?> class="mt-shipping-method"><?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->escapeHtml($this->getTotal()->getTitle())).'</span>' ?></a>
     </td>
-    <td style="<?php echo $this->getStyle() ?>" class="a-right">
-        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-price-fancybox" style="color: #3f4048; cursor: pointer;"'; } else { echo 'style="color: #3f4048; text-decoration: none; cursor: normal;"'; }?> class="mt-shipping-price"><?php echo $this->helper('checkout')->formatPrice($multiShip) ?></a>
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
+        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-price-fancybox"'; } else { }?> class="mt-shipping-price"><?php echo $this->helper('checkout')->formatPrice($multiShip) ?></a>
     </td>
 </tr>
 <?php endif;?>
-

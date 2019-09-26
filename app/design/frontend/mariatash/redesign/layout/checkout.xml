@@ -127,15 +127,15 @@ will be rendered on all checkout pages
         <!-- Mage_Checkout -->
         <!--<remove name="right"/>-->
         <remove name="left"/>
-        
+
         <reference name="head">
             <action method="addCss"><stylesheet>css/multiship.css</stylesheet></action>
         </reference>
-        
+
         <reference name="right">
             <action method="unsetChildren"></action>
             <block type="checkout/cart" name="checkout.cart">
-                <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action>
+                <!-- <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action> -->
                 <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
                 <action method="chooseTemplate"/>
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
@@ -276,7 +276,7 @@ Multi address shipping checkout billing information
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
         <reference name="content">
-            <block type="checkout/multishipping_billing" name="checkout_billing" template="checkout/multishipping/billing.phtml">                
+            <block type="checkout/multishipping_billing" name="checkout_billing" template="checkout/multishipping/billing.phtml">
                 <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
                         <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
                 </block>
@@ -383,17 +383,17 @@ One page checkout main layout
                 </block>
                 <block type="checkout/onepage_billing" name="checkout.onepage.billing" as="billing" template="checkout/onepage/billing.phtml"/>
                 <block type="checkout/onepage_shipping" name="checkout.onepage.shipping" as="shipping" template="checkout/onepage/shipping.phtml"/>
-                
+
                 <!-- new delivery method after shipping information -->
                 <block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="allure/multicheckout/checkout/onepage/delivery_option.phtml">
                 	<block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="allure/multicheckout/checkout/onepage/delivery_option_details.phtml"></block>
                   </block>
-                
+
                 <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="checkout/onepage/shipping_method.phtml">
                     <block type="checkout/onepage_shipping_method_available" name="checkout.onepage.shipping_method.available" as="available" template="checkout/onepage/shipping_method/available.phtml"/>
                     <block type="checkout/onepage_shipping_method_additional" name="checkout.onepage.shipping_method.additional" as="additional" template="checkout/onepage/shipping_method/additional.phtml"/>
                 </block>
-                
+
                 <block type="checkout/onepage_payment" name="checkout.onepage.payment" as="payment" template="checkout/onepage/payment.phtml">
                     <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
                         <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
@@ -504,12 +504,12 @@ One page checkout order review block
         </reference>
     </checkout_onepage_failure>
     <block type="core/list" name="additional.product.info"/>
-    
-    
+
+
     <checkout_cart_refreshtotals>
         <block type="checkout/cart_totals" template="checkout/cart/totals.phtml" name="root" output="toHtml" >
             <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
         </block>
     </checkout_cart_refreshtotals>
-    
+
 </layout>

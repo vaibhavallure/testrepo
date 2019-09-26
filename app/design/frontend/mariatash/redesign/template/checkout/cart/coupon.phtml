@@ -27,7 +27,7 @@
 <!--<form id="discount-gift-cart" action="#" method="post">
 <div class="discount">
     <div class="discount-form">
-        <label for="coupon_code"><?php // echo $this->__('Gift Card') ?></label>
+        <label for="coupon_code"><//?php // echo $this->__('Gift Card') ?></label>
         <input type="hidden" name="remove" id="remove-coupone" value="0" />
         <div class="input-cart">
             <input class="input-text" id="coupon_code" name="coupon_code" value="<?php // echo $this->htmlEscape($this->getCouponCode()) ?>" />
@@ -43,22 +43,22 @@
 </div>-->
 </form>
 <form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
-    <div class="discount">        
+    <div class="discount">
         <div class="discount-form">
-            <label for="coupon_code2"><?php echo $this->__('Promo Code') ?></label>
+            <!-- <label for="coupon_code2"><//?php echo $this->__('Promo Code') ?></label> -->
             <input type="hidden" name="remove" id="remove-coupone" value="0" />
             <div class="input-cart">
-                <input class="input-text" id="coupon_code2" name="coupon_code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" <?php echo (strlen($this->getCouponCode())) ? 'disabled' : '';?>/>
+                <input class="input-text" id="coupon_code2" name="coupon_code" placeholder="Promo Code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" <?php echo (strlen($this->getCouponCode())) ? 'disabled' : '';?>/>
             </div>
-            <div class="buttons-set">                
+            <div class="buttons-set">
                 <?php if(strlen($this->getCouponCode())): ?>
                     <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon" onclick="discountForm.submit(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
                     <p class="youhave validation-advice">Promo Code Applied</p>
                 <?php else: ?>
-                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="discountForm.submit()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
+                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="discountForm.submit()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>
                 <?php endif;?>
             </div>
-        </div>                
+        </div>
     </div>
 </form>
 <script type="text/javascript">
@@ -74,15 +74,15 @@ Validation.add('emptycustomvalidation','<?php echo $this->__('This is a required
 
 discountForm.submit = function (remove) {
     $('coupon_code2').addClassName('required-entry');
-    $('coupon_code2').addClassName('emptycustomvalidation');        
+    $('coupon_code2').addClassName('emptycustomvalidation');
     $('remove-coupone').value = "0";
     if (this.validator.validate()) {
         if (remove) {
             $('coupon_code2').removeClassName('required-entry');
-            $('remove-coupone').value = "1";            
+            $('remove-coupone').value = "1";
         } else {
             $('coupon_code2').addClassName('required-entry');
-            $('coupon_code2').addClassName('emptycustomvalidation');        
+            $('coupon_code2').addClassName('emptycustomvalidation');
             $('remove-coupone').value = "0";
         }
         return VarienForm.prototype.submit.bind(discountForm)();

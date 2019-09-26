@@ -37,27 +37,27 @@ $typeId = $_item->getProduct()->getTypeId();
 
     <td class="cart_col1">
 
-        <div class="productname"><h2 class="product-name">
+        <div class="productname"><h1 class="product-name">
             <?php if ($this->hasProductUrl()):?>
                 <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
             <?php else: ?>
                 <?php echo $this->escapeHtml($this->getProductName()) ?>
             <?php endif; ?>
-        </h2>
+        </h1>
         <?php if ($_options = $this->getOptionList()):?>
             <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
             <div class="product-options" style="display:none;">-->
             <div class="item-options">
                 <?php foreach ($_options as $_option) : ?>
                     <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                    <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                    <div><span class="para-three"><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
                         <?php if (isset($_formatedOptionValue['full_view'])): ?>
                             <?php echo $_formatedOptionValue['full_view'] ?>
                         <?php else: ?>
                             <?php echo $_formatedOptionValue['value'] ?>
                         <?php endif; ?>
                     </div>
-                <?php endforeach; ?>
+                <?php endforeach; ?></span>
             </div>
             <!--</div>-->
         <?php endif;?>
@@ -187,50 +187,50 @@ $typeId = $_item->getProduct()->getTypeId();
     <tr class="messages">
         <td colspan="6">
             <div class="item-msg <?php echo $message['type'] ?>">
-            	
+
             	<?php if(false): ?>
 	                <?php foreach ($messages as $message): ?>
 	                    <?php $html .= $message['text']; ?>
 	                <?php endforeach;?>
 	                <p>* <?php echo $html; ?></p>
                 <?php endif;?>
-                
+
                 <?php if(0): //commenting existing code for parent child?>
-                <?php 
+                <?php
             	$stockQty = intval($_item->getProduct()->getStockItem()->getQty());
-                
+
             	$manageStock = $_item->getProduct()->getStockItem()->getManageStock();
-                     
+
                 $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
-                     
+
                 $isBackordered = false;
-                     
+
                 $backorderedQty = $_item->getQty();
-                     
+
                 if ($stockQty < $backorderedQty) {
                 	$isBackordered = true;
-                    
+
                     if ($stockQty >= 0) {
                     	$backorderedQty = $_item->getQty() - $stockQty;
                     }
                 }
-                    
+
                 if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) : ?>
                 	<?php //allure code
                 		$message = "";
                 		$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
                 		if(!empty($stockMsg))
                 			$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                		else 
+                		else
                 			$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
                 	?>
                 	<p><?php echo $message ?></p>
                	<?php else : ?>
                		<p>In Stock: Ships Within 24 hours (Mon-Fri).</p><?php //add by allure?>
-        		 <?php endif; ?>     
+        		 <?php endif; ?>
         		 <?php endif; //End of existing code?>
-        		 
-        		 	
+
+
 				<?php //Parent child code starts
                 $storeId=Mage::app()->getStore()->getStoreId();
                 $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
@@ -238,34 +238,34 @@ $typeId = $_item->getProduct()->getTypeId();
                 $stockQty = intval($stock->getQty());
                 $manageStock =$stock->getManageStock();
                 $isInStock = $stock->getIsInStock();
-                     
+
                 $isBackordered = false;
                 $backorderedQty = $_item->getQty();
-                     
+
                 if ($stockQty < $backorderedQty) {
                 	$isBackordered = true;
-                    
+
                     if ($stockQty >= 0) {
                     	$backorderedQty = $_item->getQty() - $stockQty;
                     }
                 }
 				?>
-				
-				<?php if ($isBackordered && $manageStock==1) :?> 
+
+				<?php if ($isBackordered && $manageStock==1) :?>
 				<?php
                 	$message = "";
                 	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_product);
                 	if(!empty($stockMsg))
                 		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                	else 
+                	else
                 		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
                 ?>
                 <p><?php echo $message ?></p>
-				<?php else : ?> 
+				<?php else : ?>
 					<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
 				<?php endif; ?>
-				<?php //allure Parent child code end?>      
-                
+				<?php //allure Parent child code end?>
+
             </div>
         </td>
     </tr>
@@ -277,4 +277,3 @@ $typeId = $_item->getProduct()->getTypeId();
         }
     });
 </script>
-

@@ -34,13 +34,14 @@
 ?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
-<ol id="checkoutSteps" class="opc">
+<div class="container row mx-auto p-0">
+<ol id="checkoutSteps" class="opc p-0">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_billing'): ?>
             <li id="opc-<?= $stepKey ?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
-                <div class="step-title">
+                <div class="step-title checkout-step-name col-12">
                     <span class="number"><?php echo $cnt ?></span>
-                    <h2><?= $_step->getLabel() ?></h2>
+                    <h3><?= $_step->getLabel() ?></h3>
                 </div>
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
@@ -58,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 col-wide">                                
+                            <div class="col-2 col-wide">
                                 <div class="box">
                                     <div class="box-title">
                                         <h2><?= $this->__('Payment Method') ?></h2>
@@ -68,8 +69,8 @@
                                             <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo $this->__('Close') ?>"><?php echo $this->__('Close') ?></a></div>
                                             <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
                                         </div>
-                                        <!-- Payment methods forms list -->                                       
-                                        <?= $this->getChildHtml('methods') ?>                                        
+                                        <!-- Payment methods forms list -->
+                                        <?= $this->getChildHtml('methods') ?>
                                         <?= $this->getChildHtml('checkout_billing_items') ?>
                                     </div>
                                 </div>
@@ -99,7 +100,7 @@
                         }
                         $$('.cvv-what-is-this').each(function(element){
                             Event.observe(element, 'click', toggleToolTip);
-                        });  
+                        });
                         jQuery(document).ready(function(){
                             jQuery('#p_method_paypal_express').parent().hide();
                             //Enable giftcart
@@ -136,8 +137,9 @@
               	</div>
             <?php endif; ?>
             </li>
-            
+
         <?php endif; ?>
     <?php $cnt++; ?>
     <?php endforeach; ?>
 </ol>
+</div>

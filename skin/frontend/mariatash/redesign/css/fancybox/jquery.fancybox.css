@@ -519,7 +519,7 @@ a.fancybox-nav.fancybox-next.last_next span,a.fancybox-nav.fancybox-prev.first_p
 /*end fancy box magazine*/
 .catalog-category-view .fancybox-mobile {z-index: 200000}
 
-button.minus {
+/* button.minus {
 
     border: 1px solid #d1d1d1;
     border-radius: 0.25rem;
@@ -531,9 +531,8 @@ button.minus {
     padding-top: 10px;
     width: 18px;
     background-image: url('icon_cart_subtract.gif');
-}
-button.plus {
-
+} */
+/* button.plus {
     border: 1px solid #d1d1d1;
     border-radius: 0.25rem;
     color: #d1d1d1;
@@ -544,8 +543,8 @@ button.plus {
     padding-top: 10px;
     width: 18px;
     background-image: url('icon_cart_add.gif');
-}
-.minus_icon {
+} */
+/* .minus_icon {
     float: left;
     margin-right: 2px;
     margin-top: 9px;
@@ -554,4 +553,4 @@ button.plus {
     float: left;
     margin-top: 9px;
     margin-left: -3px;
-}
+} */

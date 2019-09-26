@@ -43,13 +43,14 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 	jQuery("#"+eleId+" .ship-select option[value="+custAddrId+"]").attr('selected','selected');
 }
 </script>
+<div class="container row mx-auto p-0">
 <ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_shipping'): ?>
             <li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
-                <div class="step-title">
+                <div class="step-title checkout-step-name col-12">
                     <span class="number"><?php echo $cnt ?></span>
-                    <h2><?= $this->__($_step->getLabel()) ?></h2>
+                    <h3><?= $this->__($_step->getLabel()) ?></h3>
                 </div>
                 <div class="multiple-checkout">
                     <div class="page-title">
@@ -58,54 +59,54 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
                         <?php $shipAddressHtml = $this->getChildHtml("checkout_shipping_address_select");?>
-                        
+
                         <?php $shippingConfig = array();?>
-                        
+
                         <?php foreach ($this->getAddresses() as $_index => $_address): ?>
 						<div class="box">
 							<div class="box-title">
                            	<?php echo $this->__('Address %s of %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Change') ?></a>
                             </div>
                             <div class="box-content">
-                            
+
                             	<div class="col2-set">
                                     <div class="gift-messages">
                                      	<p class="control">
                                      		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
 											<input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
-            								<label for="no_signature_delivery_<?= $_address->getId()?>"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>                                       
+            								<label for="no_signature_delivery_<?= $_address->getId()?>"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>
             							</p>
                                     </div>
                             	</div>
-                            
+
     							<div class="shipping-address-select" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
     							<?= $shipAddressHtml?>
                             	</div>
                             </div>
                         </div>
-                        
+
                         <div class="box">
                             <div class="box-content">
                           	<?php if (!($_shippingRateGroups = $this->getShippingRates($_address))): ?>
                             	<p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
                             <?php else: ?>
                             	<select id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
-                           		
+
                            		<?php $ship_sign_national = array();?>
                            		<?php $ship_sign_without_national = array();?>
                            		<?php $ship_withoutsign_national = array();?>
                            		<?php $ship_withoutsign_without_national = array();?>
-                           		
+
                            		<?php foreach ($_shippingRateGroups as $code => $_rates): ?>
                             	<?php foreach ($_rates as $_rate): ?>
                                 	<?php if ($_rate->getErrorMessage()): ?>
                                     <?php //echo $this->escapeHtml($_rate->getCarrierTitle()) ?>: <?php echo $this->escapeHtml($_rate->getErrorMessage()) ?>
                                     <?php else: ?>
-                                    
+
                                     	<?php $_excl = $this->getShippingPrice($_address, $_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                                     	<?php $_incl = $this->getShippingPrice($_address, $_rate->getPrice(), true); ?>
-                                           
-                                       	<?php 
+
+                                       	<?php
                                        	      $shipDataArr =  $_rate->getData();
                                        	      $shipDataArr["excl"] = $_excl;
                                        	      $shipDataArr["incl"] = $_incl;
@@ -113,7 +114,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                        	<?php if($code == "matrixrate"){
                                                 $shipCodeArr = explode("#",$_rate->getCode());
                                                 if(count($shipCodeArr) == 3){
-                                                    if($shipCodeArr[1] == 1){ 
+                                                    if($shipCodeArr[1] == 1){
                                                         if($shipCodeArr[2] == 1){
                                                             $ship_sign_national[$_rate->getCode()] = $shipDataArr;
                                                         }else{
@@ -126,7 +127,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                            }else{
                                                                $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
                                                            }?>
-                                                       
+
                                                        <?php if($isIternational == $shipCodeArr[2]):?>
                                                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>">
                                                        <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
@@ -136,8 +137,8 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                        <?php endif; ?>
                                                    		</option>
                                                        <?php endif;?>
-                                                       
-                                                       
+
+
                                                   <?php }
                                                 }
                                              }else{
@@ -145,7 +146,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                  $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;sss
-                                                 
+
                                              ?>
                                              	<option value="<?= $this->htmlEscape($_rate->getCode()) ?>">
                                                        <?= $this->escapeHtml($this->getCarrierName($code))?>-<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
@@ -155,12 +156,12 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                        <?php endif; ?>
                                                    </option>
                                              <?php }?>
-                                       
+
                                   	<?php endif ?>
                             	<?php endforeach; ?>
               					<?php endforeach; ?>
                       		</select>
-                      		<?php 
+                      		<?php
                       		    $shippingConfig[$_address->getId()] = array(
                       		        '1_1' => $ship_sign_national,
                       		        '1_0' => $ship_sign_without_national,
@@ -171,7 +172,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                       		<?php endif; ?>
                         </div>
                     </div>
-                        
+
                         <script type="text/javascript">setShippingAddress('shipping-address-<?=$_index?>-<?=$_address->getId()?>', <?=$_address->getId()?> ,<?=$_address->getCustomerAddressId()?>)</script>
                         <?php endforeach; ?>
                         <?php echo $this->getChildHtml('checkout_billing_items') ?>
@@ -187,17 +188,17 @@ function setShippingAddress(eleId, addrId ,custAddrId){
             <?php if($stepKey == 'multishipping_addresses'):?>
                 <li id="opc-<?= $stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
                  	<a href="<?= $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
-                     	<div class="step-title">
+                     	<div class="step-title checkout-step-name col-12">
                         	<span class="number"><?= $cnt ?></span>
-                        	<h2><?= $this->__($_step->getLabel()) ?></h2>
+                        	<h3><?= $this->__($_step->getLabel()) ?></h3>
                        	</div>
                     </a>
                 </li>
             <?php else:?>
             	<li id="opc-billing" title="<?= $_step->getLabel() ?>" class="section" >
-                	<div class="step-title">
+                	<div class="step-title checkout-step-name col-12">
                    		<span class="number"><?= $cnt ?></span>
-                    	<h2><?= $_step->getLabel() ?></h2>
+                    	<h3><?= $_step->getLabel() ?></h3>
                     </div>
                 </li>
             <?php endif;?>
@@ -205,6 +206,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
     <?php $cnt++; ?>
     <?php endforeach; ?>
 </ol>
+</div>
 
 <script type="text/javascript">
     if (typeof Allure == "undefined") {

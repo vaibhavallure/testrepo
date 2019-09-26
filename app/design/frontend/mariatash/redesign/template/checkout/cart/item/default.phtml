@@ -58,20 +58,20 @@ if(!is_null($parentId)){
     <td class="cart_col2">
         <!--a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a>-->
 
-        <h2 class="product-name">
+        <h1 class="product-name">
             <?php if ($isVisibleProduct && $this->hasProductUrl()):?>
                 <a href="<?php echo $url ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
             <?php else: ?>
                 <?php echo $this->escapeHtml($this->getProductName()) ?>
             <?php endif; ?>
-        </h2>
+        </h1>
         <?php if ($_options = $this->getOptionList()):?>
             <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
             <div class="product-options" style="display:none;">-->
             <div class="item-options">
                 <?php foreach ($_options as $_option) : ?>
                     <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                    <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                    <div><span class="para-three"><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
                         <?php if (isset($_formatedOptionValue['full_view'])): ?>
                             <?php echo $_formatedOptionValue['full_view'] ?>
                         <?php else: ?>
@@ -79,6 +79,7 @@ if(!is_null($parentId)){
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
+                </span>
             </div>
             <!--</div>-->
         <?php endif;?>
@@ -101,19 +102,20 @@ if(!is_null($parentId)){
     <td  class="cart_col3">
         <?php echo "<span class='price_multi'>Price</span> ".$this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>
-    <td  class="cart_col4">
-        <div class="minus_icon" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-            <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
+    <td class="cart_col4">
+        <div class="minus_icon minus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+            <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus quantity-count" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">-</span>
         </div>
-        <div class="qty-wrap">
-            <input id="qtyid_<?php echo $_item->getId() ?>" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+        <div class="qty-wrap total_qty col-1">
+          <span class="quantity-count" id="qtyid_<?php echo $_item->getId() ?>_span"><?php echo $this->getQty() ?></span>
+            <input type="hidden" id="qtyid_<?php echo $_item->getId() ?>" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
             <input type="hidden" value="<?php echo $this->getQty() ?>"/>
         </div>
-        <div class="plus_icon" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-            <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
+        <div class="plus_icon plus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+            <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus quantity-count" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">+</span>
         </div>
     </td>
-    <td  class="cart_col5">
+    <td  class="cart_col5 text-right">
         <div class="cart-price-box">
 
             <?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
@@ -215,11 +217,11 @@ if(!is_null($parentId)){
     </td>
     <td  class="cart_col6">
         <div class="w-remove">
-            <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov"><?php echo $this->__('Remove ');?></a>
+            <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
             <div class="ad-to-fav">
-                <a id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Save to Wishlist</a>
+                <a class="info-text-three" id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Move to Wishlist</a>
             </div>
             <script type="text/javascript">
                 jQuery("#saveToFave").click(function(){
@@ -236,7 +238,7 @@ if(!is_null($parentId)){
 <?php if(!empty($message)): ?>  <tr class="messages">
         <td colspan="6">
             <div class="item-msg">
-             	<p><?php echo $message ?></p>
+             	<p class="info-text-two">Availability: <?php echo $message ?></p>
             </div>
         </td>
     </tr>
@@ -249,4 +251,3 @@ if(!is_null($parentId)){
         }
     });
 </script>
-

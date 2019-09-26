@@ -37,7 +37,8 @@ h4{
 	letter-spacing: 1.5px;
 }
 
-.info-text-three{
+.info-text-three,
+.totals-table tbody tr td span{
 	font-family: urw-din-xlight;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -82,6 +83,12 @@ h4{
 	font-size: 15px;
 }
 
+.options-text{
+	font-size: 18px;
+	font-family: urw-din-xlight;
+	color: rgba(41,41,41,0.90);
+}
+
 .light-button{
 	border: 0.5px solid rgba(41,41,41,0.90);
 	font-family: urw-din-bold;
@@ -92,7 +99,7 @@ h4{
 	background: #fff;
 }
 
-.dark-button{
+.dark-button, .checkout-types button{
 	background: rgba(41,41,41,0.90);
 	font-family: urw-din-bold;
 	font-size: 15px;
@@ -164,6 +171,7 @@ h4{
 .quantity-count{
 	font-family: urw-din-regular;
 	font-size: 18px;
+	-webkit-appearance: none !important;
 }
 
 .simple-page-title{
@@ -298,9 +306,9 @@ hr{
 /*Checkout Left Section (Steps)*/
 .checkout-step-name {
   border-top: 1px solid #D8D8D8;
+	padding: 0;
 }
-
-.checkout-step-name h3 {
+.checkout-step-name h3, .checkout-step-name span {
   font-size: 13px;
   font-family: urw-din-bold;
   text-transform: uppercase;
@@ -309,7 +317,18 @@ hr{
   padding-top: 21.3px;
   opacity: 0.6;
 }
-
+.checkout-step-name span {
+  float: left;
+  padding-right: 11px;
+	padding-top: 19px;
+}
+.checkout-multishipping-addresses .control label {
+  padding: 1px 0 0 40px;
+  background: url(../images/checkbox-login.png) no-repeat 0 0;
+}
+.checkout-multishipping-addresses .control input:checked+label{
+	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
+}
 /*Checkout Right Section (Sidebar)*/
 .side-box{
 	background-color: #f3f3f3;
@@ -2070,6 +2089,10 @@ span#popup_loader_register {
 .product-view .product-shop .padder h1, .product-view .product-shop .product-options .required, .product-view .product-shop .short-description, .block-layered-nav p.block-subtitle {
   display: none;
 }
+/* .checkout-privacy-policy input:checked+label { May be useful for the future
+	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
+} */
+
 /*Old from recently.viewd.css*/
 .image_carousel img {
 	padding:0;
@@ -2428,7 +2451,7 @@ ul.tabs {
 li#product_tabs_rpolicy_tabbed {
   text-align: center;
 }
-table.data-table, .data-table tr {
+.padder table.data-table, .padder .data-table tr {
   display: grid;
 	margin-top: 5px;
 }
@@ -2778,36 +2801,63 @@ ul.tabs li:nth-child(3){
 	top: 366px;
 }
 .pressPopup .next.disBtn {
-    background-image: url(../images/popup-light-arrow.png);
-    cursor: auto;
-    transform: rotate(180deg);
+  background-image: url(../images/popup-light-arrow.png);
+  cursor: auto;
+  transform: rotate(180deg);
 }
 .pressPopup .prev.disBtn {
-    background-image: url(../images/popup-light-arrow.png);
-    cursor: auto;
-    transform: rotate(0deg);
+  background-image: url(../images/popup-light-arrow.png);
+  cursor: auto;
+  transform: rotate(0deg);
 }
 .press-loader{
-    position: absolute;
-		top: 56%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+	top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .insta-main, .recently-view, .you_may_like{
-    position: relative;
-    width: 100%;
-    margin: 59px 0 0;
+  position: relative;
+  width: 100%;
+  margin: 59px 0 0;
 }
 .insta-main .image_carousel,.recently-view .image_carousel,.you_may_like .image_carousel{
-    width: 80%;
-    overflow: hidden;
-    position: relative;
-    margin: auto
+  width: 80%;
+  overflow: hidden;
+  position: relative;
+  margin: auto
 }
  .block-viewed #foo2 li img,.image_carousel #foo4 li img{
-    background: #f2f2f2!important;
+  background: #f2f2f2!important;
 }
 .you_may_like #foo4 li {
-    display: block;
-    margin: 0 9px 0 0;
+  display: block;
+  margin: 0 9px 0 0;
+}
+
+/*CHECKOUT - Shopping Bag*/
+table th {
+  font-size: 13px;
+  font-family: urw-din-bold;
+  color: rgba(41,41,41,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1.08px;
+}
+table thead {
+  border-bottom: 1px solid #d8d8d8;
+}
+.cart_col4 {
+  display: flex;
+	justify-content: center;
+}
+#shopping-cart-table .qty-wrap span.quantity-count {
+  display: block;
+}
+#shopping-cart-table .price{
+	text-align: right;
+	font-size: 18px;
+  font-family: urw-din-xlight;
+}
+.w-remove .info-text-three, .ad-to-fav .info-text-three{
+	text-decoration: underline;
 }
