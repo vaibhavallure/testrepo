@@ -9,16 +9,16 @@
  */
 
 
-include_once '/var/www/emailing/library/smarty/Smarty.class.php';
 include_once 'millesima_abstract.php';
 include_once 'millesima_bdd.php';
 include_once 'article.php';
 class Millesima_Message_Template extends Millesima_Abstract
 {
-    const REPAPPLI = '/var/www/emailing/';
+
     const DEBUG = false;
 
     public function createMessage($data){
+        $appPath = dirname(__DIR__, 1)."/";
         $ressourceClass = new Millesima_Ressource();
 
         //param default
@@ -37,8 +37,9 @@ class Millesima_Message_Template extends Millesima_Abstract
         /*if (! is_dir(self::REPAPPLI."emailings/".$codemessage)){
             mkdir(self::REPAPPLI."emailings/".$codemessage, 0777);
         }*/
-        if (! is_dir(self::REPAPPLI."fichiers/emailings/".$codemessage)){
-            mkdir(self::REPAPPLI."fichiers/emailings/".$codemessage, 0777);
+        //die($appPath."fichiers/emailings/".$codemessage);
+        if (! is_dir($appPath."fichiers/emailings/".$codemessage)){
+            mkdir($appPath."fichiers/emailings/".$codemessage, 0777);
         }
 
         $datevalide = $data["datevalide"];
@@ -70,7 +71,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 		}
 		
         if($data["block_image"]){
-			$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/block_image/fonctions_images.php";
+			$filename = $appPath.'smarty/templates/'.$tpl."/block_image/fonctions_images.php";
 			if (file_exists($filename)){
                 require_once($filename);
             }
@@ -126,10 +127,12 @@ class Millesima_Message_Template extends Millesima_Abstract
              * see /config/ressources.php
              */
             $oSmarty = new Smarty();
-            $oSmarty->template_dir = self::REPAPPLI.'smarty/templates/';
-            $oSmarty->compile_dir = self::REPAPPLI.'smarty/templates_c/';
-            $oSmarty->config_dir = self::REPAPPLI.'smarty/configs/';
-            $oSmarty->cache_dir = self::REPAPPLI.'smarty/cache/';
+            $oSmarty->template_dir = $appPath.'smarty/templates/';
+            $oSmarty->compile_dir = $appPath.'smarty/templates_c/';
+            $oSmarty->config_dir = $appPath.'smarty/configs/';
+            $oSmarty->cache_dir = $appPath.'smarty/cache/';
+            $oSmarty->debugging = false;
+            $oSmarty->error_reporting = E_ALL & ~E_NOTICE;
 
 			//if(in_array($country, $is_ibm)){
 				$tracking = $tracking_ibm;
@@ -196,13 +199,13 @@ class Millesima_Message_Template extends Millesima_Abstract
             * versions en ligne/smartphone, thème, vcard desabonnement
             *
 		    */
-			$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/entete/ressources_entetes.php";
+			$filename = $appPath.'smarty/templates/'.$tpl."/entete/ressources_entetes.php";
 			if (file_exists($filename)){
                 require($filename);
             }
 			
             /* Conditions pour le menu */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/menus/ressources_menus.php";
+            $filename = $appPath.'smarty/templates/'.$tpl."/menus/ressources_menus.php";
             if (file_exists($filename)){
                 require($filename);
             }
@@ -217,7 +220,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 			
 			/* MODULE BLOCK_IMAGE */
             if($data["block_image"]){
-				$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/block_image/traitement_images.php";
+				$filename = $appPath.'smarty/templates/'.$tpl."/block_image/traitement_images.php";
 				if (file_exists($filename)){
 					require($filename);
 				}
@@ -225,7 +228,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             }
 
 			
-			$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/boutons/ressources_btns.php";
+			$filename = $appPath.'smarty/templates/'.$tpl."/boutons/ressources_btns.php";
             if (file_exists($filename)){
                 require($filename);
             }
@@ -265,7 +268,7 @@ class Millesima_Message_Template extends Millesima_Abstract
                     $asterisquedesc = $ressourceClass->getRessourceValue($country,'ast_description',$vardates);
                 }
 
-                $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/informations_importantes/ressources_codepromobandeau.php";
+                $filename = $appPath.'smarty/templates/'.$tpl."/informations_importantes/ressources_codepromobandeau.php";
                 if (file_exists($filename)){
                     require($filename);
                 }
@@ -287,7 +290,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 					$oSmarty->assign('iscodepromo', $iscodepromo);
 					$oSmarty->assign('codepromo', $codepromo);
 					
-					$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/codepromo/ressources_codepromo.php";
+					$filename = $appPath.'smarty/templates/'.$tpl."/codepromo/ressources_codepromo.php";
 					if (file_exists($filename)){
 						require($filename);
 					}
@@ -333,7 +336,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 					}
 					$oSmarty->assign('appvins', $appellationshtml);
 					
-					$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/listing_produits/ressources_listing.php";
+					$filename = $appPath.'smarty/templates/'.$tpl."/listing_produits/ressources_listing.php";
 					if (file_exists($filename)){
 						require($filename);
 					}
@@ -423,43 +426,43 @@ class Millesima_Message_Template extends Millesima_Abstract
             }
 
             /* Contact */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/contact/ressources_contact.php";
+            $filename = $appPath.'smarty/templates/'.$tpl."/contact/ressources_contact.php";
             if (file_exists($filename)){
                 require($filename);
             }
             /* Reassurance */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/reassurance/ressources_reassurance.php";
+            $filename = $appPath.'smarty/templates/'.$tpl."/reassurance/ressources_reassurance.php";
             if (file_exists($filename)){
                 require($filename);
             }
 
             /* Desabo */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/desabo/ressources_desabo.php";
+            $filename = $appPath.'smarty/templates/'.$tpl."/desabo/ressources_desabo.php";
             if (file_exists($filename)){
                 require($filename);
             }
 			
 			/* mentions légales */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/mentions/ressources_mentions.php";
+            $filename = $appPath.'smarty/templates/'.$tpl."/mentions/ressources_mentions.php";
             if (file_exists($filename)){
                 require($filename);
             }
 
             /* Push */
-			$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/push/traitement_push.php";
+			$filename = $appPath.'smarty/templates/'.$tpl."/push/traitement_push.php";
             if (file_exists($filename)){
                 require($filename);
             }
 
             /* Reseaux sociaux */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/social/ressources_social.php";
+            $filename = $appPath.'smarty/templates/'.$tpl."/social/ressources_social.php";
             if (file_exists($filename)){
                 require($filename);
             }
 
             /* Wallet Widget */
             if(isset($_POST["w_wallet"]) && $_POST["w_wallet"]){
-                $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/wallet/ressources_wallet_selligent.php";
+                $filename = $appPath.'smarty/templates/'.$tpl."/wallet/ressources_wallet_selligent.php";
                 if (file_exists($filename)){
                     require($filename);
                 }
@@ -471,6 +474,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             if(isset($_POST["isPromotionCard"]) && $_POST["isPromotionCard"]) {
                 $isPromotionCard = $data['isPromotionCard'];
                 $promotionCardDescription = $data['promotionCardDescription-' . $country];
+
                 $promotionCardDiscountCode = $data['promotionCardDiscountCode'];
                 $promotionCardImageLink = $data['promotionCardImageLink'];
 
@@ -556,7 +560,7 @@ class Millesima_Message_Template extends Millesima_Abstract
              * Ecriture des fichiers html depuis le return $output de l'objet smarty
              * @var unknown_type
              */
-            $filename = self::REPAPPLI."fichiers/emailings/".$codemessage."/".$country.$codemessage.".html";
+            $filename = $appPath."fichiers/emailings/".$codemessage."/".$country.$codemessage.".html";
             //echo $filename;exit;
             $handle = fopen("$filename", "w");
             fwrite($handle,$this->encodeVar($output));
@@ -567,25 +571,25 @@ class Millesima_Message_Template extends Millesima_Abstract
 			if($country == 'F' || $country == 'B' || $country == 'L' || $country == 'SF'){
                 $briefClass = new Millesima_Brief();
                 $brief = $briefClass->getBrief($data['brief_id']);
-				$htmlfr .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$brief['objfr']."<br />";
+				$htmlfr .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$brief['objfr']."<br />";
 			}elseif($country == 'D' || $country == 'O' || $country == 'SA'){
 				$objet = $traductionClass->getValueTrad($data['brief_id'],'d','objtrad');
-                $htmlde .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+                $htmlde .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'G' || $country == 'I' || $country == 'H' || $country == 'SG'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'g','objtrad');
-				$htmluk .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmluk .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'Y'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'y','objtrad');
-				$htmlit .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmlit .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'E'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'e','objtrad');
-				$htmles .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmles .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'P'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'p','objtrad');
-				$htmlpt .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmlpt .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'U'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'u','objtrad');
-				$htmlus .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmlus .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}
 
             //get version text of mail
