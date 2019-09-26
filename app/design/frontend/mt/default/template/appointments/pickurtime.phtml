@@ -171,12 +171,22 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             {
                 $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
                 $endTime = strtotime("+$interval minutes", strtotime($selectedTime));
+                /*CODE FOR BROWNTHOMAS*/
+                $currentStore = $this->getData("store_id");
 
+
+                if(( $currentStore == $limerick) || ($currentStore == $cork)  ) {
+                    $selectedTime = $helper->getStaticSelectTime($date,$selectedTime,true);
+
+                }
 
 
                 $slotval ="`". "time_slot_".$i ."`";
                 //echo '<br>'.$slotval;
                 $endTime = date('H:i', $endTime);
+                if(( $currentStore == $limerick) || ($currentStore == $cork)  ) {
+                    $endTime = $helper->getStaticSelectTime($date, $endTime, false);
+                }
                 //echo $i.' '.$selectedTime.'<br>';
                 //echo $endTime;
                 $show=false;
@@ -189,6 +199,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     $endTo = date('H:i:s', $endTo);
                     $fromTime = date("Y-m-d", strtotime($date))." " .$selectedTime.":00";
                     $toTime = date("Y-m-d", strtotime($date))." " .$endTo;
+
                     $appCollection = Mage::getModel('appointments/appointments')->getCollection();
                     $appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
                         ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
@@ -327,15 +338,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     }
 
 
-                    /*CODE FOR BROWNTHOMAS*/
-                    $currentStore = $this->getData("store_id");
 
-                    $increment = 0;
-                    if(( $currentStore == $limerick) || ($currentStore == $cork)  ) {
-                        $selectedTime = $helper->getStaticSelectTime($date,$selectedTime,true);
-                        $endTime = $helper->getStaticSelectTime($date,$selectedTime,false);
-
-                    }
 
                     /*END STATIC CODE*/
 
