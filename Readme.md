@@ -19,7 +19,11 @@
 - Login to mysql container and load dump
 
 > docker-exec -it millesima-emailing-mysql mysql -uroot -pmillesima
-mysql> use emailing;
-mysql> source bdd/backup_db_emailing_25092019.sql
-mysql> exit
-ByeBye
+>
+> mysql> use emailing;
+>
+> mysql> source bdd/backup_db_emailing_25092019.sql
+>
+> mysql> exit
+>
+> ByeBye
