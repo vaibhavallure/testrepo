@@ -42,7 +42,7 @@
                 $linksCount = count($_links);
                 $i = 1;
                 ?>
-                <ul id="order-info-tabs">
+                <ul id="order-info-tabs" style="display: none;">
                     <?php foreach ($_links as $_link): ?>
                         <?php if($_link->getUrl()): ?>
                             <li><a href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a></li>

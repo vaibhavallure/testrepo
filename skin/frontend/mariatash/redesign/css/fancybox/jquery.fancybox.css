@@ -50,18 +50,18 @@
 }
 
 .fancybox-opened .fancybox-skin {
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	/*-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	background: none repeat scroll 0 0 #D4D4D7;
+	background: none repeat scroll 0 0 #D4D4D7;*/
 	/*FANCYBOX QUICKVIEW ARG*/
 
 }
 .catalog-category-view .fancybox-opened .fancybox-skin {
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	/*-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 	        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	background:url(../../images/bg-fancy-press.png) repeat 0 0;
+	background:url(../../images/bg-fancy-press.png) repeat 0 0;*/
 	/*FANCYBOX QUICKVIEW ARG*/
 	/*height: 510px !important;
     width: 785px !important;*/
