@@ -250,6 +250,20 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         return '';
     }
 
+    public function getBrownthomasTimeByValue($value){
+        $timings = Mage::getModel('appointments/adminhtml_source_timing')->toBrownthomasOptionArray();
+
+        var_dump($timings);
+        foreach ($timings as $time) {
+            $timeValue = $time['value'];
+            if ("$timeValue" >=  "$value"){
+                return $time['label'];
+            }
+        }
+        return '';
+
+    }
+
     public function getTimeByKey ($key) {
 
         $timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
@@ -837,5 +851,15 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
             }
             return null;
         }
+    }
+
+    public function  getCustomersInfoSetting(){
+        $store_id = $this->getReqStoreId();
+
+    }
+    public function getCustomersInfo($store_id){
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($store_id, $configData['stores']);
+        return($configData['enable_people_info'][$storeKey]);
     }
 }
