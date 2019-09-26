@@ -426,13 +426,13 @@ class Millesima_Abstract{
         $message .= ''. '<br />';
         $message .= 'Le brief '.$codeBrief;
         $headers = 'From: brief@millesima.com' . "\r\n" .
-            'Reply-To: jcortina@millesima.com' . "\r\n" .
+            'Reply-To: lbassagaits@millesima.com' . "\r\n" .
 			'Content-Type: text/html; charset="utf-8' . "\r\n" .
 			'Content-Transfer-Encoding: 8bit' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         if(!$testenvoi){
             $recipiants[] = 'alopes@millesima.com';
-            $replyto = "jcortina@millesima.com,alopes@millesima.com,ldeker@millesima.com";
+            $replyto = "lbassagaits@millesima.com,alopes@millesima.com,ldeker@millesima.com";
         }else {
             $recipiants = array('dgorski@millesima.com');
         }
@@ -597,10 +597,9 @@ class Millesima_Abstract{
             $message .= 'Merci de validé leurs traductions'. '<br />';
         } else if($type == 'alltrad'){
             if(!$testenvoi){
-                $recipiants[] = 'jcortina@millesima.com';
+                $recipiants[] = 'lbassagaits@millesima.com';
                 $recipiants[] = 'ldeker@millesima.com';
             }
-            //$recipiants[] = 'sbazerque@millesima.com';
             $objet = 'Traductions complètes pour le brief '.$codeBrief;
             $message .=' a été traduit dans toutes les langues.'. '<br />';
 			$message .= ''. '<br />';
@@ -608,7 +607,7 @@ class Millesima_Abstract{
         } else if($type == 'batfr')	{
             if(!$testenvoi){
                 $recipiants[] = 'egarnaud@millesima.com, mdutoya@millesima.com, bgibier@millesima.com,pastanislas@millesima.com, vvecchione@millesima.com';
-			    $cc = 'jcortina@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, sbazerque@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com';
+			    $cc = 'lbassagaits@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com';
             } else {
                 $cc = '';
             }
@@ -685,7 +684,6 @@ class Millesima_Abstract{
         $tabRecipiant = array();
         if(!$isTest){
             $tabRecipiant[] = 'alopes@millesima.com';
-            $tabRecipiant[] = 'jcortina@millesima.com';
             $tabRecipiant[] = 'ldeker@millesima.com';
             $tabRecipiant[] = 'bgibier@millesima.com';
             $tabRecipiant[] = 'lbassagaits@millesima.com';
