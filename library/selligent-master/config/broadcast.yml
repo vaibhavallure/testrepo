@@ -1,7 +1,0 @@
-login: ~
-password: ~
-namespace: "http://tempuri.org/"
-wsdl: ~
-options:
-    classmap:
-        CreateCampaignResponse: "Mediapart\\Selligent\\Response\\CreateCampaignResponse"
