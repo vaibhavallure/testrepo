@@ -36,3 +36,4 @@ If you want to use phpMyadmin :
 - cd into phpMyAdmin directory
 - composer install (outside of container)
 - adjust config.inc.php to your needs
+- access via http://localhost:8080/phpmyadmin/
