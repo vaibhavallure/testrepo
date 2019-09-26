@@ -37,3 +37,15 @@ If you want to use phpMyadmin :
 - composer install (outside of container)
 - adjust config.inc.php to your needs
 - access via http://localhost:8080/phpmyadmin/
+
+## Getting Production Ready
+- Setup cron* files on project root in a crontab
+- Setup mails on server so that sales, marketing etc.. can be aware of their tasks
+- Edit /class/millesima_abstract.php to setup Host server
+- Mount CUMULUS folder on host CF : cronCampaign.php (untested by me as I am writing this - is it used ?)
+- Test stuffs before deploying ...
+
+## Todos
+- Save PromotionCards to database
+- Ugrade Slim Library as we're using a very old one
+
