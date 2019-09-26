@@ -9,14 +9,14 @@
 
 class Millesima_Bdd
 {
-    const HOST = 'localhost';
-    const USERNAME = 'root';
-    const PASSWORD = '';
+    const HOST = 'millesima-emailing-mysql';
+    const USERNAME = 'emailing';
+    const PASSWORD = 'emailing';
     const DBNAME = 'emailing';
 
     /**
      *
-     * variable qui stock la conection à la base
+     * variable qui stock la connection à la base
      * @var unknown_type
      */
     private $_dbInstance = '';
