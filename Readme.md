@@ -38,6 +38,12 @@ If you want to use phpMyadmin :
 - adjust config.inc.php to your needs
 - access via http://localhost:8080/phpmyadmin/
 
+## Using mailhog
+- By default containter is using mhsendmail to send internal emails to mailhog
+- you can access mailhog via http://localhost:8025
+- check phpdocker/php-fpm/php-ini-overrides.ini 
+- see section below
+
 ## Getting Production Ready
 - Setup cron* files on project root in a crontab
 - Setup mails on server so that sales, marketing etc.. can be aware of their tasks
