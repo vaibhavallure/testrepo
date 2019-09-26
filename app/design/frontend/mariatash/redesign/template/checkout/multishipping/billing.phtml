@@ -35,7 +35,7 @@
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
 <div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc p-0">
+<ol id="checkoutSteps" class="opc col-lg-8 col-12">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_billing'): ?>
             <li id="opc-<?= $stepKey ?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
@@ -60,12 +60,8 @@
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
-                            <div class="col-2 col-wide">
-=======
                             <?php endif;?>
-                            <div class="col-2 col-wide">                                
->>>>>>> 3a9365eeadf76cde3212e6d0d6e80602174170e9
+                            <div class="col-2 col-wide">
                                 <div class="box">
                                     <div class="box-title">
                                         <h2><?= $this->__('Payment Method') ?></h2>

@@ -25,9 +25,9 @@
  */
 ?>
 <div class="product-name">
-	<h3><a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->htmlEscape($this->getProductName()) ?></a></h3>
+	<h1><a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->htmlEscape($this->getProductName()) ?></a></h1>
 </div>
-<?php 
+<?php
 $type = $this->getProduct()->getTypeId();
 if('configurable' == 'configurable'):
 ?>

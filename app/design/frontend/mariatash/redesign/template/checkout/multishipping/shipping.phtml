@@ -44,7 +44,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 }
 </script>
 <div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc">
+<ol id="checkoutSteps" class="opc col-lg-8 col-12">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_shipping'): ?>
             <li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >

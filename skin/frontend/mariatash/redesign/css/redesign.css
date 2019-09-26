@@ -251,6 +251,10 @@ margin: 24px 0 46px !important;
 	display: block;
 }
 
+.product-name a{
+	color: #000;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -316,6 +320,7 @@ hr{
   letter-spacing: 1px;
   padding-top: 21.3px;
   opacity: 0.6;
+	padding-bottom: 15px;
 }
 .checkout-step-name span {
   float: left;
@@ -328,6 +333,9 @@ hr{
 }
 .checkout-multishipping-addresses .control input:checked+label{
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
+}
+.gift-messages label:before {
+  content: none !important;
 }
 /*Checkout Right Section (Sidebar)*/
 .side-box{
@@ -386,7 +394,7 @@ select{
 }
 
 .product-description-section {
-  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #d8d8d8;
   padding: 30px 0;
 }
 
@@ -743,7 +751,6 @@ nav.mariatash-header {
 
 .products-grid .product-name a {
     font-size: 14px;
-		color: rgba(41,41,41,1);
     font-family: urw-din-xlight;
 }
 .catalog-common-grid .price-box {
@@ -2405,7 +2412,7 @@ ul#foo4 {
 .product-shop {
   margin-top: 71px;
 }
-.product-name {
+.catalog-category-view .product-name{
   margin-bottom: 16px;
 }
 .catalog-product-view .amconf-images-container img,.quickview-index-index .amconf-images-container img  {
@@ -2861,8 +2868,6 @@ table thead {
 .w-remove .info-text-three, .ad-to-fav .info-text-three{
 	text-decoration: underline;
 }
-
-
 .fancybox-type-iframe{
 	position: fixed!important;
 }
@@ -2889,6 +2894,20 @@ table thead {
 	height: 26px;
 	background-size: 100%;
 }
+.checkout-multishipping-addresses .data-table td{
+	vertical-align: top;
+}
+.overview-address-item .product-image img, #multiship-addresses-table .product-image img{
+	background: #fff;
+}
+.title-buttons {
+  border-bottom: 1px solid #d8d8d8;
+  padding-bottom: 30px;
+}
+/* cccc */
+
+
+
 /*-----------------shop by look------------*/
 .shop_by_look-img,.shop_by_look .big-popup-image {
 	width: 322px;
