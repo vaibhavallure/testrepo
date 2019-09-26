@@ -70,8 +70,9 @@ if ($session->isLoggedIn()) {
 
 <?php if($getCustomersInfo == 1):
 ?>
+<?php if($fetch_aptId):?>
 <input  type="hidden" name="id"   value="<?= $fetch_aptId ?>">
-
+<?php endif;?>
 <?php
 $count=1;
     if($customers):

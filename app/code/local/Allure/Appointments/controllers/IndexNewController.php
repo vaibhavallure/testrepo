@@ -46,7 +46,6 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
 
             } else {
                 $this->log()->addStoreWiseLog('no piercer available for this slot', $post_data['store_id']);
-                $this->taskEnd();
                 Mage::getSingleton('core/session')->setSlotInvalid("true");
                 $this->_redirectReferer();
                 return;
