@@ -682,7 +682,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             }
             $EnablePeopleOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
         }
-        $html.='<div class="appointment-setting-common apt-row-1 right">';
+        $html.='<div class="appointment-setting-common apt-row-1">';
         $html .= '<label for="appointments_enable_people_info">Enable People Info </label>';
         $html .= '<select onclick="enablePeopleContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[enable_people_info][]'.'" style="">';
         $html.= $EnablePeopleOpt;

@@ -1,6 +1,8 @@
 <?php
 $model = Mage::registry('apt_modify_data');
 $storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
+$limerick = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_limerick');
+$cork = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_cork');
 
 if(isset($storeIdNone)){
     $popupStoreName = Mage::helper('appointments/data')->getPopupStoreName($storeIdNone);
@@ -30,8 +32,9 @@ if(count($storeId_arr) >= 1){
                 if($st_value == $key){
                     $requestStoreName = $store;
                     $requestStoreId = $key;
-
-                    $multi_stores[$requestStoreId]= $requestStoreName;
+                    if($key != $limerick && $key != $cork) {
+                        $multi_stores[$requestStoreId] = $requestStoreName;
+                    }
                 }
             }
         }
