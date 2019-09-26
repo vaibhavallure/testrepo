@@ -1,4 +1,8 @@
 <?php
+$limerick = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_limerick');
+$cork = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_cork');
+?>
+<?php
 $fetch_model = Mage::registry('apt_modify_data');
 
 
@@ -157,6 +161,15 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		{
 		    $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
 			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
+
+            /*CODE FOR BROWNTHOMAS*/
+            $currentStore = $this->getData("store_id");
+
+
+            if(( $currentStore == $limerick) || ($currentStore == $cork)  ) {
+                $selectedTime = $helper->getStaticSelectTime($date,$selectedTime,true);
+
+            }
 
 			$slotval ="`". "time_slot_".$i ."`";
 			//echo '<br>'.$slotval;
