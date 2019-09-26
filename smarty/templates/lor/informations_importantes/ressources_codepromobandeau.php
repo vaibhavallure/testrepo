@@ -45,9 +45,12 @@
 	
 	case "U" :
         $phrasecodebd= "With the promo code";
-		break;	
+		break;
+
+     default: $phrasecodebd = '';
+     break;
 }
 
-	$oSmarty->assign('phrasecodebd', $phrasecodebd)
+	$oSmarty->assign('phrasecodebd', $phrasecodebd);
 	
 ?>

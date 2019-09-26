@@ -62,7 +62,7 @@ class Millesima_Brief extends Millesima_Abstract
     public function getStatutBrief($briefId){
         $bddClass = new Millesima_Bdd();
         $res = $bddClass->selectone("SELECT statut FROM brief WHERE id = (?)",array($briefId),'statut');
-        if(count($res)>0){
+        if( is_array($res) && count($res)>0){
             return $res[0];
         } else {
             return false;

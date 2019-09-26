@@ -565,7 +565,7 @@
     </style>
     {/literal}
     <!--==============Promotion card ===============-->
-    {if $isPromotionCard}
+    {if isset($isPromotionCard)}
         {include file="$tpl/card/structure_promotioncard.tpl"}
     {/if}
 </head>
@@ -579,18 +579,18 @@
     {include file="$tpl/informations_importantes/structure_info.tpl"}
 {/if}
 <!--==============Image principale/Bandeau===============-->
-{if $titregen}
+{if isset($titregen)}
 
     {if $country != "U"}
 
     {/if}
 {/if}
 
-    {if $bdunq}
+    {if isset($bdunq)}
         {include file="$tpl/block_image/templates_images/bandeau_unique.tpl"}
     {/if}
 <!--==============Description===============-->
-{if $descgen OR $lstprmodesc}
+{if isset($descgen) OR isset($lstprmodesc)}
     {include file="$tpl/description_generale/structure_description.tpl"}
 {/if}
 <!--==============Listing produit===============-->
@@ -602,17 +602,17 @@
     {include file="$tpl/listing_produits/listing.tpl"}
 {/if}
 <!--==============Article===============-->
-{if $articles_nb > 0}
+{if isset($articles_nb) && $articles_nb > 0}
     {include file="$tpl/articles/article.tpl"}
 {/if}
 <!--==============Bandeau Frais de port==============-->
-{if $fdpo.ssphrase}
+{if isset($fdpo.ssphrase)}
     {include file="$tpl/informations_importantes/structure_fdpo.tpl"}
 {/if}
 <!--=============Bloc push debut===============-->
 {include file="$tpl/push/push.tpl"}
 <!--==============Wallet debut ===============-->
-{if $w_wallet}
+{if isset($w_wallet)}
     {include file="$tpl/wallet/structure_widget.tpl"}
 {/if}
 <!--==============Footer debut===============-->

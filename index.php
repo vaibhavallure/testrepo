@@ -84,7 +84,7 @@ $app->post('/view/ajax/ressource_info/','searchRessource');
 /////////////////////  Function Route Page  ////////////////////////////////////////
 function getView($content,$url = '../') {
     //die('ggfdgdfgd');
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
 
     $app->view()->setData(array('content' => $content, 'url'=> $url));
     $app->render('view.php');
@@ -92,7 +92,7 @@ function getView($content,$url = '../') {
 
 function getHomeView() {
     //die('ggfdgdfgd');
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $content =$app->view()->fetch('home.php');
     getView($content);
 }
@@ -100,7 +100,7 @@ function getHomeView() {
 /////////////////////  Function action brief   ////////////////////////////////////////
 
 function getGestionBriefView($html = '',$url = '../') {
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
 
     if($html != ''){
         $app->view()->appendData(array( 'html' => $html));
@@ -121,7 +121,7 @@ function getGestionBriefView($html = '',$url = '../') {
 }
 
 function getActionBriefView($html = '',$url = '../../', $brief = array(),$button = 'Envoyer') {
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
 
     if($html != ''){
         $app->view()->appendData(array( 'html' => $html));
@@ -142,7 +142,7 @@ function getActionBriefView($html = '',$url = '../../', $brief = array(),$button
 }
 
 function actionBrief(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
     $briefClass = new Millesima_Brief();
     $tradClass = new Millesima_Traduction();
@@ -403,7 +403,7 @@ function getBriefCheckView ($param){
 /////////////////////  Function action traduction   ////////////////////////////////////////
 
 function getTraductionBriefView($html = '',$url = '../', $trad = array(), $brief = array()){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
 
     if($html != ''){
@@ -421,7 +421,7 @@ function getTraductionBriefView($html = '',$url = '../', $trad = array(), $brief
 }
 
 function actionTrad(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
     $tradClass = new Millesima_Traduction();
     $bddClass = new Millesima_Bdd();
@@ -504,7 +504,7 @@ function getTradCheckViewByBrief ($param){
 }
 
 function invalidTraduction (){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
 
     $textMasterClass = new Millesima_Textmaster();
@@ -524,7 +524,7 @@ function invalidTraduction (){
 /////////////////////  Function action message   ////////////////////////////////////////
 
 function getMessageView($html = '',$url = '../') {
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $briefClass = new Millesima_Brief();
     $briefList = $briefClass->getBriefMessageList();
     $app->view()->appendData(array( 'brief_list' => $briefList));
@@ -540,7 +540,7 @@ function getMessageView($html = '',$url = '../') {
 
 
 function createMessage(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
     //var_dump($data['btnaction']);
 	//die('gfdgdfg');
@@ -589,7 +589,7 @@ function createMessage(){
 function actionMessage() {
     $html = '';
     $url = '../';
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
 
     //recupération des messages
     $messageClass = new Millesima_Message();
@@ -634,7 +634,7 @@ function actionMessage() {
 
 /////////////////////  Function action segment   ////////////////////////////////////////
 function getSegmentView($html = '',$url = '../') {
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $segmentClass = new Millesima_Segment();
 
     $segmentList = $segmentClass->getSegmentList();
@@ -650,7 +650,7 @@ function getSegmentView($html = '',$url = '../') {
 }
 
 function createSegment(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
 
     $rep="dolist";
@@ -714,7 +714,7 @@ function traitementTinyclues(){
     $logFile = fopen ('tinyclues.log', "a+" ); //on l'ouvre en ecriture
     fputs ( $logFile, 'Debut traitement Tyniclues : '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
 
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
 
     $tinycluesClass = new Millesima_Tinyclues();
@@ -787,7 +787,7 @@ function traitementTinyclues(){
 function createCampaign(){
     $html = '';
     $url = '../';
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
 
     //recupération des messages pour la création des campagnes
     $messageClass = new Millesima_Message();
@@ -941,7 +941,7 @@ function createCampaign(){
 
 function statCampaign(){
     $url = '../';
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $campaignClass = new Millesima_Campaign();
     $segmentClass = new Millesima_Segment();
     $messageClass = new Millesima_Message();
@@ -970,7 +970,7 @@ function statCampaign(){
 
 function getRessource($html = ''){
     $url = '../';
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $filter = $app->request->post();
     //$filter = array();
     $ressourceClass = new Millesima_Ressource();
@@ -993,7 +993,7 @@ function getRessource($html = ''){
 
 function getActionRessource(){
     $url = '../';
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
     $ressourceClass = new Millesima_Ressource();
     $bddClass = new Millesima_Bdd();
@@ -1135,9 +1135,9 @@ function getConfigDataIndex($name) {
 
 /////////////////////  brief  ////////////////////////////////////////
 function verifBriefExist(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
-    $return = '';
+    $return = array();
     $briefClass = new Millesima_Brief();
     $briefDup = $briefClass->getBriefByCodeBriefAndTypeBrief($data['typebrief'],$data['code']);
     if(!$briefDup){
@@ -1151,7 +1151,7 @@ function verifBriefExist(){
 
 
 function getBriefInfo($idBrief) {
-    $return = '';
+    $return = array();
     $tabTrad = array();
     if($idBrief != 'undefined'){
         $briefClass = new Millesima_Brief();
@@ -1171,7 +1171,7 @@ function getBriefInfo($idBrief) {
 }
 
 function getMessageSaveInfo($idBrief) {
-    $return = '';
+    $return = array();
     if($idBrief != 'undefined'){
         $messageDataClass = new Millesima_Messagedata();
         $tradClass = new Millesima_Traduction();
@@ -1198,7 +1198,7 @@ function getTradInfo($data) {
 }
 
 function saveTradInfo(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     //verification param for creation
     $data = $app->request->post();
     $tradClass = new Millesima_Traduction();
@@ -1214,7 +1214,7 @@ function saveTradInfo(){
 
 /////////////////////  campaigne  ////////////////////////////////////////
 function sendCampaignReelAjax (){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
     $return = '';
 
@@ -1247,7 +1247,7 @@ function  searchCampaign($name){
 }
 
 function searchRessource(){
-    $app = \Slim\Slim::getInstance();
+    $app = Slim\Slim::getInstance();
     $data = $app->request->post();
     $return = '';
 

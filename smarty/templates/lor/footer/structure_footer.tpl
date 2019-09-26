@@ -62,9 +62,11 @@
                                                             <table cellpadding="0" cellspacing="0" border="0" width="15" align="center" style="margin:auto;width:15px" class="t_w14px m_w14px" role="presentation">
                                                                 <tr>
                                                                     <td style="text-align:center" class="m_pb20px">
+                                                                       {if isset($numero) }
                                                                         <a href="{$numero.href}" style="color:#000000;outline:none;border:none" title="Contactez-nous !">
                                                                             <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-phone.png" alt="Phone" width="15" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
                                                                         </a>
+                                                                       {/if}
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -493,7 +495,7 @@
                         <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;width:640px" class="t_w100p m_w100p" role="presentation">
                             <tr>
                                 <td style="font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#000000;text-align:center;font-size:13px;padding-top:15px;padding-bottom:15px;vertical-align:middle;letter-spacing:3px;line-height:15px" class=" opensans">
-                                    {$social.titre}
+                                {if isset($social.titre) }  {$social.titre} {/if}
                                 </td>
                             </tr>
                         </table>
@@ -600,10 +602,11 @@
                                                 <table cellpadding="0" cellspacing="0" border="0" width="37" align="center" style="margin:auto;width:37px" class="t_w37px m_w37px" role="presentation">
                                                     <tr>
                                                         <td style="text-align:center">
-                                                            <a href="{$social.instagram}" style="color:#000000;outline:none;border:none" title="Instagram">
+                                                          {if isset($social.instagram) } <a href="{$social.instagram}" style="color:#000000;outline:none;border:none" title="Instagram">
                                                                 <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon_instagram.png" alt="Instagram" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                 />
                                                             </a>
+                                                          {/if}
                                                         </td>
                                                     </tr>
                                                 </table>

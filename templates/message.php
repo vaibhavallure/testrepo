@@ -1231,7 +1231,7 @@ function getCode($typebrief){
                                     </div>
 
                                     <div class="input-group L">
-                                        <input name="ppromotionCardDescription-L" id="promotionCardDescriptionL" type="text" placeholder="Encadré Vert Luxembourg" value="" class="form-control pays-input" onkeyup="copyContent('L', 'promotionCardDescription')">
+                                        <input name="promotionCardDescription-L" id="promotionCardDescriptionL" type="text" placeholder="Encadré Vert Luxembourg" value="" class="form-control pays-input" onkeyup="copyContent('L', 'promotionCardDescription')">
                                         <span class="input-group-addon">
                                                 L
                                             </span>

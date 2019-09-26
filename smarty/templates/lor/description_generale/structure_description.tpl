@@ -26,12 +26,12 @@
                         <table cellpadding="0" cellspacing="0" border="0" width="495" align="center" style="width:495px" class="t_w100p m_w100p" role="presentation">
                             <tr>
                                 <td style="font-family:Arial,Helvetica,sans-serif;color:#272727;text-align:{$desc.textalign};font-size:13px;padding-top:30px;padding-bottom:20px;vertical-align:middle;line-height:18px" class="t_fz15px t_pt15px t_pr8p t_pb25px t_pl8p t_lh21px m_fz15px m_pt15px m_pr8p m_pb25px m_pl8p m_lh21px">
-                                    {$desc.text}{if $lstprmodesc}{if $desc.text != ""}<br /><br />{/if}{$lstpromotab.desc}{/if}
+                                    {$desc.text}{if isset($lstprmodesc)}{if $desc.text != ""}<br /><br />{/if}{$lstpromotab.desc}{/if}
                                 </td>
                             </tr>
 
                             <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin-bottom:15px;width:640px" class="t_w100p m_w100p" role="presentation">
-                                {if $iscodepromo}
+                                {if isset($iscodepromo)}
                                 <tr>
                                     <td style="font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#9c9487;text-align:center;text-transform:uppercase;font-size:13px;padding-bottom:15px;vertical-align:middle;letter-spacing:3px;line-height:15px" class=" sourcesanspro">
                                         {$phrasecode}&nbsp;<span style="font-weight: bold">{$codepromo}</span>
@@ -50,7 +50,7 @@
                                         <tr>
                                             <td class="t_fwbold t_fsnormal t_w100p m_fwbold m_fsnormal m_w100p opensans">
 
-                                                {if $lstprmodesc}{include file="$tpl/boutons/structure_btn.tpl" infos=$lstpromotab}{else}{include file="$tpl/boutons/structure_btn.tpl" infos=$desc}{/if}
+                                                {if isset($lstprmodesc)}{include file="$tpl/boutons/structure_btn.tpl" infos=$lstpromotab}{else}{include file="$tpl/boutons/structure_btn.tpl" infos=$desc}{/if}
                                                 <br>
                                             </td>
                                         </tr>
@@ -66,15 +66,15 @@
                 </tr>
             </table>
                                     <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;width:640px" class="t_w100p m_w100p" role="presentation">
-                                        {if $desc.astdesc != "" || $lstprmodesc}
+                                        {if $desc.astdesc != "" || isset($lstprmodesc)}
                                             <tr>
                                                 <td style="font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#000000;text-align:left;font-size:11px;padding-bottom:5px;padding-left:10px;vertical-align:middle;line-height:15px;margin-bottom:10px;" class=" sourcesanspro">
-                                                    {if $lstprmodesc}{$lstpromotab.ast}{else}{$desc.astdesc}{/if}
+                                                    {if isset($lstprmodesc)}{$lstpromotab.ast}{else}{$desc.astdesc}{/if}
                                                 </td>
                                             </tr>
                                         {/if}
 
-                                        {if $ast.description != "" }
+                                        {if isset($ast.description) && $ast.description != "" }
                                             <tr>
                                                 <td style="font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#000000;text-align:left;font-size:11px;padding-bottom:5px;padding-left:10px;vertical-align:middle;line-height:15px;margin-bottom:10px;" class=" sourcesanspro">
                                                     {$ast.description}
