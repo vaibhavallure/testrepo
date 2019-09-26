@@ -853,8 +853,10 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
-    public function  getCustomersInfoSetting(){
+    public function  getCustomersInfoSetting($store_id=null){
+       if($store_id==null)
         $store_id = $this->getReqStoreId();
+
         return $this->getCustomersInfo($store_id);
     }
     public function getCustomersInfo($store_id){

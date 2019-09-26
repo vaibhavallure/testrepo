@@ -3,7 +3,7 @@ $getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfoSetting()
 ?>
 <?php
 $fetch_model = Mage::registry('apt_modify_data');
-
+$customers=null;
 if($fetch_model){
     $fetch_aptId = $fetch_model->getId();
     $f_custId = $fetch_model->getCustomerId();
@@ -18,6 +18,12 @@ if($fetch_model){
     $f_postcode = $fetch_model->getPostalCode();
     $f_special_notes = $fetch_model->getSpecialNotes();
     $f_notification_pref = $fetch_model->getNotificationPref();
+
+    $getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfoSetting($fetch_model->getStoreId());
+
+    $customers = Mage::getModel('appointments/customers')->getCollection();
+    $customers->addFieldToFilter('appointment_id', $fetch_aptId);
+
 }
 /* else{
     $f_custId = '';
@@ -60,15 +66,55 @@ if ($session->isLoggedIn()) {
 <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
 <!--<script src="--><?php //echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?><!--"></script>-->
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
-<?php if($getCustomersInfo == 1): ?>
-    <?php $customers = Mage::getSingleton("core/session")->getData('apt_customer_data');?>
-    <input type="hidden" id="customers_info_yes" value="yes">
+
+
+<?php if($getCustomersInfo == 1):
+?>
+<input  type="hidden" name="id"   value="<?= $fetch_aptId ?>">
+
+<?php
+$count=1;
+    if($customers):
+foreach ($customers as $customer):
+?>
+<input  type="hidden" name="customer[<?= $count ?>][id]"   value="<?= $customer->getId() ?>">
+
+<div class="field" id="reg_form">
+    <div class="regDiv" id="customer_info_div" >
+        <div id="customer_info_1">
+            <h6>Customer: <?= $count ?></h6>
+            <div class="fieldDiv">
+                <label><?= $this->__('First Name')?>*:</label><br/>
+                <input class="ele_width apt_firstname" type="text" name="customer[<?= $count ?>][firstname]" id="firstname_1" placeholder="First Name*" value="<?= $customer->getFirstname() ?>">
+            </div>
+            <div class="fieldDiv">
+                <label><?= $this->__('Last Name')?>*:</label><br/>
+                <input class="ele_width apt_lastname" type="text" name="customer[<?= $count ?>][lastname]" id="lastname_1" placeholder="Last Name*" value="<?= $customer->getLastname() ?>">
+            </div>
+            <div class="fieldDiv">
+                <label><?= $this->__('Email')?>*:</label><br/>
+                <input class="ele_width apt_email" type="text" name="customer[<?= $count ?>][email]" id="email_1" placeholder="Email" value="<?= $customer->getEmail() ?>">
+            </div>
+            <div class="fieldDiv">
+                <label><?= $this->__('Phone')?>*:</label><br/>
+                <input class="ele_width apt_phone" type="text" name="customer[<?= $count ?>][phone]" id="phone_1" placeholder="Phone" value="<?= $customer->getPhone() ?>">
+            </div>
+
+            <div class="fieldDiv">
+                <label><?= $this->__('Notify Me')?>:</label><br/>
+                <div><input type="checkbox" name="customer[<?= $count ?>][noti_email]" title="" value="1" class="notifyRadio" <?php if($customer->getSmsNotification()=='0'):echo "checked"; endif?>  <?php if($f_notification_pref==null):echo "checked";endif?>><p><?= $this->__('By Email')?></p></div>
+                <div><input type="checkbox" name="customer[<?= $count ?>][noti_sms]" title="" value="2" class="notifyRadio" <?php if($customer->getSmsNotification()=='1'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
+            </div>
+        </div>
+
+    </div>
+    <?php
+    $count++;
+    endforeach;
+    else: ?>
 
     <div class="field" id="reg_form">
         <div class="regDiv" id="customer_info_div" >
-            <input type="hidden" name="customers_info_div" value="">
-            <input type="hidden" name="checkup" value="0">
-            <input type="hidden" name="piercing" value="1">
             <div id="customer_info_1">
                 <h6>Customer: 1</h6>
                 <div class="fieldDiv">
@@ -96,6 +142,8 @@ if ($session->isLoggedIn()) {
             </div>
 
         </div>
+        <?php endif; ?>
+
         <div class="">
             <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
         </div>
