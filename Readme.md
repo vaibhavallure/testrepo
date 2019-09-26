@@ -1,8 +1,11 @@
 # Projet Millesima Emailing
+## Requirements
+- Docker
+- Composer & php7.2+
 ## Setup
 - Clone repository
 - Launch Docker using docker-compose up -d
-- Execute _**composer install**_ within container millesima-emailing-php-fpm
+- Execute _**composer install**_ outside of any container
 - Setup class/millesima_bdd.php according to your needs or use included dump in /bdd
 - Acces project via http://localhost:8080
 
@@ -27,3 +30,9 @@
 > mysql> exit
 >
 > ByeBye
+
+## Using phpMyAdmin
+If you want to use phpMyadmin :
+- cd into phpMyAdmin directory
+- composer install (outside of container)
+- adjust config.inc.php to your needs
