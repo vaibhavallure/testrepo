@@ -26,7 +26,7 @@
 ?>
 <?php $_item = $this->getItem() ?>
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-    <td><h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
+    <td style="text-align: left; padding:10px 0;"><h4 class="product-name para-bold"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options custom-options-univaersal">
         <?php $optionslist="";?>
@@ -94,7 +94,7 @@
          </dl>
         <?php endif;?>
     </td>
-    <td class="a-center nobr-sku"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
+    <td class="a-center nobr-sku para-noromal"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
     <td class="a-center print-price">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">

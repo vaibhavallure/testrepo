@@ -10728,7 +10728,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 }
 /*arg*/
 .sales-order-view .my-account .order-info-box {
-	border-top: 1px solid #D0D0D0;
+	/*border-top: 1px solid #D0D0D0;*/
 	margin-bottom: 6px;
 }
 
@@ -10980,7 +10980,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	float: left;
 	margin: 0;
 	font-size: 13px;
-	font-weight: normal;
 	line-height: 1.35;
 	text-transform: uppercase;
 	font-family: Arial, Arial, Helvetica, sans-serif;
@@ -10996,7 +10995,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .my-account .order-items h2.table-caption {
 	font-size: 13px;
 	float: none;
-	background: #D1D1D1;
 	padding: 8px 10px;
 	width: 100%;
 	-webkit-box-sizing: border-box;
@@ -11064,9 +11062,9 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	padding: 0;
 } */
 /*.my-account .box .box-title a { font-size:10px; text-decoration:underline; color:#666; }*/
-.my-account .box>p, .my-account .box .box-content {
+/*.my-account .box>p, .my-account .box .box-content {
 	padding: 0 10px;
-}
+}*/
 
 
 .my-account .box h3 {
@@ -11101,7 +11099,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .my-account .order-info-box .box-title {
 	background: none;
 	text-align: left;
-	padding: 6px 10px 0;
 	margin: 0;
 	height: auto;
 }
@@ -11649,7 +11646,7 @@ tr.additional-addresses {
 .order-info-box h2 {
 	font-size: 13px;
 	font-weight: normal;
-	border-bottom: 1px solid #ddd;
+	/*border-bottom: 1px solid #ddd;*/
 	margin: 0 0 8px;
 }
 
@@ -11664,15 +11661,6 @@ tr.additional-addresses {
 
 .order-items {
 	width: 100%;
-}
-
-.order-items h2, .order-items h3 {
-	font-weight: normal;
-	font-size: 16px;
-	padding: 0 0 0 10px;
-	margin: 0 0 .45em;
-	position: relative;
-	width: 300px;
 }
 
 .order-items h3 {

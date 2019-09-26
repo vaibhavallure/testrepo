@@ -29,9 +29,9 @@
         <?php /** @var $this Mage_Sales_Block_Order_Info */ ?>
         <?php $_order = $this->getOrder() ?>
         <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-        <div class="page-title title-buttons">
+        <div class="page-title">
             <h1><?php echo $this->__('Order #%s - %s', $_order->getRealOrderId(), $_order->getStatusLabel()) ?></h1>
-            <?php echo $this->getChildHtml('buttons') ?>
+           <p class="para-normal link-button"> <?php echo $this->getChildHtml('buttons') ?></p>
         </div>
         <?php echo $this->getStatusHistoryRssUrl($_order) ?>
         <dl class="order-info">
@@ -60,25 +60,26 @@
                     <script type="text/javascript">decorateGeneric($('order-info-tabs').select('LI'),['first','last']);</script>
                 </dd>
             </dl>
-            <p class="order-date"><?php echo $this->__('Order Date: %s', $this->formatDate($_order->getCreatedAtStoreDate(), 'long')) ?></p>
+            <p class="order-date para-normal"><?php echo $this->__('<b>Order Date:</b> %s', $this->formatDate($_order->getCreatedAtStoreDate(), 'long')) ?></p>
+              <h2 class="para-bold mb-4">ORDER INFORMATION</h2>
             <?php if (!$_order->getIsVirtual()): ?>
                 <div class="col2-set order-info-box">
-                    <div class="col">
+                    <div class="col-wrap">
                         <div class="box">
                             <div class="box-title">
                                 <h2><?php echo $this->__('Shipping Address') ?></h2>
                             </div>
                             <div class="box-content">
-                                <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
+                                <address class="para-normal"><?php echo $_order->getShippingAddress()->format('html') ?></address>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-wrap">
                         <div class="box">
                             <div class="box-title">
                                 <h2><?php echo $this->__('Shipping Method') ?></h2>
                             </div>
-                            <div class="box-content">
+                            <div class="box-content para-normal">
                                 <?php if ($_order->getShippingDescription()): ?>
                                     <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
                                     <?php else: ?>
@@ -90,22 +91,22 @@
                     </div>
                 <?php endif; ?>
                 <div class="col2-set order-info-box">
-                    <div class="col">
+                    <div class="col-wrap">
                         <div class="box">
                             <div class="box-title">
                                 <h2><?php echo $this->__('Billing Address') ?></h2>
                             </div>
-                            <div class="box-content">
-                                <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+                            <div class="box-content para-normal">
+                                <address class="para-normal"><?php echo $_order->getBillingAddress()->format('html') ?></address>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-wrap">
                         <div class="box box-payment">
                             <div class="box-title">
                                 <h2><?php echo $this->__('Payment Method') ?></h2>
                             </div>
-                            <div class="box-content">
+                            <div class="box-content para-normal">
                                 <?php echo $this->getPaymentInfoHtml() ?>
                             </div>
                         </div>
