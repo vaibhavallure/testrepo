@@ -1870,19 +1870,12 @@ li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active 
 	display: block ! important;
 }
 
-#load-complete-order-data .box-content , #load-open-order-data .box-content{
+/*#load-complete-order-data .box-content , #load-open-order-data .box-content{
 	margin-left: 10px;
 }
-
+*/
 .complete-order-view tbody td a , .open-order-view tbody td a{
 	cursor: pointer;
-}
-
-.custom-order-info-ul{
-	float: right;
-}
-.custom-order-info-tabs.order-info-tab-back{
-	float: left;
 }
 
 /*.complete-order-view #my-orders-table{
@@ -1890,10 +1883,9 @@ li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active 
 	margin-top: -18px;
 }*/
 
-.mt-custom-order-info{
-	border-bottom: 9px solid #DEDEDE;
+#load-open-order-data,#load-complete-order-data{
+    position: static!important;
 }
-
 .mt-custom-order-info dd{
 	margin-bottom: 10px;
 }

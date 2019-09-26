@@ -749,6 +749,67 @@ th,td{
 .table{
 	max-width: 792px;
 }
+.acc-products-wrapper .receipts .container,
+#complete-order-info .container{
+	padding: 0;
+}
+.receipts .container .order-info,
+#complete-order-info .container .order-info{
+	display: none;
+}
+
+.acc-products-wrapper .box-content{
+	margin-left: 0;
+}
+.w-remove a{
+	background-image:url(../images/wish-x-remove.png) no-repeat 0px 8px;
+	padding-left: 15px;
+}
+.acc-products-wrapper .box-payment .box-content table td{
+	text-align: left!important;
+}
+#open-order-info .order-details .container{
+	padding: 0!important;
+}
+#open-order-info .order-details .item-options{
+	margin-left: 0!important;
+	margin-bottom: 0!important;
+}
+#open-order-info .order-details .item-options dt{
+	font-size: 12px;
+}
+#open-order-info .order-details .item-options dd{
+	margin-bottom: 0;
+}
+#open-order-info .order-details th,
+#open-order-info .order-details td,
+#complete-order-info .order-details th,
+#complete-order-info .order-details td{
+	width: auto!important;
+	text-align: left!important;
+}
+#open-order-info .order-details table h4,
+#complete-order-info .order-details table h4{
+	font-size: 15px;
+}
+#open-order-info .order-details .odd td,
+#complete-order-info .order-details .odd td{
+	text-align: right!important;
+}
+#open-order-info .order-details .odd .total-base_grandtotal .price,
+#complete-order-info .order-details .odd .total-base_grandtotal .price{
+	    font-family: urw-din-bold!important;
+}
+#complete-order-info h2.para-bold.mb-4,
+#open-order-info h2.para-bold.mb-4{
+	display: none;
+}
+.order-info-tab-back{
+	    font-size: 13px!important;
+    text-decoration: underline;
+    font-family: urw-din-xlight;
+    color: rgba(41,41,41,0.90);
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -811,6 +872,10 @@ th,td{
 	}
 }
 @media(max-width: 767px){
+	#open-order-info .order-details .container,
+	#complete-order-info .order-details .container{
+		overflow-x: auto;
+	}
 	.receipts .col-wrap{
 		width: 100%;
 	}
@@ -826,10 +891,11 @@ th,td{
 		overflow-x: auto;
 	}
 	.acc-products-wrapper #myaccount-shopping-cart-table,
-	.acc-products-wrapper #wishlist-table{
+	.acc-products-wrapper #wishlist-table,
+	#complete-order-info .order-details table{
 		display: block;
 		width: 150%!important;
-		overflow: auto;
+		overflow-x: auto;
 	}
 	.acc-products-wrapper #new-mt-myproduct-openorders table th, 
 	.acc-products-wrapper #new-mt-myproduct-openorders table td,
@@ -940,3 +1006,4 @@ th,td{
 		padding-left: 153px;
 	}
 }
+
