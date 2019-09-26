@@ -564,7 +564,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             //echo $filename;exit;
             $handle = fopen("$filename", "w");
             fwrite($handle,$this->encodeVar($output));
-            $linkFileHtml = '/emailing/fichiers/emailings/'.$codemessage.'/'.$country.$codemessage.'.html';
+            $linkFileHtml = '/fichiers/emailings/'.$codemessage.'/'.$country.$codemessage.'.html';
 
 
             $traductionClass = new Millesima_Traduction();

@@ -10,7 +10,7 @@ var htmlFiles = new Array();
 
 //htmlFiles.push("C:/Users/dgorski/Desktop/Transformation_html_to_png/Biosliv16-16.html");
 //htmlFiles.push("C:/Users/dgorski/projet/emailing/Biosliv16-16.html");
-htmlFiles.push("/var/www/emailing/fichiers/tmpGeneratePng.html");
+htmlFiles.push("/fichiers/tmpGeneratePng.html");
 console.log('Number of Html Files: ' + htmlFiles.length);
 
 // output pages as PNG
