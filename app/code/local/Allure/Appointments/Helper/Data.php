@@ -862,4 +862,28 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $storeKey = array_search ($store_id, $configData['stores']);
         return($configData['enable_people_info'][$storeKey]);
     }
+    public function getStaticSelectTime($date,$time,$is_start){
+
+        if($date == '10/04/2019' || $date == '10/25/2019' || $date == '10/24/2019'){
+            if($time == '19:40' && $is_start){
+                return null;
+            }
+            $increment = 5;
+        }
+        if($date == '10/05/2019' || $date == '10/26/2019'){
+            if($time == '18:00' && $is_start){
+                return null;
+            }
+            $increment = 15;
+        }
+        $time = explode(":",$time);
+        if($time[1] < 10 && $increment < 10){
+            $time[1] = '0'.$increment;
+        }else {
+            $time[1] += $increment;
+        }
+
+        $time = implode(":",$time);
+        return $time;
+    }
 }
