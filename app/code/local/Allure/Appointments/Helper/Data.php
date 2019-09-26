@@ -855,7 +855,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function  getCustomersInfoSetting(){
         $store_id = $this->getReqStoreId();
-
+        $this->getCustomersInfo($store_id);
     }
     public function getCustomersInfo($store_id){
         $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
