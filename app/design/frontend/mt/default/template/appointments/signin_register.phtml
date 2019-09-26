@@ -66,7 +66,7 @@ if ($session->isLoggedIn()) {
 
     <div class="field" id="reg_form">
         <div class="regDiv" id="customer_info_div" >
-            <input type="hidden" name="customers_info" value="">
+            <input type="hidden" name="customers_info_div" value="">
             <input type="hidden" name="checkup" value="0">
             <input type="hidden" name="piercing" value="1">
             <div id="customer_info_1">
@@ -94,9 +94,10 @@ if ($session->isLoggedIn()) {
                     <div><input type="checkbox" name="customer[1][noti_sms]" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
                 </div>
             </div>
-            <div class="">
-                <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
-            </div>
+
+        </div>
+        <div class="">
+            <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
         </div>
         <div class="createaccDiv" >
             <div id="appointment-pricing">
