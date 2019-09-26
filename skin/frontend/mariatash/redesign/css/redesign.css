@@ -2768,6 +2768,9 @@ ul.tabs li:nth-child(3){
   margin-bottom: 18px;
 	padding: 0;
 }
+.categorypath-celebrity-clientele-html .for-space-to-bottom{
+	height: 250px !important;
+}
 /*press page--------------------------------------------*/
 .category-press .top-bar {
   display: none;
@@ -2941,4 +2944,7 @@ table thead {
 }
 .category-piercing-gallery .top-bar {
   display: none;
+}
+.category-piercing-gallery .for-space-to-bottom{
+	height: 250px !important;
 }
