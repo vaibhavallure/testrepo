@@ -674,7 +674,7 @@
 .receipts .order-date{
 	padding-left: 0;
 }
-th,td{
+.receipts th,.receipts td{
 	font-family: urw-din-regular!important;
 }
 .receipts .order-info-box{
@@ -691,7 +691,8 @@ th,td{
 	text-transform: capitalize;
 	line-height: 20px!important
 }
-.receipts .box-payment th,td{
+.receipts .box-payment th,
+.receipts .box-payment td{
 	font-family: urw-din-light!important;
 }
 .mt-myaccount-new .order-items table th,
@@ -846,7 +847,7 @@ th,td{
 .fs-detail-content .fs-detail-nav-bar-arrows .fs-detail-nav-button{
 	display: none;
 }
-#fs-detail-close{
+#fs-instagram-view-container #fs-detail-close{
 	background-image: url(../images/redesign/login-cross.png);
 	display: block;
 	width: 25px;
@@ -854,21 +855,21 @@ th,td{
 	padding-left: 0;
 	background-repeat: no-repeat;
 }
-.fs-detail-nav-bar-close{
+#fs-instagram-view-container .fs-detail-nav-bar-close{
 	position: absolute;
 	top: 20px;
 	right: 20px;
 }
-#fs-detail-close .fs-detail-nav-bar-close a{
+#fs-instagram-view-container #fs-detail-close .fs-detail-nav-bar-close a{
 	background-image: url(../images/redesign/login-cross.png);
 	width: 25px;
 	height: 26px;
 	background-size: 100%;
 }
-#fs-detail-close svg{
+#fs-instagram-view-container #fs-detail-close svg{
 	display: none;
 }
-.fs-detail-content .fs-link-text-number{
+#fs-instagram-view-container .fs-detail-content .fs-link-text-number{
 	margin-right: 15px;
 	display: inline-flex;
 	width: 24px;
@@ -878,16 +879,16 @@ th,td{
 	justify-content: center;
 	align-items: center;
 }
-.fs-link-text{
+#fs-instagram-view-container .fs-link-text{
 	display: inline-flex;
 	width: 80%;
 
 }
-.fs-detail-container{
+#fs-instagram-view-container .fs-detail-container{
 	position: relative!important;
 	padding: 40px!important;
 }
-.fs-detail-left,.fs-detail-right{
+#fs-instagram-view-container .fs-detail-left,.fs-detail-right{
 	position: static!important;
 }
 /*=====================*/
