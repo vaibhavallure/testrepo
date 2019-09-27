@@ -891,15 +891,16 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
                 $time[1] = '0'.$increment;
             }else {
                 $time[1] += $increment;
-                if($time[1] >=60){
-                    $increment = $time[1]-60;
-                    $time[0] = $time+1;
 
-                    if($increment <10){
-                        $time[1] = '0'.$increment;
-                    }else{
-                        $time[1] = $increment;
-                    }
+            }
+            if($time[1] >=60){
+                $increment = $time[1]-60;
+                $time[0] = $time[0]+1;
+
+                if($increment <10){
+                    $time[1] = '0'.$increment;
+                }else{
+                    $time[1] = $increment;
                 }
             }
         }
