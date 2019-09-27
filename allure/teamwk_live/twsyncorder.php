@@ -5,7 +5,7 @@ umask(0);
 Mage::app();
 Mage::app()->setCurrentStore(0);
 
-$TM_URL = "/services/orders";
+$TM_URL = "/services/ordersNew";
 $TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
 
 $start = $_GET["start"];
