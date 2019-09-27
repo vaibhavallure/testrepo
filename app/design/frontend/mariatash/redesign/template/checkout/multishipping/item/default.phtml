@@ -35,14 +35,18 @@ if('configurable' == 'configurable'):
 <div class="item-options">
     <?php foreach ($_options as $_option) : ?>
     <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-    <p class=""><?php echo $this->htmlEscape($_option['label']).":" ?></p>
-    <p class=""<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?></p>
-    <div><?php if (isset($_formatedOptionValue['full_view'])): ?>
+		<div class="attr-detail">
+    <p class="float-left mr-1 para-three"><?php echo $this->htmlEscape($_option['label']).":" ?></p>
+    <p class="para-three"<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?></p>
+		</div>
+		<div><?php if (isset($_formatedOptionValue['full_view'])): ?>
         <div class="truncated_full_value">
             <div class="item-options">
-                <p><?php echo $this->htmlEscape($_option['label']).":" ?></p>
-                <p><?php echo $_formatedOptionValue['full_view'] ?></p>
-            </div>
+<div class="attr-detail">
+	<p class="float-left mr-1 para-three"><?php echo $this->htmlEscape($_option['label']).":" ?></p>
+	<p class="para-three"><?php echo $_formatedOptionValue['full_view'] ?></p>
+</div>
+</div>
         </div>
         <?php endif; ?>
     </div>
