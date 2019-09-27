@@ -91,7 +91,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
         </fieldset>
     </form>
 
-    <div class="cart-collaterals col-4">
+    <div class="cart-collaterals col-4 fix-section">
         <div class="collat-wrap">
             <table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table">
                 <tr>
@@ -113,18 +113,12 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                     </td>
                 </tr>
             </table>
-            <div class="cart_cms_block">
-                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('shoppingcart_links')->toHtml(); ?>
-            </div>
+
             <div class="crosssell-wrap">
                 <?php echo $this->getChildHtml('crosssell') ?>
             </div>
             <div>
                 <div class="pay-caart">
-                    <button type="button" title="Continue Shopping" class="button cart-continue-mt dark-button"
-                            onclick="setLocation('<?php echo $this->getContinueShoppingUrl(); ?>')">
-                        <span><span>Continue Shopping</span></span>
-                    </button>
                     <ul class="checkout-types p-0">
                         <?php foreach ($this->getMethods('methods') as $method): ?>
                             <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
@@ -166,6 +160,9 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
             e.preventDefault();
             return false;
         }
+    });
+    jQuery(document).ready(function () {
+        jQuery(".non-total-title").parent().parent().parent().addClass("grand_total_section");
     });
 </script>
 <script>
