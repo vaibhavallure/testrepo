@@ -232,8 +232,8 @@ if(!is_null($parentId)){
     <td colspan="6">
         <div class="gift-messages float-left">
             <p class="control">
-                <input type="checkbox" name="is_gift_item" id="is_gift" value="1" class="checkbox">
-                <label for="is_gift"><span>This item is a gift.</span></label>
+                <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
+                <label for="is_gift_<?= $_item->getId() ?>"><span>This item is a gift.</span></label>
             </p>
         </div>
         <div class="w-remove float-right">
