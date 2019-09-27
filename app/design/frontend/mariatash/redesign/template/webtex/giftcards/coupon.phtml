@@ -1,16 +1,10 @@
 <?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
 
 <div class="discount">
-    <h2><?php echo $this->__('Gift Cards'); ?></h2>
-
     <div class="discount-form">
         <form method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
             <div class="input-box">
-                <input value="" name="giftcard_code" id="giftcard_code" class="input-text">
-            </div>
-            <div class="buttons-set">
-                <button value="<?php echo $this->__('Activate') ?>" onclick="giftCardForm.submit(true)" class="button_coupon" title="Apply" type="button"><span><span><?php echo $this->__('Apply') ?></span></span>
-                </button>
+                <input value="" name="giftcard_code" id="giftcard_code" class="input-text" placeholder="Gift Card">
             </div>
         </form>
 
@@ -32,6 +26,9 @@
         var deActivateGiftCardForm = new VarienForm('deActivateGiftCard');
         var giftCardForm = new VarienForm('activateGiftCard');
         //]]&gt;
+        jQuery("#giftcard_code").blur(function() {
+            giftCardForm.submit(true);
+        });
     </script>
 
 </div>

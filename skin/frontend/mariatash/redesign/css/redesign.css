@@ -2948,3 +2948,18 @@ table thead {
 .category-piercing-gallery .top-bar {
   display: none;
 }
+
+/*cart page*/
+.cart-collaterals.fix-section {
+	position: fixed;
+	right: 0;
+}
+.cart-collaterals .total-title{
+	display: block;
+}
+.cart-collaterals .non-total-title{
+	display: none;
+}
+.cart-collaterals .grand_total_section .price{
+font-weight: bold;
+}
