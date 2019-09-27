@@ -920,12 +920,12 @@ a.fs-shop-link.fs-link-list {
   display: inline;
   transition: color 0.25s, background-color 0.25s; }
 
-.fs-text-product:hover, .fs-text-product a.fs-link-active {
+/*.fs-text-product:hover, .fs-text-product a.fs-link-active {
   background-color: #222;
   color: white;	/*white*/
   text-decoration: none;
   }
-
+*/
 .fs-narrow-timeline div.fs-mobile-feed-links a {
   text-align: center; }
 

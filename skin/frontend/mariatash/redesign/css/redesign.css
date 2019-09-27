@@ -304,11 +304,20 @@ hr{
   border: 0;
   border-top: 1px solid #D4D4D4;
 }
-
+select{
+  border: 1px solid #292929;
+	-webkit-appearance:none;
+	position: relative;
+	background: #fff;
+	background-image: url(../images/redesign/arrow-down-bk.png);
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+}
 .select-type-one{
 	width: 323px;
-  height: 42px;
-  border: 1px solid #292929;
+}
+.select-type-two, .product-description-section select{
+	width: 210px;
 }
 
 /* STANDARD CSS ENDED */
@@ -334,11 +343,11 @@ hr{
   padding-right: 11px;
 	padding-top: 19px;
 }
-.checkout-multishipping-addresses .control label {
+.control label {
   padding: 1px 0 0 40px;
   background: url(../images/checkbox-login.png) no-repeat 0 0;
 }
-.checkout-multishipping-addresses .control input:checked+label{
+.control input:checked+label{
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
 .gift-messages label:before {
@@ -376,9 +385,6 @@ input, select, textarea{
 	box-shadow: 0 0 0 0 !important;
 }
 
-select{
-	-webkit-appearance:none;
-}
 .validation-advice {
 	clear: both;
 	font-size: 10px;
@@ -391,15 +397,10 @@ select{
 	position: absolute;
 	margin-top: -8px;
 }
-
-.next-button button{
+.next-button{
 	width: 204px;
+	height: 42px;
 }
-
-.next-button {
-  margin-bottom: 32.5px;
-}
-
 .product-description-section {
   border-bottom: 1px solid #d8d8d8;
   padding: 30px 0;
@@ -438,12 +439,9 @@ select{
   margin-top: 3px;
 }
 
-select{
-	position: relative;
-}
 
-select:after{
-	background-image: url(../images/maria/arrow-down-bk.png);
+/* select:after{
+	background-image: url(../images/redesign/arrow-down-bk.png);
   content: '';
   background-repeat: no-repeat;
   position: absolute;
@@ -451,7 +449,7 @@ select:after{
   width: 10px;
   height: 10px;
   margin-top: 3px;
-}
+} */
 
 .login-dropdown li a {
   color: #fff;
@@ -704,34 +702,7 @@ nav.mariatash-header {
 	width: 100px;
 }
 /* 4.Newletter */
-.form-subscribe-mt input {
-	width: 100%;
-}
-.form-subscribe-mt input {
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-#newsletter-form .dark-button {
-	text-transform: uppercase;
-	padding: 5px 20px;
-}
-.form-subscribe-mt {
-  width: 300px;
-}
-.footer-item-list span {
-  font-size: 12px !important;
-  font-family: urw-din-medium;
-	letter-spacing: 0 !important;
-}
 
-.footer-items a:hover {
-    text-decoration: none;
-}
-
-.footerlink-icons .item-icons img {
-    width: 22px;
-}
 
 
 /* catalog page */

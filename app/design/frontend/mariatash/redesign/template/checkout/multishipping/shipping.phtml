@@ -65,7 +65,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                         <?php foreach ($this->getAddresses() as $_index => $_address): ?>
 						<div class="box">
 							<div class="box-title">
-                           	<?php echo $this->__('Address %s of %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Change') ?></a>
+                           	<?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Change') ?></a>
                             </div>
                             <div class="box-content">
 
@@ -90,7 +90,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                           	<?php if (!($_shippingRateGroups = $this->getShippingRates($_address))): ?>
                             	<p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
                             <?php else: ?>
-                            	<select id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
+                            	<select class="select-type-two" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
 
                            		<?php $ship_sign_national = array();?>
                            		<?php $ship_sign_without_national = array();?>

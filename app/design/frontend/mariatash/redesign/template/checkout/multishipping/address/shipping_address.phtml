@@ -26,7 +26,7 @@
  * @var Mage_Checkout_Block_Multishipping_Address_Select $this
  */
 ?>
-<select class="ship-select">
+<select class="ship-select select-type-two">
     	<?php foreach ($this->getAddressCollection() as $_address):?>
     	<option value="<?= $_address->getId()?>"><?= $_address->format('oneline')?></option>
     	<?php endforeach;?>
