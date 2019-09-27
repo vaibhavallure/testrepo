@@ -41,9 +41,13 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
     }
     
     public function salesEventConvertQuoteAddressToOrder($observer){
-        if($observer->getEvent()->getAddress()->getNoSignatureDelivery()) {
-            $observer->getEvent()->getOrder()
-            ->setNoSignatureDelivery($observer->getEvent()->getAddress()->getNoSignatureDelivery());
+        $address = $observer->getEvent()->getAddress();
+        $order = $observer->getEvent()->getOrder();
+        if($address->getNoSignatureDelivery()) {
+            $order->setNoSignatureDelivery($address->getNoSignatureDelivery());
+        }
+        if($address->getIsContainBackorder()){
+            $order->setIsContainBackorder($address->getIsContainBackorder());
         }
         return $this;
     }
