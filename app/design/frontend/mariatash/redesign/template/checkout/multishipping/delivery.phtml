@@ -1,0 +1,78 @@
+<?php
+/**
+ * Multishipping checkout delivery template
+ *
+ * @see Allure_RedesignCheckout_Block_Checkout_Multishipping_Delivery
+ * @var $this Allure_RedesignCheckout_Block_Checkout_Multishipping_Delivery
+ */
+?>
+<?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
+<?php $cnt = 1;?>
+<div class="container row mx-auto p-0">
+<ol id="checkoutSteps" class="opc col-lg-8 col-12">
+    <?php foreach ($steps as $stepKey => $_step): ?>
+        <?php if($stepKey == 'multishipping_delivery_option'): ?>
+            <li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
+                <div class="step-title checkout-step-name col-12">
+                    <span class="number"><?php echo $cnt ?></span>
+                    <h3><?= $this->__($_step->getLabel()) ?></h3>
+                </div>
+                <div class="multiple-checkout">
+                    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+                    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="delivery_method_form">
+    					<?php foreach ($this->getAddresses() as $_index => $_address): ?>
+    					<div class="box">
+    						<div class="box-title">
+    							<?php echo $this->__('Address %s of %s', ($_index+1), $this->getAddressCount()) ?>
+    						</div>
+    						<div class="box-content">
+    							<div class="col2-set">
+                                    <div class="gift-messages">
+                                     	<p class="control">
+											<input id="delivery-<?= $_address->getId()?>" type="checkbox" name="delivery[<?= $_address->getId()?>]"  value="0" class="checkbox"  />
+            								<label for="delivery-<?= $_address->getId()?>"><?php echo $this->__('Shipment delivery.') ?></label>
+            							</p>
+                                    </div>
+                            	</div>
+    						</div>
+    					</div>
+						<?php endforeach;?>
+						<div class="buttons-set">
+                            <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
+                            <button class="button continue" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
+                        </div>
+						<?php echo $this->getBlockHtml("formkey") ?>
+                    </form>
+                </div>
+            </li>
+        <?php else: ?>
+            <?php if($stepKey == 'multishipping_addresses'):?>
+                <li id="opc-<?= $stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
+                 	<a href="<?= $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
+                     	<div class="step-title checkout-step-name col-12">
+                        	<span class="number"><?= $cnt ?></span>
+                        	<h3><?= $this->__($_step->getLabel()) ?></h3>
+                       	</div>
+                    </a>
+                </li>
+            <?php else:?>
+            	<li id="opc-billing" title="<?= $_step->getLabel() ?>" class="section" >
+                	<div class="step-title checkout-step-name col-12">
+                   		<span class="number"><?= $cnt ?></span>
+                    	<h3><?= $_step->getLabel() ?></h3>
+                    </div>
+                </li>
+            <?php endif;?>
+        <?php endif; ?>
+    <?php $cnt++; ?>
+    <?php endforeach; ?>
+</ol>
+</div>
+
+<script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+    Allure.baseUrl = '<?= $this->getBaseUrl() ?>';
+</script>
+
