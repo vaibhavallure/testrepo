@@ -891,6 +891,89 @@
 #fs-instagram-view-container .fs-detail-left,.fs-detail-right{
 	position: static!important;
 }
+
+/*=====================*/
+/*HOMEPAGE F00TER  NAV*/
+/*=====================*/
+.footer8 .footlinks{
+
+}
+.t_Tooltip_dark_subscribe{
+	background: white;
+}
+.newsletter_parent{
+	bottom: 50px!important;
+	height: 470px!important;
+    width: 419px!important;
+}
+.newsletter_parent .t_ContentContainer,
+.customer_care .t_ContentContainer{
+	background: white;
+	padding: 48px;
+	height: 100%;
+}
+.newsletter_parent .t_Content{
+	position: relative;
+	height: 100%;
+}
+.newsletter_parent .newsletter-mt{
+	display: none;
+}
+.newsletter_parent .input-box{
+	margin-bottom: 24px;
+}
+.newsletter_parent .input-box input{
+	width: 100%;
+	font-family: urw-din-light;
+	font-size: 13px;
+	color: rgba(41,41,41,0.60);
+	line-height: 18px;
+	border: 1px solid rgba(41,41,41,0.25);
+}
+.newsletter_parent .checkmark{
+	top: 0;
+	transform: translate(0,0);
+}
+.newsletter_parent p{
+		font-family: urw-din-light;
+	font-size: 13px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 0.5px;
+	line-height: 20px;
+}
+.newsletter_parent button{
+	float: right;
+	margin-top: 15px;
+	width: 204px;
+	height: 42px;
+	border: 0.5px solid rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 1.5px;
+	text-align: center;
+	background: #fff;
+	text-transform: uppercase;
+}
+.newsletter_parent button:hover{
+	background: white;
+}
+.customer_care{
+	bottom: 50px!important;
+	width: 234px!important;
+}
+.tooltip_jewelry,.tooltip_account,.tooltip_contact{
+	bottom: 50px!important;
+}
+.tooltip_jewelry p{
+	font-family: urw-din-light;
+	font-size: 13px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 0.5px;
+}
+.customer_care .t_ContentContainer{
+	width: 100%;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
