@@ -871,19 +871,40 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
                 return null;
             }
             $increment = 5;
+
+            $time = explode(":",$time);
+            if($time[1] < 10 && $increment < 10){
+                $time[1] = '0'.$increment;
+            }else {
+                $time[1] += $increment;
+            }
+
         }
         if($date == '10/05/2019' || $date == '10/26/2019'){
             if($time == '18:00' && $is_start){
                 return null;
             }
             $increment = 15;
+
+            $time = explode(":",$time);
+            if($time[1] < 10 && $increment < 10){
+                $time[1] = '0'.$increment;
+            }else {
+                $time[1] += $increment;
+
+            }
+            if($time[1] >=60){
+                $increment = $time[1]-60;
+                $time[0] = $time[0]+1;
+
+                if($increment <10){
+                    $time[1] = '0'.$increment;
+                }else{
+                    $time[1] = $increment;
+                }
+            }
         }
-        $time = explode(":",$time);
-        if($time[1] < 10 && $increment < 10){
-            $time[1] = '0'.$increment;
-        }else {
-            $time[1] += $increment;
-        }
+
 
         $time = implode(":",$time);
         return $time;

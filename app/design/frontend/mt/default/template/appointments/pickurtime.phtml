@@ -1,9 +1,7 @@
-
 <?php
 $limerick = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_limerick');
 $cork = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_cork');
 ?>
-
 <?php
 $fetch_model = Mage::registry('apt_modify_data');
 
@@ -106,7 +104,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             //$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
             $endTimeSystem = $configData['end_work_time'][$storeKey];
 
-
             $selectedStartTime = strtotime($selectedTime);
 
             $endTimeSystem=$helper->getTimeByValue($endTimeSystem);
@@ -166,31 +163,28 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $isFour = 0;
             $countSlot = 0;
             $noSlot=true;
-
             for($i=0;$i< $totalSlot;$i++)
             {
                 $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
                 $endTime = strtotime("+$interval minutes", strtotime($selectedTime));
-                /*CODE FOR BROWNTHOMAS*/
-                $currentStore = $this->getData("store_id");
 
-
-                if(( $currentStore == $limerick) || ($currentStore == $cork)  ) {
+                if(( $storeId == $limerick) || ($storeId == $cork)  ) {
                     $selectedTime = $helper->getStaticSelectTime($date,$selectedTime,true);
 
                 }
 
-
                 $slotval ="`". "time_slot_".$i ."`";
                 //echo '<br>'.$slotval;
                 $endTime = date('H:i', $endTime);
-                if(( $currentStore == $limerick) || ($currentStore == $cork)  ) {
-                    $endTime = $helper->getStaticSelectTime($date, $endTime, false);
-                }
                 //echo $i.' '.$selectedTime.'<br>';
                 //echo $endTime;
                 $show=false;
                 $allocatedApps = null;
+
+                if(( $storeId == $limerick) || ($storeId == $cork)  ) {
+                    $endTime = $helper->getStaticSelectTime($date,$endTime,false);
+
+                }
 
                 foreach ($collection as $piercer)
                 {
@@ -338,15 +332,9 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     }
 
 
-
-
-                    /*END STATIC CODE*/
-
-                    if($selectedTime != null):
-                        echo "<li class='timeslot $htmlsel' id='time_slot_$i'
+                    echo "<li class='timeslot $htmlsel' id='time_slot_$i'
 			data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
 			data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)' >";
-                    endif;
 
 
                     echo "<span >";

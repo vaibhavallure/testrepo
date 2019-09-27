@@ -59,7 +59,7 @@ if(count($multi_stores) <= 1):
         <select id="store-id" name="store_id" class="storeLocationSelect">
             <?php foreach ($multi_stores as $key=>$store):?>
                 <!--FOR BROWNTHOMAS POPUPS-->
-                <?php if($getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfo($key)):?>
+                <?php if(Mage::helper('appointments/data')->getCustomersInfo($key)):?>
                     <option value="specialStore" data-url="<?=Mage::getBaseUrl()?>appointments/book/store/code/<?=Mage::helper('allure_virtualstore')->getStoreCode($key)?>" ><?=$store?></option>
                 <?php else:?>
                     <!--CODE END-->

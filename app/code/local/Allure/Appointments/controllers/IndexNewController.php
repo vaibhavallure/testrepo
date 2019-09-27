@@ -7,6 +7,7 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
     {
         $post_data = $this->getFormattedPostData();
 
+
         /*------------------notification setting start ----------------------*/
         $oldAppointment = null;
         $oldCustomersCollection = null;
@@ -139,9 +140,6 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
         $post_data['appointment_start'] = strtotime($post_data['app_date'] . ' ' . $post_data['appointment_start']);
         $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
 
-        $post_data['appointment_end'] = explode(':',$post_data['appointment_end']);
-        $post_data['appointment_end'][1] -= 1;
-        $post_data['appointment_end'] = implode(':',$post_data['appointment_end']);
         $post_data['appointment_end'] = $post_data['app_date'] . " " . $post_data['appointment_end'];
         $post_data['appointment_end'] = strtotime($post_data['appointment_end']);
         $post_data['appointment_end'] = date('Y-m-d H:i:59', $post_data['appointment_end']);
@@ -216,6 +214,31 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
         }
 
         return $collection;
+    }
+
+
+    public function cancelaptAction()
+    {
+        try {
+            if ($this->getAppId()) {
+                $appointment = $this->appointment()->load($this->getAppId());
+                $appointment->setData('app_status', Allure_Appointments_Model_Appointments::STATUS_CANCELLED);
+                $appointment->save();
+
+                $this->log()->addStoreWiseLog('appointment_canceled_action ------------->' . $appointment->getId(), $appointment->getStoreId());
+
+                echo "Your scheduled Appointment is Cancelled successfully.";
+
+                if ($this->notify()->sendEmailNotification($appointment, "cancel"))
+                    $this->log()->addStoreWiseLog('cancel Notified by email', $appointment->getStoreId());
+
+                if ($this->notify()->sendSmsNotification($appointment, "cancel"))
+                    $this->log()->addStoreWiseLog('cancel Notified By SMS(if selected)', $appointment->getStoreId());
+
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
 }
