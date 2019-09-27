@@ -25,14 +25,14 @@
     					<?php if($helper->isAddressContainBackOrderItem($_address)):?>
     					<div class="box">
     						<div class="box-title">
-    							<?php echo $this->__('Address %s of %s', ($_index+1), $this->getAddressCount()) ?>
+    							<p class="info-text-two"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?></p>
     						</div>
     						<div class="box-content">
     							<div class="col2-set">
                                     <div class="gift-messages">
                                      	<p class="control">
-											<input id="delivery-<?= $_address->getId()?>" type="checkbox" name="delivery[<?= $_address->getId()?>]"  value="1" class="checkbox" checked="checked" />
-            								<label for="delivery-<?= $_address->getId()?>"><?php echo $this->__('Shipment delivery.') ?></label>
+											<input id="delivery-<?= $_address->getId()?>" type="checkbox" name="delivery[<?= $_address->getId()?>]"  value="0" class="checkbox"  />
+            								<label class="para-normal" for="delivery-<?= $_address->getId()?>"><?php echo $this->__('Shipment delivery.') ?></label>
             							</p>
                                     </div>
                             	</div>
@@ -40,9 +40,9 @@
     					</div>
     					<?php endif;?>
 						<?php endforeach;?>
-						<div class="buttons-set">
+						<div class="buttons-set text-right">
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
-                            <button class="button continue" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
+                            <button class="button continue light-button next-button" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
                         </div>
 						<?php echo $this->getBlockHtml("formkey") ?>
                     </form>
@@ -85,4 +85,3 @@
     }
     Allure.baseUrl = '<?= $this->getBaseUrl() ?>';
 </script>
-

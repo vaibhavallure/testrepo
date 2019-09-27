@@ -53,9 +53,9 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                     <h3><?= $this->__($_step->getLabel()) ?></h3>
                 </div>
                 <div class="multiple-checkout">
-                    <div class="page-title">
-                        <h3><?php echo $this->__('Select Shipping Method') ?></h3>
-                    </div>
+                    <!-- <div class="page-title">
+                        <h3><//?php echo $this->__('Select Shipping Method') ?></h3>
+                    </div> -->
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
                         <?php $shipAddressHtml = $this->getChildHtml("checkout_shipping_address_select");?>
@@ -65,7 +65,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                         <?php foreach ($this->getAddresses() as $_index => $_address): ?>
 						<div class="box">
 							<div class="box-title">
-                           	<?php echo $this->__('Address %s of %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Change') ?></a>
+                           	<p class="info-text-two mt-3"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Change') ?></a></p>
                             </div>
                             <div class="box-content">
 
@@ -74,24 +74,23 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                      	<p class="control">
                                      		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
 											<input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
-            								<label for="no_signature_delivery_<?= $_address->getId()?>"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>
+            								<label for="no_signature_delivery_<?= $_address->getId()?>"><?php echo $this->__('Require signature upon delivery.') ?></label>
             							</p>
                                     </div>
                             	</div>
 
-    							<div class="shipping-address-select" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
-    							<?= $shipAddressHtml?>
-                            	</div>
-                            </div>
-                        </div>
+													<div class="address-method-common">
+														<div class="row">
+    												<div class="shipping-address-select col-6 float-left" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
+    														<?= $shipAddressHtml?>
+                          	</div>
 
-                        <div class="box">
-                            <div class="box-content">
                           	<?php if (!($_shippingRateGroups = $this->getShippingRates($_address))): ?>
-                            	<p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
+                            	<p class="col-12 validation-advice"><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
                             <?php else: ?>
-                            	<select id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
-
+															<div class="col-6 text-right">
+																<select class="select-type-one" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
+																	<option>Select Method</option>
                            		<?php $ship_sign_national = array();?>
                            		<?php $ship_sign_without_national = array();?>
                            		<?php $ship_withoutsign_national = array();?>
@@ -161,6 +160,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                             	<?php endforeach; ?>
               					<?php endforeach; ?>
                       		</select>
+												</div>
                       		<?php
                       		    $shippingConfig[$_address->getId()] = array(
                       		        '1_1' => $ship_sign_national,
@@ -170,15 +170,18 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                       		    );
                       		?>
                       		<?php endif; ?>
-                        </div>
+												</div>
+											</div>
                     </div>
+                  </div>
+
 
                         <script type="text/javascript">setShippingAddress('shipping-address-<?=$_index?>-<?=$_address->getId()?>', <?=$_address->getId()?> ,<?=$_address->getCustomerAddressId()?>)</script>
                         <?php endforeach; ?>
                         <?php echo $this->getChildHtml('checkout_billing_items') ?>
-                        <div class="buttons-set">
+                        <div class="buttons-set text-right">
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
-                            <button class="button continue" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
+                            <button class="button continue light-button next-button" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
                         </div>
 						<?php echo $this->getBlockHtml("formkey") ?>
                     </form>

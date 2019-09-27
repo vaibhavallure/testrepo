@@ -215,12 +215,32 @@ if(!is_null($parentId)){
 
         </div>
     </td>
-    <td  class="cart_col6">
-        <div class="w-remove">
+
+</tr>
+
+<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+<?php if(!empty($message)): ?>  <tr class="messages">
+        <td colspan="6">
+            <div class="item-msg">
+                <p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+            </div>
+        </td>
+    </tr>
+<?php endif; ?>
+
+<tr class="w-100">
+    <td colspan="6">
+        <div class="gift-messages float-left">
+            <p class="control">
+                <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
+                <label for="is_gift_<?= $_item->getId() ?>"><span>This item is a gift.</span></label>
+            </p>
+        </div>
+        <div class="w-remove float-right">
             <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
-            <div class="ad-to-fav">
+            <div class="ad-to-fav float-right">
                 <a class="info-text-three" id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Move to Wishlist</a>
             </div>
             <script type="text/javascript">
@@ -233,16 +253,6 @@ if(!is_null($parentId)){
         <?php endif; ?>
     </td>
 </tr>
-
-<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-<?php if(!empty($message)): ?>  <tr class="messages">
-        <td colspan="6">
-            <div class="item-msg">
-             	<p class="info-text-two">Availability: <?php echo $message ?></p>
-            </div>
-        </td>
-    </tr>
-<?php endif; ?>
 
 <script>
     jQuery(document).ready(function(){

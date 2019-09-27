@@ -135,7 +135,7 @@ will be rendered on all checkout pages
         <reference name="right">
             <action method="unsetChildren"></action>
             <block type="checkout/cart" name="checkout.cart">
-                <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action>
+                <!-- <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action> -->
                 <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
                 <action method="chooseTemplate"/>
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>

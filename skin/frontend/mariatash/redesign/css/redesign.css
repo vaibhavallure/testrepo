@@ -304,11 +304,30 @@ hr{
   border: 0;
   border-top: 1px solid #D4D4D4;
 }
-
+select{
+  border: 1px solid #292929;
+	-webkit-appearance:none;
+	position: relative;
+	background: #fff;
+	background-image: url(../images/redesign/arrow-down-bk.png);
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+}
 .select-type-one{
 	width: 323px;
-  height: 42px;
-  border: 1px solid #292929;
+}
+.select-type-two, .product-description-section select{
+	width: 210px;
+}
+address {
+  font-family: urw-din-light;
+  font-size: 13px;
+  color: rgba(41,41,41,0.90);
+  letter-spacing: 0.5px;
+  line-height: 20px;
+}
+address span {  /*use this parent ".overview-address-item address span" if this is diff on other pages*/
+  font-family: urw-din-medium;
 }
 
 /* STANDARD CSS ENDED */
@@ -334,11 +353,11 @@ hr{
   padding-right: 11px;
 	padding-top: 19px;
 }
-.checkout-multishipping-addresses .control label {
+.control label {
   padding: 1px 0 0 40px;
   background: url(../images/checkbox-login.png) no-repeat 0 0;
 }
-.checkout-multishipping-addresses .control input:checked+label{
+.control input:checked+label{
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
 .gift-messages label:before {
@@ -376,30 +395,26 @@ input, select, textarea{
 	box-shadow: 0 0 0 0 !important;
 }
 
-select{
-	-webkit-appearance:none;
-}
-.validation-advice {
+.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg {
 	clear: both;
 	font-size: 10px;
 	color: #830000 !important;
 	font-weight: bold;
 	float: left;
-	text-align: right;
+	/* text-align: right; */
+}
+.messages, .messages ul{
+	padding: 0;
 }
 .form-checkbox{
 	position: absolute;
 	margin-top: -8px;
 }
-
-.next-button button{
+.next-button{
 	width: 204px;
+	height: 42px;
+	margin-bottom: 31px;
 }
-
-.next-button {
-  margin-bottom: 32.5px;
-}
-
 .product-description-section {
   border-bottom: 1px solid #d8d8d8;
   padding: 30px 0;
@@ -438,12 +453,9 @@ select{
   margin-top: 3px;
 }
 
-select{
-	position: relative;
-}
 
-select:after{
-	background-image: url(../images/maria/arrow-down-bk.png);
+/* select:after{
+	background-image: url(../images/redesign/arrow-down-bk.png);
   content: '';
   background-repeat: no-repeat;
   position: absolute;
@@ -451,7 +463,7 @@ select:after{
   width: 10px;
   height: 10px;
   margin-top: 3px;
-}
+} */
 
 .login-dropdown li a {
   color: #fff;
@@ -704,34 +716,7 @@ nav.mariatash-header {
 	width: 100px;
 }
 /* 4.Newletter */
-.form-subscribe-mt input {
-	width: 100%;
-}
-.form-subscribe-mt input {
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-#newsletter-form .dark-button {
-	text-transform: uppercase;
-	padding: 5px 20px;
-}
-.form-subscribe-mt {
-  width: 300px;
-}
-.footer-item-list span {
-  font-size: 12px !important;
-  font-family: urw-din-medium;
-	letter-spacing: 0 !important;
-}
 
-.footer-items a:hover {
-    text-decoration: none;
-}
-
-.footerlink-icons .item-icons img {
-    width: 22px;
-}
 
 
 /* catalog page */
@@ -2106,7 +2091,19 @@ span#popup_loader_register {
 /* .checkout-privacy-policy input:checked+label { May be useful for the future
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 } */
-
+#checkoutSteps .tool-tip { /*for payment Cards info tooltip*/
+  border: 2px solid #ddd;
+  border-bottom-color: #666;
+  background: #f6f6f6;
+  padding: 15px 20px;
+  position: absolute;
+  z-index: 9999;
+}
+.tool-tip .btn-close a{
+	display: block;
+	background: url(../images/btn_window_close.gif) 100% 0 no-repeat;
+	text-indent: -999em;
+}
 /*Old from recently.viewd.css*/
 .image_carousel img {
 	padding:0;
@@ -2950,4 +2947,19 @@ table thead {
 }
 .category-piercing-gallery .top-bar {
   display: none;
+}
+
+/*cart page*/
+.cart-collaterals.fix-section {
+	position: fixed;
+	right: 0;
+}
+.cart-collaterals .total-title{
+	display: block;
+}
+.cart-collaterals .non-total-title{
+	display: none;
+}
+.cart-collaterals .grand_total_section .price{
+font-weight: bold;
 }

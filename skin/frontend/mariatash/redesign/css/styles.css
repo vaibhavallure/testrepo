@@ -403,7 +403,7 @@ button[disabled], input[disabled] {
  */
 
 
-input[type="radio"] {
+/* input[type="radio"] {
 	position: absolute;
 	left: -9999px;
 }
@@ -415,7 +415,7 @@ input[type="radio"]+label {
 
 input[type="radio"]:checked+label {
 	background: url(../images/radio-button-checked.png) no-repeat left;
-}
+} */
 
 
 /****** END Normalization *****************************************************************************/
@@ -2219,7 +2219,7 @@ p.required {
 	color: #EB340A;
 }
 /* Expiration date and CVV number validation fix */
-#authorizenet_cc_type_cvv_div .input-box .v-fix {
+/* #authorizenet_cc_type_cvv_div .input-box .v-fix {
 	float: left;
 	position: relative;
 	height: auto;
@@ -2252,7 +2252,7 @@ p.required {
 
 #advice-required-entry-authorizenet_expiration_yr {
 	margin-left: 9px;
-}
+} */
 
 /* Global Messages  */
 .success {
@@ -2267,17 +2267,6 @@ p.required {
 
 .notice {
 	color: #e26703;
-}
-
-.messages, .messages ul {
-	list-style: none !important;
-	margin: 0 !important;
-	padding: 0 !important;
-}
-
-.messages {
-	width: 100%;
-	overflow: hidden;
 }
 
 .messages#timeout-message {
@@ -2298,17 +2287,13 @@ p.required {
 	left: 0;
 }
 
-.error-msg, .success-msg, .note-msg, .notice-msg {
-	/*border-style:solid !important; border-width:1px !important;*/
+/* .error-msg, .success-msg, .note-msg, .notice-msg {
+	/*border-style:solid !important; border-width:1px !important;
 	font-size: 12px !important;
 	font-weight: bold !important;
-	line-height: 1.63636363636; /*padding: 8px 10px; */
+	line-height: 1.63636363636; /*padding: 8px 10px;
 	margin-bottom: 18px;
-}
-
-.checkout-cart-index .error-msg {
-	margin-bottom: 0;
-}
+} */
 
 .checkout-cart-index .success-msg  span span {
 	display: none !important;
@@ -2326,24 +2311,6 @@ p.required {
 .category-piercing .note-msg, .notice-msg
 .category-new-arrivals .note-msg, .notice-msg {
 	display: none;
-}
-
-.error-msg {
-	color: #830000;
-}
-
-.error-msg a, .error-msg a:hover, .error-msg a:visited {
-	color: #906E39 !important;
-	font-size: 11px !important;
-	text-decoration: underline !important;
-}
-
-.success-msg {
-	color: #906E39;
-}
-
-.notice-msg {
-	color: #906E39;
 }
 
 /* BreadCrumbs */
@@ -2410,12 +2377,12 @@ p.required {
 	margin-top: 18px;
 }
 
-.checkout-multishipping-addresses .messages,
+/* .checkout-multishipping-addresses .messages,
 .checkout-multishipping-shipping .messages,
 .checkout-multishipping-billing .messages,
 .checkout-multishipping-overview .messages {
 	position: absolute;
-}
+} */
 
 .checkout-multishipping-overview .multiple-checkout .col2-set .col-2.col-wide .box
 {
@@ -5979,20 +5946,6 @@ ul.product-tabs {
 
 /* Shopping Cart Table */
 
-/* Shopping Cart Collateral boxes */
-/* .cart .cart-collaterals {
-	padding: 18px 0 0;
-}
-
-.cart .cart-collaterals .col2-set .col-1 {
-	width: 222px;
-}
-
-.cart .cart-collaterals .col2-set .col-2 {
-	width: 655px;
-	background: #e6f7d7;
-} */
-
 ul.crosssell-products-list {
 	margin: 10px auto;
 }
@@ -6045,11 +5998,6 @@ ul.crosssell-products-list {
 }
 
 /* Discount Codes & Estimate Shipping and Tax Boxes */
-/* .collat-wrap {
-	float: left;
-	width: 100%;
-	margin-bottom: 30px;
-} */
 
 .cart div.discount, .cart div.shipping {
 	padding: 9px 0;
@@ -6195,7 +6143,7 @@ ul.crosssell-products-list {
 /* Checkout ============================================================================== */
 /********** < Common Checkout Styles */
 /* Shipping and Payment methods */
-.sp-methods {
+/* .sp-methods {
 	margin: 0 0 8px;
 }
 
@@ -6225,14 +6173,10 @@ ul.crosssell-products-list {
 
 .sp-methods .form-list {
 	padding-left: 20px;
-}
+} */
 
 .multiple-checkout .sp-methods .credit_cards_img {
 	margin-top: -25px;
-}
-
-.multiple-checkout .sp-methods .form-list {
-	margin-top: 16px;
 }
 
 .multiple-checkout .sp-methods #payment_form_authorizenet {
@@ -6241,10 +6185,6 @@ ul.crosssell-products-list {
 
 .multiple-checkout .sp-methods #payment_form_authorizenet li {
 	overflow: hidden;
-}
-
-.multiple-checkout .box-content {
-	font-size: 13px;
 }
 
 .multiple-checkout .box-content .sp-methods #payment_form_authorizenet label
@@ -6280,10 +6220,6 @@ ul.crosssell-products-list {
 	border: none;
 	border-radius: 0;
 	padding-left: 0px;
-}
-
-.sp-methods .form-list li {
-	margin: 0 10px 15px 0;
 }
 
 #payment_form_authorizenet .input-box li {
@@ -6329,10 +6265,6 @@ ul.crosssell-products-list {
 	width: 115px;
 }
 
-.multiple-checkout .sp-methods input.cvv {
-	width: 226px !important;
-}
-
 .multiple-checkout .sp-methods #authorizenet_cc_type_cvv_div input.cvv {
 	width: 142px !important;
 }
@@ -6341,10 +6273,6 @@ ul.crosssell-products-list {
 	width: 110px !important;
 }
 
-.sp-methods input.cvv {
-	width: 11em !important;
-	position: absolute
-}
 
 .img_cards {
 	background-image:
@@ -6390,14 +6318,14 @@ ul.crosssell-products-list {
 	vertical-align: middle;
 }
 
-.cvv-what-is-this {
+/* .cvv-what-is-this {
 	font-size: 11px;
 	cursor: help;
 	margin-top: 5px;
 	color: #555555;
 	float: right;
 	margin-left: 20px;
-}
+} */
 
 .multiple-checkout .box-content .sp-methods #payment_form_authorizenet .input-box .cvv-what-is-this
 {
@@ -6413,35 +6341,7 @@ ul.crosssell-products-list {
 {
 	width: 160px;
 }
-/* Tooltip */
-.tool-tip {
-	border: 2px solid #ddd;
-	border-bottom-color: #666;
-	background: #f6f6f6;
-	padding: 15px 20px;
-	position: absolute;
-	z-index: 9999;
-}
 
-.tool-tip .btn-close {
-	margin: -9px -14px 0;
-	text-align: right;
-}
-
-.tool-tip .btn-close a {
-	display: block;
-	margin: 0 0 0 auto;
-	width: 12px;
-	height: 12px;
-	background: url(../images/btn_window_close.gif) 100% 0 no-repeat;
-	text-align: left;
-	text-indent: -999em;
-	overflow: hidden;
-}
-
-.tool-tip .tool-tip-content {
-	padding: 5px;
-}
 
 .credit_cards_img {
 	margin-left: 150px;
@@ -6631,10 +6531,10 @@ ul.crosssell-products-list {
 	padding: 2px 0 2px 30px;
 }
 
-.gift-messages .control label {
+/* .gift-messages .control label {
 	padding: 2px 0 2px 30px;
 	background: url(../images/checkbox-login.png) no-repeat 0 0;
-}
+} */
 
 .input-gif-card-balance label {
 	padding: 0px 0 0px 30px;
@@ -6948,7 +6848,6 @@ ul.crosssell-products-list {
 	text-transform: none;
 }
 
-
 .block-progress p {
 	margin: 9px 0;
 }
@@ -6994,22 +6893,7 @@ ul.crosssell-products-list {
 	padding-left: 18px;
 }
 
-/* ol#checkoutSteps.opc {
-	float: left;
-	height: auto;
-	width: 100%;
-	margin-bottom: 80px;
-} */
-
-/* ol#checkoutSteps.opc li.section, ol#checkoutSteps.opc li.active {
-	display: block;
-	float: left;
-	height: auto;
-	width: 100%;
-} */
-
 /* start PASO 3 */
-
 
 .checkout-onepage-index #opc-shipping_method.active {
 	display: block;
@@ -8768,7 +8652,7 @@ checkout-payment-method-load
 	display: none;
 }
 
-.multiple-checkout>.buttons-set button.continue, .multiple-checkout>form .buttons-set button.continue
+/* .multiple-checkout>.buttons-set button.continue, .multiple-checkout>form .buttons-set button.continue
 {
 	float: right;
 	margin: 0 0 26px;
@@ -8781,7 +8665,7 @@ checkout-payment-method-load
 
 .checkout-multishipping-addresses .multiple-checkout .product h3 a {
 	font-weight: bold;
-}
+} */
 
 .multiple-checkout .product .input-text.qty {
 	background: #fff;
@@ -8848,19 +8732,14 @@ checkout-payment-method-load
 	width: 260px;
 }
 
-.multiple-checkout .col2-set .col-2.col-wide {
+/* .multiple-checkout .col2-set .col-2.col-wide {
 	width: 367px;
-}
+} */
 
 .multiple-checkout .col2-set .box-sp-methods .box-title {
 	display: none;
 }
 
-.multiple-checkout .col2-set .box-sp-methods .sp-methods label,
-.multiple-checkout .col2-set .box-sp-methods .sp-methods .price {
-	color: #3f4048;
-	font-weight: normal;
-}
 
 /* .multiple-checkout .col2-set .gift-messages p.control {
 	color: #3f4048;
@@ -8926,9 +8805,7 @@ checkout-payment-method-load
 }
 
 /* Step 3 */
-.checkout-multishipping-billing .multiple-checkout {
-	position: relative;
-}
+
 
 /* Step 5  */
 .promoDiv {
@@ -9039,12 +8916,6 @@ checkout-payment-method-load
 	width: 155px !important;
 }
 
-#checkout-payment-method-load {
-	float: left;
-	margin: 0 0 11px;
-	padding-left: 5px;
-	width: 670px;
-}
 
 #checkout-payment-method-load .sp-methods .form-list {
 	padding-left: 0;
