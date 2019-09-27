@@ -172,11 +172,18 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 
 
+
+
                 $slotval ="`". "time_slot_".$i ."`";
                 //echo '<br>'.$slotval;
                 $endTime = date('H:i', $endTime);
                 //echo $i.' '.$selectedTime.'<br>';
                 //echo $endTime;
+
+                if(( $storeId == $limerick) || ($storeId == $cork)  ) {
+                    $endTime = $helper->getStaticSelectTime($date,$endTime,false);
+
+                }
                 $show=false;
                 $allocatedApps = null;
 

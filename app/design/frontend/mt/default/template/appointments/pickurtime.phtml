@@ -181,6 +181,11 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 $show=false;
                 $allocatedApps = null;
 
+                if(( $storeId == $limerick) || ($storeId == $cork)  ) {
+                    $endTime = $helper->getStaticSelectTime($date,$endTime,false);
+
+                }
+
                 foreach ($collection as $piercer)
                 {
                     /*  To check if piercer already has allocated an appointment */
