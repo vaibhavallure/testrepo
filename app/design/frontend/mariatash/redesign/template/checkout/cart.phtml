@@ -102,7 +102,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                     </td> -->
                     <td>
                         <div class="coupons-mt">
-                            <div class="coupons"><?php echo$this->getChildHtml('giftcards'). "</br>" .  $this->getChildHtml('coupon')  ?></div>
+                            <div class="coupons"><?php echo$this->getChildHtml('coupon'). "</br>" .  $this->getChildHtml('giftcards')  ?></div>
                             <div class="totals">
                                 <?php // if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
                                 <?php echo $this->getChildHtml('totals'); ?>

@@ -49,14 +49,9 @@
             <input type="hidden" name="remove" id="remove-coupone" value="0" />
             <div class="input-cart">
                 <input class="input-text" id="coupon_code2" name="coupon_code" placeholder="Promo Code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" <?php echo (strlen($this->getCouponCode())) ? 'disabled' : '';?>/>
-            </div>
-            <div class="buttons-set">
                 <?php if(strlen($this->getCouponCode())): ?>
-                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon" onclick="discountForm.submit(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
-                    <p class="youhave validation-advice">Promo Code Applied</p>
-                <?php else: ?>
-                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="discountForm.submit()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>
-                <?php endif;?>
+                    <button type="button" title="<?php echo $this->__('X') ?>" class="button_coupon" onclick="discountForm.submit(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('X') ?></span></span></button>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -90,4 +85,8 @@ discountForm.submit = function (remove) {
         return false;
 }
 //]]>
+
+    jQuery("#coupon_code2").blur(function() {
+        discountForm.submit();
+    });
 </script>
