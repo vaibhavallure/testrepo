@@ -27,13 +27,13 @@
  */
 ?>
 <?php $billingAddress = Mage::getSingleton('checkout/type_multishipping')->getQuote()->getBillingAddress();?>
-<?php 
+<?php
     $billingAddressId = false;
     if($billingAddress){
         $billingAddressId = $billingAddress->getCustomerAddressId();
     }
 ?>
-<div class="billing-address-select">
+<div class="billing-address-select col-12 p-0">
 	<select name="billing_address_id">
 		<?php foreach ($this->getAddressCollection() as $_address):?>
 		<option value="<?= $_address->getId()?>" <?= ($billingAddressId == $_address->getId()) ? "selected='selected'" : "" ?> ><?= $_address->format('oneline')?></option>
