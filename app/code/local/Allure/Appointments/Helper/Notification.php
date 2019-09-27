@@ -51,6 +51,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         $store = $appointment->getStoreId();
         $store_id =  array_search($store, $configData['stores']);
         $storeInfoArray = $this->getStoreInfo($configData,$store_id);
+        $isSpecialPopup = Mage::helper('appointments')->getCustomersInfo($store);
         $oldAppointmentArray = array();
         $oldCustomerListHtml ='';
 
@@ -161,7 +162,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             }
 
             if($type != 'cancel'){
-                $appointmentArray['apt_modify_link'] = $this->getModifyLink($appointmentCustomer);
+                $appointmentArray['apt_modify_link'] = $this->getModifyLink($appointmentCustomer,$isSpecialPopup);
             }
 
 
