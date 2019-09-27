@@ -110,7 +110,7 @@ function addToShoppingCart(button, formId, relode=false) {
                  //allure code end
 
                 //var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
-                //var dataSend = JSON.parse(stringJSON);
+                var dataSend = JSON.parse(stringJSON);
                 var urlAdd2Cart = jQuery("#product_addtocart_form").attr('action');
             } else {
                 if (jQuery("#" + formId.id).attr('class') == "product_addtocart_celebrities_form") {
@@ -182,8 +182,8 @@ function addToShoppingCartFromQuickView(button, formId) {
                     mibandera = false;
                 datos += ',"' + this.name + '":"' + this.value + '"';
             });
-            
-            
+
+
             var super_attribute = {};
             var options= {};
             var optionStr = '';
@@ -207,8 +207,8 @@ function addToShoppingCartFromQuickView(button, formId) {
              if(Object.keys(options).length>0){
             	 optionStr = optionStr + '"options":'+JSON.stringify(options);
              }
-            
-            
+
+
 
             var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
             datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
@@ -225,7 +225,7 @@ function addToShoppingCartFromQuickView(button, formId) {
             var urlAdd2Cart = jQuery(clicked).attr('href');
         }
     }
-    
+
     parent.jQuery("div.top-cart").css("background", "url('" + parent.SKIN_URL + "frontend/mt/default/images/loading.gif') no-repeat scroll 0 0 transparent");
     var jqxhr = jQuery.get(urlAdd2Cart, dataSend, function (data) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
