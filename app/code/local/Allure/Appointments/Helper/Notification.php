@@ -51,6 +51,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         $store = $appointment->getStoreId();
         $store_id =  array_search($store, $configData['stores']);
         $storeInfoArray = $this->getStoreInfo($configData,$store_id);
+        $isSpecialPopup = Mage::helper('appointments')->getCustomersInfo($store);
         $oldAppointmentArray = array();
         $oldCustomerListHtml ='';
 
@@ -66,6 +67,8 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
 
             $appointmentArray['pre_apt_date'] = $this->getDate($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
             $appointmentArray['pre_apt_time'] = $this->getTime($appointmentArray['appointment_start']);
+            $appointmentArray['oldappointmentdate'] = $this->getDate($oldAppointmentArray['appointment_start'],'en');
+            $appointmentArray['oldapttime'] = $this->getTime($oldAppointmentArray['appointment_start']);
 
             $cnt = 0;
 
@@ -88,7 +91,9 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+                    if(!$isSpecialPopup):
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
+                    endif;
                     $oldCustomerListHtml .= '</td>';
 
                 if($create_rows == 0){
@@ -111,6 +116,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
 
         $appointmentArray['apt_date'] = $this->getDate($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
         $appointmentArray['apt_time'] = $this->getTime($appointmentArray['appointment_start']);
+        $appointmentArray['appointmentdate'] = $this->getDate($appointmentArray['appointment_start'],'en');
         $customerListHtml ='';
         $cnt = 0;
 
@@ -134,7 +140,9 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+            if(!$isSpecialPopup):
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
+            endif;
                 $customerListHtml .= '</td>';
 
 
@@ -159,7 +167,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             }
 
             if($type != 'cancel'){
-                $appointmentArray['apt_modify_link'] = $this->getModifyLink($appointmentCustomer);
+                $appointmentArray['apt_modify_link'] = $this->getModifyLink($appointmentCustomer,$isSpecialPopup);
             }
 
 
@@ -196,6 +204,8 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
 
 
             /*EMAIL VARIABLES*/
+
+
             $appointmentObject = new Varien_Object();
             $appointmentObject->setData($appointmentArray);
 
@@ -240,9 +250,12 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         $configData = $this->getAppointmentStoreMapping();
         $store = $appointment->getStoreId();
         $store_id =  array_search($store, $configData['stores']);
+        $isSpecialPopup = Mage::helper('appointments')->getCustomersInfo($store);
+
         $smsType = $this->getSmsTypeMapping();
 
         $appointmentCustomers = $this->getAppointmentCustomerArray($appointment);
+
 
         foreach ($appointmentCustomers as $appointmentCustomer) {
 
@@ -268,18 +281,26 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 $this->writeLog("Language :" . $language);
                 $this->writeLog("Phone :" . $phone);
 
+                $this->getModifyLink($appointmentCustomer,$isSpecialPopup);
+
                 try {
-                    $url = $this->getShortUrl($this->getModifyLink($appointmentCustomer));
+                    $url = $this->getShortUrl($this->getModifyLink($appointmentCustomer,$isSpecialPopup));
                     if (strlen($url) < 1) {
-                        $url = $this->getModifyLink($appointmentCustomer);
+                        $url = $this->getModifyLink($appointmentCustomer,$isSpecialPopup);
                     }
 
                     $date = $this->getDate($appointment->getAppointmentStart(),$appointment->getLanguagePref());
+                    $date_en = $this->getDate($appointment->getAppointmentStart(),'en');
                     $time = $this->getTime($appointment->getAppointmentStart());
+
 
                     $smsText = str_replace("(apt_id)", $appointmentCustomer['appointment_id'], $smsText);
                     $smsText = str_replace("(time)", $time, $smsText);
-                    $smsText = str_replace("(date)", $date, $smsText);
+                    if($isSpecialPopup){
+                        $smsText = str_replace("(date)", $date_en, $smsText);
+                    }else{
+                        $smsText = str_replace("(date)", $date, $smsText);
+                    }
                     $smsText = str_replace("(modify_link)", $url, $smsText);
 
                     if (strlen(trim($phone)) > 0) {
@@ -372,15 +393,19 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     }
 
 
-    public function getModifyLink($apt_customer){
+    public function getModifyLink($apt_customer,$isSpecialPopup = false){
 
+        if(!$isSpecialPopup):
         $apt_url = 'appointments/popup/modify';
         $id =  urlencode(Mage::getModel('core/encryption')->encrypt($apt_customer['appointment_id'].'-'.$apt_customer['id']));
         $apt_modify_link = Mage::getUrl($apt_url, array(
             '_secure'   => true,
             '_query'=>'id='.$id
         ));
-
+        else:
+            $appointment = Mage::getModel('appointments/appointments')->load($apt_customer['appointment_id']);
+            $apt_modify_link = Mage::getBaseUrl().'appointments/index/modify/id/'.$appointment->getId().'/email/'.$appointment->getEmail().'/store/'.$appointment->getStoreId();
+            endif;
         return $apt_modify_link;
 
     }

@@ -250,6 +250,20 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         return '';
     }
 
+    public function getBrownthomasTimeByValue($value){
+        $timings = Mage::getModel('appointments/adminhtml_source_timing')->toBrownthomasOptionArray();
+
+        var_dump($timings);
+        foreach ($timings as $time) {
+            $timeValue = $time['value'];
+            if ("$timeValue" >=  "$value"){
+                return $time['label'];
+            }
+        }
+        return '';
+
+    }
+
     public function getTimeByKey ($key) {
 
         $timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
@@ -837,5 +851,62 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
             }
             return null;
         }
+    }
+
+    public function  getCustomersInfoSetting($store_id=null){
+       if($store_id==null)
+        $store_id = $this->getReqStoreId();
+
+        return $this->getCustomersInfo($store_id);
+    }
+    public function getCustomersInfo($store_id){
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($store_id, $configData['stores']);
+        return($configData['enable_people_info'][$storeKey]);
+    }
+    public function getStaticSelectTime($date,$time,$is_start){
+
+        if($date == '10/04/2019' || $date == '10/25/2019' || $date == '10/24/2019'){
+            if($time == '19:40' && $is_start){
+                return null;
+            }
+            $increment = 5;
+
+            $time = explode(":",$time);
+            if($time[1] < 10 && $increment < 10){
+                $time[1] = '0'.$increment;
+            }else {
+                $time[1] += $increment;
+            }
+
+        }
+        if($date == '10/05/2019' || $date == '10/26/2019'){
+            if($time == '18:00' && $is_start){
+                return null;
+            }
+            $increment = 15;
+
+            $time = explode(":",$time);
+            if($time[1] < 10 && $increment < 10){
+                $time[1] = '0'.$increment;
+            }else {
+                $time[1] += $increment;
+
+            }
+            if($time[1] >=60){
+                $increment = $time[1]-60;
+                $time[0] = $time[0]+1;
+
+                if($increment <10){
+                    $time[1] = '0'.$increment;
+                }else{
+                    $time[1] = $increment;
+                }
+            }
+        }
+
+
+        $time = implode(":",$time);
+        return $time;
     }
 }
