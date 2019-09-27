@@ -286,7 +286,29 @@
     border: 1px solid #fff;
   	background: transparent;
   	color: #fff;
+    padding: 10px;
   }
+/* ///// */
+.form-subscribe-mt input {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.footer-item-list span {
+  font-size: 12px !important;
+  font-family: urw-din-medium;
+	letter-spacing: 0 !important;
+}
+
+.footer-items a:hover {
+    text-decoration: none;
+}
+
+.footerlink-icons .item-icons img {
+    width: 22px;
+}
+
   /* Catalog Filter CSS */
 
   .m-filter-checkboxes{
