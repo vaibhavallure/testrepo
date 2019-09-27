@@ -1,4 +1,6 @@
 <?php
+$limerick = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_limerick');
+$cork = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_cork');
 /**
 *
 *	Allure checkout step success order.
@@ -15,6 +17,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
 ?>
 	<?php if($apt_id):?>
+
 
 
     <style>
@@ -196,6 +199,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 					</div>
 				</div>
 			</div>
+
 		<?php endif;?>
 <!--  If the id or email not correct  -->	
 		
@@ -223,7 +227,14 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         }
 
 		    //Logic to cancel the apt
-			var reloadurl = '<?php echo $this->getUrl('*/index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+        var store = '<?= $model->getStoreId()?>';
+        var limerick = '<?= $limerick?>';
+        var cork = '<?= $cork?>';
+        var reloadurl = '<?php echo $this->getUrl('*/index/cancelapt', array('id' => $apt_id, 'email' => $apt_email, '_secure' => true)); ?>';
+        if(store === limerick || store === cork) {
+            reloadurl = '<?php echo $this->getUrl('*/indexNew/cancelapt', array('id' => $apt_id, 'email' => $apt_email, '_secure' => true)); ?>';
+        }
+       
 		    jQuery.ajax({
 		        url: reloadurl, //Relative or absolute path to response.php file
 		        method: 'get',
