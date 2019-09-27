@@ -1,10 +1,15 @@
 jQuery(document).ready(function() {
 
 
-        if (jQuery(window).width() >= 992){
-            var nav_height=jQuery('header').outerHeight();
-            jQuery('.login_security,.my_addresses,.new_address').css("margin-top",nav_height/2);
-        }
+    if (jQuery(window).width() >= 992){
+        var nav_height=jQuery('header').outerHeight();
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",nav_height/2);
+    }
+
+
+    var box_width=jQuery('.fs-entry-container').outerWidth();
+    jQuery('.fs-entry-container').css('height',box_width);
+
 
 
     jQuery(".mobile-sub_menu .menu-head").click(function(){
@@ -115,19 +120,19 @@ jQuery(document).ready(function() {
 
         if (jQuery('.filter-common-div').length) {
             var filter_popup = '<div id="openModal" class="filterPopup">\n' +
-                '\t<div class="pop-up-cover">\n' +
-                '\t\t<div class="pop-title modal-header">\n' +
-                '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
-                '\t\t\t\t<div></div>\n' +
-                '\t\t\t</a>\n' +
-                '\t\t</div>\n' +
-                '\t\t<div class="body modal-body">\n' +
-                '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
-                '\t\t</div>\n' +
-                '\t</div>\n' +
-                '</div>';
+            '\t<div class="pop-up-cover">\n' +
+            '\t\t<div class="pop-title modal-header">\n' +
+            '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
+            '\t\t\t\t<div></div>\n' +
+            '\t\t\t</a>\n' +
+            '\t\t</div>\n' +
+            '\t\t<div class="body modal-body">\n' +
+            '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
+            '\t\t</div>\n' +
+            '\t</div>\n' +
+            '</div>';
             var filterButton='<a href="#" class="filterButton">' +
-                '</a>';
+            '</a>';
 
             jQuery('.filter-common-div').html("");
 
@@ -154,11 +159,16 @@ function myFunction(x) {
 
 
 jQuery(window).bind("load resize scroll",function(e){
-        if (jQuery(window).width() >= 992){
-            var nav_height=jQuery('header').outerHeight();
-            jQuery('.login_security,.my_addresses,.new_address').css("margin-top",nav_height/2 +20);
-        }
-        else{
-            jQuery('.login_security,.my_addresses,.new_address').css("margin-top",'0px');
-        }
-    });
+    if (jQuery(window).width() >= 992){
+        var nav_height=jQuery('header').outerHeight();
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",nav_height/2 +20);
+    }
+    else{
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",'0px');
+    }
+
+
+    var box_width=jQuery('.fs-entry-container').outerWidth();
+    jQuery('.fs-entry-container').css('height',box_width);
+
+});
