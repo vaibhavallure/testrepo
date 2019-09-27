@@ -4355,13 +4355,13 @@ textarea:focus, input:focus {
 	display: none;
 }
 
-.category-reviews .category-title h1, .category-tash-tv .category-title h1,
+/* .category-reviews .category-title h1, .category-tash-tv .category-title h1,
 .category-piercing-gallery .category-title h1,
 .category-youth-piercing-services .category-title h1,
 .category-piercing-services .category-title h1 {
 	width: 960px;
 	margin: 0 auto;
-}
+} */
 
 .category-title h1 {
 
