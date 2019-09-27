@@ -68,6 +68,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             $appointmentArray['pre_apt_date'] = $this->getDate($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
             $appointmentArray['pre_apt_time'] = $this->getTime($appointmentArray['appointment_start']);
             $appointmentArray['oldappointmentdate'] = $this->getDate($oldAppointmentArray['appointment_start'],'en');
+            $appointmentArray['oldapttime'] = $this->getTime($oldAppointmentArray['appointment_start']);
 
             $cnt = 0;
 
@@ -90,7 +91,9 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+                    if(!$isSpecialPopup):
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
+                    endif;
                     $oldCustomerListHtml .= '</td>';
 
                 if($create_rows == 0){
@@ -137,7 +140,9 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+            if(!$isSpecialPopup):
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
+            endif;
                 $customerListHtml .= '</td>';
 
 
