@@ -86,19 +86,19 @@ $count=1;
             <h6>Customer: <?= $count ?></h6>
             <div class="fieldDiv">
                 <label><?= $this->__('First Name')?>*:</label><br/>
-                <input class="ele_width apt_firstname" type="text" name="customer[<?= $count ?>][firstname]" id="firstname_1" placeholder="First Name*" value="<?= $customer->getFirstname() ?>">
+                <input class="ele_width apt_firstname required-entry" type="text" name="customer[<?= $count ?>][firstname]" id="firstname_1" placeholder="First Name*" value="<?= $customer->getFirstname() ?>">
             </div>
             <div class="fieldDiv">
                 <label><?= $this->__('Last Name')?>*:</label><br/>
-                <input class="ele_width apt_lastname" type="text" name="customer[<?= $count ?>][lastname]" id="lastname_1" placeholder="Last Name*" value="<?= $customer->getLastname() ?>">
+                <input class="ele_width apt_lastname required-entry" type="text" name="customer[<?= $count ?>][lastname]" id="lastname_1" placeholder="Last Name*" value="<?= $customer->getLastname() ?>">
             </div>
             <div class="fieldDiv">
                 <label><?= $this->__('Email')?>*:</label><br/>
-                <input class="ele_width apt_email" type="text" name="customer[<?= $count ?>][email]" id="email_1" placeholder="Email" value="<?= $customer->getEmail() ?>">
+                <input class="ele_width apt_email required-entry" type="text" name="customer[<?= $count ?>][email]" id="email_1" placeholder="Email" value="<?= $customer->getEmail() ?>">
             </div>
             <div class="fieldDiv">
-                <label><?= $this->__('Phone')?>*:</label><br/>
-                <input class="ele_width apt_phone" type="text" name="customer[<?= $count ?>][phone]" id="phone_<?= $count?>" placeholder="Phone" value="<?= $customer->getPhone() ?>">
+                <label><?= $this->__('Phone')?>:</label><br/>
+                <input class="ele_width apt_phone required-entry" type="text" name="customer[<?= $count ?>][phone]" id="phone_<?= $count?>" placeholder="Phone" value="<?= $customer->getPhone() ?>">
             </div>
 
             <div class="fieldDiv">
@@ -125,19 +125,19 @@ $count=1;
                 <h6>Customer: 1</h6>
                 <div class="fieldDiv">
                     <label><?= $this->__('First Name')?>*:</label><br/>
-                    <input class="ele_width apt_firstname" type="text" name="customer[1][firstname]" id="firstname_1" placeholder="First Name*" value="">
+                    <input class="ele_width apt_firstname required-entry" type="text" name="customer[1][firstname]" id="firstname_1" placeholder="First Name*" value="">
                 </div>
                 <div class="fieldDiv">
                     <label><?= $this->__('Last Name')?>*:</label><br/>
-                    <input class="ele_width apt_lastname" type="text" name="customer[1][lastname]" id="lastname_1" placeholder="Last Name*" value="">
+                    <input class="ele_width apt_lastname required-entry" type="text" name="customer[1][lastname]" id="lastname_1" placeholder="Last Name*" value="">
                 </div>
                 <div class="fieldDiv">
                     <label><?= $this->__('Email')?>*:</label><br/>
-                    <input class="ele_width apt_email" type="text" name="customer[1][email]" id="email_1" placeholder="Email" value="">
+                    <input class="ele_width apt_email required-entry" type="text" name="customer[1][email]" id="email_1" placeholder="Email" value="">
                 </div>
                 <div class="fieldDiv">
-                    <label><?= $this->__('Phone')?>*:</label><br/>
-                    <input class="ele_width apt_phone" type="text" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
+                    <label><?= $this->__('Phone')?>:</label><br/>
+                    <input class="ele_width apt_phone required-entry" type="text" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
                 </div>
 
                 <div class="fieldDiv">

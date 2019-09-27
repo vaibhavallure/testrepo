@@ -75,19 +75,19 @@ var addCustomer = function (id) {
     <h6>Customer: ${id}</h6>
 <div class="fieldDiv">
 <label>First Name*</label><br/>
-<input class="ele_width apt_firstname" type="text" name="customer[${id}][firstname]" id="firstname_${id}" placeholder="First Name*" value="">
+<input class="ele_width apt_firstname required-entry" type="text" name="customer[${id}][firstname]" id="firstname_${id}" placeholder="First Name*" value="">
     </div>
     <div class="fieldDiv">
 <label>Last Name*:</label><br/>
-<input class="ele_width apt_lastname" type="text" name="customer[${id}][lastname]" id="lastname_${id}" placeholder="Last Name*" value="">
+<input class="ele_width apt_lastname required-entry" type="text" name="customer[${id}][lastname]" id="lastname_${id}" placeholder="Last Name*" value="">
     </div>
     <div class="fieldDiv">
 <label>Email*:</label><br/>
-<input class="ele_width apt_email" type="text" name="customer[${id}][email]" id="email_${id}" placeholder="Email" value="">
+<input class="ele_width apt_email required-entry" type="text" name="customer[${id}][email]" id="email_${id}" placeholder="Email" value="">
     </div>
     <div class="fieldDiv">
 <label>Phone*:</label><br/>
-<input class="ele_width apt_phone" type="text" name="customer[${id}][phone]" id="phone_${id}" placeholder="Phone" value="">
+<input class="ele_width apt_phone required-entry" type="text" name="customer[${id}][phone]" id="phone_${id}" placeholder="Phone" value="">
     </div>
 
     <div class="fieldDiv">
