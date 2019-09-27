@@ -203,6 +203,13 @@
                     	<h3><?= $_step->getLabel()?></h3>
                 	</div>
                 </a>
+            <?php elseif($stepKey == 'multishipping_delivery_option'):?>
+                <a href="<?= $this->getBaseUrl().'checkout/multishipping/delivery/'; ?>">
+                	<div class="step-title checkout-step-name col-12">
+                    	<span class="number"><?= $cnt ?></span>
+                    	<h3><?= $_step->getLabel()?></h3>
+                	</div>
+                </a>
             <?php elseif($stepKey == 'multishipping_billing'):?>
                 <a href="<?= $this->getBaseUrl().'checkout/multishipping/billing/'; ?>">
                 	<div class="step-title checkout-step-name col-12">
