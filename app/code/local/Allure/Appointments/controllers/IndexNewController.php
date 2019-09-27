@@ -7,6 +7,7 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
     {
         $post_data = $this->getFormattedPostData();
 
+
         /*------------------notification setting start ----------------------*/
         $oldAppointment = null;
         $oldCustomersCollection = null;
