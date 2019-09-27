@@ -815,8 +815,39 @@ th,td{
 	height: 300px;
 }
 /*=====================*/
+/*INSTAGRAM*/
+/*=====================*/
+#shop_our_instagram .fs-entry-container{
+	width: 322px;
+	margin-bottom: 18px;
+}
+#shop_our_instagram h1{
+	font-size: 30px;
+	text-align: center;
+	margin-bottom: 40px;
+}
+#shop_our_instagram  .fs-timeline{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+#shop_our_instagram .fs-timeline-entry{
+	margin: 0;
+}
+.category-shop-our-instagram .top-bar{
+	display: none;
+}
+.category-shop-our-instagram .category-title{
+	display: none;
+}
+/*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
+@media(max-width: 1450px){
+	.category-shop-our-instagram .main-container{
+		margin-top: 0!important;
+	}
+}
 @media(min-width: 481px){
 	.list-form .field{float: right;}
 }
@@ -824,10 +855,19 @@ th,td{
 	.acc-products-wrapper .container{
 		padding: 0 150px;
 	}
+	#shop_our_instagram{
+		padding: 0 72px;
+	}
 }
-@media(min-width:1024px ){
+@media(min-width:1024px){
 	.other-contact-options{
 		margin-bottom: 235px;
+	}
+}
+@media(max-width: 1199px){
+	#shop_our_instagram .fs-entry-container{
+		width: 32%;
+		height: auto;
 	}
 }
 @media(max-width:991px){
@@ -879,6 +919,9 @@ th,td{
 	}
 }
 @media(max-width: 767px){
+	#shop_our_instagram .fs-entry-container{
+		width: 48%;
+	}
 	#open-order-info .order-details .container,
 	#complete-order-info .order-details .container{
 		overflow-x: auto;
@@ -1003,6 +1046,7 @@ th,td{
 }
 
 @media(min-width: 1300px){
+	
 	.login_security{
 		padding-left: 248px;
 	}
