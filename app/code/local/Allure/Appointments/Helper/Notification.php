@@ -397,7 +397,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         ));
         else:
             $appointment = Mage::getModel('appointments/appointments')->load($apt_customer['appointment_id']);
-            $apt_modify_link = Mage::getBaseUrl().'appointments/index/modify/id/'.$appointment->getId().'/email/'.$appointment->getEmail();
+            $apt_modify_link = Mage::getBaseUrl().'appointments/index/modify/id/'.$appointment->getId().'/email/'.$appointment->getEmail().'/store/'.$appointment->getStoreId();
             endif;
         return $apt_modify_link;
 
