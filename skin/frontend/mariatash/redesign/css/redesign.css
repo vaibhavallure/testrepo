@@ -120,16 +120,16 @@ h4{
 	font-size: 13px;
 	color: rgba(41,41,41,0.60);
 	line-height: 18px;
-	border: 0.25px solid rgba(41,41,41,0.90);
+	border: 1px solid rgba(41,41,41,0.25);
 }
 
 .border-style-one{
-	border: 0.25px solid rgba(41,41,41,0.90);
+	border: 1px solid rgba(41,41,41,0.25);
 }
 
 .border-style-two{
-	border: 0.5px solid
-	rgba(41,41,41,0.90);
+	border: 1px solid
+	rgba(41,41,41,0.75);
 }
 
 .selection-line{
@@ -303,6 +303,12 @@ hr{
   margin-bottom: 19px;
   border: 0;
   border-top: 1px solid #D4D4D4;
+}
+
+.select-type-one{
+	width: 323px;
+  height: 42px;
+  border: 1px solid #292929;
 }
 
 /* STANDARD CSS ENDED */
@@ -2768,7 +2774,7 @@ ul.tabs li:nth-child(3){
   margin-bottom: 18px;
 	padding: 0;
 }
-.categorypath-celebrity-clientele-html .for-space-to-bottom{
+.categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
 	height: 250px !important;
 }
 /*press page--------------------------------------------*/
@@ -2944,7 +2950,4 @@ table thead {
 }
 .category-piercing-gallery .top-bar {
   display: none;
-}
-.category-piercing-gallery .for-space-to-bottom{
-	height: 250px !important;
 }

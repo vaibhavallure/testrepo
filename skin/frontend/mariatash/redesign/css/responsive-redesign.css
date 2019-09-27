@@ -348,6 +348,9 @@
     flex: 0 0 33.33% !important;
     max-width: 33.33% !important;
   }
+  .simple-page-title{
+    padding: 0!important;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */

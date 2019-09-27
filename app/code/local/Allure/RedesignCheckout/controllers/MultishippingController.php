@@ -20,6 +20,29 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     }
     
     /**
+     * Multishipping checkout shipping information page
+     */
+    public function shippingAction()
+    {
+        if (!$this->_validateMinimumAmount()) {
+            return;
+        }
+        
+        if (!$this->_getState()->getCompleteStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_SELECT_ADDRESSES)) {
+            $this->_redirect('*/*/addresses');
+            return $this;
+        }
+        
+        $this->_getState()->setActiveStep(
+            Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
+            );
+        $this->loadLayout();
+        $this->_initLayoutMessages('customer/session');
+        $this->_initLayoutMessages('checkout/session');
+        $this->renderLayout();
+    }
+    
+    /**
      * Multishipping checkout after the shipping page
      */
     public function shippingPostAction()
@@ -40,16 +63,57 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 );
             $this->_getCheckout()->setShippingMethods($shippingMethods);
             $this->_getState()->setActiveStep(
-                Mage_Checkout_Model_Type_Multishipping_State::STEP_BILLING
+                Allure_RedesignCheckout_Model_Checkout_Type_Multishipping_State::STEP_DELIVERY_OPTION
                 );
             $this->_getState()->setCompleteStep(
                 Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
                 );
-            $this->_redirect('*/*/billing');
+            $this->_redirect('*/*/delivery');
         }
         catch (Exception $e) {
             $this->_getCheckoutSession()->addError($e->getMessage());
             $this->_redirect('*/*/shipping');
+        }
+    }
+    
+    public function deliveryAction()
+    {
+        if (!$this->_validateMinimumAmount()) {
+            return;
+        }
+        
+        if (!$this->_getState()->getCompleteStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING)) {
+            $this->_redirect('*/*/shipping');
+            return $this;
+        }
+        
+        $this->_getState()->setActiveStep(
+            Allure_RedesignCheckout_Model_Checkout_Type_Multishipping_State::STEP_DELIVERY_OPTION
+            );
+        $this->loadLayout();
+        $this->_initLayoutMessages('customer/session');
+        $this->_initLayoutMessages('checkout/session');
+        $this->renderLayout();
+    }
+    
+    public function deliveryPostAction()
+    {
+        if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
+            $this->_redirect('*/*/delivery');
+            return;
+        }
+        try {
+            $this->_getState()->setActiveStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_BILLING
+                );
+            $this->_getState()->setCompleteStep(
+                Allure_RedesignCheckout_Model_Checkout_Type_Multishipping_State::STEP_DELIVERY_OPTION
+                );
+            $this->_redirect('*/*/overview');
+        }
+        catch (Exception $e) {
+            $this->_getCheckoutSession()->addError($e->getMessage());
+            $this->_redirect('*/*/delivery');
         }
     }
     

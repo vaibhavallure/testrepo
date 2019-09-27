@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_RedesignCheckout>
 			<name>Allure - Redesign Checkout</name>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</Allure_RedesignCheckout>
 	</modules>
 	<global>

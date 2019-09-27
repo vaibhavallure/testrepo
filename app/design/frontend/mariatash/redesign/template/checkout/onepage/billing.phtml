@@ -43,8 +43,7 @@
         <ul class="form-list">
             <?php if ($_hasAddresses): ?>
                 <li class="wide">
-                    <label for="billing-address-select"
-                           style="display:inline-block; margin-bottom:10px;"><?php echo $this->__('Select a billing address from your address book or enter a new address.') ?></label>
+                    <label for="billing-address-select"><?php echo $this->__('Select a billing address from your address book or enter a new address.') ?></label>
                     <div class="input-box">
                         <?php Varien_Profiler::start('DTN: getHtmlSelect binling'); ?>
                         <?php echo $this->getAddressesHtmlSelect('billing') ?>
@@ -389,4 +388,3 @@
 
     //]]>
 </script>
-

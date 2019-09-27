@@ -266,6 +266,14 @@ Multi address shipping checkout shipping information
             </block>
         </reference>
     </checkout_multishipping_shipping>
+    
+    <checkout_multishipping_delivery translate="label">
+        <label>Multishipping Checkout Delivery Information Step</label>
+        <update handle="checkout_multishipping"/>
+        <reference name="content">
+            <block type="allure_redesigncheckout/checkout_multishipping_delivery" name="checkout_delivery" template="checkout/multishipping/delivery.phtml" />
+        </reference>
+    </checkout_multishipping_delivery>
 
 <!--
 Multi address shipping checkout billing information
