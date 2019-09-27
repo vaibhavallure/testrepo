@@ -36,7 +36,7 @@
     <li><div class="img_tdc">
         <label for="<?php echo $_code ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Card Type') ?></label></div>
         <div class="input-box">
-            <select id="<?php echo $_code ?>_cc_type" name="payment[cc_type]" class="required-entry validate-cc-type-select">
+            <select id="<?php echo $_code ?>_cc_type" name="payment[cc_type]" class="required-entry validate-cc-type-select select-type-two">
                 <option value=""><?php echo $this->__('')?></option>
             <?php $_ccType = $this->getInfoData('cc_type') ?>
             <?php foreach ($this->getCcAvailableTypes() as $_typeCode => $_typeName): ?>

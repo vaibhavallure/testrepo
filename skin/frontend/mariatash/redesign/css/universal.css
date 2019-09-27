@@ -309,13 +309,13 @@ div.tab button.active {
 	width: 100%;
 }
 
-#authnetcim_cc_cid{
-	/* height: 30px; */
+/* #authnetcim_cc_cid{
+	/* height: 30px;
 	background: #fff;
 	border: 1px solid #ccc;
 	width: 90px !important;
     margin-left: 10px;
-}
+} */
 
 #new-mt-add-payment-method #form-validate{
 	margin-top: -30px;
@@ -1082,7 +1082,7 @@ padding: 0 0 8px 0;
     padding: 0 0 0px 0;
 }
 /*.my-account .data-table thead, .my-account .data-table tr{
-     background: none !important; 
+     background: none !important;
     padding: 7px 0px 7px 0px;
     background: #d1d1d1;
     border-bottom: 9px solid #DEDEDE;
@@ -1448,10 +1448,10 @@ width: 63%;
   width: 95.8% !important;
 }
 
-#authnetcim_cc_type_cvv_div,
+/* #authnetcim_cc_type_cvv_div,
 #authnetcim_cc_type_exp_div{
 	clear: both;
-}
+} */
 
 /*ul#primary-address-list,
 ul#additional-addresses{
@@ -1559,13 +1559,13 @@ margin-right: 10px;
    width: 99% !important;
 }
 
-#authnetcim_cc_type_exp_div .v-fix {
+/* #authnetcim_cc_type_exp_div .v-fix {
 	margin-right: 4px;
-}
+} */
 
-.sp-methods{
+/* .sp-methods{
    margin: 0;
-}
+} */
 
 .manage-payment-method #billing-new-address-form .input-box select{
   padding: 2px 0 2px 2px;

@@ -1,6 +1,6 @@
 <?php $requireClass	= ( $this->haveStoredCards() ? $this->getMethodCode() . '_require' : 'required-entry' ); ?>
 <?php $newClass		= $this->getMethodCode() . '_new'; ?>
-<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode(); ?>" style="display:none;">
+<ul class="form-list p-0" id="payment_form_<?php echo $this->getMethodCode(); ?>" style="display:none;">
 	<?php if( $this->getMethod()->isAcceptJsEnabled() === true ): ?>
 		<input type="hidden" name="payment[acceptjs_key]" id="<?php echo $this->getMethodCode(); ?>_acceptjs_key" value="" />
 		<input type="hidden" name="payment[acceptjs_value]" id="<?php echo $this->getMethodCode(); ?>_acceptjs_value" value="" />
@@ -15,7 +15,7 @@
 		<li>
 			<label for="<?php echo $this->getMethodCode(); ?>_payment_id"><?php echo $this->__('Pay with credit card on file'); ?></label>
 			<div class="input-box">
-				<select name="payment[card_id]" id="<?php echo $this->getMethodCode(); ?>_card_id" class="<?php echo $this->getMethodCode(); ?>_require required-entry"  onchange="changeCard('<?php echo $this->getMethodCode(); ?>');"  >
+				<select name="payment[card_id]" id="<?php echo $this->getMethodCode(); ?>_card_id" class="<?php echo $this->getMethodCode(); ?>_require required-entry select-type-one"  onchange="changeCard('<?php echo $this->getMethodCode(); ?>');"  >
 					<option value=""><?php echo $this->__('-- Select One --'); ?></option>
 					<?php foreach( $this->getStoredCards() as $card ): ?>
 						<?php $card = $card->getTypeInstance(); ?>
@@ -30,7 +30,7 @@
 					<a href="#" onclick="toggleToolTip(this);" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 					<label for="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" class="left"><?php echo $this->__('Card Code'); ?></label>&nbsp;
 					<input type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:70px!important;" maxlength="4" />
-					
+
 				</div>
 			</li>
 		<?php endif; ?>
@@ -43,7 +43,7 @@
 	<li <?php if( $this->haveStoredCards() ): ?>style="display:none"<?php endif; ?> class="<?php echo $newClass; ?>">
 		<label for="<?php echo $this->getMethodCode(); ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type') ?></label>
 		<div class="input-box">
-			<select id="<?php echo $this->getMethodCode(); ?>_cc_type" name="payment[cc_type]" class="<?php echo $requireClass; ?>">
+			<select id="<?php echo $this->getMethodCode(); ?>_cc_type" name="payment[cc_type]" class="<?php echo $requireClass; ?> select-type-one">
 				<option value=""><?php echo $this->__('-- Select One --')?></option>
 				<?php foreach( $this->getCcAvailableTypes() as $k => $v ): ?>
 					<option value="<?php echo $k; ?>" <?php if( $k == $this->getInfoData('cc_type') ): ?>selected="selected"<?php endif ?>><?php echo $v; ?></option>
@@ -94,7 +94,7 @@
 			<input type="hidden" name="payment[save]" value="0" />
 			<div class="gift-messages"><?php //mt-allure added code ?>
 				<p class="control">
-					<input type="checkbox" name="payment[save]" id="<?php echo $this->getMethodCode(); ?>_save" value="1" <?php if( $this->getMethod()->getConfigData('savecard_opt_out') ): ?>checked="checked" <?php endif; ?>autocomplete="on" class="checkbox" /> 
+					<input type="checkbox" name="payment[save]" id="<?php echo $this->getMethodCode(); ?>_save" value="1" <?php if( $this->getMethod()->getConfigData('savecard_opt_out') ): ?>checked="checked" <?php endif; ?>autocomplete="on" class="checkbox" />
 					<label for="<?php echo $this->getMethodCode(); ?>_save" style="float:none;font-weight:normal;"><?php echo $this->__('Save for next time'); ?></label>
 				</p>
 		  </div>
@@ -111,45 +111,45 @@
 	//<![CDATA[
 		$('<?php echo $this->getMethodCode(); ?>_add_new').observe( 'click', function(e) {
 			e.preventDefault();
-			
+
 			$$('.<?php echo $newClass; ?>, #payment_form_<?php echo $this->getMethodCode(); ?> .centinel-logos').each(function(el) {
 				el.toggle();
 			});
-			
+
 			$$('.<?php echo $this->getMethodCode(); ?>_require').each(function(el) {
 				el.toggleClassName('required-entry');
 				if( el.hasClassName('cvv') ) {
 					el.toggleClassName('validate-cc-cvn');
 				}
 			});
-			
+
 			$('<?php echo $this->getMethodCode(); ?>_card_id').setValue(0);
-			
+
 			return false;
 		});
-		
+
 		$('<?php echo $this->getMethodCode(); ?>_card_id').observe( 'change', function(e) {
 			$$('.<?php echo $newClass; ?>, #payment_form_<?php echo $this->getMethodCode(); ?> .centinel-logos').each(function(el) {
 				el.hide();
 			});
-			
+
 			$$('.<?php echo $newClass; ?> .<?php echo $this->getMethodCode(); ?>_require').each(function(el) {
 				el.removeClassName('required-entry');
 				if( el.hasClassName('cvv') ) {
 					el.removeClassName('validate-cc-cvn');
 				}
 			});
-			
+
 			$$('#<?php echo $this->getMethodCode(); ?>_saved_cc_cid, #<?php echo $this->getMethodCode(); ?>_card_id').each(function(el) {
 				el.addClassName('required-entry');
 				if( el.hasClassName('cvv') ) {
 					el.addClassName('validate-cc-cvn');
 				}
 			});
-			
+
 			return false;
 		});
-		
+
 		$$('#payment_form_<?php echo $this->getMethodCode(); ?> .centinel-logos').each(function(el) {
 			el.hide();
 		});
@@ -167,7 +167,7 @@
 			var fs = document.getElementsByTagName('script')[0];
 			fs.parentNode.insertBefore(s, fs);
 		}
-		
+
 		if( typeof pdlAcceptJs == 'undefined' ) {
 			var acceptJs_<?php echo $this->getMethodCode(); ?>_init = function() {
 				acceptJs_<?php echo $this->getMethodCode(); ?> = new pdlAcceptJs(
@@ -177,17 +177,17 @@
 					'<?php echo $this->getMethodCode(); ?>',
 					'form button[type=submit]'
 				);
-				
+
 				if( typeof window['acceptJs_<?php echo $this->getMethodCode(); ?>_callback'] == 'undefined' ) {
 					window['acceptJs_<?php echo $this->getMethodCode(); ?>_callback'] = function(response) {
 						acceptJs_<?php echo $this->getMethodCode(); ?>.handlePaymentResponse(response);
 					}
-					
+
 					<?php /** TODO: Remove following expected 9/2016 fix round with deferred loading support **/ ?>
 					window.isReady = true;
 				}
 			}
-			
+
 			var s = document.createElement('script');
 			s.type = "text/javascript";
 			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'paradoxlabs/authnetcim/accept.js'; ?>";
