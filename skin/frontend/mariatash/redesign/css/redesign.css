@@ -1480,6 +1480,9 @@ input[type="checkbox"]:checked+label:before {
   right:0;
 	border-bottom: 1px solid #292929;
 }
+.sub-menu.scrolled{
+	top:83px;
+}
 #piercing_appointments {
   padding: 48px 21px;
 }
