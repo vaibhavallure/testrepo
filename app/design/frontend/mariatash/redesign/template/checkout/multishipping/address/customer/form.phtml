@@ -41,7 +41,6 @@
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
                 <?php endif; ?>
-                <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?php echo $this->getUrl("customer/address/saveCustomerAddressForm",array('_secure'=>true)) ?>" method="post" id="form-validate">
                         <div class="fieldset">
                             <?php echo $this->getBlockHtml('formkey')?>

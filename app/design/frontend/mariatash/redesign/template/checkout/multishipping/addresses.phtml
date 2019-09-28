@@ -161,7 +161,7 @@
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery('.multi-address-select-address-option select').append('<option>New Address</option>');
+		jQuery('.multi-address-select-address-option select').append('<option value="">New Address</option>');
 
 		jQuery('.multi-address-select-address-option select').on('change',function(){
 			newAddressForm(jQuery(this));
@@ -175,11 +175,10 @@
 	});
 
 	function newAddressForm(evt){
-		if(jQuery(evt)){
-			jQuery(evt).val('');
-		}
-
 		if(!(jQuery(evt).val())){
+			if(jQuery(evt)){
+				jQuery(evt).val('');
+			}
 			jQuery('#checkout_multishipping_form').hide();
 			jQuery('#multiaddress-new-address').show();
 		}else{
