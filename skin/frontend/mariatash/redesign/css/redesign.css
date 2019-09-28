@@ -298,6 +298,9 @@ a:focus {
 ul, ol{
 	list-style: none;
 }
+ol {
+  padding: 0;
+}
 hr{
 	margin-top: 14px;
   margin-bottom: 19px;
@@ -2260,8 +2263,9 @@ ul#foo4 {
 #narrow-by-list .filtru-price dd{
   display: none;
 }
-#slidecaption{
-  visibility: hidden;
+
+.cms-home #supersized{
+	z-index: -1!important;
 }
 .select-currency.main-nav-link-dropdown img:first-child {
   display: none;
@@ -2934,22 +2938,52 @@ table thead {
 }
 
 /* Multicheckout Layout Css */
-.checkout-multishipping-addresses .main {
-  max-width: 1140px;
+.checkout-multishipping-addresses .main,
+ .checkout-multishipping-shipping .main,
+ .checkout-multishipping-delivery .main,
+ .checkout-multishipping-billing .main,
+ .checkout-multishipping-overview .main{
+  max-width: 1205px;
   display: flex;
   margin: 0 auto;
 }
-.checkout-multishipping-addresses .col-main {
+.checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main,
+.checkout-multishipping-delivery .col-main,
+.checkout-multishipping-billing .col-main,
+.checkout-multishipping-overview .col-main {
   flex: 0 0 66.666667%;
   max-width: 66.666667%;
 	padding-right: 15px;
   padding-left: 15px;
 }
-.checkout-multishipping-addresses .col-right.sidebar {
+.checkout-multishipping-addresses .col-right.sidebar, .checkout-multishipping-shipping .col-right.sidebar,
+.checkout-multishipping-delivery .col-right.sidebar,
+.checkout-multishipping-billing .col-right.sidebar,
+.checkout-multishipping-overview .col-right.sidebar {
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding-right: 15px;
   padding-left: 15px;
+}
+.checkout-multishipping-addresses .title_total, .checkout-multishipping-shipping .title_total,
+.checkout-multishipping-delivery .title_total,
+.checkout-multishipping-billing .title_total,
+.checkout-multishipping-overview .title_total{
+	display: none;
+}
+.cart-mt-checkout {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 49px 48px 48px 45px;
+  width: 322px;
+  height: 338px;
+  margin: 0 auto;
+}
+#shopping-cart-totals-table td {
+  padding: 0 0 20px;
+}
+.special-total td span {
+  font-size: 18px;
+  font-family: urw-din-medium;
 }
 /* cccc */
 
@@ -3005,4 +3039,38 @@ font-weight: bold;
 }
 .checkoutPopupLoginModel .pop-up-cover{
 	width: fit-content;
+}
+
+
+/*home page slider*/
+.homepageSliderControllers .prevS{
+	content: "";
+	background-image: url("../images/white-active-arrow.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 40%;
+	left: 24px;
+	height: 95px;
+	width: 40px;
+	transform: rotate(180deg);
+	cursor: pointer;
+}
+.homepageSliderControllers .nextS {
+	content: "";
+	background-image: url(../images/white-active-arrow.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 40%;
+	right: 24px;
+	height: 95px;
+	width: 40px;
+	cursor: pointer;
+}
+#slidecaption{
+	/*visibility: hidden;*/
+	position: absolute;
+	top: 35%;
+	left: 10%;
 }
