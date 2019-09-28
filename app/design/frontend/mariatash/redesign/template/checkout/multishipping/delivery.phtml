@@ -8,8 +8,8 @@
 ?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
-<div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc col-lg-8 col-12">
+<div class="container">
+<ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_delivery_option'): ?>
             <li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >

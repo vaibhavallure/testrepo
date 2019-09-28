@@ -43,8 +43,8 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 	jQuery("#"+eleId+" .ship-select option[value="+custAddrId+"]").attr('selected','selected');
 }
 </script>
-<div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc col-lg-8 col-12">
+<div class="container">
+<ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_shipping'): ?>
             <li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >

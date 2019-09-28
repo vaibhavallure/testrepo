@@ -38,7 +38,7 @@
     </td>
 </tr><?php */?>
 <?php echo $this->renderTotals('taxes', $this->getColspan()); ?>
-<tr>
+<tr class="special-total">
     <td class="cart-subtotals-left" colspan="<?php echo $this->getColspan(); ?>">
         <?php echo '<span class="non-total-title info-text-two">'.$this->getTotal()->getTitle().'</span>' . '<span class="total-title">'.((Mage::app()->getRequest()->getActionName() == 'index_') ? $this->__('Total') : $this->__('Total'))?>
     </td>
@@ -47,9 +47,9 @@
     </td>
 </tr>
 <?php else:?>
-<tr>
+<tr class="special-total">
     <td class="cart-subtotals-left" colspan="<?php echo $this->getColspan(); ?>">
-        <strong><?php echo '<span class="non-total-title">'.$this->getTotal()->getTitle().'</span>' . '<span class="total-title">'.$this->helper('tax')->__('Total').'</span>' ?></strong>
+        <?php echo '<span class="non-total-title">'.$this->getTotal()->getTitle().'</span>' . '<span class="total-title">'.$this->helper('tax')->__('Total').'</span>' ?>
     </td>
     <td class="cart-subtotals-right">
         <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
