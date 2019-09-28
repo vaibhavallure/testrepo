@@ -918,7 +918,10 @@
   #narrow-by-list{
     margin-top: 65px;
   }
-  .for-space-to-bottom{
+  .for-space-to-bottom, .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
     height: 380px !important;
+  }
+  .caroufredsel_wrapper{
+    width: 88.3%;
   }
 }
