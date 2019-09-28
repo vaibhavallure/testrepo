@@ -41,7 +41,7 @@
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
                 <?php endif; ?>
-                    <form action="<?php echo $this->getUrl("customer/address/saveCustomerAddressForm",array('_secure'=>true)) ?>" method="post" id="form-validate">
+                    <form action="<?php echo $this->getUrl("customer/address/saveCustomerAddressForm",array('_secure'=>true)) ?>" method="post" id="customer-address-form-validate">
                         <div class="fieldset">
                             <?php echo $this->getBlockHtml('formkey')?>
                             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
@@ -152,12 +152,13 @@
                     		</ul>
                 		</div>
                     	<div class="buttons-set text-right">
+                    		<p class="back-link"><a><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
                         	<button type="submit" title="<?php echo $this->__('Save Address') ?>" class="dark-button save_button next-button"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
                     	</div>
             		</form>
                 	<script type="text/javascript">
         				//<![CDATA[
-        					var dataForm = new VarienForm('form-validate', true);
+        					var dataForm = new VarienForm('customer-address-form-validate', true);
         					var regionUpdater = new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
         				//]]>
                         jQuery(document).ready(function(){
