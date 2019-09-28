@@ -1574,10 +1574,10 @@ div.my-account div.col2-set div.box div.box-title div.pager-mt-1 div.pager div.l
 }
 
 
-.form-list li.fields, .form-list li.wide {
+/* .form-list li.fields, .form-list li.wide {
 	display: inline-block;
 	width: 300px;
-}
+} */
 
 .my-account .form-list li.fields,
 .checkout-multishipping-address-editbilling .form-list li.fields,

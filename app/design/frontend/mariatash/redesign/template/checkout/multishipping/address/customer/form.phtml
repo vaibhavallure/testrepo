@@ -34,23 +34,9 @@
 ?>
 <div class="new_address">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <style>
-                    .address-edit-itel-cstm {
-                        border: none;
-                        border-top: 1px solid #ccc;
-                        border-bottom: 1px solid #ddd;
-                        height:20px;
-                        width:50%;
-                        background: #F7F7F7;
-                        line-height: 20px;
-                    }
-                </style>
+        <div class="">
+            <div class="col-lg-12">
                 <?php if($this->getTitle()): ?>
-                    <div class="page-title">
-                    	<h1><?php echo $this->getTitle() ?></h1>
-                    </div>
                     <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
@@ -61,71 +47,61 @@
                             <?php echo $this->getBlockHtml('formkey')?>
                             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
                             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
-                            <h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
                             <ul class="form-list">
                                 <li class="fields">
-                                    <?php echo $this->getNameBlockHtml() ?>
-                                </li>
-                                <li class="wide">
-                                    <label for="company" class="para-normal"><?php echo $this->__('Company') ?></label>
-                                    <div class="input-box">
-                                        <input type="text" name="company" id="company" title="<?php echo $this->__('Company') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
-                                    </div>
-                                </li>
-                                <li class="fields">
-                                    <div class="field">
-                                        <label for="telephone" class="para-normal"><em>*</em><?php echo $this->__('Telephone') ?></label>
+                                    <?php //echo $this->getNameBlockHtml() ?>
+                                    <div class="field name-firstname">
                                         <div class="input-box">
-                                            <input id="phone" name="telephone" type="text" class="validate-mobileno address-edit-itel-cstm ele_width main-dropdown-box pl-5" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>"/>
+                                            <input placeholder="First Name*" type="text" onkeypress="return isText(event)" id="firstname" name="firstname" value="" title="firstname" maxlength="255" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('firstname') ?>"/>
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label for="fax" class="para-normal" ><?php echo $this->__('Fax') ?></label>
-                                        <div class="input-box fax-edit">
-                                            <input type="text" name="fax" id="fax" title="<?php echo $this->__('Fax') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" />
+                                    <div class="field name-lastname">
+                                        <div class="input-box">
+                                            <input placeholder="Last Name*" type="text" onkeypress="return isText(event)" id="lastname" name="lastname" value="" title="Last Name" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('lastname') ?>" />
                                         </div>
                                     </div>
+                                </li>
+
+                                <li class="wide">
+                                    <div class="input-box">
+                                        <input placeholder="Company" type="text" name="company" id="company" title="<?php echo $this->__('Company') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
+                                    </div>
+                                </li>
+                                <li>
+                                  <div class="field">
+                                      <div class="input-box">
+                                          <div class="select-styled"><?php echo $this->getCountryHtmlSelect() ?></div>
+                                      </div>
+                                  </div>
                                 </li>
                             </ul>
                         </div>
                         <div class="fieldset">
-                            <h2 class="legend"><?php echo $this->__('Address') ?></h2>
                             <ul class="form-list">
                                 <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
                                 <li class="wide">
-                                    <label for="street_1" class="para-normal"><em>*</em><?php echo $this->__('Street Address') ?></label>
                                     <div class="input-box">
-                                        <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-patern <?php echo $_streetValidationClass ?>" />
+                                        <input placeholder="Street 1*" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-patern <?php echo $_streetValidationClass ?>" />
                                     </div>
                                 </li>
                                 <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
                                 <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
-                                <li class="wide" style="justify-content: flex-end;">
+                                <li class="wide">
                                     <div class="input-box">
-                                        <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i ?>" class="input-patern <?php echo $_streetValidationClass ?>" />
+                                        <input placeholder="Street 2" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i ?>" class="input-patern <?php echo $_streetValidationClass ?>" />
                                     </div>
                                 </li>
                             	<?php endfor; ?>
-                            	<?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
-                                <li class="wide">
-                                    <label for="vat_id"><?php echo $this->__('VAT Number') ?></label>
-                                    <div class="input-box">
-                                        <input type="text" name="vat_id" value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<?php echo $this->__('VAT Number') ?>" id="vat_id" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
-                                    </div>
-                                </li>
-                            	<?php endif; ?>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="city" class="para-normal"><em>*</em><?php echo $this->__('City') ?></label>
                                         <div class="input-box">
-                                            <input type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                                            <input placeholder="City" type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
                                         </div>
                                     </div>
                                     <div class="field">
-                                        <label for="region_id" class="required region-label para-normal"><em>*</em><?php echo $this->__('State/Province') ?></label>
                                         <div class="input-box region_edit">
                                             <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select required-entry main-dropdown-box" style="display:none;">
-                                                <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                                                <option value=""><?php echo $this->__('State/Province') ?></option>
                                             </select>
                                             <script type="text/javascript">
                                                 //<![CDATA[
@@ -138,15 +114,15 @@
                     			</li>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="zip" class="required zip-label para-normal"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
                                         <div class="input-box">
-                                            <input type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="required-entry-dtn input-patern validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                                            <input placeholder="zip" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="required-entry-dtn input-patern validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                                         </div>
                                     </div>
+                                </li>
+                                <li class="fields">
                                     <div class="field">
-                                        <label for="country" class="required para-normal"><em>*</em><?php echo $this->__('Country') ?></label>
                                         <div class="input-box">
-                                            <div class="select-styled"><?php echo $this->getCountryHtmlSelect() ?></div>
+                                            <input placeholder="Phone Number" id="phone" name="telephone" type="text" class="validate-mobileno address-edit-itel-cstm ele_width main-dropdown-box pl-5" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>"/>
                                         </div>
                                     </div>
                                 </li>
@@ -176,9 +152,8 @@
                                	</li>
                     		</ul>
                 		</div>
-                    	<div class="buttons-set">
-                        	<p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
-                        	<button type="submit" title="<?php echo $this->__('Save Address') ?>" class="dark-button save_button"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
+                    	<div class="buttons-set text-right">
+                        	<button type="submit" title="<?php echo $this->__('Save Address') ?>" class="dark-button save_button next-button"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
                     	</div>
             		</form>
                 	<script type="text/javascript">
@@ -197,7 +172,7 @@
                                 nationalMode: false,
                                 utilsScript: utilPath
                           	});
-                        
+
                            	// take phone number and check if it exist
                             // if it does not exist then
                             // first check if we can get Geo Location based Country Code if its there then set it
@@ -213,9 +188,9 @@
                             //custom validator for itel tel input
                             //FileName - intel-tel-validation.js
                             allureIntlTelValidate(jQuery("#phone"),iti);
-                        
+
                             jQuery.noConflict();
-                        
+
                             if(jQuery('#country').val() !='US') {
                             	jQuery('#zip').removeClass( "validate-zip-international");
                             } else {
@@ -234,7 +209,7 @@
                             jQuery('form').submit(function(e) {
                             	if (regionUpdater._checkRegionRequired()) {
                                 	jQuery('#region_id').parent().find('.ajax-error-messages').remove();
-                                } 
+                                }
                             });
                       	});
         		</script>
