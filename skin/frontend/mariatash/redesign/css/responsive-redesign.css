@@ -915,4 +915,10 @@
   .footer{
     padding: 0;
   }
+  #narrow-by-list{
+    margin-top: 65px;
+  }
+  .for-space-to-bottom{
+    height: 380px !important;
+  }
 }
