@@ -37,15 +37,15 @@ jQuery(document).ready(function() {
     jQuery(window).scroll(function() {
         var scroll = jQuery(window).scrollTop();
         if (scroll > jQuery(".mariatash-header").outerHeight()) {
-            jQuery(".mt-logo").addClass('header-item-hide');
-            jQuery(".nav-links-left").addClass('header-item-hide');
-            jQuery("#scroll-logo").addClass('header-item-show');
+            jQuery(".mt-logo").addClass('d-none');
+            jQuery(".nav-links-left").addClass('d-none');
+            jQuery("#scroll-logo").removeClass('d-none');
             jQuery('.mariatash-header').addClass('header-height');
             jQuery('.mariatash-header').addClass('maria-black');
         } else {
-            jQuery(".mt-logo").removeClass('header-item-hide');
-            jQuery(".nav-links-left").removeClass('header-item-hide');
-            jQuery("#scroll-logo").removeClass('header-item-show');
+            jQuery(".mt-logo").removeClass('d-none');
+            jQuery(".nav-links-left").removeClass('d-none');
+            jQuery("#scroll-logo").addClass('d-none');
             jQuery('.mariatash-header').removeClass('header-height');
             jQuery('.mariatash-header').removeClass('maria-black');
 
