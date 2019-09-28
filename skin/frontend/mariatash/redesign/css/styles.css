@@ -3021,7 +3021,7 @@ div.wrapper div.page div.main-container div.main div.col-main div.cart-mt div.ca
 	margin: 0 3px;
 }
 
-.divider {
+/* .divider {
 	clear: both;
 	display: block;
 	font-size: 0;
@@ -3031,7 +3031,7 @@ div.wrapper div.page div.main-container div.main div.col-main div.cart-mt div.ca
 	margin: 10px 0;
 	text-indent: -999em;
 	overflow: hidden;
-}
+} */
 
 /* Noscript Notice */
 .noscript {

@@ -90,7 +90,8 @@
 	border: 1px solid #CCC;
 	white-space: nowrap;
 	max-height: 200px;
-	overflow-y: scroll
+	overflow-y: scroll;
+	width: 322px;
 }
 
 .intl-tel-input .country-list.dropup {
@@ -109,11 +110,11 @@
 	}
 }
 
-.intl-tel-input .country-list .divider {
+/* .intl-tel-input .country-list .divider {
 	padding-bottom: 5px;
 	margin-bottom: 5px;
 	border-bottom: 1px solid #CCC
-}
+} */
 
 .intl-tel-input .country-list .country {
 	padding: 5px 10px

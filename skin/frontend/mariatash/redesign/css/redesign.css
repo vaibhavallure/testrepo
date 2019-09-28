@@ -399,6 +399,7 @@ input, select, textarea{
 	color: #830000 !important;
 	font-weight: bold;
 	float: left;
+	font-family: urw-din-medium;
 	/* text-align: right; */
 }
 .messages, .messages ul{
@@ -2994,6 +2995,11 @@ table thead {
 }
 #multiaddress-new-address .new_address {
   margin-top: 0 !important;
+}
+#opc-multishipping_addresses .success-msg {
+  float: none;
+  text-align: left;
+  margin-bottom: 20px;
 }
 /* cccc */
 

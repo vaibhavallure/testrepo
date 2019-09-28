@@ -57,7 +57,7 @@
                                	</p>
                            	</div>
                         </div>
-                        <button data-action="add-new-customer-address" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
+                        <!-- <button data-action="add-new-customer-address" type="button" title="<//?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><//?php echo $this->__('Add New Address') ?></span></span></button> -->
                     </div>
                     <input type="hidden" name="continue" value="0" id="can_continue_flag" />
                     <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
@@ -95,7 +95,7 @@
                                                 </div>
                                              </div>
     										<?php endif;?>
-    
+
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">
@@ -161,12 +161,12 @@
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery('.multi-address-select-address-option select').append('<option>New Address</option>');
+		jQuery('.multi-address-select-address-option select').append('<option value="">New Address</option>');
 
 		jQuery('.multi-address-select-address-option select').on('change',function(){
 			newAddressForm(jQuery(this));
 		});
-		
+
 		jQuery('#shipping-to-more-than-one').on('change',function(){
 			if(! jQuery(this).is(":checked")){
 				window.location.href = Allure.baseUrl+'checkout/onepage/';
@@ -175,11 +175,10 @@
 	});
 
 	function newAddressForm(evt){
-		if(jQuery(evt)){
-			jQuery(evt).val('');
-		}
-
 		if(!(jQuery(evt).val())){
+			if(jQuery(evt)){
+				jQuery(evt).val('');
+			}
 			jQuery('#checkout_multishipping_form').hide();
 			jQuery('#multiaddress-new-address').show();
 		}else{
