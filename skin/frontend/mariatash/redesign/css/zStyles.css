@@ -240,7 +240,7 @@
 .acc-products-wrapper table{
 	margin-top: 0
 }
-.acc-products-wrapper table.data-table, 
+.acc-products-wrapper table.data-table,
 .acc-products-wrapper .data-table tr{
 	display: table;
 	margin-top: 0;
@@ -439,7 +439,7 @@
 .fields .fields input{
 	width: 100%;
 	background: transparent;
-	
+
 }
 .login_security .fields .input-box,
 .list-form .fields .input-box{
@@ -638,11 +638,11 @@
 }
 .new_address .input-box input,
 .new_address select{
-	width: 100%!important;
+	width: 322px !important; /*Changed By Shruti*/
 	background-color: transparent;
 }
 .new_address #phone,.new_address #country{
-	border: 0.25px solid rgba(41,41,41,0.90)!important;
+	border: 1px solid rgba(41,41,41,0.25);
 }
 .new_address em{
 	display: none;
@@ -658,7 +658,7 @@
 	width: 323px;
 	margin: 9px 0;
 	text-align: left;
-	float: right;
+	/* float: right; */ /*Changed By Shruti*/
 }
 /*=====================*/
 /*PRODUCT RECEIPTS*/
@@ -1099,7 +1099,7 @@
 		width: 150%!important;
 		overflow-x: auto;
 	}
-	.acc-products-wrapper #new-mt-myproduct-openorders table th, 
+	.acc-products-wrapper #new-mt-myproduct-openorders table th,
 	.acc-products-wrapper #new-mt-myproduct-openorders table td,
 	.acc-products-wrapper #new-mt-myproduct-receipts table th,
 	.acc-products-wrapper #new-mt-myproduct-receipts table td{
@@ -1144,7 +1144,7 @@
 		padding: 15px!important;
 	}
 	.fs-text-link-container{
-		margin-left: 0!important; 
+		margin-left: 0!important;
 		margin-right: 0!important;
 	}
 	.receipts .col-wrap{
@@ -1208,7 +1208,7 @@
 }
 
 @media(min-width: 1300px){
-	
+
 	.login_security{
 		padding-left: 248px;
 	}
@@ -1219,4 +1219,3 @@
 		padding-left: 153px;
 	}
 }
-

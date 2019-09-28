@@ -183,11 +183,6 @@ padding: 0 !important;
 	text-align: center;
 }
 
-/* .custom-select-digits{
-	font-family: urw-din-xlight;
-	font-size: 18px;
-} */
-
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
   width: 996px !important;
@@ -308,7 +303,7 @@ hr{
   border-top: 1px solid #D4D4D4;
 }
 select{
-  border: 1px solid #292929;
+  border: 1px solid rgba(41,41,41,0.25);
 	-webkit-appearance:none;
 	position: relative;
 	background: #fff;
@@ -2983,6 +2978,12 @@ table thead {
 .special-total td span {
   font-size: 18px;
   font-family: urw-din-medium;
+}
+#multiaddress-new-address .container {
+  padding-left: 0;
+}
+#multiaddress-new-address .new_address {
+  margin-top: 0 !important;
 }
 /* cccc */
 
