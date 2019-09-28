@@ -22,6 +22,10 @@ jQuery(document).ready(function(){
 		$j(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 		scrollBody();
 	});
+    $j(".checkoutPopupLoginModel .close").on('click',function(){
+        $j(".checkoutPopupLoginModel").css({"opacity":"0","pointer-events":"none"});
+        scrollBody();
+    });
 
 	$j('.popupLoginModel #passwd-login').keypress(function (e) {
 		 var key = e.which;
@@ -214,7 +218,7 @@ jQuery(document).ready(function(){
 	           complete: function() { $j('.please-wait-popup-del').hide(); },
 		       success : function(data){
 				   if (data.success) {
-					   location.reload();
+                        location.reload();
 				   } else {
 						console.log(data.error);
 						$j('#reg_msg_div').css('display','block');
@@ -265,4 +269,9 @@ function scrollBody() {
 }
 function unScrollBody() {
     jQuery("body").css({"position":"fixed","overflow":"hidden","width":"100%"});
+}
+function checkoutLogin(redirectUrls) {
+    jQuery(".checkoutPopupLoginModel").css({"opacity":"1","pointer-events":"auto"});
+    jQuery("#redirectUrl").val(redirectUrls);
+    unScrollBody();
 }
