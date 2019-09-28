@@ -36,8 +36,8 @@
 <?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
-<div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc col-lg-8 col-12">
+<div class="container">
+<ol id="checkoutSteps" class="opc">
 <?php foreach ($steps as $stepKey => $_step): ?>
 	<?php if($stepKey == "multishipping_addresses"):?>
 	<li id="opc-<?= $stepKey?>" class="section allow active">
@@ -86,7 +86,7 @@
                             <div class="item-options">
                             <input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
                             </div>
-                            
+
                             <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
 							<?php if(!empty($message)): ?>
 							<div class="box">
@@ -97,7 +97,7 @@
                                 </div>
                              </div>
 							<?php endif;?>
-                            
+
                             <div class="col2-set">
                                 <div class="gift-messages">
                                  	<p class="control">
@@ -175,8 +175,8 @@
 <div class="multiple-checkout">
     <h1>Secure Checkout - ship to multiple addresses</h1>
 </div>
-<div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc col-lg-8 col-12">
+<div class="container">
+<ol id="checkoutSteps" class="opc">
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();
     $cont = 1;
     foreach ($steps as $_step): ?>

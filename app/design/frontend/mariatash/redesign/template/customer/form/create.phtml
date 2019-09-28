@@ -105,12 +105,12 @@
     					title="<?php echo $this->__('State/Province') ?>"
     					class="validate-select" style="display: none;">
     					<option value=""><?php echo $this->__('Please select region, state or province') ?></option>
-					</select> 
+					</select>
 					<script type="text/javascript">
                     //<![CDATA[
                         $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
                     //]]>
-                    </script> 
+                    </script>
                     <input type="text" id="region"
     					name="region"
     					value="<?php echo $this->escapeHtml($this->getRegion()) ?>"
@@ -155,4 +155,3 @@
     //]]>
     </script>
 </div>
-

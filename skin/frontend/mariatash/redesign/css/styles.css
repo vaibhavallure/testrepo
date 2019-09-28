@@ -857,7 +857,7 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 /*ARG EDIT*/
 /*.customer-account-edit .form-list li,
 .customer-account-edit .form-list li .field,*/
-.customer-address-form .form-list li,
+/* .customer-address-form .form-list li,
 .checkout-multishipping-address-editbilling .form-list li,
 .customer-address-form .form-list li .field,
 .checkout-multishipping-address-editbilling .form-list li .field {
@@ -871,7 +871,7 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 
 .customer-account-edit  .my-account .page-title {
 	margin-bottom: -3px !important;
-}
+} */
 
 /*.customer-account-edit .input-box {
 	clear: none;
@@ -879,9 +879,9 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	margin-left: 170px;
 }*/
 
-.customer-account-edit .form-subscribe-mt .input-box {
+/* .customer-account-edit .form-subscribe-mt .input-box {
 	margin-left: 0;
-}
+} */
 
 /*.customer-address-form .input-box {
 	clear: none;
@@ -12104,13 +12104,13 @@ li.item h2.product-name {text-align: center;}
 	margin-bottom: 19px;
 }
 
-.customer-address-form .form-list li.fields .field {
+/* .customer-address-form .form-list li.fields .field {
 	padding-top: 0;
 }
 
 .customer-address-form .form-list li.fields .field:last-child {
 	padding-bottom: 0;
-}
+} */
 
 .category-reviews .page-title {
 	margin-bottom: 0;
