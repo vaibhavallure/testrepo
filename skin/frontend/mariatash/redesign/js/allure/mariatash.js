@@ -34,40 +34,41 @@ jQuery(document).ready(function() {
     var headerHeight = jQuery(".mariatash-header").outerHeight();
     jQuery('.open-navigation').css("padding-top", headerHeight);
 
-    jQuery(window).scroll(function() {
-        var scroll = jQuery(window).scrollTop();
-        if (scroll > jQuery(".mariatash-header").outerHeight()) {
-            jQuery(".mt-logo").addClass('d-none');
-            jQuery(".nav-links-left").addClass('d-none');
-            jQuery("#scroll-logo").removeClass('d-none');
-            jQuery('.mariatash-header').addClass('header-height');
-            jQuery('.mariatash-header').addClass('maria-black');
-        } else {
-            jQuery(".mt-logo").removeClass('d-none');
-            jQuery(".nav-links-left").removeClass('d-none');
-            jQuery("#scroll-logo").addClass('d-none');
-            jQuery('.mariatash-header').removeClass('header-height');
-            jQuery('.mariatash-header').removeClass('maria-black');
-
-        }
-
-        var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
-        var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-        if (jQuery('.owl-carousel').length) {
-            if ((productImageHeight) > (productDetailsHeight - scroll)) {
-                jQuery('#product-details-flow').removeClass('offset-66');
-                jQuery('#product-detail-image').removeClass('fix-image');
-                jQuery('#product-detail-image > div').addClass('position-bottom');
+    if (jQuery(window).width() >= 1025) {
+        jQuery(window).scroll(function () {
+            var scroll = jQuery(window).scrollTop();
+            if (scroll > jQuery(".mariatash-header").outerHeight()) {
+                jQuery(".mt-logo").addClass('d-none');
+                jQuery(".nav-links-left").addClass('d-none');
+                jQuery("#scroll-logo").removeClass('d-none');
+                jQuery('.mariatash-header').addClass('header-height');
+                jQuery('.mariatash-header').addClass('maria-black');
             } else {
-                jQuery('#product-details-flow').addClass('offset-66');
-                jQuery('#product-detail-image').addClass('fix-image');
-                jQuery('#product-detail-image > div').removeClass('position-bottom');
-            }
-        }
-        headerHeight = jQuery(".mariatash-header").outerHeight();
-        jQuery('.open-navigation').css("padding-top", headerHeight);
-    });
+                jQuery(".mt-logo").removeClass('d-none');
+                jQuery(".nav-links-left").removeClass('d-none');
+                jQuery("#scroll-logo").addClass('d-none');
+                jQuery('.mariatash-header').removeClass('header-height');
+                jQuery('.mariatash-header').removeClass('maria-black');
 
+            }
+
+            var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
+            var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
+            if (jQuery('.owl-carousel').length) {
+                if ((productImageHeight) > (productDetailsHeight - scroll)) {
+                    jQuery('#product-details-flow').removeClass('offset-66');
+                    jQuery('#product-detail-image').removeClass('fix-image');
+                    jQuery('#product-detail-image > div').addClass('position-bottom');
+                } else {
+                    jQuery('#product-details-flow').addClass('offset-66');
+                    jQuery('#product-detail-image').addClass('fix-image');
+                    jQuery('#product-detail-image > div').removeClass('position-bottom');
+                }
+            }
+            headerHeight = jQuery(".mariatash-header").outerHeight();
+            jQuery('.open-navigation').css("padding-top", headerHeight);
+        });
+    }
 
 
 
