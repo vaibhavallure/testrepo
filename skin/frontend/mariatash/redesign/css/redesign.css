@@ -2932,6 +2932,25 @@ table thead {
 .page-height{
 	height: 60vh;
 }
+
+/* Multicheckout Layout Css */
+.checkout-multishipping-addresses .main {
+  max-width: 1140px;
+  display: flex;
+  margin: 0 auto;
+}
+.checkout-multishipping-addresses .col-main {
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+	padding-right: 15px;
+  padding-left: 15px;
+}
+.checkout-multishipping-addresses .col-right.sidebar {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
 /* cccc */
 
 
