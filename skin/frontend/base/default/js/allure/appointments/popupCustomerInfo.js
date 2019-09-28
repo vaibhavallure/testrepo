@@ -37,6 +37,7 @@ var telephoneAdd = function (id) {
     //initialize itel tel input
     var input = document.querySelector(id)
     var iti = window.intlTelInput(input, {
+        initialCountry: "ie",
         autoFormat: false,
         autoHideDialCode: false,
         autoPlaceholder: false,
@@ -49,19 +50,7 @@ var telephoneAdd = function (id) {
     // first check if we can get Geo Location based Country Code if its there then set it
     // otherwise set default as country as 'us'
     // Magento module - Allure/GeoLocation
-    var phone = jQuery(id).val();
-    //console.log('[signing_register.phtml] length',phone.length)
-    if(phone.length <= 0){
-
-        if (country_code == undefined || country_code == null || country_code == "") {
-            country_code = "us"
-        }
-
-        iti.setCountry(country_code.toLowerCase());
-    } else if (phone.charAt(0) != '+') {
-        iti.setCountry(country_code.toLowerCase());
-    }
-
+    
     //custom validator for itel tel input
     //FileName - intel-tel-validation.js
     allureIntlTelValidate(jQuery(id),iti);
