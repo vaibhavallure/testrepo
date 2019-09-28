@@ -750,24 +750,7 @@ label.popup-reg-privacy-lbl {
     color: #906E39;
 }
 
-.quickview-index-index .custom-options{
-	margin-bottom: 30px;
-}
-.quickview-index-index dd.post-lengthds-lbl-options.last{
-	padding-top: 7px;
-    height: 24px !important;
-}
-.quickview-index-index .post-lengthds-lbl {
-    display: inline-block;
-    float: left;
-    width: 80px;
-    text-indent: 3px;
-    font-size: 13px;
-    color: #3f3f47;
-}
-.quickview-index-index .product-view .product-options dd option {
-    font-weight: normal !important;
-}
+
 .custom-options-univaersal{
 	    margin-left: 25px !important;
 }

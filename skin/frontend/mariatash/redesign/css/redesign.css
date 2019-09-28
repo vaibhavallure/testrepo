@@ -2898,6 +2898,12 @@ table thead {
 .quickview-index-index #galleria{
 	width: 100%;
 }
+.quickview-index-index .containerImage img{
+	margin: auto;
+}
+.quickview-index-index .thumb.thumb1 img {
+	margin-top: 78px;
+}
 .fancybox-overlay{
 	position: fixed!important;
 	background: #1f1e1e61!important;

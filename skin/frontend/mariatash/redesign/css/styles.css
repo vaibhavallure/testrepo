@@ -10268,56 +10268,6 @@ body.quickview-index-index {
 	display: none;
 }
 
-.quickview-index-index .product-view .product-options {
-	float: left;
-	min-height: 30px;
-	margin-bottom: 11px;
-	background: none;
-}
-
-.catalog-category-view .quickview-index-index .product-view .product-options
-{
-	float: left;
-}
-
-.quickview-index-index .product-view .product-options dl {
-	width: 329px;
-}
-
-.quickview-index-index .product-view .product-options dd {
-	padding: 0 0 17px 0;
-	font-size: 13px;
-	color: #3f3f47;
-	border-bottom: none;
-}
-
-.quickview-index-index .product-view .product-options dd.last {
-	position: relative;
-}
-
-.quickview-index-index .product-view .product-options .validation-advice  stockerr
-{
-	float: left;
-	position: absolute;
-}
-
-.quickview-index-index .product-view .product-options dd option {
-	font-size: 12px;
-	font-weight: bold;
-	color: #3f3f47;
-}
-
-.quickview-index-index .product-view .product-options dd label {
-	width: 80px;
-}
-
-.quickview-index-index .product-view .product-options p.required {
-	display: none;
-}
-
-.quickview-index-index .product-view .product-options label {
-	float: left;
-}
 
 .product-img-box-quickview {
 	float: left;
