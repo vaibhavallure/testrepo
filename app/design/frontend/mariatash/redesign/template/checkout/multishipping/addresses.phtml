@@ -111,7 +111,7 @@
                                                 </div>
                                             </div>
                                 		</div>
-                                    	<div class="col-4 text-right">
+                                    	<div class="col-4 text-right multi-address-select-address-option">
                                     		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
                                     	</div>
     								</div>
@@ -121,7 +121,7 @@
     						</div>
     					</div>
                     </div>
-                    <div class="billing-address billing-address-selection col-12">
+                    <div class="billing-address billing-address-selection multi-address-select-address-option select col-12">
     					<div class="row">
     						<div class="col-12 p-0">
                     			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
@@ -137,8 +137,8 @@
                 </div>
                 <?php echo $this->getBlockHtml("formkey") ?>
             </form>
-            <div id="multiaddress-new-address">
-            	<?php //$this->getChildHtml("customer_address_edit_form")?>
+            <div id="multiaddress-new-address" style="display: none;">
+            	<?= $this->getChildHtml("customer_address_edit_form")?>
             </div>
     	</li>
     	<?php else:?>
@@ -161,10 +161,30 @@
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function(){
+		jQuery('.multi-address-select-address-option select').append('<option>New Address</option>');
+
+		jQuery('.multi-address-select-address-option select').on('change',function(){
+			newAddressForm(jQuery(this));
+		});
+		
 		jQuery('#shipping-to-more-than-one').on('change',function(){
 			if(! jQuery(this).is(":checked")){
 				window.location.href = Allure.baseUrl+'checkout/onepage/';
 			}
 		});
 	});
+
+	function newAddressForm(evt){
+		if(jQuery(evt)){
+			jQuery(evt).val('');
+		}
+
+		if(!(jQuery(evt).val())){
+			jQuery('#checkout_multishipping_form').hide();
+			jQuery('#multiaddress-new-address').show();
+		}else{
+			jQuery('#checkout_multishipping_form').show();
+			jQuery('#multiaddress-new-address').hide();
+		}
+	}
 </script>
