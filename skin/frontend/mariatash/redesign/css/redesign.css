@@ -9,7 +9,7 @@ h1{
 	color: rgba(40,40,40,0.9);
 }
 
-.cms-page-view h1, .category-press h1, .simple-page-title h1{
+.cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
   font-size: 30px;
   text-transform: none;
   letter-spacing: 0;
@@ -54,7 +54,7 @@ h4{
 	line-height: 17px;
 }
 
-.para-normal{
+.para-normal, .cart-empty p{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -414,6 +414,7 @@ input, select, textarea{
 	width: 204px;
 	height: 42px;
 	margin-bottom: 31px;
+	text-transform: uppercase;
 }
 .product-description-section {
   border-bottom: 1px solid #d8d8d8;
@@ -646,7 +647,8 @@ nav.mariatash-header {
   margin-top: 5px;
 }
 
-.catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom{
+.catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom,
+.checkout-cart-index .for-space-to-bottom, .checkout-multishipping-success .for-space-to-bottom{
   height:320px;
 }
 
@@ -2104,6 +2106,11 @@ span#popup_loader_register {
 	background: url(../images/btn_window_close.gif) 100% 0 no-repeat;
 	text-indent: -999em;
 }
+.checkout-multishipping-success .multiple-checkout {
+  width: 700px;
+  margin: 0 auto;
+	text-align: center;
+}
 /*Old from recently.viewd.css*/
 .image_carousel img {
 	padding:0;
@@ -2797,19 +2804,19 @@ ul.tabs li:nth-child(3){
   margin: 0 auto;
 }
 .scroll-loader{
-    position: fixed;
-    top: 50%;
-    left: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }
 .pressPopup .pop-up-cover{
-    width: 731px;
-    height: 842px;
+  width: 731px;
+  height: 842px;
 }
 .pressPopup .modal-body{
-    padding: 0px;
+  padding: 0px;
 }
 .pressPopup .close{
-    z-index: 2;
+  z-index: 2;
 }
 .pressPopup .next, .pressPopup .prev{
 	top: 366px;
@@ -2910,6 +2917,20 @@ table thead {
 .title-buttons {
   border-bottom: 1px solid #d8d8d8;
   padding-bottom: 30px;
+}
+.cart-empty {
+  text-align: center;
+}
+/*Success Page*/
+.order-success-title {
+  margin-bottom: 20px;
+	margin-top: 23px;
+}
+.cart-empty a {
+  text-decoration: underline;
+}
+.page-height{
+	height: 60vh;
 }
 /* cccc */
 
