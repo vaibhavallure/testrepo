@@ -40,6 +40,11 @@ extends Mage_Sales_Block_Items_Abstract
         return $count;
     }
     
+    public function getShippingAddressItems($address)
+    {
+        return $address->getAllVisibleItems();
+    }
+    
     public function getPostActionUrl()
     {
         return $this->getUrl('*/*/deliveryPost');

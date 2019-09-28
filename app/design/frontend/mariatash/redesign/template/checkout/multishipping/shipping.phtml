@@ -89,7 +89,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                             	<p class="col-12 validation-advice"><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
                             <?php else: ?>
 															<div class="col-6 text-right">
-																<select class="select-type-one" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
+																<select class="select-type-one validate-select" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
 																	<option>Select Method</option>
                            		<?php $ship_sign_national = array();?>
                            		<?php $ship_sign_without_national = array();?>
@@ -185,6 +185,9 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                         </div>
 						<?php echo $this->getBlockHtml("formkey") ?>
                     </form>
+                    <script type="text/javascript">
+                    var shippingForm = new VarienForm('shipping_method_form',true);
+                    </script>
                 </div>
             </li>
         <?php else: ?>

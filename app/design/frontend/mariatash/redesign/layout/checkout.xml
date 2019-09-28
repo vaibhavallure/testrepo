@@ -285,7 +285,7 @@ Multi address shipping checkout billing information
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="checkout/multishipping_billing" name="checkout_billing" template="checkout/multishipping/billing.phtml">
-                <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
+                <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/multishipping/payment/methods.phtml">
                         <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
                 </block>
                 <!--<block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">

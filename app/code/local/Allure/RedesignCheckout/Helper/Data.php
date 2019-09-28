@@ -21,4 +21,65 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return null;
     }
+    
+    public function getShippingAddressItems($address)
+    {
+        return $address->getAllVisibleItems();
+    }
+    
+    public function isAddressContainBackOrderItem($address){
+        $isBackOrderItem = false;
+        $isOutofStockItem = $this->isAddressContainOutofItem($address);
+        $isInstockItem = $this->isAddressContainInstockItem($address);
+        $isBackOrderItem = $isInstockItem & $isOutofStockItem;
+        return $isBackOrderItem;
+    }
+    
+    private function isAddressContainOutofItem($address){
+        $isOutofStock = false;
+        $items = $this->getShippingAddressItems($address);
+        $storeId = Mage::app()->getStore()->getStoreId();
+        try {
+            foreach ($items as $item){
+                $_product = Mage::getModel('catalog/product')
+                    ->setStoreId($storeId)
+                    ->loadByAttribute('sku', $item->getSku());
+                $stock = Mage::getModel('cataloginventory/stock_item')
+                    ->loadByProduct($_product);
+                $stockQty = $stock->getQty();
+                if ($stockQty < $item->getQty() && $stock->getManageStock() == 1) {
+                    $isOutofStock = true;
+                    break;
+                }
+            }
+        } catch (Exception $e) {
+            Mage::log("isAddressContainOutofItem function - Exception:",Zend_Log::DEBUG,"abc.log",true);
+            Mage::log($e->getMessage(),Zend_Log::DEBUG,"abc.log",true);
+        }
+        return $isOutofStock;
+    }
+    
+    private function isAddressContainInstockItem($address){
+        $isInstock = false;
+        try { 
+            $items = $this->getShippingAddressItems($address);
+            $storeId = Mage::app()->getStore()->getStoreId();
+            foreach ($items as $item){
+                $_product = Mage::getModel('catalog/product')
+                    ->setStoreId($storeId)
+                    ->loadByAttribute('sku', $item->getSku());
+                $stock = Mage::getModel('cataloginventory/stock_item')
+                    ->loadByProduct($_product);
+                $stockQty = $stock->getQty();
+                if($stockQty > 0){
+                    $isInstock = true;
+                    break;
+                }
+            }
+        } catch (Exception $e){
+            Mage::log("isAddressContainInstockItem function - Exception:",Zend_Log::DEBUG,"abc.log",true);
+            Mage::log($e->getMessage(),Zend_Log::DEBUG,"abc.log",true);
+        }
+        return $isInstock;
+    }
 }

@@ -20,7 +20,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping_State extends Ma
                 'label' => Mage::helper('checkout')->__('Shipping & Billing Address')
             )),
             self::STEP_SHIPPING => new Varien_Object(array(
-                'label' => Mage::helper('checkout')->__('Shipping method & Gift Option')
+                'label' => Mage::helper('checkout')->__('Shipping method')
             )),
             self::STEP_DELIVERY_OPTION => new Varien_Object(array(
                 'label' => Mage::helper('checkout')->__('Delivery Option')

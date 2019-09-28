@@ -86,6 +86,18 @@
                             <div class="item-options">
                             <input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
                             </div>
+                            
+                            <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+							<?php if(!empty($message)): ?>
+							<div class="box">
+                            	<div class="box-content">
+                                	<div class="item-msg">
+                                    	<p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                    </div>
+                                </div>
+                             </div>
+							<?php endif;?>
+                            
                             <div class="col2-set">
                                 <div class="gift-messages">
                                  	<p class="control">

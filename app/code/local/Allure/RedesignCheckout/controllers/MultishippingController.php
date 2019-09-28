@@ -33,6 +33,8 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             return $this;
         }
         
+        $this->_getCheckout()->removeBackOrderAddresses();
+        
         $this->_getState()->setActiveStep(
             Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
             );
@@ -87,6 +89,8 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             return $this;
         }
         
+        $this->_getCheckout()->removeIsbackOrderedAddress();
+        
         $this->_getState()->setActiveStep(
             Allure_RedesignCheckout_Model_Checkout_Type_Multishipping_State::STEP_DELIVERY_OPTION
             );
@@ -102,7 +106,10 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             $this->_redirect('*/*/delivery');
             return;
         }
+        $deliveryParams = $this->getRequest()->getPost("delivery");
         try {
+            $this->_getCheckout()->setCollectRatesFlag(false);
+            $this->_getCheckout()->setDeliveryOptions($deliveryParams);
             $this->_getState()->setActiveStep(
                 Mage_Checkout_Model_Type_Multishipping_State::STEP_BILLING
                 );

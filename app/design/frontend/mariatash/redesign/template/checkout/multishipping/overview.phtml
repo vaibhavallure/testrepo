@@ -102,6 +102,17 @@
                                         	</div>
                                         </div>
                                         <?php endif;?>
+                                        
+                                        <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+										<?php if(!empty($message)): ?>
+										<div class="box">
+                                        	<div class="box-content">
+                                        		<div class="item-msg">
+                                                    <p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                                </div>
+                                        	</div>
+                                        </div>
+										<?php endif;?>
 
                                         <div class="box">
                                         	<div class="box-content">
