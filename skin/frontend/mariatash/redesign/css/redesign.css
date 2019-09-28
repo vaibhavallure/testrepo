@@ -2258,8 +2258,9 @@ ul#foo4 {
 #narrow-by-list .filtru-price dd{
   display: none;
 }
-#slidecaption{
-  visibility: hidden;
+
+.cms-home #supersized{
+	z-index: -1!important;
 }
 .select-currency.main-nav-link-dropdown img:first-child {
   display: none;
@@ -3039,4 +3040,38 @@ font-weight: bold;
 }
 .checkoutPopupLoginModel .pop-up-cover{
 	width: fit-content;
+}
+
+
+/*home page slider*/
+.homepageSliderControllers .prevS{
+	content: "";
+	background-image: url("../images/white-active-arrow.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 40%;
+	left: 24px;
+	height: 95px;
+	width: 40px;
+	transform: rotate(180deg);
+	cursor: pointer;
+}
+.homepageSliderControllers .nextS {
+	content: "";
+	background-image: url(../images/white-active-arrow.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+	top: 40%;
+	right: 24px;
+	height: 95px;
+	width: 40px;
+	cursor: pointer;
+}
+#slidecaption{
+	/*visibility: hidden;*/
+	position: absolute;
+	top: 35%;
+	left: 10%;
 }
