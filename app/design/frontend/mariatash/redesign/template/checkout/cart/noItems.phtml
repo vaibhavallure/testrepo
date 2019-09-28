@@ -20,17 +20,20 @@
  *
  * @category    design
  * @package     base_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="page-title">
-    <h1 class="text-center"><?php echo $this->__('Shopping Cart is Empty') ?></h1>
+<p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="" title=""></p>
+<div class="page-height">
+<div class="page-title mt-4">
+    <h1 class="text-center mb-4 higher-h1"><?php echo $this->__('Shopping Cart is Empty') ?></h1>
 </div>
 <div class="cart-empty">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php echo $this->getChildHtml('checkout_cart_empty_widget'); ?>
-<!--    <p>--><?php //echo $this->__('You have no items in your shopping cart.') ?><!--</p>-->
-    <p>You have no completed orders - <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'jewelry/earlobe.html'; ?>"><u style="font-size: 14px">Click here</u></a> to Start Browsing.</p>
+    <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+    <p><?php echo $this->__('Click <a class="info-text-two" href="%s">here</a> to continue shopping.', Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl())) ?></p>
     <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>
+</div>
 </div>
