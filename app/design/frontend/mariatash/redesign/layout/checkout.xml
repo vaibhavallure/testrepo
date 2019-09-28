@@ -135,7 +135,7 @@ will be rendered on all checkout pages
         <reference name="right">
             <action method="unsetChildren"></action>
             <block type="checkout/cart" name="checkout.cart">
-                <!-- <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action> -->
+                <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action>
                 <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
                 <action method="chooseTemplate"/>
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
@@ -238,6 +238,7 @@ Multi address shipping checkout address page
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
             	<block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/billing_select.phtml"/>
+            	<block type="customer/address_edit" name="customer_address_edit_form" template="checkout/multishipping/address/customer/form.phtml"/>
             </block>
         </reference>
     </checkout_multishipping_addresses>
@@ -266,7 +267,7 @@ Multi address shipping checkout shipping information
             </block>
         </reference>
     </checkout_multishipping_shipping>
-    
+
     <checkout_multishipping_delivery translate="label">
         <label>Multishipping Checkout Delivery Information Step</label>
         <update handle="checkout_multishipping"/>
@@ -285,7 +286,7 @@ Multi address shipping checkout billing information
         <!-- Mage_Checkout -->
         <reference name="content">
             <block type="checkout/multishipping_billing" name="checkout_billing" template="checkout/multishipping/billing.phtml">
-                <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
+                <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/multishipping/payment/methods.phtml">
                         <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
                 </block>
                 <!--<block type="checkout/multishipping_billing_items" name="checkout_billing_items" template="checkout/multishipping/billing/items.phtml">

@@ -61,11 +61,11 @@
                                 </div>
                             </div>
                             <?php endif;?>
-                            <div class="col-2 col-wide">
+                            <div class="col-wide">
                                 <div class="box">
-                                    <div class="box-title">
-                                        <h2><?= $this->__('Payment Method') ?></h2>
-                                    </div>
+                                    <!-- <div class="box-title">
+                                        <h2><//?= $this->__('Payment Method') ?></h2>
+                                    </div> -->
                                     <div class="box-content">
                                         <div class="tool-tip" id="payment-tool-tip" style="display:none;">
                                             <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo $this->__('Close') ?>"><?php echo $this->__('Close') ?></a></div>
@@ -78,9 +78,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="buttons-set">
+                        <div class="buttons-set text-right">
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shipping Information') ?></a></p>
-                            <button class="button continue" type="submit" title="<?php echo $this->__('Continue') ?>" class="button"><span><span><?php echo $this->__('Continue') ?></span></span></button>
+                            <button class="button continue light-button next-button" type="submit" title="<?php echo $this->__('Continue') ?>" class="button"><span><span><?php echo $this->__('Continue') ?></span></span></button>
                         </div>
 						<?= $this->getBlockHtml("formkey") ?>
                     </form>
@@ -120,16 +120,16 @@
         	<li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
             <?php if($stepKey == 'multishipping_addresses'):?>
             	<a href="<?php echo $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
-               		<div class="step-title">
+               		<div class="step-title checkout-step-name">
                     	<span class="number"><?php echo $cnt ?></span>
-                        <h2><?= $this->__($_step->getLabel()) ?></h2>
+                        <h3><?= $this->__($_step->getLabel()) ?></h3>
                   	</div>
              	</a>
             <?php elseif($stepKey == 'multishipping_shipping'):?>
                 <a href="<?= $this->getBaseUrl().'checkout/multishipping/shipping/'; ?>">
-                	<div class="step-title">
+                	<div class="step-title checkout-step-name">
                     	<span class="number"><?php echo $cnt ?></span>
-                    	<h2><?= $_step->getLabel()?></h2>
+                    	<h3><?= $_step->getLabel()?></h3>
                 	</div>
                 </a>
            	<?php elseif($stepKey == 'multishipping_delivery_option'):?>
@@ -140,9 +140,9 @@
                 	</div>
                 </a>
             <?php else:?>
-            	<div class="step-title">
+            	<div class="step-title checkout-step-name">
                 	<span class="number"><?php echo $cnt ?></span>
-                   	<h2><?= $_step->getLabel()?></h2>
+                   	<h3><?= $_step->getLabel()?></h3>
               	</div>
             <?php endif; ?>
             </li>

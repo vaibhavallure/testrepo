@@ -195,7 +195,8 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 /**
                  * Require shiping rate recollect
                  */
-                $quoteAddress->setCollectShippingRates((boolean) $this->getCollectRatesFlag());
+                Mage::log((boolean) $this->getCollectRatesFlag(),Zend_Log::DEBUG,'abc.log',true);
+                $quoteAddress->setCollectShippingRates(1);
             }
         }
         return $this;
@@ -217,19 +218,198 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         "address" => ($addressId == $address->getId()) ? $customerAddrId : $address->getCustomerAddressId()
                     )
                 ); 
+                $index++;
             }
-            $index++;
         }
         $this->setShippingItemsInformation($requestParams);
-        /* $address = $this->getCustomer()->getAddressById($customerAddrId);
-        if ($address->getId()) {
-            $quoteAddress = Mage::getModel('sales/quote_address')->load($addressId);
-            if($quoteAddress->getId()){
-                $quoteAddress->importCustomerAddress($address);
-                $quoteAddress->save();
-                $this->save();
+    }
+    
+    /**
+     * Assign shipping methods to addresses
+     *
+     * @param  array $methods
+     * @return Mage_Checkout_Model_Type_Multishipping
+     */
+    public function setShippingMethodsAgain($methods)
+    {
+        Mage::log($methods,Zend_log::DEBUG,'abc.log',true);
+        $addresses = $this->getQuote()->getAllShippingAddresses();
+        foreach ($addresses as $address) {
+            Mage::log($methods[$address->getCustomerAddressId()],Zend_log::DEBUG,'abc.log',true);
+            if (isset($methods[$address->getCustomerAddressId()])) {
+                $address->setShippingMethod($methods[$address->getCustomerAddressId()]);
+            } elseif (!$address->getShippingMethod()) {
+                Mage::throwException(Mage::helper('checkout')->__('Please select shipping methods for all addresses ssss'));
             }
         }
-        Mage::dispatchEvent('checkout_type_multishipping_set_shipping_items', array('quote'=>$this->getQuote())); */
+        $this->save();
+        return $this;
+    }
+    
+    public function removeBackOrderAddresses(){
+        try{
+            $addresses = $this->getQuote()->getAllShippingAddresses();
+            foreach ($addresses as $address) {
+                if($address->getIsContainBackorder()){
+                    $address->delete();
+                    continue;
+                }
+            }
+        }catch (Exception $e){
+            Mage::log("removeBackOrderAddresses function - Exception",Zend_log::DEBUG,'abc.log',true);
+            Mage::log($e->getMessage(),Zend_log::DEBUG,'abc.log',true);
+        }
+    }
+    
+    public function removeIsbackOrderedAddress(){
+        try{
+            $index = 0;
+            $requestParams = array();
+            $shippingMethodArray = array();
+            $addresses = $this->getQuote()->getAllShippingAddresses();
+            foreach ($addresses as $address) {
+                if($address->getShippingMethod()){
+                    $shippingMethodArray[$address->getCustomerAddressId()] = $address->getShippingMethod();
+                }
+                foreach ($address->getAllVisibleItems() as $item){
+                    $requestParams[$index] = array(
+                        $item->getQuoteItemId() => array(
+                            "qty" => $item->getQty(),
+                            "is_gift_item" => $item->getIsGiftItem(),
+                            "address" => $address->getCustomerAddressId()
+                        )
+                    );
+                    $index++;
+                }
+                if($address->getIsContainBackorder()){
+                    $address->delete();
+                    continue;
+                }
+            }
+            $this->setShippingItemsInformation($requestParams);
+            Mage::log($shippingMethodArray,Zend_log::DEBUG,'abc.log',true);
+            if(count($shippingMethodArray) > 0){
+                $this->setShippingMethodsAgain($shippingMethodArray);
+            }
+            $quote = $this->getQuote();
+            $quote->setTotalsCollectedFlag(false)
+            ->collectTotals();
+            $quote->save();
+        }catch (Exception $e){
+            Mage::log("removeIsbackOrderedAddress function - Exception",Zend_log::DEBUG,'abc.log',true);
+            Mage::log($e->getMessage(),Zend_log::DEBUG,'abc.log',true);
+        }
+    }
+    
+    /**
+     * Assign backorder 1|0 to addresses
+     *
+     * @param  array $methods
+     * @return Mage_Checkout_Model_Type_Multishipping
+     */
+    public function setDeliveryOptions($methods)
+    {
+        $addresses = $this->getQuote()->getAllShippingAddresses();
+        foreach ($addresses as $address) {
+            $this->spliteAddressOrder($address, $methods);
+        }
+        $this->save();
+        return $this;
+    }
+    
+    private function spliteAddressOrder($address, $methods){
+        try{
+            $isAllowBackorder = (isset($methods[$address->getId()])) ? ($methods[$address->getId()]) ? 1 : 0 : 0;
+            if ($isAllowBackorder) {
+                $helper = Mage::helper("redesign_checkout");
+                if($helper->isAddressContainBackOrderItem($address)){
+                    /** @var Mage_Sales_Model_Quote_Address $backOrderAddress */
+                    $backOrderAddress = clone $address;
+                    $backOrderAddress->setId(null);
+                    $backOrderAddress->setIsContainBackorder(1);
+                    $backOrderAddress->save();
+                    $storeId = Mage::app()->getStore()->getStoreId();
+                    foreach($address->getAllItems() as $item){
+                        if ($item->getParentItemId()) {
+                            continue;
+                        }
+                        $_product = Mage::getModel('catalog/product')
+                        ->setStoreId($storeId)
+                        ->loadByAttribute('sku', $item->getSku());
+                        $stock = Mage::getModel('cataloginventory/stock_item')
+                        ->loadByProduct($_product);
+                        $stockQty = $stock->getQty();
+                        if ($stockQty < $item->getQty() && $stock->getManageStock() == 1) {
+                            $backItem = clone $item;
+                            $backItem->setId(null);
+                            $backOrderAddress->addItem($backItem, $item->getQty());
+                            $address->removeItem($item->getId());
+                        }
+                    }
+                    Mage::log("shipping address - ".$address->getShippingMethod(),Zend_Log::DEBUG,'abc.log',true);
+                    $backOrderAddress->setCollectShippingRates(1);
+                    $backOrderAddress->setShippingMethod($address->getShippingMethod());
+                    /* $backOrderAddress->collectTotals();
+                    $backOrderAddress->save();
+                    
+                    $address->collectTotals();
+                    $address->save(); */
+                }
+            } 
+        }catch (Exception $e){
+            Mage::log($e->getMessage(),Zend_log::DEBUG,'abc.log',true);
+        }
+    }
+    
+    /**
+     * Create orders per each quote address
+     *
+     * @return Mage_Checkout_Model_Type_Multishipping
+     */
+    public function createOrders()
+    {
+        $orderIds = array();
+        $this->_validate();
+        $shippingAddresses = $this->getQuote()->getAllShippingAddresses();
+        $orders = array();
+        
+        if ($this->getQuote()->hasVirtualItems()) {
+            $shippingAddresses[] = $this->getQuote()->getBillingAddress();
+        }
+        
+        try {
+            foreach ($shippingAddresses as $address) {
+                $order = $this->_prepareOrder($address);
+                
+                $orders[] = $order;
+                Mage::dispatchEvent(
+                    'checkout_type_multishipping_create_orders_single',
+                    array('order'=>$order, 'address'=>$address)
+                    );
+            }
+            
+            foreach ($orders as $order) {
+                $order->place();
+                $order->save();
+                if ($order->getCanSendNewEmailFlag()){
+                    $order->queueNewOrderEmail();
+                }
+                $orderIds[$order->getId()] = $order->getIncrementId();
+            }
+            
+            Mage::getSingleton('core/session')->setOrderIds($orderIds);
+            Mage::getSingleton('checkout/session')->setLastQuoteId($this->getQuote()->getId());
+            
+            $this->getQuote()
+            ->setIsActive(false)
+            ->save();
+            
+            Mage::dispatchEvent('checkout_submit_all_after', array('orders' => $orders, 'quote' => $this->getQuote()));
+            
+            return $this;
+        } catch (Exception $e) {
+            Mage::dispatchEvent('checkout_multishipping_refund_all', array('orders' => $orders));
+            throw $e;
+        }
     }
 }

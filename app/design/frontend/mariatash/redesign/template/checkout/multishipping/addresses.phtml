@@ -36,198 +36,123 @@
 <?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
-<div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc col-lg-8 col-12">
-<?php foreach ($steps as $stepKey => $_step): ?>
-	<?php if($stepKey == "multishipping_addresses"):?>
-	<li id="opc-<?= $stepKey?>" class="section allow active">
-		<div class="step-title checkout-step-name col-12">
-            <span class="number"><?php echo $cnt ?></span>
-            <h3><?php echo $this->__($_step->getLabel()) ?></h3>
-        </div>
-		<?php echo $this->getMessagesBlock()->toHtml() ?>
-        <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
-            <div class="multiple-checkout">
-                <div class="page-title title-buttons">
-                	<div class="col2-set">
-                    	<div class="gift-messages">
-                        	<p class="control">
-                            	<input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
-                               	<label for="shipping-to-more-than-one"><span class="para-normal">Shipping to more than one address?</span></label>
-                           	</p>
-                       	</div>
-                    </div>
-                    <button data-action="add-new-customer-address" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
-                </div>
-                <input type="hidden" name="continue" value="0" id="can_continue_flag" />
-                <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
-                <h2><?php //echo $this->__('Please select shipping address for applicable items') ?></h2>
-                <div class="data-table col-12" id="multiship-addresses-table">
-                    <div class="row">
-											<div class="">
-                    <?php foreach ($this->getItems() as $_index => $_item): ?>
-                        <?php if ($_item->getQuoteItem()) :?>
-                        <?php //if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
-												<div class="col-12 product-description-section">
-													<div class="row">
-                        	<div class="col-2">
-                        		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
-                        		<?php
-                        		if ($option = $_item->getOptionByCode('simple_product')) {
-                        		    $_product = $option->getProduct();
-                        		}
-                        		?>
-                        		<p class="product-image">
-                             		<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
-                         		</p>
-                        	</div>
-                            <div class="col-6">
-                            <?php echo $this->getItemHtml($_item->getQuoteItem())?>
-                            <div class="item-options">
-                            <input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
-                            </div>
-                            <div class="col2-set">
-                                <div class="gift-messages">
-                                 	<p class="control">
-                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
-                                        <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>This item is a gift (price will be hidden in the receipt).</span></label>
-                                   </p>
-                                </div>
-                                <div class="gift-messages">
-                                 	<p class="control">
-                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
-                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
-                                   </p>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-4">
-                            	<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
-                            </div>
-													</div>
-													</div>
-                            <!-- <div class="a-center"><a href="<//?php echo $this->getItemDeleteUrl($_item) ?>" title="<//?php echo Mage::helper('core')->quoteEscape($this->__('Remove Item')) ?>" class="btn-remove2"><//?php echo $this->__('Remove Item') ?></a></div> -->
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-									</div>
-
-
-										<!-- <div>
-												<div>
-														<div colspan="100" class="a-right"><button type="submit"
-																	data-multiship-item-update
-																	title="<//?php echo Mage::helper('core')->quoteEscape($this->__('Update Qty &amp; Addresses')) ?>"
-																	class="button" onclick="$('can_continue_flag').value=0">
-																		<span><span><//?php echo $this->__('Update Qty &amp; Addresses') ?></span></span>
-																</button>
-														</div>
-												</div>
-										</div> -->
-										</div>
-                </div>
-                <div class="billing-address billing-address-selection col-12">
-									<div class="row">
-										<div class="col-12 p-0">
-                			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
-										</div>
-                			<?= $this->getChildHtml("checkout_address_select");?>
-                	</div>
-								</div>
-                <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
-                <div class="buttons-set text-right">
-                    <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shopping Cart') ?></a></p>
-                    <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue to Shipping Information')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next');//('Continue to Shipping Information') ?></span></span></button>
-                </div>
+<div class="container">
+    <ol id="checkoutSteps" class="opc">
+    <?php foreach ($steps as $stepKey => $_step): ?>
+    	<?php if($stepKey == "multishipping_addresses"):?>
+    	<li id="opc-<?= $stepKey?>" class="section allow active">
+    		<div class="step-title checkout-step-name col-12">
+                <span class="number"><?php echo $cnt ?></span>
+                <h3><?php echo $this->__($_step->getLabel()) ?></h3>
             </div>
-            <?php echo $this->getBlockHtml("formkey") ?>
-        </form>
-	</li>
-	<?php else:?>
-	<li id="opc-<?= $stepKey?>" class="section">
-		<div class="step-title checkout-step-name col-12">
-            <span class="number"><?php echo $cnt ?></span>
-            <h3><?= $_step->getLabel()?></h3>
-        </div>
-	</li>
-	<?php endif;?>
-	<?php $cnt++; ?>
-<?php endforeach;?>
-</ol>
-</div>
-
-
-
-
-<?php if(0):?>
-<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<div class="page-title">
-    <h1>Secure Checkout - ship to multiple addresses</h1>
-</div>
-<div class="container row mx-auto p-0">
-<ol id="checkoutSteps" class="opc col-lg-8 col-12">
-<?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();
-    $cont = 1;
-    foreach ($steps as $_step): ?>
-        <?php if($_step->getLabel()=='Select Addresses'): ?>
-    <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section allow active row" >
-        <div class="step-title checkout-step-name col-12">
-            <span class="number"><?php echo $cont ?></span>
-            <h3><?php echo $this->__('Select Address') ?></h3>
-        </div>
-        <form id="checkout_multishipping_form" class="col-12" action="<?php echo $this->getPostActionUrl() ?>" method="post">
-                <div class="multiple-checkout row">
-                    <div class="title-buttons col-12">
-                        <!--<h1><?php // echo $this->__('Ship to Multiple Addresses') ?></h1>-->
-										<div>
-											<h2><?php echo $this->__('Ship to Multiple Addresses') ?></h2>
-											<p><?php echo $this->__('Please select the proper shipping address for each item in your cart.') ?></p>
-										</div>
-                        <button type="button" title="<?php echo $this->__('Add New Address') ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
+    		<?php echo $this->getMessagesBlock()->toHtml() ?>
+            <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
+                <div class="multiple-checkout">
+                    <div class="page-title title-buttons">
+                    	<div class="col2-set">
+                        	<div class="gift-messages">
+                            	<p class="control">
+                                	<input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
+                                   	<label for="shipping-to-more-than-one"><span class="para-normal">Shipping to more than one address?</span></label>
+                               	</p>
+                           	</div>
+                        </div>
+                        <button data-action="add-new-customer-address" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
                     </div>
                     <input type="hidden" name="continue" value="0" id="can_continue_flag" />
                     <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
-                        <?php foreach ($this->getItems() as $_index => $_item): ?>
+                    <div class="data-table col-12" id="multiship-addresses-table">
+                        <div class="row">
+    						<div class="">
+                        	<?php foreach ($this->getItems() as $_index => $_item): ?>
                             <?php if ($_item->getQuoteItem()) :?>
-                            <div class="product">
-                                <p><?php echo $this->getItemHtml($_item->getQuoteItem())?></p>
-                                <p class="qty">Qty <input type="text" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->htmlEscape($_item->getQty()) ?>" size="2" class="input-text qty" /></p>
-                                <p class="address">Ship to <div class="styled"><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.'); else: echo $this->getAddressesHtmlSelect($_item, $_index); endif; ?></div></p>
-                                <p class="edit a-right"><a href="<?php echo $this->getItemDeleteUrl($_item) ?>" title="<?php echo $this->__('Remove') ?>" class="btn-remove"><?php echo $this->__('Remove') ?></a></p>
-                            </div>
-                            <div class="col2-set row">
-                            <div class="gift-messages">
-                             	<p class="control">
-                               		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
-                                    <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>This item is a gift (price will be hidden in the receipt).</span></label>
-                               </p>
-                            </div>
-                            </div>
+                            <?php //if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
+    							<div class="col-12 product-description-section">
+    								<div class="row">
+                            			<div class="col-2">
+                                    		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
+                                    		<?php
+                                        		if ($option = $_item->getOptionByCode('simple_product')) {
+                                        		    $_product = $option->getProduct();
+                                        		}
+                                		    ?>
+                                			<p class="product-image">
+                                     			<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                                 			</p>
+                            			</div>
+                                		<div class="col-6">
+                                    		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
+                                    		<div class="item-options">
+                                    			<input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
+                                    		</div>
+                                			<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+    										<?php if(!empty($message)): ?>
+                							<div class="box">
+                                            	<div class="box-content">
+                                                	<div class="item-msg">
+                                                    	<p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                                    </div>
+                                                </div>
+                                             </div>
+    										<?php endif;?>
+    
+                                            <div class="col2-set">
+                                                <div class="gift-messages">
+                                                 	<p class="control">
+                                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
+                                                        <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>This item is a gift (price will be hidden in the receipt).</span></label>
+                                                   </p>
+                                                </div>
+                                                <div class="gift-messages">
+                                                 	<p class="control">
+                                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
+                                                   </p>
+                                                </div>
+                                            </div>
+                                		</div>
+                                    	<div class="col-4 text-right">
+                                    		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
+                                    	</div>
+    								</div>
+    							</div>
                             <?php endif; ?>
-                        <?php endforeach; ?>
-                    <div class="updateQty a-right"><button type="submit" title="<?php echo $this->__('Update Qty &amp; Address') ?>" class="button" onclick="$('can_continue_flag').value=0"><span><span><?php echo $this->__('Update Qty &amp; Address') ?></span></span></button></div>
+                        	<?php endforeach; ?>
+    						</div>
+    					</div>
+                    </div>
+                    <div class="billing-address billing-address-selection col-12">
+    					<div class="row">
+    						<div class="col-12 p-0">
+                    			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
+    						</div>
+                    		<?= $this->getChildHtml("checkout_address_select");?>
+                    	</div>
+    				</div>
                     <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
-                    <div class="buttons-set">
+                    <div class="buttons-set text-right">
                         <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shopping Cart') ?></a></p>
-                        <button class="button continue" type="submit" title="<?php echo $this->__('Continue') ?>" class="button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Continue') ?></span></span></button>
+                        <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue to Shipping Information')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next');//('Continue to Shipping Information') ?></span></span></button>
                     </div>
                 </div>
-		<?php echo $this->getBlockHtml("formkey") ?>
+                <?php echo $this->getBlockHtml("formkey") ?>
             </form>
-    </li>
-        <?php else: ?>
-    <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section row" >
-        <div class="step-title checkout-step-name col-12">
-            <span class="number"><?php echo $cont ?></span>
-            <h3><?php echo ($_step->getLabel()!='Shipping Information')? $_step->getLabel() : $this->__('SHIPPING METHOD AND GIFT OPTIONS'); ?></h3>
-        </div>
-    </li>
-        <?php endif; ?>
-    <?php $cont+=1; ?>
-    <?php endforeach; ?>
-</ol>
+            <div id="multiaddress-new-address">
+            	<?php //$this->getChildHtml("customer_address_edit_form")?>
+            </div>
+    	</li>
+    	<?php else:?>
+    	<li id="opc-<?= $stepKey?>" class="section">
+    		<div class="step-title checkout-step-name col-12">
+                <span class="number"><?php echo $cnt ?></span>
+                <h3><?= $_step->getLabel()?></h3>
+            </div>
+    	</li>
+    	<?php endif;?>
+    	<?php $cnt++; ?>
+    <?php endforeach;?>
+    </ol>
 </div>
-<?php endif;?>
-
 <script type="text/javascript">
     if (typeof Allure == "undefined") {
         var Allure = {};

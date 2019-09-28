@@ -22,14 +22,18 @@
  * @package     base_default
  * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- *
- * @var Mage_Checkout_Block_Multishipping_Address_Select $this
  */
 ?>
-<select class="ship-select select-type-one mb-3">
-  	<option>Select Address</option>
-    	<?php foreach ($this->getAddressCollection() as $_address):?>
-    	<option value="<?= $_address->getId()?>"><?= $_address->format('oneline')?></option>
-    	<?php endforeach;?>
-    	<option value="new">New Address</option>
-</select>
+<p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="" title=""></p>
+<div class="page-height">
+<div class="page-title mt-4">
+    <h1 class="text-center mb-4 higher-h1"><?php echo $this->__('Shopping Cart is Empty') ?></h1>
+</div>
+<div class="cart-empty">
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('checkout_cart_empty_widget'); ?>
+    <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+    <p><?php echo $this->__('Click <a class="info-text-two" href="%s">here</a> to continue shopping.', Mage::helper('core')->quoteEscape($this->getContinueShoppingUrl())) ?></p>
+    <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>
+</div>
+</div>

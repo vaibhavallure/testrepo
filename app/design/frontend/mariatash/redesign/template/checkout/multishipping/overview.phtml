@@ -44,12 +44,12 @@
 
                         <?php foreach ($this->getShippingAddresses() as $_index => $_address): ?>
 
-                        	<table class="data-table overview-address-item" id="overview-address-item-<?= $_address->getId()?>">
-                        		<tbody>
+                        	<div class="data-table overview-address-item" id="overview-address-item-<?= $_address->getId()?>">
+                        		<div class="col-12">
                         	<?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
                             	<?php if ($_item->getQuoteItem()) :?>
-                            	<tr>
-                            		<td>
+                            	<div class="row">
+                            		<div class="col-2">
                                 		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
                                 		<?php
                                 		if ($option = $_item->getOptionByCode('simple_product')) {
@@ -59,16 +59,16 @@
                                 		<p class="product-image">
                                      		<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
                                  		</p>
-                                	</td>
-                                	<td>
+                                	</div>
+                                	<div class="col-10">
                                 		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
 
                                 		<div class="box"></div>
 
                                 		<div class="box">
-                                            <div class="box-title">
-                                                <h4><?= $this->__('Shipping To') ?></h4>
-                                            </div>
+                                            <!-- <div class="box-title">
+                                                <h4><//?= $this->__('Shipping To') ?></h4>
+                                            </div> -->
                                             <div class="box-content">
                                                 <address>
                                                     <?= $_address->format('html') ?>
@@ -78,12 +78,12 @@
 
                                     	<div class="box">
                                             <div class="box-title">
-                                                <h4><?= $this->__('Shipping Method') ?></h4>
+                                                <h4><?= $this->__('[Shipping Method]') ?></h4>
                                             </div>
                                             <div class="box-content">
                                                 <?php if($_rate=$this->getShippingAddressRate($_address)): ?>
                                                 <p>
-                                                <?php echo $this->escapeHtml($_rate->getCarrierTitle()) ?> - <?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                                <!-- <//?php echo $this->escapeHtml($_rate->getCarrierTitle()) ?> - <//?php echo $this->escapeHtml($_rate->getMethodTitle()) ?> -->
                                                 <?php $_excl = $this->getShippingPriceExclTax($_address); ?>
                                                 <?php $_incl = $this->getShippingPriceInclTax($_address); ?>
                                                 <?php echo $_excl; ?>
@@ -102,6 +102,17 @@
                                         	</div>
                                         </div>
                                         <?php endif;?>
+                                        
+                                        <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+										<?php if(!empty($message)): ?>
+										<div class="box">
+                                        	<div class="box-content">
+                                        		<div class="item-msg">
+                                                    <p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                                </div>
+                                        	</div>
+                                        </div>
+										<?php endif;?>
 
                                         <div class="box">
                                         	<div class="box-content">
@@ -124,24 +135,24 @@
                                         	</div>
                                         </div>
 
-                                	</td>
-                            	</tr>
+                                	</div>
+                            	</div>
                             	<?php endif;?>
                             <?php endforeach; ?>
-                            	</tbody>
-                            </table>
+                            	</div>
+                            </div>
                             <script type="text/javascript">decorateTable('overview-address-item-<?= $_address->getId()?>')</script>
 
                         <?php endforeach; ?>
 
-                        <div id="checkout-review-submit">
+                        <div id="checkout-review-submit col-12">
                         <?php echo $this->getChildHtml('agreements') ?>
-                        	<div class="place-order">
-                            	<div class="grand-total">
-                                	<div class="inner">
-                                    	<big><?php echo $this->__('Grand Total') ?> <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?></big>
-                                        <div id="review-buttons-container">
-                                        	<button type="submit" title="<?php echo $this->__('Place Order') ?>" class="button btn-checkout" id="review-button"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
+                        	<div class="place-order row">
+                            	<div class="grand-total col-12">
+                                	<div class="inner row">
+                                    	<big class="col-12 text-right"><?php echo $this->__('Grand Total') ?> <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?></big>
+                                        <div id="review-buttons-container" class="col-12 text-right">
+                                        	<button type="submit" title="<?php echo $this->__('Checkout') ?>" class="button btn-checkout dark-button next-button" id="review-button"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
                                        	</div>
                                  	</div>
                             	</div>

@@ -1,8 +1,8 @@
-<?php 
+<?php
 /**
- * 
+ *
  * Gift message for gift item.
- * 
+ *
  * @var Mage_Sales_Model_Quote_Address_Item $_item
  * @var Allure_RedesignCheckout_Block_Giftmessage $this
  */
@@ -15,24 +15,15 @@
 <?php $sender = $_giftMessage->getSender();?>
 <?php $receipt = $_giftMessage->getRecipient();?>
 <?php endif;?>
-<ul>
-	<li>
-		<div>
+<div class="col-12">
+	<div class="row">
+	<div class="col-4">
+		<div class="row">
 			<input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][type]" value="quote_address_item" />
             <input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][address]" value="<?= $_item->getAddress()->getId()?>" />
-			<label for="gift-message-<?php echo $_item->getId() ?>-from"><?php echo $this->__('Sender') ?></label>
+			<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-from"><//?php echo $this->__('Sender') ?></label> -->
 			<div>
-				<input type="text"
-					name="giftmessage[<?php echo $_item->getId() ?>][from]"
-					id="gift-message-<?php echo $_item->getId() ?>-from"
-					title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($sender, $this->getDefaultFrom()) ?>"
-					class="input-text validation-passed" />
-			</div>
-		</div>
-		<div>
-			<label for="gift-message-<?php echo $_item->getId() ?>-to"><?php echo $this->__('Recipient') ?></label>
-			<div>
-				<input type="text"
+				<input type="text" placeholder="To"
 					name="giftmessage[<?php echo $_item->getId() ?>][to]"
 					id="gift-message-<?php echo $_item->getId() ?>-to"
 					title="<?php echo $this->__('To') ?>"
@@ -40,16 +31,23 @@
 					class="input-text validation-passed" />
 			</div>
 		</div>
-	</li>
-	<li>
-		<div>
-    		<label for="gift-message-<?php echo $_item->getId() ?>-message"><?php echo $this->__('Message') ?></label>
-    		<div>
-    			<textarea id="gift-message-<?php echo $_item->getId() ?>-message"
+		<div class="row">
+			<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-to"><//?php echo $this->__('Recipient') ?></label> -->
+				<input type="text" placeholder="From"
+					name="giftmessage[<?php echo $_item->getId() ?>][from]"
+					id="gift-message-<?php echo $_item->getId() ?>-from"
+					title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($sender, $this->getDefaultFrom()) ?>"
+					class="input-text validation-passed" />
+		</div>
+	</div>
+	<div class="col-8">
+		<div class="row">
+    		<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
+    			<textarea placeholder="Message" id="gift-message-<?php echo $_item->getId() ?>-message"
     				class="input-text validation-passed  giftmessage-area"
     				name="giftmessage[<?php echo $_item->getId() ?>][message]"
     				title="<?php echo $this->__('Message') ?>" rows="5" cols="10"><?php echo $giftHelper->getEscapedGiftMessage($_item) ?></textarea>
-    		</div>
 		</div>
-	</li>
-</ul>
+	</div>
+</div>
+</div>
