@@ -138,6 +138,11 @@
             </div>
             <?php echo $this->getBlockHtml("formkey") ?>
         </form>
+        
+        <div id="multiaddress-new-address">
+        	<?= $this->getChildHtml("customer_address_edit_form")?>
+        </div>
+        
 	</li>
 	<?php else:?>
 	<li id="opc-<?= $stepKey?>" class="section">
