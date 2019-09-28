@@ -111,7 +111,7 @@
                                                 </div>
                                             </div>
                                 		</div>
-                                    	<div class="col-4 text-right multi-address-select-address-option">
+                                    	<div class="col-4 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
                                     		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
                                     	</div>
     								</div>
@@ -172,12 +172,18 @@
 				window.location.href = Allure.baseUrl+'checkout/onepage/';
 			}
 		});
+
+		jQuery('#customer-address-form-validate .back-link a').on('click',function(){
+			jQuery('#checkout_multishipping_form').show();
+			jQuery('#multiaddress-new-address').hide();
+		});
 	});
 
 	function newAddressForm(evt){
 		if(!(jQuery(evt).val())){
+			var addressId = jQuery(evt).parent().data("selected_address_id");
 			if(jQuery(evt)){
-				jQuery(evt).val('');
+				jQuery(evt).val(addressId);
 			}
 			jQuery('#checkout_multishipping_form').hide();
 			jQuery('#multiaddress-new-address').show();
