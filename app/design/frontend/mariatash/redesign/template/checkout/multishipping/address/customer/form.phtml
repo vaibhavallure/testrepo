@@ -37,9 +37,6 @@
         <div class="">
             <div class="col-lg-12">
                 <?php if($this->getTitle()): ?>
-                    <!-- <div class="page-title">
-                    	<h1><//?php echo $this->getTitle() ?></h1>
-                    </div> -->
                     <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
@@ -50,10 +47,9 @@
                             <?php echo $this->getBlockHtml('formkey')?>
                             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
                             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
-                            <!-- <h2 class="legend"><//?php echo $this->__('Contact Information') ?></h2> -->
                             <ul class="form-list">
                                 <li class="fields">
-                                    <?php// echo $this->getNameBlockHtml() ?>
+                                    <?php //echo $this->getNameBlockHtml() ?>
                                     <div class="field name-firstname">
                                         <div class="input-box">
                                             <input placeholder="First Name*" type="text" onkeypress="return isText(event)" id="firstname" name="firstname" value="" title="firstname" maxlength="255" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('firstname') ?>"/>
@@ -78,18 +74,6 @@
                                       </div>
                                   </div>
                                 </li>
-                                <li class="fields">
-                                    <div class="field">
-                                        <div class="input-box">
-                                            <input placeholder="Phone Number" id="phone" name="telephone" type="text" class="validate-mobileno address-edit-itel-cstm ele_width main-dropdown-box pl-5" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>"/>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="field">
-                                        <div class="input-box fax-edit">
-                                            <input placeholder="Fax" type="text" name="fax" id="fax" title="<//?php echo $this->__('Fax') ?>" value="<//?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>" class="input-patern <//?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" />
-                                        </div>
-                                    </div> -->
-                                </li>
                             </ul>
                         </div>
                         <div class="fieldset">
@@ -108,13 +92,6 @@
                                     </div>
                                 </li>
                             	<?php endfor; ?>
-                            	<?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
-                                <!-- <li class="wide">
-                                    <div class="input-box">
-                                        <input placeholder="Vat Number" type="text" name="vat_id" value="<//?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<//?php echo $this->__('VAT Number') ?>" id="vat_id" class="input-patern <//?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
-                                    </div>
-                                </li> -->
-                            	<?php endif; ?>
                                 <li class="fields">
                                     <div class="field">
                                         <div class="input-box">
@@ -141,7 +118,13 @@
                                             <input placeholder="zip" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="required-entry-dtn input-patern validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                                         </div>
                                     </div>
-
+                                </li>
+                                <li class="fields">
+                                    <div class="field">
+                                        <div class="input-box">
+                                            <input placeholder="Phone Number" id="phone" name="telephone" type="text" class="validate-mobileno address-edit-itel-cstm ele_width main-dropdown-box pl-5" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>"/>
+                                        </div>
+                                    </div>
                                 </li>
                                 <li <?php if($this->canSetAsDefaultBilling()) echo ' class="control mt-4"' ?>>
                                		<?php if($this->isDefaultBilling()): ?>
