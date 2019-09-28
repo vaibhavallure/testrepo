@@ -43,12 +43,14 @@ jQuery(document).ready(function() {
                 jQuery("#scroll-logo").removeClass('d-none');
                 jQuery('.mariatash-header').addClass('header-height');
                 jQuery('.mariatash-header').addClass('maria-black');
+                jQuery("section.sub-menu").addClass("scrolled");
             } else {
                 jQuery(".mt-logo").removeClass('d-none');
                 jQuery(".nav-links-left").removeClass('d-none');
                 jQuery("#scroll-logo").addClass('d-none');
                 jQuery('.mariatash-header').removeClass('header-height');
                 jQuery('.mariatash-header').removeClass('maria-black');
+                jQuery("section.sub-menu").removeClass("scrolled");
 
             }
 
