@@ -2057,7 +2057,7 @@ span#popup_loader_register {
 	width: 229px;
 }
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -3035,4 +3035,7 @@ table thead {
 }
 .cart-collaterals .grand_total_section .price{
 font-weight: bold;
+}
+.checkoutPopupLoginModel .pop-up-cover{
+	width: fit-content;
 }

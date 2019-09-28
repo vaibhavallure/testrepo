@@ -104,6 +104,12 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 
                     $result['url'] = $refererUrl;
 
+                    /*code to redirect checkout after login*/
+                    if(!empty($this->getRequest()->getParam('redirectUrl')))
+                    {
+                        $result['redirectUrl']=$this->getRequest()->getParam('redirectUrl');
+                    }
+
                 } catch (Mage_Core_Exception $e) {
                     switch ($e->getCode()) {
                         case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
