@@ -17,7 +17,6 @@ try{
     $order->queueMultiAddressNewOrderEmail($orderObjArray);
 }catch(Exception $e){
     var_dump($e->getMessage());
-    echo "Ayala hagali maria chi site.";
 }
 die("Finish...");
 

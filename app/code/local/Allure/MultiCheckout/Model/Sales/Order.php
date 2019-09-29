@@ -4,9 +4,11 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
 {
 
     const XML_MULTIORDER_EMAIL_TEMPLATE = 'sales_email/allure_multicheckout_sales_email/template';
-
     const XML_MULTIORDER_EMAIL_GUEST_TEMPLATE = 'sales_email/allure_multicheckout_sales_email/guest_template';
 
+    const XML_MULTI_ADDRESS_ORDER_EMAIL_TEMPLATE = 'sales_email/allure_multiaddress_sales_email/template';
+    const XML_MULTI_ADDRESS_ORDER_GUEST_EMAIL_TEMPLATE = 'sales_email/allure_multiaddress_sales_email/guest_template';
+    
     /*
      * Send email to customer that contains In stock and
      * Out of stock products information.
@@ -117,9 +119,7 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
     
     
     /*
-     * Send email to customer that contains In stock and
-     * Out of stock products information.
-     * i.e. two orders in this email.
+     * Send email to customer with multiple orders combined.
      */
     public function queueMultiAddressNewOrderEmail ($orderArray,$forceMode = false)
     {
@@ -168,10 +168,10 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
         
         // Retrieve corresponding email template id and customer name
         if ($this->getCustomerIsGuest()) {
-            $templateId = Mage::getStoreConfig(self::XML_MULTIORDER_EMAIL_GUEST_TEMPLATE, $storeId);
+            $templateId = Mage::getStoreConfig(self::XML_MULTI_ADDRESS_ORDER_GUEST_EMAIL_TEMPLATE, $storeId);
             $customerName = $this->getBillingAddress()->getName();
         } else {
-            $templateId = Mage::getStoreConfig(self::XML_MULTIORDER_EMAIL_TEMPLATE, $storeId);
+            $templateId = Mage::getStoreConfig(self::XML_MULTI_ADDRESS_ORDER_EMAIL_TEMPLATE, $storeId);
             $customerName = $this->getCustomerName();
         }
         
