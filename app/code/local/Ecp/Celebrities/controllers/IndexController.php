@@ -128,6 +128,7 @@ class Ecp_Celebrities_IndexController extends Mage_Core_Controller_Front_Action
         {
            $data[$i]["id"]=$product->getId();
            $data[$i]["name"]=$product->getName();
+           $data[$i]["product_url"]=$product->getProductUrl();
            $i++;
         }
 
