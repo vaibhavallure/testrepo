@@ -197,49 +197,57 @@ var count = 1;
 		 	//console.log("hi");
 			//console.log(todaysDate);
 		 	//jQuery("#pick_ur_time_div").empty();
-		 	var todaysDate = document.getElementById("datepicker-13_hidden").value;	
-			//ajax start to pass the selected date to get the time
-			var qty = document.getElementById("count").value;
-			var storeid = document.getElementById("store-id").value;
-			//ajax start to get the working days of piercers according to store			 	
-		 	jQuery.ajax({
-		 		url : Allure.adminAjaxGetWorkingDaysUrl,			 		
-				type : 'POST',
-				dataType:'json',
-				data: {storeid:storeid,id:Allure.appointmentId,
-					form_key:Allure.adminFormKey},
-				success : function(response){
-					jQuery("#fetchpickurday").html(response.output);
-					var todaysDate = document.getElementById("datepicker-13_hidden").value;	
-					var request = {
-				 				"qty":qty,
-				 				"store":storeid,
-				 				"date":todaysDate,
-				 				"id":Allure.appointmentId,
-				 				"form_key":Allure.adminFormKey
-				 	 		};
-					console.log(request);
-					
-				 	 jQuery.ajax({
-				        	url : Allure.adminAjaxGetTimeUrl,
-				        	dataType : 'json',
-				 			type : 'POST',
-				 			data: {request:request
-				 				},
-				 			success : function(response){
-				 				jQuery("#pick_ur_time_div").html(response.output);
-				 				window.sample = 30;
-				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
-				 				simple.sliderDemo();
-				 			}
-				        });
-					//ajax end
-				 	 
-				}
-	      });
-		 //ajax start to get the working days of piercers according to store
-		 	
-		 	
+         var selectedStore = jQuery(this).children("option:selected");
+
+         if(typeof selectedStore.attr('data-url') !== "undefined"){
+             window.location.replace(selectedStore.attr('data-url'));
+         }else {
+             var todaysDate = document.getElementById("datepicker-13_hidden").value;
+             //ajax start to pass the selected date to get the time
+             var qty = document.getElementById("count").value;
+             var storeid = document.getElementById("store-id").value;
+             //ajax start to get the working days of piercers according to store
+             jQuery.ajax({
+                 url: Allure.adminAjaxGetWorkingDaysUrl,
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {
+                     storeid: storeid, id: Allure.appointmentId,
+                     form_key: Allure.adminFormKey
+                 },
+                 success: function (response) {
+                     jQuery("#fetchpickurday").html(response.output);
+                     var todaysDate = document.getElementById("datepicker-13_hidden").value;
+                     var request = {
+                         "qty": qty,
+                         "store": storeid,
+                         "date": todaysDate,
+                         "id": Allure.appointmentId,
+                         "form_key": Allure.adminFormKey
+                     };
+                     console.log(request);
+
+                     jQuery.ajax({
+                         url: Allure.adminAjaxGetTimeUrl,
+                         dataType: 'json',
+                         type: 'POST',
+                         data: {
+                             request: request
+                         },
+                         success: function (response) {
+                             jQuery("#pick_ur_time_div").html(response.output);
+                             window.sample = 30;
+                             var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
+                             simple.sliderDemo();
+                         }
+                     });
+                     //ajax end
+
+                 }
+             });
+             //ajax start to get the working days of piercers according to store
+
+         }
 		 	 
 		 	 
 		 	 
