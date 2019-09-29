@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
     jQuery('#tooltip-id-customer-care').parents('.t_Tooltip').addClass('customer_care');
     jQuery('#tooltip-id-my-account').parents('.t_Tooltip').addClass('tooltip_account');
     jQuery('#tooltip-id-our-jewelry').parents('.t_Tooltip').addClass('tooltip_jewelry');*/
-  });
+  // });
 }
 
   

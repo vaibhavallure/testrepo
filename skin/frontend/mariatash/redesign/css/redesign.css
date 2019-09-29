@@ -1475,7 +1475,7 @@ input[type="checkbox"]:checked+label:before {
   z-index: 999/* changed by aditya 1 */;
   position: fixed;
   width: 100%;
-  top: 138px;
+  top: 136px;
   overflow-x: hidden;
   right:0;
 	border-bottom: 1px solid #292929;
