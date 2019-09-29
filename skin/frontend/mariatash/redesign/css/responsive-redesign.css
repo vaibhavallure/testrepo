@@ -308,9 +308,7 @@
 .footerlink-icons .item-icons img {
     width: 22px;
 }
-
-  /* Catalog Filter CSS */
-
+/* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
   }
@@ -372,6 +370,9 @@
   }
   .simple-page-title{
     padding: 0!important;
+  }
+  .btn-quickview {
+    display: none !important;
   }
 }
 
@@ -577,6 +578,9 @@
     width: 100%;
     max-width: 100%;
     flex: 0 0 30%;
+  }
+  .btn-quickview {
+    display: none !important;
   }
 }
 

@@ -207,9 +207,9 @@ iframe {
     margin-right: 135px;
 }*/
 
-#payment_form_authnetcim #authnetcim_cc_number{
+/* #payment_form_authnetcim #authnetcim_cc_number{
 	width: 250px ! important;
-}
+} */
 
 
 /*shipping methods css*/
@@ -908,10 +908,6 @@ label.popup-reg-privacy-lbl {
 width: 94%;
     float: right;
 }
-div#advice-required-entry-authnetcim_cc_cid {
-    margin-top: 25px;
-}
-
 
 .product-options-bottom .add-to-cart-left .ajax-error-messages {
     left: 150px;
