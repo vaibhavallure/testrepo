@@ -65,10 +65,12 @@
     var product_info="";
     var current_outfits="";
     var current_outfits_length="";
+    var quickViewUrl = "<?= $this->getUrl('quickview/index/index/sourceOfReq/quickview') ?>";
+
 
     jQuery(".celebrity-img").on('click',function(){
         clear();
-        jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto"});
+        jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto","z-index":"1"});
         jQuery(".celeb-loader").show();
         var celebId=jQuery(this).attr("data-id");
         jQuery.post(popupActionUrl,
@@ -89,6 +91,7 @@
                 jQuery(".celeb-loader").hide();
                 setButtons(celebId);
             });
+
     });
 
     jQuery(".celebPopup .close").on('click',function(){
@@ -135,7 +138,8 @@
     function setProduct(item) {
         product_info+='<li>\n' +
             ' <div class="product-name info-text-two">'+item["name"]+'</div>\n' +
-            ' <div class="quick_link link-button"><a href="#">Quick View</a></div>\n' +
+            ' <div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="'+quickViewUrl+'id/'+item["id"]+'" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>\n' +
+            '<div class="quick_link link-button d-block d-xs-block d-md-block d-lg-none d-xl-none"><a href="'+item["product_url"]+'" >Buy</a></div>\n'+
             '  </li>';
     }
     function setImg(img) {
@@ -187,6 +191,37 @@
         jQuery(".celebPopup .prev").addClass("disBtn");
 
     }
+
+
+
+
+
+    jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'yes',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
+
+        afterLoad: function(current, previous) {
+
+        }
+    });
 
     jQuery("#category-title").html("");
 </script>

@@ -2907,6 +2907,9 @@ table thead {
 .quickview-index-index .thumb.thumb1 img {
 	margin-top: 78px;
 }
+.fancybox-close::before{
+	content: ""!important;
+}
 .fancybox-overlay{
 	position: fixed!important;
 	background: #1f1e1e61!important;
