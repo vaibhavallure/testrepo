@@ -1386,6 +1386,9 @@ input[type="checkbox"]:checked+label:before {
 .main-nav-link li {
   margin-right: 24px;
 }
+.main-nav-link li .block-currency{
+	margin-left: 10px;
+}
 .nav-links-right {
   margin-right: 5px;
 }
@@ -2072,22 +2075,31 @@ span#popup_loader_register {
 	background: rgba(0,0,0,0.4);
 }
 #tooltip-id-our-jewelry a.previous-content-block-seo {
-	text-indent: -9000px;
-	background: url(../images/mini-gray_prev.png) no-repeat 0 0;
-	width: 15px;
-	height: 20px;
+	background: url(../images/Popup-side-arrow.png) no-repeat 0 0;
+	width: 24px;
+	height: 40px;
 	display: block;
-	float: right;
-	margin-right: 0 !important;
+	/* float: right; */
+	/* margin-right: 10px; */
+	text-indent: -9000px;
+	background-size: 100% 100%;
+	position: absolute;
+	left: 5px;
+	top: 40%;
+	transform: rotate(180deg);
 }
 #tooltip-id-our-jewelry a.next-content-block-seo {
-	background: url(../images/mini-gray_next.png) no-repeat 0 0;
-	width: 15px;
-	height: 20px;
+	background: url(../images/Popup-side-arrow.png) no-repeat 0 0;
+	width: 24px;
+	height: 40px;
 	display: block;
-	float: right;
-	margin-right: 10px;
+	/* float: right; */
+	/* margin-right: 10px; */
 	text-indent: -9000px;
+	background-size: 100% 100%;
+	position: absolute;
+	right: 5px;
+	top: 40%;
 }
 .product-view .product-shop .padder h1, .product-view .product-shop .product-options .required, .product-view .product-shop .short-description, .block-layered-nav p.block-subtitle {
   display: none;
@@ -3154,3 +3166,69 @@ font-weight: bold;
 	background: white!important;
 }
 
+
+/*currency block*/
+/* Block: Currency Switcher */
+.block-currency {
+	position: relative;
+}
+
+.block-currency  #currency-selector {
+	position: absolute;
+	top: 20px;
+	/*right: 0;*/
+	z-index: 99999;
+	width: 96px;
+	height: auto;
+	background: white;
+}
+.block-currency  #currency-selector ul {
+	margin: 6px 0 11px 0;
+	padding: 0;
+	width: 96px;
+	height: auto;
+	text-align: right;
+	overflow: hidden;
+}
+
+.block-currency  #currency-selector ul li:first-child {
+	margin-top: 15px;
+}
+
+.block-currency  #currency-selector ul li:last-child {
+	margin-bottom: 4px;
+}
+
+.block-currency  #currency-selector ul li {
+	font-size: 12px;
+	display: block;
+	float: none;
+	margin: 0 0 4px;
+	padding: 0 17px;
+	text-align: left;
+	color: #3f3f47;
+}
+
+.block-currency  #currency-selector ul li a i {
+	position: absolute;
+	right: 60px;
+}
+
+.block-currency  #currency-selector ul li a span {
+	padding-left: 36px;
+}
+
+.block-currency .block-title {
+	border: 0;
+	background: none;
+	text-transform: none;
+}
+
+.block-currency .block-title strong {
+	text-transform: none;
+}
+
+.block-currency .block-content select {
+	padding: 0;
+	width: 100%;
+}

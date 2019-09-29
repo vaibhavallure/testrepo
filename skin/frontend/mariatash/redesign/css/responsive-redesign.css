@@ -376,6 +376,36 @@
   .simple-page-title{
     padding: 0!important;
   }
+
+
+  #tooltip-id-our-jewelry a.previous-content-block-seo {
+    background: url(../images/white-active-arrow.png) no-repeat 0 0;
+    width: 14px;
+    height: 20px;
+    display: block;
+     float: right;
+     margin-right: 10px;
+    text-indent: -9000px;
+    background-size: 100% 100%;
+    position: relative;
+
+    transform: rotate(180deg);
+  }
+  #tooltip-id-our-jewelry a.next-content-block-seo {
+    background: url(../images/white-active-arrow.png) no-repeat 0 0;
+    width: 14px;
+    height: 20px;
+    display: block;
+     float: right;
+     margin-right: 10px;
+    text-indent: -9000px;
+    background-size: 100% 100%;
+    position: relative;
+margin-left: 10px;
+  }
+  #tooltip-id-our-jewelry #container{
+    height: auto;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
