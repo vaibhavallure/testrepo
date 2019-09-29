@@ -205,6 +205,9 @@
   #tooltip-id-contact, #tooltip-id-customer-care, #tooltip-id-my-account{
     margin-top: 7px;
   }
+  #tooltip-id-contact table td{
+    color: white;
+  }
   #tooltip-id-our-jewelry {
     margin-top: 13px;
   }
@@ -371,8 +374,38 @@
   .simple-page-title{
     padding: 0!important;
   }
+
   .btn-quickview {
     display: none !important;
+  }
+  
+  #tooltip-id-our-jewelry a.previous-content-block-seo {
+    background: url(../images/white-active-arrow.png) no-repeat 0 0;
+    width: 14px;
+    height: 20px;
+    display: block;
+     float: right;
+     margin-right: 10px;
+    text-indent: -9000px;
+    background-size: 100% 100%;
+    position: relative;
+
+    transform: rotate(180deg);
+  }
+  #tooltip-id-our-jewelry a.next-content-block-seo {
+    background: url(../images/white-active-arrow.png) no-repeat 0 0;
+    width: 14px;
+    height: 20px;
+    display: block;
+     float: right;
+     margin-right: 10px;
+    text-indent: -9000px;
+    background-size: 100% 100%;
+    position: relative;
+margin-left: 10px;
+  }
+  #tooltip-id-our-jewelry #container{
+    height: auto;
   }
 }
 
@@ -880,6 +913,10 @@
 .custom-container {
     max-width: 1178px !important;
     margin: 0 auto;
+  }
+  .footlinks .footer-item-list span:hover{
+    border-bottom: 6px solid #fff;
+    padding-bottom: 16px;
   }
 }
 @media (min-width:1030px) and (max-width:1200px){

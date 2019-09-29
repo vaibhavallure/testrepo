@@ -271,7 +271,7 @@
 }
 .t_Tooltip .t_ContentContainer ul{ margin-top:5px;}
 .t_Tooltip .t_ContentContainer li { line-height:26px; text-transform:uppercase; }
-.t_Tooltip .t_ContentContainer #tooltip-id-customer-care li{float:left;width:100%;}
+/*.t_Tooltip .t_ContentContainer #tooltip-id-customer-care li{float:left;width:100%;}*/
 .t_UpdateQueue .t_ContentContainer {
   position: absolute;
   top: 0;
