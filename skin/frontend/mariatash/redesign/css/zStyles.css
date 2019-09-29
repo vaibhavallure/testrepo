@@ -475,7 +475,7 @@
 	margin-bottom: 0;
 }
 .login_security .list-form .fields .field,
-.new_address .list-form .fields .field,
+.new_address .list-form .fields .field
 {
 	justify-content: flex-end;
 }
@@ -895,7 +895,7 @@
 /*=====================*/
 /*HOMEPAGE F00TER  NAV*/
 /*=====================*/
-.footer8 .footlinks{
+/*.footer8 .footlinks{
 
 }
 .t_Tooltip_dark_subscribe{
@@ -973,7 +973,7 @@
 }
 .customer_care .t_ContentContainer{
 	width: 100%;
-}
+}*/
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/

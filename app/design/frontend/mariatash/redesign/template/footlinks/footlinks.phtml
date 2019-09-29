@@ -7,15 +7,25 @@
 
         var width = jQuery(window).width();
         if ((width > 1023)) {
+            jQuery.extend(Tipped.Skins, {
+                'allure_footer' : {
+                    border: { size: 4, color: '#959fa9' },
+                    background: '#f7f7f7',
+                    radius: { size: 4, position: 'border' },
+                    shadow: false,
+                    closeButtonSkin: 'light'
+                }
+            });
             jQuery('.popbox').each(function () {
                 var selector = '#' + jQuery(this).data('tooltip-id');
-                Tipped.create(this, jQuery(selector)[0], {skin: 'dark_subscribe', offset: {y: -4}});
+                Tipped.create(this, jQuery(selector)[0], {skin: 'allure_footer', offset: {y: -6}});
             });
 
             Tipped.create('.popbox_ajax', {
-                skin: 'dark_subscribe',
+                skin: 'allure_footer',
                 fadeIn: 0,
                 fadeOut: 0,
+                offset:{y:-6},
                 hideOn: 'click-outside',
                 ajax: true,//{type: 'post',cache: false},
                 hook: 'topmiddle',
@@ -268,7 +278,7 @@
     .slide
     {
         width: 300px;
-        height: 70px;
+        height: 100px;
         overflow: hidden;
         float: left;
     }

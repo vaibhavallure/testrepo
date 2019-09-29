@@ -1,12 +1,12 @@
 jQuery(document).ready(function() {
 
      if (jQuery(window).width() >= 1025){
-    jQuery('body').mouseover(function(){
+    /*jQuery('body').mouseover(function(){
     jQuery('#newsletter-form').parents('.t_Tooltip').addClass('newsletter_parent');
     jQuery('#tooltip-id-contact').parents('.t_Tooltip').addClass('tooltip_contact');
     jQuery('#tooltip-id-customer-care').parents('.t_Tooltip').addClass('customer_care');
     jQuery('#tooltip-id-my-account').parents('.t_Tooltip').addClass('tooltip_account');
-    jQuery('#tooltip-id-our-jewelry').parents('.t_Tooltip').addClass('tooltip_jewelry');
+    jQuery('#tooltip-id-our-jewelry').parents('.t_Tooltip').addClass('tooltip_jewelry');*/
   });
 }
 
