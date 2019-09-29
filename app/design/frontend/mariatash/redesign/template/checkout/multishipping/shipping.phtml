@@ -53,9 +53,6 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                     <h3><?= $this->__($_step->getLabel()) ?></h3>
                 </div>
                 <div class="multiple-checkout">
-                    <!-- <div class="page-title">
-                        <h3><//?php echo $this->__('Select Shipping Method') ?></h3>
-                    </div> -->
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
                         <?php $shipAddressHtml = $this->getChildHtml("checkout_shipping_address_select");?>
@@ -90,7 +87,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                             <?php else: ?>
 															<div class="col-6 text-right">
 																<select class="select-type-one validate-select" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
-																	<option>Select Method</option>
+																	<option value="">Select Method</option>
                            		<?php $ship_sign_national = array();?>
                            		<?php $ship_sign_without_national = array();?>
                            		<?php $ship_withoutsign_national = array();?>
@@ -144,7 +141,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                  $ship_sign_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
-                                                 $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;sss
+                                                 $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
 
                                              ?>
                                              	<option value="<?= $this->htmlEscape($_rate->getCode()) ?>">
