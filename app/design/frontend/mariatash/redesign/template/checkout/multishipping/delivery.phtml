@@ -20,7 +20,7 @@
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="delivery_method_form">
-    					<?php $helper = Mage::helper("redesign_checkout");?>
+    					<?php $helper = Mage::helper("allure_redesigncheckout");?>
     					<?php foreach ($this->getAddresses() as $_index => $_address): ?>
     					<?php if($helper->isAddressContainBackOrderItem($_address)):?>
     					<div class="box">

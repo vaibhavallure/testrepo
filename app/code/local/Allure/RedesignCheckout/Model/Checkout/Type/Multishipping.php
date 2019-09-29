@@ -323,7 +323,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             Mage::log($methods,Zend_Log::DEBUG,'abc.log',true);
             $isAllowBackorder = (isset($methods[$address->getId()])) ? ($methods[$address->getId()]) ? 1 : 0 : 0;
             if ($isAllowBackorder) {
-                $helper = Mage::helper("redesign_checkout");
+                $helper = Mage::helper("allure_redesigncheckout");
                 if($helper->isAddressContainBackOrderItem($address)){
                     /** @var Mage_Sales_Model_Quote_Address $backOrderAddress */
                     $backOrderAddress = clone $address;
