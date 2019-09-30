@@ -11,7 +11,7 @@
 
 ## Restoring included database dump
 - open bash in php-fpm container
-> docker-exec -it millesima-emailing-php-fpm bash
+> docker exec -it millesima-emailing-php-fpm bash
 
 - decompress bdd archive
 > bzip2 -d bdd/backup_db_emailing_25092019.sql.bz2
@@ -21,7 +21,7 @@
 
 - Login to mysql container and load dump
 
-> docker-exec -it millesima-emailing-mysql mysql -uroot -pmillesima
+> docker exec -it millesima-emailing-mysql mysql -uroot -pmillesima
 >
 > mysql> use emailing;
 >
