@@ -55,7 +55,7 @@ h4{
 }
 
 .para-normal,
-.cart-empty p{
+.cart-empty p, .gift-messages label, .overview-address-item .box .price{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -349,6 +349,11 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
+.medium-price, .overview-dark-price span{
+	font-family: urw-din-medium !important;
+	font-size: 18px !important;
+}
+
 /* STANDARD CSS ENDED */
 
 
@@ -370,7 +375,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 .checkout-step-name span {
   float: left;
   padding-right: 11px;
-	padding-top: 19px;
+	padding-top: 17px;
 }
 .control label {
   padding: 1px 0 0 40px;
@@ -562,6 +567,7 @@ html {
 .homepage-menu.mariatash-header {
     /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
     background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
+	z-index: 1;
 }
 
 nav.mariatash-header {
@@ -1510,7 +1516,7 @@ input[type="checkbox"]:checked+label:before {
   bottom: 15px;
   width:100%;
 }
-.image-text h6, .cart-subtotals-right span{
+.image-text h6, .cart-subtotals-right span,.overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
   font-family: urw-din-regular;
@@ -2967,7 +2973,7 @@ table thead {
 }
 .title-buttons {
   border-bottom: 1px solid #d8d8d8;
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 }
 .cart-empty {
   text-align: center;
@@ -3066,7 +3072,7 @@ table thead {
 #checkoutSteps {
   padding: 0 33px;
 }
-.product-description-section .item-options .para-three {
+.attr-detail .item-options .para-three {
   margin-bottom: 4px;
 }
 .product-description-section .item-msg {
@@ -3084,6 +3090,20 @@ table thead {
 }
 .common-redesign-checkout .for-space-to-bottom {
   height: 352px;
+}
+.overview-quantity .para-three {
+  line-height: 12px;
+}
+.item-options.overview-options {
+  margin-bottom: 12px;
+}
+.overview-product {
+  border-bottom: 1px solid #d8d8d8;
+  padding-bottom: 11px;
+  margin-bottom: 19px;
+}
+.overview-price-qty{
+	line-height: 10px;
 }
 /* cccc */
 /*MINI CART CSS*/
