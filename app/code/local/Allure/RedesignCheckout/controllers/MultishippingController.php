@@ -66,7 +66,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             $this->_getCheckout()->setShippingMethods($shippingMethods);
             $this->_getState()->setActiveStep(
                 Allure_RedesignCheckout_Model_Checkout_Type_Multishipping_State::STEP_DELIVERY_OPTION
-                );
+            );
             $this->_getState()->setCompleteStep(
                 Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
                 );
@@ -143,9 +143,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 'checkout_controller_multishipping_overview_giftmessage_post',
                 array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
                 );
-            /* echo "<pre>";
-            print_r($this->getRequest()->getParams());
-            die; */
+            
             if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
                 if ($diff = array_diff($requiredAgreements, $postedAgreements)) {

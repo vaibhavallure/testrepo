@@ -6,6 +6,8 @@
  */
 class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Checkout_Model_Type_Multishipping
 {
+    const XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW = 'sales_email/allure_multiaddress_sales_email/multi_order_allow_email';
+    
     /**
      * Assign quote items to addresses and specify items qty
      *
@@ -323,7 +325,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             Mage::log($methods,Zend_Log::DEBUG,'abc.log',true);
             $isAllowBackorder = (isset($methods[$address->getId()])) ? ($methods[$address->getId()]) ? 1 : 0 : 0;
             if ($isAllowBackorder) {
-                $helper = Mage::helper("redesign_checkout");
+                $helper = Mage::helper("allure_redesigncheckout");
                 if($helper->isAddressContainBackOrderItem($address)){
                     /** @var Mage_Sales_Model_Quote_Address $backOrderAddress */
                     $backOrderAddress = clone $address;
@@ -406,13 +408,24 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     );
             }
             
+            $storeId = $this->getQuote()->getStoreId();
+            $isAllowCombinedEmail = Mage::getStoreConfig(self::XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW, $storeId);
+            
             foreach ($orders as $order) {
                 $order->place();
                 $order->save();
                 if ($order->getCanSendNewEmailFlag()){
-                    $order->queueNewOrderEmail();
+                    if(!$isAllowCombinedEmail){
+                        //$order->queueNewOrderEmail();
+                        $orderArray = array($order->getId() => $order);
+                        $order->queueMultiAddressNewOrderEmail($orderArray);
+                    }
                 }
                 $orderIds[$order->getId()] = $order->getIncrementId();
+            }
+            
+            if($isAllowCombinedEmail){
+                $order->queueMultiAddressNewOrderEmail($orders);
             }
             
             Mage::getSingleton('core/session')->setOrderIds($orderIds);

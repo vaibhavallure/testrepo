@@ -117,7 +117,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $timeOptArr = array("0"=>"No","1"=>"Yes");
-        $EnableStoreOpt = '';
+        $EnableStoreOpt = $EnableReleaseOpt ='';
         foreach ($timeOptArr as $key=>$name){
             $selectOpt = "";
             if($this->_getValue('enable_store/' . $rowIndex) == $key){
@@ -125,6 +125,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             }
             $EnableStoreOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
         }
+        $EnableReleaseOpt = $EnableStoreOpt;
         $html .= '<label for="appointments_enable_store">Enable Store </label>';
         $html .= '<select onclick="enableStoreContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[enable_store][]'.'" style="">'.$EnableStoreOpt.'</select>';
         $html .= '</div>';
@@ -669,7 +670,26 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<label for="piercing-pricing-block">Piercing Pricing </label>';
         $html .= $this->getCmsBlock($rowIndex);
         $html .= '</div>';
-        
+
+        $html .= '<hr class="appointment-setting-hr">';
+        $html .= '<div style="text-align:center"><h3>Pop-Store Special settings</h3></div>';
+
+        $EnablePeopleOpt = '';
+        foreach ($timeOptArr as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('enable_people_info/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $EnablePeopleOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $html.='<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="appointments_enable_people_info">Enable People Info </label>';
+        $html .= '<select onclick="enablePeopleContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[enable_people_info][]'.'" style="">';
+        $html.= $EnablePeopleOpt;
+        $html.=  '</select>';
+        $html .= '</div>';
+
+        $html .= '<hr class="appointment-setting-hr">';
         
         
         

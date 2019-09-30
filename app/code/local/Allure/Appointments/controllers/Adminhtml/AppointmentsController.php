@@ -670,11 +670,12 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
                 foreach ($data['allure_appointments_ids'] as $id) {
                     $appointment = Mage::getModel('appointments/appointments')->load($id);
+                    $specialPopup = Mage::helper('appointments')->getCustomersInfo($appointment->getStoreId());
 
                     if($appointment->getAppStatus()!=2)
                         continue;
 
-                    if($appointment->getSpecialStore())
+                    if($appointment->getSpecialStore() ||  $specialPopup)
                         $Popupappointments[]=$appointment;
                     else
                         $appointments[]=$appointment;
