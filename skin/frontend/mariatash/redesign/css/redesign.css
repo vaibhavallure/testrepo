@@ -567,7 +567,6 @@ html {
 .homepage-menu.mariatash-header {
     /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
     background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
-	z-index: 1;
 }
 
 nav.mariatash-header {
@@ -3244,8 +3243,8 @@ table thead {
 
 /*cart page*/
 .cart-collaterals.fix-section {
-	position: fixed;
-	right: 0;
+	/*position: fixed;*/
+	/*right: 0;*/
 }
 .cart-collaterals .total-title{
 	display: block;
@@ -3258,6 +3257,9 @@ table thead {
 }
 .checkoutPopupLoginModel .pop-up-cover{
 	width: fit-content;
+}
+.catalog-category-view .price_tax_text{
+	display: none;
 }
 
 
@@ -3419,4 +3421,7 @@ table thead {
 .block-currency .block-content select {
 	padding: 0;
 	width: 100%;
+}
+.category-celebrity-clientele .homepage-menu.mariatash-header,.category-piercing-gallery .homepage-menu.mariatash-header{
+	z-index: 1;
 }
