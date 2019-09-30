@@ -54,4 +54,5 @@ If you want to use phpMyadmin :
 ## Todos
 - Save PromotionCards to database
 - Ugrade Slim Library as we're using a very old one
+- Migrate database to mysql 8.0 using modern encoding utf8mb4
 
