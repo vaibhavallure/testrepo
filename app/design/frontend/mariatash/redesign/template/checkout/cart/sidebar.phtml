@@ -50,16 +50,16 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
     <?php if(count($_items)): ?>
         <div class="cart_sidebar display_none" id="cart-sidebar-content">
 		<div class="tite_cart">
-		   <h1><a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('View your Cart') ?></a></h1>
-		   	<a href="#" class="close-button"  onclick="jQuery('#cart-sidebar-content').slideUp(300); "><div class="close1-button close-tooltip"></div></a>
+		   <h1 class="text-center"><a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('Your Shopping Bag') ?></a></h1>
+		   	<!-- <a href="#" class="close-button"  onclick="jQuery('#cart-sidebar-content').slideUp(300); "><div class="close1-button close-tooltip"></div></a> -->
 		</div>
-        <ol id="cart-sidebar" class="mini-products-list">
+        <ol id="cart-sidebar" class="mini-products-list col-12">
 			<?php foreach($_items as $_item): ?>
 				<?php echo $this->getItemHtml($_item) ?>
 			<?php endforeach; ?>
         </ol>
         <script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
-		<div class="subtotal">
+		<div class="subtotal minicart-subtotal col-12 text-right">
 		<?php if ($this->canApplyMsrp()): ?>
 			<span class="map-cart-sidebar-total"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></span>
 		<?php else: ?>
@@ -68,11 +68,11 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
     	               ->getGrandTotalWithBaseCurrency();
 			?>
 
-			<span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal());
+			<div class="total-cover"><span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal());
 
            // Mage::log("get subtotal ".$this->getSubtotal(), Zend_Log::DEBUG,'allure_log.log',true);
 
-            ?>
+            ?></div>
 			<?php echo (!empty($baseGrandTotal) ? "(".$baseGrandTotal.")":"")?>
 
 			<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
@@ -83,8 +83,9 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 		<?php //if(1 == 1): ?>
 
         <?php echo $this->getChildHtml('extra_actions') ?>
-        <button type="button" style="text-align:center" title="<?php echo $this->__('Checkout') ?>" class=" cart_checkout" onclick="setLocation('<?php echo $this->getUrl('checkout/cart')?>')"><?php echo $this->__('Checkout') ?></button>
-
+        <div class="col-12 text-center">
+        <button type="button" title="<?php echo $this->__('Checkout') ?>" class=" cart_checkout dark-button" onclick="setLocation('<?php echo $this->getUrl('checkout/cart')?>')"><?php echo $this->__('Checkout') ?></button>
+      </div>
 		<?php endif ?>
 
 
@@ -99,21 +100,22 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 	<?php $_items = $this->getRecentItems() ?>
 	<?php if(count($_items)) { ?>
 		<div class="tite_cart">
-		   <h1><a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('Added to Cart') ?></a></h1>
+		   <!-- <h1><a href="<//?php echo $this->getUrl('checkout/cart')?>"><//?php echo $this->__('Added to Cart') ?></a></h1> -->
 		   	<a href="#"><div class="close-button close-tooltip" onclick="jQuery('#just_added').slideUp(300); "></div></a>
 		</div>
 		<div><?php //echo $this->__('Just added to your cart'); ?></div>
-        <ol id="cart-sidebar" class="mini-products-list">
+        <ol id="cart-sidebar" class="mini-products-list col-12">
 			<?php foreach($_items as $_item): ?>
 				<?php echo $this->getItemHtml($_item) ?>
 			<?php endforeach; ?>
         </ol>
         <script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
-		<div class="subtotal">
+		<div class="subtotal minicart-subtotal col-12">
 		<?php if ($this->canApplyMsrp()): ?>
 			<span class="map-cart-sidebar-total"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></span>
 		<?php else: ?>
-			<span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+<div class="col-12">
+      <span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?></div>
 			<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
 				<br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
 			<?php endif; ?>
@@ -121,8 +123,9 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 		<?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
 
         <?php echo $this->getChildHtml('extra_actions') ?>
-        <button type="button" title="<?php echo $this->__('Checkout') ?>" class="button cart_checkout" onclick="setLocation('<?php echo $this->getUrl('checkout/cart') ?>')"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
-
+      <div class="col-12">
+        <button type="button" title="<?php echo $this->__('Checkout') ?>" class="button cart_checkout dark-button" onclick="setLocation('<?php echo $this->getUrl('checkout/cart') ?>')"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+      </div>
 		<?php endif ?>
 		</div>
 	<?php } elseif(Mage::app()->getRequest()->getModuleName() != 'wishlist') { ?>

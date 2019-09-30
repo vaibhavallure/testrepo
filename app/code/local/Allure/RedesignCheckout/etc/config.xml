@@ -15,9 +15,9 @@
 			</Allure_RedesignCheckout>
 		</controllers>
 		<helpers>
-            <redesign_checkout>
+            <allure_redesigncheckout>
                 <class>Allure_RedesignCheckout_Helper</class>
-            </redesign_checkout>
+            </allure_redesigncheckout>
         </helpers>
         <blocks>
         	<allure_redesigncheckout>
@@ -75,6 +75,13 @@
 		</fieldsets>
 	</global>
 	<frontend>
+		<layout>
+            <updates>
+                <amstockstatus>
+                    <file>allure/redesign_checkout.xml</file>
+                </amstockstatus>
+            </updates>
+        </layout>
 		<routers>
 			<checkout>
 				<args>

@@ -29,7 +29,7 @@
 <?php
     $methods = $this->getMethods();
     $oneMethod = count($methods) <= 1;
-    
+
     $methodsList = array();
 ?>
 <?php
@@ -39,12 +39,19 @@
 ?>
     <dt>
     <?php if(!$oneMethod): ?>
+      <label class="custom-radio para-normal" id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?>
         <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
+        <span class="radiomark"></span>
+      </label>
     <?php else: ?>
-        <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
+        <label class="para-normal" name="payment[method]">
+        <span class="no-display">
+          <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
+          <span class="radiomark"></span>
+        </label>
         <?php $oneMethod = $_code; ?>
     <?php endif; ?>
-        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+
     </dt>
     <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
     <dd>
@@ -69,7 +76,7 @@
 		AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
 		AllureApplePay.MerchantId = '<?php $_method->getConfigData('merchant_id') ?>';
 		AllureApplePay.MerchantName = '<?php $_method->getConfigData('merchant_name') ?>';
-		
+
 		var s = document.createElement('script');
 		s.type = "text/javascript";
 		s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
@@ -123,18 +130,18 @@
                   $('advice-required-entry-promoCode_code').removeClassName('false');
                   $('advice-required-entry-promoCode_code').show();
               } else{
-                 $('promoCode').enable(); 
+                 $('promoCode').enable();
                  $('promoCodeLinkAdd').show();
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
-              }              
+              }
             },
-            onFailure: function() { 
+            onFailure: function() {
                 alert('Error applying coupon code!');
             }
           });
     };
-     
+
     function giftCardApply(url,applied){
         if($F('giftcard_code') == '' && applied) {
             $('advice-required-entry-giftcard_code').innerHTML = 'This is a required field';
@@ -151,7 +158,7 @@
             method:'post',
             parameters: params,
             onSuccess: function(transport) {
-                var data = transport.responseText.evalJSON();               
+                var data = transport.responseText.evalJSON();
                 if(data.error){
                     if(data.message) {
                         $('advice-required-entry-giftcard_code').innerHTML = data.message;
@@ -186,18 +193,18 @@
                     $('giftcard_use').value = "0";
                 }
             },
-            onFailure: function() { 
-                alert('Error applying gift card code!'); 
+            onFailure: function() {
+                alert('Error applying gift card code!');
             }
           });
-    };   
+    };
     function uncheckPayment(){
-     jQuery('input[name="payment[method]"]').each(function () {  
-              var payment = jQuery(this).val();      
+     jQuery('input[name="payment[method]"]').each(function () {
+              var payment = jQuery(this).val();
               if(payment){
                 jQuery('#label-'+payment).attr('class','');
               }
-        }); 
+        });
     }
 //]]>
 </script>
@@ -224,27 +231,27 @@ function toggleCreditInfo(method){
 	cardSelector.val(0);
 	if(diffCardSelector.is(':visible')){
 		cardSelector.removeClass('required-entry');
-		
+
 		removeCardClass(method);
-		
+
 		diffCardSelector.find('select').addClass('required-entry');
 		diffCardSelector.find('input').addClass('required-entry');
 	}else{
 		cardSelector.addClass('required-entry');
-		
+
 		addCardClass(method);
-		
+
 		diffCardSelector.find('select').removeClass('required-entry');
 		diffCardSelector.find('input').removeClass('required-entry');
 	} */
-}  
+}
 
 function changeCard(method){
 	var cardSelector = jQuery('#'+method+'_card_id');
 	cardSelector.addClass('required-entry');
 
 	addCardClass(method);
-	
+
 	var diffCardSelector = jQuery('.'+method+'_new');
 	diffCardSelector.find('select').removeClass('required-entry');
 	diffCardSelector.find('input').removeClass('required-entry');

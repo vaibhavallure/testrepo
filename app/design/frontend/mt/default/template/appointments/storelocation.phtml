@@ -1,6 +1,8 @@
 <?php
 $model = Mage::registry('apt_modify_data');
 $storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
+$limerick = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_limerick');
+$cork = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_cork');
 
 if(isset($storeIdNone)){
     $popupStoreName = Mage::helper('appointments/data')->getPopupStoreName($storeIdNone);
@@ -30,8 +32,9 @@ if(count($storeId_arr) >= 1){
                 if($st_value == $key){
                     $requestStoreName = $store;
                     $requestStoreId = $key;
-
-                    $multi_stores[$requestStoreId]= $requestStoreName;
+                    if($key != $limerick && $key != $cork) {
+                        $multi_stores[$requestStoreId] = $requestStoreName;
+                    }
                 }
             }
         }
@@ -54,15 +57,20 @@ if(count($multi_stores) <= 1):
 <?php else:?>
     <div>
         <select id="store-id" name="store_id" class="storeLocationSelect">
-            <?php
-            foreach ($multi_stores as $key=>$store):
-                ?>
-                <option value="<?php echo $key;?>" <?php if($fetch_storeId==$key):echo "selected";endif;?>><?php echo $store;?></option>
+            <?php foreach ($multi_stores as $key=>$store):?>
+                <!--FOR BROWNTHOMAS POPUPS-->
+                <?php if(Mage::helper('appointments/data')->getCustomersInfo($key)):?>
+                    <option value="specialStore" data-url="<?=Mage::getBaseUrl()?>appointments/book/store/code/<?=Mage::helper('allure_virtualstore')->getStoreCode($key)?>" ><?=$store?></option>
+                <?php else:?>
+                    <!--CODE END-->
+                    <option value="<?php echo $key;?>" <?php if($fetch_storeId==$key):echo "selected";endif;?>><?php echo $store;?></option>
+                <?php endif;?>
+
             <?php endforeach;?>
             <?php if(isset($storeIdNone)):?>
-            <?php if(isset($popupStoreName)):?>
-                <option value="specialStore" data-url="<?=Mage::getBaseUrl().$popupUrl?>" ><?=$popupStoreName?></option>
-            <?php endif;?>
+                <?php if(isset($popupStoreName)):?>
+                    <option value="specialStore" data-url="<?=Mage::getBaseUrl().$popupUrl?>" ><?=$popupStoreName?></option>
+                <?php endif;?>
             <?php endif;?>
         </select>
     </div>

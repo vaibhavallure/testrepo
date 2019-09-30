@@ -311,9 +311,7 @@
 .footerlink-icons .item-icons img {
     width: 22px;
 }
-
-  /* Catalog Filter CSS */
-
+/* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
   }
@@ -377,6 +375,9 @@
     padding: 0!important;
   }
 
+  .btn-quickview {
+    display: none !important;
+  }
 
   #tooltip-id-our-jewelry a.previous-content-block-seo {
     background: url(../images/white-active-arrow.png) no-repeat 0 0;
@@ -610,6 +611,9 @@ margin-left: 10px;
     width: 100%;
     max-width: 100%;
     flex: 0 0 30%;
+  }
+  .btn-quickview {
+    display: none !important;
   }
 }
 
@@ -955,7 +959,7 @@ margin-left: 10px;
   #narrow-by-list{
     margin-top: 65px;
   }
-  .for-space-to-bottom, .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+  .catalog-category-view .for-space-to-bottom, .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
     height: 380px !important;
   }
   .caroufredsel_wrapper{
