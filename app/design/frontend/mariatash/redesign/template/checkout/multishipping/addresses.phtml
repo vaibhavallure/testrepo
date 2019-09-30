@@ -100,13 +100,13 @@
                                                 <div class="gift-messages">
                                                  	<p class="control">
                                                    		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
-                                                        <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>This item is a gift (price will be hidden in the receipt).</span></label>
+                                                        <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">This item is a gift (price will be hidden in the receipt).</span></label>
                                                    </p>
                                                 </div>
                                                 <div class="gift-messages">
                                                  	<p class="control">
                                                    		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
-                                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span>Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
+                                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
                                                    </p>
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@
     						</div>
     					</div>
                     </div>
-                    <div class="billing-address billing-address-selection multi-address-select-address-option select col-12">
+                    <div class="billing-address billing-address-selection select col-12">
     					<div class="row">
     						<div class="col-12 p-0">
                     			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>

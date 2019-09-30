@@ -32,12 +32,12 @@ $type = $this->getProduct()->getTypeId();
 if('configurable' == 'configurable'):
 ?>
 <?php if ($_options = $this->getOptionList()):?>
-<div class="item-options">
+<div class="item-options overview-options">
     <?php foreach ($_options as $_option) : ?>
     <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
 		<div class="attr-detail">
-    <p class="float-left mr-1 para-three"><?php echo $this->htmlEscape($_option['label']).":" ?></p>
-    <p class="para-three"<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?></p>
+    <p class="float-left mr-1 para-three mb-0"><?php echo $this->htmlEscape($_option['label']).":" ?></p>
+    <p class="para-three mb-0"<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?></p>
 		</div>
 		<div><?php if (isset($_formatedOptionValue['full_view'])): ?>
         <div class="truncated_full_value">
