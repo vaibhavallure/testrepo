@@ -146,7 +146,7 @@ if($customers):
                     </div>
                     <div class="fieldDiv">
                         <label><?= $this->__('Phone')?>:</label><br/>
-                        <input class="ele_width apt_phone required-entry" type="text" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
+                        <input class="ele_width apt_phone required-entry" type="tel" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
                     </div>
 
                     <div class="fieldDiv">
@@ -195,7 +195,7 @@ if($customers):
             <label><?= $this->__('Phone Number')?>*:</label><br/>
             <!-- <input class="ele_width required-entry validate-number" type="text" name="phone" value="<?php //echo $telephone?>" />-->
             <!--					    	<input class="ele_width required-entry validate-phone-len" onkeypress="return isNumber(event)"  type="text" id="phone" name="phone" value="--><?php //if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?><!--" />-->
-            <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
+            <input id="phone" name="phone" type="tel" class="input-text ele_width validate-intl-telephone"  value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
         </div>
 
         <div class="fieldDiv">

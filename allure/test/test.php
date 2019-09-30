@@ -26,6 +26,7 @@ $readConnection = $resource->getConnection('core_read');
 
 
 
+
 $file = 'app.csv';
 $csv = new Varien_File_Csv();
 $data = $csv->getData($file);

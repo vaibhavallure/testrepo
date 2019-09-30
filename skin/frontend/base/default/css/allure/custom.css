@@ -1,0 +1,10 @@
+input[name="email"],
+input[name="shipping[email_shipping]"],
+input[name="billing[email]"],
+input[name="login[username]"],
+input[name="username"],
+input[name="mail_from_email"],
+input[name="mail_to_email"]
+{
+    text-transform: lowercase !important;
+}
