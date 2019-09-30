@@ -1,8 +1,10 @@
 if (typeof Allure == "undefined") {
     var Allure = {};
-} 
+}
 var count = 0;
- function increase(){			  
+
+ function increase(){
+     count=jQuery('#count').val();
      count++;
      document.getElementById("count").value = count;
      //jQuery("#pick_ur_time_div").empty();
@@ -73,7 +75,8 @@ var count = 0;
 
  }
  function decrease(){
-	 if (count > 1) {
+     count=jQuery('#count').val();
+     if (count > 1) {
      count--;		     
      document.getElementById("count").value = count;
 
