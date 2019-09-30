@@ -974,6 +974,9 @@
 .customer_care .t_ContentContainer{
 	width: 100%;
 }*/
+.login_security .control .ch-pass-link{
+	background: none!important;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1010,6 +1013,13 @@
 	}
 }
 @media(max-width:991px){
+	.login_security .fields .input-box, .list-form .fields .input-box{
+		margin-bottom: 0!important;
+	}
+.login_security .list-form .fields{
+	display: flex;
+	flex-direction: column;
+}
 	.flex-item:nth-of-type(2n+0){
 		margin-right: 0!important;
 	}
