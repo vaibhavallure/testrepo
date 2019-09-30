@@ -15,9 +15,9 @@
 			</Allure_RedesignCheckout>
 		</controllers>
 		<helpers>
-            <redesign_checkout>
+            <allure_redesigncheckout>
                 <class>Allure_RedesignCheckout_Helper</class>
-            </redesign_checkout>
+            </allure_redesigncheckout>
         </helpers>
         <blocks>
         	<allure_redesigncheckout>
@@ -73,15 +73,6 @@
 				</is_gift>
 			</sales_convert_order_item>
 		</fieldsets>
-		<template>
-			<email>
-				<multiaddress_order_email_template translate="label" module="redesign_checkout">
-					<label>Multi Address Order Email Template With Customer</label>
-					<file>sales/multiaddress_customer_order.html</file>
-					<type>html</type>
-				</multiaddress_order_email_template>
-			</email>
-		</template>
 	</global>
 	<frontend>
 		<layout>

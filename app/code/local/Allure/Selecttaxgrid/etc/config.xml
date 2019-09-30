@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Selecttaxgrid>
+            <version>1.0.0</version>
+        </Allure_Selecttaxgrid>
+    </modules>
+    <global>
+        <helpers>
+            <selecttaxgrid>
+                <class>Allure_Selecttaxgrid_Helper</class>
+            </selecttaxgrid>
+        </helpers>
+
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <tax_rate_grid>Allure_Selecttaxgrid_Block_Adminhtml_Tax_Rate_Grid</tax_rate_grid>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+    </global>
+    <admin>
+        <routers>
+            <allure_selecttaxgrid>
+                <use>admin</use>
+                <args>
+                    <module>Allure_Selecttaxgrid</module>
+                    <frontName>selecttaxgrid</frontName>
+                </args>
+            </allure_selecttaxgrid>
+        </routers>
+    </admin>
+    
+</config>

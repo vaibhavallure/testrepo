@@ -1,7 +1,12 @@
 <?php
+$getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfoSetting();
+?>
+<?php
 $fetch_model = Mage::registry('apt_modify_data');
 
 if($fetch_model){
+    $fetch_aptId = $fetch_model->getId();
+
     $f_custId = $fetch_model->getCustomerId();
     $f_firstName = $fetch_model->getFirstname();
     $f_lastName = $fetch_model->getLastname();
@@ -14,6 +19,11 @@ if($fetch_model){
     $f_postcode = $fetch_model->getPostalCode();
     $f_special_notes = $fetch_model->getSpecialNotes();
     $f_notification_pref = $fetch_model->getNotificationPref();
+    $getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfoSetting($fetch_model->getStoreId());
+
+    $customers = Mage::getModel('appointments/customers')->getCollection();
+    $customers->addFieldToFilter('appointment_id', $fetch_aptId);
+
 }
 /* else{
     $f_custId = '';
@@ -58,6 +68,103 @@ if ($session->isLoggedIn()) {
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
 
 
+<?php if($getCustomersInfo == 1):
+?>
+<?php if($fetch_aptId):?>
+    <input  type="hidden" name="id"   value="<?= $fetch_aptId ?>">
+<?php endif;?>
+<?php
+$count=1;
+if($customers):
+?>
+
+<div class="field" id="reg_form">
+    <div class="regDiv">
+        <div id="customer_info_div" >
+  <?php  foreach ($customers as $customer):
+?>
+<input  type="hidden" name="customer[<?= $count ?>][id]"   value="<?= $customer->getId() ?>">
+
+            <div id="customer_info_<?= $count ?>">
+                <h6>Customer: <?= $count ?></h6>
+                <div class="fieldDiv">
+                    <label><?= $this->__('First Name')?>*:</label><br/>
+                    <input class="ele_width apt_firstname required-entry" type="text" name="customer[<?= $count ?>][firstname]" id="firstname_<?= $count ?>" placeholder="First Name*" value="<?= $customer->getFirstname() ?>">
+                </div>
+                <div class="fieldDiv">
+                    <label><?= $this->__('Last Name')?>*:</label><br/>
+                    <input class="ele_width apt_lastname required-entry" type="text" name="customer[<?= $count ?>][lastname]" id="lastname_<?= $count ?>" placeholder="Last Name*" value="<?= $customer->getLastname() ?>">
+                </div>
+                <div class="fieldDiv">
+                    <label><?= $this->__('Email')?>*:</label><br/>
+                    <input class="ele_width apt_email required-entry" type="text" name="customer[<?= $count ?>][email]" id="email_<?= $count ?>" placeholder="Email" value="<?= $customer->getEmail() ?>">
+                </div>
+                <div class="fieldDiv">
+                    <label><?= $this->__('Phone')?>:</label><br/>
+                    <input class="ele_width apt_phone required-entry" type="text" name="customer[<?= $count ?>][phone]" id="phone_<?= $count ?>" placeholder="Phone" value="<?= $customer->getPhone() ?>">
+                </div>
+
+                <div class="fieldDiv">
+                    <label><?= $this->__('Notify Me')?>:</label><br/>
+                    <div><input type="checkbox" name="customer[<?= $count ?>][noti_email]" title="" value="1" class="notifyRadio" <?php if($customer->getSmsNotification()=='0'):echo "checked"; endif?>  <?php if($f_notification_pref==null):echo "checked";endif?>><p><?= $this->__('By Email')?></p></div>
+                    <div><input type="checkbox" name="customer[<?= $count ?>][noti_sms]" title="" value="2" class="notifyRadio" <?php if($customer->getSmsNotification()=='1'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <?php
+    $count++;
+    endforeach;
+    ?>
+</div>
+    </div>
+
+    </div>
+    <div class="">
+        <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
+    </div>
+    <?php
+    else: ?>
+
+    <div class="field" id="reg_form">
+        <div class="regDiv"  >
+            <div id="customer_info_div">
+                <div id="customer_info_1">
+                    <h6>Customer: 1</h6>
+                    <div class="fieldDiv">
+                        <label><?= $this->__('First Name')?>*:</label><br/>
+                        <input class="ele_width apt_firstname required-entry" type="text" name="customer[1][firstname]" id="firstname_1" placeholder="First Name*" value="">
+                    </div>
+                    <div class="fieldDiv">
+                        <label><?= $this->__('Last Name')?>*:</label><br/>
+                        <input class="ele_width apt_lastname required-entry" type="text" name="customer[1][lastname]" id="lastname_1" placeholder="Last Name*" value="">
+                    </div>
+                    <div class="fieldDiv">
+                        <label><?= $this->__('Email')?>*:</label><br/>
+                        <input class="ele_width apt_email required-entry" type="text" name="customer[1][email]" id="email_1" placeholder="Email" value="">
+                    </div>
+                    <div class="fieldDiv">
+                        <label><?= $this->__('Phone')?>:</label><br/>
+                        <input class="ele_width apt_phone required-entry" type="text" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
+                    </div>
+
+                    <div class="fieldDiv">
+                        <label><?= $this->__('Notify Me')?>:</label><br/>
+                        <div><input type="checkbox" name="customer[1][noti_email]" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked"; endif?>  <?php if($f_notification_pref==null):echo "checked";endif?>><p><?= $this->__('By Email')?></p></div>
+                        <div><input type="checkbox" name="customer[1][noti_sms]" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
+            </div>
+        </div>
+        <?php endif; ?>
+        <script>country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";</script>
+        <script src="<?php echo $this->getSkinUrl('js/allure/appointments/popupCustomerInfo.js');?>"></script>
+
+        <?php else:?>
 <?php if (!$session->isLoggedIn()) :?>
     <div class="field signin-field" >
         <button type="button" name="sign_in" href="#" id="signin-maria" class="button signin">Sign In With Mariatash</button>
@@ -187,6 +294,7 @@ if ($session->isLoggedIn()) {
         <div class="">
             <input type="submit" Value="CONFIRM" class="submitbtn" >
         </div><!-- field end -->
+        <?php endif; ?>
 
         <div id="appointment-pricing">
             <?php echo $this->getChildHtml('appointments_piercing_pricing')?>
