@@ -363,9 +363,9 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   text-transform: uppercase;
   color: #292929;
   letter-spacing: 1px;
-  padding-top: 21.3px;
+  padding-top: 19px;
   opacity: 0.6;
-	padding-bottom: 15px;
+	padding-bottom: 14px;
 }
 .checkout-step-name span {
   float: left;
@@ -438,9 +438,11 @@ input, select, textarea{
 }
 .product-description-section {
   border-bottom: 1px solid #d8d8d8;
-  padding: 30px 0;
+  padding: 22px 0;
 }
-
+.product-description-section .product-name {
+  margin-bottom: 10px;
+}
 .gift-marked input{
 	width: 192px;
 }
@@ -2889,8 +2891,16 @@ table th {
   color: rgba(41,41,41,0.6);
   text-transform: uppercase;
   letter-spacing: 1.08px;
+	padding-bottom: 20px;
 }
 table thead {
+  border-bottom: 1px solid #d8d8d8;
+}
+.data-table.cart-table td {
+  /* vertical-align: top; */
+	margin-top: 40px;
+}
+.gift-row {
   border-bottom: 1px solid #d8d8d8;
 }
 .cart_col4 {
@@ -2904,6 +2914,12 @@ table thead {
 	text-align: right;
 	font-size: 18px;
   font-family: urw-din-xlight;
+}
+.checkout-list-title {
+  margin-bottom: 42px;
+}
+.messages-tr .plus_icon, .messages-tr .minus_icon{
+	height: 28px;
 }
 .w-remove .info-text-three, .ad-to-fav .info-text-three{
 	text-decoration: underline;
@@ -3047,6 +3063,25 @@ table thead {
   font-family: urw-din-medium;
   letter-spacing: 0.19px;
 }
+#checkoutSteps {
+  padding: 0 33px;
+}
+.product-description-section .item-options .para-three {
+  margin-bottom: 4px;
+}
+.product-description-section .item-msg {
+  margin-top: 23px;
+	margin-bottom: 22px;
+}
+#multiaddress-new-address .new_address .form-list li.control{
+	margin: 27px 0 25px;
+}
+.multi-address-select-address-option {
+  margin: 22px 0 24px;
+}
+.multi-address-select-address-option .billing-address-select {
+  margin-top: 18px;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
@@ -3107,6 +3142,20 @@ table thead {
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
+}
+.messages-tr .product-name {
+  margin-top: 18px;
+	margin-bottom: 14px;
+}
+.messages-tr img {
+  margin-top: 14px;
+}
+.data-table.cart-table .gift-messages {
+  margin-top: 8px;
+	margin-bottom: 1px;
+}
+.data-table.cart-table .messages .item-msg {
+  margin-top: 22px;
 }
 /* SHOPPING BAG CSS */
 .collat-wrap {

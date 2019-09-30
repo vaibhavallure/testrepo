@@ -125,7 +125,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li <?php if($this->canSetAsDefaultBilling()) echo ' class="control mt-4"' ?>>
+                                <li <?php if($this->canSetAsDefaultBilling()) echo ' class="control"' ?>>
                                		<?php if($this->isDefaultBilling()): ?>
                                 		<?php echo $this->__('Default Billing Address') ?>
                                 	<?php elseif($this->canSetAsDefaultBilling()): ?>

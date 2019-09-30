@@ -557,8 +557,14 @@ margin-left: 10px;
   .about-designer h1{
     margin-bottom: 20px;
   }
-  .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom{
+  /* .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom{
     height: 240px;
+  } */
+  .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
+    height: 170px !important;
+  }
+  .catalog-category-view .for-space-to-bottom{
+    height: 250px;
   }
   .about-jewelry{
     padding: 0 26px;

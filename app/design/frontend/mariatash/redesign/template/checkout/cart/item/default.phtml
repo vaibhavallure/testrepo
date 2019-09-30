@@ -220,6 +220,7 @@ if(!is_null($parentId)){
 
 <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
 <?php if(!empty($message)): ?>  <tr class="messages">
+        <td></td>
         <td colspan="6">
             <div class="item-msg">
                 <p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
@@ -228,12 +229,13 @@ if(!is_null($parentId)){
     </tr>
 <?php endif; ?>
 
-<tr class="w-100">
-    <td colspan="6">
+<tr class="w-100 gift-row">
+      <td></td>
+    <td colspan="5">
         <div class="gift-messages float-left">
             <p class="control">
                 <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
-                <label for="is_gift_<?= $_item->getId() ?>"><span>This item is a gift.</span></label>
+                <label for="is_gift_<?= $_item->getId() ?>"><span class="para-normal">This item is a gift.</span></label>
             </p>
         </div>
         <div class="w-remove float-right">
