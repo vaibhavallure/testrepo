@@ -301,6 +301,8 @@ function actionBrief(){
                 $html .= $briefClass->delete($id);
             } else if($btnaction == 'copier'){
                 $data["dateenvoi"] = date("d/m/Y");
+                //ne pas recopier le code de tracking en copie, source d'erreur
+                unset($data['tracking']);
                 $yearbrief = date('y');
                 if($data['typebrief'] == 'livrable_eu'){
                     $typebrief = 'iosliv';
