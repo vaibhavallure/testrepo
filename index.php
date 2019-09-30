@@ -29,6 +29,8 @@ include 'class/millesima_textmaster.php';
 include 'class/millesima_ressource.php';
 
 /////////////////////  Route Page  ////////////////////////////////////////
+$app->get('/','getHomeView');
+$app->get('/view/','getHomeView');
 $app->get('/view/home','getHomeView');
 
 $app->get('/view/brief','getGestionBriefView');
