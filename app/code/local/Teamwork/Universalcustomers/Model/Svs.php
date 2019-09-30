@@ -53,7 +53,18 @@ class Teamwork_Universalcustomers_Model_Svs
             'email'     => $login,
             'password'  => $password
         );
+
+        /*New Code from Allure for Login Log*/
+        $encrypted_data = $this->getEncryptedData($loginData);
+        $this->writeLog('----- Customer Login Request -----');
+        $this->writeLog($encrypted_data);
+
         $response = $this->request($loginData, self::API_SVS_LOGIN_METHOD);
+
+        $this->writeLog('----- Response from TW -----');
+        $this->writeLog($response);
+        $this->writeLog('----- Customer Login Request End-----');
+
         return !empty( $response['email'] ) ? $response : null;
     }
 
@@ -282,5 +293,17 @@ class Teamwork_Universalcustomers_Model_Svs
             $response[$customer_id] = !empty($data['customer_id']) ? $data['customer_id'] : null;
         }
         return $response;
+    }
+
+    /*Encrypted Login Data*/
+    public function getEncryptedData($loginData){
+        $encrypted_password = isset($loginData['password'])?$loginData['password']:'';
+        $encrypted_password = base64_encode($encrypted_password);
+        $loginData['password'] = $encrypted_password;
+        return $loginData;
+    }
+    /*Log function to track responses of Login*/
+    public function writeLog($message){
+        Mage::log($message,Zend_Log::DEBUG,'login.log',true);
     }
 }
