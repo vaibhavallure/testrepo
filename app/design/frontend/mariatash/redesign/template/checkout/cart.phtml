@@ -93,7 +93,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 
     <div class="cart-collaterals col-4 fix-section">
         <div class="collat-wrap">
-            <table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table">
+            <table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table w-100">
                 <tr>
                     <!-- <td class="banner-bg">
                         <div class="banner-c-code">
@@ -102,7 +102,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                     </td> -->
                     <td>
                         <div class="coupons-mt">
-                            <div class="coupons"><?php echo$this->getChildHtml('coupon'). "</br>" .  $this->getChildHtml('giftcards')  ?></div>
+                            <div class="coupons text-center"><?php echo$this->getChildHtml('coupon'). "</br>" .  $this->getChildHtml('giftcards')  ?></div>
                             <div class="totals">
                                 <?php // if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
                                 <?php echo $this->getChildHtml('totals'); ?>
@@ -118,11 +118,11 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                 <?php echo $this->getChildHtml('crosssell') ?>
             </div>
             <div>
-                <div class="pay-caart">
+                <div class="pay-caart text-center">
                     <ul class="checkout-types p-0">
                         <?php foreach ($this->getMethods('methods') as $method): ?>
                             <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
-                                <li><?php echo $methodHtml; ?></li>
+                                <li class="mb-2"><?php echo $methodHtml; ?></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>
