@@ -3082,6 +3082,9 @@ table thead {
 .multi-address-select-address-option .billing-address-select {
   margin-top: 18px;
 }
+.common-redesign-checkout .for-space-to-bottom {
+  height: 352px;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
