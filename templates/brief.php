@@ -29,28 +29,22 @@ function getCode($typebrief){
 ?>
 <script>
 
-    $(function() { // document ready
+    document.addEventListener('DOMContentLoaded', function() {
 
         /* initialize the calendar
          -----------------------------------------------------------------*/
         //Date for the calendar events (dummy data)
         var date = new Date();
-        var d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear();
-        $('#calendar').fullCalendar({
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [ 'dayGrid','list'],
+            defaultView: 'dayGridMonth',
+            defaultDate: date,
             header: {
+                right: 'dayGridMonth,listWeek',
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month'
-            },
-            buttonText: {
-                today: 'today',
-                month: 'month',
-                week: 'week',
-                day: 'day'
-            },
-
+                    },
             //Random default events
             events: [
                 <?php foreach ($briefAllList as $brief):?>
@@ -61,7 +55,7 @@ function getCode($typebrief){
                 //$url = 'http://192.168.11.100:8000/emailing/view/brief/check/'.$brief['id']; //local
 
 
-                $title = $name.$brief['code'];
+                $title = $name.$brief['code']." - ".$brief["theme"];
                 $startDay = $brief['dateenvoi'];
                 $startDay = explode(' ',$startDay);
                 $startDay = $startDay[0];
@@ -83,7 +77,7 @@ function getCode($typebrief){
 
                 ?>
                 {
-                    title: '<?php echo $title ?>',
+                    title: '<?php echo htmlspecialchars($title,ENT_QUOTES); ?>',
                     start:  '<?php echo $startDay ?>',
                     backgroundColor:"<?php echo $color ?>",
                     borderColor:"<?php echo $color ?>",
@@ -95,7 +89,7 @@ function getCode($typebrief){
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
             editable: false
         });
-
+        calendar.render();
     });
 
 </script>
