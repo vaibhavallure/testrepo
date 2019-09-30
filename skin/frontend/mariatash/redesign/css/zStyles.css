@@ -254,6 +254,7 @@
 }
 .acc-products-wrapper table h2 a{
 	display: block;
+	padding-right: 20px;
 }
 .wishlist-empty,.no-order-msg,.no-purchase-item{
 	font-family: urw-din-light;
@@ -1021,6 +1022,34 @@
 		font-family: urw-din-light;
 	}
 	/*=====================*/
+	/*SHARE WISHLIST*/
+	/*=====================*/
+	#share-form-validate .form-list{
+		padding: 0;
+	}
+	#share-form-validate textarea{
+		resize: none;
+	}
+	#share-form-validate label{
+		color: rgba(41, 41, 41, 0.6);
+	}
+	#share-form-validate button{
+		width: 164px;
+		height: 37px;
+	}
+	#share-form-validate .textarea-cu{
+		height: 115px!important;
+	}
+	#share-form-validate .mt-share-btn-grp{
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+	#wishlist-table-overlay form{
+		max-width: 323px;
+	}
+
+	/*=====================*/
 	/*MEDIA QUERIES*/
 	/*=====================*/
 	@media(max-width: 1450px){
@@ -1186,7 +1215,7 @@
 	}
 	@media (min-width: 1800px){
 		#container-cu {
-			margin-top: 130px;
+			margin-top: 40px;
 		}
 	}
 	@media(max-width: 576px){

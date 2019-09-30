@@ -50,7 +50,7 @@ var telephoneAdd = function (id) {
     // first check if we can get Geo Location based Country Code if its there then set it
     // otherwise set default as country as 'us'
     // Magento module - Allure/GeoLocation
-    
+
     //custom validator for itel tel input
     //FileName - intel-tel-validation.js
     allureIntlTelValidate(jQuery(id),iti);

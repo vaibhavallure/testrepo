@@ -3288,8 +3288,8 @@ table thead {
 
 /*cart page*/
 .cart-collaterals.fix-section {
-	position: fixed;
-	right: 0;
+	/*position: fixed;*/
+	/*right: 0;*/
 }
 .cart-collaterals .total-title{
 	display: block;
@@ -3302,6 +3302,9 @@ table thead {
 }
 .checkoutPopupLoginModel .pop-up-cover{
 	width: fit-content;
+}
+.catalog-category-view .price_tax_text{
+	display: none;
 }
 
 
@@ -3463,4 +3466,7 @@ table thead {
 .block-currency .block-content select {
 	padding: 0;
 	width: 100%;
+}
+.category-celebrity-clientele .homepage-menu.mariatash-header,.category-piercing-gallery .homepage-menu.mariatash-header{
+	z-index: 1;
 }

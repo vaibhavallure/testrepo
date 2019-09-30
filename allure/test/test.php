@@ -9,6 +9,7 @@ ini_set('memory_limit', '-1');
 
 
 
+
 var_dump(Mage::helper("appointments/data")->isPopupStore(1));
 
 
@@ -23,6 +24,7 @@ die();
 $resource = Mage::getSingleton('core/resource');
 $writeAdapter = $resource->getConnection('core_write');
 $readConnection = $resource->getConnection('core_read');
+
 
 
 

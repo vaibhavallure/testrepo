@@ -98,7 +98,7 @@ $count=1;
             </div>
             <div class="fieldDiv">
                 <label><?= $this->__('Phone')?>:</label><br/>
-                <input class="ele_width apt_phone required-entry" type="text" name="customer[<?= $count ?>][phone]" id="phone_<?= $count?>" placeholder="Phone" value="<?= $customer->getPhone() ?>">
+                <input class="ele_width apt_phone required-entry" type="tel" name="customer[<?= $count ?>][phone]" id="phone_<?= $count?>" placeholder="Phone" value="<?= $customer->getPhone() ?>">
             </div>
 
             <div class="fieldDiv">
@@ -137,7 +137,7 @@ $count=1;
                 </div>
                 <div class="fieldDiv">
                     <label><?= $this->__('Phone')?>:</label><br/>
-                    <input class="ele_width apt_phone required-entry" type="text" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
+                    <input class="ele_width apt_phone required-entry" type="tel" name="customer[1][phone]" id="phone_1" placeholder="Phone" value="">
                 </div>
 
                 <div class="fieldDiv">
@@ -212,7 +212,7 @@ $count=1;
             </div>
             <div class="fieldDiv appt_ph">
                 <label><?= $this->__('Phone Number')?>*:</label><br/>
-                <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
+                <input id="phone" name="phone" type="tel" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
             </div>
 
             <div class="fieldDiv">
