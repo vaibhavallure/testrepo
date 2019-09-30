@@ -252,6 +252,19 @@
 .acc-products-wrapper table h2{
 	padding-top: 0;
 }
+.acc-products-wrapper table h2 a{
+	display: block;
+}
+.wishlist-empty,.no-order-msg,.no-purchase-item{
+	font-family: urw-din-light;
+	font-size: 13px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 0.5px;
+	line-height: 20px;
+}
+.no-order-msg{
+	padding-top: 22px!important;
+}
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2{
 	vertical-align: top;
 	width: 100%;
@@ -662,6 +675,24 @@
 	text-align: left;
 	/* float: right; */ /*Changed By Shruti*/
 }
+.new_address .intl-tel-input .selected-flag .iti-flag{
+	top: 0!important;
+	left: 17px;
+}
+.table .custom-options-univaersal{
+	margin-left: 0!important;
+	font-size: 12px;
+	font-family: urw-din-light;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 0.5px;
+	line-height: 20px;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+.table .nobr-sku{
+	font-size: 13px;
+	font-family: urw-din-light;
+}
 /*=====================*/
 /*PRODUCT RECEIPTS*/
 /*=====================*/
@@ -985,6 +1016,10 @@
 	.new_address .control label{
 		background: none;
 	}
+
+	.customer_care li a{
+		font-family: urw-din-light;
+	}
 	/*=====================*/
 	/*MEDIA QUERIES*/
 	/*=====================*/
@@ -1182,6 +1217,12 @@
 		}
 	}
 	@media(max-width: 480px){
+		.acc-products-wrapper .optionfilter{
+			padding: 0px 0 0px 3px;
+		}
+		.myaccount-index-index .tab button{
+			font-size: 10px;
+		}
 		.receipts .order-info-box{
 			flex-direction: column;
 			margin-bottom: 20px!important;
