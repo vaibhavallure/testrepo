@@ -55,7 +55,7 @@ if(!is_null($parentId)){
     <div class="product-details col-9">
         <div class="product-name"><?php if ($isVisibleProduct && $this->hasProductUrl()): ?><a href="<?php echo $url?>"><?php endif; ?><h5><?php echo $this->htmlEscape($this->getProductName()) ?><?php if ($isVisibleProduct && $this->hasProductUrl()): ?></h5></a><?php endif; ?></div>
         <?php if ($_options = $this->getOptionList()):?>
-            <div class="item-options" >
+            <div class="item-options" ><h5>
                 <?php foreach ($_options as $_option) : ?>
                     <?php echo $this->htmlEscape($_option['label']) ?>:
                     <?php if (is_array($_option['value'])): ?>
@@ -65,7 +65,7 @@ if(!is_null($parentId)){
                         <?php echo $_option['value'].'<br/>' ?>
                     <?php endif; ?>
 
-                <?php endforeach; ?>
+                <?php endforeach; ?></h5>
             </div>
         <?php endif; ?>
 
@@ -151,10 +151,10 @@ if(!is_null($parentId)){
           </h5>
         </div>
         <div class="cart_price"><h5><?php echo $this->__('Qty: '); ?><?php echo $this->getQty() ?></h5></div>
-
+</div>
   		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
         <?php if(!empty($message)): ?>
-             <div class="item-msg">
+             <div class="item-msg col-12">
              	<p><?php echo $message ?></p>
         	</div>
         <?php endif; ?>
