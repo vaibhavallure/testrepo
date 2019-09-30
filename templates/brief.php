@@ -39,7 +39,11 @@ function getCode($typebrief){
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: [ 'dayGrid','list'],
             defaultView: 'dayGridMonth',
-            defaultDate: date,
+            datesRender: function (info) {
+                // when the view changes, we update our localStorage value with the new view name
+                localStorage.setItem("fcDefaultView", info.view.currentStart);
+            },
+            defaultDate: (localStorage.getItem("fcDefaultView") !== null ? new Date(localStorage.getItem("fcDefaultView")) : date),
             header: {
                 right: 'dayGridMonth,listWeek',
                 left: 'prev,next today',
