@@ -33,7 +33,7 @@
         $billingAddressId = $billingAddress->getCustomerAddressId();
     }
 ?>
-<div class="billing-address-select col-12 p-0">
+<div class="billing-address-select col-12 p-0 multi-address-select-address-option" data-selected_address_id="<?= $billingAddressId?>">
 	<select class="select-type-one" name="billing_address_id">
 		<?php foreach ($this->getAddressCollection() as $_address):?>
 		<option value="<?= $_address->getId()?>" <?= ($billingAddressId == $_address->getId()) ? "selected='selected'" : "" ?> ><?= $_address->format('oneline')?></option>
