@@ -1,9 +1,6 @@
 .display-none {
  	display:none !important;
 }
-.grand-total .price {
-    padding-left: 20px;
-}
 
 /* Quick fix css for tattoo, need css team to update styling */
 .category-tattoos .col1-layout .col-main {

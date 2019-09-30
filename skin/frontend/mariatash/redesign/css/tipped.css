@@ -41,7 +41,7 @@
 }
 
 /* Styling links so they are visible no matter is defined on the page behind */
-.t_ContentContainer a {   color: #38393c; cursor:pointer; }
+/* .t_ContentContainer a {   color: #38393c; cursor:pointer; }
 .t_ContentContainer a:hover {
   color: #917440;
   text-decoration: none;
@@ -52,7 +52,7 @@
 .t_ContentContainer a:hover {
   text-decoration:none;
   cursor:pointer;
-}
+} */
 
 /* Some skins need different link colors for visibility */
 .t_Content_black a, .t_Content_black a:hover {

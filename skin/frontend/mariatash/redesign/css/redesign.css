@@ -349,7 +349,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-price, .overview-dark-price span{
+.medium-price, .overview-dark-price span, .grand-total span{
 	font-family: urw-din-medium !important;
 	font-size: 18px !important;
 }
@@ -396,7 +396,9 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 	width: 322px;
 	margin-bottom: 24px;
 }
-
+.expiry-section{
+	width: 322px;
+}
 .state-selection{
 	width: 173px;
 }
@@ -426,7 +428,7 @@ input, select, textarea{
 	font-weight: bold;
 	/* float: left; */
 	font-family: urw-din-medium;
-	/* text-align: right; */
+	text-align: left;
 }
 .messages, .messages ul{
 	padding: 0;
@@ -438,7 +440,7 @@ input, select, textarea{
 .next-button{
 	width: 204px;
 	height: 42px;
-	margin-bottom: 31px;
+	margin-bottom: 24px;
 	text-transform: uppercase;
 }
 .product-description-section {
@@ -1411,7 +1413,7 @@ input[type="checkbox"]:checked+label:before {
 .maria-left-menus{
   left: 17px;
   z-index: 1;
-  top: 2px;
+  top: -2px;
 }
 .maria-right-menus{
   right: 15px;
@@ -3054,13 +3056,20 @@ table thead {
 #reload_payment .form-list .input-box {
   margin-bottom: 24px;
 }
-
-.v-fix-month select{
+.v-fix-month{
 	width: 173px;
-	margin-right: 33px;
+  margin-right: 23px;
+}
+.v-fix-month select{
+	width: 100%;
+	background-position: 94% 50%;
+}
+.v-fix.v-fix-year{
+	width: 126px;
+  clear: both;
 }
 .v-fix-year select{
-	width: 126px;
+	width: 100%;
 	background-position: 94% 50%;
 }
 #cart-sidebar .item-msg p {
@@ -3103,6 +3112,42 @@ table thead {
 }
 .overview-price-qty{
 	line-height: 10px;
+}
+.place-order .grand-total {
+  margin-top: 23px;
+}
+#review-buttons-container {
+  margin-top: 42px;
+}
+.billing-address.billing-address-selection {
+  margin-top: 22px;
+}
+.address-method-common {
+  margin-bottom: 10px;
+}
+.gift-input-section {
+  margin-top: 25px;
+}
+.gift-input-section p {
+  margin-bottom: 19px;
+}
+.to-from-section input {
+  width: 192px;
+}
+.gift-message-section textarea {
+	width: 323px;
+	min-height: 108px !important;
+}
+.to-from-section .row {
+  margin-bottom: 24px;
+}
+.place-order .grand-total .price {
+  padding-left: 20px;
+  flex-basis: 0;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+  padding: 0 15px;
 }
 /* cccc */
 /*MINI CART CSS*/

@@ -130,17 +130,15 @@
 							<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>    </td>
 					</tr>
 					<tr id="mt-shipping">
-
-
 						<td style="" class="" colspan="1">
 							<a style="color: #3f4048; text-decoration: none; cursor: normal;" class="mt-shipping-method">
-							<span class="shipping-label">Shipping</span>
+							<span class="shipping-label para-normal">Shipping</span>
 
 							<span class="non-shipping-label"></span></a>
 						</td>
 						<td style="" class="a-right">
-							<a style="color: #3f4048; text-decoration: none; cursor: normal;" class="mt-shipping-price">
-							<span class="price"><?php echo $this->helper('checkout')->formatPrice($shipping) ?></span></a>
+							<a class="mt-shipping-price">
+							<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($shipping) ?></span></a>
 						</td>
 					</tr>
 
@@ -150,7 +148,7 @@
 							Discount
 						</td>
 						<td style="" class="cart-subtotals-right">
-							<span class="price"><?php echo $this->helper('checkout')->formatPrice($discount) ?></span>
+							<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($discount) ?></span>
 						</td>
 					</tr>
 					<?php endif;?>
@@ -176,7 +174,7 @@
     	<?php if(!empty($baseGrandTotal)):?>
             <p class="mt-cart-charge-note">
             <?php
-            echo $this->__("All orders are charged in USD 
+            echo $this->__("All orders are charged in USD
 
 You will be charged( ".$baseGrandTotal." )");
             ?>
