@@ -268,8 +268,10 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             $index = 0;
             $requestParams = array();
             $shippingMethodArray = array();
+            $signatureArray = array();
             $addresses = $this->getQuote()->getAllShippingAddresses();
             foreach ($addresses as $address) {
+                $signatureArray[$address->getCustomerAddressId()] = $address->getNoSignatureDelivery();
                 if($address->getShippingMethod()){
                     $shippingMethodArray[$address->getCustomerAddressId()] = $address->getShippingMethod();
                 }
@@ -293,6 +295,22 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             if(count($shippingMethodArray) > 0){
                 $this->setShippingMethodsAgain($shippingMethodArray);
             }
+            
+            //set signture once again
+            $addresses = $this->getQuote()->getAllShippingAddresses();
+            foreach ($addresses as $address) {
+                try{
+                    $address->setNoSignatureDelivery(0);
+                    if (isset($signatureArray[$address->getCustomerAddressId()])) {
+                        if($signatureArray[$address->getCustomerAddressId()]){
+                            $address->setNoSignatureDelivery(1);
+                        }
+                    }
+                }catch (Exception $e){
+                    
+                }
+            }
+            
             $quote = $this->getQuote();
             $quote->setTotalsCollectedFlag(false)
             ->collectTotals();

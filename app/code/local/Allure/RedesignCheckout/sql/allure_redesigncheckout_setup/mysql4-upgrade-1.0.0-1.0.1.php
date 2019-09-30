@@ -1,7 +1,7 @@
 <?php
 $installer = new Mage_Sales_Model_Resource_Setup('core_setup');
 $entities = array("quote", "order", "quote_address");
-$attributes = array("is_contain_backorder", "is_split_done");
+$attributes = array("is_contain_backorder");
 
 foreach ($entities as $entity){
     foreach ($attributes as $attribute){
