@@ -860,6 +860,21 @@ margin-left: 10px;
     height: auto;
     width: auto;
   }
+
+
+  .homepageSliderControllers .nextS{
+    top: 45%;
+    right: 8px;
+    height: 45px;
+    width: 20px;
+  }
+  .homepageSliderControllers .prevS{
+    top: 45%;
+    left: 14px;
+    height: 45px;
+    width: 20px;
+    z-index: 1;
+  }
 }
 
 /* Mobile landscape */
