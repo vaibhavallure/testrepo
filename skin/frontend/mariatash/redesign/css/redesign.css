@@ -1517,7 +1517,7 @@ input[type="checkbox"]:checked+label:before {
   bottom: 15px;
   width:100%;
 }
-.image-text h6, .cart-subtotals-right span,.overview-address-item .box .box-title{
+.reg-price, .image-text h6, .cart-subtotals-right span,.overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
   font-family: urw-din-regular;
