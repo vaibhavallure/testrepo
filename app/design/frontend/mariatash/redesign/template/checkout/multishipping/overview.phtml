@@ -124,10 +124,10 @@
                                         </div>
                                         </div>
 										<?php endif;?>
-                                        <div class="box">
+                                        <div class="box gift-input-section">
                                         	<div class="box-content">
                                         		<?php if($_item->getIsGiftItem()):?>
-                                        		<p><?= $this->__('You have marked this item as a gift.Would you like to add a gift message?')?></p>
+                                        		<p class="para-normal"><?= $this->__('You have marked this item as a gift. Would you like to add a gift message?')?></p>
                                         		<?= $this->getGiftItemHtml($_item)?>
                                         		<?php endif;?>
                                         	</div>
@@ -148,7 +148,11 @@
                         	<div class="place-order row">
                             	<div class="grand-total col-12">
                                 	<div class="inner row">
-                                    	<big class="col-12 text-right"><?php echo $this->__('Grand Total') ?> <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?></big>
+                                    	<big class="col-6 offset-lg-6 text-right">
+                                        <div class="row justify-content-around">
+                                          <span class="col"><?php echo $this->__('Grand Total') ?></span> <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
+                                        </div>
+                                        </big>
                                         <div id="review-buttons-container" class="col-12 text-right">
                                         	<button type="submit" title="<?php echo $this->__('Checkout') ?>" class="button btn-checkout dark-button next-button" id="review-button"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
                                        	</div>

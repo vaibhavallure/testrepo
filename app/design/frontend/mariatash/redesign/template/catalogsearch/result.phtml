@@ -24,47 +24,54 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php if($this->getResultCount()): ?>
-<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<div class="page-title">
-    <?php if ($this->helper('rss/catalog')->getTagFeedUrl()): ?>
-        <a href="<?php echo $this->helper('rss/catalog')->getTagFeedUrl() ?>" class="nobr link-rss"><?php echo $this->__('Subscribe to Feed') ?></a>
-    <?php endif; ?>
-    <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("Search results for '%s'", $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+<!-- <div class="second-header-image">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
 </div>
+ -->
+<div class="search_results">
+    <?php if($this->getResultCount()): ?>
+        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+        <div class="container">
+            <div class="page-title">
+                <?php if ($this->helper('rss/catalog')->getTagFeedUrl()): ?>
+                <a href="<?php echo $this->helper('rss/catalog')->getTagFeedUrl() ?>" class="nobr link-rss"><?php echo $this->__('Subscribe to Feed') ?></a>
+            <?php endif; ?>
+            <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("Showing results for '%s'", $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+        </div>
+    </div>
     <?php if ($messages = $this->getNoteMessages()):?>
-    <p class="note-msg">
-        <?php foreach ($messages as $message):?>
-            <?php echo $message?><br />
-        <?php endforeach;?>
-    </p>
+        <p class="note-msg">
+            <?php foreach ($messages as $message):?>
+                <?php echo $message?><br />
+            <?php endforeach;?>
+        </p>
     <?php endif; ?>
     <?php echo $this->getProductListHtml() ?>
-<?php else: ?>
-<div class="page-title">
-    <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("No results found") ?></h1>
-</div>
-<p class="note-msg">
-    <?php echo ($this->getNoResultText()) ? $this->getNoResultText() : $this->__("Your search for '%s' returned 0 results.", $this->helper('catalogsearch')->getEscapedQueryText()) ?>
-    <?php if ($messages = $this->getNoteMessages()):?>
-        <?php foreach ($messages as $message):?>
-        <br /><?php echo $message?>
-        <?php endforeach;?>
-    <?php endif; ?>
-</p>
-<div class="research-div">
-    <p><?php echo $this->__("Try a new search: "); ?></p>
-    <form id="research_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
-        <div class="form-research">
-            <input id="search" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="" class="input-text" />
-            <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span><?php echo $this->__('Search') ?></span></button>
-            <script type="text/javascript">
-            //<![CDATA[
-                searchForm.initAutocomplete('<?php echo $this->helper('catalogsearch')->getSuggestUrl() ?>', 'search_autocomplete');
-            //]]>
-            </script>
+    <?php else: ?>
+        <div class="page-title">
+            <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("No results found") ?></h1>
         </div>
-    </form>
+        <p class="note-msg">
+            <?php echo ($this->getNoResultText()) ? $this->getNoResultText() : $this->__("Your search for '%s' returned 0 results.", $this->helper('catalogsearch')->getEscapedQueryText()) ?>
+            <?php if ($messages = $this->getNoteMessages()):?>
+                <?php foreach ($messages as $message):?>
+                    <br /><?php echo $message?>
+                <?php endforeach;?>
+            <?php endif; ?>
+        </p>
+        <div class="research-div">
+            <p><?php echo $this->__("Try a new search: "); ?></p>
+            <form id="research_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
+                <div class="form-research">
+                    <input id="search" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="" class="input-text" />
+                    <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span><?php echo $this->__('Search') ?></span></button>
+                    <script type="text/javascript">
+            //<![CDATA[
+            searchForm.initAutocomplete('<?php echo $this->helper('catalogsearch')->getSuggestUrl() ?>', 'search_autocomplete');
+            //]]>
+        </script>
+    </div>
+</form>
 </div>
 <div class="search-tips">
     <!-- <p>Search tips:</p>
@@ -73,6 +80,8 @@
         <li>2. Limit the search to one or two terms.</li>
         <li>3. Use more general term(s) to lead you to similar or related products.</li>
     </ul>  -->
-	 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('search_results')->toHtml() ?>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('search_results')->toHtml() ?>
 </div>
 <?php endif; ?>
+</div>
+

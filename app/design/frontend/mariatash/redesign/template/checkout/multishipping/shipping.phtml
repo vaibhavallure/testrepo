@@ -52,7 +52,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                     <span class="number"><?php echo $cnt ?></span>
                     <h3><?= $this->__($_step->getLabel()) ?></h3>
                 </div>
-                <div class="multiple-checkout">
+                <div class="multiple-checkout shipping-method-parent">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
                         <?php $shipAddressHtml = $this->getChildHtml("checkout_shipping_address_select");?>

@@ -31,12 +31,14 @@ jQuery(document).ready(function() {
 
 
 
-    var headerHeight = jQuery(".mariatash-header").outerHeight();
-    jQuery('.open-navigation').css("padding-top", headerHeight);
 
-    if (jQuery(window).width() >= 1025) {
         jQuery(window).scroll(function () {
-            var scroll = jQuery(window).scrollTop();
+            var headerHeight = jQuery(".mariatash-header").outerHeight();
+            jQuery('.open-navigation').css("padding-top", headerHeight);
+
+            if (jQuery(window).width() >= 1025) {
+
+                var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
                 jQuery(".mt-logo").addClass('d-none');
                 jQuery(".nav-links-left").addClass('d-none');
@@ -69,10 +71,20 @@ jQuery(document).ready(function() {
             }
             headerHeight = jQuery(".mariatash-header").outerHeight();
             jQuery('.open-navigation').css("padding-top", headerHeight);
+
+    }else {
+                if (jQuery(window).width() >= 1024) {
+
+                    var scroll = jQuery(window).scrollTop();
+                    if (scroll > jQuery(".mariatash-header").outerHeight()) {
+                        jQuery('.mariatash-header').addClass('maria-black');
+                    }else {
+                        jQuery('.mariatash-header').removeClass('maria-black');
+                    }
+
+                }
+            }
         });
-    }
-
-
 
 
 
