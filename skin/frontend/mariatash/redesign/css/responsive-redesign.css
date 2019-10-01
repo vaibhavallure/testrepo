@@ -165,10 +165,6 @@
   .customer-care-page .main {
     padding-bottom: 0;
   }
-  #category-title{
-    margin: 16px 0 20px !important;
-    padding: 0 !important;
-  }
   .content-customer {
     margin: 15px 0 0;
   }
@@ -246,9 +242,6 @@
   }
   .maria-left-menus{
     top: 2px;
-  }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom{
-    height: 30px !important;
   }
   /*Different Footer */
   /* 1. Customer Care */
@@ -458,8 +451,8 @@ margin-left: 10px;
   .about-designer{
     margin-bottom: 0;
   }
-  .for-space-to-bottom, .for-space-to-bottom{
-    height: 130px !important;
+  .for-space-to-bottom{
+    height: 90px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 73px !important;
@@ -546,6 +539,13 @@ margin-left: 10px;
   }
   .cartilage-section {
     margin-top: 28px;
+  }
+  .categorypath-celebrity-clientele-html .for-space-to-bottom{
+    height: 30px !important;
+  }
+  #category-title{
+    margin: 16px 0 40px !important;
+    padding: 0 !important;
   }
 }
 
@@ -645,7 +645,7 @@ margin-left: 10px;
     padding: 0 36px;
   }
   .for-space-to-bottom{
-    height: 90px !important;
+    height: 70px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 60px !important;
@@ -731,6 +731,13 @@ margin-left: 10px;
   }
   .cartilage-section {
     margin-top: 28px;
+  }
+  .categorypath-celebrity-clientele-html .for-space-to-bottom{
+    height: 0 !important;
+  }
+  #category-title{
+    margin: 16px 0 20px !important;
+    padding: 0 !important;
   }
 }
 

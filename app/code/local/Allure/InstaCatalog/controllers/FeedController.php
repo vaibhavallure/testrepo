@@ -189,14 +189,20 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
 	    				$points .= '<div class="fs-arrow-up"></div>';
 	    				$points .= 'Shop it // " '.$productName.'</div></div></a>';
 
+	    				$quickViewUrl = Mage::getBaseUrl('web').'quickview/index/index/id/'.$productId;
+
 	    				$productsLinks .= '<div class="fs-text-link-container ">';
 	    				$productsLinks .= '<a class="fs-text-product fs-link-list" ';
 	    				$productsLinks .= 'data-original-url="'.$productUrl.'"';
 	    				$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
 	    				$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
 	    				$productsLinks .= '<span class="fs-link-text-number">'.$numberOfProducts.'</span> <span class="fs-slashes">  </span>';
+
 	    				$productsLinks .= '<span class="fs-link-text para-bold"> '.$productName.' </span></span>';
-	    				$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
+                        $productsLinks.='<div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="'.$quickViewUrl.'sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
+                                  <div class="quick_link link-button d-block d-xs-block d-md-block d-lg-none d-xl-none"><a href="'.$productUrl.'" >Buy</a></div> ';
+                        $productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
+
 	    			}
 
 	    			$strHtml .= '<div class="fs-entry-container">';
