@@ -1048,7 +1048,34 @@
 	#wishlist-table-overlay form{
 		max-width: 323px;
 	}
-
+	/*=====================*/
+	/*SEARCH REULTS*/
+	/*=====================*/
+	.catalogsearch-result-index .mb-breadcrumbs{
+		max-width: 1140px;
+		margin: 0 auto!important;
+		padding: 0 15px!important;
+	}
+	.catalogsearch-result-index .mb-breadcrumbs,
+	.catalogsearch-result-index .mb-breadcrumbs .breadcrumbs{
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+	.catalogsearch-result-index .mb-breadcrumbs ul{
+		padding: 0;
+	}
+	.catalogsearch-result-index .mb-breadcrumbs ul li{
+		float: none;
+	}
+	.search_results h1{
+		font-size: 17px;
+	}
+	.catalogsearch-result-index #narrow-by-list{
+		max-width: 1140px;
+		margin: 0 auto;
+		margin-top: 33px;
+	}
 	/*=====================*/
 	/*MEDIA QUERIES*/
 	/*=====================*/
@@ -1074,6 +1101,9 @@
 		}
 	}
 	@media(max-width: 1024px){
+		#fs-instagram-view-container .fs-overlink-text.fs-overlink-text-right{
+		display: none!important;
+	}
 		.category-shop-our-instagram .for-space-to-bottom{
 			height: 123px;
 		}
