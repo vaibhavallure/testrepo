@@ -73,7 +73,7 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
            // Mage::log("get subtotal ".$this->getSubtotal(), Zend_Log::DEBUG,'allure_log.log',true);
 
             ?></div>
-			<?php echo (!empty($baseGrandTotal) ? "(".$baseGrandTotal.")":"")?>
+			<!-- <//?php echo (!empty($baseGrandTotal) ? "(".$baseGrandTotal.")":"")?> -->
 
 			<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
 				<br />(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)

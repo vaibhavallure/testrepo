@@ -676,8 +676,8 @@
 	text-align: left;
 	/* float: right; */ /*Changed By Shruti*/
 }
-.new_address .intl-tel-input .selected-flag .iti-flag{
-	top: 0!important;
+.mt-myaccount-new .new_address .intl-tel-input .selected-flag .iti-flag{
+	top: 0;
 	left: 17px;
 }
 .table .custom-options-univaersal{

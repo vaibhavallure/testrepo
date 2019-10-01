@@ -35,7 +35,7 @@
 		<?php endif; ?>
 		<li>
 			<div class="input-box">
-			<a class="link-button" href="javascript:void(0);" onclick="toggleCreditInfo('<?php echo $this->getMethodCode()?>');" id="<?php echo $this->getMethodCode(); ?>_add_new"><?php echo $this->__('use a different card.'); ?></a>
+			<a class="link-button" href="javascript:void(0);" onclick="toggleCreditInfo('<?php echo $this->getMethodCode()?>');" id="<?php echo $this->getMethodCode(); ?>_add_new"><?php echo $this->__('Use a different card.'); ?></a>
 			</div>
 		</li>
 	<?php endif; ?>
@@ -61,17 +61,17 @@
 	</li>
 	<li <?php if( $this->haveStoredCards() ): ?>style="display:none"<?php endif; ?> class="<?php echo $newClass; ?> col-12 p-0" id="<?php echo $this->getMethodCode(); ?>_cc_type_exp_div">
 		<!-- <label for="<//?php echo $this->getMethodCode(); ?>_cc_exp_month" class="required"><em>*</em><//?php echo $this->__('Expiration Date') ?></label> -->
-<div class="col-6">
-	<div class="row">
-		<div class="input-box row">
-			<div class="v-fix v-fix-month col-6">
+<div class="expiry-section">
+	<div class="">
+		<div class="input-box d-flex">
+			<div class="v-fix v-fix-month">
 				<select id="<?php echo $this->getMethodCode(); ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $requireClass; ?>">
 					<?php foreach( $this->getCcMonths() as $k => $v ): ?>
 						<option value="<?php echo $k?$k:''; ?>" <?php if( $k == $this->getInfoData('cc_exp_month') ): ?>selected="selected"<?php endif ?>><?php echo $v; ?></option>
 					<?php endforeach ?>
 				</select>
 			</div>
-			<div class="v-fix v-fix-year col-6">
+			<div class="v-fix v-fix-year">
 				<select id="<?php echo $this->getMethodCode(); ?>_cc_exp_year" name="payment[cc_exp_year]" class="year <?php echo $requireClass; ?>">
 					<?php foreach( $this->getCcYears() as $k => $v ): ?>
 						<option value="<?php echo $k?$k:''; ?>" <?php if( $k == $this->getInfoData('cc_exp_year') ): ?>selected="selected"<?php endif ?>><?php echo $v; ?></option>

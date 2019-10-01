@@ -17,19 +17,17 @@
 <?php endif;?>
 <div class="col-12">
 	<div class="row">
-	<div class="col-4">
+	<div class="col-5 to-from-section">
 		<div class="row">
 			<input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][type]" value="quote_address_item" />
             <input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][address]" value="<?= $_item->getAddress()->getId()?>" />
 			<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-from"><//?php echo $this->__('Sender') ?></label> -->
-			<div>
 				<input type="text" placeholder="To"
 					name="giftmessage[<?php echo $_item->getId() ?>][to]"
 					id="gift-message-<?php echo $_item->getId() ?>-to"
 					title="<?php echo $this->__('To') ?>"
 					value="<?= $this->getEscaped($receipt)?>"
 					class="input-text validation-passed" />
-			</div>
 		</div>
 		<div class="row">
 			<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-to"><//?php echo $this->__('Recipient') ?></label> -->
@@ -40,7 +38,7 @@
 					class="input-text validation-passed" />
 		</div>
 	</div>
-	<div class="col-8">
+	<div class="col-7 gift-message-section">
 		<div class="row">
     		<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
     			<textarea placeholder="Message" id="gift-message-<?php echo $_item->getId() ?>-message"
