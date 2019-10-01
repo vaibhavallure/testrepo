@@ -10,7 +10,8 @@
       "ext-soap": "*",
         "ext-pdo": "*",
         "ckeditor/ckeditor": "^4.12",
-        "fancyapps/fancybox": "^2.1"
+        "fancyapps/fancybox": "^2.1",
+        "voku/html-min": "^4.0"
     },
     "minimum-stability": "stable"
 }

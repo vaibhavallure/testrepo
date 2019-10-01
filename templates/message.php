@@ -488,6 +488,7 @@ function getCode($typebrief){
                                             <div class="col-xs-5" style="margin-bottom: 10px;">
                                             <div class="form-group">
                                                 <button type="submit" name="btnaction" class="btn btn-primary" value="envoyer" style="float: right;">Générer Message</button>
+                                                <button type="submit" name="btnaction" class="btn btn-primary" value="envoyercompress" style="float: right;">Générer Message Compressé</button>
                                             </div>
                                             </div>
                                         </div>

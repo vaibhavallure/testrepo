@@ -558,6 +558,10 @@ function createMessage(){
         $messageDataClass->saveMessageData($data);
         $html = $messageClass->createMessage($data);
         $content=$html;
+    }elseif ($btnAction == 'envoyercompress'){
+        $messageDataClass->saveMessageData($data);
+        $html = $messageClass->createMessage($data,true);
+        $content=$html;
     }elseif ($btnAction == 'master'){
         $messageDataClass->saveMessageData($data);
         $data["pays"] = array("F");

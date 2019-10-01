@@ -7,7 +7,8 @@
  * Time: 17:27
  * To change this template use File | Settings | File Templates.
  */
-
+use voku\helper\HtmlMin;
+require 'vendor/autoload.php';
 
 include_once 'millesima_abstract.php';
 include_once 'millesima_bdd.php';
@@ -17,7 +18,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 
     const DEBUG = false;
 
-    public function createMessage($data){
+    public function createMessage($data, $compress = false){
         $appPath = dirname(__DIR__, 1)."/";
         $ressourceClass = new Millesima_Ressource();
 
@@ -560,7 +561,19 @@ class Millesima_Message_Template extends Millesima_Abstract
             } else {
                 $output = $oSmarty->fetch($tpl.'/normal.tpl'); /* Version par défaut */
             }
-
+            /**
+             * Minifier le Html pour éviter les messages tronqués dans Gmail
+             * CF : https://github.com/voku/HtmlMin
+             */
+            if ($compress == true) {
+                $htmlMin = new HtmlMin();
+                $htmlMin->doOptimizeViaHtmlDomParser();
+                $htmlMin->doRemoveComments();
+                $htmlMin->doSumUpWhitespace();
+                $htmlMin->doRemoveWhitespaceAroundTags();
+                $htmlMin->doRemoveSpacesBetweenTags();
+                $output = $htmlMin->minify($output);
+            }
             /**
              * Ecriture des fichiers html depuis le return $output de l'objet smarty
              * @var unknown_type
