@@ -1175,13 +1175,15 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             return;
         }
 
-        $request = array(
-            "Magento_Tracker_Id__c" => $track->getData("entity_id"),
-            "Name" => $track->getData("title"),
-            "Shipment__c" => $shipmentModel->getSalesforceShipmentId(),
-            "Tracking_Number__c" => $track->getData("track_number"),
-            "Carrier__c" => $track->getData("carrier_code")
-        );
+        if($salesforceShipmentId){
+            $request = array(
+                "Magento_Tracker_Id__c" => $track->getData("entity_id"),
+                "Name" => $track->getData("title"),
+                "Shipment__c" => $salesforceShipmentId,
+                "Tracking_Number__c" => $track->getData("track_number"),
+                "Carrier__c" => $track->getData("carrier_code")
+            );
+        }
 
         if(!$isFromEvent)
             $request["attributes"] = array("type" => "Tracking_Information__c", "referenceId" => "shipment_track-".$shipment->getId());
