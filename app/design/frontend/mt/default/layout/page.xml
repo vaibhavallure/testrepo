@@ -122,6 +122,8 @@ Default layout, loads most of the pages
 
                 <!--BUGFIX CSS ADDED-->
                 <action method="addCss"><stylesheet>css/design-fix.css</stylesheet></action>
+                <action method="addItem"><type>skin_js</type><name>js/allure/custom.js</name></action>
+                <action method="addCss"><stylesheet>css/allure/custom.css</stylesheet></action>
 
             </block>
 
