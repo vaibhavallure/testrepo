@@ -3205,7 +3205,7 @@ table thead {
 }
 #cart-sidebar {
   overflow: scroll;
-  height: 330px !important;
+  max-height: 330px !important;
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
