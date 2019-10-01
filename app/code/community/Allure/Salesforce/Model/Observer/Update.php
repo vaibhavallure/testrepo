@@ -198,7 +198,6 @@ class Allure_Salesforce_Model_Observer_Update
 
             $request = $helper->getOrderRequestData($order,$create);
 
-
             if($create){
                 if(!empty($request))
                     array_push($orderList, $request["request"]);
@@ -437,7 +436,7 @@ class Allure_Salesforce_Model_Observer_Update
         return $shipmentTrackList;
     }
 
-    private function getProductUpdateData($lastRunTime = null, $list = null)
+    public function getProductUpdateData($lastRunTime = null, $list = null)
     {
         $helper = $this->getHelper();
         $helper->salesforceLog("------------BULK UPDATE: start getProductUpdateData request.",true);
