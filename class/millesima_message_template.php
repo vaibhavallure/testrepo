@@ -105,17 +105,22 @@ class Millesima_Message_Template extends Millesima_Abstract
                     }else{
                         $article = $this->load($loaded,$country);
                     }
-					if(!in_array($article->libelle_internet, $noms)){
-						$noms[]=$article->libelle_internet ." ". $article->millesime;
-					}
-					if(!in_array($article->appellation, $appellations)){
-						$appellations[]=$article->appellation;
-					}
-                    //print_r($article);
-                    if($article->prix_ttc != ""){
-                        $maliste[] = $article;
+                    if($article == false) {
+                        $html .= " Produit non trouvé : ".$loaded."</br>";
+
+                    } else {
+                        if (!in_array($article->libelle_internet, $noms)) {
+                            $noms[] = $article->libelle_internet . " " . $article->millesime;
+                        }
+                        if (!in_array($article->appellation, $appellations)) {
+                            $appellations[] = $article->appellation;
+                        }
+                        //print_r($article);
+                        if ($article->prix_ttc != "") {
+                            $maliste[] = $article;
+                        }
+                        unset($article);
                     }
-                    unset($article);
                 }
             }
             $listeproduit = $maliste;
@@ -678,7 +683,8 @@ class Millesima_Message_Template extends Millesima_Abstract
      */
     public function load($idtoload,$country,$type = 'Code_article') {
         $bddClass = new Millesima_Bdd();
-        $data= $bddClass->selectAll("SELECT * FROM baseok WHERE ".$type." = '".$idtoload."' AND Lettre_pays = '".$country."'");
+        $data = $bddClass->selectAll("SELECT * FROM baseok WHERE ".$type." = '".$idtoload."' AND Lettre_pays = '".$country."'");
+        if (is_array($data) && isset($data[0])) {
         $data = $data[0];
 
         $article = new Article;
@@ -857,5 +863,9 @@ class Millesima_Message_Template extends Millesima_Abstract
 
         }
             return $article;
+    } else {
+            $article = false;
+            return $article;
+        }
     }
 }
