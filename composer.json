@@ -8,7 +8,9 @@
         "phpoffice/phpspreadsheet": "^1.9",
         "almasaeed2010/adminlte": "~2.4",
       "ext-soap": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ckeditor/ckeditor": "^4.12",
+        "fancyapps/fancybox": "^2.1"
     },
     "minimum-stability": "stable"
 }
