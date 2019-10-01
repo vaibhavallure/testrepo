@@ -22,7 +22,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     /**
      * Multishipping checkout shipping information page
      */
-    public function shippingAction()
+    public function shippingAction1()
     {
         if (!$this->_validateMinimumAmount()) {
             return;
@@ -47,7 +47,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     /**
      * Multishipping checkout after the shipping page
      */
-    public function shippingPostAction()
+    public function shippingPostAction1()
     {
         if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
             $this->_redirect('*/*/shipping');
