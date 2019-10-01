@@ -195,7 +195,7 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
 	    				$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
 	    				$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
 	    				$productsLinks .= '<span class="fs-link-text-number">'.$numberOfProducts.'</span> <span class="fs-slashes">  </span>';
-	    				$productsLinks .= '<span class="fs-link-text"> '.$productName.' </span></span>';
+	    				$productsLinks .= '<span class="fs-link-text para-bold"> '.$productName.' </span></span>';
 	    				$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
 	    			}
 
