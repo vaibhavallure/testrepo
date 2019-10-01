@@ -147,6 +147,7 @@
   }
   .jewelry-container{
     margin-top: 0;
+    margin-bottom: 0px;
   }
   .designer-copy{
     margin: 30px 0 5px;
@@ -163,10 +164,6 @@
   }
   .customer-care-page .main {
     padding-bottom: 0;
-  }
-  #category-title{
-    margin: 16px 0 20px;
-    padding: 0;
   }
   .content-customer {
     margin: 15px 0 0;
@@ -455,7 +452,7 @@ margin-left: 10px;
     margin-bottom: 0;
   }
   .for-space-to-bottom{
-    height: 130px !important;
+    height: 90px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 73px !important;
@@ -505,7 +502,7 @@ margin-left: 10px;
     padding: 0 60px 120px;
   }
   .big-popup-cover{
-    height: 996px;
+    height: 936px;
   }
   .celebPopup .next, .celebPopup .prev{
     top: 47%;
@@ -540,11 +537,15 @@ margin-left: 10px;
   .filterButton:before{
     top: -80px;
   }
-  .catalog-category-view .category-title{
-    margin-bottom: 0 !important;
-  }
   .cartilage-section {
     margin-top: 28px;
+  }
+  .categorypath-celebrity-clientele-html .for-space-to-bottom{
+    height: 30px !important;
+  }
+  #category-title{
+    margin: 16px 0 40px !important;
+    padding: 0 !important;
   }
 }
 
@@ -644,7 +645,7 @@ margin-left: 10px;
     padding: 0 36px;
   }
   .for-space-to-bottom{
-    height: 90px !important;
+    height: 70px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 60px !important;
@@ -728,11 +729,15 @@ margin-left: 10px;
     padding: 0 15px;
     text-align: center;
   }
-  .catalog-category-view .category-title{
-    margin-bottom: 0 !important;
-  }
   .cartilage-section {
     margin-top: 28px;
+  }
+  .categorypath-celebrity-clientele-html .for-space-to-bottom{
+    height: 0 !important;
+  }
+  #category-title{
+    margin: 16px 0 20px !important;
+    padding: 0 !important;
   }
 }
 

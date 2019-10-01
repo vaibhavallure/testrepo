@@ -64,6 +64,7 @@
                     <div class="data-table col-12" id="multiship-addresses-table">
                         <div class="row">
     						<div class="">
+    						<?php $product = null; $stockItem = null;?>
                         	<?php foreach ($this->getItems() as $_index => $_item): ?>
                             <?php if ($_item->getQuoteItem()) :?>
                             <?php //if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
@@ -109,6 +110,17 @@
                                                         <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
                                                    </p>
                                                 </div>
+                                                <?php if(!empty($message)): ?>
+                                                    <?php $tmpMessage = $message;?>
+                                                    <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
+                                                    <div class="gift-messages">
+                                                     	<p class="control">
+                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
+                                                            <label for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Is backorder item ship separately.</span></label>
+                                                       </p>
+                                                    </div>
+                                                    <?php endif;?>
+                                                <?php endif;?>
                                             </div>
                                 		</div>
                                     	<div class="col-4 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">

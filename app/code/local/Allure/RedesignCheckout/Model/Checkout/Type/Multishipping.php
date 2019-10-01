@@ -67,6 +67,8 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 }
             }
             
+            $this->splitBackorder();
+            
             /**
              * Delete all not virtual quote items which are not added to shipping address
              * MultishippingQty should be defined for each quote item when it processed with _addShippingItem
@@ -114,6 +116,13 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                             }
                         }
                         
+                        $_item->setIsSeparateShip(0);
+                        if(isset($itemsInfo[$_item->getId()]["is_separate_ship"])){
+                            if($itemsInfo[$_item->getId()]["is_separate_ship"]){
+                                $_item->setIsSeparateShip(1);
+                            }
+                        }
+                        
                         $quote->getBillingAddress()->addItem($_item);
                     } else {
                         $_item->setQty(0);
@@ -132,8 +141,57 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             
             $this->save();
             Mage::dispatchEvent('checkout_type_multishipping_set_shipping_items', array('quote'=>$quote));
+            
         }
         return $this;
+    }
+    
+    private function splitBackorder(){
+        try {
+            $helper = Mage::helper("allure_redesigncheckout");
+            $addresses = $this->getQuote()->getAllShippingAddresses();
+            foreach ($addresses as $address) {
+                if($address->getIsContainBackorder()){
+                    if($helper->isAddressContainBackOrderItem($address)){
+                        /** @var Mage_Sales_Model_Quote_Address $backOrderAddress */
+                        $customerAddress = $this->getCustomer()->getAddressById($address->getCustomerAddressId());
+                        $quoteAddress = Mage::getModel('sales/quote_address')->importCustomerAddress($customerAddress);
+                        $this->getQuote()->addShippingAddress($quoteAddress);
+                        
+                        $backOrderAddress = Mage::getModel('sales/quote_address')->importCustomerAddress($customerAddress);
+                        $this->getQuote()->addShippingAddress($backOrderAddress);
+             
+                        $storeId = Mage::app()->getStore()->getStoreId();
+                        foreach($address->getAllItems() as $item){
+                            if ($item->getParentItemId()) {
+                                continue;
+                            }
+                            $_product = Mage::getModel('catalog/product')
+                            ->setStoreId($storeId)
+                            ->loadByAttribute('sku', $item->getSku());
+                            $stock = Mage::getModel('cataloginventory/stock_item')
+                            ->loadByProduct($_product);
+                            $stockQty = $stock->getQty();
+                            
+                            $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
+                            $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                            $quoteItem->setQty($quoteItem->getMultishippingQty());
+                            if ($stockQty < $item->getQty() && $stock->getManageStock() == 1) {
+                                $backOrderAddress->addItem($quoteItem, $item->getQty());
+                            }else{
+                                $quoteAddress->addItem($quoteItem, $item->getQty());
+                            }
+                        }
+                        $this->getQuote()->removeAddress($address->getId());
+                        $quoteAddress->setCollectShippingRates(1);
+                        $backOrderAddress->setCollectShippingRates(1);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            Mage::log("splitBackorder method - Exception:",Zend_Log::DEBUG,'abc.log',true);
+            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+        }
     }
     
     
@@ -192,6 +250,14 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         }
                     }
                     
+                    //set item status to separte ship
+                    $quoteItem->setIsSeparateShip(0);
+                    if(isset($data["is_separate_ship"])){
+                        if($data["is_separate_ship"]){
+                            $quoteItem->setIsSeparateShip(1);
+                        }
+                    }
+                    
                     $quoteAddress->addItem($quoteItem, $qty);
                 }
                 /**
@@ -217,7 +283,8 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $item->getQuoteItemId() => array(
                         "qty" => $item->getQty(),
                         "is_gift_item" => $item->getIsGiftItem(),
-                        "address" => ($addressId == $address->getId()) ? $customerAddrId : $address->getCustomerAddressId()
+                        "address" => ($addressId == $address->getId()) ? $customerAddrId : $address->getCustomerAddressId(),
+                        "is_separate_ship" => $item->getIsSeparateShip()
                     )
                 ); 
                 $index++;

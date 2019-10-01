@@ -27,6 +27,9 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
             $addressItem->setGiftItemQty($item->getGiftItemQty());
             $addressItem->setIsGiftWrap($item->getIsGiftWrap());
             
+            //set separatly ship item
+            $addressItem->setIsSeparateShip($item->getIsSeparateShip());
+            
             $this->getItemsCollection()->addItem($addressItem);
             
             if ($item->getHasChildren()) {
@@ -40,6 +43,9 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
                     $addressChildItem->setGiftItemQty($item->getGiftItemQty());
                     $addressChildItem->setIsGiftWrap($item->getIsGiftWrap());
                     
+                    //set separatly ship item
+                    $addressChildItem->setIsSeparateShip($item->getIsSeparateShip());
+                    
                     $this->getItemsCollection()->addItem($addressChildItem);
                 }
             }
@@ -52,12 +58,20 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
                 $addressItem->setGiftItemQty($item->getGiftItemQty());
                 $addressItem->setIsGiftWrap($item->getIsGiftWrap());
                 
+                //set separatly ship item
+                $addressItem->setIsSeparateShip($item->getIsSeparateShip());
+                
                 $this->getItemsCollection()->addItem($addressItem);
             }
         }
         
         if ($qty) {
             $addressItem->setQty($qty);
+        }
+        
+        $this->setIsContainBackorder(0);
+        if($item->getIsSeparateShip()){
+            $this->setIsContainBackorder(1);
         }
         return $this;
     }
