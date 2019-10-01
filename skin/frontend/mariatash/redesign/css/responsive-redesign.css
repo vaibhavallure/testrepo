@@ -149,7 +149,7 @@
     margin-top: 0;
   }
   .designer-copy{
-    margin: 30px 0 115px;
+    margin: 30px 0 5px;
   }
   .faq-main > .row{
     flex-direction: column-reverse;
@@ -169,7 +169,7 @@
     padding: 0;
   }
   .content-customer {
-    margin: 15px 0 85px;
+    margin: 15px 0 0;
   }
   .footer-item-list:last-child{
     display: none;
@@ -242,6 +242,9 @@
   }
   .level-top.parent span:hover {
     border-bottom: none;
+  }
+  .maria-left-menus{
+    top: 2px;
   }
   /*Different Footer */
   /* 1. Customer Care */
@@ -966,10 +969,10 @@ margin-left: 10px;
     max-width: 1318px !important;
   }
   .jewelry-container, .faq-main{
-    margin-top: 182px !important;
+    margin-top: 65px !important;
   }
   .about-designer{
-    margin-top: 90px;
+    margin-top: 30px;
   }
   #piercing_appointments{
     padding: 48px 254px;
