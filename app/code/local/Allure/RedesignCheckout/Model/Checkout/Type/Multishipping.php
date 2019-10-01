@@ -160,12 +160,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         
                         $backOrderAddress = Mage::getModel('sales/quote_address')->importCustomerAddress($customerAddress);
                         $this->getQuote()->addShippingAddress($backOrderAddress);
-                        
-                        
-                        /* $backOrderAddress = clone $address;
-                        $backOrderAddress->setId(null);
-                        $backOrderAddress->setIsContainBackorder(1);
-                        $backOrderAddress->save(); */
+             
                         $storeId = Mage::app()->getStore()->getStoreId();
                         foreach($address->getAllItems() as $item){
                             if ($item->getParentItemId()) {
@@ -182,22 +177,14 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                             $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
                             $quoteItem->setQty($quoteItem->getMultishippingQty());
                             if ($stockQty < $item->getQty() && $stock->getManageStock() == 1) {
-                                //$backItem = clone $item;
-                                //$backItem = $this->getQuote()->getItemById($item->getQuoteItemId());
-                                //$backItem->setId(null);
-                                $backOrderAddress->addItem($quoteItem, $item->getQty())->save();
-                                //$address->removeItem($item->getId())->save();
+                                $backOrderAddress->addItem($quoteItem, $item->getQty());
                             }else{
-                                $quoteAddress->addItem($quoteItem, $item->getQty())->save();
+                                $quoteAddress->addItem($quoteItem, $item->getQty());
                             }
                         }
                         $this->getQuote()->removeAddress($address->getId());
-                        //$address->setIsContainBackorder(0);
-                        //$address->setCollectShippingRates(1);
                         $quoteAddress->setCollectShippingRates(1);
-                        $backOrderAddress->setCollectShippingRates(1);//->save();
-                        //$this->getQuote()->collectTotals()->save();
-                        //$this->save();
+                        $backOrderAddress->setCollectShippingRates(1);
                     }
                 }
             }
