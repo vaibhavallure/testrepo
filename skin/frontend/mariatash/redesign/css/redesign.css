@@ -3467,6 +3467,15 @@ table thead {
 	padding: 0;
 	width: 100%;
 }
-.category-celebrity-clientele .homepage-menu.mariatash-header,.category-piercing-gallery .homepage-menu.mariatash-header{
+.category-celebrity-clientele .homepage-menu.mariatash-header,
+.category-piercing-gallery .homepage-menu.mariatash-header,
+.category-shop-our-instagram .homepage-menu.mariatash-header
+{
 	z-index: 1;
+}
+.category-shop-our-instagram .fs-timeline-detail{
+z-index: 1!important;
+}
+.category-shop-our-instagram .fs-timeline-detail .quick_link{
+	margin-left: 30px;
 }
