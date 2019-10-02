@@ -1499,7 +1499,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                     $refId = $refArr[1];
 
                     $tableName = $responseMapping[$modelName][0];
-                    $sql .= "INSERT INTO " . $tableName . " VALUES(NULL,'1'," . $attribute_id . "," . $refId . "," . $res["id"] . ");";
+                    $sql .= "INSERT INTO " . $tableName . " VALUES(NULL,'1'," . $attribute_id . "," . $refId . ",'" . $res["id"] . "');";
                     $logString = "Adding for ". $modelName . " Attribute Id = " . $attribute_id . " Value = ". $res["id"];
                     $this->salesforceLog($logString,true);
                 }
