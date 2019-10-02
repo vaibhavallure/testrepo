@@ -16,7 +16,7 @@
     <link href="/vendor/almasaeed2010/adminlte/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet"
           type="text/css"/>
     <!-- DATA TABLES -->
-    <link href="/css/default/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="/vendor/datatables/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
 
 
@@ -54,9 +54,8 @@
     <script src="/vendor/almasaeed2010/adminlte/bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js"
             type="text/javascript"></script>
     <!-- DATA TABES SCRIPT -->
-    <script src="/js/default/jquery.dataTables.js" type="text/javascript"></script>
-    <script src="/js/default/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="/js/default/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="/vendor/datatables/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="/vendor/datatables/datatables/media/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
     <!-- SlimScroll -->
     <script src="/vendor/almasaeed2010/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.js"
             type="text/javascript"></script>
