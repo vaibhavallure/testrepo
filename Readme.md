@@ -33,9 +33,10 @@
 
 ## Using phpMyAdmin
 If you want to use phpMyadmin :
-- cd into phpMyAdmin directory
-- composer install (outside of container)
-- adjust config.inc.php to your needs
+- cd into project directory
+- composer create-project phpmyadmin/phpmyadmin (outside of container)
+- cp phpdocker/phpmyadmin/config.inc.php phpmyadmin/
+- adjust phpmyadmin/config.inc.php to your needs
 - access via http://localhost:8080/phpmyadmin/
 
 ## Using mailhog
