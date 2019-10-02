@@ -784,7 +784,9 @@ function traitementTinyclues(){
         unlink($newFichier);
         $oldfichier = explode("/", $newFichier);
         $oldfichier = "$oldfichier[0]/$oldfichier[2]";
-        unlink($oldfichier);
+        if(!is_dir($oldfichier)) {
+            unlink($oldfichier);
+        }
     }
     rmdir("/tinyclues/dedoublon");
 
