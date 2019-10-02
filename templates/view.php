@@ -74,7 +74,7 @@
     <!-- bootstrap date picker -->
     <link href="/vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js" rel="stylesheet" type="text/css" />
     <!-- Millesima fancybox -->
-    <link href="/css/default/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    <link href="/vendor/fancyapps/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -185,7 +185,7 @@
 </aside>
     <div class="data-loading" id="data-loading" style="display:none;">
             <span>
-                <img src="<?php echo $this->data['url']?>images/opc-ajax-loader.gif" alt="Loading step data..." title="Loading step data..." class="v-middle" />
+
                 Loading step data...
             </span>
     </div>
