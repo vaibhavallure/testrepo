@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<!-- jQuery 2.1.3 -->
-<script src="/js/default/jQuery-2.1.3.min.js"></script>
+<!-- jQuery 3.3.1 -->
+<script src="/vendor/almasaeed2010/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- <script src="/vendor/almasaeed2010/adminlte/bower_components/jquery/dist/jquery.slim.js"></script> -->
 <!-- Bootstrap 3.3.7 JS -->
 <script src="/vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
