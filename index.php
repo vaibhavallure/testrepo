@@ -748,7 +748,7 @@ function traitementTinyclues(){
     foreach ($fichierTinyclues as $fichier){
         fputs ( $logFile, $fichier."\r\n"); //on ecrit la ligne dedans
         $contents = file_get_contents("ssh2.sftp://$sftp/data/from_tc/$fichier");
-        file_put_contents ("/var/www/emailing/tinyclues/$fichier", $contents);
+        file_put_contents ("tinyclues/$fichier", $contents);
     }
 
     //Dedoublonnage des fichiers non US (S'il y en a)
@@ -786,7 +786,7 @@ function traitementTinyclues(){
         $oldfichier = "$oldfichier[0]/$oldfichier[2]";
         unlink($oldfichier);
     }
-    rmdir("tinyclues/dedoublon");
+    rmdir("/tinyclues/dedoublon");
 
     fclose ( $logFile );
     getSegmentView($html,'../../');

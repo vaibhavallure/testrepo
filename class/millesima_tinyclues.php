@@ -167,26 +167,29 @@ class Millesima_Tinyclues{
     }
 
     function deplaceFichier($fichier, $year, $dossier, $nameNewFichier, $type, $pays="") {
-        if(!file_exists("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year")){
-            mkdir("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year");
+        if(!file_exists("tinyclues/archivage/$type")){
+            mkdir("tinyclues/archivage/$type");
         }
-        if(!file_exists("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing")){
-            mkdir("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing");
+        if(!file_exists("tinyclues/archivage/$type/$year")){
+            mkdir("tinyclues/archivage/$type/$year");
         }
-        if($pays != "" && !file_exists("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays")){
-            mkdir("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays");
+        if(!file_exists("tinyclues//archivage/$type/$year/emailing")){
+            mkdir("tinyclues/archivage/$type/$year/emailing");
         }
-        if($pays != "" && !file_exists("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays")){
-            mkdir("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays");
+        if($pays != "" && !file_exists("tinyclues/archivage/$type/$year/emailing/$pays")){
+            mkdir("tinyclues/archivage/$type/$year/emailing/$pays");
         }
-        if(!file_exists("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier")){
-            mkdir("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier");
+        if($pays != "" && !file_exists("tinyclues/archivage/$type/$year/emailing/$pays")){
+            mkdir("tinyclues/archivage/$type/$year/emailing/$pays");
         }
-        if(!file_exists("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier/extraction")){
-            mkdir("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier/extraction");
+        if(!file_exists("tinyclues/archivage/$type/$year/emailing/$pays$dossier")){
+            mkdir("tinyclues/archivage/$type/$year/emailing/$pays$dossier");
         }
-        copy("/var/www/emailing/tinyclues/dedoublon/$fichier","/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier/extraction/$fichier");
-        rename("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier/extraction/$fichier","/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$pays$dossier/extraction/extraction_$nameNewFichier.csv");
+        if(!file_exists("tinyclues/archivage/$type/$year/emailing/$pays$dossier/extraction")){
+            mkdir("tinyclues/archivage/$type/$year/emailing/$pays$dossier/extraction");
+        }
+        copy("tinyclues/dedoublon/$fichier","tinyclues/archivage/$type/$year/emailing/$pays$dossier/extraction/$fichier");
+        rename("tinyclues/archivage/$type/$year/emailing/$pays$dossier/extraction/$fichier","tinyclues/archivage/$type/$year/emailing/$pays$dossier/extraction/extraction_$nameNewFichier.csv");
 
     }
     
@@ -291,17 +294,17 @@ class Millesima_Tinyclues{
                     $caract = substr($nomFichier,0,1);
                     if($caract == "u"){
                         $nomFichier2 = substr($nomFichier, 1, strlen($nomFichier));
-                        copy("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/USA/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier2.csv");
+                       copy("tinyclues/archivage/$type/$year/emailing/USA/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier2.csv");
                         $nomFichier = $nomFichier2;
                     }else{
-                        copy("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/USA/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier.csv");
+                       copy("tinyclues/archivage/$type/$year/emailing/USA/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier.csv");
                     }
                 }
             }else{
-                copy("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/USA/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier.csv");
+                copy("tinyclues/archivage/$type/$year/emailing/USA/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier.csv");
             }
         }else{
-            copy("/mnt/sf_P_DRIVE/Millésima/Marketing/Messages/$type/$year/emailing/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier.csv");
+            copy("tinyclues/archivage/$type/$year/emailing/$dossier/extraction/extraction_$nomFichier.csv","fichiers/segment-file/extraction_$nomFichier.csv");
             if(!$brief){
                 $html .= "Aucun brief créé pour l'extraction $dossier. L'envoi de segment est donc annulé !";
                 $erreur = true;
