@@ -21,7 +21,7 @@ class Allure_Salesforce_Adminhtml_SyncController extends Mage_Adminhtml_Controll
         $objectType = $formData["object_type"];
         $entityArray = explode(',',$entityId);
         $salesfoceModel = Mage::getModel('allure_salesforce/observer_update');
-        echo "<pre>";
+        //echo "<pre>";
         $requestArray = array();
         switch ($objectType) {
             case "account":
@@ -59,7 +59,7 @@ class Allure_Salesforce_Adminhtml_SyncController extends Mage_Adminhtml_Controll
             default:
                 return "";
         }
-        //$salesfoceModel->sendCompositeRequest($requestArray,null);
-        print_r($requestArray);
+        $salesfoceModel->sendCompositeRequest($requestArray,null);
+        //print_r($requestArray);
     }
 }

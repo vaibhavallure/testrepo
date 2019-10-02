@@ -60,15 +60,15 @@
 				</observers>
 			</customer_save_after>
 			
-			<customer_address_save_after>
-				<observers>
-					<allure_salesforce>
-	                    <type>singleton</type>
-	                    <class>allure_salesforce/observer_customer</class>
-	                    <method>changeCustomerAddressToSalesforce</method>
-	                </allure_salesforce>
-				</observers>
-			</customer_address_save_after>
+			<!--<customer_address_save_after>-->
+				<!--<observers>-->
+					<!--<allure_salesforce>-->
+	                    <!--<type>singleton</type>-->
+	                    <!--<class>allure_salesforce/observer_customer</class>-->
+	                    <!--<method>changeCustomerAddressToSalesforce</method>-->
+	                <!--</allure_salesforce>-->
+				<!--</observers>-->
+			<!--</customer_address_save_after>-->
 			
 			
 			<sales_order_save_after>
