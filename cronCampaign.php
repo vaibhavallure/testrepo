@@ -73,20 +73,20 @@ foreach ($tabBriefComplete as $idBrief){
 
         //get html
         $html = $message['html'];
-        $filename = "/var/www/emailing/fichiers/tmpGeneratePng.html";
+        $filename = "fichiers/tmpGeneratePng.html";
         $handle = fopen("$filename", "w");
         fwrite($handle,$html);
         fclose($handle);
 
         //set image
-        $test = shell_exec('/var/www/emailing/library/phantomjs /var/www/emailing/js/millesima/generateImg.js');
-        rename('/var/www/emailing/fichiers/tmpGeneratePng.html.png', '/var/www/emailing/fichiers/'.$namePng.'.png');
+        $test = shell_exec('library/phantomjs js/millesima/generateImg.js');
+        rename('fichiers/tmpGeneratePng.html.png', 'fichiers/'.$namePng.'.png');
 
         //set Meta
-        $test = shell_exec('/var/www/emailing/library/Image-ExifTool-10.96/exiftool -overwrite_original -SubjectCode='.chr(34).$codePick.chr(34).' -ModelAge='.$year.'  /var/www/emailing/fichiers/'.$namePng.'.png');
+        $test = shell_exec('library/Image-ExifTool-10.96/exiftool -overwrite_original -SubjectCode='.chr(34).$codePick.chr(34).' -ModelAge='.$year.'  fichiers/'.$namePng.'.png');
 
         //move file
-        copy("/var/www/emailing/fichiers/".$namePng.".png","/mnt/CUMULUS/Catalogage_Automatique/Emailings/".$namePng.".png");
+        copy("fichiers/".$namePng.".png","fichiers/archivage/Catalogage_Automatique/Emailings/".$namePng.".png");
         //die('gfdgdfgd');
     }
 

@@ -32,15 +32,21 @@
 > ByeBye
 
 ## Using phpMyAdmin
-If you want to use phpMyadmin :
+If you want to use phpmyadmin :
 - cd into project directory
 - composer create-project phpmyadmin/phpmyadmin (outside of container)
 - cp phpdocker/phpmyadmin/config.inc.php phpmyadmin/
 - adjust phpmyadmin/config.inc.php to your needs
 - access via http://localhost:8080/phpmyadmin/
 
+## Exporting emailing database from srv-zend
+- ssh into srv-zend
+- switch to su
+- create dump using
+> mysqldump -u root -p[password] --default-character-set=latin1 emailing -r backup_db_emailing_[date].sql
+
 ## Using mailhog
-- By default containter is using mhsendmail to send internal emails to mailhog
+- By default container is using mhsendmail to send internal emails to mailhog
 - you can access mailhog via http://localhost:8025
 - check phpdocker/php-fpm/php-ini-overrides.ini 
 - see section below
@@ -49,11 +55,13 @@ If you want to use phpMyadmin :
 - Setup cron* files on project root in a crontab
 - Setup mails on server so that sales, marketing etc.. can be aware of their tasks
 - Edit /class/millesima_abstract.php to setup Host server
-- Mount CUMULUS folder on host CF : cronCampaign.php (untested by me as I am writing this - is it used ?)
 - Test stuffs before deploying ...
 
 ## Todos
 - Save PromotionCards to database
+- Create a task to copy tinyclues/archivage on internal network
 - Ugrade Slim Library as we're using a very old one
 - Migrate database to mysql 8.0 using modern encoding utf8mb4
+- Change usage of library/PHPExcel to vendor/phpoffice
+
 
