@@ -42,7 +42,7 @@
 
 <div class="grand-total col-12">
 <?php foreach ($totalsArray as $code => $totals):?>
-	<?php if($totalsArray[$code]["value"] > 0):?>
+	<?php if($totalsArray[$code]["value"] != 0):?>
 	<div class="inner row">
 		<div class="col-6 offset-lg-6 text-right">
 			<div class="row justify-content-around">
