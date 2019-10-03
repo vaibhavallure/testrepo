@@ -1,0 +1,4 @@
+* * * * * echo "Hello world" >> /var/log/cron.log 2>&1
+0 8 * * 1,2,3,4,5 php /application/cronCampaign.php
+*/10 * * * 1-5 php /application/cronSegmentList.php >> /application/cronSegmentList.log
+# An empty line is required at the end of this file for a valid cron file.

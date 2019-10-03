@@ -2,6 +2,13 @@
 ## Requirements
 - Docker
 - Composer & php7.2+
+
+## Containers
+- millesima-emailing-php-fpm responsible for php-fpm service
+- millesima-emailing-mysql responsible for mysql database
+- millesima-emailing-webserver responsible for nginx webserver service
+- millesima-emailing-mailhog responsible for mailhog service
+- millesima-emailing-cron responsible for cron deamon
 ## Setup
 - Clone repository
 - Launch Docker using docker-compose up -d
