@@ -246,6 +246,9 @@
   .category-piercing-gallery .for-space-to-bottom{
     height: 20px !important;
   }
+  .shop_by_look .big-popup-body {
+    padding: 48px 26px 48px 29px!important;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -630,6 +633,13 @@ margin-left: 10px;
   }
   .btn-quickview {
     display: none !important;
+  }
+  .popup-left-section, .popup-right-section {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+  .shop_by_look .celeb-info {
+    margin-top: 0;
   }
 }
 
