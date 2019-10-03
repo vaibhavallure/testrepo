@@ -1018,6 +1018,18 @@ margin-left: 10px;
   .close-section{
     display: none;
   }
+  /*footer display on hover bottom  of the page*/
+  .catalog-category-view .footer {
+    padding-top: 0px !important;
+    height: auto;
+    z-index: 1;
+    position: fixed;
+    bottom: 0px;
+    opacity: 0;
+  }
+  .catalog-category-view .footer:hover {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 1200px){

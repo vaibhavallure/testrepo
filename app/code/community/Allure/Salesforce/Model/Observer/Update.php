@@ -198,7 +198,6 @@ class Allure_Salesforce_Model_Observer_Update
 
             $request = $helper->getOrderRequestData($order,$create);
 
-
             if($create){
                 if(!empty($request))
                     array_push($orderList, $request["request"]);
@@ -249,13 +248,13 @@ class Allure_Salesforce_Model_Observer_Update
             foreach ($customers as $customer) {
                 $salesforceId = $customer->getSalesforceCustomerId();
                 $salesforceContactId = $customer->getSalesforceContactId();
-                $requestData = $helper->getCustomerRequestData($customer,false,false);
+                $requestData = $helper->getCustomerRequestData($customer,$create,false);
 
                 if($create){
                     //don't push to Salesforce if the ID's are present for Account or Contact
-                    if(!$salesforceId && !empty($customerList) && !empty($customerList["customer"]))
+                    if(!$salesforceId && !empty($requestData) && !empty($requestData["customer"]))
                         array_push($customerList['customer'], $requestData["customer"]);
-                    if(!$salesforceContactId && !empty($customerList) && !empty($customerList["contact"]))
+                    if(!$salesforceContactId && !empty($requestData) && !empty($requestData["contact"]))
                         array_push($customerList['contact'], $requestData["contact"]);
                 }else{
                     if(!empty($requestData) && !empty($requestData["customer"]))
@@ -437,7 +436,7 @@ class Allure_Salesforce_Model_Observer_Update
         return $shipmentTrackList;
     }
 
-    private function getProductUpdateData($lastRunTime = null, $list = null)
+    public function getProductUpdateData($lastRunTime = null, $list = null)
     {
         $helper = $this->getHelper();
         $helper->salesforceLog("------------BULK UPDATE: start getProductUpdateData request.",true);
