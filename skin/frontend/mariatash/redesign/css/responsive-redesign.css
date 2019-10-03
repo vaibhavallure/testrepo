@@ -243,6 +243,9 @@
   .maria-left-menus{
     top: 2px;
   }
+  .category-piercing-gallery .for-space-to-bottom{
+    height: 20px !important;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -352,7 +355,7 @@
   .celebPopup .product-info {
     position: relative;
     bottom: 0;
-    margin-top: 30px;
+    /* margin-top: 30px; */
   }
   .big-popup-body{
     padding: 28px 93px !important;
@@ -371,7 +374,7 @@
     flex: 0 0 33.33% !important;
     max-width: 33.33% !important;
   }
-  .simple-page-title{
+  .catalog-category-view .simple-page-title{
     padding: 0!important;
   }
 
@@ -515,6 +518,9 @@ margin-left: 10px;
   }
   .celeb-info{
     margin-top: 30px;
+  }
+  .shop_by_look .celeb-info {
+    margin-top: 0;
   }
   .big-popup-body {
     padding: 28px 75px !important;
@@ -874,8 +880,6 @@ margin-left: 10px;
     height: auto;
     width: auto;
   }
-
-
   .homepageSliderControllers .nextS{
     top: 45%;
     right: 8px;
@@ -888,6 +892,9 @@ margin-left: 10px;
     height: 45px;
     width: 20px;
     z-index: 1;
+  }
+  .popup-right-section{
+    padding: 20px 30px 0 26px;
   }
 }
 
@@ -999,5 +1006,8 @@ margin-left: 10px;
   }
   .common-redesign-checkout .for-space-to-bottom {
     height: 470px;
+  }
+  .categorypath-piercing-piercing-gallery-html .category-products {
+    margin-top: 0;
   }
 }
