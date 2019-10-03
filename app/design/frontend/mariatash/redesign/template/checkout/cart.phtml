@@ -61,7 +61,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
         <?php endforeach; ?>
         </ul>
     <?php endif;*/ ?>
-    <form id="shopping-cart-form" class="col-8" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
+    <form id="shopping-cart-form" class="col-lg-8 col-md-12 col-12" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
        <?php echo $this->getBlockHtml('formkey'); ?>
         <fieldset>
           <div class="checkout-list-title">
@@ -70,10 +70,10 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
             <table id="shopping-cart-table" class="data-table cart-table" width="100%" border="0">
                 <thead class="shop-titles">
                 <tr>
-                    <th class="product-column" colspan="2"><?php echo $this->__('Product'); ?></th>
-                    <th class="price-column text-center"><?php echo $this->__('Price'); ?></th>
-                    <th class="quantity-column text-center"><?php echo $this->__('Quantity '); ?></th>
-                    <th class="subtotal-column text-right"><?php echo $this->__('Subtotal'); ?></th>
+                    <th class="product-column" colspan="2" data-th="Product"><?php echo $this->__('Product'); ?></th>
+                    <th class="price-column text-center" data-th="Price"><?php echo $this->__('Price'); ?></th>
+                    <th class="quantity-column text-center" data-th="Quantity"><?php echo $this->__('Quantity '); ?></th>
+                    <th class="subtotal-column text-right" data-th="Subtotal"><?php echo $this->__('Subtotal'); ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -91,7 +91,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
         </fieldset>
     </form>
 
-    <div class="cart-collaterals col-4 fix-section">
+    <div class="cart-collaterals col-lg-4 col-md-12 col-12 fix-section">
         <div class="collat-wrap">
             <table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table w-100">
                 <tr>

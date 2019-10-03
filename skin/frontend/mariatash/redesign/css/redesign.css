@@ -2904,7 +2904,7 @@ table thead {
   border-bottom: 1px solid #d8d8d8;
 }
 .data-table.cart-table td {
-  /* vertical-align: top; */
+  vertical-align: initial;
 	margin-top: 40px;
 }
 .gift-row {
@@ -3112,6 +3112,7 @@ table thead {
 }
 .overview-price-qty{
 	line-height: 10px;
+	margin-top: -13px;   /*This is because of the different client request which is not standard*/
 }
 .place-order .grand-total {
   margin-top: 23px;
@@ -3148,6 +3149,10 @@ table thead {
   flex-grow: 1;
   max-width: 100%;
   padding: 0 15px;
+}
+.plus_icon, .minus_icon, .qty-wrap.total_qty{
+	display: flex;
+	justify-content: center;
 }
 /* cccc */
 /*MINI CART CSS*/

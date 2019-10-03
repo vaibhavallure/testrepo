@@ -43,7 +43,7 @@ if(!is_null($parentId)){
 ?>
 
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
-    <td class="cart_col1">
+    <td class="cart_col1" data-th="Product">
         <?php if ($isVisibleProduct && $this->hasProductUrl()):?>
         <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
     <?php else: ?>
@@ -99,10 +99,10 @@ if(!is_null($parentId)){
         </div>
 
     </td>
-    <td  class="cart_col3">
+    <td  class="cart_col3" data-th="Price">
         <?php echo "<span class='price_multi'>Price</span> ".$this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>
-    <td class="cart_col4">
+    <td class="cart_col4" data-th="Quantity">
         <div class="minus_icon minus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
             <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus quantity-count" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">-</span>
         </div>
@@ -115,7 +115,7 @@ if(!is_null($parentId)){
             <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus quantity-count" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">+</span>
         </div>
     </td>
-    <td  class="cart_col5 text-right">
+    <td  class="cart_col5 text-right" data-th="Subtotal">
         <div class="cart-price-box">
 
             <?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
