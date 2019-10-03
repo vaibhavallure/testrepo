@@ -212,13 +212,21 @@
                 $points .= '<div class="fs-arrow-up"></div>';
                 $points .= '" '.$productName.'</div></div></a>';
 
+                        $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId()));
+
                 $productsLinks .= '<div class="fs-text-link-container ">';
                 $productsLinks .= '<a class="fs-text-product fs-link-list" ';
                 $productsLinks .= 'data-original-url="'.$productUrl.'"';
                 $productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
                 $productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
-                $productsLinks .= '<span class="fs-link-text-number para-bold">'.$numberOfProducts.'</span> <span class="fs-slashes">  </span> ';
+
+                $productsLinks .= '<span class="fs-link-text-number para-bold">'.$numberOfProducts.'</span> <span class="fs-slashes"></span> ';
                 $productsLinks .= '<span class="fs-link-text para-bold"> '.$productName.' </span></span>';
+                $productsLinks.='<div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="'.$quickViewUrl.'sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
+                                  <div class="quick_link link-button d-block d-xs-block d-md-block d-lg-none d-xl-none"><a href="'.$product->getProductUrl().'" >Buy</a></div> ';
+
+
+
                 $productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
               }
               ?>
@@ -560,4 +568,33 @@ jQuery(document).ready(function(){
 		//jQuery('#fs-detail-response').remove();
 		//jQuery('#fs-instagram-view-container').html('<div class="instagram-loader"></div>');
 	}
+
+
+    jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'yes',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
+
+        afterLoad: function(current, previous) {
+
+        }
+    });
+
 </script>

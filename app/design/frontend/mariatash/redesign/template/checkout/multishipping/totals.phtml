@@ -1,0 +1,130 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart totals template
+ *
+ * @see Mage_Checkout_Block_Cart_Totals
+ * @var $this Mage_Checkout_Block_Cart_Totals
+ */
+?>
+<?php $customer = Mage::getSingleton('customer/session');?>
+<?php if ($this->canApplyMsrp()): ?>
+<div class="cart-msrp-totals">
+	<?= $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
+</div>
+<?php else:?>
+<table id="shopping-cart-totals-table" class="totals-table">
+    <?php $quote = $this->getQuote();?>
+    <?php $addresses = $quote->getAllShippingAddresses();?>
+    <?php $shipping = 0; $discount = 0; $tax = 0; $subtotal = 0; $grandTotal = 0;?>
+    <?php foreach ($addresses as $address):?>
+    	<?php $totals = $address->getTotals();?>
+    	<?php if(isset($totals['tax']) && $totals['tax']->getValue()):?>
+    		<?php $tax = $tax + $totals['tax']->getValue(); ?>
+    	<?php endif;?>
+    	<?php if(isset($totals['shipping']) && $totals['shipping']->getValue()):?>
+    		<?php $shipping = $shipping + $totals['shipping']->getValue();?>
+    	<?php endif;?>
+    <?php endforeach;?>
+	
+	<?php $totals = $quote->getTotals();?>
+	<?php if(isset($totals['discount']) && $totals['discount']->getValue()):?>
+    	<?php $discount = $discount + $totals['discount']->getValue();?>
+    <?php endif;?>
+    <?php if(isset($totals['subtotal']) && $totals['subtotal']->getValue()):?>
+    		<?php $subtotal = $subtotal + $totals['subtotal']->getValue();?>
+    <?php endif;?>
+    <?php if(isset($totals['grand_total']) && $totals['grand_total']->getValue()):?>
+    		<?php $grandTotal = $grandTotal + $totals['grand_total']->getValue();?>
+    <?php endif;?>
+    
+    
+	<col />
+   	<col width="1" />
+   	
+   	<tbody>
+		<tr>
+			<td class="cart-subtotals-left" colspan="1">
+				<span class="merchandise"><?= $this->__('Merchandise')?></span>    
+			</td>
+			<td class="cart-subtotals-right">
+				<span class="price"><?= $this->helper('checkout')->formatPrice($subtotal) ?></span>    
+			</td>
+		</tr>
+		<tr id="mt-shipping">
+			<td colspan="1">
+				<a style="color: #3f4048; text-decoration: none; cursor: normal;" class="mt-shipping-method">
+					<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
+				</a>
+			</td>
+			<td class="text-right">
+				<a class="mt-shipping-price">
+					<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
+				</a>
+			</td>
+		</tr>
+		<?php if($discount != 0): ?>
+		<tr>
+			<td colspan="1" class="cart-subtotals-left"><?= $this->__('Discount')?></td>
+			<td class="cart-subtotals-right">
+				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($discount)?></span>
+			</td>
+		</tr>
+		<?php endif;?>
+	</tbody>
+	
+	<tfoot>
+    	<?php if($tax > 0): ?>
+    	<tr class="summary-total">
+			<td>
+				<div class="info-text-three">
+					<span><?= $this->__('Estimated Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+				</div>
+			</td>
+			<td class="text-right">
+				<span class="reg-price price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+			</td>
+		</tr>
+		<?php endif; ?>
+     	<tr>
+			<td class="cart-subtotals-left" colspan="1">
+				<strong>
+					<span class="total-title"><?= $this->__('Total')?></span>
+				</strong>
+			</td>
+			<td class="cart-subtotals-right">
+				<strong><span class="price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span></strong>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<?php endif;?>
+
+
+
+

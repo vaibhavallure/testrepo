@@ -146,18 +146,10 @@
                         <div id="checkout-review-submit col-12">
                         <?php echo $this->getChildHtml('agreements') ?>
                         	<div class="place-order row">
-                            	<div class="grand-total col-12">
-                                	<div class="inner row">
-                                    	<big class="col-6 offset-lg-6 text-right">
-                                        <div class="row justify-content-around">
-                                          <span class="col"><?php echo $this->__('Grand Total') ?></span> <?php echo $this->helper('checkout')->formatPrice($this->getTotal()) ?>
-                                        </div>
-                                        </big>
-                                        <div id="review-buttons-container" class="col-12 text-right">
-                                        	<button type="submit" title="<?php echo $this->__('Checkout') ?>" class="button btn-checkout dark-button next-button" id="review-button"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
-                                       	</div>
-                                 	</div>
-                            	</div>
+                            	<?= $this->getChildHtml("totals");?>
+                            	<div id="review-buttons-container" class="col-12 text-right">
+                                	<button type="submit" title="<?php echo $this->__('Checkout') ?>" class="button btn-checkout dark-button next-button" id="review-button"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+                               	</div>
                                 <span class="please-wait" id="review-please-wait" style="display:none;">
                                		<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
                               	</span>

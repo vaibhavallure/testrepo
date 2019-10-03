@@ -1055,6 +1055,7 @@
 		max-width: 1140px;
 		margin: 0 auto!important;
 		padding: 0 15px!important;
+		margin-bottom: 29px!important;
 	}
 	.catalogsearch-result-index .mb-breadcrumbs,
 	.catalogsearch-result-index .mb-breadcrumbs .breadcrumbs{
@@ -1071,10 +1072,17 @@
 	.search_results h1{
 		font-size: 17px;
 	}
+	.search_results h1 span{
+		display: block;
+		font-size: 30px;
+		text-transform: capitalize;
+		margin-top: 12px;
+	}
 	.catalogsearch-result-index #narrow-by-list{
 		max-width: 1140px;
 		margin: 0 auto;
-		margin-top: 33px;
+		margin-top: 103px;
+		padding-left: 20px;
 	}
 	/*=====================*/
 	/*MEDIA QUERIES*/
@@ -1115,6 +1123,9 @@
 		}
 	}
 	@media(max-width:991px){
+		.popups-container h4{
+			margin-top: 3rem;
+		}
 		.login_security .fields .input-box, .list-form .fields .input-box{
 			margin-bottom: 0!important;
 		}
