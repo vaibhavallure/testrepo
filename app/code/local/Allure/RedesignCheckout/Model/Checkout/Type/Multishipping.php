@@ -185,6 +185,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         $this->getQuote()->removeAddress($address->getId());
                         $quoteAddress->setCollectShippingRates(1);
                         $backOrderAddress->setCollectShippingRates(1);
+                        $backOrderAddress->setIsContainBackorder(1);
                     }
                 }
             }

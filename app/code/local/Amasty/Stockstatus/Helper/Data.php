@@ -462,7 +462,7 @@ INLINECSS;
         $manageStock = $stock->getManageStock();
         $isInStock = $stock->getIsInStock();
         $isBackordered = false;
-        $backorderedQty = $_item->getQty();
+        $backorderedQty = round($_item->getQty());
 
 
 

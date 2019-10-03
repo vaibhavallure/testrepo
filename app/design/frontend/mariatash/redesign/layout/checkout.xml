@@ -141,10 +141,10 @@ will be rendered on all checkout pages
                 <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>ecp/checkout/cart/item/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>ecp/checkout/cart/item/default.phtml</template></action>
-			 <action method="addItemRender"><type>giftcards</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+			 	<action method="addItemRender"><type>giftcards</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
 
 
-                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/multishipping/totals.phtml">
                     <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 </block>
             </block>
@@ -319,7 +319,9 @@ Multi address shipping checkout overview
                     <action method="setInfoTemplate"><method></method><template></template></action>
                 </block>
                 <block type="checkout/agreements" name="checkout.multishipping.agreements" as="agreements" template="checkout/multishipping/agreements.phtml"/>
-                <block type="checkout/cart_totals" name="totals" />
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/multishipping/overview/totals.phtml">
+                    <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                </block>
                 <block type="core/text_list" name="checkout.multishipping.overview.items.after" as="items_after" translate="label">
                     <label>Overview Items After</label>
                 </block>
