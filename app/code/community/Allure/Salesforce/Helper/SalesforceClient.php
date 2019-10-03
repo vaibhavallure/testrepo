@@ -738,6 +738,13 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             }
             $fullName .= $lName;
 
+            //echo $customer->getId()."-".strlen($fName).":".strlen($lName)."</br>";
+            if(strlen($fName) < 1 || strlen($lName)< 1) {
+                $this->salesforceLog("Tried to get data of Customer or Contact - ".$customer->getId().". But Customer or Contact Doesn't have any name-".$salesforceId);
+                return;
+            }
+
+
             $defaultBillingAddr = $customer->getDefaultBillingAddress();
             $state = "";
             $countryName = "";
@@ -1268,7 +1275,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         "Jewelry_Care__c" => $product->getJewelryCare(),
                         //"Metal_Color__c"            => $product->getMetal(),
                         "ProductCode" => $product->getId(),
-                        "Description" => htmlspecialchars($product->getDescription()),
+                        "Description" => htmlspecialchars(str_replace('"',"'",$product->getDescription())),
                         "Family" => $product->getTypeId(),
                         "Name" => $product->getName(),
                         "StockKeepingUnit" => $product->getSku(),
@@ -1408,7 +1415,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                                 "UnitPrice" => $wholesalePrice
                             );
                             //array_push($sRequest["records"], $sTemp);
-                            $sRequest["records"] = $sTemp;
+                            $sRequest["records"][] = $sTemp;
                         }
                     } else {
                         $sRequest["records"] = array(
@@ -1481,7 +1488,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 "credit_memo" => array("sales_flat_creditmemo", "salesforce_creditmemo_id"),
                 "shipment" => array("sales_flat_shipment", "salesforce_shipment_id"),
                 "shipment_track" => array("sales_flat_shipment_track","salesforce_shipment_track_id"),
-                "product" =>  array("_", "salesforce_product_id"),
+                "products" =>  array("_", "salesforce_product_id"),
                 "productG" =>  array("_", "salesforce_standard_pricebk"),
                 "productW" =>  array("_", "salesforce_wholesale_pricebk"),
             );
