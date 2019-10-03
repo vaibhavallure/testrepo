@@ -306,6 +306,10 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
                 }
 
+                /* EXTRA METHOD TO CHECK FOR BROWNTHOMAS WILL BE VISIBLE OR NOT*/
+                if(( $storeId == $limerick) || ($storeId == $cork)  ) {
+                    $show = Mage::helper('appointments')->checkVisible($selectedTime, $endTime, $date, $show);
+                }
                 if($show==true) :
                     $countSlot++;
                     if((($countSlot - 1) % $timeslot_col_size == 0) || $countSlot==1 ){
