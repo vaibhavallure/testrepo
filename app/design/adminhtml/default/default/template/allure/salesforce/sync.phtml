@@ -1,0 +1,57 @@
+<style>
+    .allure-salesforce-div{
+        padding: 5px;
+    }
+    .sync-button {
+        border-width: 1px;
+        border-style: solid;
+        border-color: #ed6502 #a04300 #a04300 #ed6502;
+        padding: 1px 7px 2px 7px;
+        background: #ffac47 url(images/btn_bg.gif) repeat-x 0 100%;
+        color: #fff;
+        font: bold 12px arial, helvetica, sans-serif;
+        cursor: pointer;
+        text-align: center !important;
+        white-space: nowrap;
+    }
+    .sync-button:hover{
+        background: #f77c16 url(images/btn_over_bg.gif) repeat-x 0 0;
+    }
+</style>
+
+<?php
+$_helper            = Mage::helper("allure_salesforce/sync");
+$_objectList        = $_helper->getObjectListForSync();
+?>
+<div id="main-div-sync">
+    <h1><?php echo $this->__("Salesforce Sync")?></h1>
+    <form id="form-gen-csv" action="<?php echo $this->getSyncFormUrl()?>" method="post" enctype="multipart/form-data">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <div class="allure-salesforce-div">
+            <div>
+                <label><strong><?php echo $this->__("Object Type")?></strong></label>
+            </div>
+            <div>
+                <select class="required-entry" name="object_type" id="object-type" required>
+                    <option value=""><?php echo $this->__("-- Please select --")?></option>
+                    <?php foreach ($_objectList as $_objKey => $_objVal):?>
+                        <option value="<?php echo $_objKey?>"><?php echo $_objVal?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+        <div class="allure-salesforce-div">
+            <div>
+                <label><strong><?php echo $this->__("EntityId")?></strong></label>
+            </div>
+            <div>
+                <input class="required-entry" name="entityId" value="" required />
+            </div>
+        </div>
+        <div class="allure-salesforce-div">
+            <div>
+                <input class="sync-button" name="Submit" type="submit"/>
+            </div>
+        </div>
+    </form>
+</div>
