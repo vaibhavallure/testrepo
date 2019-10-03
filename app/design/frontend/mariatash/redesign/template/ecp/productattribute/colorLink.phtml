@@ -15,9 +15,9 @@ $productId  = $this->getConfigId();
         $optionLb = $option[$attribute_code . "_value"];
         $simple_id = $option['child_id'];     
         ?>
-        <li id="<?php echo $simple_id ?>" 
-            style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;" 
-            class="colorSelector tipped-create" value="<?php echo $optionId ?>" 
+        <li id="<?php echo $simple_id ?>"
+            style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;"
+            class="colorSelector tipped-create" value="<?php echo $optionId ?>"
             title="<?php echo $optionLb ?>" >
             <div style="display: none">
                 <?php if($attribute_code == 'color_apparel'):?>
@@ -27,7 +27,7 @@ $productId  = $this->getConfigId();
                 <?php endif;?>
                 <span id="price-<?php echo $simple_id; ?>"></span>
             </div>
-        </li>            
+        </li>
 <?php endforeach; ?>
 </ul>
 </div>
