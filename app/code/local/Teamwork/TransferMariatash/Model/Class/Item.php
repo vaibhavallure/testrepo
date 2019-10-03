@@ -1,149 +1,149 @@
 <?php
 class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_Transfer_Model_Class_Item
 {
-	protected $_productTypes = array(
+    protected $_productTypes = array(
         self::CHQ_PRODUCT_TYPE_SINGLEITEM    => Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE,
         self::CHQ_PRODUCT_TYPE_SERVICEITEM   => Mage_Catalog_Model_Product_Type::TYPE_SIMPLE,
         self::CHQ_PRODUCT_TYPE_STYLE         => Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE
     );
-	
-	protected function _beforeAddData(&$productData, &$style, &$typeId, &$item, &$topProduct)
-	{
-        $productData['teamwork_plu'] = $item['plu'];
-		if ($topProduct)
-		{
-			/*ring_closing_mechanism*/
-			if (!empty($style['customlongtext16']))
-			{
-				$optionId = null;
-				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_closing_mechanism');
-					if ($attr->usesSource()) 
-					{
-						$optionId = $attr->getSource()->getOptionId($style['customlongtext16']);
-					}
-				$productData['ring_closing_mechanism'] = $optionId;
-			}
-			/*ring_closing_mechanism*/
-			
-			/*ring_diameter_as_filter*/
-			if (!empty($style['customlongtext17']))
-			{
-				$optionId = null;
-				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_diameter_as_filter');
-					if ($attr->usesSource()) 
-					{
-						$optionId = $attr->getSource()->getOptionId($style['customlongtext17']);
-					}
-				$productData['ring_diameter_as_filter'] = $optionId;
-			}
-			/*ring_diameter_as_filter*/
-			
-			/*diamond_color*/
-			if (!empty($style['custommultiselect1']))
-			{
-				$attrValues = unserialize($style['custommultiselect1']);
-				$optionId = array();
-				if(isset($attrValues['LookupName']))
-				{
-					$attrValues = $attrValues['LookupName'];
-					if(is_array($attrValues))
-					{
-						foreach ($attrValues as $val)
-						{
-							$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
-							if ($attr->usesSource()) 
-							{
-								$optionId[] = $attr->getSource() ->getOptionId($val);
-							}
-							
-						}
-					}
-					else
-					{
-						$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
-						if ($attr->usesSource()) 
-						{
-							$optionId[] = $attr->getSource() ->getOptionId($attrValues);
-						}
-					}
-				}
-			}
-			
-			$productData['diamond_color'] = $optionId;
-			/*diamond_color*/
-			
-			/*gemstone*/
-			if (!empty($style['custommultiselect2']))
-			{
-				$attrValues = unserialize($style['custommultiselect2']);
-				$optionId = array();
-				if(isset($attrValues['LookupName']))
-				{
-					$attrValues = $attrValues['LookupName'];
-					if(is_array($attrValues))
-					{
-						foreach ($attrValues as $val)
-						{
-							$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
-							if ($attr->usesSource()) 
-							{
-								$optionId[] = $attr->getSource()->getOptionId($val);
-							}
-							
-						}
-					}
-					else
-					{
-						$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
-						if ($attr->usesSource()) 
-						{
-							$optionId[] = $attr->getSource() ->getOptionId($attrValues);
-						}
-					}
-				}
-			}
-			
-			$productData['gemstone'] = $optionId;
-			/*gemstone*/
-		}
-		else
-		{
-			/*vendor_item_no*/
-			if (!empty($item['c_vlu']))
-			{
-				$productData['vendor_item_no'] = $item['c_vlu'];
-			}
-            
-			/*vendor_item_no*/
-			/*thread_type*/
-			if (!empty($item['Attribute3']))
-			{
-				$optionId = null;
-				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('thread_type');
-				if ($attr->usesSource()) 
-				{
-					$optionId = $attr->getSource()->getOptionId($item['Attribute3']);
-				}
-				$productData['thread_type'] = $optionId;
-			}
-			/*thread_type*/
 
-			/*ball_size*/
-			if (!empty($item['Attribute3']))
-			{
-				$optionId = null;
-				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ball_size');
-				if ($attr->usesSource()) 
-				{
-					$optionId = $attr->getSource()->getOptionId($item['Attribute3']);
-				}
-			$productData['ball_size'] = $optionId;
-			}
-			/*ball_size*/
-		}
-	}
-	
-	protected function _getProductData(&$style, $typeId = Mage_Catalog_Model_Product_Type::TYPE_SIMPLE, $item = null)
+    protected function _beforeAddData(&$productData, &$style, &$typeId, &$item, &$topProduct)
+    {
+        $productData['teamwork_plu'] = $item['plu'];
+        if ($topProduct)
+        {
+            /*ring_closing_mechanism*/
+            if (!empty($style['customlongtext16']))
+            {
+                $optionId = null;
+                $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_closing_mechanism');
+                if ($attr->usesSource())
+                {
+                    $optionId = $attr->getSource()->getOptionId($style['customlongtext16']);
+                }
+                $productData['ring_closing_mechanism'] = $optionId;
+            }
+            /*ring_closing_mechanism*/
+
+            /*ring_diameter_as_filter*/
+            if (!empty($style['customlongtext17']))
+            {
+                $optionId = null;
+                $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_diameter_as_filter');
+                if ($attr->usesSource())
+                {
+                    $optionId = $attr->getSource()->getOptionId($style['customlongtext17']);
+                }
+                $productData['ring_diameter_as_filter'] = $optionId;
+            }
+            /*ring_diameter_as_filter*/
+
+            /*diamond_color*/
+            if (!empty($style['custommultiselect1']))
+            {
+                $attrValues = unserialize($style['custommultiselect1']);
+                $optionId = array();
+                if(isset($attrValues['LookupName']))
+                {
+                    $attrValues = $attrValues['LookupName'];
+                    if(is_array($attrValues))
+                    {
+                        foreach ($attrValues as $val)
+                        {
+                            $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
+                            if ($attr->usesSource())
+                            {
+                                $optionId[] = $attr->getSource() ->getOptionId($val);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
+                        if ($attr->usesSource())
+                        {
+                            $optionId[] = $attr->getSource() ->getOptionId($attrValues);
+                        }
+                    }
+                }
+            }
+
+            $productData['diamond_color'] = $optionId;
+            /*diamond_color*/
+
+            /*gemstone*/
+            if (!empty($style['custommultiselect2']))
+            {
+                $attrValues = unserialize($style['custommultiselect2']);
+                $optionId = array();
+                if(isset($attrValues['LookupName']))
+                {
+                    $attrValues = $attrValues['LookupName'];
+                    if(is_array($attrValues))
+                    {
+                        foreach ($attrValues as $val)
+                        {
+                            $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
+                            if ($attr->usesSource())
+                            {
+                                $optionId[] = $attr->getSource()->getOptionId($val);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
+                        if ($attr->usesSource())
+                        {
+                            $optionId[] = $attr->getSource() ->getOptionId($attrValues);
+                        }
+                    }
+                }
+            }
+
+            $productData['gemstone'] = $optionId;
+            /*gemstone*/
+        }
+        else
+        {
+            /*vendor_item_no*/
+            if (!empty($item['c_vlu']))
+            {
+                $productData['vendor_item_no'] = $item['c_vlu'];
+            }
+
+            /*vendor_item_no*/
+            /*thread_type*/
+            if (!empty($item['Attribute3']))
+            {
+                $optionId = null;
+                $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('thread_type');
+                if ($attr->usesSource())
+                {
+                    $optionId = $attr->getSource()->getOptionId($item['Attribute3']);
+                }
+                $productData['thread_type'] = $optionId;
+            }
+            /*thread_type*/
+
+            /*ball_size*/
+            if (!empty($item['Attribute3']))
+            {
+                $optionId = null;
+                $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ball_size');
+                if ($attr->usesSource())
+                {
+                    $optionId = $attr->getSource()->getOptionId($item['Attribute3']);
+                }
+                $productData['ball_size'] = $optionId;
+            }
+            /*ball_size*/
+        }
+    }
+
+    protected function _getProductData(&$style, $typeId = Mage_Catalog_Model_Product_Type::TYPE_SIMPLE, $item = null)
     {
         if($typeId == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE || $this->_productTypes[$style[Teamwork_Service_Model_Mapping::FIELD_STYLE_INVETTYPE]] == Mage_Catalog_Model_Product_Type::TYPE_SIMPLE)
         {
@@ -217,11 +217,11 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
         }
 
         $this->_beforeAddData($productData, $style, $typeId, $item, $topProduct);
-        
+
         //mapping rich content
         $this->_mappingRichContent($productData, $style, $this->_globalVars['channel_id'], $item, $typeId);
 
-		// it's important to add name suffix at the end of _getProductData, when product name won't be changed by any function
+        // it's important to add name suffix at the end of _getProductData, when product name won't be changed by any function
         if(!$topProduct)
         {
             $suffix = '';
@@ -232,14 +232,14 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                     $suffix .= ' ' . trim($this->_attributeValues[$item["attribute{$i}_id"]]['attribute_value']);
                 }
             }
-            
+
             if(!empty($suffix))
             {
                 $prefix = !empty($productData['name']) ? $productData['name'] : '';
                 $productData['name'] = $prefix . $suffix;
             }
-			/*set sku in simple products*/
-			$suffix = '';
+            /*set sku in simple products*/
+            $suffix = '';
             for($i = 1; $i <= 3; $i++)
             {
                 if(!empty($item["attribute{$i}_id"]) && !empty($this->_attributeValues[$item["attribute{$i}_id"]]) && $this->_attributes[$this->_attributeValues[$item["attribute{$i}_id"]]['attribute_set_id']]['is_active'])
@@ -247,21 +247,21 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                     $suffix .= '|' . trim($this->_attributeValues[$item["attribute{$i}_id"]]['attribute_value']);
                 }
             }
-            
+
             if(!empty($suffix))
             {
                 $prefix = !empty($style['no']) ? $style['no'] : '';
                 $productData['sku'] = $prefix . $suffix;
             }
-			
+
         }
-        
+
         //push once
         $this->_pushOnce($productData, $style, $typeId, $item);
 
         return $productData;
     }
-    
+
     public function getConfigurableAttributesData($product, &$children, &$style, $forceSetParentPrices = true)
     {
         $configurableAttributesTempAttributes = array();
@@ -286,22 +286,22 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                 break;
             }
         }
-        
+
         foreach($children as $childId => $childAttributes)
         {
             foreach($childAttributes as $childAttribute)
             {
                 $optionSets[$childAttribute['plu']][$childAttribute['attribute_id']] = $childAttribute['value_index'];
-                
+
                 $price = floatval($childAttribute['pricing_value']);
                 if (($disabledAll || $childAttribute['product_status'] == Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
-                        && (is_null($minChildPrice) || $price < $minChildPrice))
+                    && (is_null($minChildPrice) || $price < $minChildPrice))
                 {
                     $minChildPrice = $price;
                     $minPriceChildProd = $childAttribute['price_data_object'];
                 }
                 if (($disabledAll || $childAttribute['product_status'] == Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
-                        && (is_null($maxChildPrice) || $price > $maxChildPrice))
+                    && (is_null($maxChildPrice) || $price > $maxChildPrice))
                 {
                     $maxChildPrice = $price;
                     $maxPriceChildProd = $childAttribute['price_data_object'];
@@ -329,7 +329,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                 }
             }
         }
-       
+
         /*get attributes to skip using collected data*/
         $skipPricingAttributeIds = array();
         $foundPricingAttr = 0;
@@ -359,7 +359,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                 {
                     $select = $this->_db->select()
                         ->from(Mage::getSingleton('core/resource')->getTableName('service_style'), array('no'))
-                    ->where('internal_id = ?', $style['internal_id']);
+                        ->where('internal_id = ?', $style['internal_id']);
                     $noTemp = $this->_db->fetchOne($select);
                     if (!empty($noTemp))
                     {
@@ -406,7 +406,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                 $this->_getLogger()->addMessage(sprintf("Error occured while detecting pricing attributes: sku: %s: detected the following attribute ids: %s", $product->getSku(), implode(',', $skipPricingAttributeIds)), Zend_Log::ERR);
             }
         }
-        
+
         $superAttributes = array();
         if( !empty($style['internal_id']) )
         {
@@ -434,9 +434,9 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                     if( !in_array($superAttribute['attribute_id'],array_keys($configurableAttributesTempAttributes)) )
                     {
                         $superAttributeForDelete = Mage::getModel('catalog/product_type_configurable_attribute')
-                           ->setId($superAttribute['product_super_attribute_id'])
-                        ->setProductId($style['internal_id']);
-                        
+                            ->setId($superAttribute['product_super_attribute_id'])
+                            ->setProductId($style['internal_id']);
+
                         $superAttributeForDelete->isDeleted(true);
                         $superAttributeForDelete->save();
                     }
@@ -487,7 +487,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             }
             $this->_addWarningMsg( sprintf("Product %s has not accepted some items to be assigned: %s", $product->getSku(), implode(', ', $skus)) );
         }
-        
+
         if( !$this->_checkDoubledAttributeUsage($children, $configurableAttributesData, $product) )
         {
             $this->_checkDoubledAttributeOptionUsage($optionSets, $configurableAttributesData);
@@ -514,7 +514,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
         }
         return $configurableAttributesData;
     }
-    
+
     protected function _addProductImages($product, &$entity)
     {
         $this->_recentlyLoadedProductImages = array();
@@ -595,7 +595,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                             // update image params
                             $productImage = &$productMediaGalleryData['images'][$magentoImage['media_gallery_key']];
                             $productImage = array_replace($productImage, $imageParams);
-                            
+
                             continue;
                         }
                         else
@@ -603,7 +603,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                             $productMediaGalleryData['images'][$magentoImage['media_gallery_key']]['removed'] = 1;
                         }
                     }
-                    
+
                     /*download and attach image*/
                     $loadedImages = $this->_mediaModel->loadMediaImages($entity['style_id'], Teamwork_Service_Model_Mapping::CONST_STYLE, $this->_globalVars['channel_id'], $uniqueId, array($image));
                     $loadedImage = reset($loadedImages);
@@ -626,7 +626,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
         }
         $product->setData(self::GALLERY_ATTRIBUTE_CODE, $productMediaGalleryData);
     }
-    
+
     protected function _getMapAttributeValue($magentoAttrName, $mapAttrName, $objectData)
     {
         if($this->_attributeModel->isSpecialAttribute($mapAttrName))
@@ -639,9 +639,21 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
         }
 
         $mapAttrName = $this->_mapModel->cutItemPrefixInAttributeName($mapAttrName); //cut item prefix if exists
-        
+
         return (isset($objectData[$mapAttrName]) && strlen($objectData[$mapAttrName])) ?
             array($objectData[$mapAttrName]) :
-        array();
+            array();
+    }
+
+    public function removeEqualPriceData(Varien_Object $product)
+    {
+        $priceAttributeCodes = array_keys($this->_mapModel->getPrice());
+        foreach($priceAttributeCodes as $priceAttributeCode)
+        {
+            if( $priceAttributeCode == 'special_price' && $product->getData($priceAttributeCode) == $product->getData('price') )
+            {
+                $product->setData($priceAttributeCode, '');
+            }
+        }
     }
 }
