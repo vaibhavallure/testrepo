@@ -306,8 +306,10 @@ class Millesima_Abstract{
                     $assoc=explode("=>", $value);
                     //print_r($assoc);
                     //echo $assoc[0] . " xx " .$assoc[1];
+                    if (is_array($assoc) && isset($assoc[1])) {
                     $liste[$assoc[0]] = $this->getTracking($assoc[1], $tracking);
                     unset($assoc);
+                    }
                 }
                 //print_r($liste);
 
