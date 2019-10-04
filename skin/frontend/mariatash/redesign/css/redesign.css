@@ -1413,7 +1413,7 @@ input[type="checkbox"]:checked+label:before {
 .maria-left-menus{
   left: 17px;
   z-index: 1;
-  top: -2px;
+  top: -12px;
 }
 .maria-right-menus{
   right: 15px;
@@ -1759,6 +1759,9 @@ div#narrow-by-list {
 }
 #narrow-by-list li div dd ol{
   padding: 3px;
+}
+#narrow-by-list li div dd ol li {
+  width: 100%;
 }
 .m-filter-checkboxes li {
     width: 100%;
