@@ -416,6 +416,10 @@ margin-left: 10px;
   #tooltip-id-our-jewelry #container{
     height: auto;
   }
+  
+  #total_item_counts_holder{
+    display: none;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
