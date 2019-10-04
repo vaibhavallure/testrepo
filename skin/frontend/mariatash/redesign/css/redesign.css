@@ -2319,8 +2319,12 @@ ul#foo4 {
   width: 25px;
   height: 26px;
   background-size: 100%;
-
+	z-index: 2;
 }
+.filterPopup .close{
+	z-index: 2;
+}
+
 #narrow-by-list li{
   float: left;
 	padding: 0;

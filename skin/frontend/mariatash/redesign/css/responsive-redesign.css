@@ -427,6 +427,10 @@ margin-left: 10px;
   #tooltip-id-our-jewelry #container{
     height: auto;
   }
+  
+  #total_item_counts_holder{
+    display: none;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -769,6 +773,15 @@ margin-left: 10px;
     margin: 16px 0 20px !important;
     padding: 0 !important;
   }
+  .filter-common-div{
+    display: none;
+  }
+  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
+    margin-top: -70px;
+  }
+  .filterPopup .pop-up-cover {
+    margin-top: 5%;
+  }
 }
 
 /* Mobile Portrait */
@@ -946,7 +959,7 @@ margin-left: 10px;
     width: 30%;
     display: block;
     float: left;
-    margin-top: 0:
+    margin-top: 0;
   }
   #shopping-cart-table td.cart_col2{
     width: 94%;
@@ -979,10 +992,14 @@ margin-left: 10px;
   .checkout-list-title{
     margin-bottom: 25px;
   }
+<<<<<<< HEAD
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
   }
+=======
+
+>>>>>>> c07c99a94155d60f7dd06d3cbd2ed8040426faa4
 }
 
 /* Mobile landscape */
@@ -1039,6 +1056,12 @@ margin-left: 10px;
   }
   .collat-wrap{
     margin: 0 auto;
+  }
+  .cartilage-section .next {
+    right: 1.7%;
+  }
+  .cartilage-section .prev {
+    left: 1.7%;
   }
 }
 
