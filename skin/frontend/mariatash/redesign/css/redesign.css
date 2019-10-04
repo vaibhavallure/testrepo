@@ -2316,8 +2316,6 @@ ul#foo4 {
   width: 25px;
   height: 26px;
   background-size: 100%;
-  z-index: 1;
-
 }
 #narrow-by-list li{
   float: left;
