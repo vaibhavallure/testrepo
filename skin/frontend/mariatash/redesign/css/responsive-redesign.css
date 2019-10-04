@@ -935,6 +935,7 @@ margin-left: 10px;
     width: 30%;
     display: block;
     float: left;
+    margin-top: 0:
   }
   #shopping-cart-table td.cart_col2{
     width: 94%;
@@ -963,6 +964,9 @@ margin-left: 10px;
   }
   .messages-tr .plus_icon, .messages-tr .minus_icon{
     display: block;
+  }
+  .checkout-list-title{
+    margin-bottom: 25px;
   }
 }
 
@@ -1010,6 +1014,16 @@ margin-left: 10px;
   }
   .shop_by_look .celeb-info {
     margin-top: 0;
+  }
+  .cart-mt.container {
+    max-width: 670px;
+  }
+  .cart-collaterals.fix-section{
+    background: #f2f2f2;
+    margin-top: 30px;
+  }
+  .collat-wrap{
+    margin: 0 auto;
   }
 }
 
@@ -1059,7 +1073,7 @@ margin-left: 10px;
     margin-left: 300px;
   }
   .filter-common-div {
-    top: 455px;
+    top: 505px;
   }
   .category-products{
     margin-top: 133px;
@@ -1082,7 +1096,10 @@ margin-left: 10px;
   #narrow-by-list{
     margin-top: 65px;
   }
-  .catalog-category-view .for-space-to-bottom, .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+  .catalog-category-view .for-space-to-bottom{
+    height: 430px !important;
+  }
+  .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
     height: 380px !important;
   }
   .catalog-category-view.category-press .for-space-to-bottom{
@@ -1096,5 +1113,12 @@ margin-left: 10px;
   }
   .categorypath-piercing-piercing-gallery-html .category-products {
     margin-top: 0;
+  }
+}
+
+/* Small Laptops : 1366px */
+@media (min-width:1025px) and (max-width:1432px) {
+  .swatches li{
+    margin-left: 7px;
   }
 }
