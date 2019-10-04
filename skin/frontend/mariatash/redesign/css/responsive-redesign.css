@@ -758,6 +758,15 @@ margin-left: 10px;
     margin: 16px 0 20px !important;
     padding: 0 !important;
   }
+  .filter-common-div{
+    display: none;
+  }
+  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
+    margin-top: -70px;
+  }
+  .filterPopup .pop-up-cover {
+    margin-top: 10%;
+  }
 }
 
 /* Mobile Portrait */
@@ -935,7 +944,7 @@ margin-left: 10px;
     width: 30%;
     display: block;
     float: left;
-    margin-top: 0:
+    margin-top: 0;
   }
   #shopping-cart-table td.cart_col2{
     width: 94%;
@@ -968,6 +977,7 @@ margin-left: 10px;
   .checkout-list-title{
     margin-bottom: 25px;
   }
+
 }
 
 /* Mobile landscape */
@@ -1024,6 +1034,12 @@ margin-left: 10px;
   }
   .collat-wrap{
     margin: 0 auto;
+  }
+  .cartilage-section .next {
+    right: 1.7%;
+  }
+  .cartilage-section .prev {
+    left: 1.7%;
   }
 }
 
