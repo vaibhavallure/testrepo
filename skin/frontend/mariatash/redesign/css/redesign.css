@@ -430,6 +430,9 @@ input, select, textarea{
 	font-family: urw-din-medium;
 	text-align: left;
 }
+.category-products .note-msg {
+  text-align: center;
+}
 .messages, .messages ul{
 	padding: 0;
 }

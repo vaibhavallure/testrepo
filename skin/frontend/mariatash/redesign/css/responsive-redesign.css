@@ -427,7 +427,7 @@ margin-left: 10px;
   #tooltip-id-our-jewelry #container{
     height: auto;
   }
-  
+
   #total_item_counts_holder{
     display: none;
   }
@@ -757,7 +757,9 @@ margin-left: 10px;
     margin-top: 0;
   }
   .filterButton:before{
-    top: -84px !important;
+    top: -95px !important;
+    width: 15px;
+    height: 15px;
   }
   .breadcrumbs{
     padding: 0 15px;
@@ -895,7 +897,7 @@ margin-left: 10px;
     padding-top: 50px !important;
   }
   .caroufredsel_wrapper{
-    width: 47%;
+    width: 49%;
   }
   .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
     width: 68%;
@@ -992,14 +994,10 @@ margin-left: 10px;
   .checkout-list-title{
     margin-bottom: 25px;
   }
-<<<<<<< HEAD
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
   }
-=======
-
->>>>>>> c07c99a94155d60f7dd06d3cbd2ed8040426faa4
 }
 
 /* Mobile landscape */

@@ -2248,14 +2248,14 @@ p.required {
 	display: none !important;
 }
 
-#productsContainer-wrapper .note-msg {
+/* #productsContainer-wrapper .note-msg {
 	margin-top: -77px;
 	font-weight: normal !important;
-}
+} */
 
-.catalog-category-view #productsContainer-wrapper .note-msg {
+/* .catalog-category-view #productsContainer-wrapper .note-msg {
 	margin-top: 0;
-}
+} */
 
 .category-piercing .note-msg, .notice-msg
 .category-new-arrivals .note-msg, .notice-msg {
