@@ -139,11 +139,11 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         }
 
         //shipping_description, customer_email, coupon_code, weight, customer_note
-        $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','counterpoint_order_id');
+        $sales_flat_order = array('state','shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','counterpoint_order_id');
 
         //store cleanup
         if ($this->isVirtualStoreActive()){
-            $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','old_store_id');
+            $sales_flat_order = array('state','shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','old_store_id');
         }
 
         $selected_col = array_intersect($selected_columns, $sales_flat_order);
@@ -230,6 +230,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             /*** sales_flat_order_grid (base table) ***/
             'increment_id' => $helper->__('*Order #'),
             'status' => $helper->__('*Status'),
+            'state' => $helper->__('*State'),
             'store_id' => $helper->__('*Purchased From (Store)'),
             'grand_total' => $helper->__('*G.T. (Purchased)'),
             'base_grand_total' => $helper->__('*G.T. (Base)'),
@@ -828,6 +829,15 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'filter_index' => "{$tableName_sales_flat_order}.old_store_id",
             );
         }
+
+        $columns['state'] =array(
+            'header' => $helper->__('State'),
+            'index' => 'state',
+            'type' => 'options',
+            'widht'=>'70px',
+            'filter_index' => "{$tableName_sales_flat_order}.state",
+            'options' => Mage::getSingleton('sales/order_config')->getStates(),
+        );
 
         return $columns;
     }
