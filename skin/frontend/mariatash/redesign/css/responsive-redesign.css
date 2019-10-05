@@ -243,6 +243,26 @@
   .maria-left-menus{
     top: 2px;
   }
+  .category-piercing-gallery .for-space-to-bottom{
+    height: 20px !important;
+  }
+  .shop_by_look .big-popup-body {
+    padding: 48px 26px 48px 29px!important;
+  }
+  .popup-right-section{
+    padding: 0 30px 0 6px;
+  }
+  .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .col-right.sidebar {
+    display: none;
+  }
+  .breadcrumbs{
+    margin-top: 30px;
+  }
+
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -352,7 +372,7 @@
   .celebPopup .product-info {
     position: relative;
     bottom: 0;
-    margin-top: 30px;
+    /* margin-top: 30px; */
   }
   .big-popup-body{
     padding: 28px 93px !important;
@@ -371,7 +391,7 @@
     flex: 0 0 33.33% !important;
     max-width: 33.33% !important;
   }
-  .simple-page-title{
+  .catalog-category-view .simple-page-title{
     padding: 0!important;
   }
 
@@ -406,6 +426,10 @@ margin-left: 10px;
   }
   #tooltip-id-our-jewelry #container{
     height: auto;
+  }
+
+  #total_item_counts_holder{
+    display: none;
   }
 }
 
@@ -516,6 +540,9 @@ margin-left: 10px;
   .celeb-info{
     margin-top: 30px;
   }
+  .shop_by_look .celeb-info {
+    margin-top: 0;
+  }
   .big-popup-body {
     padding: 28px 75px !important;
   }
@@ -547,6 +574,13 @@ margin-left: 10px;
     margin: 16px 0 40px !important;
     padding: 0 !important;
   }
+  .cart-collaterals.fix-section{
+    background: #f2f2f2;
+    margin-top: 30px;
+  }
+  .collat-wrap{
+    margin: 0 auto;
+  }
 }
 
 
@@ -561,9 +595,6 @@ margin-left: 10px;
   .about-designer h1{
     margin-bottom: 20px;
   }
-  /* .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom{
-    height: 240px;
-  } */
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
     height: 170px !important;
   }
@@ -624,6 +655,9 @@ margin-left: 10px;
   }
   .btn-quickview {
     display: none !important;
+  }
+  .block-layered-nav dd a, .block-layered-nav label{
+    font-size: 10px !important;
   }
 }
 
@@ -723,7 +757,9 @@ margin-left: 10px;
     margin-top: 0;
   }
   .filterButton:before{
-    top: -84px !important;
+    top: -95px !important;
+    width: 15px;
+    height: 15px;
   }
   .breadcrumbs{
     padding: 0 15px;
@@ -738,6 +774,15 @@ margin-left: 10px;
   #category-title{
     margin: 16px 0 20px !important;
     padding: 0 !important;
+  }
+  .filter-common-div{
+    display: none;
+  }
+  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
+    margin-top: -70px;
+  }
+  .filterPopup .pop-up-cover {
+    margin-top: 5%;
   }
 }
 
@@ -852,7 +897,7 @@ margin-left: 10px;
     padding-top: 50px !important;
   }
   .caroufredsel_wrapper{
-    width: 47%;
+    width: 49%;
   }
   .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
     width: 68%;
@@ -874,8 +919,6 @@ margin-left: 10px;
     height: auto;
     width: auto;
   }
-
-
   .homepageSliderControllers .nextS{
     top: 45%;
     right: 8px;
@@ -888,6 +931,72 @@ margin-left: 10px;
     height: 45px;
     width: 20px;
     z-index: 1;
+  }
+  .popup-right-section{
+    padding: 20px 40px 0 46px;
+  }
+  /* TABLE TO DIV CONVERSION - SHOPPING CART */
+  #shopping-cart-form tbody{
+    display: grid;
+  }
+  #shopping-cart-form thead{
+    display: none;
+  }
+  #shopping-cart-table tbody td:before {
+    content: attr(data-th);
+    font-size: 13px;
+    font-family: urw-din-bold;
+    color: rgba(41,41,41,0.6);
+    text-transform: uppercase;
+    letter-spacing: 1.08px;
+    line-height: 0px;
+  }
+  .data-table.cart-table .gift-messages, .gift-row td:nth-child(2){
+    width: 100%;
+  }
+  .gift-row td:nth-child(2){
+    padding-bottom: 30px;
+  }
+  #shopping-cart-table td.cart_col1 {
+    width: 30%;
+    display: block;
+    float: left;
+    margin-top: 0;
+  }
+  #shopping-cart-table td.cart_col2{
+    width: 94%;
+    display: block;
+  }
+  #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5 {
+    width: 28%;
+    display: block;
+    float: left;
+    margin-right: 5.33%;
+    line-height: 40px;
+  }
+  .minus_icon.minus_qty, .qty-wrap.total_qty {
+    max-width: 33.33%;
+    float: left;
+    flex: 0 0 33.33%;
+  }
+  #shopping-cart-table td.cart_col4{
+    text-align: center;
+  }
+  .messages-tr .product-name a{
+    font-size: 20px;
+  }
+  .data-table.cart-table td{
+    margin-top: 20px;
+  }
+  .messages-tr .plus_icon, .messages-tr .minus_icon{
+    display: block;
+  }
+  .checkout-list-title{
+    margin-bottom: 25px;
+  }
+  /*Checkout*/
+  #checkoutSteps {
+    padding: 0;
   }
 }
 
@@ -929,12 +1038,47 @@ margin-left: 10px;
   .caroufredsel_wrapper{
     width: 82%;
   }
+  .popup-left-section, .popup-right-section {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+  .shop_by_look .celeb-info {
+    margin-top: 0;
+  }
+  .cart-mt.container {
+    max-width: 670px;
+  }
+  .cart-collaterals.fix-section{
+    background: #f2f2f2;
+    margin-top: 30px;
+  }
+  .collat-wrap{
+    margin: 0 auto;
+  }
+  .cartilage-section .next {
+    right: 1.7%;
+  }
+  .cartilage-section .prev {
+    left: 1.7%;
+  }
 }
 
 
 @media (min-width:1024px){
   .close-section{
     display: none;
+  }
+  /*footer display on hover bottom  of the page*/
+  .catalog-category-view .footer {
+    padding-top: 0px !important;
+    height: auto;
+    z-index: 1;
+    position: fixed;
+    bottom: 0px;
+    opacity: 0;
+  }
+  .catalog-category-view .footer:hover {
+    opacity: 1;
   }
 }
 
@@ -965,7 +1109,7 @@ margin-left: 10px;
     margin-left: 300px;
   }
   .filter-common-div {
-    top: 455px;
+    top: 505px;
   }
   .category-products{
     margin-top: 133px;
@@ -988,7 +1132,10 @@ margin-left: 10px;
   #narrow-by-list{
     margin-top: 65px;
   }
-  .catalog-category-view .for-space-to-bottom, .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+  .catalog-category-view .for-space-to-bottom{
+    height: 430px !important;
+  }
+  .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
     height: 380px !important;
   }
   .catalog-category-view.category-press .for-space-to-bottom{
@@ -999,5 +1146,15 @@ margin-left: 10px;
   }
   .common-redesign-checkout .for-space-to-bottom {
     height: 470px;
+  }
+  .categorypath-piercing-piercing-gallery-html .category-products {
+    margin-top: 0;
+  }
+}
+
+/* Small Laptops : 1366px */
+@media (min-width:1025px) and (max-width:1432px) {
+  .swatches li{
+    margin-left: 7px;
   }
 }

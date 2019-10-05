@@ -73,11 +73,11 @@ $mode  = $this->getMode();
                        jQuery('#color-icons-' + product_id + ' li').each(function(){
                             var color_id  = jQuery(this).attr('id'),
                                 color_title = jQuery(this).attr('title');
-                                    Tipped.create(jQuery("#" + color_id), color_title, {
+                                    /*Tipped.create(jQuery("#" + color_id), color_title, {
                                             skin: 'customTiny',
                                             showOn: ['click', 'mouseover'],
                                             background: { color: '#fff', opacity: .7 }
-                                    });
+                                    });*/
 
                             jQuery(this).click(function(){
                                 var option = jQuery(this).attr('value');
@@ -135,11 +135,11 @@ $mode  = $this->getMode();
                             ->addAttributeToFilter('status', 1)
                             ->addAttributeToFilter('visibility', 4);
 
-                if($products->getSize() > 30) : ?>
+                //if($products->getSize() > 30) : ?>
                     <div class="toolbar d-none">
-                        <span id="total_item_counts"><?php echo $products->getSize(); ?> Items</span>
+                        <span id="total_item_counts"><?php echo $_productCollection->getSize(); ?> Items</span>
                     </div>
-                <?php endif; ?>
+                <?php //endif; ?>
             <?php endif; ?>
 
         </div>
@@ -227,7 +227,7 @@ $mode  = $this->getMode();
                                                                 $j++;
                                                                 */?>
                                                                 <li id="<?php /*echo $simple_id */?>"
-                                                                    style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');width: 21px; height: 22px;"
+                                                                   style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');width: 21px; height: 22px;"
                                                                     class="colorSelector tipped-create" value="<?php /*echo $optionId */?>"
                                                                     title="<?php /*echo $optionLb */?>" >
                                                                     <div style="display: none">
@@ -297,7 +297,7 @@ $mode  = $this->getMode();
                                   <div class="row justify-content-between">
                                         <div class="col-12">
                                           <div class="row list-mt-upper">
-                                            <div class="col-8">
+                                            <div class="col-7">
                                               <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
                                                   <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                                      title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
@@ -307,7 +307,7 @@ $mode  = $this->getMode();
                                                 <span id="link-qv-<?php echo $_product->getId(); ?>" ><?php echo $quickViewUrl; ?>sourceOfReq/quickview/</span>
                                                 <span id="link-pv-<?php echo $_product->getId(); ?>" ><?php echo $productUrl; ?></span>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-5 pl-0">
                                               <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>">
                                                 <p class="m-0"><?= $this->getPriceHtml($_product) ?></p>
                                               </div>
@@ -415,14 +415,14 @@ $mode  = $this->getMode();
         jQuery('.price-box').show();
 
         /* Add tooltip for color icon*/
-        jQuery('.colorSelector').each(function(){
+        /*jQuery('.colorSelector').each(function(){
             var li_id = jQuery(this).attr('id');
             var li_title = jQuery(this).attr('title');
             Tipped.create(jQuery("#"+li_id), li_title, {
                     skin: 'customTiny',
                     showOn: ['click', 'mouseover']
                 });
-        });
+        });*/
     });
 
     jQuery.noConflict();

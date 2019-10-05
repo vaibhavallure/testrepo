@@ -2,15 +2,16 @@
 jQuery.noConflict();
 
 jQuery(document).ready(function() {
-
-    jQuery('#foo3').jcarousel({
+        jQuery('#foo3').jcarousel({
         initCallback: mycarousel_initCallback,
         buttonNextCallback: mycarousel_buttonNextCallback,
         buttonPrevCallback: mycarousel_buttonPrevCallback,
-        // This tells jCarousel NOT to autobuild prev/next buttons
         buttonNextHTML: null,
-        buttonPrevHTML: null
-    });
+        buttonPrevHTML: null,
+        scroll:1,
+        start:parseInt(jQuery(".cur_active").attr("data-count"))-1
+        });
+
 
     jQuery(window).resize();
 
@@ -28,6 +29,7 @@ function mycarousel_initCallback(carousel) {
         carousel.next();
         return false;
     });
+    carousel;
 };
 
 function mycarousel_buttonNextCallback(carousel, button, enabled) {
@@ -202,9 +204,9 @@ jQuery(window).resize(function() {
     <ul id="foo3">
 		<?php $i = 1;?>
         <?php foreach($_collection as $category): ?>
-            <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="active"' : '' ?>
+            <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
             <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
             </li>
         <?php endforeach; ?>
     </ul>
