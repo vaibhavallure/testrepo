@@ -25,7 +25,7 @@
  */
 ?>
 <div class="page-title">
-    <h1><?php echo $this->__('Secure Checkout') ?></h1>
+    <!-- <h1><//?php echo $this->__('Secure Checkout') ?></h1> -->
 </div>
 <script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
@@ -34,9 +34,9 @@
 <?php if (!$this->getChild($_stepId)): continue; endif; $i++ ?>
 
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-        <div class="step-title">
+        <div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $i ?></span>
-            <h2  onclick="jQuery('#shipping-address-select').uniform();"><?php echo $_stepInfo['label'] ?></h2>
+            <h3 onclick="jQuery('#shipping-address-select').uniform();"><?php echo $_stepInfo['label'] ?></h3>
             <a href="#"><?php echo $this->__('Edit') ?></a>
         </div>
         <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
