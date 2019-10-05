@@ -270,7 +270,7 @@ Product.Config.prototype.configureImage = function(event){
     for (var i = 0; i < options.length; i ++) {
         if (options[i].id && options[i].id == optionId) {
             if (typeof options[i].stock_status_text !== 'undefined') {
-                jQuery('div.product-options-bottom p span').text(options[i].stock_status_text);
+                jQuery('div.product-options-bottom p span').html(options[i].stock_status_text);
             }
             break;
         }
