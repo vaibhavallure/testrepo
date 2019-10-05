@@ -135,11 +135,13 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             //set billing address
             $params = Mage::app()->getRequest()->getParams();
             if(isset($params["billing_address_id"])){
-                Mage::getModel('checkout/type_multishipping')
-                ->setQuoteCustomerBillingAddress($params["billing_address_id"]);
+                $this->setQuoteCustomerBillingAddress($params["billing_address_id"]);
             }
             
-            $this->save();
+            $quote = $this->getQuote();
+            $quote->setTotalsCollectedFlag(false);
+            $quote->collectTotals()->save();
+            //$this->save();
             Mage::dispatchEvent('checkout_type_multishipping_set_shipping_items', array('quote'=>$quote));
             
         }
