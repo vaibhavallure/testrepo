@@ -24,14 +24,27 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
+<?php 
+/** 
+ * @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available 
+ * 
+ */ ?>
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
 <?php else: ?>
 	<?php $_sole = count($_shippingRateGroups) == 1;?>
-	<div class="col-6 text-right">
-		<select class="select-type-one validate-select" name="shipping_method"  >
+	<?php $_address = $this->getAddress();?>
+	<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
+	<div class="gift-messages">
+        <p class="info-text-two"><?= $this->__('Delivery Signature Option.')?></p>
+        <p class="control">
+            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="0" class="checkbox shipping-signature" data-is_international="<?= $isIternational?>">
+            <label for="no_signature_delivery" class="para-normal">Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.</label>
+        </p>
+    </div>
+	<div>
+		<select class="select-shipping-method select-type-one validate-select" name="shipping_method"  >
 			<option value="">Select Method</option>
             <?php $ship_sign_national = array();?>
             <?php $ship_sign_without_national = array();?>
@@ -70,7 +83,7 @@
                                 $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
                             } ?>
 
-                  	<?php if(1 == $shipCodeArr[2]):?>
+                  	<?php if($isIternational == $shipCodeArr[2]):?>
                         <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
                        	<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
                        	<?php echo $_excl; ?>
@@ -114,6 +127,32 @@
         var Allure = {};
     }
    	Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
+</script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.shipping-signature').on('change',function(){
+			var selector = jQuery(this);
+			var isInternational = selector.data("is_international");
+			var value = (selector.is( ":checked" )) ? 1 : 0;
+			var genKey = value+"_"+isInternational;
+			jQuery(this).val(value);
+			if(Object.entries(Allure.shippingConfig).length){
+				if(Allure.shippingConfig[genKey]){
+					var shippingOptions = Allure.shippingConfig[genKey];
+					if(shippingOptions){
+						var shippingHtml = '';
+						for (var objKey in shippingOptions) {
+							var shipObj = shippingOptions[objKey];
+							shippingHtml += '<option value="'+shipObj.code+'">'+shipObj.method_title +' '+shipObj.excl +'</option>';
+					    }
+						jQuery('.select-shipping-method').html("");
+						jQuery('.select-shipping-method').html(shippingHtml);
+					}
+				}
+			}
+		});
+	});
 </script>
 <?php endif;?>
       

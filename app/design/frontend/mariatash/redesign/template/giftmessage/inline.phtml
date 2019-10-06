@@ -122,9 +122,11 @@ billing.onSave = function(evt){
 <?php if ($this->isMessagesAvailable() || $this->isItemsAvailable()): ?>
 <?php switch ($this->getType()): ?>
 <?php case 'onepage_checkout': ?>
-     <div class="gift-messages">
-      <p class="para-normal"><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></p >
-     </div>
+    <div class="gift-messages">
+    	<p class="para-normal"><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></p >
+    </div>
+    
+    <?php if(false):?>
     <div class="gift-messages">
         <p class="info-text-two"><?php echo $this->__('Delivery Signature Option.'); ?></p>
 
@@ -134,6 +136,8 @@ billing.onSave = function(evt){
             <span class="signature_message" style ="display: none;"><?php echo $this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.'); ?></span>
         </p>
     </div>
+    <?php endif;?>
+    
     <div class="gift-messages">
         <p class="info-text-two"><?php echo $this->__('Do you have any gift items in your order? If yes, the receipt will not include pricing information.'); ?></p>
         <p class="control">
