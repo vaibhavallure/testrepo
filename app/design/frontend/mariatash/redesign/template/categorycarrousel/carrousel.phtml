@@ -81,7 +81,7 @@ jQuery(window).resize(function() {
         if($_category->getCategoryBleed()) {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
-                        .caroufredsel_wrapper {margin-top: 240px !important}
+                        // .caroufredsel_wrapper {margin-top: 240px !important}
                         #productsContainer-wrapper { margin-top: 75px !important; }
                   </style>';
         }
@@ -101,6 +101,9 @@ jQuery(window).resize(function() {
                             }
                             .catalog-category-view .category-title{
                               margin-top: 0;
+                            }
+                            .catalog-product-name-display {
+                              padding-left: 0;
                             }
                           }
                           @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
