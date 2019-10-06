@@ -12390,13 +12390,13 @@ li.item h2.product-name {text-align: center;}
 	display: none;
 }
 
-.thumbnail-image #productsContainer-wrapper {
+/* .thumbnail-image #productsContainer-wrapper {
 	margin-top: 85px !important;
-}
+} */
 
-.with-category-image-bleed #productsContainer-wrapper {
+/* .with-category-image-bleed #productsContainer-wrapper {
 	margin-top: 302px;
-}
+} */
 
 /* coppy */
 @media only screen and (min-device-width : 768px) and (max-device-width
