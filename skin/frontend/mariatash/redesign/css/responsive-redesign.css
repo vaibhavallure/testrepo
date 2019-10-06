@@ -262,7 +262,9 @@
   .breadcrumbs{
     margin-top: 30px;
   }
-
+  #narrow-by-list li div dd ol li{
+    width: auto;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -582,9 +584,6 @@ margin-left: 10px;
   .category-products {
     margin-top: 0px;
   }
-  .filterButton:before{
-    top: -80px;
-  }
   .cartilage-section {
     margin-top: 28px;
   }
@@ -595,12 +594,18 @@ margin-left: 10px;
     margin: 16px 0 40px !important;
     padding: 0 !important;
   }
+  .catalog-category-view #category-title{
+    padding-left: 77px !important;
+  }
   .cart-collaterals.fix-section{
     background: #f2f2f2;
     margin-top: 30px;
   }
   .collat-wrap{
     margin: 0 auto;
+  }
+  .categorypath-jewelry-ear-cartilage-jewelry-html .catalog-product-name-display {
+    padding-left: 0;
   }
 }
 
@@ -778,7 +783,6 @@ margin-left: 10px;
     margin-top: 0;
   }
   .filterButton:before{
-    top: -95px !important;
     width: 15px;
     height: 15px;
   }
@@ -804,6 +808,13 @@ margin-left: 10px;
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
+  }
+  .filterButton::before{
+    left: 10px;
+    top: 2px;
+  }
+  .filterPopup #narrow-by-list {
+    padding-top: 30px;
   }
 }
 
