@@ -582,9 +582,6 @@ margin-left: 10px;
   .category-products {
     margin-top: 0px;
   }
-  .filterButton:before{
-    top: -80px;
-  }
   .cartilage-section {
     margin-top: 28px;
   }
@@ -784,7 +781,6 @@ margin-left: 10px;
     margin-top: 0;
   }
   .filterButton:before{
-    top: -95px !important;
     width: 15px;
     height: 15px;
   }
@@ -810,6 +806,13 @@ margin-left: 10px;
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
+  }
+  .filterButton::before{
+    left: 10px;
+    top: 2px;
+  }
+  .filterPopup #narrow-by-list {
+    padding-top: 30px;
   }
 }
 

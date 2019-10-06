@@ -2,6 +2,10 @@
 jQuery.noConflict();
 
 jQuery(document).ready(function() {
+    var startPoint =1;
+    if(jQuery(".cur_active").length>0) {
+        var startPoint = parseInt(jQuery(".cur_active").attr("data-count")) - 1;
+    }
         jQuery('#foo3').jcarousel({
         initCallback: mycarousel_initCallback,
         buttonNextCallback: mycarousel_buttonNextCallback,
@@ -9,7 +13,7 @@ jQuery(document).ready(function() {
         buttonNextHTML: null,
         buttonPrevHTML: null,
         scroll:1,
-        start:parseInt(jQuery(".cur_active").attr("data-count"))-1
+        start:startPoint
         });
 
 
