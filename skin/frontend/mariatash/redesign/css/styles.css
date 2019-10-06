@@ -1578,11 +1578,11 @@ div.my-account div.col2-set div.box div.box-title div.pager-mt-1 div.pager div.l
 	width: 300px;
 } */
 
-.my-account .form-list li.fields,
+/* .my-account .form-list li.fields,
 .checkout-multishipping-address-editbilling .form-list li.fields,
-.form-list li.wide { /*display: inline !important;*/
+.form-list li.wide { /*display: inline !important;
 	width: 100% !important;
-}
+} */
 
 .form-list li.wide .input-box input.input-text {
 	width: 90%;
@@ -1641,11 +1641,11 @@ div.my-account div.col2-set div.box div.box-title div.pager-mt-1 div.pager div.l
 	margin: 0 10px;
 }
 
-.checkout-onepage-index #onepage-checkout-shipping-method-additional-load  .form-list li label
+/* .checkout-onepage-index #onepage-checkout-shipping-method-additional-load  .form-list li label
 {
 	float: left;
 	margin-left: 20px;
-}
+} */
 
 .form-list li label em {
 
@@ -6027,10 +6027,10 @@ ul.crosssell-products-list {
 }
 
 /* Gift Messages */
-.gift-messages h3 {
+/* .gift-messages h3 {
 	font-size: 12px;
 	font-weight: bold;
-}
+} */
 
 
 #payment-buttons-container .back-link {
@@ -6052,17 +6052,6 @@ ul.crosssell-products-list {
 
 .gift-messages-form {
 	position: relative;
-}
-
-.gift-messages-form label {
-	float: none !important;
-	position: static !important;
-}
-
-.gift-messages-form h4 {
-	font-size: 13px;
-	font-weight: normal;
-	color: #3F4048;
 }
 
 .gift-messages-form h4.gift-message-or {
@@ -6153,11 +6142,11 @@ ul.crosssell-products-list {
 	text-align: right;
 }
 
-.gift-messages-form .allow-gift-messages-for-order-container ul.form-list li.fields div.field,
+/* .gift-messages-form .allow-gift-messages-for-order-container ul.form-list li.fields div.field,
 .gift-messages-form .multiple-checkout .gift-messages-form ul.form-list li.fields div.field
 {
 	width: 332px;
-}
+} */
 
 .gift-messages-form .input-box input.input-text {
 	height: 18px;
@@ -6574,13 +6563,13 @@ ul.crosssell-products-list {
 	border: none;
 }
 
-.checkout-onepage-index #checkout-step-shipping {
+/* .checkout-onepage-index #checkout-step-shipping {
 	float: left;
 	height: auto;
 	margin: 0;
 	padding: 16px 10px 40px;
 	width: 97%;
-}
+} */
 
 .lt-ie9 .checkout-onepage-index #checkout-step-shipping {
 	padding: 0px 10px 40px;
@@ -6594,20 +6583,20 @@ ul.crosssell-products-list {
 	width: 100%;
 }
 
-.checkout-onepage-index #checkout-step-shipping_method #checkout-shipping-method-load
+/* .checkout-onepage-index #checkout-step-shipping_method #checkout-shipping-method-load
 {
 	float: left;
 	height: auto;
 	width: 100%;
 	margin: 0 0 10px 4px;
 	border-bottom: 1px solid #D1D1D1;
-}
+} */
 
-.checkout-onepage-index li#opc-shipping_method .sp-methods {
+/* .checkout-onepage-index li#opc-shipping_method .sp-methods {
 	float: left;
 	margin: 0px;
 	width: 682px;
-}
+} */
 
 /* .checkout-onepage-index #opc-shipping form#co-shipping-form fieldset.shipp
 {
@@ -6642,27 +6631,6 @@ ul.crosssell-products-list {
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
 
-/* .checkout-onepage-index #opc-shipping fieldset {
-	display: block;
-	float: left;
-	height: auto;
-	width: 100%;
-} */
-
-.checkout-onepage-index li#opc-shipping_method .sp-methods dd li {
-	font: 13px/14px Arial, Helvetica, sans-serif;
-	margin: 9px 0;
-}
-
-.checkout-onepage-index li#opc-shipping_method  .sp-methods dt {
-	font-weight: bold;
-	margin: 26px 0 4px;
-}
-
-.checkout-onepage-index li#opc-shipping_method .sp-methods dd {
-	margin-bottom: 15px;
-}
-
 .checkout-onepage-index #shipping-method-buttons-container {
 	float: left;
 	height: 51px;
@@ -6677,11 +6645,11 @@ ul.crosssell-products-list {
 	width: 696px;
 }
 
-.checkout-onepage-index #checkout-step-shipping_method .inner-box {
+/* .checkout-onepage-index #checkout-step-shipping_method .inner-box {
 	height: auto;
 	padding: 5px 0;
 	width: 100%;
-}
+} */
 
 .checkout-onepage-index #checkout-step-shipping_method .inner-box .allow-gift-messages-for-order-container h4
 {
@@ -6690,22 +6658,6 @@ ul.crosssell-products-list {
 	font-size: 17px;
 	font-family: dinmittelschriftregular;
 	font-weight: normal;
-}
-
-.checkout-onepage-index #onepage-checkout-shipping-method-additional-load .gift-messages
-{
-	float: left;
-	height: auto;
-	width: 97%;
-}
-
-.checkout-onepage-index #onepage-checkout-shipping-method-additional-load .gift-messages h3
-{
-	font: normal 13px/13px Arial, Helvetica, sans-serif;
-	border-bottom: 1px solid #D1D1D1;
-	padding: 0 0 10px;
-	/* margin: 0 0 0 4px; */
-	color: #3F4048;
 }
 
 /*END PASO 3 */
@@ -6878,28 +6830,11 @@ ul.crosssell-products-list {
 	margin-top: -5px;
 }
 
-.checkout-onepage-index #allow-gift-message-container {
-	display: block;
-	float: left;
-	height: auto;
-	width: 100%;
-}
 
 .checkout-onepage-index .allow-gift-messages-for-order-container .form-list li .input-box input.input-text,
 .multiple-checkout .gift-messages-form .inner-box .form-list .fields .field .input-box .input-text
 {
 	width: auto;
-}
-
-.checkout-onepage-index .allow-gift-messages-for-order-container .form-list li,
-.checkout-multishipping-shipping .gift-messages-form .form-list li {
-	float: left;
-	padding-top: 5px;
-}
-
-.checkout-onepage-index .allow-gift-messages-for-order-container .form-list li label
-{
-	margin-left: 0 !important;
 }
 
 .checkout-onepage-index #onepage-checkout-shipping-method-additional-load .gift-messages-form .item .details .form-list .field,
@@ -7380,25 +7315,18 @@ ul.crosssell-products-list {
 	margin: 48px 0 0 !important;
 }
 
-#onepage-checkout-shipping-method-additional-load .gift-messages-form .inner-box  ul.form-list li.wide label
+/* #onepage-checkout-shipping-method-additional-load .gift-messages-form .inner-box  ul.form-list li.wide label
 {
 	margin-left: -140px;
 	margin-top: 78px;
 	float: left !important;
-}
+} */
 
-#onepage-checkout-shipping-method-additional-load .gift-messages-form div.inner-box .allow-gift-messages-for-order-container ul.form-list li.wide label
+/* #onepage-checkout-shipping-method-additional-load .gift-messages-form div.inner-box .allow-gift-messages-for-order-container ul.form-list li.wide label
 {
 	margin-top: 0;
 	position: relative;
-}
-
-.allow-gift-messages-for-order-container ul.form-list li.fields div.field,
-.multiple-checkout .gift-messages-form ul.form-list li.fields div.field
-{
-	margin-bottom: 20px;
-	width: 300px;
-}
+} */
 
 .multiple-checkout .gift-messages-form ul.form-list li.fields div.field
 {
@@ -7635,18 +7563,14 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 }
 
 
-.charcount-safe, .charcount-limit {
+/* .charcount-safe, .charcount-limit {
 	margin-top: 5px;
 	font-size: 11px;
-}
+} */
 
 .checkout-multishipping-shipping .charcount-safe {
 	margin-left: -68px;
 	float: left;
-}
-
-.wide>.charcount-safe, .wide>.charcount-limit {
-	margin-left: 57px
 }
 
 #billing-new-address-form li.fields label em, #shipping-new-address-form li.fields label em,
@@ -7666,9 +7590,9 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 }
 
 /*.opc .gift-messages-form { margin:0 -30px; background:#f4f4f4; border:1px solid #ddd; border-width:1px 0; padding:22px 24px 22px 30px; }*/
-.opc .gift-messages-form .inner-box {
+/* .opc .gift-messages-form .inner-box {
 	height: 260px;
-}
+} */
 
 #opc-review .step {
 	padding: 0;
@@ -7713,52 +7637,6 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	float: right;
 	margin-left: 20px;
 }
-
-/* .checkout-onepage-index .col-main .page-title {
-	margin: 16px 0 9px;
-} */
-
-/* .checkout-onepage-index .col-main,
-.checkout-multishipping-address-newshipping .col-main,
-.checkout-multishipping-shipping .col-main,
-.checkout-multishipping-address-editbilling .col-main,
-.checkout-multishipping-billing .col-main,
-.checkout-multishipping-overview .col-main,
-.checkout-multishipping-address-editshipping .col-main,
-.checkout-multishipping-address-selectbilling .col-main,
-.checkout-multishipping-address-editaddress .col-main {
-	float: left;
-	width: 692px;
-} */
-
-/* .checkout-onepage-index .main, .checkout-multishipping-addresses .main,
-.checkout-multishipping-address-editbilling .main,
-.checkout-multishipping-address-newshipping .main,
-.checkout-multishipping-shipping .main, .checkout-multishipping-billing .main,
-.checkout-multishipping-overview .main,
-.checkout-multishipping-address-editshipping .main,
-.checkout-multishipping-address-selectbilling .main,
-.checkout-multishipping-address-editaddress .main {
-	margin: 0 auto;
-	width: 970px;
-} */
-
-/* .checkout-onepage-index .col2-right-layout .col-right,
-.checkout-multishipping-addresses .col2-right-layout .col-right,
-.checkout-multishipping-address-newshipping .col2-right-layout .col-right,
-.checkout-multishipping-shipping .col2-right-layout .col-right,
-.checkout-multishipping-address-editbilling .col2-right-layout .col-right,
-.checkout-multishipping-billing .col2-right-layout .col-right,
-.checkout-multishipping-overview .col2-right-layout .col-right,
-.checkout-multishipping-address-editshipping .col2-right-layout .col-right,
-.checkout-multishipping-address-selectbilling .col2-right-layout .col-right,
-.checkout-multishipping-address-editaddress .col2-right-layout .col-right
-{
-	float: left;
-	width: 265px;
-	margin-left: 8px;
-} */
-
 
 /* Multiple Addresses Checkout */
 .checkout-progress {
@@ -11285,41 +11163,6 @@ body.quickview-index-index {
 	padding: 10px;
 }
 
-/* Clears ================================================================================ */
-/* .category-celebrity-clientele .outfit-product:after,
-.ecp-celebrities-index-index .outfit-product:after, .clearer:after,
-.header-container:after, .header-container .top-container:after,
-.header:after, .top-bar:after, .quick-access:after, .form-search:after,
-#nav:after, .main:after, .footer:after, .footer .form-subscribe:after,
-.footer-container .bottom-container:after, .col-main:after, .col2-set:after,
-.col3-set:after, .col4-set:after, .search-autocomplete li:after, .block .block-content:after,
-.block .actions:after, .block li.item:after, .block-poll li:after,
-.block-layered-nav .currently li:after, .page-title:after,
-.products-grid:after, .products-list li.item:after, .box-account .box-head:after,
-.dashboard .box .box-title:after, .my-account .box .box-title:after,
-.order-info ul:after, .box-reviews li.item:after, .box-tags li.item:after,
-.pager:after, .sorter:after, .ratings:after, .add-to-box:after,
-.add-to-cart:after, .product-essential:after, .product-collateral:after,
-.product-tabs:after, .product-view .product-img-box .more-views ul:after,
-.product-view .box-tags .form-add:after, .product-view .product-shop .short-description:after,
-.product-view .box-description:after, .product-options .options-list li:after,
-.product-options-bottom:after, .product-review:after, .cart:after,
-.cart-collaterals:after, .cart .crosssell li.item:after, .opc .step-title:after,
-.checkout-progress:after, .multiple-checkout .place-order:after,
-.group-select li:after, .form-list li:after, .form-list .field:after,
-.buttons-set:after, .page-print .print-head:after,
-.advanced-search-summary:after, .gift-messages-form .item:after,
-.send-friend .form-list li p:after, #checkout-step-login .col2-set .col-1:after,
-#checkout-step-login .col2-set .col-2:after {
-	display: block;
-	content: ".";
-	clear: both;
-	font-size: 0;
-	line-height: 0;
-	height: 0;
-	overflow: hidden;
-} */
-/* ======================================================================================= */
 @media only screen and (max-width:1500px) {
 	.shippingtextheader {
 		margin-right: 5%;
@@ -11942,14 +11785,6 @@ li.item h2.product-name {text-align: center;}
 	margin-bottom: 19px;
 }
 
-/* .customer-address-form .form-list li.fields .field {
-	padding-top: 0;
-}
-
-.customer-address-form .form-list li.fields .field:last-child {
-	padding-bottom: 0;
-} */
-
 .category-reviews .page-title {
 	margin-bottom: 0;
 }
@@ -12180,22 +12015,6 @@ li.item h2.product-name {text-align: center;}
 	margin-left: 26px;
 }
 
-/* ::-webkit-input-placeholder { /* WebKit browsers
-	color: #3f4048;
-}
-
-:-moz-placeholder { /* Mozilla Firefox 4 to 18
-	color: #3f4048;
-}
-
-::-moz-placeholder { /* Mozilla Firefox 19+
-	color: #3f4048;
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10+
-	color: #3f4048;
-} */
-
 .checkout-multishipping-address-newshipping .selectboxit-container .selectboxit,
 .checkout-multishipping-address-newshipping .selectboxit-container .selectboxit-options,
 .checkout-multishipping-address-editshipping .selectboxit-container .selectboxit,
@@ -12323,10 +12142,6 @@ li.item h2.product-name {text-align: center;}
 .display_none {
 	display: none;
 }
-
-/* .cart_price {
-	line-height: 130%;
-} */
 
 .checkout-cart-index tr.title_total {
 	display: none;
