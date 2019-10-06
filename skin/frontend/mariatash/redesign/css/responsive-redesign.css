@@ -595,12 +595,18 @@ margin-left: 10px;
     margin: 16px 0 40px !important;
     padding: 0 !important;
   }
+  .catalog-category-view #category-title{
+    padding-left: 77px !important;
+  }
   .cart-collaterals.fix-section{
     background: #f2f2f2;
     margin-top: 30px;
   }
   .collat-wrap{
     margin: 0 auto;
+  }
+  .categorypath-jewelry-ear-cartilage-jewelry-html .catalog-product-name-display {
+    padding-left: 0;
   }
 }
 
