@@ -432,10 +432,18 @@ margin-left: 10px;
     display: none;
   }
 
+
+}
+
+/* till ipad (all mobiles and ipads) */
+@media (max-width:1024px){
+  .toolbar-top {
+    display: none;
+  }
   .products-grid li.item .list-mt-w{
     position: relative;
     background: #eee;
-    padding: 0px 2px 5px 2px;
+    padding: 0px 5px 5px 5px;
   }
   .catalog-common-grid .product-image img:hover{
     -ms-transform: none; /* IE 9 */
@@ -445,12 +453,11 @@ margin-left: 10px;
   .products-grid li.item:hover .catalog-grid-image {
     background: #eee;
   }
-}
-
-/* till ipad (all mobiles and ipads) */
-@media (max-width:1024px){
-  .toolbar-top {
-    display: none;
+  .product-buy-btn{
+    display: block!important;
+  }
+  .swatches {
+    padding: 9px 3px 0 0px;
   }
 }
 
