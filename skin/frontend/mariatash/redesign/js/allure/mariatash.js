@@ -168,10 +168,12 @@ jQuery(document).ready(function() {
 
             jQuery(".filterButton").on('click',function(){
                 jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
+                unScrollBody();
             });
 
             jQuery(".filterPopup .close").on('click',function(){
                 jQuery(".filterPopup").css({"opacity":"0","pointer-events":"none"});
+                scrollBody();
             });
         }
     }
