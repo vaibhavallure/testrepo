@@ -435,11 +435,15 @@ margin-left: 10px;
   .products-grid li.item .list-mt-w{
     position: relative;
     background: #eee;
+    padding: 0px 2px 5px 2px;
   }
   .catalog-common-grid .product-image img:hover{
     -ms-transform: none; /* IE 9 */
     -webkit-transform: none; /* Safari 3-8 */
     transform: none;
+  }
+  .products-grid li.item:hover .catalog-grid-image {
+    background: #eee;
   }
 }
 
