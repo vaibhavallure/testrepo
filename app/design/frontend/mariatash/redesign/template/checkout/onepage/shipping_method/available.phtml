@@ -24,115 +24,139 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
+<?php 
+/** 
+ * @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available 
+ * 
+ */ ?>
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
-<?php $helper = Mage::helper('allure_multicheckout');
- $isWholeSale = $helper->checkWholeSaleCustomer(); 
- $freeMethod = $helper->getFedexFreeShippingMethod();
- $orderTotalArr = $this->getOrderTotal();
- $orderTotal = $orderTotalArr['one_ship']['total'];
-?>
-
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
 <?php else: ?>
-    <dl class="sp-methods">
-    <?php $shippingCodePrice = array(); ?>
-    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
-        
-          <?php 
-        //Allure code to hide usps method for order over $400
-        	$shipcode_class = "class='allure_ship_".$code."' ";
-        	if(preg_match('/usps/', $code)){
-        		if($orderTotal>400){
-        			$shipcode_class .="  style='display:none;'";
-        		}
-        	}
-        ?>
-        
-       <dt <?php echo $shipcode_class?>><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
-        <dd <?php echo $shipcode_class?>>
-            <ul <?php $shipcode_class?>>
-            <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
-                <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
-                <li style="display:<?php echo (strpos($_rate->getCode(),$freeMethod) && $isWholeSale)  ? 'none':'block' ?>">
-                   <?php if ($_rate->getErrorMessage()): ?>
-                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
-                   <?php else: ?>
-                        <?php if ($_sole) : ?>
-                        <!-- <span class="no-display"> --><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /><!-- </span> -->
-                        <?php else: ?>
-                        <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+	<?php $_sole = count($_shippingRateGroups) == 1;?>
+	<?php $_address = $this->getAddress();?>
+	<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
+	<div class="gift-messages">
+        <p class="info-text-two"><?= $this->__('Delivery Signature Option.')?></p>
+        <p class="control">
+            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="0" class="checkbox shipping-signature" data-is_international="<?= $isIternational?>">
+            <label for="no_signature_delivery" class="para-normal">Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.</label>
+        </p>
+    </div>
+	<div>
+		<select class="select-shipping-method select-type-one validate-select" name="shipping_method"  >
+			<option value="">Select Method</option>
+            <?php $ship_sign_national = array();?>
+            <?php $ship_sign_without_national = array();?>
+            <?php $ship_withoutsign_national = array();?>
+            <?php $ship_withoutsign_without_national = array();?>
 
-                        <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
-                        <script type="text/javascript">
-                            //<![CDATA[
-                                lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
-                            //]]>
-                        </script>
-                        <?php endif; ?>
+          	<?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+           	<?php $_sole = $_sole && count($_rates) == 1;?>
+           	<?php foreach ($_rates as $_rate): ?>
+           		
+            	<?php if ($_rate->getErrorMessage()): ?>
+                <?php //echo $this->escapeHtml($_rate->getCarrierTitle()) ?>: <?php echo $this->escapeHtml($_rate->getErrorMessage()) ?>
+                <?php else: ?>
+                <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
 
-                        <?php endif; ?>
-                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
-                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                        <?php echo $_excl; ?>
+                <?php
+                    $shipDataArr =  $_rate->getData();
+                    $shipDataArr["excl"] = $_excl;
+                    $shipDataArr["incl"] = $_incl;
+                ?>
+                <?php if($code == "matrixrate"){
+                    $shipCodeArr = explode("#",$_rate->getCode());
+                    if(count($shipCodeArr) == 3){
+                        if($shipCodeArr[1] == 1){
+                            if($shipCodeArr[2] == 1){
+                                $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                            } else {
+                                $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                            }
+                        ?>
+                	<?php } else {
+                            if($shipCodeArr[2] == 1){
+                                $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                            } else { 
+                                $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+                            } ?>
+
+                  	<?php if($isIternational == $shipCodeArr[2]):?>
+                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
+                       	<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                       	<?php echo $_excl; ?>
                         <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                       		(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                       	<?php endif; ?>
+                      	</option>
+                   	<?php endif;?>
+                   	<?php } 
+                        }
+                    } else {
+                            $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                            $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                            $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                            $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+                    ?>
+                    <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
+                    	<?= $this->escapeHtml($this->getCarrierName($code))?>-<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                    	<?php echo $_excl; ?>
+                    	<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                        	(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                         <?php endif; ?>
-                        </label>
-                   <?php endif ?>
-                </li>
-            <?php endforeach; ?>
-            </ul>
-        </dd>
-    <?php endforeach; ?>
-    </dl>
-<script type="text/javascript">
-//<![CDATA[
-    <?php if (!empty($shippingCodePrice)): ?>
-        var shippingCodePrice = {<?php echo implode(',',$shippingCodePrice); ?>};
-    <?php endif; ?>
-
-    $$('input[type="radio"][name="shipping_method"]').each(function(el){
-        Event.observe(el, 'click', function(){
-            if (el.checked == true) {
-            	if(accordion.currentSection!='opc-delivery_option'){
-		            var getShippingCode = el.getValue();
-		            <?php if (!empty($shippingCodePrice)): ?>
-		                var newPrice = shippingCodePrice[getShippingCode];
-		                if (!lastPrice) {
-		                    lastPrice = newPrice;
-		                    quoteBaseGrandTotal += newPrice;
-		                }
-		                if (newPrice != lastPrice) {
-		                    quoteBaseGrandTotal += (newPrice-lastPrice);
-		                    lastPrice = newPrice;
-		                }
-		            <?php endif; ?>
-		            checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
-		            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-		            new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>?shipping_method=' + getShippingCode, { method: 'get' });  
-		            return false;
-		        }
-            }
-       });
-    });
-
-    <?php //aws02 -start?>
-    	   	if($$('input[type="radio"][name="shipping_method"]').size() == 1){
-    	   	 $$('input[type="radio"][name="shipping_method"]').each(function(el){
-    	   	   	 var shippingMethodA = jQuery(el).val();
-    	   	   	 if($('totalsDivRightNav')){
-    	       	  	 $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-    	          	 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>?shipping_method=' + shippingMethodA, { method: 'get' });  
-    	   	   	 }
-    	       });
-    	   	}
-   <?php //aws02 -end?>
-    
-//]]>
-jQuery('#totalsDivRightNav').html('<div class="loading-div">Loading</div>');
-new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+                   	</option>
+                  <?php } ?>
+            	<?php endif ?>
+                <?php endforeach; ?>
+              <?php endforeach; ?>
+            </select>
+    	</div>
+    	<?php
+            $shippingConfig = array(
+                '1_1' => $ship_sign_national,
+                '1_0' => $ship_sign_without_national,
+                '0_1' => $ship_withoutsign_national,
+                '0_0' => $ship_withoutsign_without_national
+            );
+       ?>
+       
+ <script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+   	Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
 </script>
-<?php endif; ?>
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.shipping-signature').on('change',function(){
+			var selector = jQuery(this);
+			var isInternational = selector.data("is_international");
+			var value = (selector.is( ":checked" )) ? 1 : 0;
+			var genKey = value+"_"+isInternational;
+			jQuery(this).val(value);
+			if(Object.entries(Allure.shippingConfig).length){
+				if(Allure.shippingConfig[genKey]){
+					var shippingOptions = Allure.shippingConfig[genKey];
+					if(shippingOptions){
+						var shippingHtml = '';
+						for (var objKey in shippingOptions) {
+							var shipObj = shippingOptions[objKey];
+							shippingHtml += '<option value="'+shipObj.code+'">'+shipObj.method_title +' '+shipObj.excl +'</option>';
+					    }
+						jQuery('.select-shipping-method').html("");
+						jQuery('.select-shipping-method').html(shippingHtml);
+					}
+				}
+			}
+		});
+	});
+</script>
+<?php endif;?>
+      
+
+
+
+
