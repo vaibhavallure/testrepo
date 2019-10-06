@@ -37,7 +37,7 @@
         <div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $i ?></span>
             <h3 onclick="jQuery('#shipping-address-select').uniform();"><?php echo $_stepInfo['label'] ?></h3>
-            <a href="#"><?php echo $this->__('Edit') ?></a>
+            <!-- <a href="#"><//?php echo $this->__('Edit') ?></a> -->
         </div>
         <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
             <?php echo $this->getChildHtml($_stepId) ?>

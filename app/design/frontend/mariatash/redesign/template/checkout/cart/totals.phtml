@@ -100,17 +100,17 @@
         <tbody>
 			<tr>
 				<td class="cart-subtotals-left" colspan="1">
-					<span class="subtotal"><?= $this->__('Subtotal')?></span><span class="merchandise"></span>    
+					<span class="subtotal"><?= $this->__('Subtotal')?></span><span class="merchandise"></span>
 				</td>
 				<td class="cart-subtotals-right">
-					<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>    
+					<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>
 				</td>
 			</tr>
 			<tr id="mt-shipping">
 				<td colspan="1">
 					<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
 				</td>
-				<td class="a-right">
+				<td class="text-right">
 					<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($shipping) ?></span>
 				</td>
 			</tr>

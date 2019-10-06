@@ -361,6 +361,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 .checkout-step-name {
   border-top: 1px solid #D8D8D8;
 	padding: 0;
+	clear: both;
 }
 .checkout-step-name h3, .checkout-step-name span {
   font-size: 13px;
@@ -371,6 +372,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   padding-top: 19px;
   opacity: 0.6;
 	padding-bottom: 14px;
+	cursor: pointer;
 }
 .checkout-step-name span {
   float: left;
@@ -2500,7 +2502,7 @@ button#addtocart {
   height: 51px;
   text-transform: uppercase;
 }
-.product-special-instructions{
+.product-special-instructions, .back-link{
 	clear: both;
 }
 .link-wishlist{
@@ -3104,7 +3106,7 @@ table thead {
 	margin: 27px 0 25px;
 }
 .multi-address-select-address-option {
-  margin: 22px 0 24px;
+  margin: 18px 0 24px;
 }
 .multi-address-select-address-option .billing-address-select {
   margin-top: 18px;
@@ -3166,6 +3168,20 @@ table thead {
 .plus_icon, .minus_icon, .qty-wrap.total_qty{
 	display: flex;
 	justify-content: center;
+}
+/*Noemal Checkout CSS*/
+.mt-shipping-methods .mt-shipment-title{
+	padding: 5px;
+	text-align: center;
+	border: 1px solid #292929;
+}
+.checkout-onepage-index #billing-address-select,.checkout-onepage-index #shipping-address-select {
+  width: 323px;
+	margin-top: 14px;
+	margin-bottom: 24px;
+}
+.ship-to li:first-child {
+  margin-bottom: 17px;
 }
 /* cccc */
 /*MINI CART CSS*/
