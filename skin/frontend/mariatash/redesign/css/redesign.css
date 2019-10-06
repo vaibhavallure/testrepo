@@ -3183,6 +3183,9 @@ table thead {
 .ship-to li:first-child {
   margin-bottom: 17px;
 }
+#allow-gift-message-container .inner-box {
+  margin-left: 0;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
