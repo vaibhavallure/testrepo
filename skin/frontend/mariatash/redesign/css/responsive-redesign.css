@@ -262,7 +262,9 @@
   .breadcrumbs{
     margin-top: 30px;
   }
-
+  #narrow-by-list li div dd ol li{
+    width: auto;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
