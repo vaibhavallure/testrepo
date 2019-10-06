@@ -644,7 +644,7 @@ img.snize-item-image[src^=data]::after {
 
 }
 
-.close {
+/* .close {
 	background: #606061;
 	color: #FFFFFF;
 	line-height: 25px;
@@ -661,9 +661,9 @@ img.snize-item-image[src^=data]::after {
 	-moz-box-shadow: 1px 1px 3px #000;
 	-webkit-box-shadow: 1px 1px 3px #000;
 	box-shadow: 1px 1px 3px #000;
-}
+} */
 
-.close:hover { background: #00d9ff; }
+/* .close:hover { background: #00d9ff; } */
 
 #signin-btn{
 	float:right;

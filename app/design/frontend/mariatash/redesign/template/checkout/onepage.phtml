@@ -29,6 +29,7 @@
 </div>
 <script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
+<div class="container">
 <ol class="opc" id="checkoutSteps">
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId)): continue; endif; $i++ ?>
@@ -50,6 +51,7 @@
     ?>
     </div>
 </ol>
+</div>
 <script>
     jQuery('a.scl-popup').fancybox({
         openEffect  : 'none',
