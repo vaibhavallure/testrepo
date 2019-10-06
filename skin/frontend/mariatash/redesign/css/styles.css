@@ -5917,53 +5917,6 @@ ul.crosssell-products-list {
 	margin: 0;
 }
 
-/* .sp-methods select.month {
-	width: 110px !important;
-}
-
-.multiple-checkout .sp-methods select.month {
-	width: 137px !important;
-	background-image: url(../images/down-arrow.png);
-	background-position: 80% center;
-	background-repeat: no-repeat;
-	border: none;
-	border-radius: 0;
-	padding-left: 0px;
-}
-
-.multiple-checkout .sp-methods select.month option {
-	width: 125px;
-	padding-left: 0px;
-}
-
-.multiple-checkout .sp-methods select.year {
-	width: 132px !important;
-	background-image: url(../images/down-arrow.png);
-	background-position: 80% center;
-	background-repeat: no-repeat;
-	border: none;
-	border-radius: 0;
-}
-
-.multiple-checkout .v-fix.v-fix-month {
-	margin-right: 7px;
-	overflow: hidden;
-	width: 120px;
-}
-
-.multiple-checkout .v-fix.v-fix-year {
-	overflow: hidden;
-	width: 115px;
-}
-
-.multiple-checkout .sp-methods #authorizenet_cc_type_cvv_div input.cvv {
-	width: 142px !important;
-}
-
-.sp-methods select.year {
-	width: 110px !important;
-} */
-
 
 .img_cards {
 	background-image:
@@ -6026,28 +5979,12 @@ ul.crosssell-products-list {
 	margin-top: -28px;
 }
 
-/* Gift Messages */
-/* .gift-messages h3 {
-	font-size: 12px;
-	font-weight: bold;
-} */
-
-
 #payment-buttons-container .back-link {
 	display: none;
 }
 
 #payment-buttons-container .required {
 	margin: 8px 0 -42px
-}
-
-#shipping-method-buttons-container .back-link {
-	margin: 22px 0 -22px 4px;
-	text-decoration: underline;
-}
-
-#shipping-method-buttons-container {
-	border-top: 1px solid #d1d1d1;
 }
 
 .gift-messages-form {
@@ -6631,19 +6568,19 @@ ul.crosssell-products-list {
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
 
-.checkout-onepage-index #shipping-method-buttons-container {
+/* .checkout-onepage-index #shipping-method-buttons-container {
 	float: left;
 	height: 51px;
 	margin-bottom: 15px;
 	width: 100%;
-}
+} */
 
-.checkout-onepage-index #checkout-step-shipping_method #onepage-checkout-shipping-method-additional-load
+/* .checkout-onepage-index #checkout-step-shipping_method #onepage-checkout-shipping-method-additional-load
 {
 	float: left;
 	height: auto;
 	width: 696px;
-}
+} */
 
 /* .checkout-onepage-index #checkout-step-shipping_method .inner-box {
 	height: auto;
