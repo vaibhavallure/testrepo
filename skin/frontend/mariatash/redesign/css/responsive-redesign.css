@@ -431,6 +431,16 @@ margin-left: 10px;
   #total_item_counts_holder{
     display: none;
   }
+
+  .products-grid li.item .list-mt-w{
+    position: relative;
+    background: #eee;
+  }
+  .catalog-common-grid .product-image img:hover{
+    -ms-transform: none; /* IE 9 */
+    -webkit-transform: none; /* Safari 3-8 */
+    transform: none;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
