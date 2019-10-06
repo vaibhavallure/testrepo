@@ -3006,7 +3006,8 @@ table thead {
  .checkout-multishipping-shipping .main,
  .checkout-multishipping-delivery .main,
  .checkout-multishipping-billing .main,
- .checkout-multishipping-overview .main{
+ .checkout-multishipping-overview .main,
+ .checkout-onepage-index .main{
   max-width: 1205px;
   display: flex;
   margin: 0 auto;
@@ -3014,7 +3015,8 @@ table thead {
 .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main,
 .checkout-multishipping-delivery .col-main,
 .checkout-multishipping-billing .col-main,
-.checkout-multishipping-overview .col-main {
+.checkout-multishipping-overview .col-main,
+.checkout-onepage-index .col-main {
   flex: 0 0 66.666667%;
   max-width: 66.666667%;
 	padding-right: 15px;
@@ -3023,7 +3025,8 @@ table thead {
 .checkout-multishipping-addresses .col-right.sidebar, .checkout-multishipping-shipping .col-right.sidebar,
 .checkout-multishipping-delivery .col-right.sidebar,
 .checkout-multishipping-billing .col-right.sidebar,
-.checkout-multishipping-overview .col-right.sidebar {
+.checkout-multishipping-overview .col-right.sidebar,
+ .checkout-onepage-index .col-right.sidebar{
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding-right: 15px;
