@@ -852,7 +852,7 @@ ul.swatch .swatch-item a {
     left: 10px;
 }
 
-.hamburger {
+/* .hamburger {
     display: inline-block;
     cursor: pointer;
 }
@@ -865,9 +865,9 @@ ul.swatch .swatch-item a {
     background-color: #fff;
     margin: 6px 0;
     transition: 0.3s;
-}
+} */
 
-.change .bar1 {
+/* .change .bar1 {
     -webkit-transform: rotate(-45deg) translate(-5px, 5px);
     transform: rotate(-45deg) translate(-5px, 5px);
 }
@@ -879,7 +879,7 @@ ul.swatch .swatch-item a {
 .change .bar3 {
     -webkit-transform: rotate(45deg) translate(-6px, -6px);
     transform: rotate(45deg) translate(-6px, -6px);
-}
+} */
 
 .label {
     font-weight: 700;
@@ -891,7 +891,7 @@ ul.swatch .swatch-item a {
     color: var(--dark-gray);
 }
 
-.more-details .label {
+/* .more-details .label {
     letter-spacing: 1.08px;
     color: var(--light-black);
     text-transform: capitalize;
@@ -901,9 +901,9 @@ ul.swatch .swatch-item a {
 .maria-options[type=radio]:not(:checked) {
     position: absolute;
     left: -9999px;
-}
+} */
 
-.maria-options[type=radio]:checked+label,
+/* .maria-options[type=radio]:checked+label,
 .maria-options[type=radio]:not(:checked)+label {
     border-bottom: 3px solid transparent;
     position: relative;
@@ -938,7 +938,7 @@ ul.swatch .swatch-item a {
 
 .maria-options[type=radio]+label:last-child {
     margin-right: 0!important;
-}
+} */
 
 .product-details-box .qty {
     font-size: 17px;
@@ -1622,10 +1622,10 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .mobile-main_menu .main-nav-title li:first-child {
-    padding-top: 0;
+  padding-top: 0;
 }
 .mobile-main_menu ul {
-    padding-left: 15px;
+  padding-left: 15px;
 }
 .mobile-main_menu li.nav-item:after {
   background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
@@ -1733,9 +1733,10 @@ input[type="checkbox"]:checked+label:before {
 .list-mt-upper {
   min-height: 39px;
 }
-/* .products-grid2 li.item{
-  padding: 5px;
-} */
+.categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list {
+	margin-top: 73px;
+}
+
 div#narrow-by-list {
   position: absolute;
   top: 330px;
@@ -2431,8 +2432,11 @@ ul#foo4 {
 	min-width: 100%;
 }
 .filterPopup #narrow-by-list ol li {
-	min-width: 140px;
+	min-width: 208px;
 	padding: 0;
+}
+.catalog-category-view .custom-checkbox{
+	padding-left: 30px;
 }
 
 /*filter popup end----------------------------------*/
