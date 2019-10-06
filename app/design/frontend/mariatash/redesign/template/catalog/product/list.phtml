@@ -333,7 +333,11 @@ $mode  = $this->getMode();
                                                      href="<?php echo $quickViewUrl; ?>sourceOfReq/quickview/<?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
                                                      title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
                                                    </a>
-                                               </div>
+                                                    <a class="btn btn-primary btn-sm light-button product-buy-btn"
+                                                       href="<?php echo $productUrl; ?>"
+                                                       title="<?php echo $this->__('quick view') ?>" style="display: none;"><span><?php echo $this->__('buy') ?></span></a>
+
+                                                </div>
                                                 <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
                                                     <?php
                                                     $productId = $_product->getId();
@@ -381,7 +385,8 @@ $mode  = $this->getMode();
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
-                                            <?php endif; ?>
+
+                                                   <?php endif; ?>
                                         <?php else: ?>
                                             <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
                                         <?php endif; ?>

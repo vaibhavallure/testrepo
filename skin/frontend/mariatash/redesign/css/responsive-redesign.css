@@ -445,6 +445,9 @@ margin-left: 10px;
   .products-grid li.item:hover .catalog-grid-image {
     background: #eee;
   }
+  .product-buy-btn{
+    display: block!important;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
