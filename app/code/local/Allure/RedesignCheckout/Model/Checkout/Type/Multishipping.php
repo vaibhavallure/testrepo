@@ -8,6 +8,87 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
 {
     const XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW = 'sales_email/allure_multiaddress_sales_email/multi_order_allow_email';
     
+    private function prepareRequestWithGiftWrap(&$info, &$giftQty, &$giftWrapQtyArr){
+        try {
+            $giftWrapQty = 0;
+            foreach ($info as $itemData){
+                foreach ($itemData as $quoteItemId => $data) {
+                    $qty = isset($giftQty[$quoteItemId][$data["address"]]) ? 0 : $giftQty[$quoteItemId][$data["address"]] ;
+                    if(isset($data["is_gift_item"])){
+                        if($data["is_gift_item"]){
+                            $giftQty[$quoteItemId][$data["address"]] = $giftQty[$quoteItemId][$data["address"]] + 1;
+                            
+                            if(isset($data["is_gift_wrap"])){
+                                if($data["is_gift_wrap"]){
+                                    $giftWrapQtyArr[$quoteItemId][$data["address"]] = $giftWrapQtyArr[$quoteItemId][$data["address"]] + 1;
+                                    $giftWrapQty++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            $quote = $this->getQuote();
+            $giftItem = null;
+            foreach ($quote->getAllVisibleItems() as $_item){
+                if($_item->getSku() == "GIFT_WRAP"){
+                    $giftItem = $_item;
+                    break;
+                }
+            }
+            if($giftWrapQty){
+                if(!$giftItem){
+                    $giftWrapSku = "GIFT_WRAP";
+                    $_product = Mage::getModel("catalog/product")->loadByAttribute("sku", $giftWrapSku);
+                    $_product->setPrice($_product->getPrice());
+                    $giftItem = Mage::getModel('sales/quote_item')->setProduct($_product);
+                    $giftItem->setStoreId(1)
+                    ->setPrice($_product->getPrice())
+                    ->setBasePrice($_product->getPrice());
+                    $giftItem->setQty($giftWrapQty);
+                    $quote->addItem($giftItem);
+                }else{
+                    $giftItem->setQty($giftWrapQty);
+                }
+            }else{
+                if($giftItem){
+                    $quote->removeItem($giftItem->getId());
+                }
+            }
+            foreach ($this->getQuote()->getAllVisibleItems() as $_item){
+                if($_item->getSku() == "GIFT_WRAP"){
+                    $giftItem = $_item;
+                    break;
+                }
+            }
+            $quote->setTotalsCollectedFlag(false);
+            $quote->collectTotals()->save();
+            
+            foreach ($info as $itemData) {
+                foreach ($itemData as $quoteItemId => $data) {
+                    if (isset($data["is_gift_item"])) {
+                        if ($data["is_gift_item"]) {
+                            if (isset($data["is_gift_wrap"])) {
+                                if ($data["is_gift_wrap"]) {
+                                    $info[] = array(
+                                        $giftItem->getId() => array(
+                                            "qty" => 1,
+                                            "address" => $data["address"]
+                                        )
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            Mage::log("addGiftWrap method - Exception:",Zend_Log::DEBUG,'abc.log',true);
+            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+        }
+    }
+    
     /**
      * Assign quote items to addresses and specify items qty
      *
@@ -26,6 +107,12 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
     {
         Mage::log($info,Zend_Log::DEBUG,"abc.log",true);
         if (is_array($info)) {
+            
+            $giftQty = array();
+            $giftWrapQtyArr = array();
+            
+            $this->prepareRequestWithGiftWrap($info, $giftQty, $giftWrapQtyArr);
+            
             $allQty = 0;
             $itemsInfo = array();
             foreach ($info as $itemData) {
@@ -45,7 +132,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 $quote->removeAddress($address->getId());
             }
             
-            $giftQty = array();
+            /* $giftQty = array();
             foreach ($info as $itemData){
                 foreach ($itemData as $quoteItemId => $data) {
                     $qty = isset($giftQty[$quoteItemId][$data["address"]]) ? 0 : $giftQty[$quoteItemId][$data["address"]] ;
@@ -55,19 +142,22 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         }
                     }
                 }
-            }
+            } */
             
             foreach ($info as $itemData) {
                 foreach ($itemData as $quoteItemId => $data) {
                     $data["gift_qty"] = 0;
+                    $data["gift_wrap_qty"] = 0;
                     if( isset($giftQty[$quoteItemId][$data["address"]]) ){
                         $data["gift_qty"] = $giftQty[$quoteItemId][$data["address"]];
+                    }
+                    if( isset($giftWrapQtyArr[$quoteItemId][$data["address"]]) ){
+                        $data["gift_wrap_qty"] = $giftWrapQtyArr[$quoteItemId][$data["address"]];
                     }
                     $this->_addShippingItem($quoteItemId, $data);
                 }
             }
             
-            $this->splitBackorder();
             
             /**
              * Delete all not virtual quote items which are not added to shipping address
@@ -111,6 +201,10 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                                 if(isset($itemsInfo[$_item->getId()]["is_gift_wrap"])){
                                     if($itemsInfo[$_item->getId()]["is_gift_wrap"]){
                                         $_item->setIsGiftWrap(1);
+                                        
+                                        if( isset($giftWrapQtyArr[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]) ){
+                                            $_item->setGiftWrapQty($giftWrapQtyArr[$_item->getId()][$itemsInfo[$_item->getId()]["address"]]);
+                                        }
                                     }
                                 }
                             }
@@ -138,6 +232,10 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 $this->setQuoteCustomerBillingAddress($params["billing_address_id"]);
             }
             
+            
+            $this->setBackorderFlag();
+            $this->splitBackorder();
+            
             $quote = $this->getQuote();
             $quote->setTotalsCollectedFlag(false);
             $quote->collectTotals()->save();
@@ -146,6 +244,29 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             
         }
         return $this;
+    }
+    
+    private function setBackorderFlag(){
+        try {
+            $addresses = $this->getQuote()->getAllShippingAddresses();
+            foreach ($addresses as $address) {
+                $isContainBackOrder = false;
+                foreach ($address->getAllVisibleItems() as $item){
+                    if($item->getIsSeparateShip()){
+                        $isContainBackOrder = true;
+                        break;
+                    }
+                }
+                $address->setIsContainBackorder(0);
+                if($isContainBackOrder){
+                    $address->setIsContainBackorder(1);
+                }
+            }
+            $this->save();
+        } catch (Exception $e) {
+            Mage::log("setBackorderFlag method - Exception:",Zend_Log::DEBUG,'abc.log',true);
+            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+        }
     }
     
     private function splitBackorder(){
@@ -162,12 +283,22 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         
                         $backOrderAddress = Mage::getModel('sales/quote_address')->importCustomerAddress($customerAddress);
                         $this->getQuote()->addShippingAddress($backOrderAddress);
-             
+                        
+                        $instockGiftWrapQty = 0;
+                        $outofstockGiftWrapQty = 0;
+                        $giftItem = null;
+                        
                         $storeId = Mage::app()->getStore()->getStoreId();
                         foreach($address->getAllItems() as $item){
                             if ($item->getParentItemId()) {
                                 continue;
                             }
+                            
+                            if($item->getSku() == $helper::GIFT_WRAP_SKU){
+                                $giftItem = $item;
+                                continue;
+                            }
+                            
                             $_product = Mage::getModel('catalog/product')
                             ->setStoreId($storeId)
                             ->loadByAttribute('sku', $item->getSku());
@@ -178,12 +309,31 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                             $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
                             $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
                             $quoteItem->setQty($quoteItem->getMultishippingQty());
-                            if ($stockQty < $item->getQty() && $stock->getManageStock() == 1) {
+                            if (($stockQty < $item->getQty() && $stock->getManageStock() == 1)) {
+                                if($item->getIsGiftWrap()){
+                                    $outofstockGiftWrapQty += $item->getGiftWrapQty();
+                                }
                                 $backOrderAddress->addItem($quoteItem, $item->getQty());
                             }else{
+                                if($item->getIsGiftWrap()){
+                                    $instockGiftWrapQty += $item->getGiftWrapQty();
+                                }
                                 $quoteAddress->addItem($quoteItem, $item->getQty());
                             }
                         }
+                        
+                        if($giftItem){
+                            $quoteGiftItem = $this->getQuote()->getItemById($giftItem->getQuoteItemId());
+                            $quoteGiftItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                            $quoteGiftItem->setQty($quoteGiftItem->getMultishippingQty());
+                            if($outofstockGiftWrapQty){
+                                $backOrderAddress->addItem($quoteGiftItem, $outofstockGiftWrapQty);
+                            }
+                            if($instockGiftWrapQty){
+                                $quoteAddress->addItem($quoteGiftItem, $instockGiftWrapQty);
+                            }
+                        }
+                        
                         $this->getQuote()->removeAddress($address->getId());
                         $quoteAddress->setCollectShippingRates(1);
                         $backOrderAddress->setCollectShippingRates(1);
@@ -238,6 +388,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $quoteItem->setIsGiftItem(0);
                     $quoteItem->setIsGiftWrap(0);
                     $quoteItem->setGiftItemQty(0);
+                    $quoteItem->setGiftWrapQty(0);
                     if(isset($data["is_gift_item"])){
                         if($data["is_gift_item"]){
                             $quoteItem->setIsGiftItem(1);
@@ -248,6 +399,10 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                             if(isset($data["is_gift_wrap"])){
                                 if($data["is_gift_wrap"]){
                                     $quoteItem->setIsGiftWrap(1);
+                                    
+                                    if(isset($data["gift_wrap_qty"])){
+                                        $quoteItem->setGiftWrapQty($data["gift_wrap_qty"]);
+                                    }
                                 }
                             }
                         }

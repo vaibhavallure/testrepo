@@ -26,6 +26,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
             $addressItem->setIsGiftItem($item->getIsGiftItem());
             $addressItem->setGiftItemQty($item->getGiftItemQty());
             $addressItem->setIsGiftWrap($item->getIsGiftWrap());
+            $addressItem->setGiftWrapQty($item->getGiftWrapQty());
             
             //set separatly ship item
             $addressItem->setIsSeparateShip($item->getIsSeparateShip());
@@ -42,6 +43,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
                     $addressChildItem->setIsGiftItem($item->getIsGiftItem());
                     $addressChildItem->setGiftItemQty($item->getGiftItemQty());
                     $addressChildItem->setIsGiftWrap($item->getIsGiftWrap());
+                    $addressChildItem->setGiftWrapQty($item->getGiftWrapQty());
                     
                     //set separatly ship item
                     $addressChildItem->setIsSeparateShip($item->getIsSeparateShip());
@@ -57,6 +59,7 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Univers
                 $addressItem->setIsGiftItem($item->getIsGiftItem());
                 $addressItem->setGiftItemQty($item->getGiftItemQty());
                 $addressItem->setIsGiftWrap($item->getIsGiftWrap());
+                $addressItem->setGiftWrapQty($item->getGiftWrapQty());
                 
                 //set separatly ship item
                 $addressItem->setIsSeparateShip($item->getIsSeparateShip());
