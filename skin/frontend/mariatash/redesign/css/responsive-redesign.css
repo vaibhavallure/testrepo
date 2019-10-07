@@ -816,6 +816,9 @@ margin-left: 10px;
   .filterPopup #narrow-by-list {
     padding-top: 30px;
   }
+  #slidecaption{
+    display: none;
+  }
 }
 
 /* Mobile Portrait */
