@@ -5,13 +5,18 @@
  *
  */
 class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
-{    
+{   
+    /**
+     *  gift wrap sku 
+     */
+    const GIFT_WRAP_SKU = "GIFT_WRAP";
+    
     /**
      * Get the gift wrap product details by using sku.
      */
     public function getGiftWrap(){
         try {
-            $giftWrapSku = "GIFT_WRAP";
+            $giftWrapSku = self::GIFT_WRAP_SKU;
             $_product = Mage::getModel("catalog/product")->loadByAttribute( "sku", $giftWrapSku);
             if($_product){
                 return $_product;
@@ -41,6 +46,10 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
         $storeId = Mage::app()->getStore()->getStoreId();
         try {
             foreach ($items as $item){
+                if($item->getSku() == self::GIFT_WRAP_SKU){
+                    continue;
+                }
+                
                 $_product = Mage::getModel('catalog/product')
                     ->setStoreId($storeId)
                     ->loadByAttribute('sku', $item->getSku());
@@ -65,6 +74,9 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
             $items = $this->getShippingAddressItems($address);
             $storeId = Mage::app()->getStore()->getStoreId();
             foreach ($items as $item){
+                if($item->getSku() == self::GIFT_WRAP_SKU){
+                    continue;
+                }
                 $_product = Mage::getModel('catalog/product')
                     ->setStoreId($storeId)
                     ->loadByAttribute('sku', $item->getSku());

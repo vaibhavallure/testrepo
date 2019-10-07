@@ -67,7 +67,7 @@
     						<?php $product = null; $stockItem = null;?>
                         	<?php foreach ($this->getItems() as $_index => $_item): ?>
                             <?php if ($_item->getQuoteItem()) :?>
-                            <?php //if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
+                            <?php if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
     							<div class="col-12 product-description-section">
     								<div class="row">
                             			<div class="col-2">
