@@ -1132,8 +1132,9 @@ dd.post-lengthds-lbl-options.last{
 
 
 
+/*
 
-/*-------------------new alert box--------------------------*/
+!*-------------------new alert box--------------------------*!
 
  #allureModalContainer {
      background-color: rgba(0, 0, 0, 0.47);
@@ -1143,7 +1144,7 @@ dd.post-lengthds-lbl-options.last{
      top:0px;
      left:0px;
      z-index:10000;
-     /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+     !*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*!
  }
 
 #allureAlertBox {
@@ -1172,7 +1173,7 @@ dd.post-lengthds-lbl-options.last{
 #allureAlertBox p {
     text-align: center;
     font:12px arial,verdana;
-    /*margin-top: 10px;*/
+    !*margin-top: 10px;*!
     color: #3f4048;
 }
 
@@ -1204,7 +1205,7 @@ dd.post-lengthds-lbl-options.last{
 
 
 
-/*-------------confirm popup----------------*/
+!*-------------confirm popup----------------*!
 
 
 
@@ -1246,6 +1247,7 @@ dd.post-lengthds-lbl-options.last{
     text-decoration: none;
 }
 
+*/
 
 
 
