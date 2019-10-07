@@ -685,6 +685,9 @@ margin-left: 10px;
   .block-layered-nav dd a, .block-layered-nav label{
     font-size: 10px !important;
   }
+  .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
+    margin-top: 106px;
+  }
 }
 
 /* ALl Mobiles */
@@ -1167,6 +1170,9 @@ margin-left: 10px;
   #narrow-by-list{
     margin-top: 65px;
   }
+  .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
+    margin-top: 40px;
+  }
   .catalog-category-view .for-space-to-bottom{
     height: 430px !important;
   }
@@ -1185,6 +1191,19 @@ margin-left: 10px;
   .categorypath-piercing-piercing-gallery-html .category-products {
     margin-top: 0;
   }
+  .categorypath-jewelry-ear-cartilage-jewelry-html .catalog-product-name-display {
+    margin-top: 30px;
+  }
+  .catalog-category-view.category-ear-cartilage-jewelry .mb-mana-catalog-leftnav .block-layered-nav-bg{
+  	margin-top: 25px;
+  }
+  .categorypath-jewelry-ear-cartilage-jewelry-html .cartilage-section{
+    margin-top: 140px;
+  }
+  .categorypath-jewelry-ear-cartilage-jewelry-html .category-products{
+    margin-top: 56px;
+  }
+
 }
 
 /* Small Laptops : 1366px */
