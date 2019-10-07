@@ -1121,6 +1121,9 @@ margin-left: 10px;
   .close-section{
     display: none;
   }
+}
+
+@media (min-width:1025px){
   /*footer display on hover bottom  of the page*/
   .catalog-category-view .footer {
     padding-top: 0px !important;
