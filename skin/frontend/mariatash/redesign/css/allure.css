@@ -1131,8 +1131,9 @@ label.popup-reg-privacy-lbl {
 
 
 
+/*
 
-/*-------------------new alert box--------------------------*/
+!*-------------------new alert box--------------------------*!
 
  #allureModalContainer {
      background-color: rgba(0, 0, 0, 0.47);
@@ -1142,7 +1143,7 @@ label.popup-reg-privacy-lbl {
      top:0px;
      left:0px;
      z-index:10000;
-     /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+     !*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*!
  }
 
 #allureAlertBox {
@@ -1171,7 +1172,7 @@ label.popup-reg-privacy-lbl {
 #allureAlertBox p {
     text-align: center;
     font:12px arial,verdana;
-    /*margin-top: 10px;*/
+    !*margin-top: 10px;*!
     color: #3f4048;
 }
 
@@ -1203,7 +1204,7 @@ label.popup-reg-privacy-lbl {
 
 
 
-/*-------------confirm popup----------------*/
+!*-------------confirm popup----------------*!
 
 
 
@@ -1245,6 +1246,7 @@ label.popup-reg-privacy-lbl {
     text-decoration: none;
 }
 
+*/
 
 
 
