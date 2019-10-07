@@ -4053,11 +4053,6 @@ textarea:focus, input:focus {
 /* ======================================================================================= */
 
 /* Category Page ========================================================================= */
-.catalog-category-view.category-ear-cartilage-jewelry .mb-mana-catalog-leftnav .block-layered-nav-bg
-{
-	margin-top: 0px;
-	margin-top: 9px\9;
-}
 
 .lt-ie9 .catalog-category-view.category-ear-cartilage-jewelry .mb-mana-catalog-leftnav .block-layered-nav-bg
 {
@@ -9235,11 +9230,6 @@ tr.additional-addresses {
 }
 
 /* My Wishlist WJZR */
-.price-wish {
-	/*float: left;*/
-	/*width: 30px;*/
-	color: #4e4f52;
-}
 
 .links-wishlist li {
 	font-size: 12px;
@@ -9247,9 +9237,6 @@ tr.additional-addresses {
 	margin-right: 7px;
 }
 
-.links-wishlist li a:hover {
-
-}
 
 .links-wishlist #mail {
 	vertical-align: top;
@@ -9420,10 +9407,6 @@ tr.additional-addresses {
 	text-decoration: none;
 }
 
-.my-wishlist .buttons-set {
-	/*border:1px solid #F2F2F2; padding:9px; margin:18px 0; box-shadow: 0 0 7px 5px #F2F2F2 inset; width: 90%; float: left;*/
-
-}
 
 .my-wishlist .buttons-set button.button {
 	float: right;
@@ -9432,10 +9415,6 @@ tr.additional-addresses {
 	padding-right: 15px !important;
 }
 
-.my-wishlist .buttons-set .btn-add span, .my-wishlist .buttons-set .btn-share span
-{
-
-}
 
 #wishlist-table .add-to-links {
 	white-space: nowrap;
@@ -10547,7 +10526,6 @@ body.quickview-index-index {
 	margin-right: 0;
 }
 
-
 .footer .bugs {
 	margin: 0;
 	color: #666;
@@ -10649,10 +10627,6 @@ body.quickview-index-index {
 	border: 0;
 }
 
-.footer .form-subscribe .input-box {
-
-}
-
 .footer .form-subscribe input.input-text {
 	width: 196px;
 	background: #f7f7f7;
@@ -10661,10 +10635,6 @@ body.quickview-index-index {
 
 .footer .form-subscribe button.button {
 	width: 120px;
-}
-
-.footer .footer-callout {
-
 }
 
 .footer .show-on-phones {
@@ -10886,19 +10856,7 @@ body.quickview-index-index {
 .fancybox-title-inside-wrap .social-mt .twitter-share-button {
 	margin-left: 5px;
 }
-/*
-  .fancybox-title-inside-wrap .social-mt .emailBtn {
-    padding:1px 3px 2px;
-  }
-  .fancybox-title-inside-wrap .social-mt .printBtn {
-    padding:2px 3px 1px;
-  }
-  .fancybox-title-inside-wrap .social-mt .emailBtn .share,
-  .fancybox-title-inside-wrap .social-mt .printBtn .share {
-    margin-left:2px;
-    vertical-align:middle;
-  }
-  */
+
 .category-about-the-designer .social-mt {
 	clear: both;
 	float: right;
@@ -10980,19 +10938,6 @@ body.quickview-index-index {
 }
 /* END Mac Safari/Chrome styles */
 
-/*.fancybox-skin .social-mt { min-width:335px;   }*/
-/*.fancybox-skin { min-width:335px;  }
-.fancybox-title .button mail { li }*/
-/* .sharrre .button, .social-mt>div, .social-media-divs>div, .social-mt>a,
-.social-media-divs>a, .social-mt .social-media-divs>a, .social-mt>iframe,
-.social-media-divs>iframe {
-	/*background:none;*/
-	/* float: left !important; */
-	/*height: 20px;*/
-	/*padding: 0;
-	margin: 0 0 0 5px !important;
-	display: inline-block !important;*/
-}
 
 .ecp-tattoo-index-index .sharrre .button.print {
 	margin-left: 3px;
@@ -11059,13 +11004,7 @@ body.quickview-index-index {
 .social-mt>div a:hover {
 	text-decoration: none;
 }
-/*
-.social-mt .emailBtn .share,
-.social-mt .printBtn .share,
-.social-media-divs .emailBtn .share,
-.social-media-divs .printBtn .share{
-  margin-left:6px;
-}*/
+
 .mail .count {
 	color: #444444;
 	display: block;
@@ -11082,12 +11021,6 @@ body.quickview-index-index {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
-
-.share {
-	/*margin-left: 5px;*/
-
-}
-
 
 #ui-tooltip-modal {
 	max-width: 420px;
@@ -11889,11 +11822,6 @@ li.item h2.product-name {text-align: center;}
 	right: 66px;
 }
 
-.quickview-index-index {
-	/*width: 785px !important;
-	min-width: 785px !important;*/
-}
-
 .catalog-category-view .fancybox-nav {
 	top: 217px !important;
 }
@@ -11921,23 +11849,9 @@ li.item h2.product-name {text-align: center;}
 	color: #3f4048;
 }
 
-/* .checkout-block a {
-	color: #3f4048;
-	text-decoration: underline;
-}
-
-#checkout-step-shipping #shipping-address-select, #checkout-step-billing #billing-address-select
-{
-	width: 670px;
-	position: absolute;
-	left: 0;
-} */
-
 .tattoos {
 	min-width: 400px;
 }
-
-
 
 .product-gift-card .giftcard-left-form #cart-amountSelectBoxItContainer #cart-amountSelectBoxIt
 {
@@ -12395,14 +12309,6 @@ li.item h2.product-name {text-align: center;}
 	display: none;
 }
 
-.thumbnail-image #productsContainer-wrapper {
-	margin-top: 85px !important;
-}
-
-.with-category-image-bleed #productsContainer-wrapper {
-	margin-top: 302px;
-}
-
 /* coppy */
 @media only screen and (min-device-width : 768px) and (max-device-width
 : 1024px) {
@@ -12569,10 +12475,6 @@ li.item h2.product-name {text-align: center;}
 .currency-symbol {
 	margin-right: 1px;
 }
-
-/* .fancybox-type-inline {
-	top: 40px !important;
-} */
 
 .multiple-checkout .title_total, .multiple-checkout .total-title,
 .multiple-checkout .merchandise, .multiple-checkout .shipping-label,
@@ -12972,12 +12874,6 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	z-index: 100;
 }
 
-/* .mb-mana-catalogsearch-leftnav .selected-filters {
-	position: absolute;
-	top: 44px;
-	left: 20px;
-	z-index: -1;
-} */
 /**
  * @category    Mana
  * @package     ManaPro_FilterColors
@@ -13304,11 +13200,6 @@ input.giftcard-radio1 {
     margin-top: -20px; */
 	margin-bottom: 30px;
 }
-
-
-/* .checkout-privacy-policy input:checked+label {
-	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
-} */
 
 .checkout-privacy-policy input+label {
 	padding: 2px 0 2px 30px;
