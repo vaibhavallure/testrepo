@@ -852,7 +852,7 @@ ul.swatch .swatch-item a {
     left: 10px;
 }
 
-/* .hamburger {
+.hamburger {
     display: inline-block;
     cursor: pointer;
 }
@@ -865,9 +865,9 @@ ul.swatch .swatch-item a {
     background-color: #fff;
     margin: 6px 0;
     transition: 0.3s;
-} */
+}
 
-/* .change .bar1 {
+.change .bar1 {
     -webkit-transform: rotate(-45deg) translate(-5px, 5px);
     transform: rotate(-45deg) translate(-5px, 5px);
 }
@@ -879,7 +879,7 @@ ul.swatch .swatch-item a {
 .change .bar3 {
     -webkit-transform: rotate(45deg) translate(-6px, -6px);
     transform: rotate(45deg) translate(-6px, -6px);
-} */
+}
 
 .label {
     font-weight: 700;
