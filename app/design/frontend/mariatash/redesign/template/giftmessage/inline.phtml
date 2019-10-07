@@ -125,7 +125,7 @@ billing.onSave = function(evt){
     <div class="gift-messages">
     	<p class="para-normal"><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></p >
     </div>
-    
+
     <?php if(false):?>
     <div class="gift-messages">
         <p class="info-text-two"><?php echo $this->__('Delivery Signature Option.'); ?></p>
@@ -137,7 +137,7 @@ billing.onSave = function(evt){
         </p>
     </div>
     <?php endif;?>
-    
+
     <div class="gift-messages">
         <p class="info-text-two"><?php echo $this->__('Do you have any gift items in your order? If yes, the receipt will not include pricing information.'); ?></p>
         <p class="control">
@@ -154,7 +154,7 @@ billing.onSave = function(evt){
                     <input type="hidden" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][type]"  value="quote" />
                     <div class="col-12">
                     <div class="form-list p-0 row">
-                        <div class="fields col-5 to-from-section">
+                        <div class="fields col-4 to-from-section">
                             <div class="field row">
                                 <!-- <label  style="padding-right:20px;"  for="gift-message-whole-from"><//?php echo $this->__('Sender') ?></label> -->
                                 <input placeholder="From" type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][from]" id="gift-message-whole-from" title="<?php echo $this->__('From') ?>"  value="<?php echo $this->getEscaped($this->getMessage()->getSender(), $this->getDefaultFrom()) ?>" class="input-text1 validation-passed" />
@@ -164,7 +164,7 @@ billing.onSave = function(evt){
                                 <input placeholder="To" type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-whole-to" title="<?php echo $this->__('To') ?>" class="input-text1 validation-passed" />
                             </div>
                         </div>
-                        <div class="col-7 gift-message-section">
+                        <div class="col-8 gift-message-section">
                         <div class="wide row">
                             <!-- <label for="gift-message-whole-message" style="padding-right:5px;" ><//?php echo $this->__('Message') ?> </label> -->
                             <textarea placeholder="Message" id="gift-message-whole-message" onchange="toogleRequired('gift-message-whole-message', ['gift-message-whole-from','gift-message-whole-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="10"><?php echo $this->getEscaped($this->getMessage()->getMessage()) ?></textarea>
@@ -209,7 +209,7 @@ billing.onSave = function(evt){
                                      <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" />
                                  </p>
                                   <h5 class="title-item-gif-card"><?php  echo $this->htmlEscape($_product->getName()) ?></h5>
-                                 <p class="number"><?php echo $this->__('Item %d of %d', $_index+1, $quote->getItemsCount()) ?></p>
+                                 <!-- <p class="number"><//?php echo $this->__('Item %d of %d', $_index+1, $quote->getItemsCount()) ?></p> -->
 
                              </div>
                              <div class="details">
@@ -217,21 +217,19 @@ billing.onSave = function(evt){
                                      <input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][type]" value="quote_item" />
                                      <div class="col-12">
                                       <div class="form-list p-0 row">
-                                         <div class="fields col-5 to-from-section">
+                                         <!-- <div class="fields col-4 to-from-section">
                                              <div class="field row" style="display: none;">
-                                                 <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-from"><//?php echo $this->__('Sender') ?></label> -->
                                                  <div class="input-box">
-                                                     <input placeholder="From" type="text" name="giftmessage[<?php echo $_item->getId() ?>][from]" id="gift-message-<?php echo $_item->getId() ?>-from" title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($this->getMessage($_item)->getSender(), $this->getDefaultFrom()) ?>" class="input-text validation-passed" />
+                                                     <input placeholder="From" type="text" name="giftmessage[<//?php echo $_item->getId() ?>][from]" id="gift-message-<//?php echo $_item->getId() ?>-from" title="<//?php echo $this->__('From') ?>" value="<//?php echo $this->getEscaped($this->getMessage($_item)->getSender(), $this->getDefaultFrom()) ?>" class="input-text validation-passed" />
                                                  </div>
                                              </div>
                                              <div class="field row" style="display: none;">
-                                                 <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-to"><//?php echo $this->__('Recipient') ?></label> -->
                                                  <div class="input-box">
-                                                     <input placeholder="To" type="text" name="giftmessage[<?php echo $_item->getId() ?>][to]" id="gift-message-<?php echo $_item->getId() ?>-to" title="<?php echo $this->__('To') ?>" class="input-text validation-passed" />
+                                                     <input placeholder="To" type="text" name="giftmessage[<//?php echo $_item->getId() ?>][to]" id="gift-message-<//?php echo $_item->getId() ?>-to" title="<//?php echo $this->__('To') ?>" class="input-text validation-passed" />
                                                  </div>
                                              </div>
-                                           </div>
-                                             <div class="col-7 gift-message-section">
+                                           </div> -->
+                                             <div class="col-8 gift-message-section">
                                              <div class="field row">
                                                  <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
                                                  <div class="input-box">
@@ -290,7 +288,7 @@ billing.onSave = function(evt){
                 <input type="hidden" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][type]" value="quote_address" />
                 <di v class="col-12">
                   <div class="form-list p-0 row">
-                      <div class="fields col-5 to-from-section">
+                      <div class="fields col-4 to-from-section">
                           <div class="field row">
                               <!-- <label for="gift-message-<//?php echo $this->getEntity()->getId() ?>-from"><//?php echo $this->__('Sender') ?></label> -->
                                   <input type="text" placeholder="From" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][from]" id="gift-message-<?php echo $this->getEntity()->getId() ?>-from" title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($this->getMessage()->getSender(), $this->getDefaultFrom()) ?>" class="input-text validation-passed" />
@@ -300,7 +298,7 @@ billing.onSave = function(evt){
                                   <input type="text" placeholder="To" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-<?php echo $this->getEntity()->getId() ?>-to" title="<?php echo $this->__('To') ?>" class="input-text validation-passed" />
                           </div>
                       </div>
-                      <div class="col-7 gift-message-section">
+                      <div class="col-8 gift-message-section">
                         <div class="wide row">
                             <!-- <label for="gift-message-<//?php echo $this->getEntity()->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
                                 <textarea placeholder="Message" id="gift-message-<?php echo $this->getEntity()->getId() ?>-message" onchange="toogleRequired('gift-message-<?php echo $this->getEntity()->getId() ?>-message', ['gift-message-<?php echo $this->getEntity()->getId() ?>-from','gift-message-<?php echo $this->getEntity()->getId() ?>-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="40"><?php echo $this->getEscaped($this->getMessage()->getMessage()) ?></textarea>
@@ -319,16 +317,16 @@ billing.onSave = function(evt){
             <?php endif; ?>
             <?php if($this->isItemsAvailable()): ?>
            <h4 class="gift-message-or">OR</h4>
-            <div id="allow-gift-messages-for-items-container-<?php echo $this->getEntity()->getId() ?>" >
+            <div class="col-12" id="allow-gift-messages-for-items-container-<?php echo $this->getEntity()->getId() ?>" >
              <p><?php echo $this->__('You can leave this box blank if you do not wish to add a gift message for the item.') ?></p>
-             <ol>
+             <ol class="row">
              <?php foreach($this->getItems() as $_index=>$_item): ?>
              <?php $_product=$_item->getProduct() ?>
-                 <li class="item">
+                 <li class="item col-12">
                      <div class="product-img-box">
                          <p class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" /></p>
-                         <h5 class="title-item-gif-card"><?php  echo $this->htmlEscape($_product->getName()) ?></h5>
-                         <p class="number"><?php echo $this->__('Item %d of %d', $_index+1, $this->countItems()) ?></p>
+                         <h1 class="title-item-gif-card"><?php  echo $this->htmlEscape($_product->getName()) ?></h1>
+                         <!-- <p class="number para-normal"><//?php echo $this->__('Item %d of %d', $_index+1, $this->countItems()) ?></p> -->
                      </div>
                      <div class="details">
                          <div class="f-fix">
@@ -338,7 +336,7 @@ billing.onSave = function(evt){
 
                             <div class="col-12">
                                <div class="form-list p-0 row">
-                                 <div class="fields col-5 to-from-section">
+                                 <div class="fields col-4 to-from-section">
                                      <div class="field row">
                                          <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-from"><?php echo $this->__('Sender') ?></label> -->
                                          <div class="input-box">
@@ -352,7 +350,7 @@ billing.onSave = function(evt){
                                          </div>
                                      </div>
                                  </div>
-                                 <div class="col-7 gift-message-section">
+                                 <div class="col-8 gift-message-section">
                                  <div class="wide row">
                                      <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
                                      <div class="input-box">
