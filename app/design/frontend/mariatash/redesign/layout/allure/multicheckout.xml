@@ -81,7 +81,7 @@
 		<reference name="root">
 			<!--action method="setTemplate"><template>page/2columns-right.phtml</template></action -->
 			<action method="setTemplate">
-				<template>page/1column.phtml</template>
+				<template>page/checkout/1column.phtml</template>
 			</action>
 		</reference>
 		<reference name="head">
