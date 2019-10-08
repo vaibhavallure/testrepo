@@ -3523,7 +3523,6 @@ z-index: 1!important;
 
 
 
-
 /*-------------------new alert box--------------------------*/
 
  #allureModalContainer {
@@ -3566,6 +3565,12 @@ z-index: 1!important;
 	display: block;
 }
 
+#allureAlertBox #closeBtn:active{
+	background: black;
+	color: white;
+}
+
+
 
 
 
@@ -3588,5 +3593,14 @@ z-index: 1!important;
 }
 
 
+#allureAlertBox #cancelConfirm:active{
+	background: black;
+	color: white;
+}
+
+#allureAlertBox #okConfirm:active{
+	background: black;
+	color: white;
+}
 
 /*alert end*/
