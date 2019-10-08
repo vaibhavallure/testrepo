@@ -187,9 +187,10 @@ function setFacebook(){
 }
 
 function loadImage(numImage,obj){
+    jQuery('.containerImage').html("");
     jQuery(".thumb .active").removeClass("active");
     jQuery(obj).addClass("active");
-    jQuery(".containerImage").fadeIn(5000, function(){
+    jQuery(".containerImage").fadeIn(1000, function(){
        jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
     });
 
@@ -199,7 +200,7 @@ function loadImage(numImage,obj){
 }
 
 function loadImageConf(numImage){
-    jQuery(".containerImage").fadeIn(5000, function(){
+    jQuery(".containerImage").fadeIn(1000, function(){
         jQuery('.containerImage').html(imgArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()]['imageRepo'][numImage]);
     });
 
@@ -209,7 +210,7 @@ function loadImageConf(numImage){
 }
 
 function loadBaseImage(){
-    jQuery(".containerImage").fadeIn(5000, function(){
+    jQuery(".containerImage").fadeIn(1000, function(){
         <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
         jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
     });
@@ -220,8 +221,11 @@ function loadBaseImage(){
 }
 
 var loadTimes=0;
-function loadVideo(video){
-	jQuery('.containerImage img').hide();
+function loadVideo(video,obj){
+	jQuery('.containerImage').hide();
+    jQuery(".thumb .active").removeClass("active");
+    jQuery(obj).addClass("active");
+
      var player = document.getElementById('video_' + video);
      if(player){
          var src = player.src;
@@ -381,11 +385,11 @@ function shareLikeTwitter(){
                     $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
                 if($videoUrl){ ?>
                     var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
+                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
                 <?php }
                 if($secondVideoUrl){ ?>
                     var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 74, 96); ?>" /></a>');
+                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 74, 96); ?>" /></a>');
                 <?php } ?>
                 if( urlCounter > 0 ){
                     <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
@@ -413,14 +417,14 @@ function shareLikeTwitter(){
                          jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                          return;
                 });
-                jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
+                jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
             <?php }
             if($secondVideoUrl){ ?>
                 jQuery('#thumbRepo img').each(function(number){
                     jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                     return;
                 });
-                jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
+                jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
                 <?php } ?>
             if (urlCounter > 0) {
                 <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
@@ -459,43 +463,7 @@ function shareLikeTwitter(){
 <input type="hidden" name="check_option_color" id="check_option_color" value="<?php echo $check_option_color;?>"/>
 
 <div class="gallery col-12">
-    <?php if($videoUrl):?><!-- Check video url-->
-    <?php
-     $videoUrl = str_replace('&autoplay=1', '', $videoUrl);
-     $videoUrl = str_replace('&amp;autoplay=1', '', $videoUrl);
-     if (strpos($videoUrl, 'youtube.com') != false) {
-            $videoUrl = str_replace('watch?v=', 'embed/', $configProduct->getVideo());
-     }
-     if(strpos($videoUrl,'?')!= false) {
-         $videoUrl.= '&autoplay=0';
-     }else{
-         $videoUrl.= '?autoplay=0';
-     }
-    ?>
-     <div class="containerVideo containerVideo_first" id="video-<?php echo $_product->getTypeId(); ?>">
-            <iframe src="<?php echo $videoUrl;?>" width="392" height="512" frameborder="0" id="video_first" ></iframe>
-    </div>
-    <?php endif;?><!-- end check video -->
-    <?php if($secondVideoUrl):?><!-- Check Second video url-->
-    <?php
-    $secondVideoUrl = str_replace('&autoplay=1', '', $secondVideoUrl);
-    $secondVideoUrl = str_replace('&amp;autoplay=1', '', $secondVideoUrl);
-    if (strpos($secondVideoUrl, 'youtube.com') != false) {
-        $secondVideoUrl = str_replace('watch?v=', 'embed/', $configProduct->getVideo());
-    }
-    if(strpos($secondVideoUrl,'?')!= false) {
-        $secondVideoUrl.= '&autoplay=0';
-    }else{
-        $secondVideoUrl.= '?autoplay=0';
-    }
-    ?>
-    <div class="containerVideo containerVideo_second" id="video-<?php echo $_product->getTypeId(); ?>">
-        <iframe src="<?php echo $secondVideoUrl;?>" width="392" height="512" frameborder="0" id="video_second" ></iframe>
-    </div>
-    <?php endif;?><!-- end check video -->
-    <!--<div class="btnFullscreen gradient" style="display:none;" onclick="createZoomview();">
-		<span><span>View Fullscreen</span></span>
-	</div>-->
+
     <div class="row pdp-image-section">
     <div class="containerThumb col-lg-2">
         <div class="thumb thumb1"></div>
@@ -505,6 +473,44 @@ function shareLikeTwitter(){
         <div class="thumb thumb5"></div>
     </div>
     <div class="containerImage col-lg-10"></div>
+
+        <?php if($videoUrl):?><!-- Check video url-->
+        <?php
+        $videoUrl = str_replace('&autoplay=1', '', $videoUrl);
+        $videoUrl = str_replace('&amp;autoplay=1', '', $videoUrl);
+        if (strpos($videoUrl, 'youtube.com') != false) {
+            $videoUrl = str_replace('watch?v=', 'embed/', $configProduct->getVideo());
+        }
+        if(strpos($videoUrl,'?')!= false) {
+            $videoUrl.= '&autoplay=0';
+        }else{
+            $videoUrl.= '?autoplay=0';
+        }
+        ?>
+        <div class="containerVideo containerVideo_first col-lg-10" id="video-<?php echo $_product->getTypeId(); ?>">
+            <iframe src="<?php echo $videoUrl;?>" width="392" height="512" frameborder="0" id="video_first" ></iframe>
+        </div>
+        <?php endif;?><!-- end check video -->
+        <?php if($secondVideoUrl):?><!-- Check Second video url-->
+        <?php
+        $secondVideoUrl = str_replace('&autoplay=1', '', $secondVideoUrl);
+        $secondVideoUrl = str_replace('&amp;autoplay=1', '', $secondVideoUrl);
+        if (strpos($secondVideoUrl, 'youtube.com') != false) {
+            $secondVideoUrl = str_replace('watch?v=', 'embed/', $configProduct->getVideo());
+        }
+        if(strpos($secondVideoUrl,'?')!= false) {
+            $secondVideoUrl.= '&autoplay=0';
+        }else{
+            $secondVideoUrl.= '?autoplay=0';
+        }
+        ?>
+        <div class="containerVideo containerVideo_second col-lg-10" id="video-<?php echo $_product->getTypeId(); ?>">
+            <iframe src="<?php echo $secondVideoUrl;?>" width="392" height="512" frameborder="0" id="video_second" ></iframe>
+        </div>
+        <?php endif;?><!-- end check video -->
+        <!--<div class="btnFullscreen gradient" style="display:none;" onclick="createZoomview();">
+            <span><span>View Fullscreen</span></span>
+        </div>-->
     </div>
 </div>
 <div id="zoomView"></div>
