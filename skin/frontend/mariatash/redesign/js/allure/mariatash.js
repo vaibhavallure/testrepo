@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 
     if (jQuery(window).width() >= 992){
         var nav_height=jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",nav_height/2);
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",nav_height);
     }
 
 
