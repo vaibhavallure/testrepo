@@ -103,7 +103,7 @@ iframe {
 
 
 
-.two-shipment-billing-payment-mt{
+/* .two-shipment-billing-payment-mt{
 	clear: both;
     overflow: hidden;
     display: block;
@@ -111,41 +111,41 @@ iframe {
     margin-bottom: 25px;
     margin-top: 15px;
 }
+ */
 
-
-.checkout-two-shipment-shipping-method-mt,
+/* .checkout-two-shipment-shipping-method-mt,
 .checkout-two-shipment-payment-method-mt{
 	position: relative;
 	padding-left: 10px;
     border-left: 1px solid #d1d1d1;
     border-right: none;
     margin-left: -1px;
-    /*margin-top: 26px;*/
+    /*margin-top: 26px;
     float: left;
     height: auto;
-    /*width: 340px;*/
+    /*width: 340px;
 
     width: 45%;
     padding: 10px;
     background-color: #d1d1d1;
-}
+} */
 
-.checkout-two-shipment-shipping-address-mt,
+/* .checkout-two-shipment-shipping-address-mt,
 .checkout-two-shipment-billing-address-mt{
 	    position: relative;
 	    border-right: 1px solid #D1D1D1;
-	    /*margin-top: 26px;*/
+	    /*margin-top: 26px;
 	    float: left;
     	height: auto;
-    	/*width: 340px;*/
+    	/*width: 340px;
 
     	width: 45%;
     	padding: 10px;
     	margin-right: 27px;
     	background-color: #d1d1d1;
-}
+} */
 
-.checkout-two-shipment-shipping-method-mt span,
+/* .checkout-two-shipment-shipping-method-mt span,
 .checkout-two-shipment-shipping-address-mt span,
 .checkout-two-shipment-billing-address-mt span,
 .checkout-two-shipment-payment-method-mt span{
@@ -168,13 +168,13 @@ iframe {
     height: 26px;
     color: #fff;
     border: none;
-    /*margin-top: 2px;*/
+    /*margin-top: 2px;
     padding-top: 0px;
     padding-bottom: 0px;
     line-height: normal;
     float:right;
     margin-top:70px;
-}
+} */
 /* #checkout-review-submit .f-left.back-link{
 	margin-top:-20px ! important;
 } */

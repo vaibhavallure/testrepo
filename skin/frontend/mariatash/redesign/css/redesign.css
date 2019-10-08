@@ -56,7 +56,7 @@ h4{
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
-.banktransfer-instructions-content.agreement-content{
+.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -162,7 +162,7 @@ h4{
 	border: 0.5px solid rgba(41,41,41,0.90);
 }
 
-.link-button, .pay-caart li a{
+.link-button, .pay-caart li a, .checkout-onepage-index .back-link a{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.60) !important;
@@ -3222,6 +3222,9 @@ table thead {
 }
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
+}
+#payment_form_paypal_express {
+  margin-bottom: 20px;
 }
 /* cccc */
 /*MINI CART CSS*/
