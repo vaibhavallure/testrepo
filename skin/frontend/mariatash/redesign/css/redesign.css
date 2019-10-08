@@ -2141,7 +2141,7 @@ span#popup_loader_register {
 	text-indent: -999em;
 }
 .checkout-multishipping-success .multiple-checkout,
-.checkout-onepage-success .multiple-checkout {
+.checkout-onepage-success .multiple-checkout, .checkout-onepage-successorder .multiple-checkout {
   width: 700px;
   margin: 0 auto;
 	text-align: center;
