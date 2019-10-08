@@ -93,7 +93,9 @@ if(!window.toogleRequired) {
                 if (typeof shippingMethod != 'undefined' && shippingMethod.validator) {
                    shippingMethod.validator.reset(item);
                 }
-                $(item).removeClassName('required-entry');
+                if($(item)){
+                	$(item).removeClassName('required-entry');
+                }
             });
 
         }
