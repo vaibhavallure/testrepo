@@ -44,66 +44,77 @@
 -->
 
 <div class="shipping-address-mt">
-<?php
-echo "<h4>Shipping address</h4>";
-
-$checkout = Mage::getSingleton('checkout/session')->getQuote();
-$shipping = $checkout->getShippingAddress();
-echo '<p>' . $shipping->getFormated('html') . '</p>';
-?>
-
-<?php if( $this->helper('customer')->isLoggedIn() ): ?>
-<!--    <span><a href="--><?php //echo Mage::getUrl('customer/address/edit', array('id' => $shipping->getCustomerAddressId())); ?><!--">Edit</a></span>-->
-    <span><a href="javascript: accordion.openSection('opc-shipping');">Edit</a></span>
-<?php endif; ?>
+  <h4 class="info-text-two">Shipping Address</h4>
+    <div class="address-section row">
+       <address class="col float-left">
+          <?php
+          $checkout = Mage::getSingleton('checkout/session')->getQuote();
+          $shipping = $checkout->getShippingAddress();
+          echo $shipping->getFormated('html');
+          ?>
+      </address>
+  <?php if( $this->helper('customer')->isLoggedIn() ): ?>
+  <!--    <span><a href="--><?php //echo Mage::getUrl('customer/address/edit', array('id' => $shipping->getCustomerAddressId())); ?><!--">Edit</a></span>-->
+      <span class="col"><a class="link-button" href="javascript: accordion.openSection('opc-shipping');">Edit</a></span>
+  <?php endif; ?>
+  </div>
 </div>
 
 
 <div class="billing-address-mt">
-<h4>Billing Address</h4>
-<?php
-$checkout = Mage::getSingleton('checkout/session')->getQuote();
-$billing = $checkout->getBillingAddress();
-echo '<p>' . $billing->getFormated('html') . '</p>';
-?>
-
+  <h4 class="info-text-two">Billing Address</h4>
+    <div class="address-section row">
+      <address class="col float-left">
+        <?php
+        $checkout = Mage::getSingleton('checkout/session')->getQuote();
+        $billing = $checkout->getBillingAddress();
+        echo $billing->getFormated('html');
+        ?>
+      </address>
 <?php if( $this->helper('customer')->isLoggedIn() ): ?>
 <!--<span><a href="--><?php //echo Mage::getUrl('customer/address/edit', array('id' => $billing->getCustomerAddressId())); ?><!--">Edit</a></span>-->
-        <span><a href="javascript: accordion.openSection('opc-billing');">Edit</a></span>
+        <span class="col"><a class="link-button" href="javascript: accordion.openSection('opc-billing');">Edit</a></span>
 <?php endif; ?>
+    </div>
 </div>
 
 
 <div class="shipping-method-mt">
-<?php
-echo "<h4>Shipping method</h4>";
-$checkout = Mage::getSingleton('checkout/session')->getQuote();
-$shippingAddress = $checkout->getShippingAddress();
-
-echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
-?>
-<span><a href="javascript: accordion.openSection('opc-shipping_method');">Edit</a></span>
+  <h4 class="info-text-two">Shipping method</h4>
+  <div class="row">
+    <div class="col float-left">
+      <?php
+      $checkout = Mage::getSingleton('checkout/session')->getQuote();
+      $shippingAddress = $checkout->getShippingAddress();
+      ?>
+    <p class="para-normal"><?= $shippingAddress->getShippingDescription() ?></p>
+</div>
+<span class="col"><a class="link-button" href="javascript: accordion.openSection('opc-shipping_method');">Edit</a></span>
+</div>
 </div>
 
 <div class="payment-method-mt">
-<?php
-$payment = $checkout->getPayment();
-echo "<h4>Payment method</h4>";
-switch ($payment->getMethod()) {
-    case 'authorizenet':
-        $cardTypes = Mage::getModel('payment/config')->getCcTypes();
-        $cardTypeName = $cardTypes[$payment->getCcType()];
-        $cardLast4 = $payment->getCcLast4();
-        echo '<p>' . $cardTypeName . ' XXX XXX XXX ' . $cardLast4 . '</p>';
-        break;
-    default:
-        echo '<p>' . $payment->getMethodInstance()->getTitle() . '</p>';
-        break;
-}
-?>
-<span><a href="javascript: accordion.openSection('opc-payment');">Edit</a></span>
+  <h4 class="info-text-two">Payment method</h4>
+  <div class="row">
+  <div class="col float-left">
+    <?php
+    $payment = $checkout->getPayment();
+    switch ($payment->getMethod()) {
+        case 'authorizenet':
+            $cardTypes = Mage::getModel('payment/config')->getCcTypes();
+            $cardTypeName = $cardTypes[$payment->getCcType()];
+            $cardLast4 = $payment->getCcLast4();
+            echo '<p class="para-normal">' . $cardTypeName . ' XXX XXX XXX ' . $cardLast4 . '</p>';
+            break;
+        default:
+            echo '<p class="para-normal">' . $payment->getMethodInstance()->getTitle() . '</p>';
+            break;
+    }
+    ?>
+  </div>
+<span class="col"><a class="link-button" href="javascript: accordion.openSection('opc-payment');">Edit</a></span>
 </div>
-
+</div>
 <?php if(0):?>
 <?php echo $this->getChildHtml('items_after'); ?>
 
@@ -113,9 +124,9 @@ switch ($payment->getMethod()) {
         <thead>
             <tr>
                 <th><?php echo $this->__('Product Name') ?></th>
-                <th class="a-right"><?php echo $this->__('Price') ?></th>
-                <th class="a-right"><?php echo $this->__('Qty') ?></th>
-                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-right"><?php echo $this->__('Qty') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
 
@@ -148,11 +159,11 @@ switch ($payment->getMethod()) {
             </p>
         <?php endif;?>
 
-        <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
+        <p class="para-normal"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
 
         <div class="checkout-privacy-policy">
         	<p class="control f-left">
-                <label for="checkout_privacy_confirm" class="mt-custom-checkbox"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                <label for="checkout_privacy_confirm" class="mt-custom-checkbox para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
                 <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
                 <span class="checkmark"></span>
                 </label>
@@ -165,7 +176,7 @@ switch ($payment->getMethod()) {
         </span>
 
     </div>
- <p class="text-right back-link"><a href="#" onclick="checkout.back(); return false;"><?php echo $this->__('Back') ?></a></p>    
+ <p class="text-right back-link"><a href="#" onclick="checkout.back(); return false;"><?php echo $this->__('Back') ?></a></p>
     <script type="text/javascript">
     //<![CDATA[
         review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder') ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));

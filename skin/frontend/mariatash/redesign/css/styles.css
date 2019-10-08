@@ -1245,10 +1245,10 @@ li#billing-new-address-form fieldset ul li.fields div.field label
 	width: 980px;
 }
 
-.checkout-onepage-success .col-main {
+/* .checkout-onepage-success .col-main {
 	margin: 0 auto;
 	width: 980px;
-}
+} */
 
 .customer-account-login .buttons-set, .checkout-multishipping-login .buttons-set
 {
@@ -2311,10 +2311,10 @@ select#region_id {
 	float: left;
 }
 
-.checkout-onepage-success .page-title h1 {
+/* .checkout-onepage-success .page-title h1 {
 	font: 32px/32px dinmittelschriftregular;
 	margin-top: 18px;
-}
+} */
 
 
 .checkout-multishipping-overview .multiple-checkout .col2-set .col-2.col-wide .box
@@ -6625,29 +6625,29 @@ ul.crosssell-products-list {
 	height: 70px !important;
 }
 
-.checkout-onepage-success .checkout-success {
+/* .checkout-onepage-success .checkout-success {
 	float: left;
 	height: auto;
 	width: 100%;
-}
+} */
 
-.checkout-onepage-success .checkout-success a, .checkout-onepage-success .checkout-success a:hover
+/* .checkout-onepage-success .checkout-success a, .checkout-onepage-success .checkout-success a:hover
 {
 	color: #38393c;
 	text-decoration: none;
-}
+} */
 
-.checkout-onepage-success .checkout-success a.click-here {
+/* .checkout-onepage-success .checkout-success a.click-here {
 	text-decoration: underline;
-}
+} */
 
-.checkout-onepage-success .checkout-success h2 {
+/* .checkout-onepage-success .checkout-success h2 {
 	font: normal 13px/13px Arial, Helvetica, sans-serif;
 	text-transform: none;
 	margin: 12px 0 17px;
-}
+} */
 
-.checkout-onepage-success .checkout-success h3 {
+/* .checkout-onepage-success .checkout-success h3 {
 	background: none repeat scroll 0 0 #D1D1D1;
 	float: left;
 	font: 13px/35px Arial, Helvetica, sans-serif;
@@ -6656,7 +6656,7 @@ ul.crosssell-products-list {
 	width: 970px;
 	margin: 12px 0 10px 0;
 	text-transform: uppercase;
-}
+} */
 
 .checkout-onepage-success .success-order-date {
 	border-bottom: 1px solid #D1D1D1;
@@ -6685,12 +6685,12 @@ ul.crosssell-products-list {
 	line-height: 17px;
 }
 
-.checkout-onepage-success .success-shipping-address h4,
+/* .checkout-onepage-success .success-shipping-address h4,
 .checkout-onepage-success .success-billing-address h4,
 .checkout-onepage-success .success-shipping-method h4,
 .checkout-onepage-success .success-billing-method h4 {
 	font-weight: bold;
-}
+} */
 
 .checkout-onepage-success .succcess-, .checkout-onepage-success .success-sumary,
 .checkout-onepage-success .success-message {
@@ -11335,13 +11335,13 @@ li.item h2.product-name {text-align: center;}
 	padding-bottom: 3px !important;
 }
 
-.checkout-block {
+/* .checkout-block {
 	padding-top: 10px;
 	float: left;
 	width: 692px;
 	font-size: 13px;
 	color: #3f4048;
-}
+} */
 
 .tattoos {
 	min-width: 400px;
