@@ -139,7 +139,7 @@
     <?php if(strtolower($moduleName) == strtolower("checkout")):?>
    		<?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
    		<?php if(!empty($baseGrandTotal)):?>
-            <p class="mt-cart-charge-note">
+            <p class="para-normal text-center">
             <?php echo $this->__("All orders are charged in USD You will be charged( ".$baseGrandTotal." )");?>
             </p>
         <?php endif;?>
