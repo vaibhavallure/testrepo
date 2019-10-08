@@ -6,9 +6,9 @@
 .category-tattoos .col1-layout .col-main {
     position: initial !important;
 }
-#checkoutSteps label.payment-checked  {
+/* #checkoutSteps label.payment-checked  {
 	background: url(../images/radio-button-checked.png) no-repeat left;
-}
+} */
 
 .size-links__container {
   margin: -9px 0 6px;
