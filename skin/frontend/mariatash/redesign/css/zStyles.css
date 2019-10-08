@@ -1106,9 +1106,31 @@
 		width: 100%;
 		bottom: 10px;
 	}
+	.category-shop-our-instagram .main-container{
+		margin-top: 0!important;
+	}
+
+	.popupDelMyAccModel {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: -20px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+    background: rgba(0,0,0,0.45);
+}
+
 	/*=====================*/
 	/*MEDIA QUERIES*/
 	/*=====================*/
+
 	@media(min-width: 481px){
 		.list-form .field{float: right;}
 	}
