@@ -1849,13 +1849,13 @@ a.various_sample.non-color {
 	margin-bottom: 19px;
 }
 
-#promoCodeLinkAdd {
+/* #promoCodeLinkAdd {
 	font-size: 12px !important;
 	padding: 0px 0px !important;
 	margin-top: 0px;
 	line-height: 20px;
 	border-radius: 3px;
-}
+} */
 
 .product-img-box .button[title*="Try Studio"] {
 	background: #72bed6; /* Old browsers */
@@ -1982,10 +1982,10 @@ a.various_sample.non-color {
 	margin-right: 5px;
 }
 
-.coupons .buttons-set a {
+/* .coupons .buttons-set a {
 	margin: 0 0 10px 0;
 	padding: 0;
-}
+} */
 
 .customer-account-edit .buttons-set p.required {
 	margin-left: 9px;
@@ -6595,15 +6595,15 @@ ul.crosssell-products-list {
 /*END PASO 3 */
 
 /*start PASO 4 */
-.checkout-onepage-index #opc-payment.active {
+/* .checkout-onepage-index #opc-payment.active {
 	display: block;
 	float: left;
 	height: auto;
-}
+} */
 
-.checkout-onepage-index #opc-payment {
+/* .checkout-onepage-index #opc-payment {
 	display: block;
-}
+} */
 
 /* .checkout-onepage-index #opc-payment form, #opc-payment, #opc-review {
 	display: block;
@@ -7144,13 +7144,13 @@ ul.crosssell-products-list {
 	top: 1px;
 }
 
-.coupons a:hover, .discount-form .buttons-set button.button_coupon:hover
+/* .coupons a:hover, .discount-form .buttons-set button.button_coupon:hover
 {
 	background: #a78b58;
 	color: #3f4048;
 	text-decoration: none;
 	cursor: pointer;
-}
+} */
 
 .opc .step .tool-tip {
 	right: 30px;
@@ -7851,13 +7851,13 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	font: normal 13px/14px Arial, Helvetica, sans-serif;
 } */
 
-#promoCode {
+/* #promoCode {
 	width: 230px;
 	margin-left: 28px;
 	border: none;
 	height: 20px;
 	padding: 0;
-}
+} */
 
 #multishipping-billing-form  #promoCode {
 	margin-left: 0;
@@ -7904,10 +7904,10 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	padding: 0px 0px;
 }
 
-.checkout-onepage-index #promoCodeLinkAdd, .checkout-onepage-index #promoCodeLinkRemove
+/* .checkout-onepage-index #promoCodeLinkAdd, .checkout-onepage-index #promoCodeLinkRemove
 {
 	margin-left: 17px;
-}
+} */
 
 #co-payment-form #payment_form_authorizenet .input-text {
 	width: 230px !important;

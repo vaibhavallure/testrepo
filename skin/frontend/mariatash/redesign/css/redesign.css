@@ -176,8 +176,8 @@ h4{
 }
 
 .simple-page-title{
-margin: 24px 0 46px !important;
-padding: 0 !important;
+	margin: 24px 0 46px !important;
+	padding: 0 !important;
 }
 
 .simple-page-title h1{
@@ -252,7 +252,6 @@ padding: 0 !important;
 }
 .radiomark, .radiomark:after{
 	border-radius: 100%;
-
 }
 
 .custom-checkbox input:checked ~ .checkmark:after, .custom-radio input:checked ~ .radiomark:after {
