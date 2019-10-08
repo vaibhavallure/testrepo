@@ -64,12 +64,12 @@
     <?php endforeach; ?>
 <?php endif;?>
 <tr <?php if ($this->helper('tax')->displayFullSummary() && $_value!=0): ?> class="summary-total" onclick="expandDetails(this, '.summary-details-<?php echo $taxIter;?>')"<?php endif; ?>>
-    <td style="<?php echo $_style ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
+    <td style="<?php echo $_style ?>" class="cart-subtotals-left" colspan="<?php echo $this->getColspan(); ?>">
         <?php if ($this->helper('tax')->displayFullSummary()): ?>
             <div class="summary-collapse"><?php echo $this->getTotal()->getTitle() ?></div>
         <?php else: ?>            
             <?php echo $this->__('Estimated Tax') ?> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
         <?php endif;?>
     </td>
-    <td style="<?php echo $_style ?>" class="a-right"><?php echo $this->helper('checkout')->formatPrice($_value) ?></td>
+    <td style="<?php echo $_style ?>" class="cart-subtotals-right"><?php echo $this->helper('checkout')->formatPrice($_value) ?></td>
 </tr>
