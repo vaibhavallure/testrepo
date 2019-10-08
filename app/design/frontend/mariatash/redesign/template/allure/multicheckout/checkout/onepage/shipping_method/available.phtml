@@ -69,7 +69,12 @@
                       	</option>
                       	
                       	<?php 
-                      	$shippingMethodHtml = '<option value="'. $this->htmlEscape($_rate->getCode()) .'" '. ($_rate->getCode()===$this->getAddressShippingMethod())? 'selected="selected"' : "".'>';
+                      	$shippingMethodHtml .= '<option ';
+                      	$shippingMethodHtml .= 'value="'.$this->htmlEscape($_rate->getCode()) .'"';
+                      	if(($_rate->getCode()===$this->getAddressShippingMethod())){
+                      	    $shippingMethodHtml .= 'selected="selected"';
+                      	}
+                      	$shippingMethodHtml .= '>';
                       	$shippingMethodHtml .= $this->escapeHtml($_rate->getMethodTitle()).$_excl;
                       	if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl){
                       	    $shippingMethodHtml .= $this->__('Incl. Tax')." ".$_incl;
@@ -95,13 +100,18 @@
                    	</option>
                    	
                    	<?php 
-                      	$shippingMethodHtml = '<option value="'. $this->htmlEscape($_rate->getCode()) .'" '. ($_rate->getCode()===$this->getAddressShippingMethod())? 'selected="selected"' : "".'>';
-                      	$shippingMethodHtml .= $this->escapeHtml($_rate->getMethodTitle()).$_excl;
-                      	if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl){
-                      	    $shippingMethodHtml .= $this->__('Incl. Tax')." ".$_incl;
-                      	}
-                      	$shippingMethodHtml .= '</option>';
-                      	?>
+                   	$shippingMethodHtml .= '<option ';
+                   	$shippingMethodHtml .= 'value="'.$this->htmlEscape($_rate->getCode()) .'"';
+                   	if(($_rate->getCode()===$this->getAddressShippingMethod())){
+                   	    $shippingMethodHtml .= 'selected="selected"';
+                   	}
+                   	$shippingMethodHtml .= '>';
+                   	$shippingMethodHtml .= $this->escapeHtml($_rate->getMethodTitle()).$_excl;
+                   	if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl){
+                   	    $shippingMethodHtml .= $this->__('Incl. Tax')." ".$_incl;
+                   	}
+                   	$shippingMethodHtml .= '</option>';
+                    ?>
                    	
                   <?php } ?>
             	<?php endif ?>
