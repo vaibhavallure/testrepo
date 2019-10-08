@@ -323,7 +323,8 @@ select{
   background-repeat: no-repeat;
   background-position: 98% 50%;
 }
-.select-type-one{
+.select-type-one,
+.country-section select{
 	width: 322px;
 }
 .select-type-two, .product-description-section select{
@@ -2149,11 +2150,12 @@ span#popup_loader_register {
 input[type='radio']{
 	display: none;
 }
-
 .sp-methods dt {
   position: relative;
 }
-
+#billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field, .paypal-express-review li.fields .field, .paypal-express-review li.wide, .paypal-express-review li.add-field{
+	margin-bottom: 24px;
+}
 
 /*Old from file recently.viewd.css*/
 .image_carousel img {
@@ -3209,6 +3211,7 @@ margin-top: 10%;
 }
 .ship-to li:first-child {
   margin-bottom: 17px;
+	margin-bottom: 15px;
 }
 #allow-gift-message-container .inner-box {
   margin-left: 0;
