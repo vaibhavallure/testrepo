@@ -5982,40 +5982,40 @@ ul.crosssell-products-list {
 	margin: 8px 0 -42px
 }
 
-.gift-messages-form {
+/* .gift-messages-form {
 	position: relative;
-}
+} */
 
-.gift-messages-form h4.gift-message-or {
+/* .gift-messages-form h4.gift-message-or {
 	font-size: 17px;
 	font-family: dinmittelschriftregular;
 	border-top: 1px solid #D1D1D1;
 	padding-top: 15px;
-}
+} */
 
 .gift-messages-form .whole-order {
 	margin: 0 0 25px;
 }
 
-.gift-messages-form .item {
+/* .gift-messages-form .item {
 	float: left;
 	height: auto;
 	margin: 5px 0;
 	width: 100%;
 	border-bottom: 1px solid #CCCCCC;
 	padding: 5px 0;
-}
+} */
 
 .multiple-checkout .gift-messages-form .item {
 	margin: 0;
 }
 
-.gift-messages-form .item textarea {
+/* .gift-messages-form .item textarea {
 	resize: none;
 	padding: 0px 6px !important;
 	width: 326px !important;
 	height: 74px;
-}
+} */
 
 .checkout-multishipping-shipping .gift-messages-form .item textarea {
 	resize: none;
@@ -6028,20 +6028,20 @@ ul.crosssell-products-list {
 	width: 320px !important;
 }
 
-.gift-messages-form .item .product-img-box {
+/* .gift-messages-form .item .product-img-box {
 	border-right: 1px solid #CCCCCC;
 	float: left;
 	height: 172px;
 	width: 240px;
 	min-height: 200px;
-}
+} */
 
-.gift-messages-form .item .product-image {
+/* .gift-messages-form .item .product-image {
 	float: left;
 	height: 96px;
 	margin: 0 0 7px;
 	width: 74px;
-}
+} */
 
 .checkout-multishipping-shipping .gift-messages-form .item .product-image
 {
@@ -6093,12 +6093,12 @@ ul.crosssell-products-list {
 	width: 290px !important;
 }
 
-.checkout-onepage-index .product-img-box .product-image img {
+/* .checkout-onepage-index .product-img-box .product-image img {
 	float: left;
 	height: 96px;
 	width: 74px;
 	background: url(../images/img_giftmessage_bg.png) repeat-x top left;
-}
+} */
 
 .checkout-onepage-index .control>input[type="checkbox"]#allow_gift_messages,
 .input-gif-card-balance>input[type="checkbox"] {
@@ -6144,7 +6144,7 @@ ul.crosssell-products-list {
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
 
-.gift-messages-form .item .number {
+/* .gift-messages-form .item .number {
 	margin: 10px 0 0;
 	font-weight: bold;
 	text-align: left;
@@ -6152,14 +6152,14 @@ ul.crosssell-products-list {
 	font: 11px/13px Arial, Helvetica, sans-serif;
 	float: left;
 	width: 100%;
-}
+} */
 
-.gift-messages-form .item .details {
+/* .gift-messages-form .item .details {
 	display: block;
 	float: left;
 	height: auto;
 	width: 450px;
-}
+} */
 
 .checkout-multishipping-shipping .gift-messages-form .item .details {
 	width: 427px;
@@ -6171,11 +6171,11 @@ ul.crosssell-products-list {
 	margin: 0 0 10px;
 }
 
-.gift-messages-form .item .details .form-list .field {
+/* .gift-messages-form .item .details .form-list .field {
 	width: 255px;
-}
+} */
 
-.gift-messages-form .item .details .form-list .input-box {
+/* .gift-messages-form .item .details .form-list .input-box {
 	float: right;
 	margin-bottom: 19px;
 	width: 340px;
@@ -6184,9 +6184,9 @@ ul.crosssell-products-list {
 #allow-gift-messages-for-items-container .form-list .input-box {
 	width: 338px !important;
 	margin-right: 0 !important;
-}
+} */
 
-.gift-messages-form .item .details .form-list li.wide .input-box {
+/* .gift-messages-form .item .details .form-list li.wide .input-box {
 	width: 500px;
 }
 
@@ -6195,7 +6195,7 @@ ul.crosssell-products-list {
 	padding: 0;
 	width: 338px;
 	resize: none;
-}
+} */
 
 #onepage-checkout-shipping-method-additional-load .gift-messages-form .item .details .form-list li.wide textarea
 {
@@ -6605,13 +6605,13 @@ ul.crosssell-products-list {
 	display: block;
 }
 
-.checkout-onepage-index #opc-payment form, #opc-payment, #opc-review {
+/* .checkout-onepage-index #opc-payment form, #opc-payment, #opc-review {
 	display: block;
 	float: left;
 	height: auto;
 	padding: 0;
 	width: 100%;
-}
+} */
 
 .checkout-onepage-index #opc-payment fieldset {
 	padding: 0 0 0 11px;
@@ -6637,14 +6637,14 @@ ul.crosssell-products-list {
 	padding: 0;
 }
 
-.checkout-onepage-index #checkout-step-payment .promoDiv {
+/* .checkout-onepage-index #checkout-step-payment .promoDiv {
 	float: left;
 	font: normal 13px/13px Arial, Helvetica, sans-serif;
 	height: auto;
 	margin: 0 0 5px;
 	padding: 0;
 	width: 100%;
-}
+} */
 
 /* .checkout-onepage-index fieldset.ship-to {
 	float: left;
@@ -6653,7 +6653,7 @@ ul.crosssell-products-list {
 	margin-left: 10px !important;
 } */
 
-.checkout-onepage-index #checkout-step-payment .coupons {
+/* .checkout-onepage-index #checkout-step-payment .coupons {
 	float: left;
 	height: auto;
 	width: 683px;
@@ -6662,20 +6662,20 @@ ul.crosssell-products-list {
 	min-height: 0;
 	padding-bottom: 13px;
 	position: relative;
-}
+} */
 
-.checkout-onepage-index #checkout-step-payment .coupons .discount-form,
+/* .checkout-onepage-index #checkout-step-payment .coupons .discount-form,
 .checkout-onepage-index #checkout-step-payment .coupons .discount,
 .checkout-onepage-index #checkout-step-payment .coupons .discount-promo1
 {
 	float: left;
 	width: 100%;
 	text-align: left;
-}
+} */
 
-.checkout-onepage-index #checkout-step-payment .coupons .discount-form {
+/* .checkout-onepage-index #checkout-step-payment .coupons .discount-form {
 	margin-bottom: 6px;
-}
+} */
 
 .checkout-onepage-index #checkout-step-payment .coupons .discount-form button.button
 {
@@ -6684,11 +6684,11 @@ ul.crosssell-products-list {
 	border-radius: 3px;
 }
 
-.checkout-onepage-index #checkout-step-payment .discount {
+/* .checkout-onepage-index #checkout-step-payment .discount {
 	line-height: 18px;
-}
+} */
 
-.checkout-onepage-index #checkout-step-payment .coupons .discount-form input
+/* .checkout-onepage-index #checkout-step-payment .coupons .discount-form input
 {
 	background: #fff;
 	border: none;
@@ -6698,29 +6698,29 @@ ul.crosssell-products-list {
 	padding: 0 9px;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ddd;
-}
+} */
 
-.checkout-onepage-index #checkout-step-payment .coupons .discount-form .buttons-set
+/* .checkout-onepage-index #checkout-step-payment .coupons .discount-form .buttons-set
 {
 	float: left;
 	width: 53px;
 	height: 20px;
 	margin-left: 20px;
-}
+} */
 
-.checkout-onepage-index #checkout-step-payment .coupons .discount-form .buttons-set button,
+/* .checkout-onepage-index #checkout-step-payment .coupons .discount-form .buttons-set button,
 .checkout-onepage-index #promoCodeLinkAdd {
 	width: 53px;
-}
+} */
 
-.checkout-onepage-index #checkout-step-payment .coupons .discount-form .input-box
+/* .checkout-onepage-index #checkout-step-payment .coupons .discount-form .input-box
 {
 	float: left;
 	padding: 0;
 	width: 100%;
 	line-height: 20px;
 	margin: 0 0 10px;
-}
+} */
 
 .checkout-onepage-index .input-gif-card-balance input {
 	float: left;
@@ -6947,10 +6947,10 @@ ul.crosssell-products-list {
 	border-bottom: 0;
 }
 
-.checkout-onepage-index #allow-gift-messages-for-items-container>ol {
+/* .checkout-onepage-index #allow-gift-messages-for-items-container>ol {
 	float: left;
 	width: 100%;
-}
+} */
 
 .checkout-multishipping-shipping .gift-messages-form .item .details .form-list li.wide .input-box
 .checkout-onepage-index .gift-messages-form .item .details .form-list li.wide .input-box
@@ -6967,18 +6967,18 @@ ul.crosssell-products-list {
 	background: red;
 }
 
-.checkout-multishipping-shipping h5.title-item-gif-card,
+/* .checkout-multishipping-shipping h5.title-item-gif-card,
 .checkout-onepage-index h5.title-item-gif-card {
 	clear: right;
 	float: left;
 	font: 13px/13px Arial, Helvetica, sans-serif;
 	height: 60px;
 	margin: 19px 0 0 9px;
-	/* overflow: hidden; */
+	/* overflow: hidden;
 	width: 106px;
 	font-weight: bold;
 	line-height: 1.5;
-}
+} */
 
 .f-fix ul li {
 	float: left;
@@ -7116,9 +7116,9 @@ ul.crosssell-products-list {
 }
 
 
-.discount-form  button.button_coupon {
+/* .discount-form  button.button_coupon {
 	margin-left: 9px;
-}
+} */
 
 .lt-ie9 .coupons a, .lt-ie9 .discount-form .buttons-set button.button_coupon
 {
@@ -7126,12 +7126,12 @@ ul.crosssell-products-list {
 }
 
 
-.checkout-onepage-index .discount-form .buttons-set button.button_coupon
+/* .checkout-onepage-index .discount-form .buttons-set button.button_coupon
 {
 	margin: -1px 0 0 0;
 	padding: 0;
 	text-align: center;
-}
+} */
 
 .lt-ie9 .checkout-onepage-index .discount-form .buttons-set button.button_coupon span span
 {
@@ -7844,12 +7844,12 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 
 
 /* Step 5  */
-.promoDiv {
+/* .promoDiv {
 	width: 500px;
 	padding: 0;
 	margin: 0 0 4px;
 	font: normal 13px/14px Arial, Helvetica, sans-serif;
-}
+} */
 
 #promoCode {
 	width: 230px;
@@ -12413,9 +12413,9 @@ li.item h2.product-name {text-align: center;}
 	text-align: right;
 }
 
-.discount-form.giftcard-payment-method {
+/* .discount-form.giftcard-payment-method {
 	position: relative;
-}
+} */
 
 .discount-form.giftcard-payment-method label {
 	position: absolute;
@@ -12425,18 +12425,18 @@ li.item h2.product-name {text-align: center;}
 	font-size: 10px;
 }
 
-.discount-form.giftcard-payment-method  input#giftcard_code {
+/* .discount-form.giftcard-payment-method  input#giftcard_code {
 	position: absolute;
 	top: -19px;
 	left: 80px;
 	width: 211px !important;
-}
+} */
 
-.discount-form.giftcard-payment-method .buttons-set {
+/* .discount-form.giftcard-payment-method .buttons-set {
 	position: absolute;
 	top: -17px;
 	left: 332px;
-}
+} */
 
 .product-view .product-shop.simple .product-collateral a.various_sample.non-color
 {

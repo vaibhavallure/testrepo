@@ -765,7 +765,7 @@ nav.mariatash-header {
     text-align: left;
 }
 
-.products-grid .product-name a, #cart-sidebar .product-details h5 {
+.products-grid .product-name a, #cart-sidebar .product-details h5, .title-item-gif-card {
     font-size: 14px;
     font-family: urw-din-xlight;
 }
@@ -3189,6 +3189,36 @@ table thead {
 }
 #allow-gift-message-container .inner-box {
   margin-left: 0;
+}
+#checkout-shipping-method-load .gift-messages p:first-child,
+#onepage-checkout-shipping-method-additional-load .gift-messages p:first-child{
+	margin-bottom: 20px;
+}
+#checkout-shipping-method-load .gift-messages p:last-child{
+	margin-bottom: 16px;
+}
+#onepage-checkout-shipping-method-additional-load{
+	margin-top: 19px;
+}
+.gift-messages-form h4.gift-message-or{
+	border-top: 1px solid #d8d8d8;
+	padding-top: 15px;
+}
+#allow-gift-messages-for-items-container li {
+  border-bottom: 1px solid #d8d8d8;
+	padding-top: 18px;
+}
+#allow-gift-messages-for-items-container .details {
+  padding-bottom: 20px;
+}
+#allow-gift-messages-for-items-container li:last-child {
+  border: none;
+}
+#allow-gift-messages-for-items-container .product-img-box {
+  margin-bottom: 25px;
+}
+.select-shipping-method.select-type-one.validate-select {
+  margin-bottom: 20px;
 }
 /* cccc */
 /*MINI CART CSS*/

@@ -600,7 +600,7 @@ img.snize-item-image[src^=data]::after {
 
 
 
-.popupLoginModel {
+/* .popupLoginModel {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
 	top:-20px;
@@ -619,15 +619,15 @@ img.snize-item-image[src^=data]::after {
 .popupLoginModel:target {
 	opacity:1;
 	pointer-events: auto;
-}
+} */
 
-.popupLoginModel > div {
+/* .popupLoginModel > div {
 	width: 320px;
     position: relative;
     margin: 4% auto;/*10% to 5% changed*/
-    /* padding: 5px 20px 13px 20px; */
+    /* padding: 5px 20px 13px 20px;
     padding: 20px;
-    /* border-radius: 10px; */
+    /* border-radius: 10px;
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
@@ -642,7 +642,7 @@ img.snize-item-image[src^=data]::after {
     font-weight: bold;
     line-height: 1.63636363636;
 
-}
+} */
 
 /* .close {
 	background: #606061;
@@ -665,7 +665,7 @@ img.snize-item-image[src^=data]::after {
 
 /* .close:hover { background: #00d9ff; } */
 
-#signin-btn{
+/* #signin-btn{
 	float:right;
 }
 
@@ -688,27 +688,27 @@ img.snize-item-image[src^=data]::after {
 .popupResetPasswordModel:target {
 	opacity:1;
 	pointer-events: auto;
-}
+} */
 
-.popupResetPasswordModel > div {
+/* .popupResetPasswordModel > div {
 	width: 320px;
     position: relative;
     margin: 10% auto;
-    /* padding: 5px 20px 13px 20px; */
+    /* padding: 5px 20px 13px 20px;
     padding: 20px;
-    /* border-radius: 10px; */
+    /* border-radius: 10px;
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
     background: #dcdcdc;
     box-shadow: 0px 0px 6px
-}
+} */
 
 
 
 
-.popupRegisterModel {
+/* .popupRegisterModel {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
 	top: -80px;;
@@ -723,8 +723,8 @@ img.snize-item-image[src^=data]::after {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.8);
-}
-.popupRegisterModel:target {
+} */
+/* .popupRegisterModel:target {
 	opacity:1;
 	pointer-events: auto;
 }
@@ -733,25 +733,25 @@ img.snize-item-image[src^=data]::after {
 	width: 320px;
     position: relative;
     margin: 10% auto;
-    /* padding: 5px 20px 13px 20px; */
+    /* padding: 5px 20px 13px 20px;
     padding: 20px;
-    /* border-radius: 10px; */
+    /* border-radius: 10px;
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
     background: #dcdcdc;
     box-shadow: 0px 0px 6px
-}
-.popupRegisterModel #register-msg{
+} */
+/* .popupRegisterModel #register-msg{
 	color:#830000;
 	margin-left: 20px;
 	font-size: 12px;
-  /*   font-weight: bold; */
+  /*   font-weight: bold;
     line-height: 1.63636363636;
-}
+} */
 
-.pop-title{
+/* .pop-title{
 	border-bottom: 1px solid #999;
 	margin-bottom: 10px;
 }
@@ -763,8 +763,8 @@ label.popup-login-lbl{
    float: left;
    font-size: 12px;
 	margin: 10px 0 5px;
-}
-.popupLoginModel input{
+} */
+/* .popupLoginModel input{
 	width: calc(100% - 10px);
 	height: 25px !important;
 	margin: 2px 0 10px;
@@ -773,9 +773,9 @@ label.popup-login-lbl{
 	border-left: 0px;
 	border-right: 0;
 	padding: 5px;
-}
+} */
 
-.popupResetPasswordModel input{
+/* .popupResetPasswordModel input{
    width: 96%;
    margin: 2px 0 10px;
    border-top: 1px solid #b2b2b2;
@@ -860,8 +860,8 @@ label.popup-login-lbl{
     padding-top: 0px;
     padding-bottom: 0px;
     line-height: normal;
-}
-.popup-benifits{
+} */
+/* .popup-benifits{
     list-style-type: disc;
     margin-left: 25px;
 }
@@ -878,7 +878,7 @@ label.popup-login-lbl{
 	margin: auto;
 	color: #830000;
     font-size: 12px;
-  /*   font-weight: bold; */
+  /*   font-weight: bold;
     line-height: 1.63636363636;
 }
 #login_msg_div{
@@ -902,7 +902,7 @@ label.popup-login-lbl{
     margin: auto;
     color: #830000;
     font-size: 12px;
-   /*  font-weight: bold; */
+   /*  font-weight: bold;
     line-height: 1.63636363636;
 }
 .popupLoginModel .submit-login{
@@ -919,7 +919,7 @@ label.popup-login-lbl{
 .please-wait-popup-register{
     margin-top: 16px;
     margin-left: 15px;
-}
+} */
 .custom_recaptcha .recaptcha{
 	float:right;
 }
@@ -945,7 +945,7 @@ label.popup-login-lbl{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px !important;
 }
-.popupDelMyAccModel {
+/* .popupDelMyAccModel {
     position: fixed;
     font-family: Arial, Helvetica, sans-serif;
     top: -20px;
@@ -965,16 +965,16 @@ label.popup-login-lbl{
     width: 460px;
     position: relative;
     margin: 10% auto;
-    /* padding: 5px 20px 13px 20px; */
+    /* padding: 5px 20px 13px 20px;
     padding: 20px;
-    /* border-radius: 10px; */
+    /* border-radius: 10px;
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
     background: #dcdcdc;
     box-shadow: 0px 0px 6px;
-}
+} */
 .popupDelMyAccModel .submit-delete{
 	    margin-bottom: 45px;
 }
@@ -1030,7 +1030,6 @@ label.popup-reg-privacy-lbl {
 	    margin: 0;
 }
 
-
 .popupRegisterModel .news-letter {
 	margin-top: 10px;
 }
@@ -1053,7 +1052,7 @@ label.popup-reg-privacy-lbl {
 #myaccount-shopping-cart-table a:hover {
     color: #906E39;
 }
-.post-lengthds-lbl{
+/* .post-lengthds-lbl{
     display: inline-block !important;
     float: left;
     width: 90px;
@@ -1061,17 +1060,17 @@ label.popup-reg-privacy-lbl {
     font-size: 13px;
     color: #3f3f47;
 
-}
+} */
 .post-lengthds-lbl label.required{
 
     color: rgb(63, 64, 72);
     font-weight: 200;
 
 }
-dd.post-lengthds-lbl-options.last{
+/* dd.post-lengthds-lbl-options.last{
 	    display: inline-block;
 	    padding-top: 10px;
-}
+} */
 .post-lengthds-lbl-options .product-custom-option{
 	padding-left: 1px;
     padding-right: 36px;
@@ -1079,14 +1078,14 @@ dd.post-lengthds-lbl-options.last{
     font-size: 12px;
     font-weight: normal;
 }
-.quickview-index-index .custom-options{
+/* .quickview-index-index .custom-options{
 	margin-bottom: 30px;
-}
-.quickview-index-index dd.post-lengthds-lbl-options.last{
+} */
+/* .quickview-index-index dd.post-lengthds-lbl-options.last{
 	padding-top: 7px;
     height: 24px !important;
-}
-.quickview-index-index .post-lengthds-lbl {
+} */
+/* .quickview-index-index .post-lengthds-lbl {
     display: inline-block;
     float: left;
     width: 80px;
@@ -1096,7 +1095,7 @@ dd.post-lengthds-lbl-options.last{
 }
 .quickview-index-index .product-view .product-options dd option {
     font-weight: normal !important;
-}
+} */
 .custom-options-univaersal{
 	    margin-left: 25px !important;
 }
@@ -1304,9 +1303,9 @@ div#advice-required-entry-authnetcim_cc_cid {
 .mt-facebookconnect-btn a{
  margin: 0px;
 }
-.soc-login-btn div#amazon-buttons-wrapper {
+/* .soc-login-btn div#amazon-buttons-wrapper {
     padding-top: 10px;
-}
+} */
 
 .allure-amazon-connect-login .account-login .content{
     min-height: 0;
