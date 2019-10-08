@@ -26,7 +26,7 @@
 ?>
 <?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
 
-<?php 
+<?php
 	/* $status = $this->checkGiftCardInQuotes();
 	$firstShipMethodStatus = $status['first_ship_method'];
 	$secondShipMethodStatus = $status['second_ship_method'];
@@ -35,7 +35,7 @@
 
 <?php //if(!$firstShipMethodStatus):?>
 <?php $helper = Mage::helper('checkoutstep');
- $isWholeSale = $helper->checkWholeSaleCustomer(); 
+ $isWholeSale = $helper->checkWholeSaleCustomer();
  $freeMethod = $helper->getFedexFreeShippingMethod();
  $orderTotalArr = $this->getOrderTotal();
  $orderTotal = $orderTotalArr['two_ship']['in_stock_total'];
@@ -48,14 +48,14 @@
     <dt class="mt-shipment-title">For 1st Shipment:<br><span class="mt-shipment-message">(Ready to ship now)</span></dt>
 <?php $_shippingRateGroups = $this->getShippingRatesForTwoShipInStockProducts(); ?>
 <?php if (!$_shippingRateGroups): ?>
-    <p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
+    <p class="validation-advice"><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
 <?php else: ?>
-    
+
     <?php $shippingCodePrice = array(); ?>
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
-        
-        <?php 
-        
+
+        <?php
+
         //Allure code to hide usps method for order over $400
         	$shipcode_class = "class='allure_ship_".$code."' ";
         	if(preg_match('/usps/', $code)){
@@ -101,7 +101,7 @@
             </ul>
         </dd>
     <?php endforeach; ?>
-    
+
 <script type="text/javascript">
 //<![CDATA[
     <?php if (!empty($shippingCodePrice)): ?>
@@ -126,7 +126,7 @@
 		            <?php endif; ?>
 		            checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
 		            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-		            new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>?shipping_method=' + getShippingCode, { method: 'get' });  
+		            new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>?shipping_method=' + getShippingCode, { method: 'get' });
 		            return false;
 		        }
             }
@@ -152,7 +152,7 @@ new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/r
 
     <?php $shippingCodePrice = array(); ?>
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
-        <?php 
+        <?php
         	$shipcode_class = "class='allure_ship_".$code."' ";
         	if(preg_match('/usps/', $code)){
         		if($orderTotal1>400){
@@ -198,6 +198,6 @@ new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/r
         </dd>
     <?php endforeach; ?>
     <?php endif; ?>
-    
+
     </dl>
     <?php //endif; ?>

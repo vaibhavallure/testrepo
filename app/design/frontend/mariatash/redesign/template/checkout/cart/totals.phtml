@@ -31,155 +31,117 @@
  * @see Mage_Checkout_Block_Cart_Totals
  * @var $this Mage_Checkout_Block_Cart_Totals
  */
-    $customer = Mage::getSingleton('customer/session');
 ?>
-
+<?php $customer = Mage::getSingleton('customer/session');?>
 <?php if ($this->canApplyMsrp()): ?>
-    <div class="cart-msrp-totals"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></div>
+<div class="cart-msrp-totals"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></div>
 <?php else: ?>
-    <table id="shopping-cart-totals-table" class="totals-table">
-        <col />
-        <col width="1" />
-        <?php
-        	$_checkoutHelper = Mage::helper('allure_multicheckout');
-        	if((strtolower(Mage::getSingleton('checkout/session')->getQuote()->getDeliveryMethod())==strtolower($_checkoutHelper::TWO_SHIP))){
-        ?>
-
-        	<?php
-            		$totals1 = $this->getOrderedQuote()->getTotals();
-            		$totals2 = $this->getBackorderedQuote()->getTotals();
-            		$gradtotal1 = 0;
-            		$grandtotal2  = 0;
-            		$grandtotal = 0;
-            		$gradtotal1 = $totals1['grand_total']->getValue();
-            		$gradtotal2 = $totals2['grand_total']->getValue();
-            		$grandtotal = $gradtotal1 + $gradtotal2;
-
-            		$subtotal1 = 0;
-            		$subtotal2 = 0;
-            		$subtotal = 0;
-            		$subtotal1 = $totals1['subtotal']->getValue();
-            		$subtotal2 = $totals2['subtotal']->getValue();
-            		$subtotal = $subtotal1 + $subtotal2;
-
-            		$shipping1  = 0;
-            		$shipping2  = 0;
-            		$shipping  = 0;
-
-            		$discount1 = 0;
-					$discount2 = 0;
-					$discount = 0;
-
-					$tax = 0;
-					$tax1 = 0;
-					$tax2 = 0;
-
-            		if(isset($totals1['shipping'])&& $totals1['shipping']->getValue()) {
-					 	$shipping1 = $totals1['shipping']->getValue();
-					}
-					if(isset($totals2['shipping'])&& $totals2['shipping']->getValue()) {
-					 	$shipping2 = $totals2['shipping']->getValue();
-					}
-					$shipping = $shipping1 + $shipping2;
-
-					if(isset($totals1['discount'])) {
-					 	$discount1 = $totals1['discount']->getValue();
-					}
-					if(isset($totals2['discount'])) {
-					 	$discount2 = $totals2['discount']->getValue();
-					}
-					$discount = $discount1 + $discount2;
-
-					if(isset($totals1['tax'])) {
-					 	$tax1 = $totals1['tax']->getValue();
-					}
-					if(isset($totals2['tax'])) {
-					 	$tax2 = $totals2['tax']->getValue();
-					}
-					$tax = $tax1 + $tax2;
-            	?>
-       		<tfoot>
-            	 <?php //if($tax > 0): ?>
-            	 <tr class="summary-total">
-						<td>
-							<div class="info-text-three"><span><?php echo $this->__('Estimated Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?></div>
-						</td>
-						<td style="" class="text-right"><span class="reg-price price"><?php echo $this->helper('checkout')->formatPrice($tax) ?>
-						</span></td>
-				 </tr>
-				 <?php //endif; ?>
-
-            	  <tr>
-					<td class="cart-subtotals-left" colspan="1">
-						<strong><span class="non-total-title">Grand Total</span><span class="total-title">Total</span></strong>
-					</td>
-					<td class="cart-subtotals-right">
-						<strong><span class="price"><?php echo $this->helper('checkout')->formatPrice($grandtotal) ?></span></strong>
-					</td>
-				</tr>
-
-        	</tfoot>
-        	<tbody>
-            	<tr class="title_total">
-					<td colspan="4"><div class="title_total"> Summary of charges</div></td>
-					</tr>
-					<tr>
-						<td class="cart-subtotals-left" colspan="1">
-							<span class="subtotal">Subtotal</span><span class="merchandise"></span>    </td>
-						<td class="cart-subtotals-right">
-							<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>    </td>
-					</tr>
-					<tr id="mt-shipping">
-						<td style="" class="" colspan="1">
-							<a style="color: #3f4048; text-decoration: none; cursor: normal;" class="mt-shipping-method">
-							<span class="shipping-label para-normal">Shipping</span>
-
-							<span class="non-shipping-label"></span></a>
-						</td>
-						<td style="" class="a-right">
-							<a class="mt-shipping-price">
-							<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($shipping) ?></span></a>
-						</td>
-					</tr>
-
-					<?php if($discount != 0): ?>
-					<tr>
-						<td colspan="1" style="" class="cart-subtotals-left">
-							Discount
-						</td>
-						<td style="" class="cart-subtotals-right">
-							<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($discount) ?></span>
-						</td>
-					</tr>
-					<?php endif;?>
-        	</tbody>
-        <?php } else{?>
-        	 <tfoot>
-            <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
+<table id="shopping-cart-totals-table" class="totals-table">
+	<col />
+   	<col width="1" />
+   	<?php $_checkoutHelper = Mage::helper('allure_multicheckout');?>
+   	<?php $mainQuote = Mage::getSingleton('checkout/session')->getQuote();?>
+    <?php if((strtolower($mainQuote->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP))):?>
+    	<?php $totals1 = $this->getOrderedQuote()->getTotals();?>
+        <?php $totals2 = $this->getBackorderedQuote()->getTotals(); ?>
+       	<?php $grandtotal = 0; $subtotal = 0; $shipping  = 0; $discount = 0; $tax = 0;?>
+       	<?php if(isset($totals1['grand_total']) && $totals1['grand_total']->getValue()):?>
+       		<?php $grandtotal += $totals1['grand_total']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['grand_total']) && $totals2['grand_total']->getValue()):?>
+       		<?php $grandtotal += $totals2['grand_total']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['subtotal']) && $totals1['subtotal']->getValue()):?>
+       		<?php $subtotal += $totals1['subtotal']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['subtotal']) && $totals2['subtotal']->getValue()):?>
+       		<?php $subtotal += $totals2['subtotal']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['shipping']) && $totals1['shipping']->getValue()):?>
+       		<?php $shipping += $totals1['shipping']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['shipping']) && $totals2['shipping']->getValue()):?>
+       		<?php $shipping += $totals2['shipping']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['discount']) && $totals1['discount']->getValue()):?>
+       		<?php $discount += $totals1['discount']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['discount']) && $totals2['discount']->getValue()):?>
+       		<?php $discount += $totals2['discount']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['tax']) && $totals1['tax']->getValue()):?>
+       		<?php $tax += $totals1['tax']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['tax']) && $totals2['tax']->getValue()):?>
+       		<?php $tax += $totals2['tax']->getValue();?>
+       	<?php endif;?>
+       	<tfoot>
+        	<?php if($tax != 0): ?>
+       		<tr class="summary-total">
+				<td>
+					<div class="info-text-three">
+						<span><?= $this->__('Estimated Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+					</div>
+				</td>
+				<td class="text-right">
+					<span class="reg-price price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+				</td>
+			</tr>
+			<?php endif; ?>
+        	<tr>
+				<td class="cart-subtotals-left" colspan="1">
+					<strong><span class="total-title"><?= $this->__('Total')?></span></strong>
+				</td>
+				<td class="cart-subtotals-right">
+					<strong><span class="price"><?php echo $this->helper('checkout')->formatPrice($grandtotal) ?></span></strong>
+				</td>
+			</tr>
+        </tfoot>
+        <tbody>
+			<tr>
+				<td class="cart-subtotals-left" colspan="1">
+					<span class="merchandise">Merchandise</span>
+				</td>
+				<td class="cart-subtotals-right">
+					<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>
+				</td>
+			</tr>
+			<tr id="mt-shipping">
+				<td colspan="1">
+					<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
+				</td>
+				<td class="text-right">
+					<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($shipping) ?></span>
+				</td>
+			</tr>
+			<?php if($discount != 0): ?>
+			<tr>
+				<td colspan="1" class="cart-subtotals-left">
+					<span class="para-normal"><?= $this->__('Discount')?></span>
+				</td>
+				<td class="cart-subtotals-right">
+					<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($discount) ?></span>
+				</td>
+			</tr>
+			<?php endif;?>
+        </tbody>
+        <?php else:?>
+       	<tfoot>
+        	<?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
             <?php echo $this->renderTotals('footer'); ?>
         </tfoot>
         <tbody>
-
-            <?php echo $this->renderTotals();?>
+        	<?php echo $this->renderTotals();?>
         </tbody>
-        <?php }?>
+        <?php endif;?>
     </table>
-
-      <?php
-        $moduleName = Mage::app()->getRequest()->getModuleName();
-        if($moduleName == strtolower("checkout")):
-      ?>
-    	<?php  $baseGrandTotal = Mage::helper("currencymanager")
-    	               ->getGrandTotalWithBaseCurrency();?>
-    	<?php if(!empty($baseGrandTotal)):?>
+  	<?php $moduleName = Mage::app()->getRequest()->getModuleName();?>
+    <?php if(strtolower($moduleName) == strtolower("checkout")):?>
+   		<?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
+   		<?php if(!empty($baseGrandTotal)):?>
             <p class="mt-cart-charge-note">
-            <?php
-            echo $this->__("All orders are charged in USD
-
-You will be charged( ".$baseGrandTotal." )");
-            ?>
+            <?php echo $this->__("All orders are charged in USD You will be charged( ".$baseGrandTotal." )");?>
             </p>
         <?php endif;?>
-     <?php endif;?>
-
+ 	<?php endif;?>
 <?php endif; ?>

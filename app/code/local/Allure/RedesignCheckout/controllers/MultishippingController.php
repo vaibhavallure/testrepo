@@ -47,6 +47,41 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     /**
      * Multishipping checkout after the shipping page
      */
+    public function shippingPostAction()
+    {
+        if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
+            $this->_redirect('*/*/shipping');
+            return;
+        }
+        
+        $shippingMethods = $this->getRequest()->getPost('shipping_method');
+        try {
+            Mage::dispatchEvent(
+                'checkout_controller_multishipping_shipping_post',
+                array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
+                );
+            Mage::dispatchEvent(
+                'checkout_controller_multishipping_shipping_signature_post',
+                array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
+                );
+            $this->_getCheckout()->setShippingMethods($shippingMethods);
+            $this->_getState()->setActiveStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_BILLING
+                );
+            $this->_getState()->setCompleteStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
+                );
+            $this->_redirect('*/*/billing');
+        }
+        catch (Exception $e) {
+            $this->_getCheckoutSession()->addError($e->getMessage());
+            $this->_redirect('*/*/shipping');
+        }
+    }
+    
+    /**
+     * Multishipping checkout after the shipping page
+     */
     public function shippingPostAction1()
     {
         if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {

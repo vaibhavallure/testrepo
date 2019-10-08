@@ -2,15 +2,20 @@
 jQuery.noConflict();
 
 jQuery(document).ready(function() {
-
-    jQuery('#foo3').jcarousel({
+    var startPoint =1;
+    if(jQuery(".cur_active").length>0) {
+        var startPoint = parseInt(jQuery(".cur_active").attr("data-count")) - 1;
+    }
+        jQuery('#foo3').jcarousel({
         initCallback: mycarousel_initCallback,
         buttonNextCallback: mycarousel_buttonNextCallback,
         buttonPrevCallback: mycarousel_buttonPrevCallback,
-        // This tells jCarousel NOT to autobuild prev/next buttons
         buttonNextHTML: null,
-        buttonPrevHTML: null
-    });
+        buttonPrevHTML: null,
+        scroll:1,
+        start:startPoint
+        });
+
 
     jQuery(window).resize();
 
@@ -28,6 +33,7 @@ function mycarousel_initCallback(carousel) {
         carousel.next();
         return false;
     });
+    carousel;
 };
 
 function mycarousel_buttonNextCallback(carousel, button, enabled) {
@@ -75,7 +81,7 @@ jQuery(window).resize(function() {
         if($_category->getCategoryBleed()) {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
-                        .caroufredsel_wrapper {margin-top: 240px !important}
+                        // .caroufredsel_wrapper {margin-top: 240px !important}
                         #productsContainer-wrapper { margin-top: 75px !important; }
                   </style>';
         }
@@ -83,11 +89,14 @@ jQuery(window).resize(function() {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
-                        #narrow-by-list { margin-top: 72px; }
-                        .filterButton:before {top: -270px !important; left: 61px !important;}
+                        #narrow-by-list { margin-top: 73px; }
+                        .category-products{
+                          margin-top: 56px;
+                        }
+
+                        .filterButton:before {left: 61px !important;}
                         @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
                           .filterButton:before{
-                            top: -321px !important;
                             left: 19px !important;
                           }
                             .category-products{
@@ -96,11 +105,14 @@ jQuery(window).resize(function() {
                             .catalog-category-view .category-title{
                               margin-top: 0;
                             }
+                            .catalog-product-name-display {
+                              padding-left: 0;
+                            }
                           }
                           @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
                             #narrow-by-list {
                               margin-left: 61px;
-                              margin-top: 120px;
+                              margin-top: 106px;
                             }
                           }
                           @media (max-width:1023px){
@@ -137,17 +149,13 @@ jQuery(window).resize(function() {
                             .category-products{
                               margin-top: 0px;
                             }
-                            .filterButton:before{
-                              top: -270px !important;
-                            }
+
                           }
                           @media (max-width:767px){
                             .category-products{
                               margin-top: 0;
                             }
-                            .filterButton:before{
-                              top: -315px !important;
-                            }
+
                             .filterButton:before {
                               left: 10px !important;
                             }
@@ -164,6 +172,12 @@ jQuery(window).resize(function() {
                           @media (min-width: 1920px){
                             .filter-common-div {
                               top: 424px !important;
+                            }
+                            #narrow-by-list{
+                              margin-top: 146px;
+                            }
+                            .cartilage-section{
+                              margin-top:140px;
                             }
                           }
                 </style>';
@@ -182,7 +196,7 @@ jQuery(window).resize(function() {
                         #productsContainer-wrapper { margin-top: 75px !important; }
                         #narrow-by-list{margin-top: 72px;
                         #narrow-by-list li div dd { top: 99px !important; }
-                        .filterButton:before {top: -270px !important; left: 61px !important;}
+                        .filterButton:before {left: 61px !important;}
                         @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){.filterButton:before{left: 79px !important;}}
                         @media (min-width: 1920px){
                           .filter-common-div {
@@ -202,9 +216,9 @@ jQuery(window).resize(function() {
     <ul id="foo3">
 		<?php $i = 1;?>
         <?php foreach($_collection as $category): ?>
-            <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="active"' : '' ?>
+            <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
             <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
             </li>
         <?php endforeach; ?>
     </ul>

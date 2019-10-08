@@ -867,9 +867,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
     public function getStaticSelectTime($date,$time,$is_start){
 
         if($date == '10/04/2019' || $date == '10/25/2019' || $date == '10/24/2019'){
-            if($time == '19:40' && $is_start){
-                return null;
-            }
+
             $increment = 5;
 
             $time = explode(":",$time);
@@ -881,9 +879,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
         }
         if($date == '10/05/2019' || $date == '10/26/2019'){
-            if($time == '18:00' && $is_start){
-                return null;
-            }
+
             $increment = 15;
 
             $time = explode(":",$time);
@@ -908,5 +904,27 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
         $time = implode(":",$time);
         return $time;
+    }
+
+    public function checkVisible($startTime,$endTime,$date,$show){
+        if($date == '10/05/2019'){
+            $time = explode(':',$endTime);
+            if($time[0] == 18 && $time[1] > 15 ){
+                return false;
+            }
+        }
+        if($date == '10/26/2019'){
+            $time = explode(':',$endTime);
+            if($time[0] == 18 && $time[1] > 45 ){
+                return false;
+            }
+        }
+        if($date == '10/04/2019' || $date == '10/24/2019' || $date == '10/25/2019'){
+            $time = explode(':',$endTime);
+            if($time[0] == 19 && $time[1] > 45 ){
+                return false;
+            }
+        }
+        return $show;
     }
 }

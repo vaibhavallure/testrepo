@@ -164,14 +164,16 @@ jQuery(document).ready(function() {
             jQuery('.filter-common-div').html("");
 
             jQuery("body").append(filter_popup);
-            jQuery(".category-products.aw-ajaxcatalog-container").prepend(filterButton);
+            jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
 
             jQuery(".filterButton").on('click',function(){
                 jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
+                unScrollBody();
             });
 
             jQuery(".filterPopup .close").on('click',function(){
                 jQuery(".filterPopup").css({"opacity":"0","pointer-events":"none"});
+                scrollBody();
             });
         }
     }

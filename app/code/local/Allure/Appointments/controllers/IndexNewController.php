@@ -142,7 +142,10 @@ class Allure_Appointments_IndexNewController extends Mage_Core_Controller_Front_
 
         $post_data['appointment_end'] = $post_data['app_date'] . " " . $post_data['appointment_end'];
         $post_data['appointment_end'] = strtotime($post_data['appointment_end']);
+        $post_data['appointment_end'] = $post_data['appointment_end'] - (1*60);
+
         $post_data['appointment_end'] = date('Y-m-d H:i:59', $post_data['appointment_end']);
+        
 
         $booking_date = Mage::getModel('core/date')->date('Y-m-d H:i:s');
         $post_data['booking_time'] = $booking_date;

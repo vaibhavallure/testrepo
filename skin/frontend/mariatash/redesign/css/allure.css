@@ -62,11 +62,11 @@ iframe {
 }
 
 
-.shipment-delivery-method ul li{
+/* .shipment-delivery-method ul li{
 	padding: 10px 0px 10px 10px;
 	width: 100%;
 	background-color: #d1d1d1;
-}
+} */
 
 
 
@@ -207,33 +207,16 @@ iframe {
     margin-right: 135px;
 }*/
 
-/* #payment_form_authnetcim #authnetcim_cc_number{
+#payment_form_authnetcim #authnetcim_cc_number{
 	width: 250px ! important;
-} */
+}
 
 
 /*shipping methods css*/
-.mt-shipping-methods{
+/* .mt-shipping-methods{
 	width: 47% ! important;
 	padding: 10px;
-}
-
-.mt-shipping-methods .mt-shipping-methods-list{
-	padding: 10px;
-	background: #d1d1d1;
-}
-
-
-.mt-shipping-methods .mt-shipment-title{
-	padding: 5px;
-    background: #9e9e9e;
-    text-align: center;
-    color: #fff;
-}
-
-.mt-shipping-methods .mt-shipment-message{
-	font-weight: 100;
-}
+} */
 
 .mt-shipping-methods.mt-gift-card-present{
 	width: 100% ! important;
@@ -392,6 +375,9 @@ iframe {
 	margin-left: 25px;
 }
 
+input.special-inst-product {
+    width: 250px;
+}
 
 .opc .step .buttons-set button.btn-amazon_continue {float:left; margin-top: 10px;}
 .opc .step .buttons-set button.button.btn-amazon_change_payment_method {
@@ -608,7 +594,247 @@ img.snize-item-image[src^=data]::after {
   }
 }
 
+/*Loader Css end*/
 
+/* popop css added by Ajay */
+
+
+
+/* .popupLoginModel {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top:-20px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.45);
+}
+.popupLoginModel:target {
+	opacity:1;
+	pointer-events: auto;
+} */
+
+/* .popupLoginModel > div {
+	width: 320px;
+    position: relative;
+    margin: 4% auto;/*10% to 5% changed*/
+    /* padding: 5px 20px 13px 20px;
+    padding: 20px;
+    /* border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
+}
+.popupLoginModel #login-msg{
+	color:#830000;
+	margin-left: 20px;
+	font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+
+} */
+
+/* .close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+} */
+
+/* .close:hover { background: #00d9ff; } */
+
+/* #signin-btn{
+	float:right;
+}
+
+.popupResetPasswordModel {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top:-20px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.8);
+}
+.popupResetPasswordModel:target {
+	opacity:1;
+	pointer-events: auto;
+} */
+
+/* .popupResetPasswordModel > div {
+	width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px;
+    padding: 20px;
+    /* border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
+} */
+
+
+
+
+/* .popupRegisterModel {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: -80px;;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.8);
+} */
+/* .popupRegisterModel:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.popupRegisterModel > div {
+	width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px;
+    padding: 20px;
+    /* border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
+} */
+/* .popupRegisterModel #register-msg{
+	color:#830000;
+	margin-left: 20px;
+	font-size: 12px;
+  /*   font-weight: bold;
+    line-height: 1.63636363636;
+} */
+
+/* .pop-title{
+	border-bottom: 1px solid #999;
+	margin-bottom: 10px;
+}
+.pop-title h2{
+   	margin: 0 0 10px
+}
+label.popup-login-lbl{
+   width: 100%;
+   float: left;
+   font-size: 12px;
+	margin: 10px 0 5px;
+} */
+/* .popupLoginModel input{
+	width: calc(100% - 10px);
+	height: 25px !important;
+	margin: 2px 0 10px;
+	border-top: 1px solid #b2b2b2;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0;
+	padding: 5px;
+} */
+
+/* .popupResetPasswordModel input{
+   width: 96%;
+   margin: 2px 0 10px;
+   border-top: 1px solid #b2b2b2;
+   border-bottom: 0px;
+   border-left: 0px;
+   border-right: 0;
+   padding: 5px;
+}
+.popupResetPasswordModel .pop-link{
+	   overflow: hidden;
+        clear: both;
+}
+
+.popupRegisterModel input{
+   width: 96%;
+   margin: 2px 0 10px;
+   border-top: 1px solid #b2b2b2;
+   border-bottom: 0px;
+   border-left: 0px;
+   border-right: 0;
+   padding: 5px;
+}
+.popupRegisterModel .news-letter{
+	display: inline-block;
+}
+.pop-link a{
+	outline: 0;
+	text-decoration: underline;
+	color: #000;
+	cursor: pointer;
+	font-size: 12px;
+	display: inline-block;
+	margin: 10px 0;
+}
+.pop-link p{
+	clear: both;
+	letter-spacing: 0.7px;
+}
+.popupRegisterModel .pop-link{
+	margin-top: 15px;
+
+}
+.pop-link a:hover{
+   outline: 0;
+   text-decoration: none;
+   color: #000;
+}
+.popupLoginModel #signin-btn-popup {
+   float: right;
+   margin: 10px 0 10px;
+   color: #fff;
+   background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
+}
+.popupResetPasswordModel #reset_pass_btn{
+   float: right;
+   margin: 10px 0 10px;
+   color: #fff;
+   background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
+}
 #popup_is_subscribed{
 	width: 20px;
     height: 20px;
@@ -625,10 +851,75 @@ img.snize-item-image[src^=data]::after {
     padding-right: 5px;
 }
 
+#signup-btn-popup{
+	 background: transparent url(../images/bkg_black_btn.png) repeat-x;
+    height: 26px;
+    color: #fff;
+    border: none;
+    margin-top: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: normal;
+} */
+/* .popup-benifits{
+    list-style-type: disc;
+    margin-left: 25px;
+}
+.pop-link .new_account{
+	text-align: right!important;
+    margin-top: 10px;
+}
+#reg_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#reg_msg_div #register-msg{
+	margin: auto;
+	color: #830000;
+    font-size: 12px;
+  /*   font-weight: bold;
+    line-height: 1.63636363636;
+}
+#login_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#login_msg_div #login-msg{
+	margin: auto;
+	color: #830000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
+#resetpassword_msg_div{
+    text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#resetpassword_msg_div #resetpassword-msg{
+    margin: auto;
+    color: #830000;
+    font-size: 12px;
+   /*  font-weight: bold;
+    line-height: 1.63636363636;
+}
+.popupLoginModel .submit-login{
+    float: right;
+}
+.popupResetPasswordModel .submit-login{
+    float: right;
+}
+.please-wait-popup{
+    float: left;
+    margin-top: 16px;
+    margin-right: 15px;
+}
 .please-wait-popup-register{
     margin-top: 16px;
     margin-left: 15px;
-}
+} */
 .custom_recaptcha .recaptcha{
 	float:right;
 }
@@ -654,7 +945,7 @@ img.snize-item-image[src^=data]::after {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px !important;
 }
-.popupDelMyAccModel {
+/* .popupDelMyAccModel {
     position: fixed;
     font-family: Arial, Helvetica, sans-serif;
     top: -20px;
@@ -674,16 +965,16 @@ img.snize-item-image[src^=data]::after {
     width: 460px;
     position: relative;
     margin: 10% auto;
-    /* padding: 5px 20px 13px 20px; */
+    /* padding: 5px 20px 13px 20px;
     padding: 20px;
-    /* border-radius: 10px; */
+    /* border-radius: 10px;
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
     background: #dcdcdc;
     box-shadow: 0px 0px 6px;
-}
+} */
 .popupDelMyAccModel .submit-delete{
 	    margin-bottom: 45px;
 }
@@ -711,7 +1002,12 @@ label.popup-reg-privacy-lbl {
     float: left;
     font-size: 12px;
 }
-
+#popup_is_privacy_agree {
+    width: 20px;
+    height: 20px;
+    left: 0;
+    margin: 3px 20px;
+}
 .please-wait-popup-del{
 	float: left;
     margin-left: 301px;
@@ -734,6 +1030,10 @@ label.popup-reg-privacy-lbl {
 	    margin: 0;
 }
 
+.popupRegisterModel .news-letter {
+	margin-top: 10px;
+}
+
 .main-container.col1-layout .messages{
 	margin-left: 20px ! important;
     margin-top: 15px ! important;
@@ -742,15 +1042,60 @@ label.popup-reg-privacy-lbl {
 .mt-myaccount-new .messages{
 	margin-right: 40px! important;
 }
-/* .product-options-bottom {
+.product-options-bottom {
     margin-top: 20px;
-} */
-
+}
+.product-custom-option{
+	width: 130px;
+    height: 27px !important;
+}
 #myaccount-shopping-cart-table a:hover {
     color: #906E39;
 }
+/* .post-lengthds-lbl{
+    display: inline-block !important;
+    float: left;
+    width: 90px;
+    text-indent: 3px;
+    font-size: 13px;
+    color: #3f3f47;
 
+} */
+.post-lengthds-lbl label.required{
 
+    color: rgb(63, 64, 72);
+    font-weight: 200;
+
+}
+/* dd.post-lengthds-lbl-options.last{
+	    display: inline-block;
+	    padding-top: 10px;
+} */
+.post-lengthds-lbl-options .product-custom-option{
+	padding-left: 1px;
+    padding-right: 36px;
+    background: #f8f8f8;
+    font-size: 12px;
+    font-weight: normal;
+}
+/* .quickview-index-index .custom-options{
+	margin-bottom: 30px;
+} */
+/* .quickview-index-index dd.post-lengthds-lbl-options.last{
+	padding-top: 7px;
+    height: 24px !important;
+} */
+/* .quickview-index-index .post-lengthds-lbl {
+    display: inline-block;
+    float: left;
+    width: 80px;
+    text-indent: 3px;
+    font-size: 13px;
+    color: #3f3f47;
+}
+.quickview-index-index .product-view .product-options dd option {
+    font-weight: normal !important;
+} */
 .custom-options-univaersal{
 	    margin-left: 25px !important;
 }
@@ -786,8 +1131,9 @@ label.popup-reg-privacy-lbl {
 
 
 
+/*
 
-/*-------------------new alert box--------------------------*/
+!*-------------------new alert box--------------------------*!
 
  #allureModalContainer {
      background-color: rgba(0, 0, 0, 0.47);
@@ -797,7 +1143,7 @@ label.popup-reg-privacy-lbl {
      top:0px;
      left:0px;
      z-index:10000;
-     /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+     !*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*!
  }
 
 #allureAlertBox {
@@ -826,7 +1172,7 @@ label.popup-reg-privacy-lbl {
 #allureAlertBox p {
     text-align: center;
     font:12px arial,verdana;
-    /*margin-top: 10px;*/
+    !*margin-top: 10px;*!
     color: #3f4048;
 }
 
@@ -858,7 +1204,7 @@ label.popup-reg-privacy-lbl {
 
 
 
-/*-------------confirm popup----------------*/
+!*-------------confirm popup----------------*!
 
 
 
@@ -900,6 +1246,7 @@ label.popup-reg-privacy-lbl {
     text-decoration: none;
 }
 
+*/
 
 
 
@@ -908,6 +1255,10 @@ label.popup-reg-privacy-lbl {
 width: 94%;
     float: right;
 }
+div#advice-required-entry-authnetcim_cc_cid {
+    margin-top: 25px;
+}
+
 
 .product-options-bottom .add-to-cart-left .ajax-error-messages {
     left: 150px;
@@ -916,6 +1267,46 @@ width: 94%;
     position: static;
 }
 
+#popup-login-form .pop-title h2{
+    font-weight: normal;
+    color: #303136;
+    text-transform: uppercase;
+    font-size: 17px;
+    line-height: 1.285714286;
+    font-family: dinmittelschriftregular;
+    background: transparent;
+    float: none;
+    width: auto;
+    height: auto;
+    padding-left: initial;
+}
+
 .pop-link .mt-amazon{
     float: right;
+}
+.pop-link .mt-googleconnect-btn
+{
+    float: right;
+}
+.pop-link .mt-googleconnect-btn a
+{
+    margin: 0;
+}
+.pop-link .soc-login-btn{
+    clear: left !important;
+    float: left !important;
+}
+.facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
+    width: 200px;
+    float: right;
+}
+.mt-facebookconnect-btn a{
+ margin: 0px;
+}
+/* .soc-login-btn div#amazon-buttons-wrapper {
+    padding-top: 10px;
+} */
+
+.allure-amazon-connect-login .account-login .content{
+    min-height: 0;
 }

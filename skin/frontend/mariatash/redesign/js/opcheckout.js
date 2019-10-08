@@ -654,12 +654,19 @@ ShippingMethod.prototype = {
         if(!this.validator.validate()) {
             return false;
         }
-
-        for (var i=0; i<methods.length; i++) {
+        
+        /* its for radio button*/
+        /*for (var i=0; i<methods.length; i++) {
             if (methods[i].checked) {
                 return true;
             }
+        }*/
+        
+        /* now its used for redesign*/
+        if(methods.value != '' && methods.value != 'undefined'){
+        	return true;
         }
+        
         alert(Translator.translate('Please specify shipping method').stripTags());
         return false;
     },

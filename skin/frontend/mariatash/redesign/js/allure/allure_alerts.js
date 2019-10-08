@@ -24,9 +24,11 @@ function createCustomAlert(txt) {
     msg = alertObj.appendChild(d.createElement("p"));
     //msg.appendChild(d.createTextNode(txt));
     msg.innerHTML = txt;
+    msg.classList.add("para-normal");
 
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "closeBtn";
+    btn.className="btn btn-primary btn-sm light-button";
     btn.appendChild(d.createTextNode("OK"));
     btn.href = "javascript:void()";
     btn.focus();
@@ -57,12 +59,15 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
 
     msg = alertObj.appendChild(d.createElement("p"));
     msg.classList.add("confirmBox");
+    msg.classList.add("para-normal");
 
     //msg.appendChild(d.createTextNode(txt));
     msg.innerHTML = txt;
 
     btnc = alertObj.appendChild(d.createElement("a"));
     btnc.id = "cancelConfirm";
+    btnc.className="btn btn-primary btn-sm light-button";
+
     btnc.appendChild(d.createTextNode(cancelBtn));
     btnc.href = "javascript:void()";
 
@@ -73,6 +78,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
 
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "okConfirm";
+    btn.className="btn btn-primary btn-sm light-button";
     btn.appendChild(d.createTextNode(okBtn));
     btn.href = "javascript:void()";
     btn.focus();

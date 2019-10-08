@@ -11,30 +11,30 @@ $codeExists = ($quote->getCouponCode())
     : false;
 ?>
 <div class='promoDiv'>
-    <div class="coupons">        
-        
-			
+    <div class="coupons">
+
+
 		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
 
-<div class="discount">
+<div class="discount row">
     <div class="sp-methods">
         <form method="post" action="<?php echo $this->getUrl('giftcards/cart/giftcardActive'); ?>" id="giftcardAgree">
             <div class="input-box">
                 <input type="checkbox" value="1" name="giftcard_use" id="giftcard_use" class="checkbox"  <?php echo $oGiftCardSession->getActive() ? 'checked="checked"' : '' ?>>
-                <label for="giftcard_use"><?php echo $this->__('Gift Card'); ?></label>
+                <!-- <label for="giftcard_use"><//?php echo $this->__('Gift Card'); ?></label> -->
             </div>
         </form>
     </div>
     <?php if(1==1): ?>
-    <div class="discount-form giftcard-payment-method">
-        <form method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
-            <div class="input-box">
-                <input value="" name="giftcard_code" id="giftcard_code" class="input-text">
+    <div class="discount-form giftcard-payment-method col-12">
+        <form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
+            <div class="input-box col-4">
+                <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-two">
             </div>
-            <div class="buttons-set">
-                <button value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon"
+            <div class="buttons-set col">
+                <a value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon link-button"
                         title="Apply" type="button" ><span><span><?php echo $this->__('Apply') ?></span></span>
-                </button>
+                </a>
             </div>
         </form>
 
@@ -56,18 +56,17 @@ $codeExists = ($quote->getCouponCode())
     <?php endif;?>
 
 </div>
-<div class="discount">
-            <div class="discount-form">
-                <label>Promo Code</label>
+<div class="discount row">
+            <div class="discount-form col-12">
+                <!-- <label>Promo Code</label> -->
 
-                    <input class="input-text" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
-     
-                    <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon" onclick="javascript:couponApply(0)"><span><span>APPLY</span></span></a>
-                    <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon" onclick="javascript:couponApply(1)"><span><span>REMOVE</span></span></a>
+                    <input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
+
+                    <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button col" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
+                    <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button col" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
 					<span style="display:none;" id="advice-required-entry-promoCode_code" ></span>
-          
+
             </div>
-        </div>	
+        </div>
     </div>
 </div>
-
