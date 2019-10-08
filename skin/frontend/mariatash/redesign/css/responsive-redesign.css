@@ -265,6 +265,9 @@
   #narrow-by-list li div dd ol li{
     width: auto;
   }
+  .checkout-multishipping-success .multiple-checkout, .checkout-onepage-success .multiple-checkout, .checkout-onepage-successorder .multiple-checkout{
+    width: 90%;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -698,6 +701,9 @@ margin-left: 10px;
   .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 106px;
   }
+  .common-redesign-checkout .for-space-to-bottom{
+    height: 142px;
+  }
 }
 
 /* ALl Mobiles */
@@ -831,6 +837,9 @@ margin-left: 10px;
   }
   #slidecaption{
     display: none;
+  }
+  .cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
+    font-size: 19px;
   }
 }
 
