@@ -11,7 +11,7 @@ $codeExists = ($quote->getCouponCode())
     : false;
 ?>
 <div class='promoDiv'>
-    <div class="coupons">
+    <div class="coupons col-12">
 
 
 		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
@@ -59,13 +59,16 @@ $codeExists = ($quote->getCouponCode())
 <div class="discount row">
             <div class="discount-form col-12">
                 <!-- <label>Promo Code</label> -->
-
+                <div class="row">
+                  <div class="col-4">
                     <input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
-
-                    <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button col" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
-                    <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button col" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
+                  </div>
+                  <div class="buttons-set col">
+                    <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
+                    <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
+                  </div>
 					<span style="display:none;" id="advice-required-entry-promoCode_code" ></span>
-
+              </div>
             </div>
         </div>
     </div>

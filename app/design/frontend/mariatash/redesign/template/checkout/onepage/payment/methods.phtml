@@ -29,7 +29,7 @@
 <?php
     $methods = $this->getMethods();
     $oneMethod = count($methods) <= 1;
-    
+
     $methodsList = array();
 ?>
 <?php
@@ -38,13 +38,16 @@
         $methodsList[] = $_code;
 ?>
     <dt>
+      <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked custom-radio para-normal"<?php else: ?> class="radio custom-radio para-normal"<?php endif;?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?>
+
     <?php if(!$oneMethod): ?>
         <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
     <?php else: ?>
         <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
         <?php $oneMethod = $_code; ?>
     <?php endif; ?>
-        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+    <span class="radiomark"></span>
+        </label>
     </dt>
     <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
     <dd>
@@ -69,7 +72,7 @@ payment.singleMethod = true;
 		AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
 		AllureApplePay.MerchantId = '<?php $_method->getConfigData('merchant_id') ?>';
 		AllureApplePay.MerchantName = '<?php $_method->getConfigData('merchant_name') ?>';
-		
+
 		var s = document.createElement('script');
 		s.type = "text/javascript";
 		s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
@@ -123,11 +126,11 @@ payment.singleMethod = true;
                   $('advice-required-entry-promoCode_code').removeClassName('false');
                   $('advice-required-entry-promoCode_code').show();
               } else{
-                 $('promoCode').enable(); 
+                 $('promoCode').enable();
                  $('promoCodeLinkAdd').show();
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
-              }              
+              }
               $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
               $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
               new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post',
@@ -147,7 +150,7 @@ payment.singleMethod = true;
                           $('advice-required-entry-promoCode_code').removeClassName('false');
                           $('advice-required-entry-promoCode_code').show();
                       } else{
-                         $('promoCode').enable(); 
+                         $('promoCode').enable();
                          $('promoCodeLinkAdd').show();
                          $('promoCode').value = '';
                          $('promoCodeLinkRemove').hide();
@@ -163,12 +166,12 @@ payment.singleMethod = true;
               });
               new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },
-            onFailure: function() { 
+            onFailure: function() {
                 alert('Error applying coupon code!');
             }
           });
     };
-     
+
     function giftCardApply(url,applied){
         if($F('giftcard_code') == '' && applied) {
             $('advice-required-entry-giftcard_code').innerHTML = 'This is a required field';
@@ -185,7 +188,7 @@ payment.singleMethod = true;
             method:'post',
             parameters: params,
             onSuccess: function(transport) {
-                var data = transport.responseText.evalJSON();               
+                var data = transport.responseText.evalJSON();
                 if(data.error){
                     if(data.message) {
                         $('advice-required-entry-giftcard_code').innerHTML = data.message;
@@ -222,7 +225,7 @@ payment.singleMethod = true;
                 $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
                 $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
                 $('gift_amount').innerHTML = '<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + data.current_balance;
-                new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post', 
+                new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post',
                     onComplete: function () {
                         if (jQuery.browser.msie && jQuery.browser.version == "8.0" && typeof checkout !== 'undefined') {
                             if (jQuery('#giftcard_use').attr('checked')) {
@@ -249,18 +252,18 @@ payment.singleMethod = true;
                 });
                 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },
-            onFailure: function() { 
-                alert('Error applying gift card code!'); 
+            onFailure: function() {
+                alert('Error applying gift card code!');
             }
           });
-    };   
+    };
     function uncheckPayment(){
-     jQuery('input[name="payment[method]"]').each(function () {  
-              var payment = jQuery(this).val();      
+     jQuery('input[name="payment[method]"]').each(function () {
+              var payment = jQuery(this).val();
               if(payment){
-                jQuery('#label-'+payment).attr('class','');
+                jQuery('#label-'+payment).attr('class','radio custom-radio para-normal');
               }
-        }); 
+        });
     }
     jQuery(document).ready(function(){
         $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
@@ -269,27 +272,27 @@ payment.singleMethod = true;
             onComplete: function(transport) {
                 jQuery("#country").selectBoxIt({
                         aggressiveChange: true
-                }).data("selectBoxIt");               
+                }).data("selectBoxIt");
                 // Fix payment check box for ie
-                jQuery('input[name="payment[method]"]').each(function () {                      
-                      var payment = jQuery(this).val(); 
+                jQuery('input[name="payment[method]"]').each(function () {
+                      var payment = jQuery(this).val();
                       if(payment){
-                        if(jQuery(this).is(':checked')){                        
-                           jQuery(this).attr('class','radio payment-checked');
+                        if(jQuery(this).is(':checked')){
+                           jQuery(this).attr('class','radio payment-checked custom-radio para-normal');
                            if(payment == 'authorizenet'){
                                jQuery('#payment_form_'+payment).show();
                            }
                         }
-                        jQuery('#label-'+payment).click(function(){                         
+                        jQuery('#label-'+payment).click(function(){
                             uncheckPayment();
-                            jQuery(this).attr('class','radio payment-checked');
+                            jQuery(this).attr('class','radio payment-checked custom-radio para-normal');
                         });
                         <?php //aws02-start?>
                                 showPaymentForm();
                                 <?php //aws02-end?>
                       }
-                      
-                }); 
+
+                });
             }
         });
         jQuery("#co-payment-form select").selectBoxIt({aggressiveChange: true});
@@ -300,13 +303,13 @@ payment.singleMethod = true;
                     var payment = jQuery(this).val();
                     if(payment){
                         if(jQuery(this).is(':checked')){
-                            jQuery(this).attr('class','radio payment-checked');
+                            jQuery(this).attr('class','radio payment-checked custom-radio para-normal');
                             if(payment == 'authorizenet'){
                             }
                         }
                         jQuery('#label-'+payment).click(function(){
                             uncheckPayment();
-                            jQuery(this).attr('class','radio payment-checked');
+                            jQuery(this).attr('class','radio payment-checked custom-radio para-normal');
                         });
 
                         <?php //aws02-start?>
@@ -315,7 +318,7 @@ payment.singleMethod = true;
                     }
 
                 });
-                
+
                 if (payment && payment.singleMethod) {
             		payment.switchMethod(payment.singleMethod);
             	}
@@ -323,7 +326,7 @@ payment.singleMethod = true;
         }); },1000);
 
     });
-    
+
 //]]>
 </script>
 
@@ -351,7 +354,7 @@ function switchPayOptions(that){
 			jQuery('#payment_form_'+payMethod).hide();
 		}
 	}); */
-	
+
 }
 
 function toggleCreditInfo(method){
@@ -361,27 +364,27 @@ function toggleCreditInfo(method){
 	cardSelector.val(0);
 	if(diffCardSelector.is(':visible')){
 		cardSelector.removeClass('required-entry');
-		
+
 		removeCardClass(method);
-		
+
 		diffCardSelector.find('select').addClass('required-entry');
 		diffCardSelector.find('input').addClass('required-entry');
 	}else{
 		cardSelector.addClass('required-entry');
-		
+
 		addCardClass(method);
-		
+
 		diffCardSelector.find('select').removeClass('required-entry');
 		diffCardSelector.find('input').removeClass('required-entry');
 	}
-}  
+}
 
 function changeCard(method){
 	var cardSelector = jQuery('#'+method+'_card_id');
 	cardSelector.addClass('required-entry');
 
 	addCardClass(method);
-	
+
 	var diffCardSelector = jQuery('.'+method+'_new');
 	diffCardSelector.find('select').removeClass('required-entry');
 	diffCardSelector.find('input').removeClass('required-entry');

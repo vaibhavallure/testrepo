@@ -55,7 +55,8 @@ h4{
 }
 
 .para-normal,
-.cart-empty p, .gift-messages label, .overview-address-item .box .price{
+.cart-empty p, .gift-messages label, .overview-address-item .box .price,
+.banktransfer-instructions-content.agreement-content{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -3218,6 +3219,9 @@ table thead {
 }
 .select-shipping-method.select-type-one.validate-select {
   margin-bottom: 20px;
+}
+.discount-form.giftcard-payment-method {
+  margin-bottom: 24px;
 }
 /* cccc */
 /*MINI CART CSS*/

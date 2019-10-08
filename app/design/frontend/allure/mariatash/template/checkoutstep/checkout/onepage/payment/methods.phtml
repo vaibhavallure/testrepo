@@ -60,7 +60,7 @@
     foreach ($methods as $_method):
         $_code = $_method->getCode();
 ?>
-    <dt class="<?php echo (in_array($_code,$payNowArr)?"mt-pay-now":""); 
+    <dt class="<?php echo (in_array($_code,$payNowArr)?"mt-pay-now":"");
     	echo (in_array($_code,$payAsShipArr)?" mt-pay-as-ship":"");?>"
     	style="display:<?php echo (in_array($_code,$payNowArr)?"block":"none");?>">
     <?php if(!$oneMethod): ?>
@@ -69,7 +69,7 @@
         <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
         <?php $oneMethod = $_code; ?>
     <?php endif; ?>
-        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="payment-checked custom-radio"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
     </dt>
     <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
     <dd>
@@ -128,11 +128,11 @@ payment.singleMethod = true;
                   $('advice-required-entry-promoCode_code').removeClassName('false');
                   $('advice-required-entry-promoCode_code').show();
               } else{
-                 $('promoCode').enable(); 
+                 $('promoCode').enable();
                  $('promoCodeLinkAdd').show();
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
-              }              
+              }
               $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
               $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
               new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post',
@@ -152,7 +152,7 @@ payment.singleMethod = true;
                           $('advice-required-entry-promoCode_code').removeClassName('false');
                           $('advice-required-entry-promoCode_code').show();
                       } else{
-                         $('promoCode').enable(); 
+                         $('promoCode').enable();
                          $('promoCodeLinkAdd').show();
                          $('promoCode').value = '';
                          $('promoCodeLinkRemove').hide();
@@ -165,12 +165,12 @@ payment.singleMethod = true;
               });
               new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },
-            onFailure: function() { 
+            onFailure: function() {
                 alert('Error applying coupon code!');
             }
           });
     };
-     
+
     function giftCardApply(url,applied){
         if($F('giftcard_code') == '' && applied) {
             $('advice-required-entry-giftcard_code').innerHTML = 'This is a required field';
@@ -187,7 +187,7 @@ payment.singleMethod = true;
             method:'post',
             parameters: params,
             onSuccess: function(transport) {
-                var data = transport.responseText.evalJSON();               
+                var data = transport.responseText.evalJSON();
                 if(data.error){
                     if(data.message) {
                         $('advice-required-entry-giftcard_code').innerHTML = data.message;
@@ -224,7 +224,7 @@ payment.singleMethod = true;
                 $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
                 $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
                 $('gift_amount').innerHTML = '<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + data.current_balance;
-                new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post', 
+                new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post',
                     onComplete: function () {
                         if (jQuery.browser.msie && jQuery.browser.version == "8.0" && typeof checkout !== 'undefined') {
                             if (jQuery('#giftcard_use').attr('checked')) {
@@ -248,18 +248,18 @@ payment.singleMethod = true;
                 });
                 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },
-            onFailure: function() { 
-                alert('Error applying gift card code!'); 
+            onFailure: function() {
+                alert('Error applying gift card code!');
             }
           });
-    };   
+    };
     function uncheckPayment(){
-     jQuery('input[name="payment[method]"]').each(function () {  
-              var payment = jQuery(this).val();      
+     jQuery('input[name="payment[method]"]').each(function () {
+              var payment = jQuery(this).val();
               if(payment){
                 jQuery('#label-'+payment).attr('class','');
               }
-        }); 
+        });
     }
     jQuery(document).ready(function(){
     	if($('totalsDivRightNav')!=null)
@@ -269,24 +269,24 @@ payment.singleMethod = true;
             onComplete: function(transport) {
                 jQuery("#country").selectBoxIt({
                         aggressiveChange: true
-                }).data("selectBoxIt");               
+                }).data("selectBoxIt");
                 // Fix payment check box for ie
-                jQuery('input[name="payment[method]"]').each(function () {                      
-                      var payment = jQuery(this).val(); 
+                jQuery('input[name="payment[method]"]').each(function () {
+                      var payment = jQuery(this).val();
                       if(payment){
-                        if(jQuery(this).is(':checked')){                        
+                        if(jQuery(this).is(':checked')){
                            jQuery(this).attr('class','payment-checked');
                            if(payment == 'authorizenet'){
                                jQuery('#payment_form_'+payment).show();
                            }
                         }
-                        jQuery('#label-'+payment).click(function(){                         
+                        jQuery('#label-'+payment).click(function(){
                             uncheckPayment();
                             jQuery(this).attr('class','payment-checked');
                         });
                       }
-                      
-                }); 
+
+                });
             }
         });
         jQuery("#co-payment-form select").selectBoxIt({aggressiveChange: true});
@@ -308,7 +308,7 @@ payment.singleMethod = true;
                     }
 
                 });
-                
+
                 if (payment && payment.singleMethod) {
             		payment.switchMethod(payment.singleMethod);
             	}
@@ -316,7 +316,6 @@ payment.singleMethod = true;
         }); },1000);
 
     });
-    
+
 //]]>
 </script>
-
