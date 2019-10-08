@@ -15,7 +15,16 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 
     protected function _prepareCollection()
     {
+        $customer_table = Mage::getSingleton('core/resource')->getTableName('appointments/customers');
+
         $collection = Mage::getModel('appointments/appointments')->getCollection();
+        $collection
+            ->getSelect()
+            ->joinLeft(
+                array('customers' => $customer_table),
+                'customers.appointment_id=main_table.id',
+                array('no_of_piercing' => 'SUM(customers.piercing)','no_of_checkup' => 'SUM(customers.checkup)')
+            )->group('main_table.id');
         $this->setCollection($collection);
         parent::_prepareCollection();
         return $this;
@@ -75,17 +84,19 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
             'index'  => 'piercing_qty'
         ));
 
-//        $this->addColumn('no_of_piercing', array(
-//            'header' => $helper->__('No of Piercings'),
-//            'index'  => 'no_of_piercing',
-//            'renderer' => 'appointments/adminhtml_render_piercing'
-//        ));
+        $this->addColumn('no_of_piercing', array(
+            'header' => $helper->__('No of Piercings'),
+            'index'  => 'no_of_piercing',
+            'filter_index'=>'no_of_piercing',
+            'filter_condition_callback' => array($this,'_filterPiercingConditionCallback')
+        ));
 
-//        $this->addColumn('no_of_checkup', array(
-//            'header' => $helper->__('No of Checkups'),
-//            'index'  => 'no_of_checkup',
-//            'renderer' => 'appointments/adminhtml_render_checkup'
-//        ));
+        $this->addColumn('no_of_checkup', array(
+            'header' => $helper->__('No of Checkups'),
+            'index'  => 'no_of_checkup',
+            'filter_index'=>'no_of_checkup',
+            'filter_condition_callback' => array($this,'_filterCheckupConditionCallback')
+        ));
 
         $this->addColumn('last_notified', array(
             'header' => $helper->__('Last Notifed (EST)'),
@@ -204,5 +215,22 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
     public function getRowUrl($row)
     {
         return $this->getUrl('*/*/view', array('id'=>$row->getId(),'_secure' => true));
+    }
+
+    public function _filterPiercingConditionCallback($collection,$column){
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()->getSelect()->having('no_of_piercing = '.$value);
+        return $this;
+    }
+    public function _filterCheckupConditionCallback($collection,$column){
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()->getSelect()->having('no_of_checkup = '.$value);
+        return $this;
     }
 }
