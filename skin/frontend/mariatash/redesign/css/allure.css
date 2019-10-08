@@ -175,9 +175,9 @@ iframe {
     float:right;
     margin-top:70px;
 }
-#checkout-review-submit .f-left.back-link{
+/* #checkout-review-submit .f-left.back-link{
 	margin-top:-20px ! important;
-}
+} */
 
 /*Wholeseller payment methods layout*/
 
@@ -207,9 +207,9 @@ iframe {
     margin-right: 135px;
 }*/
 
-#payment_form_authnetcim #authnetcim_cc_number{
+/* #payment_form_authnetcim #authnetcim_cc_number{
 	width: 250px ! important;
-}
+} */
 
 
 /*shipping methods css*/
@@ -1025,10 +1025,10 @@ label.popup-reg-privacy-lbl {
 	    width:18px;
 }
 
-#review-buttons-container.buttons-set .checkout_privacry_link {
+/* #review-buttons-container.buttons-set .checkout_privacry_link {
 	    float: unset;
 	    margin: 0;
-}
+} */
 
 .popupRegisterModel .news-letter {
 	margin-top: 10px;
@@ -1255,9 +1255,9 @@ label.popup-reg-privacy-lbl {
 width: 94%;
     float: right;
 }
-div#advice-required-entry-authnetcim_cc_cid {
+/* div#advice-required-entry-authnetcim_cc_cid {
     margin-top: 25px;
-}
+} */
 
 
 .product-options-bottom .add-to-cart-left .ajax-error-messages {

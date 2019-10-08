@@ -93,7 +93,9 @@ if(!window.toogleRequired) {
                 if (typeof shippingMethod != 'undefined' && shippingMethod.validator) {
                    shippingMethod.validator.reset(item);
                 }
-                $(item).removeClassName('required-entry');
+                if($(item)){
+                	$(item).removeClassName('required-entry');
+                }
             });
 
         }
@@ -174,7 +176,7 @@ billing.onSave = function(evt){
                   </div>
                     <script type="text/javascript">
                     //<![CDATA[
-                        makeItCount('gift-message-whole-message', 300, true);
+                        //makeItCount('gift-message-whole-message', 300, true);
                         toogleRequired('gift-message-whole-message', ['gift-message-whole-from','gift-message-whole-to']);
                     //]]>
                     </script>
@@ -241,7 +243,7 @@ billing.onSave = function(evt){
                                    </div>
                                      <script type="text/javascript">
                                      //<![CDATA[
-                                        makeItCount('gift-message-<?php echo $_item->getId() ?>-message', 300, true);
+                                        //makeItCount('gift-message-<?php //echo $_item->getId() ?>-message', 300, true);
                                         toogleRequired('gift-message-<?php echo $_item->getId() ?>-message', ['gift-message-<?php echo $_item->getId() ?>-from','gift-message-<?php echo $_item->getId() ?>-to']);
                                      //]]>
                                      </script>
