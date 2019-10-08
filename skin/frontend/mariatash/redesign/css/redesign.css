@@ -2140,7 +2140,8 @@ span#popup_loader_register {
 	background: url(../images/btn_window_close.gif) 100% 0 no-repeat;
 	text-indent: -999em;
 }
-.checkout-multishipping-success .multiple-checkout {
+.checkout-multishipping-success .multiple-checkout,
+.checkout-onepage-success .multiple-checkout {
   width: 700px;
   margin: 0 auto;
 	text-align: center;

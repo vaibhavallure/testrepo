@@ -24,6 +24,8 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="" title=""></p>
+<div class="multiple-checkout">
 <div class="page-title">
     <h1><?php echo $this->__('Your order has been received') ?></h1>
 </div>
@@ -33,24 +35,24 @@
 
     <?php if ($this->getOrderId()):?>
         <?php if ($this->getCanViewOrder()) :?>
-            <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+            <p class="para-normal"><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
         <?php  else :?>
-            <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+            <p class="para-normal"><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
         <?php endif;?>
-            <p><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track your progress.') ?></p>
+            <p class="para-normal"><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track your progress.') ?></p>
         <?php //if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
-            <p>
+            <p class="para-normal">
                 <?php echo $this->__('<a class="click-here" href="%s" onclick="this.target=\'_blank\'">Click here</a> to print a copy of your order confirmation.', $this->getPrintUrl()) ?>
                 <?php // echo $this->getChildHtml() ?>
             </p>
         <?php //endif;?>
     <?php endif;?>
     <?php if ($this->getAgreementRefId()): ?>
-        <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+        <p class="para-normal"><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
     <?php endif;?>
 
     <?php if ($profiles = $this->getRecurringProfiles()):?>
-    <p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+    <p class="para-normal"><?php echo $this->__('Your recurring payment profiles:'); ?></p>
     <ul class="disc">
     <?php foreach($profiles as $profile):?>
     <?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
@@ -62,6 +64,7 @@
     <div class="buttons-set">
         <!-- <button type="button" class="button" title="<?php //echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php //echo $this->getUrl() ?>'"><span><span><?php //echo $this->__('Continue Shopping') ?></span></span></button>-->
     </div>
+</div>
 </div>
 
 
