@@ -20,6 +20,11 @@
     </div>
 	<div>
 		<?php $shippingMethodHtml = "";?>
+		<div>
+			<p>For 1st Shipment:
+				<br><span>(Ready to ship now)</span>
+			</p>
+		</div>
 		<select class="select-shipping-method select-type-one validate-select" name="shipping_method"  >
 			<option value="">Select Method</option>
             <?php $ship_sign_national = array();?>
@@ -121,6 +126,11 @@
     	</div>
     	
     	<div>
+    		<div>
+    			<p>For 2nd Shipment:
+    				<br><span>(Shipped when items available)</span>
+    			</p>
+			</div>
     		<select class="select-shipping-method select-type-one validate-select" name="mt_shipping_method"  >
 				<option value="">Select Method</option>
 				<?= $shippingMethodHtml;?>
