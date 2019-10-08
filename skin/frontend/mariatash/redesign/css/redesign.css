@@ -3252,6 +3252,9 @@ margin-top: 10%;
 #payment_form_paypal_express {
   margin-bottom: 20px;
 }
+.control label.custom-checkbox ,.control label.custom-radio {
+  background: none;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{

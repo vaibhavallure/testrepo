@@ -277,12 +277,12 @@ div.tab button.active {
 	width: 100%;
 }
 
-#billing-new-address-form .input-box input.input-text{
+/* #billing-new-address-form .input-box input.input-text{
 	width: 100%!important;
 	background: #fff;
 	border: 1px solid #ccc;
 	padding: 0px;
-}
+} */
 
 #billing-new-address-form li{
 	/* margin-bottom: 10px; */
@@ -292,22 +292,22 @@ div.tab button.active {
 	/* padding: 0px!important; */
 }
 
-#authnetcim_name_on_card,
+/* #authnetcim_name_on_card,
 #authnetcim_cc_number,
 #mt-credit-card-info select,
 #billing-new-address-form select{
 	border: 1px solid #ccc;
 	height: 21px;
 	background: #fff;
-}
+} */
 
 #authnetcim_name_on_card{
 	margin-bottom: 10px;
 }
 
-#billing-new-address-form select{
+/* #billing-new-address-form select{
 	width: 100%;
-}
+} */
 
 /* #authnetcim_cc_cid{
 	/* height: 30px;
@@ -1579,9 +1579,9 @@ margin-right: 10px;
 width: 245px;
 }
 
-#billing-new-address-form select {
+/* #billing-new-address-form select {
    width: 100.5%;
-}
+} */
 
 
 .manage-payment-method #edit-main .credit-card-image{

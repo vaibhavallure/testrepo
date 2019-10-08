@@ -6787,10 +6787,10 @@ ul.crosssell-products-list {
 	list-style: square inside none;
 }
 
-#checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul
+/* #checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul
 {
 	text-align: left;
-}
+} */
 
 #checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul li.fields div.customer-name div.field div.input-box
 {
@@ -6841,13 +6841,13 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	margin-top: 10px;
 }
 
-#billing-new-address-form li.fields, #shipping-new-address-form li.fields
+/* #billing-new-address-form li.fields, #shipping-new-address-form li.fields
 {
 	display: block;
 	margin: 0;
 	padding: 0;
 	width: 100%;
-}
+} */
 
 /* #billing-new-address-form .input-box input.input-text,
 #shipping-new-address-form .input-box input.input-text {
@@ -6978,12 +6978,12 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	line-height: 20px;
 }
 
-#billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field,
+/* #billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field,
 .paypal-express-review li.fields .field, .paypal-express-review li.wide,
 .paypal-express-review li.add-field {
 	margin-bottom: 13px;
 	display: block;
-}
+} */
 
 .paypal-express-review li.fields {
 	display: block;

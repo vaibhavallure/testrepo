@@ -234,13 +234,15 @@
             </li>
             <fieldset class="shipp">
                 <li class="control">
-                    <input type="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing"
-                           value="1"<?php if ($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?>
-                           title="<?php echo $this->__('Use Billing Address') ?>"
-                           onclick=" Mage.Cookies.set('click_same_as_billing',1); shipping.setSameAsBilling(this.checked);//jQuery('#shipping-address-select').uniform();"
-                           class="checkbox"/>
-                    <label class="para-normal mb-4" for="shipping:same_as_billing"
-                           onclick="Mage.Cookies.set('click_same_as_billing',1);//jQuery('#shipping-address-select').uniform();"><?php echo $this->__('Use Billing Address') ?></label>
+                    <label class="para-normal mb-4 custom-checkbox custom-checkbox-two" for="shipping:same_as_billing"
+                           onclick="Mage.Cookies.set('click_same_as_billing',1);//jQuery('#shipping-address-select').uniform();">
+                               <input type="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing"
+                                      value="1"<?php if ($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?>
+                                      title="<?php echo $this->__('Use Billing Address') ?>"
+                                      onclick=" Mage.Cookies.set('click_same_as_billing',1); shipping.setSameAsBilling(this.checked);//jQuery('#shipping-address-select').uniform();"
+                                      class="checkbox"/>
+                                      <span class="checkmark"></span>
+                           <?php echo $this->__('Use Billing Address') ?></label>
                 </li>
                 <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()): ?>
                     <li class="control" id="li_save_in_address_book">
