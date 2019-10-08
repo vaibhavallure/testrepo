@@ -232,4 +232,105 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             $this->_redirect('*/*/billing');
         }
     }
+    
+    public function refreshtotalsAction()
+    {
+        $this->_getCheckout()->getQuote()->collectTotals()->save();
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+    
+    /**
+     * Initialize coupon
+     */
+    public function couponPostAction()
+    {
+        $isAjax = $this->getRequest()->getParam('ajax', false);
+        $response = array(
+            'error' => true,
+            'message' => '',
+            'disable' => false
+        );
+        
+        /**
+         * No reason continue with empty shopping cart
+         */
+        if (!$this->_getCheckout()->getQuote()->getItemsCount()) {
+            if (!$isAjax) $this->_redirect('checkout/cart');
+            else die(json_encode($response));
+            return;
+        }
+        
+        $couponCode = (string)$this->getRequest()->getParam('coupon_code');
+        if ($this->getRequest()->getParam('remove') == 1) {
+            $couponCode = '';
+        }
+        $oldCouponCode = $this->_getCheckout()->getQuote()->getCouponCode();
+        
+        if (!strlen($couponCode) && !strlen($oldCouponCode)) {
+            if (!$isAjax) $this->_redirect('checkout/multishipping/billing');
+            else die(json_encode($response));
+            return;
+        }
+        
+        try {
+            $this->_getCheckout()->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+            $this->_getCheckout()->getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')
+            ->collectTotals()
+            ->save();
+            
+            if (strlen($couponCode)) {
+                if ($couponCode == $this->_getCheckout()->getQuote()->getCouponCode()) {
+                    if (!$isAjax) {
+                        $this->_getCheckoutSession()->addSuccess(
+                            $this->__('Coupon code "%s" was applied.', Mage::helper('core')->htmlEscape($couponCode))
+                            );
+                    } else {
+                        $response['error'] = false;
+                        $response['message'] = $this->__('Coupon code "%s" was applied.', Mage::helper('core')->htmlEscape($couponCode));
+                        $response['disable'] = true;
+                    }
+                } else {
+                    if (!$isAjax) {
+                        $this->_getCheckoutSession()->addError(
+                            $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->htmlEscape($couponCode))
+                            );
+                    } else {
+                        $response['error'] = true;
+                        $response['message'] = $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->htmlEscape($couponCode));
+                    }
+                    
+                }
+            } else {
+                if (!$isAjax) {
+                    $this->_getCheckoutSession()->addSuccess($this->__('Coupon code was canceled.'));
+                } else {
+                    $response['error'] = false;
+                    $response['message'] = $this->__('Coupon code was canceled.');
+                }
+                
+            }
+            
+        } catch (Mage_Core_Exception $e) {
+            if (!$isAjax) {
+                $this->_getCheckoutSession()->addError($e->getMessage());
+            } else {
+                $response['error'] = true;
+                $response['message'] = $e->getMessage();
+            }
+        } catch (Exception $e) {
+            if (!$isAjax) {
+                $this->_getCheckoutSession()->addError($this->__('Cannot apply the coupon code.'));
+            } else {
+                $response['error'] = true;
+                $response['message'] = $this->__('Cannot apply the coupon code.');
+            }
+            Mage::logException($e);
+        }
+        
+        if (!$isAjax)
+            $this->_redirect('checkout/multishipping/billing');
+        else
+            die(json_encode($response));
+    }
 }

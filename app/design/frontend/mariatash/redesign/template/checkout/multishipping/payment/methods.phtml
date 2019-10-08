@@ -110,7 +110,7 @@
                 ajax: 1,
                 remove: remove
          };
-        new Ajax.Request('<?php echo $this->getUrl('checkout/cart/couponPost', array('_secure'=>true)) ?>', {
+        new Ajax.Request('<?php echo $this->getUrl('checkout/multishipping/couponPost', array('_secure'=>true)) ?>', {
             method:'post',
             parameters: params,
             onSuccess: function(transport) {
@@ -135,6 +135,8 @@
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
               }
+              $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+              new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },
             onFailure: function() {
                 alert('Error applying coupon code!');

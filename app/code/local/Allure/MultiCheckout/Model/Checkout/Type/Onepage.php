@@ -593,6 +593,10 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     ->setDeliveryMethod($_checkoutHelper::ONE_SHIP)
                     ->save();
             }
+            $this->getQuote()
+                ->getShippingAddress()->setCollectShippingRates(true);
+            $this->getQuote()->collectTotals()
+                ->save();
         } else {
             $this->getQuote()->setOrderType($_checkoutHelper::SINGLE_ORDER);
             $this->getQuote()

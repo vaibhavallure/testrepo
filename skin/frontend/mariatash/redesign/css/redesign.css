@@ -3679,3 +3679,8 @@ z-index: 1!important;
 	transform: rotate(45deg);
 	background: transparent;
 }
+
+
+div#uniform-shipping-address-select>span{
+	display: none;
+}
