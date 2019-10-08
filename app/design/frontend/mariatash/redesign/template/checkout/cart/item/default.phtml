@@ -233,10 +233,13 @@ if(!is_null($parentId)){
       <td></td>
     <td colspan="5">
         <div class="gift-messages float-left">
-            <p class="control">
+            <label for="is_gift_<?= $_item->getId() ?>" class="custom-checkbox custom-checkbox-two">
                 <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
-                <label for="is_gift_<?= $_item->getId() ?>"><span class="para-normal">This item is a gift.</span></label>
-            </p>
+                <span class="checkmark"></span>
+                <p class="para-norm">This item is a gift.</p>
+            </label>
+
+
         </div>
         <div class="w-remove float-right">
             <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>

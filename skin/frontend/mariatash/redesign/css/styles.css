@@ -1041,7 +1041,7 @@ div.account-create div.fieldset ul.form-list li.fields {
 	clear: both;
 }
 
-.customer-account-edit label.required, .wishlist-index-share label.required,
+/* .customer-account-edit label.required, .wishlist-index-share label.required,
 .account-login label.required, .account-create label.required,
 .checkout-multishipping-address-editbilling label.required,
 .paypal-express-review label.required, #checkout-step-billing .form-list li label.required,
@@ -1053,7 +1053,7 @@ label.zip-label {
 	display: block;
 	float: left;
 	margin-left: 0px;
-}
+} */
 
 .account-create .control .input-box {
 	width: auto;
@@ -1698,6 +1698,7 @@ label.required em {
 	display: inline;
 	float: left;
 }
+
 
 .shipping .shipping-form .form-list li .input-box input {
 	width: 330px !important;
@@ -6813,7 +6814,7 @@ ul.crosssell-products-list {
 	resize: none;
 }
 
-div.wrapper div.page div.main-container div.main div.col-main ol#checkoutSteps.opc li#opc-billing.section div#checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul li.fields div.field div.input-box,
+/* div.wrapper div.page div.main-container div.main div.col-main ol#checkoutSteps.opc li#opc-billing.section div#checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul li.fields div.field div.input-box,
 li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 .paypal-express-review div.input-box,
 .checkout-multishipping-address-newshipping div.input-box,
@@ -6821,7 +6822,7 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 .checkout-multishipping-address-editaddress div.input-box {
 	float: right !important;
 	clear: none;
-}
+} */
 
 .paypal-express-review input-box {
 	width: 350px;
@@ -6848,7 +6849,7 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	width: 100%;
 }
 
-#billing-new-address-form .input-box input.input-text,
+/* #billing-new-address-form .input-box input.input-text,
 #shipping-new-address-form .input-box input.input-text {
 	width: 201px !important;
 	border-top: 1px solid #b2b2b2;
@@ -6856,7 +6857,7 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	border-left: 1px solid #e2e2e2;
 	border-right: 1px solid #d8d8d8;
 	height: 19px;
-}
+} */
 
 #billing-new-address-form .input-box input.input-text::-webkit-input-placeholder,
 #shipping-new-address-form .input-box input.input-text::-webkit-input-placeholder
@@ -6988,13 +6989,13 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	display: block;
 }
 
-#billing-new-address-form li.fields label, #shipping-new-address-form li.fields label,
+/* #billing-new-address-form li.fields label, #shipping-new-address-form li.fields label,
 .paypal-express-review li.fields .field label, .paypal-express-review li.wide label,
 .paypal-express-review li.add-field label {
 	width: auto;
 	margin-left: 10px !important;
 	float: left;
-}
+} */
 
 #billing-new-address-form li.fields label {
 	margin-left: 0 !important;

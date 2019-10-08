@@ -144,7 +144,7 @@ iframe {
 	width: 100%;
 }
 
-.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
+/* .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
 #shipping-new-address-form .input-box input.input-text,
 .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form select{
     width: 99% !important;
@@ -155,7 +155,7 @@ iframe {
     height: 19px;
     padding: 0px;
     margin-bottom: 10px;
-}
+} */
 
  #mt-credit-card-info li #authnetcim_cc_type,#mt-credit-card-info li #authnetcim_cc_number
 {
