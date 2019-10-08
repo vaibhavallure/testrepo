@@ -105,10 +105,10 @@
        		<tfoot>
             	 <?php //if($tax > 0): ?>
             	 <tr class="summary-total">
-						<td style="" class="" colspan="1">
+						<td style="" class="cart-subtotals-left" colspan="1">
 							<div class=""><?php echo $this->__('Estimated Tax') ?> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?></div>
 						</td>
-						<td style="" class="a-right"><span class="price"><?php echo $this->helper('checkout')->formatPrice($tax) ?>
+						<td style="" class="cart-subtotals-right"><span class="price"><?php echo $this->helper('checkout')->formatPrice($tax) ?>
 						</span></td>
 				 </tr>
 				 <?php //endif; ?>
