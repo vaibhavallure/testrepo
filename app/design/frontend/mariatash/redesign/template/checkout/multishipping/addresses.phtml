@@ -100,14 +100,18 @@
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">
-                                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
-                                                        <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">This item is a gift (price will be hidden in the receipt).</span></label>
+                                                        <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
+                                                            <span class="checkmark"></span>
+                                                            <span class="para-normal">This item is a gift (price will be hidden in the receipt).</span></label>
                                                    </p>
                                                 </div>
                                                 <div class="gift-messages">
                                                  	<p class="control">
-                                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
-                                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
+                                                        <label class="custom-checkbox custom-checkbox-two" for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                                                <span class="checkmark"></span>
+                                                            <span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
                                                    </p>
                                                 </div>
                                                 <?php if(!empty($message)): ?>
