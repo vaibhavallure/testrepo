@@ -27,13 +27,13 @@
 <?php /** @var $this Mage_Checkout_Block_Cart_Shipping */ ?>
 <?php $_helper = Mage::helper('shoppingcart/data'); ?>
 <?php if (($_shippingRateGroups = $this->getEstimateRates())): ?>
-<div id="estimate-result">
+<div id="estimate-result" class="para-normal text-center">
     <form id="co-shipping-method-form" action="<?php echo $this->getUrl('checkout/cart/estimateUpdatePost') ?>" onsubmit="showBizi()">
         <dl class="sp-methods" style=" max-height:200px; overflow:auto;">
             <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
                 <dt><?php echo $this->escapeHtml($_helper->getCarrierName($code)) ?></dt>
                 <dd>
-                    <ul>
+                    <ul class="text-left">
                     <?php foreach ($_rates as $_rate): ?>
                         <li<?php if ($_rate->getErrorMessage()) echo ' class="error-msg"';?>>
                            <?php if ($_rate->getErrorMessage()): ?>
@@ -56,7 +56,7 @@
             <?php endforeach; ?>
         </dl>
         <div class="buttons-set estimage">
-            <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button" name="do" value="<?php echo $this->__('Update Total') ?>"><span><span><?php echo $this->__('Update Total') ?></span></span></button>
+            <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button light-button text-uppercase" name="do" value="<?php echo $this->__('Update Total') ?>"><span><span><?php echo $this->__('Update Total') ?></span></span></button>
         </div>
     </form>
 </div>
