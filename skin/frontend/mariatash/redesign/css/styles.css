@@ -1371,8 +1371,8 @@ li#billing-new-address-form fieldset ul li.fields div.field label
 }
 
 .checkout-cart-index .input-box input.input-text.validate-postcode {
-	width: 130px !important;
-	float: left !important;
+	/*width: 130px !important;
+	float: left !important;*/
 }
 
 /*------------------------------------------*/
@@ -1701,7 +1701,7 @@ label.required em {
 
 
 .shipping .shipping-form .form-list li .input-box input {
-	width: 330px !important;
+	/*width: 330px !important;
 	float: right;
 	background: #dedede;
 	padding: 0 9px;
@@ -1716,7 +1716,7 @@ label.required em {
 	border-top-color: #9b9b9b;
 	border-right-color: #d5d5d5;
 	border-bottom-color: #d5d5d5;
-	border-left-color: #d5d5d5;
+	border-left-color: #d5d5d5;*/
 }
 
 .form-guest {
