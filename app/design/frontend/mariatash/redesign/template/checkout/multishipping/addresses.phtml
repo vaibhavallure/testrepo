@@ -70,7 +70,7 @@
                             <?php if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
     							<div class="col-12 product-description-section">
     								<div class="row">
-                            			<div class="col-2">
+                            			<div class="col-lg-2 col-md-2 col-4 multi-column-1">
                                     		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
                                     		<?php
                                         		if ($option = $_item->getOptionByCode('simple_product')) {
@@ -81,7 +81,7 @@
                                      			<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
                                  			</p>
                             			</div>
-                                		<div class="col-6">
+                                		<div class="col-lg-6 col-md-6 col-12 multi-column-2">
                                     		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
                                     		<div class="item-options">
                                     			<input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
@@ -123,7 +123,7 @@
                                                 <?php endif;?>
                                             </div>
                                 		</div>
-                                    	<div class="col-4 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
+                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
                                     		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
                                     	</div>
     								</div>

@@ -257,12 +257,6 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
-  /* .checkout-onepage-index .main{
-    display: block;
-  } */
-  .col-right.sidebar {
-    display: none;
-  }
   .breadcrumbs{
     margin-top: 30px;
   }
@@ -275,7 +269,12 @@
   .checkout-onepage-index .for-space-to-bottom {
     height: 120px !important;
   }
-  .checkout-cart-index .for-space-to-bottom{
+  .checkout-cart-index .for-space-to-bottom,
+  .checkout-multishipping-addresses .for-space-to-bottom,
+  .checkout-multishipping-shipping .for-space-to-bottom,
+  .checkout-multishipping-delivery .for-space-to-bottom,
+  .checkout-multishipping-billing .for-space-to-bottom,
+  .checkout-multishipping-overview .for-space-to-bottom{
     height: 110px !important;
   }
   /* .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main, .checkout-onepage-index .col-main{
@@ -474,6 +473,9 @@
   .swatches {
     padding: 9px 3px 0 0px;
   }
+  .col-right.sidebar{
+    display: none;
+  }
 }
 
 /*All ipads*/
@@ -598,7 +600,7 @@
   }
   .filterButton:before{
     left: 19px !important;
-    }
+  }
   .category-products {
     margin-top: 0px;
   }
@@ -624,6 +626,9 @@
   }
   .categorypath-jewelry-ear-cartilage-jewelry-html .catalog-product-name-display {
     padding-left: 0;
+  }
+  #checkoutSteps {
+    padding: 0;
   }
 }
 
@@ -714,9 +719,24 @@
   .common-redesign-checkout .for-space-to-bottom{
     height: 142px !important;
   }
-  .checkout-cart-index .for-space-to-bottom {
+  .checkout-cart-index .for-space-to-bottom,
+  .checkout-multishipping-addresses .for-space-to-bottom,
+  .checkout-multishipping-shipping .for-space-to-bottom,
+  .checkout-multishipping-delivery .for-space-to-bottom,
+  .checkout-multishipping-billing .for-space-to-bottom,
+  .checkout-multishipping-overview .for-space-to-bottom {
     height: 265px !important;
   }
+  .checkout-multishipping-addresses .col-main,
+  .checkout-multishipping-shipping .col-main,
+  .checkout-multishipping-delivery .col-main,
+  .checkout-multishipping-billing .col-main,
+  .checkout-multishipping-overview .col-main,
+  .checkout-onepage-index .col-main{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
   /* .checkout-onepage-index .for-space-to-bottom {
     height: 270px;
   } */
@@ -859,6 +879,18 @@
   }
   .cart-collaterals.fix-section{
     margin-top: 40px;
+  }
+  .multi-column-1{
+    order: 1;
+  }
+  .multi-column-2{
+    order: 3;
+  }
+  .multi-column-3{
+    order: 2;
+  }
+  .product-description-section select{
+    width: 100%;
   }
 }
 
@@ -1012,8 +1044,23 @@
     padding: 20px 40px 0 46px;
   }
   .input-type-one, .form-list input, .gift-message-section textarea, .select-type-two, .product-description-section select, .select-type-one, .country-section select,
-  .expiry-section, .v-fix {
-    width: 100%;
+  .expiry-section, .v-fix, .new_address .input-box {
+    width: 100% !important;
+  }
+  .dark-button, .next-button {
+    width: 100% !important;
+  }
+  .multiple-checkout.shipping-method-parent .next-button {
+    margin-top: 10px;
+  }
+  .coupons .discount {
+    margin-bottom: 15px;
+  }
+  .coupons { /*Css is for Payment section of multi checkout*/
+    padding: 0;
+  }
+  .overview-price-qty{
+    margin-top: 0;
   }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
@@ -1095,6 +1142,9 @@
   #checkoutSteps {
     padding: 0;
   }
+  #multiaddress-new-address .container{
+    padding: 0 10px;
+  }
 }
 
 /* Mobile landscape */
@@ -1161,6 +1211,9 @@
   }
   .cartilage-section .prev {
     left: 1.7%;
+  }
+  .address-method-common {
+    margin-bottom: 25px;
   }
 }
 

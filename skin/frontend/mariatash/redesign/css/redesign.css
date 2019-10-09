@@ -56,7 +56,7 @@ h4{
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
-.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt{
+.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -351,7 +351,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-price, .overview-dark-price span, .grand-total span{
+.medium-price, .overview-dark-price span, .overview-grand span{
 	font-family: urw-din-medium !important;
 	font-size: 18px !important;
 }
@@ -3151,9 +3151,15 @@ margin-top: 10%;
   margin-bottom: 12px;
 }
 .overview-product {
-  border-bottom: 1px solid #d8d8d8;
   padding-bottom: 11px;
   margin-bottom: 19px;
+}
+.overview-product > .row {
+  border-bottom: 1px solid #d8d8d8;
+	margin-top: 30px;
+}
+.overview-product > .row:first-child {
+  margin-top: 0;
 }
 .overview-price-qty{
 	line-height: 10px;
@@ -3163,7 +3169,7 @@ margin-top: 10%;
   margin-top: 23px;
 }
 #review-buttons-container {
-  margin-top: 42px;
+  margin-top: 25px;
 }
 .billing-address.billing-address-selection {
   margin-top: 22px;
@@ -3270,6 +3276,10 @@ margin-top: 10%;
 }
 .ad-to-fav, .w-remove {
   margin-top: 13px;
+}
+.overview-common-prices, .overview-grand {
+  text-align: left;
+	margin-bottom: 19px;
 }
 /* cccc */
 /*MINI CART CSS*/
