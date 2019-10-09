@@ -476,6 +476,9 @@
   .col-right.sidebar{
     display: none;
   }
+  .cart-collaterals.fix-section{
+    padding-top: 0;
+  }
 }
 
 /*All ipads*/
@@ -736,7 +739,12 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
-
+  #checkoutSteps{
+    padding: 0 100px;
+  }
+  .address-method-common .select-type-one{
+    width: 100%;
+  }
   /* .checkout-onepage-index .for-space-to-bottom {
     height: 270px;
   } */
@@ -1062,6 +1070,9 @@
   .overview-price-qty{
     margin-top: 0;
   }
+  #shopping-cart-table td.cart_col3 .price {
+    text-align: left !important;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
     display: grid;
@@ -1080,6 +1091,7 @@
   }
   #shopping-cart-table .price{
     font-size: 15px;
+    display: block;
   }
   .ad-to-fav, .w-remove{
     margin-top: 0;
@@ -1102,6 +1114,7 @@
   #shopping-cart-table td.cart_col2{
     width: 94%;
     display: block;
+    min-height: 120px;
   }
   #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5 {
     width: 28%;
@@ -1144,6 +1157,12 @@
   }
   #multiaddress-new-address .container{
     padding: 0 10px;
+  }
+  .promoDiv {
+    padding: 0 15px;
+  }
+  .coupons .discount {
+    margin-bottom: 0;
   }
 }
 
@@ -1214,6 +1233,9 @@
   }
   .address-method-common {
     margin-bottom: 25px;
+  }
+  .place-order .grand-total{
+    padding-left: 140px;
   }
 }
 

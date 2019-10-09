@@ -2660,7 +2660,10 @@ ul.tabs li:nth-child(3){
   cursor: pointer;
   font-weight: bold;
 }
-
+.minus_qty span, .plus_qty span{
+	-webkit-appearance: none;
+	font-size: 18px;
+}
 .containerVideo iframe{
 	display: block;
 	margin: auto;
@@ -3097,6 +3100,7 @@ margin-top: 10%;
 }
 #reload_payment .sp-methods dt label{
 	margin-bottom: 23px;
+	margin-top: 23px;
 }
 #reload_payment .form-list .input-box {
   margin-bottom: 24px;
@@ -3280,6 +3284,9 @@ margin-top: 10%;
 .overview-common-prices, .overview-grand {
   text-align: left;
 	margin-bottom: 19px;
+}
+.cart-collaterals.fix-section{
+	padding-top: 110px;
 }
 /* cccc */
 /*MINI CART CSS*/

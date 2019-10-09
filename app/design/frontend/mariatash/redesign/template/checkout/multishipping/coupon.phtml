@@ -10,7 +10,7 @@ $codeExists = ($quote->getCouponCode())
 ? true
 : false;
 ?>
-<div class='promoDiv'>
+<div class='promoDiv row'>
     <div class="coupons col-12">
 
 
@@ -28,8 +28,8 @@ $codeExists = ($quote->getCouponCode())
     <?php if(1==1): ?>
     <div class="discount-form giftcard-payment-method col-12">
         <form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
-            <div class="input-box col-lg-4 col-md-4 col-12">
-                <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-two">
+            <div class="input-box col-lg-6 col-md-6 col-12">
+                <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-one">
             </div>
             <div class="buttons-set col">
                 <a value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon link-button"
@@ -60,8 +60,8 @@ $codeExists = ($quote->getCouponCode())
             <div class="discount-form col-12">
                 <!-- <label>Promo Code</label> -->
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-12">
-                    <input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
+                  <div class="col-lg-6 col-md-6 col-12">
+                    <input placeholder="Promo Code" class="input-text input-patern select-type-one" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
                   </div>
                   <div class="buttons-set col">
                     <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
