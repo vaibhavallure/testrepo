@@ -85,7 +85,8 @@ h4{
 	font-size: 15px;
 }
 
-.options-text{
+.options-text,
+#checkout-review-table .cart_col3 span, #checkout-review-table .cart_col4 span #checkout-review-table .cart_col5 div span{
 	font-size: 18px;
 	font-family: urw-din-xlight;
 	color: rgba(41,41,41,0.90);
@@ -323,7 +324,8 @@ select{
   background-repeat: no-repeat;
   background-position: 98% 50%;
 }
-.select-type-one{
+.select-type-one,
+.country-section select{
 	width: 322px;
 }
 .select-type-two, .product-description-section select{
@@ -2149,13 +2151,14 @@ span#popup_loader_register {
 input[type='radio']{
 	display: none;
 }
-
 .sp-methods dt {
   position: relative;
 }
+#billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field, .paypal-express-review li.fields .field, .paypal-express-review li.wide, .paypal-express-review li.add-field{
+	margin-bottom: 24px;
+}
 
-
-/*Old from recently.viewd.css*/
+/*Old from file recently.viewd.css*/
 .image_carousel img {
 	padding:0;
 	display: block;
@@ -3209,6 +3212,7 @@ margin-top: 10%;
 }
 .ship-to li:first-child {
   margin-bottom: 17px;
+	margin-bottom: 15px;
 }
 #allow-gift-message-container .inner-box {
   margin-left: 0;
@@ -3248,6 +3252,21 @@ margin-top: 10%;
 }
 #payment_form_paypal_express {
   margin-bottom: 20px;
+}
+.control label.custom-checkbox ,.control label.custom-radio {
+  background: none;
+}
+#checkout-review-table tbody td.cart_col1 {
+  width: 50%;
+}
+.clear-both{
+	clear: both;
+}
+#checkout-shipping-method-load br {
+  display: none;
+}
+#shopping-cart-table .cart_col1 {
+  width: 14%;
 }
 /* cccc */
 /*MINI CART CSS*/
@@ -3672,4 +3691,9 @@ z-index: 1!important;
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
 	background: transparent;
+}
+
+
+div#uniform-shipping-address-select>span{
+	display: none;
 }

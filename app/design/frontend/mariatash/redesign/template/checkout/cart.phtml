@@ -122,7 +122,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                     <ul class="checkout-types p-0">
                         <?php foreach ($this->getMethods('methods') as $method): ?>
                             <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
-                                <li class="mb-2"><?php echo $methodHtml; ?></li>
+                                <li class="mb-2 side-cart-redirects"><?php echo $methodHtml; ?></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>
