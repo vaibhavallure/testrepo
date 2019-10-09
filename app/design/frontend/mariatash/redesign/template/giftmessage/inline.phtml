@@ -133,8 +133,10 @@ billing.onSave = function(evt){
         <p class="info-text-two"><?php echo $this->__('Delivery Signature Option.'); ?></p>
 
         <p class="control">
-            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" class="checkbox" checked="checked" />
-            <label for="no_signature_delivery" class="para-normal"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="    color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>
+            <label for="no_signature_delivery" class="para-normal custom-checkbox custom-checkbox-two">
+              <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" class="checkbox" checked="checked" />
+              <span class="checkmark"></span>
+              <?php echo $this->__('Require signature upon delivery.') ?></label>
             <span class="signature_message" style ="display: none;"><?php echo $this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.'); ?></span>
         </p>
     </div>
@@ -143,8 +145,10 @@ billing.onSave = function(evt){
     <div class="gift-messages">
         <p class="info-text-two"><?php echo $this->__('Do you have any gift items in your order? If yes, the receipt will not include pricing information.'); ?></p>
         <p class="control">
-            <input type="checkbox" name="allow_gift_messages" id="allow_gift_messages" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif; ?> class="checkbox" />
-            <label class="para-normal" for="allow_gift_messages"><?php echo $this->__('Check this checkbox if you want to send as a gift and add a gift message or for special instructions.') ?></label>
+            <label class="para-normal custom-checkbox custom-checkbox-two" for="allow_gift_messages">
+              <input type="checkbox" name="allow_gift_messages" id="allow_gift_messages" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif; ?> class="checkbox" />
+              <span class="checkmark"></span>
+              <?php echo $this->__('Check this checkbox if you want to send as a gift and add a gift message or for special instructions.') ?></label>
         </p>
     </div>
     <div class="gift-messages-form" id="allow-gift-message-container" style="display: none;">
@@ -271,15 +275,18 @@ billing.onSave = function(evt){
     <div class="gift-messages">
         <h3><?php echo $this->__('Delivery Signature Option.'); ?></h3>
         <p class="control">
+            <label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $this->getEntity()->getId()?>"><?php echo $this->__('Require signature upon delivery.') ?></label>
             <input type="checkbox" name="no_signature_delivery[<?= $this->getEntity()->getId()?>]" id="no_signature_delivery_<?= $this->getEntity()->getId()?>" value="1" class="checkbox" checked="checked" />
-            <label for="no_signature_delivery_<?= $this->getEntity()->getId()?>"><?php echo $this->__('Require signature upon delivery.') ?></label>
+            <span class="checkmark"></span>
             <span class="signature_message" style ="display: none;"><?php echo $this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.'); ?></span>
         </p>
     </div>
     <div class="gift-messages">
         <p class="control">
-            <input type="checkbox" name="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" id="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container-<?php echo $this->getEntity()->getId() ?>']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif ?> class="checkbox" />
-            <label for="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>"><?php echo $this->__('Check this box if you want to add a gift message.') ?><br/><span><?php echo $this->__('Gift receipt will not include pricing information.') ?></span></label>
+            <label class="custom-checkbox custom-checkbox-two" for="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>">
+              <input type="checkbox" name="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" id="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container-<?php echo $this->getEntity()->getId() ?>']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif ?> class="checkbox" />
+              <span class="checkmark"></span>
+              <?php echo $this->__('Check this box if you want to add a gift message.') ?><br/><span><?php echo $this->__('Gift receipt will not include pricing information.') ?></span></label>
         </p>
     </div>
     <div class="gift-messages gift-messages-form" id="allow-gift-message-container-<?php echo $this->getEntity()->getId() ?>">
