@@ -857,6 +857,9 @@
   .cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
   }
+  .cart-collaterals.fix-section{
+    margin-top: 40px;
+  }
 }
 
 /* Mobile Portrait */
@@ -1021,12 +1024,21 @@
   }
   #shopping-cart-table tbody td:before {
     content: attr(data-th);
-    font-size: 13px;
+    font-size: 12px;
     font-family: urw-din-bold;
     color: rgba(41,41,41,0.6);
     text-transform: uppercase;
     letter-spacing: 1.08px;
     line-height: 0px;
+  }
+  #shopping-cart-table .price{
+    font-size: 15px;
+  }
+  .ad-to-fav, .w-remove{
+    margin-top: 0;
+  }
+  #shopping-cart-table tr.messages-tr {
+    margin-top: 20px;
   }
   .data-table.cart-table .gift-messages, .gift-row td:nth-child(2){
     width: 100%;
@@ -1049,27 +1061,35 @@
     display: block;
     float: left;
     margin-right: 5.33%;
-    line-height: 40px;
+    line-height: 30px;
+    margin-top: 20px;
   }
   .minus_icon.minus_qty, .qty-wrap.total_qty {
     max-width: 33.33%;
     float: left;
     flex: 0 0 33.33%;
   }
-  #shopping-cart-table td.cart_col4{
+  #shopping-cart-table .cart_col3 {
+    text-align: left !important;
+  }
+  #shopping-cart-table .cart_col4{
     text-align: center;
   }
   .messages-tr .product-name a{
-    font-size: 20px;
+    font-size: 15px;
   }
   .data-table.cart-table td{
-    margin-top: 20px;
+    margin-top: 18px;
+  }
+  .messages-tr .product-name{
+    margin-top: 18px;
+    margin-bottom: 9px;
   }
   .messages-tr .plus_icon, .messages-tr .minus_icon{
     display: block;
   }
   .checkout-list-title{
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   }
   /*Checkout*/
   #checkoutSteps {
@@ -1132,7 +1152,6 @@
   }
   .cart-collaterals.fix-section{
     background: #f2f2f2;
-    margin-top: 30px;
   }
   .collat-wrap{
     margin: 0 auto;
