@@ -42,7 +42,7 @@ alpha_redesign:
     - redesign
   script:
     - mage-deploy mt-redesign
-    - echo 'Deployed on Nascense Staging'
+    - echo 'Deployed on Nascense Gama'
     
 alpha_elasticsearch:
   environment: elasticsearch
