@@ -714,6 +714,9 @@
   .common-redesign-checkout .for-space-to-bottom{
     height: 142px !important;
   }
+  .checkout-cart-index .for-space-to-bottom {
+    height: 265px !important;
+  }
   /* .checkout-onepage-index .for-space-to-bottom {
     height: 270px;
   } */
