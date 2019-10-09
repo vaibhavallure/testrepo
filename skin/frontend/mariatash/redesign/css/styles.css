@@ -11973,8 +11973,8 @@ li.item h2.product-name {text-align: center;}
 
 .multiple-checkout .title_total, .multiple-checkout .total-title,
 .multiple-checkout .merchandise, .multiple-checkout .shipping-label,
-.col-right .subtotal, .col-right .non-total-title, .col-right .non-shipping-label,
-.cart-collaterals .total-title, .cart-collaterals .merchandise,
+.col-right .non-total-title, .col-right .non-shipping-label,
+.cart-collaterals .total-title,
 .cart-collaterals .non-shipping-label {
 	display: none;
 }
