@@ -736,7 +736,12 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
-
+  #checkoutSteps{
+    padding: 0 100px;
+  }
+  .address-method-common .select-type-one{
+    width: 100%;
+  }
   /* .checkout-onepage-index .for-space-to-bottom {
     height: 270px;
   } */
@@ -1145,6 +1150,12 @@
   #multiaddress-new-address .container{
     padding: 0 10px;
   }
+  .promoDiv {
+    padding: 0 15px;
+  }
+  .coupons .discount {
+    margin-bottom: 0;
+  }
 }
 
 /* Mobile landscape */
@@ -1214,6 +1225,9 @@
   }
   .address-method-common {
     margin-bottom: 25px;
+  }
+  .place-order .grand-total{
+    padding-left: 140px;
   }
 }
 
