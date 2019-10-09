@@ -22,14 +22,18 @@
     <div class="shipment-delivery-method">
     	<ul class="form-list p-0">
     		<li class="control shipment-one">
-    			<input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]"
-    			<?php echo (!$status_tt)?"checked='checked'":"";?>  class="radio shipment-one" onclick="switchMethod(this);" />
-    			<label class="para-normal"><?php echo $oneShipMsg;?></label>
+    			<label class="para-normal custom-radio">
+            <input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]"
+            <?php echo (!$status_tt)?"checked='checked'":"";?>  class="radio shipment-one" onclick="switchMethod(this);" />
+            <span class="radiomark"></span>
+            <?php echo $oneShipMsg;?></label>
     		</li>
     		<?php if($two_ship_status): ?>
     		<li class="control">
-    			<input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" <?php echo ( $status_tt)?"checked='checked'":"";?>  class="radio" onclick="switchMethod(this);" />
-    			<label class="para-normal">In two Shipments - Ship what is available today,then ship remaining item(s) once all are available.(Two shipping charges will be applied.)</label>
+    			<label class="para-normal custom-radio">
+            <input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" <?php echo ( $status_tt)?"checked='checked'":"";?>  class="radio" onclick="switchMethod(this);" />
+            <span class="radiomark"></span>
+            In two Shipments - Ship what is available today,then ship remaining item(s) once all are available.(Two shipping charges will be applied.)</label>
     		</li>
     		<?php  endif;?>
     	</ul>

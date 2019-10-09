@@ -98,8 +98,11 @@
 			<input type="hidden" name="payment[save]" value="0" />
 			<div class="gift-messages"><?php //mt-allure added code ?>
 				<p class="control">
-					<input type="checkbox" name="payment[save]" id="<?php echo $this->getMethodCode(); ?>_save" value="1" <?php if( $this->getMethod()->getConfigData('savecard_opt_out') ): ?>checked="checked" <?php endif; ?>autocomplete="on" class="checkbox" />
-					<label for="<?php echo $this->getMethodCode(); ?>_save" style="float:none;font-weight:normal;"><?php echo $this->__('Save new card to my account'); ?></label>
+
+					<label class="custom-checkbox custom-checkbox-two" for="<?php echo $this->getMethodCode(); ?>_save" style="float:none;font-weight:normal;"><?php echo $this->__('Save new card to my account'); ?>
+ 						<input type="checkbox" name="payment[save]" id="<?php echo $this->getMethodCode(); ?>_save" value="1" <?php if( $this->getMethod()->getConfigData('savecard_opt	_out') ): ?>checked="checked" <?php endif; ?>autocomplete="on" class="checkbox" />
+						<span class="checkmark"></span>
+					</label>
 				</p>
 		  </div>
 		</li>
