@@ -37,7 +37,7 @@ alpha_redesign:
   environment: redesign
   stage: redesign
   tags:
-    - beta
+    - gama
   only:
     - redesign
   script:
