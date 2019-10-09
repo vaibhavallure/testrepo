@@ -160,7 +160,7 @@ billing.onSave = function(evt){
                     <input type="hidden" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][type]"  value="quote" />
                     <div class="col-12">
                     <div class="form-list p-0 row">
-                        <div class="fields col-4 to-from-section">
+                        <div class="fields col-lg-4 col-12 to-from-section">
                             <div class="field row">
                                 <!-- <label  style="padding-right:20px;"  for="gift-message-whole-from"><//?php echo $this->__('Sender') ?></label> -->
                                 <input placeholder="From" type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][from]" id="gift-message-whole-from" title="<?php echo $this->__('From') ?>"  value="<?php echo $this->getEscaped($this->getMessage()->getSender(), $this->getDefaultFrom()) ?>" class="input-text1 validation-passed" />
@@ -170,7 +170,7 @@ billing.onSave = function(evt){
                                 <input placeholder="To" type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-whole-to" title="<?php echo $this->__('To') ?>" class="input-text1 validation-passed" />
                             </div>
                         </div>
-                        <div class="col-8 gift-message-section">
+                        <div class="col-lg-8 col-12 gift-message-section">
                         <div class="wide row">
                             <!-- <label for="gift-message-whole-message" style="padding-right:5px;" ><//?php echo $this->__('Message') ?> </label> -->
                             <textarea placeholder="Message" id="gift-message-whole-message" onchange="toogleRequired('gift-message-whole-message', ['gift-message-whole-from','gift-message-whole-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="10"><?php echo $this->getEscaped($this->getMessage()->getMessage()) ?></textarea>
@@ -297,7 +297,7 @@ billing.onSave = function(evt){
                 <input type="hidden" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][type]" value="quote_address" />
                 <di v class="col-12">
                   <div class="form-list p-0 row">
-                      <div class="fields col-4 to-from-section">
+                      <div class="fields col-lg-4 col-12 to-from-section">
                           <div class="field row">
                               <!-- <label for="gift-message-<//?php echo $this->getEntity()->getId() ?>-from"><//?php echo $this->__('Sender') ?></label> -->
                                   <input type="text" placeholder="From" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][from]" id="gift-message-<?php echo $this->getEntity()->getId() ?>-from" title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($this->getMessage()->getSender(), $this->getDefaultFrom()) ?>" class="input-text validation-passed" />
@@ -307,7 +307,7 @@ billing.onSave = function(evt){
                                   <input type="text" placeholder="To" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-<?php echo $this->getEntity()->getId() ?>-to" title="<?php echo $this->__('To') ?>" class="input-text validation-passed" />
                           </div>
                       </div>
-                      <div class="col-8 gift-message-section">
+                      <div class="col-lg-8 col-12 gift-message-section">
                         <div class="wide row">
                             <!-- <label for="gift-message-<//?php echo $this->getEntity()->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
                                 <textarea placeholder="Message" id="gift-message-<?php echo $this->getEntity()->getId() ?>-message" onchange="toogleRequired('gift-message-<?php echo $this->getEntity()->getId() ?>-message', ['gift-message-<?php echo $this->getEntity()->getId() ?>-from','gift-message-<?php echo $this->getEntity()->getId() ?>-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="40"><?php echo $this->getEscaped($this->getMessage()->getMessage()) ?></textarea>
@@ -345,7 +345,7 @@ billing.onSave = function(evt){
 
                             <div class="col-12">
                                <div class="form-list p-0 row">
-                                 <div class="fields col-4 to-from-section">
+                                 <div class="fields col-lg-4 col-12 to-from-section">
                                      <div class="field row">
                                          <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-from"><?php echo $this->__('Sender') ?></label> -->
                                          <div class="input-box">
@@ -359,7 +359,7 @@ billing.onSave = function(evt){
                                          </div>
                                      </div>
                                  </div>
-                                 <div class="col-8 gift-message-section">
+                                 <div class="col-lg-8 col-12 gift-message-section">
                                  <div class="wide row">
                                      <!-- <label for="gift-message-<//?php echo $_item->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
                                      <div class="input-box">
