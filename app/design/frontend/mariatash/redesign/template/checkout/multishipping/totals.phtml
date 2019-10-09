@@ -78,14 +78,10 @@
 		</tr>
 		<tr id="mt-shipping">
 			<td colspan="1">
-				<a style="color: #3f4048; text-decoration: none; cursor: normal;" class="mt-shipping-method">
-					<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
-				</a>
+				<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
 			</td>
 			<td class="text-right">
-				<a class="mt-shipping-price">
-					<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
-				</a>
+				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
 			</td>
 		</tr>
 		<?php if($discount != 0): ?>

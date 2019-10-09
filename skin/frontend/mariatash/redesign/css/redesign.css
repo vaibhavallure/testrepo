@@ -56,7 +56,7 @@ h4{
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
-.banktransfer-instructions-content.agreement-content{
+.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -162,7 +162,7 @@ h4{
 	border: 0.5px solid rgba(41,41,41,0.90);
 }
 
-.link-button, .pay-caart li a{
+.link-button, .pay-caart li a, .checkout-onepage-index .back-link a{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.60) !important;
@@ -2140,7 +2140,8 @@ span#popup_loader_register {
 	background: url(../images/btn_window_close.gif) 100% 0 no-repeat;
 	text-indent: -999em;
 }
-.checkout-multishipping-success .multiple-checkout {
+.checkout-multishipping-success .multiple-checkout,
+.checkout-onepage-success .multiple-checkout, .checkout-onepage-successorder .multiple-checkout {
   width: 700px;
   margin: 0 auto;
 	text-align: center;
@@ -2657,6 +2658,24 @@ ul.tabs li:nth-child(3){
   font-weight: bold;
 }
 
+.containerVideo iframe{
+	display: block;
+	margin: auto;
+	width: 100%;
+	height: 100%;
+}
+.containerVideo{
+	margin-top: 20%;
+}
+
+
+
+
+
+
+
+
+
 /*instagram slider*/
 
 .image_carousel .item.product-view-instagram-item, .image_carousel .item.product-view-instagram-item img{
@@ -2969,6 +2988,10 @@ table thead {
 .quickview-index-index .thumb.thumb1 img {
 	margin-top: 78px;
 }
+.quickview-index-index .containerVideo {
+margin-top: 10%;
+}
+
 .fancybox-close::before{
 	content: ""!important;
 }
@@ -3223,6 +3246,9 @@ table thead {
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
 }
+#payment_form_paypal_express {
+  margin-bottom: 20px;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
@@ -3302,7 +3328,7 @@ table thead {
 .collat-wrap {
   width: 322px;
   background: #f2f2f2;
-  height: 442px;
+  min-height: 442px;
 	padding: 0 55px;
 }
 .collat-wrap .input-text {
@@ -3606,12 +3632,7 @@ z-index: 1!important;
 
 
 
-
-
 /*-------------confirm popup----------------*/
-
-
-
 
 #allureAlertBox #cancelConfirm
 {
@@ -3637,3 +3658,18 @@ z-index: 1!important;
 }
 
 /*alert end*/
+
+
+
+.custom-checkbox-two .checkmark:after {
+	left: 7px;
+	top: 0px;
+	width: 9px;
+	height: 17px;
+	border: solid rgba(41,41,41,.60);
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	background: transparent;
+}
