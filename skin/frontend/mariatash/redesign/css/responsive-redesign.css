@@ -476,6 +476,9 @@
   .col-right.sidebar{
     display: none;
   }
+  .cart-collaterals.fix-section{
+    padding-top: 0;
+  }
 }
 
 /*All ipads*/
@@ -1067,6 +1070,9 @@
   .overview-price-qty{
     margin-top: 0;
   }
+  #shopping-cart-table td.cart_col3 .price {
+    text-align: left !important;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
     display: grid;
@@ -1085,6 +1091,7 @@
   }
   #shopping-cart-table .price{
     font-size: 15px;
+    display: block;
   }
   .ad-to-fav, .w-remove{
     margin-top: 0;
@@ -1107,6 +1114,7 @@
   #shopping-cart-table td.cart_col2{
     width: 94%;
     display: block;
+    min-height: 120px;
   }
   #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5 {
     width: 28%;
