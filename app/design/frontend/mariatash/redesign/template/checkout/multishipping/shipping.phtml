@@ -70,8 +70,10 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                     <div class="gift-messages">
                                      	<p class="control">
                                      		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
-											<input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
-            								<label for="no_signature_delivery_<?= $_address->getId()?>"><?php echo $this->__('Require signature upon delivery.') ?></label>
+            								<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
+                                                <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox "  />
+                                                <span class="checkmark"></span>
+                                                <?php echo $this->__('Require signature upon delivery .') ?></label>
             							</p>
                                     </div>
                             	</div>

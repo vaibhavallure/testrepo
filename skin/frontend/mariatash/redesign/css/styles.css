@@ -7293,13 +7293,13 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 
 .checkout-multishipping-shipping #checkoutSteps .multiple-checkout .col2-set .gift-messages p.control label span
 {
-	font-size: 11px;
+	/*font-size: 11px;
 	line-height: 18px;
 	position: relative;
 	top: -3px;
 	left: 0;
 	padding: 0;
-	background: transparent;
+	background: transparent;*/
 }
 
 #shipping_method_form .products {
