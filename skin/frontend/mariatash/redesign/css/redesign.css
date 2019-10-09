@@ -86,7 +86,7 @@ h4{
 }
 
 .options-text,
-#checkout-review-table .cart_col3 span, #checkout-review-table .cart_col4 span #checkout-review-table .cart_col5 span{
+#checkout-review-table .cart_col3 span, #checkout-review-table .cart_col4 span #checkout-review-table .cart_col5 div span{
 	font-size: 18px;
 	font-family: urw-din-xlight;
 	color: rgba(41,41,41,0.90);
@@ -3258,6 +3258,15 @@ margin-top: 10%;
 }
 #checkout-review-table tbody td.cart_col1 {
   width: 50%;
+}
+.clear-both{
+	clear: both;
+}
+#checkout-shipping-method-load br {
+  display: none;
+}
+#shopping-cart-table .cart_col1 {
+  width: 14%;
 }
 /* cccc */
 /*MINI CART CSS*/

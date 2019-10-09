@@ -252,10 +252,14 @@
   .popup-right-section{
     padding: 0 30px 0 6px;
   }
-  .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main{
+  .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main,
+  .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main{
     flex: 0 0 100%;
     max-width: 100%;
   }
+  /* .checkout-onepage-index .main{
+    display: block;
+  } */
   .col-right.sidebar {
     display: none;
   }
@@ -268,6 +272,16 @@
   .checkout-multishipping-success .multiple-checkout, .checkout-onepage-success .multiple-checkout, .checkout-onepage-successorder .multiple-checkout{
     width: 90%;
   }
+  .checkout-onepage-index .for-space-to-bottom {
+    height: 120px !important;
+  }
+  .checkout-cart-index .for-space-to-bottom{
+    height: 110px !important;
+  }
+  /* .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main, .checkout-onepage-index .col-main{
+    flex: 0 0 100%;
+    max-width: 100%;
+  } */
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -409,12 +423,11 @@
     width: 14px;
     height: 20px;
     display: block;
-     float: right;
-     margin-right: 10px;
+    float: right;
+    margin-right: 10px;
     text-indent: -9000px;
     background-size: 100% 100%;
     position: relative;
-
     transform: rotate(180deg);
   }
   #tooltip-id-our-jewelry a.next-content-block-seo {
@@ -422,22 +435,19 @@
     width: 14px;
     height: 20px;
     display: block;
-     float: right;
-     margin-right: 10px;
+    float: right;
+    margin-right: 10px;
     text-indent: -9000px;
     background-size: 100% 100%;
     position: relative;
-margin-left: 10px;
+    margin-left: 10px;
   }
   #tooltip-id-our-jewelry #container{
     height: auto;
   }
-
   #total_item_counts_holder{
     display: none;
   }
-
-
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -702,8 +712,11 @@ margin-left: 10px;
     margin-top: 106px;
   }
   .common-redesign-checkout .for-space-to-bottom{
-    height: 142px;
+    height: 142px !important;
   }
+  /* .checkout-onepage-index .for-space-to-bottom {
+    height: 270px;
+  } */
 }
 
 /* ALl Mobiles */
@@ -991,6 +1004,10 @@ margin-left: 10px;
   }
   .popup-right-section{
     padding: 20px 40px 0 46px;
+  }
+  .input-type-one, .form-list input, .gift-message-section textarea, .select-type-two, .product-description-section select, .select-type-one, .country-section select,
+  .expiry-section, .v-fix {
+    width: 100%;
   }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
