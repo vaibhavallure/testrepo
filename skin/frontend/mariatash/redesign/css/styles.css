@@ -1041,7 +1041,7 @@ div.account-create div.fieldset ul.form-list li.fields {
 	clear: both;
 }
 
-.customer-account-edit label.required, .wishlist-index-share label.required,
+/* .customer-account-edit label.required, .wishlist-index-share label.required,
 .account-login label.required, .account-create label.required,
 .checkout-multishipping-address-editbilling label.required,
 .paypal-express-review label.required, #checkout-step-billing .form-list li label.required,
@@ -1053,7 +1053,7 @@ label.zip-label {
 	display: block;
 	float: left;
 	margin-left: 0px;
-}
+} */
 
 .account-create .control .input-box {
 	width: auto;
@@ -1371,8 +1371,8 @@ li#billing-new-address-form fieldset ul li.fields div.field label
 }
 
 .checkout-cart-index .input-box input.input-text.validate-postcode {
-	width: 130px !important;
-	float: left !important;
+	/*width: 130px !important;
+	float: left !important;*/
 }
 
 /*------------------------------------------*/
@@ -1701,7 +1701,7 @@ label.required em {
 
 
 .shipping .shipping-form .form-list li .input-box input {
-	width: 330px !important;
+	/*width: 330px !important;
 	float: right;
 	background: #dedede;
 	padding: 0 9px;
@@ -1716,7 +1716,7 @@ label.required em {
 	border-top-color: #9b9b9b;
 	border-right-color: #d5d5d5;
 	border-bottom-color: #d5d5d5;
-	border-left-color: #d5d5d5;
+	border-left-color: #d5d5d5;*/
 }
 
 .form-guest {
@@ -6787,10 +6787,10 @@ ul.crosssell-products-list {
 	list-style: square inside none;
 }
 
-#checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul
+/* #checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul
 {
 	text-align: left;
-}
+} */
 
 #checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul li.fields div.customer-name div.field div.input-box
 {
@@ -6814,7 +6814,7 @@ ul.crosssell-products-list {
 	resize: none;
 }
 
-div.wrapper div.page div.main-container div.main div.col-main ol#checkoutSteps.opc li#opc-billing.section div#checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul li.fields div.field div.input-box,
+/* div.wrapper div.page div.main-container div.main div.col-main ol#checkoutSteps.opc li#opc-billing.section div#checkout-step-billing.step form#co-billing-form fieldset ul.form-list li#billing-new-address-form fieldset ul li.fields div.field div.input-box,
 li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 .paypal-express-review div.input-box,
 .checkout-multishipping-address-newshipping div.input-box,
@@ -6822,7 +6822,7 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 .checkout-multishipping-address-editaddress div.input-box {
 	float: right !important;
 	clear: none;
-}
+} */
 
 .paypal-express-review input-box {
 	width: 350px;
@@ -6841,15 +6841,15 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	margin-top: 10px;
 }
 
-#billing-new-address-form li.fields, #shipping-new-address-form li.fields
+/* #billing-new-address-form li.fields, #shipping-new-address-form li.fields
 {
 	display: block;
 	margin: 0;
 	padding: 0;
 	width: 100%;
-}
+} */
 
-#billing-new-address-form .input-box input.input-text,
+/* #billing-new-address-form .input-box input.input-text,
 #shipping-new-address-form .input-box input.input-text {
 	width: 201px !important;
 	border-top: 1px solid #b2b2b2;
@@ -6857,7 +6857,7 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	border-left: 1px solid #e2e2e2;
 	border-right: 1px solid #d8d8d8;
 	height: 19px;
-}
+} */
 
 #billing-new-address-form .input-box input.input-text::-webkit-input-placeholder,
 #shipping-new-address-form .input-box input.input-text::-webkit-input-placeholder
@@ -6978,24 +6978,24 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	line-height: 20px;
 }
 
-#billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field,
+/* #billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field,
 .paypal-express-review li.fields .field, .paypal-express-review li.wide,
 .paypal-express-review li.add-field {
 	margin-bottom: 13px;
 	display: block;
-}
+} */
 
 .paypal-express-review li.fields {
 	display: block;
 }
 
-#billing-new-address-form li.fields label, #shipping-new-address-form li.fields label,
+/* #billing-new-address-form li.fields label, #shipping-new-address-form li.fields label,
 .paypal-express-review li.fields .field label, .paypal-express-review li.wide label,
 .paypal-express-review li.add-field label {
 	width: auto;
 	margin-left: 10px !important;
 	float: left;
-}
+} */
 
 #billing-new-address-form li.fields label {
 	margin-left: 0 !important;
@@ -7030,13 +7030,13 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	padding: 0;
 } */
 
-#opc-review .product-name {
+/* #opc-review .product-name {
 	font-weight: bold;
-}
+} */
 
-#opc-review .item-options {
+/* #opc-review .item-options {
 	margin: 5px 0 0;
-}
+} */
 
 /* #opc-review .buttons-set {
 	border: 1px solid #F2F2F2;

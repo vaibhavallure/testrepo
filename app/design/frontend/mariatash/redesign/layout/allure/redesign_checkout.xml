@@ -15,4 +15,17 @@
 	           </block>
         </block>
     </sales_email_order_items_multiorder>
+    
+    <checkout_multishipping_refreshtotals>
+        <block type="checkout/cart_totals" template="checkout/multishipping/totals.phtml" name="root" output="toHtml" >
+            <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
+        </block>
+    </checkout_multishipping_refreshtotals>
+    
+    <checkout_multishipping_billing>
+    	<reference name="checkout_billing">
+            <block type="giftcards/coupon" name="onepage.giftcard" as="onepagegiftcard" template="checkout/multishipping/coupon.phtml" />
+        </reference>
+    </checkout_multishipping_billing>
+    
 </layout>

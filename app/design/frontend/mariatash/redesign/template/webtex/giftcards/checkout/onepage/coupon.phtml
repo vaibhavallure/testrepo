@@ -28,7 +28,7 @@ $codeExists = ($quote->getCouponCode())
     <?php if(1==1): ?>
     <div class="discount-form giftcard-payment-method col-12">
         <form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
-            <div class="input-box col-4">
+            <div class="input-box col-lg-4 col-md-4 col-12">
                 <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-two">
             </div>
             <div class="buttons-set col">
@@ -60,7 +60,7 @@ $codeExists = ($quote->getCouponCode())
             <div class="discount-form col-12">
                 <!-- <label>Promo Code</label> -->
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-lg-4 col-md-4 col-12">
                     <input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
                   </div>
                   <div class="buttons-set col">

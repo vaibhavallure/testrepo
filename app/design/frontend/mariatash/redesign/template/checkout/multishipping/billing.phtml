@@ -43,6 +43,11 @@
                     <span class="number"><?php echo $cnt ?></span>
                     <h3><?= $_step->getLabel() ?></h3>
                 </div>
+                
+                <div id="giftcard-section">
+                <?= $this->getChildHtml("onepagegiftcard");?>
+                </div>
+                
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <script src="<?= Mage::getBaseUrl('js') ?>varien/payment.js" type="text/javascript"></script>

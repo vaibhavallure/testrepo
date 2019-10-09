@@ -37,26 +37,6 @@ iframe {
     margin-bottom: 25px;
 }
 
-#ordered-two-ship .shipment-title,#backordered-two-ship .shipment-title{
-	padding:10px;
-	border-top: 1px solid #ccc;
-}
-
-#ordered-two-ship .shipment-message .shipment-notice-sp .shipment-color,
-#backordered-two-ship .shipment-message .shipment-notice-sp .shipment-color{
-	color:red;
-}
-#ordered-two-ship .shipment-message .shipment-notice-sp,
-#backordered-two-ship .shipment-message .shipment-notice-sp{
-	padding-bottom:5px;
-	float:right;
-}
-
-
-#ordered-two-ship #checkout-review-table-wrapper{
-	/*margin-bottom:20px;*/
-}
-
 #checkout-review-table tbody tr{
 	background:none;
 }
@@ -79,9 +59,9 @@ iframe {
 	background-color: #d1d1d1;
 }
 
-.checkout-two-shipment-shipping-method-mt p{
+/* .checkout-two-shipment-shipping-method-mt p{
 	padding-top:10px;
-}
+} */
 
 .mt-shipping-methods.mt-gift-card-present{
 	width: 100% ! important;
@@ -144,7 +124,7 @@ iframe {
 	width: 100%;
 }
 
-.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
+/* .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
 #shipping-new-address-form .input-box input.input-text,
 .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form select{
     width: 99% !important;
@@ -155,7 +135,7 @@ iframe {
     height: 19px;
     padding: 0px;
     margin-bottom: 10px;
-}
+} */
 
  #mt-credit-card-info li #authnetcim_cc_type,#mt-credit-card-info li #authnetcim_cc_number
 {

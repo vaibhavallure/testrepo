@@ -7,12 +7,16 @@
     <div class="shipment-delivery-method">
     	<ul class="form-list">
     		<li class="control shipment-one" style="padding: 10px 0px 10px 10px;width: 100%;">
-    			<input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]" checked="checked"  class="radio shipment-one" onclick="switchMethod(this);" />
-    			<label class="para-normal">In one shipment - Ship all the items together once all items are available.</label>
+    			<label class="para-normal custom-radio">
+            <input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]" checked="checked"  class="radio shipment-one" onclick="switchMethod(this);" />
+            <span class="radiomark"></span>
+            In one shipment - Ship all the items together once all items are available.</label>
     		</li>
     		<li class="control" style="padding: 10px 0px 10px 10px;width: 100%;">
-    			<input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" class="radio" onclick="switchMethod(this);" />
-    			<label class="para-normal">In two shipments - Ship what is available today, then ship remaining item(s) once all are available. (Two shipping charges will be applied)</label>
+    			<label class="para-normal custom-radio">
+            <input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" class="radio" onclick="switchMethod(this);" />
+            <span class="radiomark"></span>
+            In two shipments - Ship what is available today, then ship remaining item(s) once all are available. (Two shipping charges will be applied)</label>
     		</li>
     	</ul>
     </div>
