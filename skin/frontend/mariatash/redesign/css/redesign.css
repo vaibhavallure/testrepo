@@ -3268,6 +3268,9 @@ margin-top: 10%;
 #shopping-cart-table .cart_col1 {
   width: 14%;
 }
+.ad-to-fav, .w-remove {
+  margin-top: 13px;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
