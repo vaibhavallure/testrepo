@@ -24,7 +24,7 @@
     
     <checkout_multishipping_billing>
     	<reference name="checkout_billing">
-            <block type="giftcards/coupon" name="onepage.giftcard" as="onepagegiftcard" template="webtex/giftcards/checkout/onepage/coupon.phtml" />
+            <block type="giftcards/coupon" name="onepage.giftcard" as="onepagegiftcard" template="checkout/multishipping/coupon.phtml" />
         </reference>
     </checkout_multishipping_billing>
     
