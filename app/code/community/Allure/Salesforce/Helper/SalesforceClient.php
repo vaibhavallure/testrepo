@@ -359,6 +359,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $salesforceAccountId = Mage::helper('allure_salesforce')->getGuestAccount();
         if ($customerId) {
             $customer = Mage::getModel("customer/customer")->load($customerId);
+            $fullName = "{$customer->getData('firstname')} {$customer->getData('lastname')}" ;
             $salesforceAccountId = $customer->getSalesforceCustomerId();
             if (!$salesforceAccountId && $create) {
                 //$guestAccount = Mage::helper('allure_salesforce')->getGuestAccount();
@@ -594,7 +595,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
         $oldStoreArr[0] = "Admin";
 
-        $formattedEmail = $emailFormatterHelper->startMailFormating($customerEmail,null,null);
+        $formattedEmail = $emailFormatterHelper->startMailFormating($customerEmail,$fullName,null);
 
         $request= array(
             "attributes" => array("type" => "Order", "referenceId" => "orders-" . $order->getData("entity_id")),
