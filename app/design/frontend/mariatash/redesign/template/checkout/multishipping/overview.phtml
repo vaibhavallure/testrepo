@@ -49,7 +49,7 @@
                         	<?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
                             	<?php if ($_item->getQuoteItem()) :?>
                             	<div class="row">
-                            		<div class="col-2">
+                            		<div class="col-lg-2 col-md-2 col-4">
                                 		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
                                 		<?php
                                 		if ($option = $_item->getOptionByCode('simple_product')) {
@@ -60,7 +60,7 @@
                                      		<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
                                  		</p>
                                 	</div>
-                                	<div class="col-10">
+                                	<div class="col-lg-10 col-md-10 col-12">
                                 		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
 
                                 		<div class="box"></div>

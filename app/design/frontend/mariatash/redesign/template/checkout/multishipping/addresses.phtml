@@ -52,8 +52,10 @@
                     	<div class="col2-set">
                         	<div class="gift-messages">
                             	<p class="control">
-                                	<input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
-                                   	<label for="shipping-to-more-than-one"><span class="para-normal">Shipping to more than one address?</span></label>
+                                   	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
+                                      <input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
+                                      <span class="checkmark"></span>Shipping to more than one address?
+                                    </label>
                                	</p>
                            	</div>
                         </div>
@@ -70,7 +72,7 @@
                             <?php if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
     							<div class="col-12 product-description-section">
     								<div class="row">
-                            			<div class="col-2">
+                            			<div class="col-lg-2 col-md-2 col-4 multi-column-1">
                                     		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
                                     		<?php
                                         		if ($option = $_item->getOptionByCode('simple_product')) {
@@ -81,7 +83,7 @@
                                      			<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
                                  			</p>
                             			</div>
-                                		<div class="col-6">
+                                		<div class="col-lg-6 col-md-6 col-12 multi-column-2">
                                     		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
                                     		<div class="item-options">
                                     			<input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
@@ -100,14 +102,18 @@
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">
-                                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
-                                                        <label for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">This item is a gift (price will be hidden in the receipt).</span></label>
+                                                        <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
+                                                            <span class="checkmark"></span>
+                                                            <span class="para-normal">This item is a gift (price will be hidden in the receipt).</span></label>
                                                    </p>
                                                 </div>
                                                 <div class="gift-messages">
                                                  	<p class="control">
-                                                   		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
-                                                        <label for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
+                                                        <label class="custom-checkbox custom-checkbox-two" for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                                                <span class="checkmark"></span>
+                                                            <span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
                                                    </p>
                                                 </div>
                                                 <?php if(!empty($message)): ?>
@@ -115,15 +121,17 @@
                                                     <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
                                                     <div class="gift-messages">
                                                      	<p class="control">
-                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
-                                                            <label for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Is backorder item ship separately.</span></label>
+
+                                                            <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                              <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
+                                                              <span class="checkmark"></span>Is backorder item ship separately.</label>
                                                        </p>
                                                     </div>
                                                     <?php endif;?>
                                                 <?php endif;?>
                                             </div>
                                 		</div>
-                                    	<div class="col-4 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
+                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
                                     		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
                                     	</div>
     								</div>

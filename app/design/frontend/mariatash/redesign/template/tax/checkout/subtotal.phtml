@@ -51,7 +51,7 @@
 </tr> -->
 <tr>
     <td class="cart-subtotals-left" colspan="<?php echo $this->getColspan(); ?>">
-        <?php echo '<span class="subtotal">'.$this->__('Subtotal').'</span>'.'<span class="merchandise">'.$this->__('Merchandise').'</span>'?>
+        <?php echo '<span class="subtotal">'.$this->__('Subtotal').'</span>'?>
     </td>
     <td class="cart-subtotals-right">
         <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>

@@ -99,12 +99,12 @@ if(!is_null($parentId)){
         </div>
 
     </td>
-    <td  class="cart_col3" data-th="Price">
+    <td  class="cart_col3 text-right" data-th="Price">
         <?php echo "<span class='price_multi'>Price</span> ".$this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>
     <td class="cart_col4" data-th="Quantity">
         <div class="minus_icon minus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-            <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus quantity-count" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">-</span>
+            <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus para-bold" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">-</span>
         </div>
         <div class="qty-wrap total_qty col-1">
           <span class="quantity-count" id="qtyid_<?php echo $_item->getId() ?>_span"><?php echo $this->getQty() ?></span>
@@ -112,7 +112,7 @@ if(!is_null($parentId)){
             <input type="hidden" value="<?php echo $this->getQty() ?>"/>
         </div>
         <div class="plus_icon plus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-            <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus quantity-count" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">+</span>
+            <span onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus para-bold" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button">+</span>
         </div>
     </td>
     <td  class="cart_col5 text-right" data-th="Subtotal">
@@ -236,7 +236,7 @@ if(!is_null($parentId)){
             <label for="is_gift_<?= $_item->getId() ?>" class="custom-checkbox custom-checkbox-two">
                 <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
                 <span class="checkmark"></span>
-                <p class="para-norm">This item is a gift.</p>
+                <p class="para-normal">This item is a gift.</p>
             </label>
 
 

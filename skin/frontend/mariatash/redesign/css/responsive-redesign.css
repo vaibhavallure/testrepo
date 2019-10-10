@@ -257,12 +257,6 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
-  /* .checkout-onepage-index .main{
-    display: block;
-  } */
-  .col-right.sidebar {
-    display: none;
-  }
   .breadcrumbs{
     margin-top: 30px;
   }
@@ -275,7 +269,12 @@
   .checkout-onepage-index .for-space-to-bottom {
     height: 120px !important;
   }
-  .checkout-cart-index .for-space-to-bottom{
+  .checkout-cart-index .for-space-to-bottom,
+  .checkout-multishipping-addresses .for-space-to-bottom,
+  .checkout-multishipping-shipping .for-space-to-bottom,
+  .checkout-multishipping-delivery .for-space-to-bottom,
+  .checkout-multishipping-billing .for-space-to-bottom,
+  .checkout-multishipping-overview .for-space-to-bottom{
     height: 110px !important;
   }
   /* .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main, .checkout-onepage-index .col-main{
@@ -448,6 +447,17 @@
   #total_item_counts_holder{
     display: none;
   }
+  .login-dropdown {
+    position: absolute;
+    width: 137px;
+    right: 0px;
+    top: 22px;
+    padding-top: 18px;
+    line-height: 25px;
+  }
+  body.cms-index-index.cms-home .login-dropdown{
+    right: -40px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -473,6 +483,12 @@
   }
   .swatches {
     padding: 9px 3px 0 0px;
+  }
+  .col-right.sidebar{
+    display: none;
+  }
+  .cart-collaterals.fix-section{
+    padding-top: 0;
   }
 }
 
@@ -598,7 +614,7 @@
   }
   .filterButton:before{
     left: 19px !important;
-    }
+  }
   .category-products {
     margin-top: 0px;
   }
@@ -624,6 +640,9 @@
   }
   .categorypath-jewelry-ear-cartilage-jewelry-html .catalog-product-name-display {
     padding-left: 0;
+  }
+  #checkoutSteps {
+    padding: 0;
   }
 }
 
@@ -713,6 +732,29 @@
   }
   .common-redesign-checkout .for-space-to-bottom{
     height: 142px !important;
+  }
+  .checkout-cart-index .for-space-to-bottom,
+  .checkout-multishipping-addresses .for-space-to-bottom,
+  .checkout-multishipping-shipping .for-space-to-bottom,
+  .checkout-multishipping-delivery .for-space-to-bottom,
+  .checkout-multishipping-billing .for-space-to-bottom,
+  .checkout-multishipping-overview .for-space-to-bottom {
+    height: 265px !important;
+  }
+  .checkout-multishipping-addresses .col-main,
+  .checkout-multishipping-shipping .col-main,
+  .checkout-multishipping-delivery .col-main,
+  .checkout-multishipping-billing .col-main,
+  .checkout-multishipping-overview .col-main,
+  .checkout-onepage-index .col-main{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  #checkoutSteps{
+    padding: 0 100px;
+  }
+  .address-method-common .select-type-one{
+    width: 100%;
   }
   /* .checkout-onepage-index .for-space-to-bottom {
     height: 270px;
@@ -853,6 +895,21 @@
   }
   .cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
+  }
+  .cart-collaterals.fix-section{
+    margin-top: 40px;
+  }
+  .multi-column-1{
+    order: 1;
+  }
+  .multi-column-2{
+    order: 3;
+  }
+  .multi-column-3{
+    order: 2;
+  }
+  .product-description-section select{
+    width: 100%;
   }
 }
 
@@ -1006,8 +1063,26 @@
     padding: 20px 40px 0 46px;
   }
   .input-type-one, .form-list input, .gift-message-section textarea, .select-type-two, .product-description-section select, .select-type-one, .country-section select,
-  .expiry-section, .v-fix {
-    width: 100%;
+  .expiry-section, .v-fix, .new_address .input-box {
+    width: 100% !important;
+  }
+  .dark-button, .next-button {
+    width: 100% !important;
+  }
+  .multiple-checkout.shipping-method-parent .next-button {
+    margin-top: 10px;
+  }
+  .coupons .discount {
+    margin-bottom: 15px;
+  }
+  .coupons { /*Css is for Payment section of multi checkout*/
+    padding: 0;
+  }
+  .overview-price-qty{
+    margin-top: 0;
+  }
+  #shopping-cart-table td.cart_col3 .price {
+    text-align: left !important;
   }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
@@ -1018,12 +1093,22 @@
   }
   #shopping-cart-table tbody td:before {
     content: attr(data-th);
-    font-size: 13px;
+    font-size: 12px;
     font-family: urw-din-bold;
     color: rgba(41,41,41,0.6);
     text-transform: uppercase;
     letter-spacing: 1.08px;
     line-height: 0px;
+  }
+  #shopping-cart-table .price{
+    font-size: 15px;
+    display: block;
+  }
+  .ad-to-fav, .w-remove{
+    margin-top: 0;
+  }
+  #shopping-cart-table tr.messages-tr {
+    margin-top: 20px;
   }
   .data-table.cart-table .gift-messages, .gift-row td:nth-child(2){
     width: 100%;
@@ -1040,37 +1125,61 @@
   #shopping-cart-table td.cart_col2{
     width: 94%;
     display: block;
+    min-height: 120px;
   }
   #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5 {
     width: 28%;
     display: block;
     float: left;
     margin-right: 5.33%;
-    line-height: 40px;
+    line-height: 30px;
+    margin-top: 20px;
   }
   .minus_icon.minus_qty, .qty-wrap.total_qty {
     max-width: 33.33%;
     float: left;
     flex: 0 0 33.33%;
   }
-  #shopping-cart-table td.cart_col4{
+  #shopping-cart-table .cart_col3 {
+    text-align: left !important;
+  }
+  #shopping-cart-table .cart_col4{
     text-align: center;
   }
   .messages-tr .product-name a{
-    font-size: 20px;
+    font-size: 15px;
   }
   .data-table.cart-table td{
-    margin-top: 20px;
+    margin-top: 18px;
+  }
+  .messages-tr .product-name{
+    margin-top: 18px;
+    margin-bottom: 9px;
   }
   .messages-tr .plus_icon, .messages-tr .minus_icon{
     display: block;
   }
   .checkout-list-title{
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   }
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
+  }
+  #multiaddress-new-address .container{
+    padding: 0 10px;
+  }
+  .promoDiv {
+    padding: 0 15px;
+  }
+  .coupons .discount {
+    margin-bottom: 0;
+  }
+  .gift-message-section {
+    margin-bottom: 30px;
+  }
+  .to-from-section input {
+    width: 100%;
   }
 }
 
@@ -1129,7 +1238,6 @@
   }
   .cart-collaterals.fix-section{
     background: #f2f2f2;
-    margin-top: 30px;
   }
   .collat-wrap{
     margin: 0 auto;
@@ -1139,6 +1247,12 @@
   }
   .cartilage-section .prev {
     left: 1.7%;
+  }
+  .address-method-common {
+    margin-bottom: 25px;
+  }
+  .place-order .grand-total{
+    padding-left: 140px;
   }
 }
 

@@ -56,7 +56,7 @@ h4{
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
-.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt{
+.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -351,7 +351,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-price, .overview-dark-price span, .grand-total span{
+.medium-price, .overview-dark-price span, .overview-grand span{
 	font-family: urw-din-medium !important;
 	font-size: 18px !important;
 }
@@ -490,12 +490,21 @@ input, select, textarea{
   margin-top: 3px;
 }
 
+.login-dropdown li {
+	background: white;
+	text-align: center;
+	padding: 2px 0px;
+	width: 100px;
+}
 .login-dropdown li a {
-  color: #fff;
+  color: #292929;
+}
+.login-dropdown ul{
+	padding: 0px;
 }
 
 .login-dropdown li a:hover {
-  color: #fff;
+  color: #292929;
 }
 
 .icon-user:hover .login-dropdown,.login-dropdown:hover .login-dropdown {
@@ -513,10 +522,13 @@ input, select, textarea{
 .login-dropdown {
   position: absolute;
   width: 137px;
-  right: -56px;
-  top: 20px;
+  right: -22px;
+  top: 22px;
 	padding-top: 10px;
   line-height: 25px;
+}
+body.cms-index-index.cms-home .login-dropdown{
+	right: -40px;
 }
 
 #narrow-by-list li div dt{
@@ -2660,7 +2672,10 @@ ul.tabs li:nth-child(3){
   cursor: pointer;
   font-weight: bold;
 }
-
+.minus_qty span, .plus_qty span{
+	-webkit-appearance: none;
+	font-size: 18px;
+}
 .containerVideo iframe{
 	display: block;
 	margin: auto;
@@ -3097,6 +3112,7 @@ margin-top: 10%;
 }
 #reload_payment .sp-methods dt label{
 	margin-bottom: 23px;
+	margin-top: 23px;
 }
 #reload_payment .form-list .input-box {
   margin-bottom: 24px;
@@ -3151,9 +3167,15 @@ margin-top: 10%;
   margin-bottom: 12px;
 }
 .overview-product {
-  border-bottom: 1px solid #d8d8d8;
   padding-bottom: 11px;
   margin-bottom: 19px;
+}
+.overview-product > .row {
+  border-bottom: 1px solid #d8d8d8;
+	margin-top: 30px;
+}
+.overview-product > .row:first-child {
+  margin-top: 0;
 }
 .overview-price-qty{
 	line-height: 10px;
@@ -3163,7 +3185,7 @@ margin-top: 10%;
   margin-top: 23px;
 }
 #review-buttons-container {
-  margin-top: 42px;
+  margin-top: 25px;
 }
 .billing-address.billing-address-selection {
   margin-top: 22px;
@@ -3267,6 +3289,19 @@ margin-top: 10%;
 }
 #shopping-cart-table .cart_col1 {
   width: 14%;
+}
+.ad-to-fav, .w-remove {
+  margin-top: 13px;
+}
+.overview-common-prices, .overview-grand {
+  text-align: left;
+	margin-bottom: 19px;
+}
+.cart-collaterals.fix-section{
+	padding-top: 110px;
+}
+.multi-column-2 .gift-messages:last-child {
+  margin-top: 24px;
 }
 /* cccc */
 /*MINI CART CSS*/
@@ -3681,19 +3716,30 @@ z-index: 1!important;
 
 
 .custom-checkbox-two .checkmark:after {
-	left: 7px;
-	top: 0px;
+	left: 6.5px;
+	top: -1px;
 	width: 9px;
 	height: 17px;
 	border: solid rgba(41,41,41,.60);
-	border-width: 0 3px 3px 0;
+	border-width: 0 2px 2px 0;
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
-	transform: rotate(45deg);
+	transform: rotate(38deg);
 	background: transparent;
 }
 
 
 div#uniform-shipping-address-select>span{
 	display: none;
+}
+
+.checkout-sidebar-bottom{
+	padding-top:47px;
+	width: 322px;
+	height: 338px;
+	margin: 0 auto;
+}
+.checkout-sidebar-bottom .links .info-text-three{
+	border-bottom: 1px solid #D8D8D8;
+	padding: 11px 0px;
 }
