@@ -1144,7 +1144,7 @@
 }
 @media(max-width: 1024px){
 	#shop_our_instagram{
-		margin-top: 170px;
+		margin-top: 134px;
 	}
 	#fs-instagram-view-container .fs-overlink-text.fs-overlink-text-right{
 		display: none!important;
@@ -1256,6 +1256,11 @@
 	.category-shop-our-instagram .fs-timeline-detail .quick_link{
 		margin-left: 44px;
 	}
+}
+@media(max-width: 768px){
+	#shop_our_instagram {
+    margin-top: 22px;
+}
 }
 @media(max-width: 767px){
 	
