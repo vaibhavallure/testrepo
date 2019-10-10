@@ -14,7 +14,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $customerSession = $this->getCustomerSession();
         if (is_array($checkout->getStepData())) {
             foreach ($checkout->getStepData() as $step => $data) {
-                if (! ($step === 'login' || $customerSession->isLoggedIn() && $step === 'billing')) {
+                if (! ($step === 'login' || $customerSession->isLoggedIn() && $step === 'shipping')) {
                     $checkout->setStepData($step, 'allow', false);
                 }
             }

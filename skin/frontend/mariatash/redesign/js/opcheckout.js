@@ -125,7 +125,7 @@ Checkout.prototype = {
                 {method: 'post', onFailure: this.ajaxFailure.bind(this), parameters: {method:'guest'}}
             );
             Element.hide('register-customer-password');
-            this.gotoSection('billing');
+            this.gotoSection('shipping');
         }
         else if($('login:register') && ($('login:register').checked || $('login:register').type == 'hidden')) {
             this.method = 'register';
@@ -134,7 +134,7 @@ Checkout.prototype = {
                 {method: 'post', onFailure: this.ajaxFailure.bind(this), parameters: {method:'register'}}
             );
             Element.show('register-customer-password');
-            this.gotoSection('billing');
+            this.gotoSection('shipping');
         }
         else{
             alert(Translator.translate('Please choose to register or to checkout as a guest').stripTags());
@@ -149,7 +149,7 @@ Checkout.prototype = {
             shipping.syncWithBilling();
             $('opc-shipping').addClassName('allow');
           //  this.gotoSection('shipping_method');
-            this.gotoSection('delivery_option');
+            this.gotoSection('shipping_method');
         } else if (($('billing:use_for_shipping_no')) && ($('billing:use_for_shipping_no').checked)) {
             $('shipping:same_as_billing').checked = false;
             this.gotoSection('shipping');
@@ -500,6 +500,51 @@ Shipping.prototype = {
             selectElement.value='';
         }
     },
+    
+    newBillingAddress: function(isNew){
+        if($('billing-address-select') != undefined && $('billing-address-select').value != '' && $('shipping-address-select').value == $('billing-address-select').value) {
+        	$('shipping:same_as_billing').checked = true;
+        }
+        if (isNew) {
+            this.resetSelectedBillingAddress();   
+            Element.show('billing-new-address-form');
+            //Element.show('li_save_in_address_book');
+            var fields = ['billing:firstname','billing:lastname','billing:company','billing:email','billing:country_id','billing:region_id','billing:street1','billing:street2','billing:city','billing:postcode','billing:telephone','billing:fax'];
+            for(i=0; i<fields.length; i++){                
+                if($(fields[i])){
+                    if($('billing-address-select') != undefined) {
+                        $(fields[i]).value = '';
+                    }
+
+                }
+            }
+            if ($('billing:country_id') && $('billing:postcode')) {
+                if ($('billing:country_id').value != 'US' && $('billing:country_id').value != '') {
+                    $('billing:postcode').removeClassName('validate-zip-international');
+                } else {
+                    $('billing:postcode').addClassName('validate-zip-international');
+                }
+            }
+        } else {
+            Element.hide('billing-new-address-form');
+            //Element.hide('li_save_in_address_book');
+        }
+        if($('billing-address-select') != undefined && $('shipping-address-select').value != $('billing-address-select').value) {
+            shipping.setSameAsShipping(false);
+            //$('shipping:same_as_billing').disabled = false;
+            $('shipping:same_as_billing').checked = false;
+            Mage.Cookies.set('click_same_as_billing',0);
+        }
+
+        initializeItelTelInput()
+    },
+    
+    resetSelectedBillingAddress: function(){
+        var selectElement = $('billing-address-select')
+        if (selectElement) {
+            selectElement.value='';
+        }
+    },
 
     fillForm: function(transport){
         var elementValues = {};
@@ -568,9 +613,57 @@ Shipping.prototype = {
             $('shipping-address-select').value = $('billing-address-select').value;
         }
     },
+    
+    setSameAsShipping: function(flag) {
+        //$('billing:same_as_billing').checked = flag;
+        console.log("flag = "+flag);
+    	if (flag) {
+    		Element.hide('fieldset-billing');
+            this.syncWithShipping();
+        }else{
+        	Element.show('fieldset-billing');
+        	return;
+        }
+    	
+        if ($('billing:country_id') && $('billing:postcode')) {
+            if ($('billing:country_id').value != '' && $('billing:country_id').value != 'US') {
+                $('billing:postcode').removeClassName('validate-zip-international');
+            } else {
+                $('billing:postcode').addClassName('validate-zip-international');
+            }
+        }
+        if ($('billing:postcode').next())
+            $('billing:postcode').next().remove(); // remove previous shipping post code validation advice if existed
+    },
+    
+    syncWithShipping: function () {
+        $('shipping-address-select') && this.newAddress(!$('shipping-address-select').value);
+        //$('shipping:same_as_billing').checked = true;
+        if (!$('shipping-address-select') || !$('shipping-address-select').value) {
+            arrElements = Form.getElements(this.form);
+            for (var elemIndex in arrElements) {
+                if (arrElements[elemIndex].id) {
+                    var sourceField = $(arrElements[elemIndex].id.replace(/^billing:/, 'shipping:'));
+                    if (sourceField){
+                        arrElements[elemIndex].value = sourceField.value;
+                    }
+                }
+            }
+            //$('shipping:country_id').value = $('billing:country_id').value;
+            billingRegionUpdater.update();
+            $('billing:email').value = $('shipping:email_shipping').value;
+            $('billing:region_id').value = $('shipping:region_id').value;
+            $('billing:region').value = $('shipping:region').value;
+            //shippingForm.elementChildLoad($('shipping:country_id'), this.setRegionValue.bind(this));
+
+        } else {
+        	$('billing-address-select').value = $('shipping-address-select').value;
+        }
+    },
 
     setRegionValue: function(){
-        $('shipping:region').value = $('billing:region').value;
+        //$('shipping:region').value = $('billing:region').value;
+    	$('billing:region').value = $('shipping:region').value;
     },
 
     save: function(){
