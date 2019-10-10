@@ -167,7 +167,10 @@
                     <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
                     <div class="buttons-set text-right">
                         <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shopping Cart') ?></a></p>
-                        <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue to Shipping Information')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next');//('Continue to Shipping Information') ?></span></span></button>
+                        <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue to Shipping Information')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next'); ?></span></span></button>
+                        <span id="multiaddress-please-wait" class="please-wait" style="display: none;">
+            				<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...        
+            			</span>
                     </div>
                 </div>
                 <?php echo $this->getBlockHtml("formkey") ?>
@@ -195,7 +198,17 @@
     Allure.baseUrl = '<?= $this->getBaseUrl() ?>';
 </script>
 <script type="text/javascript">
+	var addressesForm = new VarienForm('checkout_multishipping_form',true);
+	
 	jQuery(document).ready(function(){
+
+		jQuery('#checkout_multishipping_form button[type="submit"]').on('click',function(){
+			if(addressesForm.validator.validate()) {
+				jQuery(this).hide();
+				jQuery('#multiaddress-please-wait').show();
+			}
+		});
+						
 		jQuery('.multi-address-select-address-option select').append('<option value="">New Address</option>');
 
 		jQuery('.multi-address-select-address-option select').on('change',function(){
