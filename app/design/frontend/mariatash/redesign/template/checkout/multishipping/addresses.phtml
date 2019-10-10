@@ -53,20 +53,38 @@
                         	<div class="gift-messages">
                             	<p class="control">
                                    	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
-                                      <input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
+                                      <input type="checkbox" id="shipping-to-more-than-one" value="0" class="checkbox">
                                       <span class="checkmark"></span>Shipping to more than one address?
                                     </label>
                                	</p>
                            	</div>
                         </div>
-                        <!-- <button data-action="add-new-customer-address" type="button" title="<//?php echo Mage::helper('core')->quoteEscape($this->__('Add New Address')) ?>" class="button light-button" onclick="$('add_new_address_flag').value=1; $('checkout_multishipping_form').submit();"><span><span><//?php echo $this->__('Add New Address') ?></span></span></button> -->
+                        
+                        <div class="billing-address billing-address-selection select col-12">
+        					<div class="row">
+        						<div class="col-12 p-0">
+                        			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
+        						</div>
+                        		<?= $this->getChildHtml("checkout_address_select");?>
+                        	</div>
+        				</div>
+        				
+        				<div id="single-shipping-address" class="select col-12 single-shipping-address">
+        					<div class="row">
+        						<div class="col-12 p-0">
+                        			<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
+        						</div>
+                        		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
+                        	</div>
+        				</div>
+                        
                     </div>
                     <input type="hidden" name="continue" value="0" id="can_continue_flag" />
                     <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
                     <div class="data-table col-12" id="multiship-addresses-table">
                         <div class="row">
     						<div class="">
-    						<?php $product = null; $stockItem = null;?>
+    						<?php $_coreHelper = $this->helper('core');?>
                         	<?php foreach ($this->getItems() as $_index => $_item): ?>
                             <?php if ($_item->getQuoteItem()) :?>
                             <?php if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
@@ -93,7 +111,7 @@
                 							<div class="box">
                                             	<div class="box-content">
                                                 	<div class="item-msg">
-                                                    	<p><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                                    	<p><span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?></p>
                                                     </div>
                                                 </div>
                                              </div>
@@ -103,17 +121,21 @@
                                                 <div class="gift-messages">
                                                  	<p class="control">
                                                         <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>>
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" 
+                                                            	value="1" class="checkbox gift-item-checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>
+                                                            	data-gift_wrap_id="<?= $_index."-".$_item->getQuoteItemId()?>">
                                                             <span class="checkmark"></span>
-                                                            <span class="para-normal">This item is a gift (price will be hidden in the receipt).</span></label>
+                                                            <span class="para-normal"><?= $this->__('This item is a gift (price will be hidden in the receipt).')?></span>
+                                                  		</label>
                                                    </p>
                                                 </div>
-                                                <div class="gift-messages">
+                                                <div id="gift-wrap-<?= $_index."-".$_item->getQuoteItemId()?>" class="gift-messages <?= (!$_item->getIsGiftItem()) ? "d-none":"" ?>">
                                                  	<p class="control">
                                                         <label class="custom-checkbox custom-checkbox-two" for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>">
                                                             <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
-                                                                <span class="checkmark"></span>
-                                                            <span class="para-normal">Add gift wrap to this item (<?= ($_productGiftWrap) ? $this->helper('checkout')->formatPrice($_productGiftWrap->getPrice()) : '' ?>).</span></label>
+                                                            <span class="checkmark"></span>
+                                                            <span class="para-normal"><?= $this->__('Add gift wrap to this item')?> (<?= ($_productGiftWrap) ? $_coreHelper->currency($_productGiftWrap->getPrice()) : '' ?>).</span>
+                                                   		</label>
                                                    </p>
                                                 </div>
                                                 <?php if(!empty($message)): ?>
@@ -121,17 +143,17 @@
                                                     <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
                                                     <div class="gift-messages">
                                                      	<p class="control">
-
                                                             <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
                                                               <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
-                                                              <span class="checkmark"></span>Is backorder item ship separately.</label>
+                                                              <span class="checkmark"></span><?= $this->__('Is backorder item ship separately.')?>
+                                                       		</label>
                                                        </p>
                                                     </div>
                                                     <?php endif;?>
                                                 <?php endif;?>
                                             </div>
                                 		</div>
-                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
+                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option multishipping-address-common visible-none" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
                                     		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
                                     	</div>
     								</div>
@@ -141,14 +163,7 @@
     						</div>
     					</div>
                     </div>
-                    <div class="billing-address billing-address-selection select col-12">
-    					<div class="row">
-    						<div class="col-12 p-0">
-                    			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
-    						</div>
-                    		<?= $this->getChildHtml("checkout_address_select");?>
-                    	</div>
-    				</div>
+                    
                     <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
                     <div class="buttons-set text-right">
                         <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shopping Cart') ?></a></p>
@@ -188,9 +203,27 @@
 		});
 
 		jQuery('#shipping-to-more-than-one').on('change',function(){
-			if(! jQuery(this).is(":checked")){
-				window.location.href = Allure.baseUrl+'checkout/onepage/';
+			if(jQuery(this).is(":checked")){
+				jQuery('#single-shipping-address').addClass('d-none');
+				jQuery('.multishipping-address-common').removeClass('visible-none');
+			}else{
+				jQuery('#single-shipping-address').removeClass('d-none');
+				jQuery('.multishipping-address-common').addClass('visible-none');
 			}
+		});
+
+		jQuery('.gift-item-checkbox').on('change',function(){
+			var giftWrapId = jQuery(this).data("gift_wrap_id");
+			if(jQuery(this).is(":checked")){
+				jQuery('#gift-wrap-'+giftWrapId).removeClass('d-none');
+			}else{
+				jQuery('#gift-wrap-'+giftWrapId).addClass('d-none');
+			}
+		});
+
+		jQuery('#single-shipping-address select').on('change',function(){
+			var addressId = jQuery(this).val();
+			jQuery('.multishipping-address-common select').val(addressId);
 		});
 
 		jQuery('#customer-address-form-validate .back-link a').on('click',function(){
