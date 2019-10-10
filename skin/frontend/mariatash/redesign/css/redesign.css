@@ -1466,6 +1466,7 @@ input[type="checkbox"]:checked+label:before {
   font-size: 11px;
   letter-spacing: 1px;
   font-family: urw-din-light;
+	cursor: pointer;
 }
 .select-currency img {
 	margin: 0 0 5px 3px;
@@ -2157,6 +2158,9 @@ span#popup_loader_register {
 }
 .product-view .product-shop .padder h1, .product-view .product-shop .product-options .required, .product-view .product-shop .short-description, .block-layered-nav p.block-subtitle {
   display: none;
+}
+.custom-checkbox .checkbox-error-validate + .checkmark{
+	border:2px solid #830000;
 }
 /* .checkout-privacy-policy input:checked+label { May be useful for the future
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
