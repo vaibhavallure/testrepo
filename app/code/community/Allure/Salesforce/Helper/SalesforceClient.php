@@ -114,7 +114,10 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         return  $url;
     }
     
-    
+    public function getEmailFormatterHelper() {
+        return Mage::helper('allure_salesforce/emailFormatter');
+    }
+
     /**
      * generate new access token 
      * @return array
@@ -700,6 +703,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     public function getCustomerRequestData($customer,$create,$isFromEvent)
     {
         $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+        $emailFormatterHelper = $this->getEmailFormatterHelper();
         $oldStoreArr = array();
 
         foreach ($ostores as $storeO) {
@@ -708,19 +712,20 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $oldStoreArr[0] = "Admin";
 
         if ($customer) {
-            $customer = Mage::getModel('customer/customer')->load($customer->getId());
-            $this->salesforceLog("Customer {$customer->getId()}");
+            $customerId = $customer->getId();
+            $customer = Mage::getModel('customer/customer')->load($customerId);
+            $this->salesforceLog("Customer {$customerId}");
 
             $salesforceId = $customer->getSalesforceCustomerId();
             $salesforceContactId = $customer->getSalesforceContactId();
 
             if($create && (!empty($salesforceId) && !empty($salesforceContactId))){
-                $this->salesforceLog("Tried to create Customer and Contact - ".$customer->getId().". But Customer and Contact already Present in SF -".$salesforceId);
+                $this->salesforceLog("Tried to create Customer and Contact - ".$customerId.". But Customer and Contact already Present in SF -".$salesforceId);
                 return;
             }
 
             if(!$create && (empty($salesforceId) || empty($salesforceContactId))) {
-                $this->salesforceLog("Tried to update Customer or Contact - ".$customer->getId().". But Customer or Contact not Present in SF -".$salesforceId);
+                $this->salesforceLog("Tried to update Customer or Contact - ".$customerId.". But Customer or Contact not Present in SF -".$salesforceId);
                 return;
             }
 
@@ -729,6 +734,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             $mName = $customer->getMiddlename();
             $lName = $customer->getLastname();
             $fullName = "";
+
+            $sql = "";
             if ($prefix) {
                 $fullName .= $prefix . " ";
             }
@@ -737,12 +744,20 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 $fullName .= $mName;
             }
             $fullName .= $lName;
-
-            //echo $customer->getId()."-".strlen($fName).":".strlen($lName)."</br>";
+            $email = $customer->getEmail();
+            $formattedEmail = $emailFormatterHelper->startMailFormating($email,$fullName,null);
+            //echo $customerId."-".strlen($fName).":".strlen($lName)."</br>";
             if(strlen($fName) < 1 || strlen($lName)< 1) {
-                $this->salesforceLog("Tried to get data of Customer or Contact - ".$customer->getId().". But Customer or Contact Doesn't have any name-".$salesforceId);
-                return;
+                $fullName = explode("@",$formattedEmail,2)[0];
+                $this->salesforceLog("Tried to get data of Customer or Contact - ".$customerId.". But Customer or Contact Doesn't have any name-".$salesforceId."Changed name too = ".$fullName);
+//                $sql = $sql. "REPLACE INTO `customer_entity_varchar`(entity_type_id,attribute_id,entity_id,value) VALUES(1,7,{$customerId},'{$fullName}');";
             }
+//
+//            if($formattedEmail != $email) {
+//                //$sql = $sql. "REPLACE INTO `customer_entity_varchar`(entity_type_id,attribute_id,entity_id,value) VALUES(1,9,{$customerId},'{$formattedEmail}');";
+//                $this->salesforceLog("Invlaid Email-address for customer- ".$customerId. "Changed email too");
+//                $sql = $sql. "UPDATE `customer_entity` SET email = '{$formattedEmail}' WHERE entity_id = {$customerId};";
+//            }
 
 
             $defaultBillingAddr = $customer->getDefaultBillingAddress();
@@ -827,12 +842,12 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 "Company__c" => $customer->getCompany(),
                 "Counterpoint_No__c" => $customer->getCounterpointCustNo(),
                 "Created_In__c" => $customer->getCreatedIn(),
-                "Customer_ID__c" => $customer->getId(),
+                "Customer_ID__c" => $customerId,
                 "Customer_Note__c" => $customer->getCustomerNote(),
                 "Default_Billing__c" => $customer->getDefaultBilling(),
                 "Default_Shipping__c" => $customer->getDefaultShipping(),
                 //"Description"         => "",
-                "Email__c" => $customer->getEmail(),
+                "Email__c" => $formattedEmail,
                 //"Fax"                 => "",
                 "Gender__c" => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Phone" => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
@@ -872,22 +887,22 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
             $contactRequest = array(
                 //"Id" => $salesforceContactId,
-                "FirstName" => $fName,
-                "MiddleName" => $mName,
-                "LastName" => $lName,
-                "Email" => $customer->getEmail(),
+                "FirstName" => $fName?$fName:"",
+                "MiddleName" => $mName?$mName:"",
+                "LastName" => $lName?$lName:$fullName,
+                "Email" => $formattedEmail,
                 "Phone" => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
                 "MailingStreet" => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
                 "MailingCity" => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",
                 "MailingState" => ($defaultBillingAddr) ? $state : "",
                 "MailingPostalCode" => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
                 "MailingCountry" => ($defaultBillingAddr) ? $countryName : "",
-                "Contact_Id__c" => $customer->getId(),
+                "Contact_Id__c" => $customerId,
                 "AccountID" => $salesforceId
             );
 
             if(!$isFromEvent)
-                $contactRequest["attributes"] = array("type" => "Contact", "referenceId" => "contact-" . $customer->getData("entity_id"));
+                $contactRequest["attributes"] = array("type" => "Contact", "referenceId" => "contact-" . $customerId);
 
             if (!$create){
                 $this->salesforceLog("Customer add ID for Contact:Update");
@@ -903,6 +918,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 $accountRequest["Accept_Transactional__c"] = $customer->getTwAcceptTransactional();
             }
 
+            //$this->executeQuery($sql);
             return array("customer" => $accountRequest, "contact" => $contactRequest);
         }
     }
