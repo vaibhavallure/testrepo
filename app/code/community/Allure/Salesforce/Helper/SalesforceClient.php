@@ -114,7 +114,10 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         return  $url;
     }
     
-    
+    public function getEmailFormatterHelper() {
+        return Mage::helper('allure_salesforce/emailFormatter');
+    }
+
     /**
      * generate new access token 
      * @return array
@@ -313,6 +316,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     {
         $orderItemList = array();
         $salesforceOrderId = $order->getSalesforceOrderId();
+        $emailFormatterHelper = $this->getEmailFormatterHelper();
 
         if($create && !empty($salesforceOrderId)){
             $this->salesforceLog("Tried to create Order - ".$order->getId().". But Order already Present in SF -".$salesforceOrderId);
@@ -351,9 +355,11 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $customerId = $order->getCustomerId();
 
         // #CH2
-        $salesforceAccountId = $this::GUEST_CUSTOMER_ACCOUNT;
+        //$salesforceAccountId = $this::GUEST_CUSTOMER_ACCOUNT;
+        $salesforceAccountId = Mage::helper('allure_salesforce')->getGuestAccount();
         if ($customerId) {
             $customer = Mage::getModel("customer/customer")->load($customerId);
+            $fullName = "{$customer->getData('firstname')} {$customer->getData('lastname')}" ;
             $salesforceAccountId = $customer->getSalesforceCustomerId();
             if (!$salesforceAccountId && $create) {
                 //$guestAccount = Mage::helper('allure_salesforce')->getGuestAccount();
@@ -589,6 +595,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
         $oldStoreArr[0] = "Admin";
 
+        $formattedEmail = $emailFormatterHelper->startMailFormating($customerEmail,$fullName,null);
+
         $request= array(
             "attributes" => array("type" => "Order", "referenceId" => "orders-" . $order->getData("entity_id")),
             "EffectiveDate" => date("Y-m-d", strtotime($createdAt)),
@@ -633,7 +641,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             "Order_Id__c" => $order->getId(),
             "Increment_Id__c" => $incrementId,
             "Customer_Group__c" => $customerGroup,
-            "Customer_Email__c" => $customerEmail,
+            "Customer_Email__c" => $formattedEmail,
             "Counterpoint_Order_ID__c" => $counterpointOrderId,
             "Customer_Note__c" => ($customerNote) ? $customerNote : "",
             "Signature__c" => ($order->getNoSignatureDelivery()) ? "Yes" : "No",
@@ -700,6 +708,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     public function getCustomerRequestData($customer,$create,$isFromEvent)
     {
         $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+        $emailFormatterHelper = $this->getEmailFormatterHelper();
         $oldStoreArr = array();
 
         foreach ($ostores as $storeO) {
@@ -708,19 +717,20 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $oldStoreArr[0] = "Admin";
 
         if ($customer) {
-            $customer = Mage::getModel('customer/customer')->load($customer->getId());
-            $this->salesforceLog("Customer {$customer->getId()}");
+            $customerId = $customer->getId();
+            $customer = Mage::getModel('customer/customer')->load($customerId);
+            $this->salesforceLog("Customer {$customerId}");
 
             $salesforceId = $customer->getSalesforceCustomerId();
             $salesforceContactId = $customer->getSalesforceContactId();
 
             if($create && (!empty($salesforceId) && !empty($salesforceContactId))){
-                $this->salesforceLog("Tried to create Customer and Contact - ".$customer->getId().". But Customer and Contact already Present in SF -".$salesforceId);
+                $this->salesforceLog("Tried to create Customer and Contact - ".$customerId.". But Customer and Contact already Present in SF -".$salesforceId);
                 return;
             }
 
             if(!$create && (empty($salesforceId) || empty($salesforceContactId))) {
-                $this->salesforceLog("Tried to update Customer or Contact - ".$customer->getId().". But Customer or Contact not Present in SF -".$salesforceId);
+                $this->salesforceLog("Tried to update Customer or Contact - ".$customerId.". But Customer or Contact not Present in SF -".$salesforceId);
                 return;
             }
 
@@ -729,6 +739,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             $mName = $customer->getMiddlename();
             $lName = $customer->getLastname();
             $fullName = "";
+
+            $sql = "";
             if ($prefix) {
                 $fullName .= $prefix . " ";
             }
@@ -737,6 +749,21 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 $fullName .= $mName;
             }
             $fullName .= $lName;
+            $email = $customer->getEmail();
+            $formattedEmail = $emailFormatterHelper->startMailFormating($email,$fullName,null);
+            //echo $customerId."-".strlen($fName).":".strlen($lName)."</br>";
+            if(strlen($lName)< 1) {
+                $fullName = explode("@",$formattedEmail,2)[0];
+                $this->salesforceLog("Tried to get data of Customer or Contact - ".$customerId.". But Customer or Contact Doesn't have any name-".$salesforceId."Changed name too = ".$fullName);
+//                $sql = $sql. "REPLACE INTO `customer_entity_varchar`(entity_type_id,attribute_id,entity_id,value) VALUES(1,7,{$customerId},'{$fullName}');";
+            }
+//
+//            if($formattedEmail != $email) {
+//                //$sql = $sql. "REPLACE INTO `customer_entity_varchar`(entity_type_id,attribute_id,entity_id,value) VALUES(1,9,{$customerId},'{$formattedEmail}');";
+//                $this->salesforceLog("Invlaid Email-address for customer- ".$customerId. "Changed email too");
+//                $sql = $sql. "UPDATE `customer_entity` SET email = '{$formattedEmail}' WHERE entity_id = {$customerId};";
+//            }
+
 
             $defaultBillingAddr = $customer->getDefaultBillingAddress();
             $state = "";
@@ -820,12 +847,12 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 "Company__c" => $customer->getCompany(),
                 "Counterpoint_No__c" => $customer->getCounterpointCustNo(),
                 "Created_In__c" => $customer->getCreatedIn(),
-                "Customer_ID__c" => $customer->getId(),
+                "Customer_ID__c" => $customerId,
                 "Customer_Note__c" => $customer->getCustomerNote(),
                 "Default_Billing__c" => $customer->getDefaultBilling(),
                 "Default_Shipping__c" => $customer->getDefaultShipping(),
                 //"Description"         => "",
-                "Email__c" => $customer->getEmail(),
+                "Email__c" => $formattedEmail,
                 //"Fax"                 => "",
                 "Gender__c" => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Phone" => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
@@ -865,22 +892,22 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
             $contactRequest = array(
                 //"Id" => $salesforceContactId,
-                "FirstName" => $fName,
-                "MiddleName" => $mName,
-                "LastName" => $lName,
-                "Email" => $customer->getEmail(),
+                "FirstName" => $fName?$fName:"",
+                "MiddleName" => $mName?$mName:"",
+                "LastName" => $lName?$lName:$fullName,
+                "Email" => $formattedEmail,
                 "Phone" => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
                 "MailingStreet" => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
                 "MailingCity" => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",
                 "MailingState" => ($defaultBillingAddr) ? $state : "",
                 "MailingPostalCode" => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
                 "MailingCountry" => ($defaultBillingAddr) ? $countryName : "",
-                "Contact_Id__c" => $customer->getId(),
+                "Contact_Id__c" => $customerId,
                 "AccountID" => $salesforceId
             );
 
             if(!$isFromEvent)
-                $contactRequest["attributes"] = array("type" => "Contact", "referenceId" => "contact-" . $customer->getData("entity_id"));
+                $contactRequest["attributes"] = array("type" => "Contact", "referenceId" => "contact-" . $customerId);
 
             if (!$create){
                 $this->salesforceLog("Customer add ID for Contact:Update");
@@ -896,6 +923,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 $accountRequest["Accept_Transactional__c"] = $customer->getTwAcceptTransactional();
             }
 
+            //$this->executeQuery($sql);
             return array("customer" => $accountRequest, "contact" => $contactRequest);
         }
     }
@@ -1268,11 +1296,11 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         "Jewelry_Care__c" => $product->getJewelryCare(),
                         //"Metal_Color__c"            => $product->getMetal(),
                         "ProductCode" => $product->getId(),
-                        "Description" => htmlspecialchars($product->getDescription()),
+                        "Description" => htmlspecialchars(str_replace('"',"'",$product->getDescription())),
                         "Family" => $product->getTypeId(),
                         "Name" => $product->getName(),
                         "StockKeepingUnit" => $product->getSku(),
-                        "Return_Policy__c" => $product->getReturnPolicy(),
+                        "Return_Policy__c" => htmlspecialchars($product->getReturnPolicy()),
                         //"Tax_Class_Id__c"           => $product->getTaxClassId(),
                         "Vendor_Item_No__c" => $product->getVendorItemNo(),
                         "Location__c" => $attributeSetName,
@@ -1408,7 +1436,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                                 "UnitPrice" => $wholesalePrice
                             );
                             //array_push($sRequest["records"], $sTemp);
-                            $sRequest["records"] = $sTemp;
+                            $sRequest["records"][] = $sTemp;
                         }
                     } else {
                         $sRequest["records"] = array(
@@ -1481,7 +1509,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 "credit_memo" => array("sales_flat_creditmemo", "salesforce_creditmemo_id"),
                 "shipment" => array("sales_flat_shipment", "salesforce_shipment_id"),
                 "shipment_track" => array("sales_flat_shipment_track","salesforce_shipment_track_id"),
-                "product" =>  array("_", "salesforce_product_id"),
+                "products" =>  array("_", "salesforce_product_id"),
                 "productG" =>  array("_", "salesforce_standard_pricebk"),
                 "productW" =>  array("_", "salesforce_wholesale_pricebk"),
             );
