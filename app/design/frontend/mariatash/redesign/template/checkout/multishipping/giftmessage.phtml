@@ -17,7 +17,7 @@
 <?php endif;?>
 <div class="col-12">
 	<div class="row">
-	<div class="col-5 to-from-section">
+	<div class="col-lg-5 col-md-5 col-12 to-from-section">
 		<div class="row">
 			<input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][type]" value="quote_address_item" />
             <input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][address]" value="<?= $_item->getAddress()->getId()?>" />
@@ -38,7 +38,7 @@
 					class="input-text validation-passed" />
 		</div>
 	</div>
-	<div class="col-7 gift-message-section">
+	<div class="col-lg-7 col-md-7 col-12 gift-message-section">
 		<div class="row">
     		<!-- <label for="gift-message-<//?php echo $_item->getId() ?>-message"><//?php echo $this->__('Message') ?></label> -->
     			<textarea placeholder="Message" id="gift-message-<?php echo $_item->getId() ?>-message"

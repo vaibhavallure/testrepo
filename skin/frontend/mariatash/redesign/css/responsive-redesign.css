@@ -447,6 +447,17 @@
   #total_item_counts_holder{
     display: none;
   }
+  .login-dropdown {
+    position: absolute;
+    width: 137px;
+    right: 0px;
+    top: 22px;
+    padding-top: 18px;
+    line-height: 25px;
+  }
+  body.cms-index-index.cms-home .login-dropdown{
+    right: -40px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -1163,6 +1174,12 @@
   }
   .coupons .discount {
     margin-bottom: 0;
+  }
+  .gift-message-section {
+    margin-bottom: 30px;
+  }
+  .to-from-section input {
+    width: 100%;
   }
 }
 
