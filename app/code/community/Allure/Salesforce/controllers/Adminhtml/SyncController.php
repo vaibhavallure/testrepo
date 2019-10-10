@@ -60,6 +60,6 @@ class Allure_Salesforce_Adminhtml_SyncController extends Mage_Adminhtml_Controll
                 return "";
         }
         $salesfoceModel->sendCompositeRequest($requestArray,null);
-        //print_r($requestArray);
+//        echo "<pre>";print_r($requestArray);
     }
 }
