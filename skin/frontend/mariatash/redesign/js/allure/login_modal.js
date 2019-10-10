@@ -231,7 +231,6 @@ jQuery(document).ready(function(){
 
     $j(".popupDelMyAccModel .close").on('click',function(){
     	$j(".popupDelMyAccModel").css({"opacity":"0","pointer-events":"none"});
-        scrollbody();
     });
 });
 

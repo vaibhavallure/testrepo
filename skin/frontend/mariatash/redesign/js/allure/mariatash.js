@@ -1,5 +1,9 @@
 jQuery(document).ready(function() {
 
+    jQuery(".close-del").on('click',function(){
+                    jQuery("body").css({"overflow": "scroll", "position": "static"});
+                });
+
      if (jQuery(window).width() >= 1025){
     /*jQuery('body').mouseover(function(){
     jQuery('#newsletter-form').parents('.t_Tooltip').addClass('newsletter_parent');
@@ -105,10 +109,22 @@ jQuery(document).ready(function() {
         {
             pass_field.attr("type","password");
             pass_field.removeClass("show");
+             jQuery(this).parent().find('.eye-image').css({
+                'display': 'block'
+            });
+             jQuery(this).parent().find('.close-eye').css({
+                'display': 'none'
+            });
         }
         else {
             pass_field.attr("type","text");
             pass_field.addClass("show");
+              jQuery(this).parent().find('.eye-image').css({
+                'display': 'none'
+            });
+             jQuery(this).parent().find('.close-eye').css({
+                'display': 'block'
+            });
         }
     });
 

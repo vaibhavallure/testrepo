@@ -122,43 +122,46 @@ if($product->getTypeId() =='configurable'){
         $_options = $helper->getConfigurableOptions($item);
     ?>
     <?php if ($_options):?>
-      
+
+        <div class="flex-box">
+
+            <div class="item para-normal pr-3">
+              <?php foreach ($_options as $_option) : ?>
+                <?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                <?php echo $_option['value'] ?>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="item">
             <div class="flex-box">
-
-                <div class="item para-normal">
-                      <?php foreach ($_options as $_option) : ?>
-                    <?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
-                    <?php echo $_option['value'] ?>
-                       <?php endforeach; ?>
-                </div>
-              
                 <div class="item">
-                    <div class="flex-box">
-                        <div class="item">
-                           <?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
-                       </div>
-                       <div class="flex-box">
-                           <?php if(0):?>
-                            <input type="text" class="input-text qty validate-not-negative-number" name="qty[<?php echo $item->getId() ?>]" value="<?php echo (int) $item->getData('qty'); ?>"/>
-                            <input type="hidden" class="item_id"value="<?php echo $item->getId() ?>"/>
-                        <?php endif;?>
+                 <?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
+             </div>
+             <div class="flex-box">
+                 <?php if(0):?>
+                    <input type="text" class="input-text qty validate-not-negative-number" name="qty[<?php echo $item->getId() ?>]" value="<?php echo (int) $item->getData('qty'); ?>"/>
+                    <input type="hidden" class="item_id"value="<?php echo $item->getId() ?>"/>
+                <?php endif;?>
 
-                        <div class="minus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-                            <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', -1 )" class="minus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">-</span></button>
-                        </div>
-                        <div class="qty-wrap">
-                            <input data-item-id="<?php echo $item->getId() ?>" id="qtyid_<?php echo $item->getId() ?>" name="cart[<?php echo $item->getId() ?>][qty]" value="<?php echo (int) $item->getData('qty')?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
-                            <input type="hidden" value="<?php echo (int) $item->getData('qty')?>"/>
-                        </div>
-                        <div class="plus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-                            <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', 1 )" class="plus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">+</span></button>
-                        </div>
-
-                    </div>
+                <div class="minus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+                    <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', -1 )" class="minus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">-</span></button>
                 </div>
+                <div class="qty-wrap">
+                    <input data-item-id="<?php echo $item->getId() ?>" id="qtyid_<?php echo $item->getId() ?>" name="cart[<?php echo $item->getId() ?>][qty]" value="<?php echo (int) $item->getData('qty')?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+                    <input type="hidden" value="<?php echo (int) $item->getData('qty')?>"/>
+                </div>
+                <div class="plus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+                    <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', 1 )" class="plus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">+</span></button>
+                </div>
+
             </div>
         </div>
-   
+    </div>
+    <div class="item fprice">
+       <?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
+   </div>
+</div>
+
 <?php endif;?>
 <?php endif;?>
 <div class="flex-box">
@@ -167,9 +170,7 @@ if($product->getTypeId() =='configurable'){
             <?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?>
         </span>
     </div>
-    <div class="item fprice">
-     <?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
- </div>
+
 </div>
 
 </td>

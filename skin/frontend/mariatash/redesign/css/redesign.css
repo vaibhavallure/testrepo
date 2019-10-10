@@ -495,16 +495,23 @@ input, select, textarea{
 	text-align: center;
 	padding: 2px 0px;
 	width: 100px;
+	height: 25px;
+}
+.login-dropdown li:first-child {
+  padding-top: 5px;
 }
 .login-dropdown li a {
   color: #292929;
+	font-size: 12px;
+  letter-spacing: 1px;
+  font-family: urw-din-light;
 }
 .login-dropdown ul{
 	padding: 0px;
 }
 
 .login-dropdown li a:hover {
-  color: #292929;
+  color: #000;
 }
 
 .icon-user:hover .login-dropdown,.login-dropdown:hover .login-dropdown {
@@ -525,7 +532,7 @@ input, select, textarea{
   right: -22px;
   top: 22px;
 	padding-top: 10px;
-  line-height: 25px;
+  line-height: 15px;
 }
 body.cms-index-index.cms-home .login-dropdown{
 	right: -40px;
@@ -592,6 +599,7 @@ html {
 
 nav.mariatash-header {
     background: var(--light-black);
+		transition: all 1s;
 }
 
 .menu-dropdown {
@@ -2569,15 +2577,23 @@ li#product_tabs_rpolicy_tabbed {
 }
 ul.tabs li.active h4 {
   border-bottom: 2px solid #000;
-  padding-bottom: 21px;
-  margin: 0;
 	width: max-content;
+	display: inline-block;
 }
 .padder {
   margin-top: 17px;
 }
 .padder .std {
   margin-bottom: 20px;
+}
+.product-detail-parent .product-shop.configurable .old-price {
+  margin: 0;
+}
+ul.tabs li h4{
+	padding-bottom: 21px;
+  margin: 0;
+  width: max-content;
+  display: inline-block;
 }
 /* ppp */
 
@@ -2589,7 +2605,7 @@ ul.tabs li.active h4 {
 	padding: 0px;
 }
 .chooseList ul li span{
-	display: block;
+	display: inline-block;
 	width: max-content;
 	padding: 0px 0 27px 0;
 }
@@ -2614,9 +2630,19 @@ ul.tabs li.active h4 {
 }
 .post-lengthds-lbl-options .chooseList ul{
 	border-bottom: 1px solid #d8d8d8;
+	justify-content: space-between;
+}
+.post-lengthds-lbl-options .chooseList ul li.firstRow :first-child,
+.post-lengthds-lbl-options .chooseList ul li.secondRow :first-child{
+	text-align: left;
+}
+.post-lengthds-lbl-options .chooseList ul li.firstRow :last-child,
+.post-lengthds-lbl-options .chooseList ul li.secondRow :last-child{
+	text-align: right;
 }
 .post-lengthds-lbl-options .chooseList li {
   padding: 0;
+	text-align: center;
 }
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
@@ -3302,6 +3328,12 @@ margin-top: 10%;
 }
 .multi-column-2 .gift-messages:last-child {
   margin-top: 24px;
+}
+.login-dropdown li:first-child {
+  padding-top: 5px;
+}
+.product-description-section:last-child {
+	border: none;
 }
 /* cccc */
 /*MINI CART CSS*/
