@@ -316,6 +316,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     {
         $orderItemList = array();
         $salesforceOrderId = $order->getSalesforceOrderId();
+        $emailFormatterHelper = $this->getEmailFormatterHelper();
 
         if($create && !empty($salesforceOrderId)){
             $this->salesforceLog("Tried to create Order - ".$order->getId().". But Order already Present in SF -".$salesforceOrderId);
@@ -354,7 +355,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $customerId = $order->getCustomerId();
 
         // #CH2
-        $salesforceAccountId = $this::GUEST_CUSTOMER_ACCOUNT;
+        //$salesforceAccountId = $this::GUEST_CUSTOMER_ACCOUNT;
+        $salesforceAccountId = Mage::helper('allure_salesforce')->getGuestAccount();
         if ($customerId) {
             $customer = Mage::getModel("customer/customer")->load($customerId);
             $salesforceAccountId = $customer->getSalesforceCustomerId();
@@ -592,6 +594,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
         $oldStoreArr[0] = "Admin";
 
+        $formattedEmail = $emailFormatterHelper->startMailFormating($customerEmail,null,null);
+
         $request= array(
             "attributes" => array("type" => "Order", "referenceId" => "orders-" . $order->getData("entity_id")),
             "EffectiveDate" => date("Y-m-d", strtotime($createdAt)),
@@ -636,7 +640,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             "Order_Id__c" => $order->getId(),
             "Increment_Id__c" => $incrementId,
             "Customer_Group__c" => $customerGroup,
-            "Customer_Email__c" => $customerEmail,
+            "Customer_Email__c" => $formattedEmail,
             "Counterpoint_Order_ID__c" => $counterpointOrderId,
             "Customer_Note__c" => ($customerNote) ? $customerNote : "",
             "Signature__c" => ($order->getNoSignatureDelivery()) ? "Yes" : "No",
@@ -747,7 +751,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             $email = $customer->getEmail();
             $formattedEmail = $emailFormatterHelper->startMailFormating($email,$fullName,null);
             //echo $customerId."-".strlen($fName).":".strlen($lName)."</br>";
-            if(strlen($fName) < 1 || strlen($lName)< 1) {
+            if(strlen($lName)< 1) {
                 $fullName = explode("@",$formattedEmail,2)[0];
                 $this->salesforceLog("Tried to get data of Customer or Contact - ".$customerId.". But Customer or Contact Doesn't have any name-".$salesforceId."Changed name too = ".$fullName);
 //                $sql = $sql. "REPLACE INTO `customer_entity_varchar`(entity_type_id,attribute_id,entity_id,value) VALUES(1,7,{$customerId},'{$fullName}');";
@@ -1295,7 +1299,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         "Family" => $product->getTypeId(),
                         "Name" => $product->getName(),
                         "StockKeepingUnit" => $product->getSku(),
-                        "Return_Policy__c" => $product->getReturnPolicy(),
+                        "Return_Policy__c" => htmlspecialchars($product->getReturnPolicy()),
                         //"Tax_Class_Id__c"           => $product->getTaxClassId(),
                         "Vendor_Item_No__c" => $product->getVendorItemNo(),
                         "Location__c" => $attributeSetName,
