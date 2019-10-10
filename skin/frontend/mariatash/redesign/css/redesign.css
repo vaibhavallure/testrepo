@@ -490,12 +490,21 @@ input, select, textarea{
   margin-top: 3px;
 }
 
+.login-dropdown li {
+	background: white;
+	text-align: center;
+	padding: 2px 0px;
+	width: 100px;
+}
 .login-dropdown li a {
-  color: #fff;
+  color: #292929;
+}
+.login-dropdown ul{
+	padding: 0px;
 }
 
 .login-dropdown li a:hover {
-  color: #fff;
+  color: #292929;
 }
 
 .icon-user:hover .login-dropdown,.login-dropdown:hover .login-dropdown {
@@ -513,10 +522,13 @@ input, select, textarea{
 .login-dropdown {
   position: absolute;
   width: 137px;
-  right: -56px;
-  top: 20px;
+  right: -22px;
+  top: 22px;
 	padding-top: 10px;
   line-height: 25px;
+}
+body.cms-index-index.cms-home .login-dropdown{
+	right: -40px;
 }
 
 #narrow-by-list li div dt{
