@@ -13,7 +13,7 @@ RewriteRule ^(.git) - [R=404,L]
 ############################################
 ## GoDaddy specific options
 
-   Options -MultiViews -Indexes
+   Options -MultiViews -Indexes 
 
 ## you might also need to add this line to php.ini
 ##     cgi.fix_pathinfo = 1
