@@ -1,4 +1,4 @@
-<?php
+  <?php
 /**
  * Magento
  *
@@ -51,7 +51,7 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
         <div class="cart_sidebar display_none" id="cart-sidebar-content">
 		<div class="tite_cart">
 		   <h1 class="text-center"><a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('Your Shopping Bag') ?></a></h1>
-		   	<a href="#" class="close-button"  onclick="jQuery('#cart-sidebar-content').slideUp(300); "><div class="close1-button close-tooltip"></div></a>
+		   	 <!-- <a href="#" class="close-button"  onclick="jQuery('#cart-sidebar-content').slideUp(300); "><div class="close1-button close-tooltip shopping-bag-close"></div></a> -->
 		</div>
         <ol id="cart-sidebar" class="mini-products-list col-12">
 			<?php foreach($_items as $_item): ?>

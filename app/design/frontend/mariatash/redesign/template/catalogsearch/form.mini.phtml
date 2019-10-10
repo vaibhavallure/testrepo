@@ -43,11 +43,21 @@
             jQuery(document).ready(function(){
               jQuery("#search-icon").click(function(){
                 jQuery(this).hide();
-                jQuery("#search-input").show();
+
+                  if (jQuery(window).width() <= 1366) {
+                      jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(2) span').css("color", "transparent");
+                      jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(1) span').css("color", "transparent");
+                  }
+                  jQuery("#search-input").show();
               });
 
             jQuery("#cross-icon").click(function(){
-              jQuery("#search-input").hide();
+                if (jQuery(window).width() <= 1366) {
+                    jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(2) a span').css("color", "#fff");
+                    jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(1) a span').css("color", "#fff");
+                }
+
+                jQuery("#search-input").hide();
               jQuery("#search-icon").show();
             });
 });

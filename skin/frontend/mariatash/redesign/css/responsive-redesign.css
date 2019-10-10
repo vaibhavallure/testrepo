@@ -490,6 +490,9 @@
   .cart-collaterals.fix-section{
     padding-top: 0;
   }
+  .footer{
+    z-index:0;
+  }
 }
 
 /*All ipads*/
