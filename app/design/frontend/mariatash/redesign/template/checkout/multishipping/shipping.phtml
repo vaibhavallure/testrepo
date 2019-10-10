@@ -71,7 +71,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                      	<p class="control">
                                      		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
             								<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
-                                                <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox "  />
+                                                <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
                                                 <span class="checkmark"></span>
                                                 <?php echo $this->__('Require signature upon delivery .') ?></label>
             							</p>
@@ -127,7 +127,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                            }?>
 
                                                        <?php if($isIternational == $shipCodeArr[2]):?>
-                                                       <option value="<?= $this->htmlEscape($_rate->getCode()) ?>">
+                                                       <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
                                                        <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                        <?php echo $_excl; ?>
                                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
@@ -146,7 +146,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                  $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
 
                                              ?>
-                                             	<option value="<?= $this->htmlEscape($_rate->getCode()) ?>">
+                                             	<option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
                                                        <?= $this->escapeHtml($this->getCarrierName($code))?>-<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                        <?php echo $_excl; ?>
                                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
