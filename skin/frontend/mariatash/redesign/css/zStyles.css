@@ -236,6 +236,9 @@
 	background-size: 15%!important;
 	background-position: right;
 	margin-right: 10px;
+	padding-top: 0;
+	font-family: urw-din-xlight;
+	font-size: 12px;
 }
 .acc-products-wrapper table{
 	margin-top: 0
@@ -320,6 +323,7 @@
 .acc-products-wrapper .mt-my-wishlist .product-w-mt{
 	padding-right: 20px;
 	vertical-align: top;
+	padding-top: 7px;
 }
 .acc-products-wrapper .mt-my-wishlist .product-w-mt .price{
 	display: inline-block;
@@ -351,10 +355,11 @@
 	text-transform: uppercase;
 }
 .acc-products-wrapper .mt-my-wishlist .product-w-mt .fprice .price{
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: bold;
 	font-family: urw-din-regular;
 	margin-right: 6px!important;
+	margin-left: 10px;
 }
 .acc-products-wrapper .mt-my-wishlist .qty-wrap input{
 	background: transparent!important;
@@ -382,9 +387,12 @@
 	height: 37px;
 }
 .share_btn{
-	width: 170px;
+	width: 170px!important;
 	height: 37px;
 	text-transform: uppercase;
+}
+.mt-my-wishlist #wishlist-table-overlay .mt-wishlist-extra-cls{
+	padding-left: 0;
 }
 /*=====================*/
 /*OPEN ORDERS*/
@@ -495,7 +503,7 @@
 	justify-content: flex-end;
 }
 .save_button{
-	width: 205px;
+	width: 205px!important;
 	height: 46px;
 	text-transform: uppercase;
 	margin-right: 0!important;
@@ -528,6 +536,10 @@
 
 }
 
+.categorypath-shop-our-instagram-html .fs-service-icon{
+	padding: 0;
+	padding-left: 3px;
+}
 /*=====================*/
 /*MY ACCOUNT-my addresses*/
 /*=====================*/
@@ -619,6 +631,10 @@
 	letter-spacing: 0.5px;
 	color: rgba(41, 41, 41, 0.9);
 	font-family: urw-din-light;
+}
+.customer-address-index address{
+	word-break: break-word;
+	padding-right: 10px;
 }
 /*=====================*/
 /*ADD NEW ADDRESS*/
@@ -1109,6 +1125,33 @@
 	font-size: 15px;
 	text-transform: uppercase;
 }
+
+.customer-account-edit .popupDelMyAccModel{
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.customer-account-edit .popup-content{
+	position: relative;
+	background: white;
+	padding: 50px;
+	max-width: 520px;
+}
+.customer-account-edit .popup-content .close{
+	position: absolute;
+	margin: 0;
+}
+.customer-account-edit .popup-content button{
+	float: left;
+	color: white;
+	text-transform: uppercase;
+	width: 149px;
+	height: 42px;
+}
+.close-eye{
+	display: none;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1136,6 +1179,9 @@
 	}
 }
 @media(max-width: 1024px){
+	#shop_our_instagram{
+		margin-top: 131px;
+	}
 	#fs-instagram-view-container .fs-overlink-text.fs-overlink-text-right{
 		display: none!important;
 	}
@@ -1158,6 +1204,9 @@
 }
 
 @media(max-width:991px){
+	#shop_our_instagram{
+		margin-top: 0;
+	}
 	.catalogsearch-result-index .category-products{
 		margin-top: 45px;
 	}
@@ -1244,7 +1293,20 @@
 		margin-left: 44px;
 	}
 }
+@media(max-width: 768px){
+	.login_security .container{
+		padding: 0 136px;
+	}
+	#shop_our_instagram {
+		margin-top: 28px;
+	}
+}
 @media(max-width: 767px){
+
+	.login_security .container{
+		padding: 0 50px;
+	}
+	
 	.catalogsearch-result-index .breadcrumbs ul{
 		display: inline-flex;
 	}
@@ -1363,6 +1425,22 @@
 	}
 }
 @media(max-width: 576px){
+	.login_security .container{
+		padding: 0 15px;
+	}
+	.my_addresses #additional-addresses li{
+		width: 100%!important;
+		padding-left: 0!important;
+	}
+	.my_addresses #additional-addresses{
+		flex-direction: column;
+	}
+	.my_addresses .mt-myaccount-address-primary-div{
+		flex-direction: column;
+	}
+	.my_addresses .addresses-primary{
+		width: 100%!important;
+	}
 	#fs-instagram-view-container #fs-detail-close{
 		width: 20px;
 		background-size: contain;
@@ -1401,6 +1479,32 @@
 	}
 }
 @media(max-width: 480px){
+	.acc-products-wrapper .tabcontent .optionfilter dt{
+		background-size: 9%!important;
+	}
+	.wishlist-empty, .no-order-msg, .no-purchase-item{
+		margin-top: 20px;
+		padding-left: 0!important;
+	}
+	.no-order-msg{
+		margin-top: 110px!important;
+	}
+	.acc-products-wrapper .optionfilter{
+		position: relative;
+	}
+	.acc-products-wrapper #narrow-by-list-new{
+		height: auto;
+		display: block;
+	}
+	.acc-products-wrapper #narrow-by-list-new li{
+		top: 20px;
+		margin-bottom: 5px;
+		width: 100%;
+	}
+	.acc-products-wrapper .tabcontent .optionfilter dt{
+		height: auto;
+		padding: 5px 10px;
+	}
 	.new_address .input-box input, .new_address select{
 		width: 100%!important;
 	}
@@ -1467,7 +1571,7 @@
 		padding-left: 248px;
 	}
 	.my_addresses .container{
-		padding: 0 232px;
+		padding: 0 150px;
 	}
 	.new_address .container{
 		padding-left: 153px;
