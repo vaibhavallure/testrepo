@@ -1143,6 +1143,9 @@
 	}
 }
 @media(max-width: 1024px){
+	#shop_our_instagram{
+		margin-top: 170px;
+	}
 	#fs-instagram-view-container .fs-overlink-text.fs-overlink-text-right{
 		display: none!important;
 	}
@@ -1165,6 +1168,9 @@
 }
 
 @media(max-width:991px){
+	#shop_our_instagram{
+		margin-top: 0;
+	}
 	.catalogsearch-result-index .category-products{
 		margin-top: 45px;
 	}
@@ -1252,6 +1258,7 @@
 	}
 }
 @media(max-width: 767px){
+	
 	.catalogsearch-result-index .breadcrumbs ul{
 		display: inline-flex;
 	}
