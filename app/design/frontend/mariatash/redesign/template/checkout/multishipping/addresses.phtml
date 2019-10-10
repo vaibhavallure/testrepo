@@ -204,10 +204,10 @@
 		jQuery('#shipping-to-more-than-one').on('change',function(){
 			if(jQuery(this).is(":checked")){
 				jQuery('#single-shipping-address').addClass('d-none');
-				jQuery('#single-shipping-address').removeClass('visible-none');
+				jQuery('.multishipping-address-common').removeClass('visible-none');
 			}else{
 				jQuery('#single-shipping-address').removeClass('d-none');
-				jQuery('#single-shipping-address').addClass('visible-none');
+				jQuery('.multishipping-address-common').addClass('visible-none');
 			}
 		});
 
