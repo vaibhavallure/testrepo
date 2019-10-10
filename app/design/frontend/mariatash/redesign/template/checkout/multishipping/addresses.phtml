@@ -52,8 +52,10 @@
                     	<div class="col2-set">
                         	<div class="gift-messages">
                             	<p class="control">
-                                	<input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
-                                   	<label for="shipping-to-more-than-one"><span class="para-normal">Shipping to more than one address?</span></label>
+                                   	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
+                                      <input type="checkbox" id="shipping-to-more-than-one" value="1" class="checkbox" checked="checked">
+                                      <span class="checkmark"></span>Shipping to more than one address?
+                                    </label>
                                	</p>
                            	</div>
                         </div>
@@ -119,8 +121,10 @@
                                                     <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
                                                     <div class="gift-messages">
                                                      	<p class="control">
-                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
-                                                            <label for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>"><span class="para-normal">Is backorder item ship separately.</span></label>
+
+                                                            <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                              <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
+                                                              <span class="checkmark"></span>Is backorder item ship separately.</label>
                                                        </p>
                                                     </div>
                                                     <?php endif;?>

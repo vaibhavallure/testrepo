@@ -3300,6 +3300,9 @@ margin-top: 10%;
 .cart-collaterals.fix-section{
 	padding-top: 110px;
 }
+.multi-column-2 .gift-messages:last-child {
+  margin-top: 24px;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
