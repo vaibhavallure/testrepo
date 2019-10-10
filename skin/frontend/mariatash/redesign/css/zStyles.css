@@ -236,6 +236,9 @@
 	background-size: 15%!important;
 	background-position: right;
 	margin-right: 10px;
+	padding-top: 0;
+	font-family: urw-din-xlight;
+	font-size: 12px;
 }
 .acc-products-wrapper table{
 	margin-top: 0
@@ -619,6 +622,10 @@
 	letter-spacing: 0.5px;
 	color: rgba(41, 41, 41, 0.9);
 	font-family: urw-din-light;
+}
+.customer-address-index address{
+	word-break: break-word;
+    padding-right: 10px;
 }
 /*=====================*/
 /*ADD NEW ADDRESS*/
@@ -1363,6 +1370,19 @@
 	}
 }
 @media(max-width: 576px){
+	.my_addresses #additional-addresses li{
+		width: 100%!important;
+		padding-left: 0!important;
+	}
+	.my_addresses #additional-addresses{
+		flex-direction: column;
+	}
+	.my_addresses .mt-myaccount-address-primary-div{
+		flex-direction: column;
+	}
+	.my_addresses .addresses-primary{
+		width: 100%!important;
+	}
 	#fs-instagram-view-container #fs-detail-close{
 		width: 20px;
 		background-size: contain;
@@ -1401,6 +1421,32 @@
 	}
 }
 @media(max-width: 480px){
+	.acc-products-wrapper .tabcontent .optionfilter dt{
+		background-size: 9%!important;
+	}
+	.wishlist-empty, .no-order-msg, .no-purchase-item{
+		margin-top: 20px;
+		padding-left: 0!important;
+	}
+	.no-order-msg{
+		margin-top: 110px!important;
+	}
+	.acc-products-wrapper .optionfilter{
+		position: relative;
+	}
+	.acc-products-wrapper #narrow-by-list-new{
+		height: auto;
+		display: block;
+	}
+	.acc-products-wrapper #narrow-by-list-new li{
+		top: 20px;
+		margin-bottom: 5px;
+		width: 100%;
+	}
+	.acc-products-wrapper .tabcontent .optionfilter dt{
+		height: auto;
+		padding: 5px 10px;
+	}
 	.new_address .input-box input, .new_address select{
 		width: 100%!important;
 	}
@@ -1467,7 +1513,7 @@
 		padding-left: 248px;
 	}
 	.my_addresses .container{
-		padding: 0 232px;
+		padding: 0 150px;
 	}
 	.new_address .container{
 		padding-left: 153px;
