@@ -51,7 +51,7 @@
     		<?php $shipping = $shipping + $totals['shipping']->getValue();?>
     	<?php endif;?>
     <?php endforeach;?>
-	
+
 	<?php $totals = $quote->getTotals();?>
 	<?php if(isset($totals['discount']) && $totals['discount']->getValue()):?>
     	<?php $discount = $discount + $totals['discount']->getValue();?>
@@ -62,18 +62,18 @@
     <?php if(isset($totals['grand_total']) && $totals['grand_total']->getValue()):?>
     		<?php $grandTotal = $grandTotal + $totals['grand_total']->getValue();?>
     <?php endif;?>
-    
-    
+
+
 	<col />
    	<col width="1" />
-   	
+
    	<tbody>
 		<tr>
 			<td class="cart-subtotals-left" colspan="1">
-				<span class="merchandise"><?= $this->__('Merchandise')?></span>    
+				<span class="merchandise para-normal"><?= $this->__('Subtotal')?></span>
 			</td>
 			<td class="cart-subtotals-right">
-				<span class="price"><?= $this->helper('checkout')->formatPrice($subtotal) ?></span>    
+				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($subtotal) ?></span>
 			</td>
 		</tr>
 		<tr id="mt-shipping">
@@ -93,34 +93,28 @@
 		</tr>
 		<?php endif;?>
 	</tbody>
-	
+
 	<tfoot>
     	<?php if($tax > 0): ?>
     	<tr class="summary-total">
 			<td>
 				<div class="info-text-three">
-					<span><?= $this->__('Estimated Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+					<span class="para-normal"><?= $this->__('Estimated Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
 				</div>
 			</td>
 			<td class="text-right">
-				<span class="reg-price price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+				<span class="reg-price price para-normal"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
 			</td>
 		</tr>
 		<?php endif; ?>
      	<tr>
 			<td class="cart-subtotals-left" colspan="1">
-				<strong>
-					<span class="total-title"><?= $this->__('Total')?></span>
-				</strong>
+					<span class="total-title text-uppercase medium-price"><?= $this->__('Total')?></span>
 			</td>
 			<td class="cart-subtotals-right">
-				<strong><span class="price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span></strong>
+				<span class="price medium-price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span>
 			</td>
 		</tr>
 	</tfoot>
 </table>
 <?php endif;?>
-
-
-
-

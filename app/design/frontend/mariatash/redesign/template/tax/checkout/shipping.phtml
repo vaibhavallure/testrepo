@@ -73,10 +73,10 @@
     }
     ?>
     <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
-        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-method-fancybox"'; } else {  }?> class="mt-shipping-method"><?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->escapeHtml($this->getTotal()->getTitle())).'</span>' ?></a>
+        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-method-fancybox"'; } else {  }?> class="mt-shipping-method"><?php echo '<span class="shipping-label info-text-three">'.$this->__('Shipping').'</span>'?></a>
     </td>
     <td style="<?php echo $this->getStyle() ?>" class="text-right">
-        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-price-fancybox"'; } else { }?> class="mt-shipping-price"><?php echo $this->helper('checkout')->formatPrice($multiShip) ?></a>
+        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-price-fancybox"'; } else { }?> class="mt-shipping-price reg-price"><?php echo $this->helper('checkout')->formatPrice($multiShip) ?></a>
     </td>
 </tr>
 <?php endif;?>

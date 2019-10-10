@@ -71,7 +71,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                 <thead class="shop-titles">
                 <tr>
                     <th class="product-column" colspan="2" data-th="Product"><?php echo $this->__('Product'); ?></th>
-                    <th class="price-column text-center" data-th="Price"><?php echo $this->__('Price'); ?></th>
+                    <th class="price-column text-right" data-th="Price"><?php echo $this->__('Price'); ?></th>
                     <th class="quantity-column text-center" data-th="Quantity"><?php echo $this->__('Quantity '); ?></th>
                     <th class="subtotal-column text-right" data-th="Subtotal"><?php echo $this->__('Subtotal'); ?></th>
                 </tr>
@@ -122,7 +122,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                     <ul class="checkout-types p-0">
                         <?php foreach ($this->getMethods('methods') as $method): ?>
                             <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
-                                <li class="mb-2 side-cart-redirects"><?php echo $methodHtml; ?></li>
+                                    <li class="mb-2 side-cart-redirects"><?php echo $methodHtml; ?></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>

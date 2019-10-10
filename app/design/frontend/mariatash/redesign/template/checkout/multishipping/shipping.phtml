@@ -70,22 +70,24 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                     <div class="gift-messages">
                                      	<p class="control">
                                      		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
-											<input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
-            								<label for="no_signature_delivery_<?= $_address->getId()?>"><?php echo $this->__('Require signature upon delivery.') ?></label>
+            								<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
+                                                <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox "  />
+                                                <span class="checkmark"></span>
+                                                <?php echo $this->__('Require signature upon delivery .') ?></label>
             							</p>
                                     </div>
                             	</div>
 
 													<div class="address-method-common">
 														<div class="row">
-    												<div class="shipping-address-select col-6 float-left" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
+    												<div class="shipping-address-select col-lg-6 col-md-6 col-12 float-left" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
     														<?= $shipAddressHtml?>
                           	</div>
 
                           	<?php if (!($_shippingRateGroups = $this->getShippingRates($_address))): ?>
                             	<p class="col-12 validation-advice"><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
                             <?php else: ?>
-															<div class="col-6 text-right">
+															<div class="col-lg-6 col-md-6 col-12 text-lg-right text-md-right text-left">
 																<select class="select-type-one validate-select" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
 																	<option value="">Select Method</option>
                            		<?php $ship_sign_national = array();?>
