@@ -28,6 +28,7 @@
 			</allure_multicheckout>
 			<checkout>
 				<rewrite>
+					<onepage_shipping>Allure_MultiCheckout_Block_Checkout_Onepage_Shipping</onepage_shipping>
 					<onepage_review_info>Allure_MultiCheckout_Block_Checkout_Onepage_Review_Info</onepage_review_info>
 					<onepage_shipping_method_available>Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available</onepage_shipping_method_available>
 				</rewrite>

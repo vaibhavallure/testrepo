@@ -392,9 +392,14 @@ One page checkout main layout
                         <action method="setMayBeInvisible"><value>1</value></action>
                     </block>
                 </block>
-                <block type="checkout/onepage_billing" name="checkout.onepage.billing" as="billing" template="checkout/onepage/billing.phtml"/>
+                <!-- <block type="checkout/onepage_billing" name="checkout.onepage.billing" as="billing" template="checkout/onepage/billing.phtml"/>
                 <block type="checkout/onepage_shipping" name="checkout.onepage.shipping" as="shipping" template="checkout/onepage/shipping.phtml"/>
-
+ 				-->
+ 				
+ 				<block type="checkout/onepage_shipping" name="checkout.onepage.shipping" as="shipping" template="checkout/onepage/shipping_1.phtml">
+                	<block type="checkout/onepage_billing" name="checkout.onepage.billing" as="billing" template="checkout/onepage/billing_1.phtml"/>
+                </block>
+ 				
                 <!-- new delivery method after shipping information -->
                 <block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="allure/multicheckout/checkout/onepage/delivery_option.phtml">
                 	<block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="allure/multicheckout/checkout/onepage/delivery_option_details.phtml"></block>

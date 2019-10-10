@@ -1175,6 +1175,12 @@
   .coupons .discount {
     margin-bottom: 0;
   }
+  .gift-message-section {
+    margin-bottom: 30px;
+  }
+  .to-from-section input {
+    width: 100%;
+  }
 }
 
 /* Mobile landscape */

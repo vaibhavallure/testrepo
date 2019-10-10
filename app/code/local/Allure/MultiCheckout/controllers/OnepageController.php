@@ -145,6 +145,15 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         }
 
         if ($this->getRequest()->isPost()) {
+            
+            /**
+             * Save customer billing address.
+             * Due the redesign website feature.
+             */
+            $dataBilling = $this->getRequest()->getPost('billing', array());
+            $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
+            $this->getOnepage()->saveBilling($dataBilling, $customerBillingAddressId);
+            
             $data = $this->getRequest()->getPost('shipping', array());
             $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
             $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
