@@ -238,6 +238,7 @@ Multi address shipping checkout address page
                 <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
             	<block type="checkout/multishipping_address_select" name="checkout_address_select" template="checkout/multishipping/address/billing_select.phtml"/>
+            	<block type="checkout/multishipping_address_select" name="checkout_shipping_single_address_select" template="checkout/multishipping/address/shipping_single_address.phtml"/>
             	<block type="customer/address_edit" name="customer_address_edit_form" template="checkout/multishipping/address/customer/form.phtml"/>
             </block>
         </reference>

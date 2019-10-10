@@ -31,7 +31,7 @@ alpha_teamwork:
     - teamwork
   script:
     - mage-deploy mariatash-teamwork
-    - echo 'Deployed on Teamwork Staging'
+    - echo 'Deployed on Teamwork Staging!'
     
 alpha_redesign:
   environment: redesign

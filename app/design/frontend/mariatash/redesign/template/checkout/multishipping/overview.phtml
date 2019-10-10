@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="text-right overview-price-qty">
                                             <div class="">
-                                              <p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getbaseRowTotal())?></p>
+                                              <p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getCalculationPrice())?></p>
                                             </div>
                                             <div class="overview-quantity">
                                             	<p class="para-three"><?= $this->__('Quantity: ')?><?= $this->escapeHtml(round($_item->getQty()))?></p>
