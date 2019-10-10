@@ -62,7 +62,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                         <?php foreach ($this->getAddresses() as $_index => $_address): ?>
 						<div class="box">
 							<div class="box-title">
-                           	<p class="info-text-two mt-3"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Change') ?></a></p>
+                           	<p class="info-text-two mt-3"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a></p>
                             </div>
                             <div class="box-content">
 
@@ -73,7 +73,11 @@ function setShippingAddress(eleId, addrId ,custAddrId){
             								<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
                                                 <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
                                                 <span class="checkmark"></span>
-                                                <?php echo $this->__('Require signature upon delivery .') ?></label>
+                                                <?= $this->__('Require signature upon delivery') ?> 
+                                                <?php if($_address->getIsContainBackorder()):?>
+                                                <?= $this->__('( Backordered shipment )'); ?>
+                                                <?php endif;?>.
+                                                </label>
             							</p>
                                     </div>
                             	</div>
