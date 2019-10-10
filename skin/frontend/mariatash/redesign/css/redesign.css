@@ -719,12 +719,14 @@ nav.mariatash-header {
   background: rgba(41, 41, 41, 0.5);
 	width: 100%;
   margin: 0;
+	transition: all 1s;
 }
 .footer {
   padding-top: 60px !important;
   height: 60px;
   z-index: 1;
 	padding: 0;
+	transition: all 1s;
 }
 .footer .footer-item-list a {
   color: #fff;
@@ -760,6 +762,7 @@ nav.mariatash-header {
 }
 .customer-care-list{
 	/*width: 100px;*/
+	padding: 0;
 }
 /* 4.Newletter */
 
@@ -1440,7 +1443,7 @@ input[type="checkbox"]:checked+label:before {
 .maria-left-menus{
   left: 17px;
   z-index: 1;
-  top: -12px;
+  top: -1px;
 }
 .maria-right-menus{
   right: 15px;
@@ -1531,13 +1534,22 @@ input[type="checkbox"]:checked+label:before {
 .sub-menu.scrolled{
 	top:83px;
 }
-#piercing_appointments {
+#appointments {
   padding: 48px 21px;
 }
-#piercing_appointments .col {
+#appointments .col {
   width: 14.28%;
   padding: 0;
   text-align: center;
+}
+#piercing .inner-box{
+	width: 80%;
+	margin-left: 0;
+  margin: 0 auto;
+}
+#piercing .left-section{
+	max-width: 100%;
+	flex:0 0 100%;
 }
 .image-text {
   position: absolute;
@@ -2632,18 +2644,26 @@ ul.tabs li h4{
 	border-bottom: 1px solid #d8d8d8;
 	justify-content: space-between;
 }
-.post-lengthds-lbl-options .chooseList ul li.firstRow :first-child,
-.post-lengthds-lbl-options .chooseList ul li.secondRow :first-child{
-	text-align: left;
-}
-.post-lengthds-lbl-options .chooseList ul li.firstRow :last-child,
-.post-lengthds-lbl-options .chooseList ul li.secondRow :last-child{
-	text-align: right;
-}
-.post-lengthds-lbl-options .chooseList li {
+.post-lengthds-lbl-options .chooseList li.firstRow {
   padding: 0;
 	text-align: center;
 }
+.post-lengthds-lbl-options .chooseList ul li.firstRow:last-child,
+.post-lengthds-lbl-options .chooseList ul li.secondRow:last-child{
+	text-align: right;
+}
+.post-lengthds-lbl-options .chooseList ul li.firstRow:first-child,
+.post-lengthds-lbl-options .chooseList ul li.secondRow:first-child{
+	text-align: left;
+}
+.post-lengthds-lbl-options .chooseList ul li.secondRow:first-child:last-child,
+.post-lengthds-lbl-options .chooseList ul li.firstRow:first-child:last-child{
+	text-align: left;
+}
+/* .firstRow.active{
+	margin-bottom: 24px;
+} */
+
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
 	display: flex;
@@ -2657,7 +2677,11 @@ ul.tabs li h4{
 }
 .chooseList .label{
 	width: 100%;
-	margin-bottom: 12px;
+	/* margin-bottom: 12px; */
+}
+.chooseList ul li.option {
+	 margin-top: 10px;
+	 min-height: 51px;
 }
 .placement .label {
   width: 50%;
