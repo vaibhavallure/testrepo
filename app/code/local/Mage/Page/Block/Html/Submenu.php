@@ -73,7 +73,7 @@ class Mage_Page_Block_Html_Submenu extends Mage_Core_Block_Template
     }
     public function thumbnailCat()
     {
-        return array('piercing appointments');
+        return array('appointments');
     }
     public function isthumbnailCat($catName)
     {

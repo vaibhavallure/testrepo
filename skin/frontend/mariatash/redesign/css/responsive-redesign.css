@@ -50,7 +50,7 @@
     width: 100%;
     margin-left: 0;
   }
-  .head-child, #piercing_appointments img {
+  .head-child, #appointments img {
     display: none;
     padding-left: 10px;
   }
@@ -64,12 +64,12 @@
   .sub-menu{
     width: 50% !important;
   }
-  #piercing_appointments .col{
+  #appointments .col{
     width: 100%;
     margin-bottom: 9px;
     flex: 0 0 100%;
   }
-  #piercing_appointments{
+  #appointments{
     padding: 0;
   }
   .maria-right-menus{
@@ -168,9 +168,6 @@
   .content-customer {
     margin: 15px 0 0;
   }
-  .footer-item-list:last-child{
-    display: none;
-  }
   .piercing_options{
     padding: 0 15px;
   }
@@ -194,15 +191,15 @@
   .newsletter-mt {
     display: none;
   }
-  .popbox, #link_about-maria > div, .popbox_ajax {
+  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, {
     border-bottom: 1px solid #fff;
     padding-bottom: 10px;
     text-transform: uppercase;
   }
-  #tooltip-id-contact, #tooltip-id-customer-care, #tooltip-id-my-account{
+  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
     margin-top: 7px;
   }
-  #tooltip-id-contact table td{
+  #tooltip-id-contact-us table td{
     color: white;
   }
   #tooltip-id-our-jewelry {
@@ -217,7 +214,7 @@
   .customer-care-list li span{
     font-size: 12px;
   }
-  #link_about-maria a{
+  #link_about-maria-tash a, #link_about-our-jewelry a, #link_accessibility a{
     font-size: 13px;
     letter-spacing: 0.5px;
   }
@@ -292,6 +289,9 @@
   }
   .customer-care-list li{
   	width: 100%;
+  }
+  #piercing .inner-box{
+    width: 100%;
   }
   /* 2. Contact and 3. Our Jewelry*/
   .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
@@ -699,8 +699,8 @@
     width:1500px;
     overflow-x: scroll;
   }
-  #piercing_appointments {
-    padding: 5px 32px 32px 0;
+  #appointments {
+    padding: 55px 32px 32px 32px;
   }
   .inner-box {
     width: 534px;
@@ -1319,7 +1319,7 @@
   .about-designer{
     margin-top: 30px;
   }
-  #piercing_appointments{
+  #appointments{
     padding: 48px 254px;
   }
   .footer{
