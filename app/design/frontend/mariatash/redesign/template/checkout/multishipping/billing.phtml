@@ -86,6 +86,9 @@
                         <div class="buttons-set text-right">
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shipping Information') ?></a></p>
                             <button type="submit" title="<?php echo $this->__('Next') ?>" class="button continue light-button next-button"><span><span><?php echo $this->__('Next') ?></span></span></button>
+                            <span id="multiaddress-billing-method-please-wait" class="please-wait" style="display: none;">
+            					<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...        
+            				</span>
                         </div>
 						<?= $this->getBlockHtml("formkey") ?>
                     </form>
@@ -157,3 +160,17 @@
     <?php endforeach; ?>
 </ol>
 </div>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('#multishipping-billing-form button[type="submit"]').on('click',function(){
+			if(payment.validator.validate()) {
+				if(!jQuery('input[name="payment[method]"]').is(":checked")){
+					alert("Please specify payment method.");
+					return false;
+				}
+				jQuery(this).hide();
+				jQuery('#multiaddress-billing-method-please-wait').show();
+			}
+		});
+	});
+</script>
