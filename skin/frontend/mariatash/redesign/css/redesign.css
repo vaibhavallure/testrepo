@@ -2649,9 +2649,9 @@ ul.tabs li h4{
 }
 .post-lengthds-lbl-options .chooseList ul{
 	border-bottom: 1px solid #d8d8d8;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 }
-.post-lengthds-lbl-options .chooseList li.firstRow {
+/* .post-lengthds-lbl-options .chooseList li.firstRow {
   padding: 0;
 	text-align: center;
 }
@@ -2666,10 +2666,10 @@ ul.tabs li h4{
 .post-lengthds-lbl-options .chooseList ul li.secondRow:first-child:last-child,
 .post-lengthds-lbl-options .chooseList ul li.firstRow:first-child:last-child{
 	text-align: left;
-}
-/* .firstRow.active{
-	margin-bottom: 24px;
 } */
+.firstRow.active{
+	margin-bottom: 24px;
+}
 
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
