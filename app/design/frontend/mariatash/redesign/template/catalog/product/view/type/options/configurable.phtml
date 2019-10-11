@@ -19,7 +19,6 @@
   <?php if ($_product->isSaleable() && count($_attributes)):?>
     <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
     <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
-    <hr>
     <div class="row">
         <?php foreach($_attributes as $_attribute): ?>
             <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
@@ -50,7 +49,7 @@
                     </div>
                 </div>
                     <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
-                    <hr>
+
                     <?php endif; ?>
             </div>
 
