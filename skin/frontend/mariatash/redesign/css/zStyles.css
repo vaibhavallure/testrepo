@@ -130,14 +130,19 @@
 /*=====================*/
 /*MY ACCOUNT*/
 /*=====================*/
-.myaccount-index-index .breadcrumbs{
+.myaccount-index-index .breadcrumbs,
+.customer-account-edit .breadcrumbs,
+.customer-address-index .breadcrumbs{
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%,0);
 	padding-left: 0;
 	padding-top: 17px;
 }
-.myaccount-index-index .breadcrumbs ul{
+
+.myaccount-index-index .breadcrumbs ul,
+.customer-account-edit .breadcrumbs ul,
+.customer-address-index .breadcrumbs ul{
 	padding-left: 0;
 }
 .customer-account-index .main .col-main {
@@ -435,7 +440,7 @@
 /*=====================*/
 .login_security h1{
 	margin-bottom: 15px;
-	margin-top: 22px;
+	margin-top: 41px;
 	font-size: 30px;
 }
 .login_security .my-account li.control input:checked+label,
@@ -555,6 +560,7 @@
 .my_addresses h1{
 	font-size: 30px;
 	margin-bottom: 30px;
+	margin-top: 30px;
 }
 .my_addresses ol,
 .my_addresses ol li{
@@ -584,6 +590,11 @@
 }
 .add-primary{
 	order: 2;
+	width: 50%;
+	padding-left:20px;
+}
+.mt-myaccount-new .messages{
+	float: none;
 }
 .my_addresses #add-new-addresss{
 	background: transparent;
@@ -607,10 +618,10 @@
 }
 
 .my_addresses #additional-addresses li:nth-of-type(odd){
-	width: 40%;
+	width: 42%;
 }
 .my_addresses #additional-addresses li:nth-of-type(even){
-	width: 60%;
+	width: 58%;
 	padding-left: 20px;
 }
 .mt-addresses-additional li.item p{
@@ -920,8 +931,13 @@
 	display: flex;
 	padding-bottom: 0;
 }
+.catalog-product-view .fs-post-info{
+	padding-right: 0;
+}
+
 .category-shop-our-instagram .fs-link-text-all{
 	width: 100%;
+	display: flex;
 }
 .category-shop-our-instagram .fs-post-info a{
 	display: flex;
@@ -1176,55 +1192,87 @@
 .insta-details .fs-detail-content{
 	display: flex;
 }
+.catalog-product-view .fs-link-text-all{
+	width: 100%;
+}
+
+.catalog-product-view .fs-text-link-container a{
+	display: flex;
+}
 
 .catalog-product-view .fs-detail-right,
 .insta-details .fs-detail-right{
-	display: flex;
+	display: flex!important;
 	align-items: flex-end;
 	flex-wrap: wrap;
 }
 
-.catalog-product-view .fs-service-username
+.catalog-product-view .fs-service-username,
 .insta-details .fs-post-info .fs-service-username{
 	text-transform: lowercase;
 } 
+.catalog-product-view .fs-post-info a,
 .insta-details .fs-post-info a{
 	display: flex;
 	justify-content: space-between;
 }
+
+.fs-post-info .fs-detail-title,
 .insta-details .fs-detail-title{
 	padding-right: 0;
 }
+.fs-post-info #fs-detail-response,
 .insta-details #fs-detail-response{
 	padding: 0;
 }
+
+.fs-post-info .fs-divider,
 .insta-details .fs-divider{
 	margin-top: 10px!important;
 	margin-bottom: 10px!important;
 }
- .insta-details .fs-text-link-container{
+.fs-post-info .fs-text-link-container,
+.insta-details .fs-text-link-container{
 	margin-top: 0;
 }
+.fs-post-info .fs-text-product,
 .insta-details .fs-text-product{
 	display: block;
 }
+.fs-post-info .fs-link-text-all,
 .insta-details .fs-link-text-all{
 	display: flex;
 }
+.fs-post-info .fs-link-text,
 .insta-details .fs-link-text{
 	width: 90%;
 }
+.fs-post-info .fs-link-text-number,
 .insta-details .fs-link-text-number{
 	margin-right: 15px;
-    display: inline-flex;
-    width: 24px;
-    height: 24px;
-    border: solid 0.5px rgba(41, 41, 41, 0.9);
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
+	display: inline-flex;
+	width: 24px;
+	height: 24px;
+	border: solid 0.5px rgba(41, 41, 41, 0.9);
+	border-radius: 50%;
+	justify-content: center;
+	align-items: center;
 }
 
+
+.customer-account-edit .breadcrumbs{
+	width: 1140px;
+    padding-left: 140px;
+}
+
+.catalog-product-view .quick_link{
+	padding-left: 52px;
+	margin-bottom: 0;
+}
+.catalog-product-view .fs-text-link-container a{
+	padding-top: 0;
+	padding-bottom: 0;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1252,6 +1300,9 @@
 	}
 }
 @media(max-width: 1024px){
+	.category-shop-our-instagram .fs-timeline-detail .quick_link{
+		margin-top: -10px;
+	}
 	.fs-overlink-text{
 		display: none!important; 
 	}
@@ -1266,6 +1317,13 @@
 	}
 }
 @media(max-width: 1199px){
+	.customer-account-edit .breadcrumbs{
+		width: 930px!important;
+		padding-left: 0!important;
+	}
+	.customer-address-index .breadcrumbs{
+		width: 930px!important;
+	}
 	.catalogsearch-result-index #narrow-by-list{
 		margin-top: 235px;
 	}
@@ -1279,7 +1337,23 @@
 	}
 }
 
+
+
 @media(max-width:991px){
+	.category-shop-our-instagram .fs-timeline-detail .quick_link{
+		margin-top: 0;
+	}
+	.my_addresses h1{
+		margin-top: 50px;
+	}
+	.customer-account-edit .breadcrumbs{
+		width: 720px!important;
+		padding-left: 0!important;
+	}
+	.customer-address-index .breadcrumbs{
+		margin-top: 0!important;
+		width: 690px!important;
+	}
 	#shop_our_instagram{
 		margin-top: 0;
 	}
@@ -1378,9 +1452,18 @@
 	}
 }
 @media(max-width: 767px){
+	.catalog-product-view .quick_link{
+		padding-left: 38px;
+	}
+	.catalog-product-view .fs-detail-right .box{
+		width: 100%
+	}
+	.catalog-product-view .fs-divider{
+		margin-left: 0;
+	}
 	.insta-details .fs-image-container{
-	margin: 35px 0; 
-}
+		margin: 35px 0; 
+	}
 	.insta-details .fs-divider{
 		margin: 0!important;
 	}
@@ -1518,6 +1601,9 @@
 	}
 }
 @media(max-width: 576px){
+	.add-primary{
+		padding-left: 0;
+	}
 	.login_security .container{
 		padding: 0 15px;
 	}
@@ -1668,5 +1754,33 @@
 	}
 	.new_address .container{
 		padding-left: 153px;
+	}
+}
+
+
+@media(max-width: 1023px){
+	.customer-account-edit .breadcrumbs{
+		margin-top: 0;
+	}
+}
+@media(max-width: 991px){
+	.customer-account-edit .breadcrumbs{
+		position: relative;
+		padding-left: 15px!important;
+		width: 720px;
+	}
+}
+@media(max-width: 767px){
+	.customer-account-edit .breadcrumbs{
+		position: relative;
+		padding-left: 15px!important;
+		width: 540px;
+	}
+}
+
+@media(max-width: 1299px){
+	.customer-account-edit .breadcrumbs{
+		width: 1140px;
+		padding-left: 15px;
 	}
 }

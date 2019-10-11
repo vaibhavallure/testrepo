@@ -351,7 +351,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-price, .overview-dark-price span, .overview-grand span{
+.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span{
 	font-family: urw-din-medium !important;
 	font-size: 18px !important;
 }
@@ -764,6 +764,12 @@ nav.mariatash-header {
 	/*width: 100px;*/
 	padding: 0;
 }
+.popbox span, .popbox_ajax span {
+  font-family: urw-din-medium;
+}
+#tooltip-id-contact td {
+  font-family: urw-din-medium;
+}
 /* 4.Newletter */
 
 
@@ -771,63 +777,63 @@ nav.mariatash-header {
 /* catalog page */
 
 .catalog a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .catalog .item,
 .insta-item {
-    position: relative;
-    background-color: #eee;
-    margin: 6px;
-    text-align: center;
+  position: relative;
+  background-color: #eee;
+  margin: 6px;
+  text-align: center;
 }
 
 .catalog .item .product-img {
-    padding: 15% 0;
+  padding: 15% 0;
 }
 
 .catalog .item h6 {
-    text-align: left;
+  text-align: left;
 }
 
 .products-grid .product-name a, #cart-sidebar .product-details h5, .title-item-gif-card {
-    font-size: 14px;
-    font-family: urw-din-xlight;
+  font-size: 14px;
+  font-family: urw-din-xlight;
 }
 .catalog-common-grid .price-box {
-    text-align: right;
-    margin-right: 3px;
+  text-align: right;
+  margin-right: 3px;
 }
 
 .list-mt-w .actions {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 .m-filter-checkboxes li {
-    display: flex;
+  display: flex;
 }
 
 .catalog .item:hover {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .catalog .item:hover .details {
-    display: block;
+  display: block;
 }
 
 .catalog .item .details h6 {
-    font-size: 13px;
-    color: #333;
+  font-size: 13px;
+  color: #333;
 }
 
 ul.swatch {
-    display: inline-flex;
-    padding-left: 0;
-    list-style: none;
+  display: inline-flex;
+  padding-left: 0;
+  list-style: none;
 }
 
 ul.swatch .swatch-item {
-    position: relative;
+  position: relative;
 }
 
 ul.swatch .swatch-item a {
@@ -2550,12 +2556,8 @@ button#addtocart {
 	padding: 2px 0 0 24px
 }
 ul.tabs {
-  padding-inline-start: 15px;
 	margin-bottom: 0;
 	margin-top: 48px;
-}
-li#product_tabs_rpolicy_tabbed {
-  text-align: center;
 }
 .padder table.data-table, .padder .data-table tr {
   display: grid;
@@ -2623,7 +2625,7 @@ ul.tabs li h4{
 	padding: 0px 0 27px 0;
 }
 .chooseList ul li{
-	padding: 0px 10px 0px 0px;
+	padding: 0px 35px 0px 0px;
 }
 .chooseList ul li.active span{
   border-bottom: 2px solid black;
@@ -2633,8 +2635,11 @@ ul.tabs li h4{
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
-	margin-top: 19px;
+	/* margin-top: 19px; */
 	border-bottom: 1px solid #d8d8d8;
+}
+.post-lengthds-lbl-options .chooseList ul li{
+	padding: 0px 25px 0px 0px;
 }
 .post-lengthds-lbl-options .chooseList {
   padding: 0 45px;
@@ -2643,9 +2648,9 @@ ul.tabs li h4{
 }
 .post-lengthds-lbl-options .chooseList ul{
 	border-bottom: 1px solid #d8d8d8;
-	justify-content: space-between;
+	/* justify-content: space-between; */
 }
-.post-lengthds-lbl-options .chooseList li.firstRow {
+/* .post-lengthds-lbl-options .chooseList li.firstRow {
   padding: 0;
 	text-align: center;
 }
@@ -2660,10 +2665,13 @@ ul.tabs li h4{
 .post-lengthds-lbl-options .chooseList ul li.secondRow:first-child:last-child,
 .post-lengthds-lbl-options .chooseList ul li.firstRow:first-child:last-child{
 	text-align: left;
-}
-/* .firstRow.active{
+} */
+/* .firstRow{
 	margin-bottom: 24px;
 } */
+.list-margin.active{
+	margin-bottom: 24px;
+}
 
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
@@ -2681,7 +2689,7 @@ ul.tabs li h4{
 	/* margin-bottom: 12px; */
 }
 .chooseList ul li.option {
-	 margin-top: 10px;
+	 /* margin-top: 10px; */
 	 min-height: 51px;
 }
 .placement .label {
@@ -2699,6 +2707,7 @@ ul.tabs li:first-child {
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
   max-width: 25%;
+	text-align: left;
 }
 ul.tabs li:nth-child(2){
 	-ms-flex: 0 0 33.333333%;
@@ -2709,6 +2718,10 @@ ul.tabs li:nth-child(3){
 	-ms-flex: 0 0 41.666667%;
   flex: 0 0 41.666667%;
   max-width: 41.666667%;
+	text-align: right;
+}
+ul.tabs li{
+	text-align: center;
 }
 .discover-mt-navigation-menu {
   display: none;

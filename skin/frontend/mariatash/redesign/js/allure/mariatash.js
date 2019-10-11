@@ -14,20 +14,22 @@ jQuery(document).ready(function() {
   // });
 }
 
-  
+
 
 
     if (jQuery(window).width() >= 992){
 
-        var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page').outerWidth();
-        jQuery('.myaccount-index-index .breadcrumbs').css({
+        var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page,.customer-address-index .addresses-list').outerWidth();
+        jQuery('.myaccount-index-index .breadcrumbs,.customer-address-index .breadcrumbs').css({
             'width': cont_width
         });
+
+        
 
         var nav_height=jQuery('header').outerHeight();
         jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top",nav_height);
 
-        jQuery('.myaccount-index-index .breadcrumbs').css("margin-top",nav_height/2);
+        jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs,.customer-address-index .breadcrumbs').css("margin-top",nav_height/2);
     }
 
 
@@ -215,18 +217,18 @@ function myFunction(x) {
 
 jQuery(window).bind("load resize scroll",function(e){
 
-     if (jQuery(window).width() >= 1025){
-    jQuery('body').mouseover(function(){
-    jQuery('#newsletter-form').parents('.t_Tooltip').addClass('newsletter_parent');
-    jQuery('#tooltip-id-contact').parents('.t_Tooltip').addClass('tooltip_contact');
-    jQuery('#tooltip-id-customer-care').parents('.t_Tooltip').addClass('customer_care');
-    jQuery('#tooltip-id-my-account').parents('.t_Tooltip').addClass('tooltip_account');
-    jQuery('#tooltip-id-our-jewelry').parents('.t_Tooltip').addClass('tooltip_jewelry');
-  });
-}
-else{
-     jQuery('.t_Tooltip').removeClass('newsletter_parent,tooltip_contact,customer_care,tooltip_account,tooltip_jewelry');
-}
+//      if (jQuery(window).width() >= 1025){
+//     jQuery('body').mouseover(function(){
+//     jQuery('#newsletter-form').parents('.t_Tooltip').addClass('newsletter_parent');
+//     jQuery('#tooltip-id-contact').parents('.t_Tooltip').addClass('tooltip_contact');
+//     jQuery('#tooltip-id-customer-care').parents('.t_Tooltip').addClass('customer_care');
+//     jQuery('#tooltip-id-my-account').parents('.t_Tooltip').addClass('tooltip_account');
+//     jQuery('#tooltip-id-our-jewelry').parents('.t_Tooltip').addClass('tooltip_jewelry');
+//   });
+// }
+// else{
+//      jQuery('.t_Tooltip').removeClass('newsletter_parent,tooltip_contact,customer_care,tooltip_account,tooltip_jewelry');
+// }
 
     if (jQuery(window).width() >= 992){
         var nav_height=jQuery('header').outerHeight();
@@ -241,8 +243,9 @@ else{
             'width': cont_width
         });
 
-        jQuery('.myaccount-index-index .breadcrumbs').css("margin-top",nav_height/2);
+        jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs').css("margin-top",nav_height/2);
 
+    
 
     var box_width=jQuery('.fs-entry-container').outerWidth();
     jQuery('.fs-entry-container').css('height',box_width);
