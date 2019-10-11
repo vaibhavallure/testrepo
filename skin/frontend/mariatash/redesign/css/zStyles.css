@@ -1300,6 +1300,9 @@
 	}
 }
 @media(max-width: 1024px){
+	.category-shop-our-instagram .fs-timeline-detail .quick_link{
+		margin-top: -10px;
+	}
 	.fs-overlink-text{
 		display: none!important; 
 	}
@@ -1337,6 +1340,9 @@
 
 
 @media(max-width:991px){
+	.category-shop-our-instagram .fs-timeline-detail .quick_link{
+		margin-top: 0;
+	}
 	.my_addresses h1{
 		margin-top: 50px;
 	}
