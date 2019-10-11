@@ -56,16 +56,21 @@
                 .after()
                 .append("<div class='chooseList col-12' id='chooseList"+select_id+"' style='display: none'><ul class='row p-0'></ul></div>");
 
+            var optioncount=jQuery(this).find('option').length;
+
             var select_id=jQuery(this).attr("id");
             jQuery(element).each(function (idx, elm) {
                 var liCounter=1;
                 jQuery('option', elm).each(function (id, el) {
                     if(el.value!="") {
 
-                        if(liCounter<=4)
-                            var liRow="firstRow";
-                         else if (liCounter>4 && liCounter<=8)
-                             var liRow="secondRow list-margin";
+                        if(liCounter<=4) {
+                            var liRow = "firstRow";
+                            if(optioncount>5)
+                                liRow+=" list-margin";
+                        }else if (liCounter>4 && liCounter<=8) {
+                            var liRow = "secondRow";
+                        }
 
                         jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="col-3 ' + liRow + '"><span>' + el.text + '</span></li>');
                         liCounter++;
