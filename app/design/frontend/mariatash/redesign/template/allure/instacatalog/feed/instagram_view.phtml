@@ -1,4 +1,11 @@
-<?php $feedModel = $this->getFeed();?>
+<div class="second-header-image">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+</div>
+
+
+<div class="insta-details">
+	<div class="container">
+		<?php $feedModel = $this->getFeed();?>
 <?php if(!is_null($feedModel->getId())):?>
 <?php
 	$mediaId = $feedModel->getMediaId();
@@ -45,8 +52,8 @@
 		$productsLinks .= 'data-original-url="'.$productUrl.'"';
 		$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
 		$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
-		$productsLinks .= '<span class="fs-link-text-number">'.$numberOfProducts.' <span class="fs-slashes"> // </span>';
-		$productsLinks .= '<span class="fs-link-text"> Shop it // '.$productName.' </span></span>';
+		$productsLinks .= '<span class="fs-link-text-number">'.$numberOfProducts.' </span><span class="fs-slashes"></span>';
+		$productsLinks .= '<span class="fs-link-text">'.$productName.' </span></span>';
 		$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
 	}
 ?>
@@ -64,9 +71,8 @@
 						</div>
 					</div>
 					<div class="fs-detail-right">
-
-
-						<div class="fs-products-title fs-plural-products"></div>
+						<div class="box">
+							<div class="fs-products-title fs-plural-products"></div>
 
 						<?php echo $productsLinks?>
 
@@ -77,14 +83,14 @@
 						<div class="fs-post-info">
 							<a href="<?php echo $feedModel->getUsername()?>"
 								target="_blank">
-								<span class="fs-service-username"> maria_tash</span>
-								<span class="fs-slashes">//</span> INSTAGRAM <span
-								class="fs-slashes">//</span>
-								<span class="fs-detail-date"><?php echo $createDate?></span>
+								<span class="fs-service-username para-normal"> #mariatash</span>
+								<!-- <span class="fs-slashes">//</span> INSTAGRAM <span
+								class="fs-slashes">//</span> -->
+								<span class="fs-detail-date para-normal"><?php echo $createDate?></span>
 							</a>
 						</div>
 
-						<div class="fs-detail-shares">
+						<div class="fs-detail-shares d-none">
 							<a class="fs-share fs-facebook-share"
 								href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php echo $shareUrl ?>/&amp;p[image]=<?php echo $feedModel->getStandardResolution()?>"
 								target="_blank"><i class="fa fa-facebook"></i>
@@ -106,6 +112,7 @@
 								href="<?php echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-link"></i>
 							</a>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -165,3 +172,6 @@
 	}
 </script>
 <?php endif;?>
+
+	</div>
+</div>

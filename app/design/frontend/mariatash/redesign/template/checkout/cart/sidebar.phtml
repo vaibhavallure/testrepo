@@ -37,11 +37,11 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 <?php if ($this->getIsNeedToDisplaySideBar()):?>
 <?php echo ($this->getRequest()->getParam('product')) ? '' : '<div class="block block-cart'.$checkout_cart.'" id ="ajax_cart_content">' ?>
     <?php $_cartQty = $this->getSummaryCount() ?>
-    <div class="block-content content_cart" >
+    <div class="block-content content_cart">
 
    <?php if ($_cartQty>0): ?>
         <div class="summary">
-                <p class="amount"><a href="<?php echo $this->getUrl('checkout/cart')?>"><span><img src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>"><div class="number-circle"><span><?= $_cartQty ?></span></div></span></a></p>
+                <p class="amount"><a   onclick="cartSymbolLink()"><span><img src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>"><div class="number-circle"><span><?= $_cartQty ?></span></div></span></a></p>
         </div>
     <?php endif ?>
 
@@ -140,7 +140,10 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 <?php echo ($this->getRequest()->getParam('product')) ? '' : '</div>' ?>
 <?php endif;?>
 <script type="text/javascript">
+    var cartLink="<?php echo $this->getUrl('checkout/cart')?>";
+
     jQuery(document).ready(function(){
+
         var config = {
             over: function(){
                 if(!jQuery('#topcart-popup').hasClass('just_added'))
@@ -153,6 +156,36 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
             }
         };
 
-        jQuery("#topcart-popup").hoverIntent( config );
+
+        if(jQuery(window).width() >= 768) {
+            /* if(jQuery(window).width() >= 768 && jQuery(window).width()<1025)
+             {
+                 jQuery("#topcart-popup").on("click",function () {
+                     if(!jQuery('#topcart-popup').hasClass('just_added') && !jQuery('#topcart-popup').hasClass('clicked') ) {
+                         jQuery('#cart-sidebar-content').addClass("clicked");
+                         jQuery('#cart-sidebar-content').slideDown(300);
+                     }
+                 });
+                 jQuery("#cart_symbol_link").on("click",function () {
+                     jQuery('#cart-sidebar-content').removeClass("clicked");
+                     jQuery('#cart-sidebar-content').slideUp(300);
+                 });
+
+             }
+              else
+             {
+                 jQuery("#topcart-popup").hoverIntent(config);
+             }*/
+            jQuery("#topcart-popup").hoverIntent(config);
+        }
+
+
     });
+
+    function cartSymbolLink() {
+    if(jQuery(window).width() < 768)
+    {
+       window.location=cartLink;
+    }
+    }
 </script>
