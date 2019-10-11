@@ -358,7 +358,7 @@
                 <div class="content-sample-already-in-cart display_none">You can only add one sample to your cart</div>
             </div>
             <div class="get_size_sample">
-                <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+                <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index/sourceOfReq/quickview/', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
             </div>
 
             <div id="inline" style="display: none;">
@@ -391,29 +391,21 @@
         prevEffect: 'none',
         padding: 0,
         mouseWheel: false,
-        scrolling: 'no',
+        scrolling: 'yes',
         loop: false,
         wrapCSS: 'fancybox-sample-size',
         helpers: {
             title: null
         },
         margin: [20, 60, 20, 60], // Increase left/right margin
-        width: 785,
-        minWidth: 785,
-        maxWidth: 785,
-        minHeight: 510,
-        height: 510,
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
         afterLoad: function(current, previous) {
-
-            jQuery('.fancybox-iframe')
-                .attr('scrolling', 'no')
-                .contents().find('.product-view.sample-size')
-                .addClass('sample-rings');
-            if (current.href == jQuery("div.category-products ul li:first-child div.actions a.btn-quickview").attr('href')) {
-                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5" class="fancybox-nav fancybox-prev first_preview" title=""><span></span></a>');
-            } else if (current.href == jQuery("div.category-products ul li:last-child div.actions a.btn-quickview").attr('href')) {
-                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5 " class="fancybox-nav fancybox-next last_next" title=""><span></span></a>');
-            }
+            
         }
 
     });
