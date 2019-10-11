@@ -347,7 +347,7 @@
                     <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
                 </div>
             <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
-                  <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>
+                  <div class="size_chart"><a class="size_chart_link link-button" href="#inline_sample">Size Chart</a></div>
             <?php endif; ?>
             <?php
             endif;
