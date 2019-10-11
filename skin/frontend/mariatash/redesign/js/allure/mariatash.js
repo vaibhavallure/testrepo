@@ -18,8 +18,16 @@ jQuery(document).ready(function() {
 
 
     if (jQuery(window).width() >= 992){
+
+        var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page').outerWidth();
+        jQuery('.myaccount-index-index .breadcrumbs').css({
+            'width': cont_width
+        });
+
         var nav_height=jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",nav_height);
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top",nav_height);
+
+        jQuery('.myaccount-index-index .breadcrumbs').css("margin-top",nav_height/2);
     }
 
 
@@ -220,11 +228,18 @@ else{
 
     if (jQuery(window).width() >= 992){
         var nav_height=jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",nav_height/2 +20);
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top",nav_height/2 +20);
     }
     else{
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container').css("margin-top",'0px');
+        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top",'0px');
     }
+
+     var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page').outerWidth();
+        jQuery('.myaccount-index-index .breadcrumbs').css({
+            'width': cont_width
+        });
+
+        jQuery('.myaccount-index-index .breadcrumbs').css("margin-top",nav_height/2);
 
 
     var box_width=jQuery('.fs-entry-container').outerWidth();
