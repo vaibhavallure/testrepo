@@ -59,8 +59,8 @@ if($iEasyTabGroupId > 0){
 $tabHtml = array();
 ?>
 <div class="pdp-tabs row">
-  <div class="col-12 tab-section p-0">
-    <ul class="tabs row">
+  <div class="col-12 tab-section">
+    <ul class="tabs row p-0">
         <?php $i = 0; ?>
         <?php foreach ($this->getTabs() as $_index => $_tab): ?>
             <?php $tabHtml[$_tab['alias']] = $this->getChildHtml($_tab['alias']) ?>

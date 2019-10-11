@@ -351,7 +351,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-price, .overview-dark-price span, .overview-grand span{
+.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span{
 	font-family: urw-din-medium !important;
 	font-size: 18px !important;
 }
@@ -2556,12 +2556,8 @@ button#addtocart {
 	padding: 2px 0 0 24px
 }
 ul.tabs {
-  padding-inline-start: 15px;
 	margin-bottom: 0;
 	margin-top: 48px;
-}
-li#product_tabs_rpolicy_tabbed {
-  text-align: center;
 }
 .padder table.data-table, .padder .data-table tr {
   display: grid;
@@ -2642,6 +2638,9 @@ ul.tabs li h4{
 	/* margin-top: 19px; */
 	border-bottom: 1px solid #d8d8d8;
 }
+.post-lengthds-lbl-options .chooseList ul li{
+	padding: 0px 25px 0px 0px;
+}
 .post-lengthds-lbl-options .chooseList {
   padding: 0 45px;
 	border-bottom: none;
@@ -2670,7 +2669,7 @@ ul.tabs li h4{
 /* .firstRow{
 	margin-bottom: 24px;
 } */
-.list-margin{
+.list-margin.active{
 	margin-bottom: 24px;
 }
 
@@ -2708,6 +2707,7 @@ ul.tabs li:first-child {
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
   max-width: 25%;
+	text-align: left;
 }
 ul.tabs li:nth-child(2){
 	-ms-flex: 0 0 33.333333%;
@@ -2718,6 +2718,10 @@ ul.tabs li:nth-child(3){
 	-ms-flex: 0 0 41.666667%;
   flex: 0 0 41.666667%;
   max-width: 41.666667%;
+	text-align: right;
+}
+ul.tabs li{
+	text-align: center;
 }
 .discover-mt-navigation-menu {
   display: none;
