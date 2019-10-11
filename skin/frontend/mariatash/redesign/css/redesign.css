@@ -495,16 +495,23 @@ input, select, textarea{
 	text-align: center;
 	padding: 2px 0px;
 	width: 100px;
+	height: 25px;
+}
+.login-dropdown li:first-child {
+  padding-top: 5px;
 }
 .login-dropdown li a {
   color: #292929;
+	font-size: 12px;
+  letter-spacing: 1px;
+  font-family: urw-din-light;
 }
 .login-dropdown ul{
 	padding: 0px;
 }
 
 .login-dropdown li a:hover {
-  color: #292929;
+  color: #000;
 }
 
 .icon-user:hover .login-dropdown,.login-dropdown:hover .login-dropdown {
@@ -525,7 +532,7 @@ input, select, textarea{
   right: -22px;
   top: 22px;
 	padding-top: 10px;
-  line-height: 25px;
+  line-height: 15px;
 }
 body.cms-index-index.cms-home .login-dropdown{
 	right: -40px;
@@ -592,6 +599,7 @@ html {
 
 nav.mariatash-header {
     background: var(--light-black);
+		transition: all 1s;
 }
 
 .menu-dropdown {
@@ -711,12 +719,14 @@ nav.mariatash-header {
   background: rgba(41, 41, 41, 0.5);
 	width: 100%;
   margin: 0;
+	transition: all 1s;
 }
 .footer {
   padding-top: 60px !important;
   height: 60px;
   z-index: 1;
 	padding: 0;
+	transition: all 1s;
 }
 .footer .footer-item-list a {
   color: #fff;
@@ -752,6 +762,7 @@ nav.mariatash-header {
 }
 .customer-care-list{
 	/*width: 100px;*/
+	padding: 0;
 }
 /* 4.Newletter */
 
@@ -1432,7 +1443,7 @@ input[type="checkbox"]:checked+label:before {
 .maria-left-menus{
   left: 17px;
   z-index: 1;
-  top: -12px;
+  top: -1px;
 }
 .maria-right-menus{
   right: 15px;
@@ -1455,6 +1466,7 @@ input[type="checkbox"]:checked+label:before {
   font-size: 11px;
   letter-spacing: 1px;
   font-family: urw-din-light;
+	cursor: pointer;
 }
 .select-currency img {
 	margin: 0 0 5px 3px;
@@ -1523,13 +1535,22 @@ input[type="checkbox"]:checked+label:before {
 .sub-menu.scrolled{
 	top:83px;
 }
-#piercing_appointments {
+#appointments {
   padding: 48px 21px;
 }
-#piercing_appointments .col {
+#appointments .col {
   width: 14.28%;
   padding: 0;
   text-align: center;
+}
+#piercing .inner-box{
+	width: 80%;
+	margin-left: 0;
+  margin: 0 auto;
+}
+#piercing .left-section{
+	max-width: 100%;
+	flex:0 0 100%;
 }
 .image-text {
   position: absolute;
@@ -2031,6 +2052,9 @@ button#signin-btn-popup {
   top: 10px;
   right: 130px;
 }
+.customer-account-logoutsuccess .col-main {
+  padding: 40px;
+}
 /*Forget Password*/
 .popupResetPasswordModel .input-form {
     margin-bottom: 47px;
@@ -2084,14 +2108,8 @@ span#popup_loader_register {
 .usd-account .icon-item span {
   color: #292929;
 }
-/* .block-cart .tite_cart{
-	background: #fff;
-  text-align: center;
-} */
-/* .block-cart .cart_sidebar{
-	left: -60px;
-	width: 229px;
-} */
+
+
 /*Old Css*/
 .popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel {
 	position: fixed;
@@ -2137,6 +2155,9 @@ span#popup_loader_register {
 }
 .product-view .product-shop .padder h1, .product-view .product-shop .product-options .required, .product-view .product-shop .short-description, .block-layered-nav p.block-subtitle {
   display: none;
+}
+.custom-checkbox .checkbox-error-validate + .checkmark{
+	border: 1px solid #830000;
 }
 /* .checkout-privacy-policy input:checked+label { May be useful for the future
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
@@ -2569,15 +2590,23 @@ li#product_tabs_rpolicy_tabbed {
 }
 ul.tabs li.active h4 {
   border-bottom: 2px solid #000;
-  padding-bottom: 21px;
-  margin: 0;
 	width: max-content;
+	display: inline-block;
 }
 .padder {
   margin-top: 17px;
 }
 .padder .std {
   margin-bottom: 20px;
+}
+.product-detail-parent .product-shop.configurable .old-price {
+  margin: 0;
+}
+ul.tabs li h4{
+	padding-bottom: 21px;
+  margin: 0;
+  width: max-content;
+  display: inline-block;
 }
 /* ppp */
 
@@ -2589,7 +2618,7 @@ ul.tabs li.active h4 {
 	padding: 0px;
 }
 .chooseList ul li span{
-	display: block;
+	display: inline-block;
 	width: max-content;
 	padding: 0px 0 27px 0;
 }
@@ -2614,10 +2643,28 @@ ul.tabs li.active h4 {
 }
 .post-lengthds-lbl-options .chooseList ul{
 	border-bottom: 1px solid #d8d8d8;
+	justify-content: space-between;
 }
-.post-lengthds-lbl-options .chooseList li {
+.post-lengthds-lbl-options .chooseList li.firstRow {
   padding: 0;
+	text-align: center;
 }
+.post-lengthds-lbl-options .chooseList ul li.firstRow:last-child,
+.post-lengthds-lbl-options .chooseList ul li.secondRow:last-child{
+	text-align: right;
+}
+.post-lengthds-lbl-options .chooseList ul li.firstRow:first-child,
+.post-lengthds-lbl-options .chooseList ul li.secondRow:first-child{
+	text-align: left;
+}
+.post-lengthds-lbl-options .chooseList ul li.secondRow:first-child:last-child,
+.post-lengthds-lbl-options .chooseList ul li.firstRow:first-child:last-child{
+	text-align: left;
+}
+/* .firstRow.active{
+	margin-bottom: 24px;
+} */
+
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
 	display: flex;
@@ -2631,7 +2678,11 @@ ul.tabs li.active h4 {
 }
 .chooseList .label{
 	width: 100%;
-	margin-bottom: 12px;
+	/* margin-bottom: 12px; */
+}
+.chooseList ul li.option {
+	 margin-top: 10px;
+	 min-height: 51px;
 }
 .placement .label {
   width: 50%;
@@ -3303,6 +3354,12 @@ margin-top: 10%;
 .multi-column-2 .gift-messages:last-child {
   margin-top: 24px;
 }
+.login-dropdown li:first-child {
+  padding-top: 5px;
+}
+.product-description-section:last-child {
+	border: none;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
@@ -3324,7 +3381,7 @@ margin-top: 10%;
 }
 .minicart-remove {
   right: 7px;
-	margin-top: -10px;
+	margin-top: -9px;
 }
 .cart_checkout {
   width: 312px;
