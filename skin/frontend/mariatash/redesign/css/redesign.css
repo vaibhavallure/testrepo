@@ -1466,6 +1466,7 @@ input[type="checkbox"]:checked+label:before {
   font-size: 11px;
   letter-spacing: 1px;
   font-family: urw-din-light;
+	cursor: pointer;
 }
 .select-currency img {
 	margin: 0 0 5px 3px;
@@ -2051,6 +2052,9 @@ button#signin-btn-popup {
   top: 10px;
   right: 130px;
 }
+.customer-account-logoutsuccess .col-main {
+  padding: 40px;
+}
 /*Forget Password*/
 .popupResetPasswordModel .input-form {
     margin-bottom: 47px;
@@ -2104,14 +2108,8 @@ span#popup_loader_register {
 .usd-account .icon-item span {
   color: #292929;
 }
-/* .block-cart .tite_cart{
-	background: #fff;
-  text-align: center;
-} */
-/* .block-cart .cart_sidebar{
-	left: -60px;
-	width: 229px;
-} */
+
+
 /*Old Css*/
 .popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel {
 	position: fixed;
@@ -2157,6 +2155,9 @@ span#popup_loader_register {
 }
 .product-view .product-shop .padder h1, .product-view .product-shop .product-options .required, .product-view .product-shop .short-description, .block-layered-nav p.block-subtitle {
   display: none;
+}
+.custom-checkbox .checkbox-error-validate + .checkmark{
+	border: 1px solid #830000;
 }
 /* .checkout-privacy-policy input:checked+label { May be useful for the future
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;

@@ -94,8 +94,8 @@ $childProductArr = $this->getChildProductArray();
             $productsLinks .= 'data-original-url="' . $productUrl . '"';
             $productsLinks .= ' id="fs_link_' . $productId . '" target="_blank" data-link-id="' . $productId . '"';
             $productsLinks .= ' href="' . $productUrl . '"> <span class="fs-link-text-all">';
-            $productsLinks .= '<span class="fs-link-text-number">' . $numberOfProducts . ' <span class="fs-slashes"> // </span>';
-            $productsLinks .= '<span class="fs-link-text"> Shop it // ' . $productName . ' </span></span>';
+            $productsLinks .= '<span class="fs-link-text-number">' . $numberOfProducts . ' </span>';
+            $productsLinks .= '<span class="fs-link-text">' . $productName . ' </span></span>';
             $productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
 
             $temp_product_parent = null;
@@ -191,8 +191,8 @@ $childProductArr = $this->getChildProductArray();
 
 							<div class="fs-divider"></div>
 							<div style="clear: both;"></div>
-							<div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
-
+							<!-- <div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
+ -->
 							<div class="fs-post-info">
 								<a href="<?php //echo $feedModel->getUsername()?>"
 									target="_blank"> <span class="fs-service-username"> maria_tash</span>

@@ -130,7 +130,16 @@
 /*=====================*/
 /*MY ACCOUNT*/
 /*=====================*/
-
+.myaccount-index-index .breadcrumbs{
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%,0);
+	padding-left: 0;
+	padding-top: 17px;
+}
+.myaccount-index-index .breadcrumbs ul{
+	padding-left: 0;
+}
 .customer-account-index .main .col-main {
 	position: static!important;
 }
@@ -148,7 +157,7 @@
 }
 .dashboard h1,
 .acc-products-wrapper h1{
-	padding-top: 37px;
+	padding-top: 60px;
 	margin-bottom: 30px;
 	font-size: 30px;
 	text-transform: capitalize;
@@ -868,6 +877,7 @@
 /*=====================*/
 /*INSTAGRAM*/
 /*=====================*/
+
 #shop_our_instagram .fs-entry-container{
 	width: 322px;
 	margin-bottom: 18px;
@@ -931,6 +941,11 @@
 /*=====================*/
 /*INSTAGRAM POPUP*/
 /*=====================*/
+.fs-detail-content #product-info,
+.catalog-product-view #product-info{
+	max-height: 500px;
+	overflow-y: auto;
+}
 .fs-detail-content .fs-detail-nav-bar-arrows .fs-detail-nav-button{
 	display: none;
 }
@@ -1152,6 +1167,64 @@
 .close-eye{
 	display: none;
 }
+
+/*=====================*/
+/*INSTA DETAILS*/
+/*=====================*/
+
+.catalog-product-view .fs-detail-content,
+.insta-details .fs-detail-content{
+	display: flex;
+}
+
+.catalog-product-view .fs-detail-right,
+.insta-details .fs-detail-right{
+	display: flex;
+	align-items: flex-end;
+	flex-wrap: wrap;
+}
+
+.catalog-product-view .fs-service-username
+.insta-details .fs-post-info .fs-service-username{
+	text-transform: lowercase;
+} 
+.insta-details .fs-post-info a{
+	display: flex;
+	justify-content: space-between;
+}
+.insta-details .fs-detail-title{
+	padding-right: 0;
+}
+.insta-details #fs-detail-response{
+	padding: 0;
+}
+.insta-details .fs-divider{
+	margin-top: 10px!important;
+	margin-bottom: 10px!important;
+}
+ .insta-details .fs-text-link-container{
+	margin-top: 0;
+}
+.insta-details .fs-text-product{
+	display: block;
+}
+.insta-details .fs-link-text-all{
+	display: flex;
+}
+.insta-details .fs-link-text{
+	width: 90%;
+}
+.insta-details .fs-link-text-number{
+	margin-right: 15px;
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    border: solid 0.5px rgba(41, 41, 41, 0.9);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1179,6 +1252,9 @@
 	}
 }
 @media(max-width: 1024px){
+	.fs-overlink-text{
+		display: none!important; 
+	}
 	#shop_our_instagram{
 		margin-top: 131px;
 	}
@@ -1302,6 +1378,23 @@
 	}
 }
 @media(max-width: 767px){
+	.insta-details .fs-image-container{
+	margin: 35px 0; 
+}
+	.insta-details .fs-divider{
+		margin: 0!important;
+	}
+	.insta-details .fs-detail-content{
+		flex-direction: column;
+	}
+
+	.insta-details .fs-detail-title{
+		padding-left: 0;
+	}
+	.insta-details .fs-post-info{
+		padding-left: 0;
+		padding-right: 0;
+	}
 
 	.login_security .container{
 		padding: 0 50px;
