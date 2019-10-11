@@ -764,6 +764,12 @@ nav.mariatash-header {
 	/*width: 100px;*/
 	padding: 0;
 }
+.popbox span, .popbox_ajax span {
+  font-family: urw-din-medium;
+}
+#tooltip-id-contact td {
+  font-family: urw-din-medium;
+}
 /* 4.Newletter */
 
 
@@ -771,63 +777,63 @@ nav.mariatash-header {
 /* catalog page */
 
 .catalog a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .catalog .item,
 .insta-item {
-    position: relative;
-    background-color: #eee;
-    margin: 6px;
-    text-align: center;
+  position: relative;
+  background-color: #eee;
+  margin: 6px;
+  text-align: center;
 }
 
 .catalog .item .product-img {
-    padding: 15% 0;
+  padding: 15% 0;
 }
 
 .catalog .item h6 {
-    text-align: left;
+  text-align: left;
 }
 
 .products-grid .product-name a, #cart-sidebar .product-details h5, .title-item-gif-card {
-    font-size: 14px;
-    font-family: urw-din-xlight;
+  font-size: 14px;
+  font-family: urw-din-xlight;
 }
 .catalog-common-grid .price-box {
-    text-align: right;
-    margin-right: 3px;
+  text-align: right;
+  margin-right: 3px;
 }
 
 .list-mt-w .actions {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 .m-filter-checkboxes li {
-    display: flex;
+  display: flex;
 }
 
 .catalog .item:hover {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .catalog .item:hover .details {
-    display: block;
+  display: block;
 }
 
 .catalog .item .details h6 {
-    font-size: 13px;
-    color: #333;
+  font-size: 13px;
+  color: #333;
 }
 
 ul.swatch {
-    display: inline-flex;
-    padding-left: 0;
-    list-style: none;
+  display: inline-flex;
+  padding-left: 0;
+  list-style: none;
 }
 
 ul.swatch .swatch-item {
-    position: relative;
+  position: relative;
 }
 
 ul.swatch .swatch-item a {
