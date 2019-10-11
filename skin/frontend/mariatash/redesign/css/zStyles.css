@@ -1264,6 +1264,15 @@
 	width: 1140px;
     padding-left: 140px;
 }
+
+.catalog-product-view .quick_link{
+	padding-left: 52px;
+	margin-bottom: 0;
+}
+.catalog-product-view .fs-text-link-container a{
+	padding-top: 0;
+	padding-bottom: 0;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1437,6 +1446,9 @@
 	}
 }
 @media(max-width: 767px){
+	.catalog-product-view .quick_link{
+		padding-left: 38px;
+	}
 	.catalog-product-view .fs-detail-right .box{
 		width: 100%
 	}

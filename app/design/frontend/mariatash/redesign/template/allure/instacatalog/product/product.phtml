@@ -89,6 +89,8 @@ $childProductArr = $this->getChildProductArray();
         	$points .= '<div class="fs-arrow-up"></div>';
         	$points .= 'Shop it // " ' . $productName . '</div></div></a>';
 
+        	 $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $productId));
+
         	$productsLinks .= '<div class="fs-text-link-container ">';
         	$productsLinks .= '<a class="fs-text-product fs-link-list ' . $current_product_class . '" ';
         	$productsLinks .= 'data-original-url="' . $productUrl . '"';
@@ -96,6 +98,8 @@ $childProductArr = $this->getChildProductArray();
         	$productsLinks .= ' href="' . $productUrl . '"> <span class="fs-link-text-all">';
         	$productsLinks .= '<span class="fs-link-text-number">' . $numberOfProducts . ' </span>';
         	$productsLinks .= '<span class="fs-link-text">' . $productName . ' </span></span>';
+        	 $productsLinks.='<div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="'.$quickViewUrl.'sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
+                                  <div class="quick_link link-button d-block d-xs-block d-md-block d-lg-none d-xl-none"><a href="'.$productUrl.'" >Quick View</a></div> ';
         	$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
 
         	$temp_product_parent = null;
@@ -155,7 +159,7 @@ $childProductArr = $this->getChildProductArray();
 </div>
 <div class="fs-detail-right">
 	<div class="box">
-		
+
 		<div class="fs-detail-nav-bar-arrows">
 			<?php if(1):?>
 				<a class="fs-detail-nav-button" id="fs-prev-post"> <svg
@@ -278,6 +282,31 @@ $childProductArr = $this->getChildProductArray();
 
 	<script type="text/javascript">
 		jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'yes',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
+
+        afterLoad: function(current, previous) {
+
+        }
+    });
 
 		jQuery(document).ready(function () {
 
