@@ -1552,6 +1552,9 @@
 	}
 }
 @media(max-width: 576px){
+	.add-primary{
+		padding-left: 0;
+	}
 	.login_security .container{
 		padding: 0 15px;
 	}
