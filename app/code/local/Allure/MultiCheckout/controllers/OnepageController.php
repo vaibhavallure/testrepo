@@ -11,6 +11,23 @@ require_once ('app/code/local/MT/Checkout/controllers/OnepageController.php');
 
 class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageController
 {
+    const WHOLESALE_GROUP_ID = 2;
+    
+    /**
+     * Check customer group id is not wholesale
+     * then redirect to multishipping checkout.
+     * @return Mage_Checkout_OnepageController
+     */
+    public function preDispatch()
+    {
+        parent::preDispatch();
+        $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        if($customerGroupId != self::WHOLESALE_GROUP_ID){
+            $this->_redirect("*/multishipping");
+        }
+        return $this;
+    }
+    
     /**
      * Checkout page
      */

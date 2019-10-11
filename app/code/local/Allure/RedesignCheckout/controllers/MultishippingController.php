@@ -7,6 +7,22 @@
 require_once ('app/code/core/Mage/Checkout/controllers/MultishippingController.php');
 class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_MultishippingController
 {
+    const WHOLESALE_GROUP_ID = 2;
+    
+    /**
+     * Check customer group id is wholesale & if it is 
+     * wholesale then redirect to onepage checkout.
+     * @return Mage_Checkout_MultishippingController
+     */
+    public function preDispatch()
+    {
+        parent::preDispatch();
+        $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        if($customerGroupId == self::WHOLESALE_GROUP_ID){
+            $this->_redirect("*/onepage");
+        }
+        return $this;
+    }
     
     public function changeShippingAddressAction()
     {
