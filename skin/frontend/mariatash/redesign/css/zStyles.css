@@ -584,6 +584,11 @@
 }
 .add-primary{
 	order: 2;
+	width: 50%;
+	padding-left:20px;
+}
+.mt-myaccount-new .messages{
+	float: none;
 }
 .my_addresses #add-new-addresss{
 	background: transparent;
@@ -607,10 +612,10 @@
 }
 
 .my_addresses #additional-addresses li:nth-of-type(odd){
-	width: 40%;
+	width: 42%;
 }
 .my_addresses #additional-addresses li:nth-of-type(even){
-	width: 60%;
+	width: 58%;
 	padding-left: 20px;
 }
 .mt-addresses-additional li.item p{
@@ -920,8 +925,13 @@
 	display: flex;
 	padding-bottom: 0;
 }
+.catalog-product-view .fs-post-info{
+	padding-right: 0;
+}
+
 .category-shop-our-instagram .fs-link-text-all{
 	width: 100%;
+	display: flex;
 }
 .category-shop-our-instagram .fs-post-info a{
 	display: flex;
@@ -1176,44 +1186,62 @@
 .insta-details .fs-detail-content{
 	display: flex;
 }
+.catalog-product-view .fs-link-text-all{
+	width: 100%;
+}
+
+.catalog-product-view .fs-text-link-container a{
+	display: flex;
+}
 
 .catalog-product-view .fs-detail-right,
 .insta-details .fs-detail-right{
-	display: flex;
+	display: flex!important;
 	align-items: flex-end;
 	flex-wrap: wrap;
 }
 
-.catalog-product-view .fs-service-username
+.catalog-product-view .fs-service-username,
 .insta-details .fs-post-info .fs-service-username{
 	text-transform: lowercase;
 } 
+.catalog-product-view .fs-post-info a,
 .insta-details .fs-post-info a{
 	display: flex;
 	justify-content: space-between;
 }
+
+.fs-post-info .fs-detail-title,
 .insta-details .fs-detail-title{
 	padding-right: 0;
 }
+.fs-post-info #fs-detail-response,
 .insta-details #fs-detail-response{
 	padding: 0;
 }
+
+.fs-post-info .fs-divider,
 .insta-details .fs-divider{
 	margin-top: 10px!important;
 	margin-bottom: 10px!important;
 }
+.fs-post-info .fs-text-link-container,
  .insta-details .fs-text-link-container{
 	margin-top: 0;
 }
+.fs-post-info .fs-text-product,
 .insta-details .fs-text-product{
 	display: block;
 }
+.fs-post-info .fs-link-text-all,
 .insta-details .fs-link-text-all{
 	display: flex;
 }
+.fs-post-info .fs-link-text,
 .insta-details .fs-link-text{
 	width: 90%;
 }
+.fs-post-info .fs-link-text-number,
 .insta-details .fs-link-text-number{
 	margin-right: 15px;
     display: inline-flex;
@@ -1378,6 +1406,12 @@
 	}
 }
 @media(max-width: 767px){
+	.catalog-product-view .fs-detail-right .box{
+		width: 100%
+	}
+	.catalog-product-view .fs-divider{
+	margin-left: 0;
+}
 	.insta-details .fs-image-container{
 	margin: 35px 0; 
 }

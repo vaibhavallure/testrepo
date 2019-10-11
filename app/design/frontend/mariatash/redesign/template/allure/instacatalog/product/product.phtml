@@ -9,33 +9,33 @@ $childProductArr = $this->getChildProductArray();
 
 <?php if (($collection && $collection->getSize())) : ?>
 
-    <div class="insta-main">
-    <div class="image_carousel">
-    <div class="block-title text-uppercase mb-3">
-        <span class="para-bold"><?php echo $this->__('on instagram') ?></span>
-    </div>
-	<ul id="foo6"  style="overflow: hidden">
-       <?php
-            $shareBaseUrl = Mage::getBaseUrl('web') . "instacatalog/feed/shareview/id/";
-            $productArr = $this->getInstagramHotspotProducts();
-            foreach ($collection as $feeds) :
-        ?>
-        <?php
+	<div class="insta-main">
+		<div class="image_carousel">
+			<div class="block-title text-uppercase mb-3">
+				<span class="para-bold"><?php echo $this->__('on instagram') ?></span>
+			</div>
+			<ul id="foo6"  style="overflow: hidden">
+				<?php
+				$shareBaseUrl = Mage::getBaseUrl('web') . "instacatalog/feed/shareview/id/";
+				$productArr = $this->getInstagramHotspotProducts();
+				foreach ($collection as $feeds) :
+					?>
+					<?php
         $feed = $feeds; // Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
         $media_id = $feed->getId(); /* getMediaId(); */
         $_post = $feed;
         $shareUrl = $shareBaseUrl . $media_id;
         $createDate = $_post->getCreatedTimestamp();
         if ($createDate != null) {
-            $createDate = date('d M Y', $createDate);
+        	$createDate = date('d M Y', $createDate);
         }
 
         $imageUrl = $_post->getThumbnail();
         if (empty($imageUrl)) {
-            $imageUrl = $_post->getLowResolution();
-            if (empty($imageUrl)) {
-                $imageUrl = $_post->getStandardResolution();
-            }
+        	$imageUrl = $_post->getLowResolution();
+        	if (empty($imageUrl)) {
+        		$imageUrl = $_post->getStandardResolution();
+        	}
         }
 
         $_options = json_decode($_post->getHotspots());
@@ -45,164 +45,165 @@ $childProductArr = $this->getChildProductArray();
         $temp_sku = "";
 
         foreach ($_options as $option) {
-            $sku = $option->text;
-            $temp_sku = $sku;
-            $temp_product = $productArr[$temp_sku];
+        	$sku = $option->text;
+        	$temp_sku = $sku;
+        	$temp_product = $productArr[$temp_sku];
 
-            if ($temp_product && count($temp_product) <= 0) {
-                continue;
-            }
+        	if ($temp_product && count($temp_product) <= 0) {
+        		continue;
+        	}
 
-            $temp_product_parent = $temp_product["parentItemNumber"];
-            $numberOfProducts += 1;
+        	$temp_product_parent = $temp_product["parentItemNumber"];
+        	$numberOfProducts += 1;
 
-            if ((substr($temp_sku, 1) == substr($sku_main, 1)) || (isset($temp_product_parent) && $temp_product_parent == $parentItemNumber)) {
-                $sku = $old_sku;
+        	if ((substr($temp_sku, 1) == substr($sku_main, 1)) || (isset($temp_product_parent) && $temp_product_parent == $parentItemNumber)) {
+        		$sku = $old_sku;
                 // $product = $_product;
-                $product = $productArr[$sku];
-            }
+        		$product = $productArr[$sku];
+        	}
 
             // $product = Mage::getSingleton('catalog/product')->loadByAttribute('sku',$sku);
 
-            if (!isset($product) || count($product) <= 0) {
-                $product = $temp_product;
-            }
+        	if (!isset($product) || count($product) <= 0) {
+        		$product = $temp_product;
+        	}
 
-            if ($product) {
-                $productName = $product["name"];
-                $productId   = $product["id"];
-                $productUrl  = $product["url"];
-            }
+        	if ($product) {
+        		$productName = $product["name"];
+        		$productId   = $product["id"];
+        		$productUrl  = $product["url"];
+        	}
 
-            $current_product_class = "";
-            if (in_array($productId, $childProductArr)) {
-                $current_product_class = "fs_current_product";
-            }
+        	$current_product_class = "";
+        	if (in_array($productId, $childProductArr)) {
+        		$current_product_class = "fs_current_product";
+        	}
 
-            $points .= '<a data-original-url="' . $productUrl . '"';
-            $points .= ' href="' . $productUrl . '" target="_blank">';
-            $points .= '<div id="fs_overlink_' . $productId . '" class="fs-overlink ' . $current_product_class . '" ';
-            $points .= ' data-link-id="' . $productId . '" ';
-            $points .= ' style="position: absolute; color: rgb(34, 34, 34); top:' . (($option->top * 100) / 640) . '%; left:' . (($option->left * 100) / 640) . '%;">';
-            $points .= '<div class="fs-product-number ' . $current_product_class . '">' . $numberOfProducts . '</div>';
-            $points .= '<div class="fs-overlink-text fs-overlink-text-right">';
-            $points .= '<div class="fs-arrow-up"></div>';
-            $points .= 'Shop it // " ' . $productName . '</div></div></a>';
+        	$points .= '<a data-original-url="' . $productUrl . '"';
+        	$points .= ' href="' . $productUrl . '" target="_blank">';
+        	$points .= '<div id="fs_overlink_' . $productId . '" class="fs-overlink ' . $current_product_class . '" ';
+        	$points .= ' data-link-id="' . $productId . '" ';
+        	$points .= ' style="position: absolute; color: rgb(34, 34, 34); top:' . (($option->top * 100) / 640) . '%; left:' . (($option->left * 100) / 640) . '%;">';
+        	$points .= '<div class="fs-product-number ' . $current_product_class . '">' . $numberOfProducts . '</div>';
+        	$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
+        	$points .= '<div class="fs-arrow-up"></div>';
+        	$points .= 'Shop it // " ' . $productName . '</div></div></a>';
 
-            $productsLinks .= '<div class="fs-text-link-container ">';
-            $productsLinks .= '<a class="fs-text-product fs-link-list ' . $current_product_class . '" ';
-            $productsLinks .= 'data-original-url="' . $productUrl . '"';
-            $productsLinks .= ' id="fs_link_' . $productId . '" target="_blank" data-link-id="' . $productId . '"';
-            $productsLinks .= ' href="' . $productUrl . '"> <span class="fs-link-text-all">';
-            $productsLinks .= '<span class="fs-link-text-number">' . $numberOfProducts . ' </span>';
-            $productsLinks .= '<span class="fs-link-text">' . $productName . ' </span></span>';
-            $productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
+        	$productsLinks .= '<div class="fs-text-link-container ">';
+        	$productsLinks .= '<a class="fs-text-product fs-link-list ' . $current_product_class . '" ';
+        	$productsLinks .= 'data-original-url="' . $productUrl . '"';
+        	$productsLinks .= ' id="fs_link_' . $productId . '" target="_blank" data-link-id="' . $productId . '"';
+        	$productsLinks .= ' href="' . $productUrl . '"> <span class="fs-link-text-all">';
+        	$productsLinks .= '<span class="fs-link-text-number">' . $numberOfProducts . ' </span>';
+        	$productsLinks .= '<span class="fs-link-text">' . $productName . ' </span></span>';
+        	$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
 
-            $temp_product_parent = null;
-            $product = null;
+        	$temp_product_parent = null;
+        	$product = null;
         }
         ?>
-                <li class="item product-view-instagram-item"><a
-			class="fancybox fancybox.iframe quickview-youmayalsolike"
-			id='product-quickview-<?php echo $feed->getId() ?>'
-			onclick="instagramView.show(this);" media-id="<?php echo $media_id?>"">
-				<img src="<?php echo $imageUrl ?>" alt="" />
-		</a>
-			<div style="display: none;" id="details-insta-<?php echo $media_id?>"
-				data-user-name="<?php $_post->getUsername()?>"
-				data-img-url="<?php echo $_post->getStandardResolution()?>"
-				data-create-date="<?php echo $createDate?>"
-				data-share-url="<?php echo $shareUrl?>">
-				<div id="insta-caption-<?php echo $media_id?>"
-					style="display: none;"><?php echo json_decode($_post->getCaption()) ?></div>
-				<div id="insta-product-mark-<?php echo $media_id?>"
-					style="display: none;"><?php echo $points ?></div>
-				<div id="insta-product-details-<?php echo $media_id?>"
-					style="display: none;"><?php echo $productsLinks ?></div>
-			</div></li>
-   <?php endforeach;?>
-        </ul>
+        <li class="item product-view-instagram-item"><a
+        	class="fancybox fancybox.iframe quickview-youmayalsolike"
+        	id='product-quickview-<?php echo $feed->getId() ?>'
+        	onclick="instagramView.show(this);" media-id="<?php echo $media_id?>"">
+        	<img src="<?php echo $imageUrl ?>" alt="" />
+        </a>
+        <div style="display: none;" id="details-insta-<?php echo $media_id?>"
+        	data-user-name="<?php $_post->getUsername()?>"
+        	data-img-url="<?php echo $_post->getStandardResolution()?>"
+        	data-create-date="<?php echo $createDate?>"
+        	data-share-url="<?php echo $shareUrl?>">
+        	<div id="insta-caption-<?php echo $media_id?>"
+        		style="display: none;"><?php echo json_decode($_post->getCaption()) ?></div>
+        		<div id="insta-product-mark-<?php echo $media_id?>"
+        			style="display: none;"><?php echo $points ?></div>
+        			<div id="insta-product-details-<?php echo $media_id?>"
+        				style="display: none;"><?php echo $productsLinks ?></div>
+        			</div></li>
+        		<?php endforeach;?>
+        	</ul>
 
-</div>
+        </div>
         <div class="clearfix"></div>
         <a class="prev" id="foo6_prev" href="#"><span>prev</span></a> <a
-                class="next" id="foo6_next" href="#"><span>next</span></a>
+        class="next" id="foo6_next" href="#"><span>next</span></a>
 
         <div class="pagination" id="foo6_pag"></div>
     </div>
-<div id="instagram-view-container">
-	<div id="showcase"
-		class="fs-wide-timeline  fs-desktop fs-prepended-detail"
-		style="display: none;">
-		<div id="fs-timeline-detail-592364" class="fs-timeline-detail">
-			<div id="fs-instagram-view-container"
-				class="fs-detail-outer-container ">
-				<div class="instagram-loader"></div>
+    <div id="instagram-view-container">
+    	<div id="showcase"
+    	class="fs-wide-timeline  fs-desktop fs-prepended-detail"
+    	style="display: none;">
+    	<div id="fs-timeline-detail-592364" class="fs-timeline-detail">
+    		<div id="fs-instagram-view-container"
+    		class="fs-detail-outer-container ">
+    		<div class="instagram-loader"></div>
 
-				<div id="fs-detail-response" class="fs-detail-container "
-					data-resource-url="<?php //echo $feedModel->getUsername()?>">
-					<div class="fs-detail-content">
-						<div class="fs-detail-left">
-							<div class="fs-image-container" style="position: relative;">
-								<img class="fs-detail-image" id="fs_main_image"
-									src="<?php
+    		<div id="fs-detail-response" class="fs-detail-container "
+    		data-resource-url="<?php //echo $feedModel->getUsername()?>">
+    		<div class="fs-detail-content">
+    			<div class="fs-detail-left">
+    				<div class="fs-image-container" style="position: relative;">
+    					<img class="fs-detail-image" id="fs_main_image"
+    					src="<?php
     // echo $feedModel->getStandardResolution()
     // $feedModel->getImage() ?>">
-							<?php //echo $points?>
-							<div id="point-mark"></div>
-								<p><?php //echo json_encode($instagramObj) ?></p>
-							</div>
-						</div>
-						<div class="fs-detail-right">
+    <?php //echo $points?>
+    <div id="point-mark"></div>
+    <p><?php //echo json_encode($instagramObj) ?></p>
+</div>
+</div>
+<div class="fs-detail-right">
+	<div class="box">
+		
+		<div class="fs-detail-nav-bar-arrows">
+			<?php if(1):?>
+				<a class="fs-detail-nav-button" id="fs-prev-post"> <svg
+					width="30" height="30" xmlns="http://www.w3.org/2000/svg"
+					xmlns:svg="http://www.w3.org/2000/svg">
+					<g>
+						<path class="fs-arrow" fill="none" stroke-width="1px"
+						d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#222"></path>
+					</g>
+				</svg>
+			</a> <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
+				<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
+				xmlns:svg="http://www.w3.org/2000/svg">
+				<g>
+					<path class="fs-arrow" stroke="#222" id="fs-left-path"
+					d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
+				</a>
+			<?php endif;?>
+			<div class="fs-detail-nav-bar-close">
+				<a class="fs-detail-nav-button" id="fs-detail-close"
+				onclick="closeView(this);"><svg width="30" height="30"
+				xmlns="http://www.w3.org/2000/svg"
+				xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
+				stroke="#222" class="fs-arrow" stroke-width="1px"
+				fill="none">   <path d="m0,0l30,30"></path>   <path
+				d="m30,0l-30,30"></path></g></svg></a>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="fs-products-title fs-plural-products"></div>
 
-							<div class="fs-detail-nav-bar-arrows">
-						<?php if(1):?>
-							<a class="fs-detail-nav-button" id="fs-prev-post"> <svg
-										width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-										xmlns:svg="http://www.w3.org/2000/svg">
-								<g>
-										<path class="fs-arrow" fill="none" stroke-width="1px"
-											d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#222"></path>
-								</g>
-								</svg>
-								</a> <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
-									<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-										xmlns:svg="http://www.w3.org/2000/svg">
-									<g>
-									<path class="fs-arrow" stroke="#222" id="fs-left-path"
-											d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
-								</a>
-							<?php endif;?>
-							<div class="fs-detail-nav-bar-close">
-									<a class="fs-detail-nav-button" id="fs-detail-close"
-										onclick="closeView(this);"><svg width="30" height="30"
-											xmlns="http://www.w3.org/2000/svg"
-											xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
-												stroke="#222" class="fs-arrow" stroke-width="1px"
-												fill="none">   <path d="m0,0l30,30"></path>   <path
-												d="m30,0l-30,30"></path></g></svg></a>
-								</div>
-								<div style="clear: both;"></div>
-							</div>
-							<div class="fs-products-title fs-plural-products"></div>
+		<?php //echo $productsLinks?>
+		<div id="product-info"></div>
 
-						<?php //echo $productsLinks?>
-						<div id="product-info"></div>
-
-							<div class="fs-divider"></div>
-							<div style="clear: both;"></div>
+		<div class="fs-divider"></div>
+		<div style="clear: both;"></div>
 							<!-- <div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
- -->
+							-->
 							<div class="fs-post-info">
 								<a href="<?php //echo $feedModel->getUsername()?>"
-									target="_blank"> <span class="fs-service-username"> maria_tash</span>
-									<span class="fs-slashes">//</span> INSTAGRAM <span
-									class="fs-slashes">//</span> <span class="fs-detail-date"><?php //echo $createDate?></span>
-								</a>
-							</div>
+									target="_blank"> <span class="fs-service-username"> #mariatash</span>
+									<!-- <span class="fs-slashes">//</span> INSTAGRAM <span
+										class="fs-slashes">//</span> --> <span class="fs-detail-date"><?php //echo $createDate?></span>
+									</a>
+								</div>
 
-							<div class="fs-detail-shares">
-								<a id="insta-facebook" class="fs-share fs-facebook-share"
+								<div class="fs-detail-shares">
+									<a id="insta-facebook" class="fs-share fs-facebook-share"
 									href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php //echo $shareUrl ?>/&amp;p[image]=<?php //echo $feedModel->getStandardResolution()?>"
 									target="_blank"><i class="fa fa-facebook"></i> </a> <a
 									id="insta-envelope" class="fs-share fs-link-share"
@@ -213,43 +214,44 @@ $childProductArr = $this->getChildProductArray();
 									href="http://www.twitter.com/share?url=<?php //echo $shareUrl ?>/&amp;related=maria_tash&amp;text=Shop this Instagram from @maria_tash">
 									<i class="fa fa-twitter"></i>
 								</a> <a id="insta-pinterest" class="fs-share fs-link-share"
-									href="http://www.pinterest.com/pin/create/button/?url=<?php //echo $shareUrl ?>/&amp;media=<?php //echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
-									target="_blank" data-pin-do="buttonPin" data-pin-config="above">
-									<i class="fa fa-pinterest"></i>
-								</a> <a id="insta-share-link" class="fs-share fs-link-share"
-									href="<?php //echo $shareUrl ?>/" target="_blank"><i
-									class="fa fa-link"></i> </a>
-							</div>
+								href="http://www.pinterest.com/pin/create/button/?url=<?php //echo $shareUrl ?>/&amp;media=<?php //echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
+								target="_blank" data-pin-do="buttonPin" data-pin-config="above">
+								<i class="fa fa-pinterest"></i>
+							</a> <a id="insta-share-link" class="fs-share fs-link-share"
+							href="<?php //echo $shareUrl ?>/" target="_blank"><i
+							class="fa fa-link"></i> </a>
 						</div>
 					</div>
 				</div>
-				<div class="fs-buy-container fs-unslid"></div>
-
 			</div>
 		</div>
+		<div class="fs-buy-container fs-unslid"></div>
+
 	</div>
+</div>
+</div>
 </div>
 
 <script type="text/javascript">
 	//<![CDATA[
-		var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
+	var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
 		//]]>
 	</script>
 
-<script>
+	<script>
 		jQuery(document).ready(function(){
 			jQuery('.fs-text-product').hover(function(){
 				var id = jQuery(this).attr('data-link-id');
 				var selector = jQuery('#fs_overlink_'+id);
 				selector.css("opacity", "1");
 				selector.find('.fs-overlink-text').css(
-						{"opacity":"1","display":"block"});
-		    }, function(){
-		    	var id = jQuery(this).attr('data-link-id');
-		    	var selector = jQuery('#fs_overlink_'+id);
-		    	selector.css("opacity", "");
-		    	selector.find('.fs-overlink-text').css(
-						{"opacity":"","display":""});
+					{"opacity":"1","display":"block"});
+			}, function(){
+				var id = jQuery(this).attr('data-link-id');
+				var selector = jQuery('#fs_overlink_'+id);
+				selector.css("opacity", "");
+				selector.find('.fs-overlink-text').css(
+					{"opacity":"","display":""});
 			});
 		});
 
@@ -274,53 +276,53 @@ $childProductArr = $this->getChildProductArray();
 	</script>
 
 
-<script type="text/javascript">
-        jQuery.noConflict();
+	<script type="text/javascript">
+		jQuery.noConflict();
 
-        jQuery(document).ready(function () {
+		jQuery(document).ready(function () {
 
-            jQuery('#foo6').jcarousel({
-                initCallback: mycarousel_initCallbackProd1,
-                buttonNextCallback: mycarousel_buttonPrevCallbackProd1,
-                buttonPrevCallback: mycarousel_buttonNextCallbackProd1,
+			jQuery('#foo6').jcarousel({
+				initCallback: mycarousel_initCallbackProd1,
+				buttonNextCallback: mycarousel_buttonPrevCallbackProd1,
+				buttonPrevCallback: mycarousel_buttonNextCallbackProd1,
                 // This tells jCarousel NOT to autobuild prev/next buttons
                 buttonNextHTML: null,
                 buttonPrevHTML: null,
                 itemFallbackDimension: 90
             });
 
-        });
+		});
 
-        function mycarousel_initCallbackProd1(carousel) {
-            jQuery('#foo6_prev').bind('click', function () {
-                carousel.prev();
-                return false;
-            });
+		function mycarousel_initCallbackProd1(carousel) {
+			jQuery('#foo6_prev').bind('click', function () {
+				carousel.prev();
+				return false;
+			});
 
-            jQuery('#foo6_next').bind('click', function () {
-                carousel.next();
-                return false;
-            });
-        }
+			jQuery('#foo6_next').bind('click', function () {
+				carousel.next();
+				return false;
+			});
+		}
 
-        function mycarousel_buttonNextCallbackProd1(carousel, button, enabled) {
-            if (enabled) {
-                jQuery("#foo6_prev").css('opacity', 1);
-            } else {
-                jQuery("#foo6_prev").css('opacity', 0.13);
-            }
-        }
+		function mycarousel_buttonNextCallbackProd1(carousel, button, enabled) {
+			if (enabled) {
+				jQuery("#foo6_prev").css('opacity', 1);
+			} else {
+				jQuery("#foo6_prev").css('opacity', 0.13);
+			}
+		}
 
-        function mycarousel_buttonPrevCallbackProd1(carousel, button, enabled) {
-            if (enabled) {
-                jQuery("#foo6_next").css('opacity', 1);
-            } else {
-                jQuery("#foo6_next").css('opacity', 0.13);
-            }
-        }
+		function mycarousel_buttonPrevCallbackProd1(carousel, button, enabled) {
+			if (enabled) {
+				jQuery("#foo6_next").css('opacity', 1);
+			} else {
+				jQuery("#foo6_next").css('opacity', 0.13);
+			}
+		}
 
-        if (jQuery('ul#foo6 li.item').length < 4){
-            jQuery("#foo6_next , #foo6_prev").hide();
-        }
-    </script>
+		if (jQuery('ul#foo6 li.item').length < 4){
+			jQuery("#foo6_next , #foo6_prev").hide();
+		}
+	</script>
 <?php endif; ?>
