@@ -19,34 +19,36 @@
   <?php if ($_product->isSaleable() && count($_attributes)):?>
     <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
     <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
-    <div class="row">
+    <div class="">
         <?php foreach($_attributes as $_attribute): ?>
             <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
-            <div class="swatch-section col-12 <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
-                <div class="input-box row">
+            <div class="swatch-section row <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
+                <div class="input-box col-12">
                     <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
-                    <div class="col">
-                    <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
+                    <div class="row">
+                      <div class="col">
+                    <h3 class="product-attribute-name mb-0"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                     </div>
-                    <div class="col">
-
+                      <div class="col">
+                        <div class="row metal-swatch">
                         <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="display: none">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
-
+                      </div>
                     <?php else:?>
-                        <div class="col">
-                            <div id="label-attr<?php echo $_attribute->getAttributeId() ?>" class="d-none">
-                                <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
+                        <div class="row">
+                            <div id="label-attr<?php echo $_attribute->getAttributeId() ?>" class="d-none rowßß col-12 ">
+                                <h3 class="product-attribute-name mb-0"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                             </div>
-                        <div class="attribute_select_default row justify-content-end m-0 <?= $_attribute->getProductAttribute()->getAttributeCode();?>" id="<?php echo $_attribute->getAttributeId() ?>">
-                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select d-none" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
-                                <option><?php echo $this->__('Select an Option') ?></option>
-                            </select>
-                        </div>
+                            <div class="attribute_select_default col-12 justify-content-end <?= $_attribute->getProductAttribute()->getAttributeCode();?>" id="<?php echo $_attribute->getAttributeId() ?>">
+                                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select d-none" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
+                                    <option><?php echo $this->__('Select an Option') ?></option>
+                                </select>
+                            </div>
                     <?php endif;?>
 
                     </div>
+                  </div>
                 </div>
                     <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
 
@@ -154,7 +156,7 @@
   var attrClass=selectlabel2.toLowerCase();
   attrClass=attrClass.replace(" ","-");
 
-  jQuery(this).parent().after().append("<div class='chooseList col-12 "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul class='row p-0'></ul></div>");
+  jQuery(this).parent().after().append("<div class='chooseList row "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
       var selectlabel=jQuery('#label-attr'+attr_id).html();
       jQuery('#label-attr'+attr_id).hide();
       var j=1;
@@ -287,7 +289,7 @@
             }
         }
     </script>
-    <div class="size-links__container cf">
+    <div class="size-links__container cf row">
         <?php
         if (!Mage::registry('sizeChartDisplay')) {
             $_product = Mage::registry('current_product');
@@ -347,7 +349,7 @@
                     <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
                 </div>
             <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
-                  <div class="size_chart"><a class="size_chart_link link-button" href="#inline_sample">Size Chart</a></div>
+                  <div class="size_chart col pl-0"><a class="size_chart_link link-button" href="#inline_sample">Size Chart</a></div>
             <?php endif; ?>
             <?php
             endif;
@@ -357,7 +359,7 @@
             <div class="sampleAlreadyInCart">
                 <div class="content-sample-already-in-cart display_none">You can only add one sample to your cart</div>
             </div>
-            <div class="get_size_sample">
+            <div class="get_size_sample col pr-0 text-right">
                 <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index/sourceOfReq/quickview/', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
             </div>
 

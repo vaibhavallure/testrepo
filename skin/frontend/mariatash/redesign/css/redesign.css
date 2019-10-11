@@ -2515,7 +2515,8 @@ ul#foo4 {
   display: none;
 }
 .product-shop {
-  margin-top: 71px;
+  margin-top: 75px;
+	padding: 0 34px;
 }
 .catalog-category-view .product-name{
   margin-bottom: 16px;
@@ -2537,6 +2538,7 @@ ul#foo4 {
 .amconf-images-container {
   justify-content: flex-end;
   display: flex;
+	padding: 0 15px;
 }
 .product-view .product-shop .product-options label.required{
 	display: inline-block !important;
@@ -2557,7 +2559,7 @@ button#addtocart {
 }
 ul.tabs {
 	margin-bottom: 0;
-	margin-top: 48px;
+	margin-top: 30px;
 }
 .padder table.data-table, .padder .data-table tr {
   display: grid;
@@ -2567,7 +2569,7 @@ ul.tabs {
   margin-bottom: 10px;
 }
 .add-to-cart .availability {
-  margin: 24px 0 25px;
+  margin: 40px 0 21px;
 }
 .thumb.thumb1 img{
 	margin-top: 153px;
@@ -2583,9 +2585,6 @@ ul.tabs {
 }
 .add-to-links {
   margin-top: 14px;
-}
-.pdp-tabs {
-  padding: 0 15px;
 }
 .tab-section{
 	border-bottom: 1px solid #d8d8d8;
@@ -2620,23 +2619,23 @@ ul.tabs li h4{
 	padding: 0px;
 }
 .chooseList ul li span{
-	display: inline-block;
+	/* display: inline-block; */
 	width: max-content;
-	padding: 0px 0 27px 0;
+	padding: 0px 0 18px 0;
 }
-.chooseList ul li{
-	padding: 0px 35px 0px 0px;
-}
+/* .chooseList ul li{
+	padding: 0px 30px 0px 0px;
+} */
 .chooseList ul li.active span{
   border-bottom: 2px solid black;
 	font-family: urw-din-medium;
 }
 .chooseList {  /* col-12 CSS */
-  -ms-flex: 0 0 100%;
+  /* -ms-flex: 0 0 100%;
   flex: 0 0 100%;
-  max-width: 100%;
+  max-width: 100%; */
 	/* margin-top: 19px; */
-	border-bottom: 1px solid #d8d8d8;
+	/* border-bottom: 1px solid #d8d8d8; */
 }
 .post-lengthds-lbl-options .chooseList ul li{
 	padding: 0px 25px 0px 0px;
@@ -2650,25 +2649,7 @@ ul.tabs li h4{
 	border-bottom: 1px solid #d8d8d8;
 	/* justify-content: space-between; */
 }
-/* .post-lengthds-lbl-options .chooseList li.firstRow {
-  padding: 0;
-	text-align: center;
-}
-.post-lengthds-lbl-options .chooseList ul li.firstRow:last-child,
-.post-lengthds-lbl-options .chooseList ul li.secondRow:last-child{
-	text-align: right;
-}
-.post-lengthds-lbl-options .chooseList ul li.firstRow:first-child,
-.post-lengthds-lbl-options .chooseList ul li.secondRow:first-child{
-	text-align: left;
-}
-.post-lengthds-lbl-options .chooseList ul li.secondRow:first-child:last-child,
-.post-lengthds-lbl-options .chooseList ul li.firstRow:first-child:last-child{
-	text-align: left;
-} */
-/* .firstRow{
-	margin-bottom: 24px;
-} */
+
 .list-margin.active{
 	margin-bottom: 24px;
 }
@@ -2685,19 +2666,20 @@ ul.tabs li h4{
 	text-transform: capitalize;
 }
 .chooseList .label{
-	width: 100%;
+	/* width: 100%; */
 	/* margin-bottom: 12px; */
 }
 .chooseList ul li.option {
 	 /* margin-top: 10px; */
-	 min-height: 51px;
+	 /* min-height: 51px; */
+	 /* line-height: 0; */
 }
 .placement .label {
   width: 50%;
 }
-.swatch-section{
+/* .swatch-section{
 	margin-top: 1px;
-}
+} */
 .post-lengthds-lbl-options {
   margin-top: 11px;
 	margin-bottom: 0px;
@@ -3811,12 +3793,50 @@ div#uniform-shipping-address-select>span{
 }
 
 /*Attributes CSS*/
-#chooseListattribute306.chooseList ul li {
+.swatch-section .input-box, #ajax-price{
+	border-bottom: 1px solid #d8d8d8;
+}
+.fr_size .chooseList ul li {
   padding: 0px 22px 0px 0px;
 }
-#chooseListattribute306.chooseList ul li span{
+.fr_size .chooseList ul li span{
 	padding: 0px 0 17px 0;
 }
-#chooseListattribute306.chooseList ul li.option{
+/* .fr_size .chooseList ul li.option{
 	min-height:41px;
+} */
+.fr_size .list-margin{
+	margin-bottom: 0;
+}
+.swatch-section ul {
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+	width: 100%;
+	justify-content: space-between;
+}
+.swatch-section .input-box {
+	padding: 14px 0 17px;
+}
+.metal-swatch{
+	justify-content: flex-end;
+}
+#ajax-price {
+  margin-top: 16px;
+	padding-bottom: 11px;
+}
+#ajax-price span{
+	font-size: 22px;
+}
+.swatch-section .input-box > .row {
+  align-items: center;
+}
+.size-links__container {
+  margin-top: 18px;
+}
+.add-to-cart-left .minus_qty, .add-to-cart-left .plus_qty, .add-to-cart-left .total_qty{
+	margin-top: 6px;
+}
+.product-special-instructions {
+  margin-top: 17px;
 }
