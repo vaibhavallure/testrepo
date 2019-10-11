@@ -18,7 +18,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     {
         parent::preDispatch();
         $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-        if($customerGroupId != self::WHOLESALE_GROUP_ID){
+        if($customerGroupId == self::WHOLESALE_GROUP_ID){
             $this->_redirect("*/onepage");
         }
         return $this;
