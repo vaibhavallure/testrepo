@@ -7,45 +7,27 @@
 require_once ('app/code/core/Mage/Checkout/controllers/MultishippingController.php');
 class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_MultishippingController
 {
-    
-    public function changeShippingAddressAction()
-    {
-        $requestData = $this->getRequest()->getParams();
-        try {
-            $this->_getCheckout()->changeShippingAddress($requestData);
-        }catch (Exception $e){
-            $this->_getCheckoutSession()->addError($e->getMessage());
-        }
-        $this->_redirect('*/*/shipping');
-    }
+    const WHOLESALE_GROUP_ID = 2;
     
     /**
-     * Multishipping checkout shipping information page
+     * Check customer group id is wholesale & if it is 
+     * wholesale then redirect to onepage checkout.
+     * @return Mage_Checkout_MultishippingController
      */
-    public function shippingAction1()
+    public function preDispatch()
     {
-        if (!$this->_validateMinimumAmount()) {
-            return;
+        parent::preDispatch();
+        $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        if($customerGroupId == self::WHOLESALE_GROUP_ID){
+            $this->_redirect("*/onepage");
         }
-        
-        if (!$this->_getState()->getCompleteStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_SELECT_ADDRESSES)) {
-            $this->_redirect('*/*/addresses');
-            return $this;
-        }
-        
-        $this->_getCheckout()->removeBackOrderAddresses();
-        
-        $this->_getState()->setActiveStep(
-            Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
-            );
-        $this->loadLayout();
-        $this->_initLayoutMessages('customer/session');
-        $this->_initLayoutMessages('checkout/session');
-        $this->renderLayout();
+        return $this;
     }
     
     /**
-     * Multishipping checkout after the shipping page
+     * Override the shippingPostAction.
+     * for save the signature data into multiple addresses.
+     * event : checkout_controller_multishipping_shipping_signature_post
      */
     public function shippingPostAction()
     {
@@ -78,9 +60,36 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             $this->_redirect('*/*/shipping');
         }
     }
+        
+    /**
+     * Temporary action.
+     * Keep as backup
+     */
+    public function shippingAction1()
+    {
+        if (!$this->_validateMinimumAmount()) {
+            return;
+        }
+        
+        if (!$this->_getState()->getCompleteStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_SELECT_ADDRESSES)) {
+            $this->_redirect('*/*/addresses');
+            return $this;
+        }
+        
+        $this->_getCheckout()->removeBackOrderAddresses();
+        
+        $this->_getState()->setActiveStep(
+            Mage_Checkout_Model_Type_Multishipping_State::STEP_SHIPPING
+            );
+        $this->loadLayout();
+        $this->_initLayoutMessages('customer/session');
+        $this->_initLayoutMessages('checkout/session');
+        $this->renderLayout();
+    }
     
     /**
-     * Multishipping checkout after the shipping page
+     * Temporary action.
+     * Keep as backup
      */
     public function shippingPostAction1()
     {
@@ -113,6 +122,26 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         }
     }
     
+    /**
+     * New controller action.
+     * It's used to customer can change it's shipping
+     * address from the shipping method user interface.
+     */
+    public function changeShippingAddressAction()
+    {
+        $requestData = $this->getRequest()->getParams();
+        try {
+            $this->_getCheckout()->changeShippingAddress($requestData);
+        }catch (Exception $e){
+            $this->_getCheckoutSession()->addError($e->getMessage());
+        }
+        $this->_redirect('*/*/shipping');
+    }
+    
+    /**
+     * New controller action.
+     * Not used yet.
+     */
     public function deliveryAction()
     {
         if (!$this->_validateMinimumAmount()) {
@@ -135,6 +164,10 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $this->renderLayout();
     }
     
+    /**
+     * New controller action.
+     * Not used yet.
+     */
     public function deliveryPostAction()
     {
         if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
@@ -160,7 +193,8 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     }
     
     /**
-     * Multishipping checkout after the overview page
+     * Override the overviewPostAction.
+     * In that success step of multishipping removed. 
      */
     public function overviewPostAction()
     {
@@ -233,6 +267,11 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         }
     }
     
+    /**
+     * New action created
+     * It's used to laod the updated totals data from 
+     * multishipping checkout through ajax call from payment section.
+     */
     public function refreshtotalsAction()
     {
         $this->_getCheckout()->getQuote()->collectTotals()->save();
@@ -241,7 +280,9 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     }
     
     /**
-     * Initialize coupon
+     * New action created
+     * It's used only for multishipping checkout 
+     * to apply the promocode from payment section.
      */
     public function couponPostAction()
     {
@@ -256,8 +297,10 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
          * No reason continue with empty shopping cart
          */
         if (!$this->_getCheckout()->getQuote()->getItemsCount()) {
-            if (!$isAjax) $this->_redirect('checkout/cart');
-            else die(json_encode($response));
+            if (!$isAjax) 
+                $this->_redirect('checkout/cart');
+            else 
+                die(json_encode($response));
             return;
         }
         
@@ -268,16 +311,18 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $oldCouponCode = $this->_getCheckout()->getQuote()->getCouponCode();
         
         if (!strlen($couponCode) && !strlen($oldCouponCode)) {
-            if (!$isAjax) $this->_redirect('checkout/multishipping/billing');
-            else die(json_encode($response));
+            if (!$isAjax) 
+                $this->_redirect('checkout/multishipping/billing');
+            else 
+                die(json_encode($response));
             return;
         }
         
         try {
             $this->_getCheckout()->getQuote()->getShippingAddress()->setCollectShippingRates(true);
             $this->_getCheckout()->getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')
-            ->collectTotals()
-            ->save();
+                ->collectTotals()
+                ->save();
             
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getCheckout()->getQuote()->getCouponCode()) {
@@ -339,20 +384,18 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $result = array();
         $q = Mage::getSingleton('giftcards/session')->getActive() ? 0 : 1;
         Mage::getSingleton('giftcards/session')->setActive($q);
-        //$result['goto_section'] = 'payment';
         $this->_getCheckout()->getQuote()->collectTotals()->save();
-        $result['update_section'] = array(
-            'name' => 'payment-method',
-            'html' => '',//$this->_getPaymentMethodsHtml()
-        );
         $result['giftcard_section'] = array(
             'html' => $this->_getUpdatedCoupon()
         );
-        
-        
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
+    /**
+     * New action created.
+     * Its used to apply the gift card code for multishipping
+     * checkout through payment section.
+     */
     public function ajaxActivateGiftCardAction()
     {
         $result = array();
@@ -372,20 +415,18 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 $result['error'] = $this->__('Gift Card "%s" is not valid.', Mage::helper('core')->escapeHtml($giftCardCode));
             }
         }
-        
-        //$result['goto_section'] = 'payment';
-        $result['update_section'] = array(
-            'name' => 'payment-method',
-            'html' => '',//$this->_getPaymentMethodsHtml()
-        );
         $result['giftcard_section'] = array(
             'html' => $this->_getUpdatedCoupon()
         );
         
-        
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
+    /**
+     * New action created.
+     * Its used to remove the gift card code for multishipping
+     * checkout through payment section.
+     */
     public function ajaxDeActivateGiftCardAction()
     {
         $result = array();
@@ -402,11 +443,6 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $oSession->setGiftCardBalance($newSessionBalance);
         $oSession->setGiftCardsIds($cardIds);
         
-        //$result['goto_section'] = 'payment';
-        $result['update_section'] = array(
-            'name' => 'payment-method',
-            'html' => '',//$this->_getPaymentMethodsHtml()
-        );
         $result['giftcard_section'] = array(
             'html' => $this->_getUpdatedCoupon()
         );
@@ -418,7 +454,6 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     private function _setSessionVars($card)
     {
         $oSession = Mage::getSingleton('giftcards/session');
-        
         $giftCardsIds = $oSession->getGiftCardsIds();
         
         //append applied gift card id to gift card session

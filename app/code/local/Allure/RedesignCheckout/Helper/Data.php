@@ -17,7 +17,7 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
     public function getGiftWrap(){
         try {
             $giftWrapSku = self::GIFT_WRAP_SKU;
-            $_product = Mage::getModel("catalog/product")->loadByAttribute( "sku", $giftWrapSku);
+            $_product = Mage::getModel("catalog/product")->loadByAttribute("sku", $giftWrapSku);
             if($_product){
                 return $_product;
             }
@@ -49,7 +49,6 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
                 if($item->getSku() == self::GIFT_WRAP_SKU){
                     continue;
                 }
-                
                 $_product = Mage::getModel('catalog/product')
                     ->setStoreId($storeId)
                     ->loadByAttribute('sku', $item->getSku());
@@ -60,6 +59,8 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
                     $isOutofStock = true;
                     break;
                 }
+                $_product = null;
+                $stock = null;
             }
         } catch (Exception $e) {
             Mage::log("isAddressContainOutofItem function - Exception:",Zend_Log::DEBUG,"abc.log",true);
@@ -87,6 +88,8 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
                     $isInstock = true;
                     break;
                 }
+                $_product = null;
+                $stock = null;
             }
         } catch (Exception $e){
             Mage::log("isAddressContainInstockItem function - Exception:",Zend_Log::DEBUG,"abc.log",true);
