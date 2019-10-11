@@ -142,7 +142,9 @@ function addToShoppingCart(button, formId, relode=false) {
         } else {
             jQuery('#ajax_cart_content').html(data);
             //jQuery('#just_added').slideDown(500).delay( 5000 ).slideUp( 600 );
-            jQuery('#just_added').slideDown(1000);
+            if(jQuery(window).width() >= 768) {
+                jQuery('#just_added').slideDown(1000);
+            }
             jQuery('#topcart-popup').addClass('just_added');
 
 
@@ -237,7 +239,9 @@ function addToShoppingCartFromQuickView(button, formId) {
             parent.jQuery('#ajax_cart_content').html(data);
             if(parent.jQuery('#ajax_cart_content').hasClass('checkout_cart'))
                 parent.window.location.reload();
-            parent.jQuery('#just_added').slideDown(1000);
+            if(jQuery(window).width() >= 768) {
+                parent.jQuery('#just_added').slideDown(1000);
+            }
             parent.jQuery('#topcart-popup').addClass('just_added');
             parent.setTimeoutDtn();
             parent.jQuery.fancybox.close();
