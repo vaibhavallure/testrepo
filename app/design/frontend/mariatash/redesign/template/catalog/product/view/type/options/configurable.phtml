@@ -165,7 +165,7 @@
   jQuery('option', elm).each(function (id, el) {
   if(el.value!="") {
   j++;
-  jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option col li-'+j+'"><span>' + el.text.toLowerCase() + '</span></li>');
+  jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option li-'+j+'"><span>' + el.text.toLowerCase() + '</span></li>');
   }
   });
   });

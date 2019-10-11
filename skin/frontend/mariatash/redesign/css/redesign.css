@@ -2629,7 +2629,7 @@ ul.tabs li h4{
 	padding: 0px 0 27px 0;
 }
 .chooseList ul li{
-	padding: 0px 10px 0px 0px;
+	padding: 0px 35px 0px 0px;
 }
 .chooseList ul li.active span{
   border-bottom: 2px solid black;
@@ -2639,7 +2639,7 @@ ul.tabs li h4{
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
   max-width: 100%;
-	margin-top: 19px;
+	/* margin-top: 19px; */
 	border-bottom: 1px solid #d8d8d8;
 }
 .post-lengthds-lbl-options .chooseList {
@@ -2667,7 +2667,10 @@ ul.tabs li h4{
 .post-lengthds-lbl-options .chooseList ul li.firstRow:first-child:last-child{
 	text-align: left;
 } */
-.firstRow.active{
+/* .firstRow{
+	margin-bottom: 24px;
+} */
+.list-margin{
 	margin-bottom: 24px;
 }
 

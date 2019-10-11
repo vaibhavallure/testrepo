@@ -65,7 +65,7 @@
                         if(liCounter<=4)
                             var liRow="firstRow";
                          else if (liCounter>4 && liCounter<=8)
-                             var liRow="secondRow";
+                             var liRow="secondRow list-margin";
 
                         jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="col-3 ' + liRow + '"><span>' + el.text + '</span></li>');
                         liCounter++;
