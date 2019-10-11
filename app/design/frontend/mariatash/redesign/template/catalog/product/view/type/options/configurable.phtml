@@ -40,7 +40,7 @@
                             <div id="label-attr<?php echo $_attribute->getAttributeId() ?>" class="d-none">
                                 <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                             </div>
-                        <div class="attribute_select_default row justify-content-end m-0" id="<?php echo $_attribute->getAttributeId() ?>">
+                        <div class="attribute_select_default row justify-content-end m-0 <?= $_attribute->getProductAttribute()->getAttributeCode();?>" id="<?php echo $_attribute->getAttributeId() ?>">
                             <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select d-none" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
                                 <option><?php echo $this->__('Select an Option') ?></option>
                             </select>
