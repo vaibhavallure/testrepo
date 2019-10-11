@@ -178,7 +178,7 @@
         {
              classes="active";
         }
-        jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option col li-'+j+' '+classes+' ' + liRow + '"><span>' + el.text.toLowerCase() + '</span></li>');
+        jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option  li-'+j+' '+classes+' ' + liRow + '"><span>' + el.text.toLowerCase() + '</span></li>');
        liCounter++;
 
    }
@@ -197,8 +197,7 @@
   jQuery('.change_select').hide();
   });
                 jQuery('.chooseList').slideDown(1000);
-
-            });
+ });
     </script>
   <?php endif;?>
   <script type="text/javascript">

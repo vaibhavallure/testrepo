@@ -267,7 +267,7 @@
 	clear: both;
 	position: relative;
 	font-size:13px;
-	font-family:Arial, Helvetica, sans-serif;
+	/* font-family:Arial, Helvetica, sans-serif; */
 }
 .t_Tooltip .t_ContentContainer ul{ margin-top:5px;}
 .t_Tooltip .t_ContentContainer li { line-height:26px; text-transform:uppercase; }
