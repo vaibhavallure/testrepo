@@ -54,7 +54,7 @@
                             	<p class="control">
                                    	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
                                       <input type="checkbox" id="shipping-to-more-than-one" value="0" class="checkbox">
-                                      <span class="checkmark"></span>Shipping to more than one address?
+                                      <span class="checkmark"></span><?= $this->__('Shipping to more than one address?')?>
                                     </label>
                                	</p>
                            	</div>
@@ -87,7 +87,7 @@
     						<?php $_coreHelper = $this->helper('core');?>
                         	<?php foreach ($this->getItems() as $_index => $_item): ?>
                             <?php if ($_item->getQuoteItem()) :?>
-                            <?php if($_item->getQuoteItem()->getSku() == "GIFT_WRAP") continue;?>
+                            <?php if($_item->getQuoteItem()->getSku() == $redesignHelper::GIFT_WRAP_SKU) continue;?>
     							<div class="col-12 product-description-section">
     								<div class="row">
                             			<div class="col-lg-2 col-md-2 col-4 multi-column-1">
@@ -144,7 +144,7 @@
                                                     <div class="gift-messages">
                                                      	<p class="control">
                                                             <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                              <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" >
+                                                              <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= ($_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
                                                               <span class="checkmark"></span><?= $this->__('Is backorder item ship separately.')?>
                                                        		</label>
                                                        </p>
