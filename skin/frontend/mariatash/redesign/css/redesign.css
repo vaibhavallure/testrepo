@@ -3782,9 +3782,6 @@ z-index: 1!important;
 }
 
 /*alert end*/
-
-
-
 .custom-checkbox-two .checkmark:after {
 	left: 6.5px;
 	top: -1px;
@@ -3797,7 +3794,6 @@ z-index: 1!important;
 	transform: rotate(38deg);
 	background: transparent;
 }
-
 
 div#uniform-shipping-address-select>span{
 	display: none;
@@ -3812,4 +3808,15 @@ div#uniform-shipping-address-select>span{
 .checkout-sidebar-bottom .links .info-text-three{
 	border-bottom: 1px solid #D8D8D8;
 	padding: 11px 0px;
+}
+
+/*Attributes CSS*/
+#chooseListattribute306.chooseList ul li {
+  padding: 0px 22px 0px 0px;
+}
+#chooseListattribute306.chooseList ul li span{
+	padding: 0px 0 17px 0;
+}
+#chooseListattribute306.chooseList ul li.option{
+	min-height:41px;
 }
