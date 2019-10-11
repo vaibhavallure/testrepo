@@ -1184,6 +1184,9 @@
   .to-from-section input {
     width: 100%;
   }
+  #reset_pass_btn, #signup-btn-popup {
+    width: 149px !important;
+  }
 }
 
 /* Mobile landscape */
