@@ -941,6 +941,11 @@
 /*=====================*/
 /*INSTAGRAM POPUP*/
 /*=====================*/
+.fs-detail-content #product-info,
+.catalog-product-view #product-info{
+	max-height: 500px;
+	overflow-y: auto;
+}
 .fs-detail-content .fs-detail-nav-bar-arrows .fs-detail-nav-button{
 	display: none;
 }
@@ -1166,6 +1171,7 @@
 /*=====================*/
 /*INSTA DETAILS*/
 /*=====================*/
+
 .catalog-product-view .fs-detail-content,
 .insta-details .fs-detail-content{
 	display: flex;
