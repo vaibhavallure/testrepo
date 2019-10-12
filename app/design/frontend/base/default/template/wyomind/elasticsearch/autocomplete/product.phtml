@@ -1,0 +1,41 @@
+<?php
+/**
+ * @category    Wyomind
+ * @package     Wyomind_Elasticsearch
+ * @version     4.5.0
+ * @copyright   Copyright (c) 2017 Wyomind (https://wyomind.net)
+ */
+/**
+ * @var $this Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete_Product
+ */
+$_product = $this->getEntity();
+$_displayImage = $this->getDisplayImage();
+if ($_displayImage == null) $_displayImage = 1;
+$_imgSize = $this->getImageSize();
+?>
+<?php if ($_product): ?>
+<li class="search-product">
+    <a href="<?php echo $this->escapeUrl($this->getProductUrl($_product)) ?>"
+       title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="result-item clearfix">
+        <?php if ($_displayImage && $_src = $this->getImageSrc()): ?>
+        <span class="image-thumbnail">
+                <img src="<?php echo $_src; ?>" border="0" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+        </span>
+        <?php endif ?>
+        <span class="info">
+            <span class="name"><?php echo $this->escapeHtml($_product->getName()) ?></span>
+            <span class="sku">SKU: <?php echo $this->escapeHtml($_product->getSku()) ?></span>
+            <?php if(!empty($_product->getShortDescription())):?>
+                <span class="description"><?php echo $this->escapeHtml($_product->getShortDescription()) ?></span>
+            <?php elseif(!empty($_product->getMetaDescription())):?>
+                <span class="description"><?php echo ( strlen($_product->getMetaDescription()) > 95 ? substr($this->escapeHtml($_product->getMetaDescription()), 0, 95).' ...' : $this->escapeHtml($_product->getMetaDescription())) ?></span>
+            <?php else:?>
+                <span class="description"></span>
+            <?php endif;?>
+            <span class="price"><?php echo $this->getPriceHtml($_product) ?></span>
+        </span>
+        <div class="clearer"><!-- --></div>
+    </a>
+</li>
+    <li class="product-separator"></li>
+<?php endif ?>
