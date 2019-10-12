@@ -1003,7 +1003,7 @@ ul.swatch .swatch-item a {
     position: relative;
 }
 .link-wishlist{
-	text-decoration: underline;
+	text-decoration: underline !important;
 }
 .wishlist-icon:before {
     position: absolute;
@@ -2608,6 +2608,7 @@ ul.tabs li.active h4 {
 }
 .padder {
   margin-top: 17px;
+	min-height: 340px;
 }
 .padder .std {
   margin-bottom: 20px;
