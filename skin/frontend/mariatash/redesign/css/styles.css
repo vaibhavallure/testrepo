@@ -74,7 +74,7 @@ audio, canvas, video {
 	transparent;
 }
 
-.url-caption {
+/*.url-caption {
 	position: absolute;
 	width: 75px;
 	height: 47px;
@@ -82,7 +82,7 @@ audio, canvas, video {
 	text-indent: -9999px;
 	background: url('../images/back_view_url.png') no-repeat scroll 0 0
 	transparent;
-}
+}*/
 
 .sendfriend-product-send button.button span span, .ecp-tattoo-index-send button.button span span,
 .ecp-celebrities-index-send button.button span span {
