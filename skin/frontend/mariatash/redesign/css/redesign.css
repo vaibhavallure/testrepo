@@ -2650,9 +2650,9 @@ ul.tabs li h4{
 	/* justify-content: space-between; */
 }
 
-.list-margin.active{
+/* .list-margin.active{
 	margin-bottom: 24px;
-}
+} */
 
 .chooseList ul { /*row CSS*/
 	display: -ms-flexbox;
@@ -3796,9 +3796,9 @@ div#uniform-shipping-address-select>span{
 .swatch-section .input-box, #ajax-price{
 	border-bottom: 1px solid #d8d8d8;
 }
-.fr_size .chooseList ul li {
+/* .fr_size .chooseList ul li {
   padding: 0px 22px 0px 0px;
-}
+} */
 .fr_size .chooseList ul li span{
 	padding: 0px 0 17px 0;
 }
@@ -3831,7 +3831,7 @@ div#uniform-shipping-address-select>span{
 .swatch-section .input-box > .row {
   align-items: center;
 }
-.size-links__container {
+.size_chart, .get_size_sample {
   margin-top: 18px;
 }
 .add-to-cart-left .minus_qty, .add-to-cart-left .plus_qty, .add-to-cart-left .total_qty{
@@ -3840,10 +3840,31 @@ div#uniform-shipping-address-select>span{
 .product-special-instructions {
   margin-top: 17px;
 }
-.fr_size .chooseList ul li.label {
+.fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label {
 	width: 100%;
 }
-.chooseList .label {
+.fr_size .chooseList .label, .c_length .chooseList .label, .gauge .chooseList .label {
   width: 100%;
   margin-top: 5px;
+}
+.fr_size .chooseList li.label, .c_length .chooseList li.label, .gauge .chooseList li.label {
+  margin-top: 5px;
+}
+.fr_size .chooseList ul li.option{
+	margin-top: 17px;
+	flex: 0 0 12%;
+  max-width: 12%;
+}
+.gauge .chooseList ul {
+  justify-content: start;
+}
+.gauge .chooseList ul li.option{
+	margin-top: 17px;
+	flex: 0 0 30%;
+	max-width: 30%;
+}
+.c_length .chooseList ul li.option{
+	margin-top: 17px;
+	flex: 0 0 21%;
+	max-width: 21%;
 }
