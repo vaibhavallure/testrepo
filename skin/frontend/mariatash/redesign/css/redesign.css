@@ -3893,3 +3893,7 @@ div#uniform-shipping-address-select>span{
 #product_tabs_details_tabbed_contents .data-table tbody tr th {
   padding-bottom: 2px;
 }
+
+.containerVideo_first, .containerVideo_second {
+	display: none;
+}
