@@ -2358,6 +2358,16 @@ ul#foo4 {
 .cms-faqs .col-left.sidebar {
   display: none;
 }
+.url-caption {
+	position: absolute;
+	width: 87px;
+	height: 49px;
+	margin-top: 50px;
+	text-indent: -9999px;
+	background: url('../images/back_view_url.png') no-repeat scroll 0 0;
+	background-size:100%;
+	transparent;
+}
 
 /*filter popup-----------------------------------------------------*/
 
@@ -3886,4 +3896,8 @@ div#uniform-shipping-address-select>span{
 }
 #product_tabs_details_tabbed_contents .data-table tbody tr th {
   padding-bottom: 2px;
+}
+
+.containerVideo_first, .containerVideo_second {
+	display: none;
 }
