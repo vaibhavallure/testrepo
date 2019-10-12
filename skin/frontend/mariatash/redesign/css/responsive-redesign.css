@@ -362,9 +362,9 @@
   .common-filter {
     display: flex;
   }
-  .containerImage img{
+  /* .containerImage img{
     margin: 0 auto 0;
-  }
+  } */
   .thumb.thumb1 img {
     margin-top: 0;
   }
@@ -1043,7 +1043,7 @@
     right: 8px;
   }
   .containerImage {
-    overflow-y: hidden;
+    overflow-y: auto;
   }
   .image_carousel .item.product-view-instagram-item{
     height: auto;
@@ -1186,6 +1186,17 @@
   }
   #reset_pass_btn, #signup-btn-popup {
     width: 149px !important;
+  }
+  ul.tabs li{
+    flex: 0 0 auto !important;
+    width: auto !important;
+  }
+  ul.tabs{
+    justify-content: space-between;
+  }
+  .product-shop {
+    margin-top: 15px;
+    padding: 0 25px;
   }
 }
 
