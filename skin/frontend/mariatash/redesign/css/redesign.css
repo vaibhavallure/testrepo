@@ -3834,6 +3834,9 @@ div#uniform-shipping-address-select>span{
 .size_chart, .get_size_sample {
   margin-top: 18px;
 }
+.add-to-cart-left{
+	margin-top: 3px;
+}
 .add-to-cart-left .minus_qty, .add-to-cart-left .plus_qty, .add-to-cart-left .total_qty{
 	margin-top: 6px;
 }
@@ -3867,4 +3870,13 @@ div#uniform-shipping-address-select>span{
 	margin-top: 17px;
 	flex: 0 0 21%;
 	max-width: 21%;
+}
+.custom-options .ajax-error-messages{
+	top: 25px;
+}
+.ajax-error-messages {
+  position: absolute;
+  right: 0;
+  color: red;
+  font-size: 10px;
 }
