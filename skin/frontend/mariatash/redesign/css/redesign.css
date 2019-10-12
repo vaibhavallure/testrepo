@@ -2500,7 +2500,7 @@ ul#foo4 {
 }
 .product-detail-parent {
   background: #f2f2f2;
-	padding-bottom: 15px;
+	padding-bottom: 25px;
 }
 .catalog-product-view .for-space-to-bottom {
   height: 127px;
@@ -3877,6 +3877,9 @@ div#uniform-shipping-address-select>span{
 .ajax-error-messages {
   position: absolute;
   right: 0;
-  color: red;
+  color: #830000;
   font-size: 10px;
+}
+#product_tabs_details_tabbed_contents .data-table tbody tr th {
+  padding-bottom: 2px;
 }
