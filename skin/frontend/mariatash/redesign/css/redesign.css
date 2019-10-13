@@ -3908,6 +3908,9 @@ div#uniform-shipping-address-select>span{
 .containerVideo_first, .containerVideo_second {
 	display: none;
 }
+.quickview-index-index p.required{
+	display: none;
+}
 .video-caption {
 	position: absolute;
 	width: 84px;
