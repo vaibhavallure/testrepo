@@ -32,18 +32,18 @@
         </p>
     <?php else: ?>
         <div>
-            <a class="sign-up-in-stock" title="<?php echo $this->escapeHtml($this->__($this->getSignupLabel())); ?>" style="cursor: pointer">
+            <a class="sign-up-in-stock link-button" title="<?php echo $this->escapeHtml($this->__($this->getSignupLabel())); ?>" style="cursor: pointer">
                 <?php echo $this->escapeHtml($this->__($this->getSignupLabel())); ?>
-            </a>                    
+            </a>
             <div class="sign-up-email-panel" style="display:none; height: 50px">
                 <div class="content-email-panel" style="display: block; width: 100%; height: 20px">
-                    <div class="close close-tooltip" style="width:25px; font-size: 9px; display: block; float:right; cursor: pointer">Close</div>
+                    <div class="close close-tooltip"><img src="<?php echo $this->getSkinUrl('images/redesign/exit-small-bk.png')?>" alt="Close"></div>
                 </div>
                 <!--<form action="" name="non-loged-signup" method="post" id="non-loged-signup">-->
                 <div class="form-inputs">
                     <input type="text" value="" style="display:none"/>
-                    <input type="text" id="email" name="email" class="required-entry text emailToNotification"/>
-                    <button type="button" class="button" onclick="sendEmailToNotification('<?php echo Mage::getUrl("ecpalertstock/index/saveEmailForStockAlert") ?>',<?php echo Mage::registry('current_product')->getData('entity_id')?>,jQuery('.emailToNotification').val());">
+                    <input type="text" id="email" name="email" class="required-entry text emailToNotification select-type-two"/>
+                    <button type="button" class="button dark-button" onclick="sendEmailToNotification('<?php echo Mage::getUrl("ecpalertstock/index/saveEmailForStockAlert") ?>',<?php echo Mage::registry('current_product')->getData('entity_id')?>,jQuery('.emailToNotification').val());">
                         <span>Signup</span>
                     </button>
                 </div>
@@ -55,14 +55,14 @@
 <script type="text/javascript">
     jQuery.noConflict();
 
-//    var productAddToCartForm = new VarienForm('product_addtocart_form');        
-//    productAddToCartForm.submit = function(button, form) {        
+//    var productAddToCartForm = new VarienForm('product_addtocart_form');
+//    productAddToCartForm.submit = function(button, form) {
 //        if (this.validator.validate()) {
 //
 //        }
 //    }
     new Varien.searchForm('product_addtocart_form', 'email', '<?php echo (Mage::getSingleton('customer/session')->isLoggedIn()) ? Mage::getSingleton('customer/session')->getCustomer()->getEmail() : $this->__('Email') ?>');
-    
+
     jQuery('.showMessages').hide();
 //    (function($) {
 //        $.extend(Tipped.Skins, {

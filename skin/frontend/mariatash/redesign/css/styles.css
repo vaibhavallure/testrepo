@@ -12685,17 +12685,6 @@ input.giftcard-radio1 {
 	margin-left: 0px;
 }
 
-.catalog-product-view .product-shop .button[title="Out of stock"]{
-	background-size:10px ! important;
-}
-
-
-/* .checkout-privacy-policy{
-	/* margin-left: -9px;
-    margin-top: -20px;
-	margin-bottom: 30px;
-} */
-
 .checkout-privacy-policy input+label {
 	padding: 2px 0 2px 30px;
 	background: url(../images/checkbox-login.png) no-repeat 0 0;

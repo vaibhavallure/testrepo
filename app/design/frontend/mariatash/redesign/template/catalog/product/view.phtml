@@ -430,11 +430,11 @@ if ($_product->getSizeSample() == 1) {
                             <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                             <?php echo $this->getChildHtml('product_type_data') ?>
                         <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
-                            <button id="sign-up-out-of-stock" class="button sign-up-out-of-stock" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
+                            <div id="sign-up-out-of-stock" class="button sign-up-out-of-stock para-normal" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
                              <span>
                                 <span><?php echo $this->__('Out of stock') ?></span>
                              </span>
-                            </button>
+                           </div>
                             <?php echo $this->getChildHtml('alert_urls') ?>
                         <?php endif;?>
 
@@ -461,14 +461,14 @@ if ($_product->getSizeSample() == 1) {
                     </div>
 
                 <?php if ($_product->getShortDescription()): ?>
-                    <div class="short-description row">
+                    <!-- <div class="short-description row">
                       <div class="col-12">
-                        <h2><?php echo $this->__('Quick Overview') ?></h2>
+                        <h2><//?php echo $this->__('Quick Overview') ?></h2>
 
                         <div
-                            class="std"><p class="para-normal"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></p></div>
+                            class="std"><p class="para-normal"><//?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></p></div>
                       </div>
-                    </div>
+                    </div> -->
                 <?php endif;?>
 
                 <?php //echo $this->getChildHtml('other');?>
