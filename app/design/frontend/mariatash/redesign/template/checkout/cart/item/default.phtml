@@ -30,7 +30,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 $messages = $this->getMessages();
 $typeId = $_item->getProduct()->getTypeId();
-
+$customerGroupId = $_item->getQuote()->getCustomerGroupId();
 ?>
 <?php $productId = $this->getProduct()->getId();
 $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
@@ -232,15 +232,15 @@ if(!is_null($parentId)){
 <tr class="w-100 gift-row">
       <td></td>
     <td colspan="5">
+    	<?php if($customerGroupId != 2):?>
         <div class="gift-messages float-left">
             <label for="is_gift_<?= $_item->getId() ?>" class="custom-checkbox custom-checkbox-two">
                 <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
                 <span class="checkmark"></span>
-                <p class="para-normal">This item is a gift.</p>
+                <span class="para-normal">This item is a gift.</span>
             </label>
-
-
         </div>
+        <?php endif;?>
         <div class="w-remove float-right">
             <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         </div>

@@ -142,6 +142,7 @@ billing.onSave = function(evt){
     </div>
     <?php endif;?>
 
+	<?php if(false):?>
     <div class="gift-messages">
         <p class="info-text-two"><?php echo $this->__('Do you have any gift items in your order? If yes, the receipt will not include pricing information.'); ?></p>
         <p class="control">
@@ -264,6 +265,8 @@ billing.onSave = function(evt){
         toogleVisibilityOnObjects('allow_gift_messages', ['allow-gift-message-container']);
     //]]>
     </script>
+    <?php endif;?>
+    
 <?php break; ?>
 <?php case 'multishipping_adress_checkbox': ?>
 
