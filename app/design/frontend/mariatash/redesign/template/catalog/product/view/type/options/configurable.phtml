@@ -59,6 +59,8 @@
 
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
+        var MariaTash = {};
+        MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
         //call priceHtml via ajax, to avoid varnish caching
