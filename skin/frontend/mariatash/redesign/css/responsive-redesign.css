@@ -766,6 +766,16 @@ body.cms-index-index.cms-home .login-dropdown{
   .address-method-common .select-type-one{
     width: 100%;
   }
+  .product-view-left{
+    flex: 0 0 63.666667%;
+    max-width: 63.666667%;
+  }
+  .product-shop{
+    flex: 0 0 33%;
+  }
+  .product-shop{
+    padding: 0 14px;
+  }
 }
 
 /* ALl Mobiles */
