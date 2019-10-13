@@ -63,7 +63,7 @@ audio, canvas, video {
 	*zoom: 1;
 }
 
-.video-caption {
+/*.video-caption {
 	position: absolute;
 	width: 74px;
 	height: 47px;
@@ -72,7 +72,7 @@ audio, canvas, video {
 	text-indent: -9999px;
 	background: url('../images/back_video.png') no-repeat scroll 0 0
 	transparent;
-}
+}*/
 
 /*.url-caption {
 	position: absolute;

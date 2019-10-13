@@ -385,11 +385,11 @@ function shareLikeTwitter(){
                     $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
                 if($videoUrl){ ?>
                     var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="84" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
                 <?php }
                 if($secondVideoUrl){ ?>
                     var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87); ?>" /></a>');
+                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="84" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87); ?>" /></a>');
                 <?php } ?>
                 if( urlCounter > 0 ){
                     <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
@@ -417,14 +417,14 @@ function shareLikeTwitter(){
                          jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                          return;
                 });
-                jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+                jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="84" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
             <?php }
             if($secondVideoUrl){ ?>
                 jQuery('#thumbRepo img').each(function(number){
                     jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                     return;
                 });
-                jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+                jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="84" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
                 <?php } ?>
             if (urlCounter > 0) {
                 <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
@@ -445,7 +445,7 @@ function shareLikeTwitter(){
             }
         } else{
             <?php if( $_product->getVideoThumb() != 'thumbnail/video/' && $videoUrl){ ?>
-                jQuery('.thumb').eq(0).html('<div class="video-caption" onclick="loadVideo();">VIDEO</div><a href="javascript:;" onclick="loadVideo();"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+                jQuery('.thumb').eq(0).html('<div class="video-caption" onclick="loadVideo();">VIDEO</div><a href="javascript:;" onclick="loadVideo();"><img width="84" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
                 <?php } ?>
                 if( urlCounter > 0 ){
                     <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>

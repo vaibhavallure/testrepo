@@ -3932,3 +3932,13 @@ div#uniform-shipping-address-select>span{
   justify-content: space-between;
 	width: 100%;
 }
+.video-caption {
+	position: absolute;
+	width: 84px;
+	height: 49px;
+	margin-top: 49px;
+	cursor: pointer;
+	text-indent: -9999px;
+	background: url('../images/back_video.png') no-repeat scroll 0 0
+	transparent;
+	background-size: 100%;
