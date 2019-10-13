@@ -3859,14 +3859,16 @@ div#uniform-shipping-address-select>span{
   margin-top: 17px;
 }
 .fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label,
-.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label {
+.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label {
 	width: 100%;
 }
-.fr_size .chooseList .label, .c_length .chooseList .label, .gauge .chooseList .label, .post_optio .chooseList .label, .nose_bend .chooseList .label {
+.fr_size .chooseList .label, .c_length .chooseList .label, .gauge .chooseList .label, .post_optio .chooseList .label, .nose_bend .chooseList .label,
+.color .chooseList .label {
   width: 100%;
   margin-top: 5px;
 }
-.fr_size .chooseList li.label, .c_length .chooseList li.label, .gauge .chooseList li.label, .post_optio .chooseList li, .nose_bend .chooseList li.label {
+.fr_size .chooseList li.label, .c_length .chooseList li.label, .gauge .chooseList li.label, .post_optio .chooseList li, .nose_bend .chooseList li.label,
+.color .chooseList li.label {
   margin-top: 5px;
 }
 .fr_size .chooseList ul li.option{
@@ -3877,7 +3879,7 @@ div#uniform-shipping-address-select>span{
 .nose_bend .chooseList ul li.option{
 	margin-top: 17px;
 	flex: 0 0 auto;
-  max-width: 100%%;
+  max-width: 100%;
 }
 .gauge .chooseList ul {
   justify-content: start;
@@ -3891,6 +3893,9 @@ div#uniform-shipping-address-select>span{
 	margin-top: 17px;
 	flex: 0 0 45%;
 	max-width: 45%;
+}
+.color .chooseList ul li.option{
+	margin-top: 17px;
 }
 .custom-options .ajax-error-messages{
 	top: 25px;
