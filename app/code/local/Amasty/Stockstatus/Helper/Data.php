@@ -205,7 +205,7 @@ INLINECSS;
             $stockItem->getUuseConfigBackorders() == 0){
             $status = $this->_out_stock;
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() >= 1){
-            $status = "({$this->_in_stock})";
+            $status = "{$this->_in_stock}";
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() <= 0){
             if($product->getBackorderTime()){
                 $status = sprintf($this->_backorder_with_time , $product->getBackorderTime());
@@ -213,7 +213,7 @@ INLINECSS;
                 $status = $this->_backorder_without_time;
             }
         }else if($product->getStockItem()->getManageStock() == 0){
-            $status = "({$this->_in_stock})";
+            $status = "{$this->_in_stock}";
         }
 
         return $status;
