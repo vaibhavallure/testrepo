@@ -274,10 +274,6 @@
   .checkout-multishipping-overview .for-space-to-bottom{
     height: 110px !important;
   }
-  /* .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main, .checkout-onepage-index .col-main{
-    flex: 0 0 100%;
-    max-width: 100%;
-  } */
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
@@ -322,7 +318,6 @@
   .form-subscribe-mt .checkmark:after{
   	background: #fff;
   }
-
   #newsletter-form .dark-button{
     border: 1px solid #fff;
   	background: transparent;
@@ -335,134 +330,122 @@
   margin: 0 auto;
   margin-top: 10px;
 }
-
 .footer-item-list span {
   font-size: 12px !important;
   font-family: urw-din-medium;
 	letter-spacing: 0 !important;
 }
-
 .footer-items a:hover {
     text-decoration: none;
 }
-
 .footerlink-icons .item-icons img {
     width: 22px;
 }
+#foo4_next, #foo4_prev{
+  top: 40%;
+}
 /* Catalog Filter CSS */
-  .m-filter-checkboxes{
-    display: flex;
-  }
-  .m-filter-checkboxes li {
-    flex-basis: 0;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    max-width: 25%;
-  }
-  .common-filter {
-    display: flex;
-  }
-  /* .containerImage img{
-    margin: 0 auto 0;
-  } */
-  .thumb.thumb1 img {
-    margin-top: 0;
-  }
-  .pdp-image-section{
-    flex-direction: column-reverse;
-  }
-  .thumb img{
-    margin-top: 0;
-  }
-  .containerThumb {
-    display: flex;
-    justify-content: center;
-    width: 340px;
-    overflow-y: scroll;
-  }
-  .thumb {
-    margin-left: 5px;
-  }
-  .thumb:first-child {
-    margin-left: 0;
-  }
-  /* .product-shop > .row {
-    padding: 0 50px;
-  } */
-  /* .padder {
-    margin-bottom: 90px;
-  } */
-  .celebPopup .product-info {
-    position: relative;
-    bottom: 0;
-    /* margin-top: 30px; */
-  }
-  .big-popup-body{
-    padding: 28px 93px !important;
-  }
-  .popup-below-content {
-    margin-top: 8px;
-    padding: 0 36px 0px 35px;
-  }
-  .catalog-category-view .category-title{
-    padding-left: 77px !important;
-  }
-  .category-image-bleed{ /* Head Image */
-    display: none;
-  }
-  ul.tabs li{
-    flex: 0 0 33.33% !important;
-    max-width: 33.33% !important;
-  }
-  .catalog-category-view .simple-page-title{
-    padding: 0!important;
-  }
-
-  .btn-quickview {
-    display: none !important;
-  }
-
-  #tooltip-id-our-jewelry a.previous-content-block-seo {
-    background: url(../images/white-active-arrow.png) no-repeat 0 0;
-    width: 14px;
-    height: 20px;
-    display: block;
-    float: right;
-    margin-right: 10px;
-    text-indent: -9000px;
-    background-size: 100% 100%;
-    position: relative;
-    transform: rotate(180deg);
-  }
-  #tooltip-id-our-jewelry a.next-content-block-seo {
-    background: url(../images/white-active-arrow.png) no-repeat 0 0;
-    width: 14px;
-    height: 20px;
-    display: block;
-    float: right;
-    margin-right: 10px;
-    text-indent: -9000px;
-    background-size: 100% 100%;
-    position: relative;
-    margin-left: 10px;
-  }
-  #tooltip-id-our-jewelry #container{
-    height: auto;
-  }
-  #total_item_counts_holder{
-    display: none;
-  }
-  .login-dropdown {
-    position: absolute;
-    width: 137px;
-    right: 0px;
-    top: 22px;
-    padding-top: 18px;
-    line-height: 25px;
-  }
-  body.cms-index-index.cms-home .login-dropdown{
-    right: -40px;
-  }
+.m-filter-checkboxes{
+  display: flex;
+}
+.m-filter-checkboxes li {
+  flex-basis: 0;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 25%;
+}
+.common-filter {
+  display: flex;
+}
+.thumb.thumb1 img {
+  margin-top: 0;
+}
+.pdp-image-section{
+  flex-direction: column-reverse;
+}
+.thumb img{
+  margin-top: 0;
+}
+.thumb {
+  margin-left: 5px;
+}
+.thumb:first-child {
+  margin-left: 0;
+}
+.containerThumb{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.celebPopup .product-info {
+  position: relative;
+  bottom: 0;
+}
+.big-popup-body{
+  padding: 28px 93px !important;
+}
+.popup-below-content {
+  margin-top: 8px;
+  padding: 0 36px 0px 35px;
+}
+.catalog-category-view .category-title{
+  padding-left: 77px !important;
+}
+.category-image-bleed{ /* Head Image */
+  display: none;
+}
+ul.tabs li{
+  flex: 0 0 33.33% !important;
+  max-width: 33.33% !important;
+}
+.catalog-category-view .simple-page-title{
+  padding: 0!important;
+}
+.btn-quickview {
+  display: none !important;
+}
+#tooltip-id-our-jewelry a.previous-content-block-seo {
+  background: url(../images/white-active-arrow.png) no-repeat 0 0;
+  width: 14px;
+  height: 20px;
+  display: block;
+  float: right;
+  margin-right: 10px;
+  text-indent: -9000px;
+  background-size: 100% 100%;
+  position: relative;
+  transform: rotate(180deg);
+}
+#tooltip-id-our-jewelry a.next-content-block-seo {
+  background: url(../images/white-active-arrow.png) no-repeat 0 0;
+  width: 14px;
+  height: 20px;
+  display: block;
+  float: right;
+  margin-right: 10px;
+  text-indent: -9000px;
+  background-size: 100% 100%;
+  position: relative;
+  margin-left: 10px;
+}
+#tooltip-id-our-jewelry #container{
+  height: auto;
+}
+#total_item_counts_holder{
+  display: none;
+}
+.login-dropdown {
+  position: absolute;
+  width: 137px;
+  right: 0px;
+  top: 22px;
+  padding-top: 18px;
+  line-height: 25px;
+}
+body.cms-index-index.cms-home .login-dropdown{
+  right: -40px;
+}
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -653,10 +636,23 @@
     padding: 0;
   }
   .product-shop > .row{
-    padding: 0 90px;
+    padding: 0 130px;
   }
   .padder{
     min-height: 250px;
+  }
+  .containerThumb{
+    width: 100%;
+  }
+  #foo4_next, #foo6_next{
+    right: 10px;
+  }
+  #foo4_prev, #foo6_prev{
+    left: 10px;
+  }
+  .post_optio .chooseList ul li.option{
+    flex: 0 0 30%;
+    max-width: 30%;
   }
 }
 
@@ -770,9 +766,16 @@
   .address-method-common .select-type-one{
     width: 100%;
   }
-  /* .checkout-onepage-index .for-space-to-bottom {
-    height: 270px;
-  } */
+  .product-view-left{
+    flex: 0 0 63.666667%;
+    max-width: 63.666667%;
+  }
+  .product-shop{
+    flex: 0 0 33%;
+  }
+  .product-shop{
+    padding: 0 14px;
+  }
 }
 
 /* ALl Mobiles */
@@ -924,6 +927,17 @@
   }
   .product-description-section select{
     width: 100%;
+  }
+  .you_may_like #foo4 li{
+    margin: 0;
+  }
+  .image_carousel #foo4 li img {
+    width: 94%;
+    margin: 0 auto !important;
+  }
+  #foo4_next, #foo6_next, #foo4_prev, #foo6_prev {
+    background-size: 35px;
+    height: 79px;
   }
 }
 
@@ -1101,6 +1115,13 @@
   .padder{
     min-height: 320px;
   }
+  .containerImage img {
+    width: 90%;
+  }
+  .containerThumb {
+    width: 340px;
+    overflow-y: scroll;
+}
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
     display: grid;
@@ -1287,6 +1308,19 @@
   }
   .product-shop{
     padding: 0 186px;
+  }
+  #foo4_next, #foo6_next{
+    right: 0;
+  }
+  #foo4_prev, #foo6_prev{
+    left: 0;
+  }
+  ul.tabs li{
+    flex: 0 0 50% !important;
+    max-width: 37% !important;
+  }
+  ul.tabs li:first-child{
+    max-width: 25% !important;
   }
 }
 
