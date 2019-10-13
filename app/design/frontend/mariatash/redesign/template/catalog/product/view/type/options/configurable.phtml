@@ -54,9 +54,9 @@
 
                     <?php endif; ?>
             </div>
-
+            </div>
         <?php endforeach; ?>
-    </div>
+
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
@@ -152,7 +152,7 @@
   var attr_id=jQuery(this).attr("data-attr_id");
   var selectlabel=jQuery('#label-attr'+attr_id).html();
   var selectlabel2=jQuery('#label-attr'+attr_id+' h3').html();
-  var selectedValue=jQuery('#attribute357').find(":selected").val();
+  var selectedValue=jQuery(this).find(":selected").val();
   var attrClass=selectlabel2.toLowerCase();
   attrClass=attrClass.replace(" ","-");
 
@@ -171,10 +171,6 @@
         j++;
 
        var liRow="";
-        if (liCounter<=4) {
-            if(optioncount>5)
-             liRow = "list-margin";
-        }
 
        var classes="";
         if(selectedValue==el.value)
@@ -360,7 +356,16 @@
                 <div class="content-sample-already-in-cart display_none">You can only add one sample to your cart</div>
             </div>
             <div class="get_size_sample col pr-0 text-right">
+                <?php
+                $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
+                if($isMobile):
+
+                    $productSampleRings =Mage::getModel('catalog/product')->loadByAttribute('sku','SAMPLERINGS');
+                ?>
+                <a class="link-button" href="<?= $productSampleRings->getProductUrl()?>"><span>Get Size Samples</span></a>
+                <?php else: ?>
                 <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index/sourceOfReq/quickview/', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+                <?php endif; ?>
             </div>
 
             <div id="inline" style="display: none;">
@@ -386,29 +391,31 @@
         win.close();
     }
 
-    jQuery('a.size_sample_quickview').attr('rel', 'gallery').fancybox({
-        openEffect: 'none',
-        closeEffect: 'none',
-        nextEffect: 'none',
-        prevEffect: 'none',
-        padding: 0,
-        mouseWheel: false,
-        scrolling: 'yes',
-        loop: false,
-        wrapCSS: 'fancybox-sample-size',
-        helpers: {
-            title: null
-        },
-        margin: [20, 60, 20, 60], // Increase left/right margin
-        width: 1200,
-        minWidth: 1200,
-        maxWidth: 1200,
-        height:610,
-        minHeight:610,
-        maxHeight:610,
-        afterLoad: function(current, previous) {
+    if (jQuery(window).width() >= 1024) {
+        jQuery('a.size_sample_quickview').attr('rel', 'gallery').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none',
+            nextEffect: 'none',
+            prevEffect: 'none',
+            padding: 0,
+            mouseWheel: false,
+            scrolling: 'yes',
+            loop: false,
+            wrapCSS: 'fancybox-sample-size',
+            helpers: {
+                title: null
+            },
+            margin: [20, 60, 20, 60], // Increase left/right margin
+            width: 1200,
+            minWidth: 1200,
+            maxWidth: 1200,
+            height: 610,
+            minHeight: 610,
+            maxHeight: 610,
+            afterLoad: function (current, previous) {
 
-        }
+            }
 
-    });
+        });
+    }
   </script>
