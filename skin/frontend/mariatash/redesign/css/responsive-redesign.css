@@ -650,6 +650,10 @@ body.cms-index-index.cms-home .login-dropdown{
   #foo4_prev, #foo6_prev{
     left: 10px;
   }
+  .post_optio .chooseList ul li.option{
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
 }
 
 
@@ -1300,6 +1304,13 @@ body.cms-index-index.cms-home .login-dropdown{
   }
   #foo4_prev, #foo6_prev{
     left: 0;
+  }
+  ul.tabs li{
+    flex: 0 0 50% !important;
+    max-width: 37% !important;
+  }
+  ul.tabs li:first-child{
+    max-width: 25% !important;
   }
 }
 
