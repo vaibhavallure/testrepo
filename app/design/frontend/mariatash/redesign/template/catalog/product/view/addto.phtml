@@ -65,7 +65,11 @@ if($_product->isConfigurable()){
                         <?php /*?>jQuery('#ajax_loading').hide();<?php */?>
                         if (data.status == 'ERROR') {
                             if (data.message == 'login') {
-                                location.href = '<?php echo Mage::helper('customer')->getLoginUrl(); ?>';
+                                console.log(data);
+
+                                parent.jQuery("#sign_in_label").trigger('click');
+                                parent.jQuery.fancybox.close();
+
                             } else {
                                 alert(data.message);
                             }
