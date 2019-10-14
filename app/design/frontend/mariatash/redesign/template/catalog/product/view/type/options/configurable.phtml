@@ -35,6 +35,7 @@
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
                       </div>
+                      </div>
                     <?php else:?>
                         <div class="row">
                             <div id="label-attr<?php echo $_attribute->getAttributeId() ?>" class="d-none rowßß col-12 ">
@@ -47,15 +48,15 @@
                             </div>
                     <?php endif;?>
 
-                    </div>
+
                   </div>
                 </div>
                     <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
 
                     <?php endif; ?>
             </div>
-            </div>
         <?php endforeach; ?>
+            </div>
 
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
