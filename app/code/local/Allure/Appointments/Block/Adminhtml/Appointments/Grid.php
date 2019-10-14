@@ -1,3 +1,4 @@
+
 <?php
 class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
@@ -8,7 +9,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
         $this->setDefaultSort('id');
         $this->setDefaultDir('DESC');
         $this->setUpdatedTime(Mage::getModel('core/date')->date('Y-m-d h:m:s'));
-        $this->setSaveParametersInSession(true);
+        $this->setSaveParametersInSession(false);
         $this->setUseAjax(true);
 
     }
@@ -17,14 +18,16 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
     {
         $customer_table = Mage::getSingleton('core/resource')->getTableName('appointments/customers');
 
+        $subQuery = new Zend_Db_Expr("(SELECT c.appointment_id,sum(c.checkup) no_of_checkup ,sum(c.piercing) no_of_piercing FROM ".$customer_table." c GROUP BY c.appointment_id)");
+
         $collection = Mage::getModel('appointments/appointments')->getCollection();
         $collection
             ->getSelect()
             ->joinLeft(
-                array('customers' => $customer_table),
-                'customers.appointment_id=main_table.id',
-                array('no_of_piercing' => 'SUM(customers.piercing)','no_of_checkup' => 'SUM(customers.checkup)')
-            )->group('main_table.id');
+                array('customers' => $subQuery),
+                'customers.appointment_id = main_table.id',
+                array("customers.no_of_checkup", "customers.no_of_piercing")
+                );
         $this->setCollection($collection);
         parent::_prepareCollection();
         return $this;
@@ -39,29 +42,26 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
             'width' => '50px',
             'index'  => 'id',
             'filter_index'=>'id',
-            'filter_condition_callback' => array($this,'_filterIdConditionCallback')
+            //'filter_condition_callback' => array($this,'_filterIdConditionCallback')
         ));
 
         $this->addColumn('firstname', array(
             'header' => $helper->__('Name'),
             'index'  => 'firstname',
             'renderer' => 'appointments/adminhtml_appointments_edit_renderer_name',
-            'filter_index'=>'firstname',
-            'filter_condition_callback' => array($this,'_filterFirstnameConditionCallback')
+            'filter_index'=>'firstname'
         ));
 
         $this->addColumn('email', array(
             'header' => $helper->__('Email'),
             'index'  => 'email',
-            'filter_index'=>'email',
-            'filter_condition_callback' => array($this,'_filterEmailConditionCallback')
+            'filter_index'=>'email'
         ));
 
         $this->addColumn('phone', array(
             'header' => $helper->__('Phone'),
             'index'  => 'phone',
-            'filter_index'=>'phone',
-            'filter_condition_callback' => array($this,'_filterPhoneConditionCallback')
+            'filter_index'=>'phone'
         ));
         date_default_timezone_set(Mage::getStoreConfig('general/locale/timezone'));
         $this->addColumn('appointment_start', array(
@@ -95,15 +95,13 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
         $this->addColumn('no_of_piercing', array(
             'header' => $helper->__('No of Piercings'),
             'index'  => 'no_of_piercing',
-            'filter_index'=>'no_of_piercing',
-            'filter_condition_callback' => array($this,'_filterPiercingConditionCallback')
+            'filter_index'=>'no_of_piercing'
         ));
 
         $this->addColumn('no_of_checkup', array(
             'header' => $helper->__('No of Checkups'),
             'index'  => 'no_of_checkup',
-            'filter_index'=>'no_of_checkup',
-            'filter_condition_callback' => array($this,'_filterCheckupConditionCallback')
+            'filter_index'=>'no_of_checkup'
         ));
 
         $this->addColumn('last_notified', array(
@@ -225,51 +223,4 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
         return $this->getUrl('*/*/view', array('id'=>$row->getId(),'_secure' => true));
     }
 
-    public function _filterPiercingConditionCallback($collection,$column){
-
-        if (!$value = $column->getFilter()->getValue()) {
-            return $this;
-        }
-        $this->getCollection()->getSelect()->having('no_of_piercing = '.$value);
-        return $this;
-    }
-    public function _filterCheckupConditionCallback($collection,$column){
-
-        if (!$value = $column->getFilter()->getValue()) {
-            return $this;
-        }
-        $this->getCollection()->getSelect()->having('no_of_checkup = '.$value);
-        return $this;
-    }
-    public function _filterFirstnameConditionCallback($collection,$column){
-
-        if (!$value = $column->getFilter()->getValue()) {
-            return $this;
-        }
-        $this->getCollection()->getSelect()->having("firstname LIKE '%".$value."%' OR lastname LIKE '%".$value."%'");
-        return $this;
-    }
-    public function _filterIdConditionCallback($collection,$column){
-
-        if (!$value = $column->getFilter()->getValue()) {
-            return $this;
-        }
-        $this->getCollection()->getSelect()->having('id='.$value);
-        return $this;
-    }
-    public function _filterEmailConditionCallback($collection,$column){
-        if (!$value = $column->getFilter()->getValue()) {
-            return $this;
-        }
-        $this->getCollection()->getSelect()->having("email LIKE '%".$value."%'");
-        return $this;
-    }
-    public function _filterPhoneConditionCallback($collection,$column){
-
-        if (!$value = $column->getFilter()->getValue()) {
-            return $this;
-        }
-        $this->getCollection()->getSelect()->having("phone LIKE '%".$value."%'");
-        return $this;
-    }
 }
