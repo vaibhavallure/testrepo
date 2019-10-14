@@ -3440,7 +3440,7 @@ margin-top: 10%;
 }
 .data-table.cart-table .gift-messages {
   margin-top: 8px;
-	margin-bottom: 1px;
+	margin-bottom: 30px;
 }
 .data-table.cart-table .messages .item-msg {
   margin-top: 22px;
@@ -3471,6 +3471,7 @@ margin-top: 10%;
   height: 51px;
   text-transform: uppercase;
 	margin-top: 17px;
+	margin-bottom: 50px;
 }
 
 /*-----------------shop by look------------*/
@@ -3916,22 +3917,22 @@ div#uniform-shipping-address-select>span{
 .quickview-index-index p.required {
 	display: none;
 }
-#sign-up-out-of-stock{
+/* #sign-up-out-of-stock{
   -webkit-appearance: none;
 	margin: 10px -15px;
 }
 .sign-up-in-stock {
   margin: 0 -15px;
   display: block;
-}
-.t_Tooltip{ /*override tipped.css*/
+} */
+/* .t_Tooltip{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;
   width: 323px !important;
   left: 979px !important;
 	top: 375px !important;
-}
-.sign-up-email-panel .dark-button{
+} */
+/* .sign-up-email-panel .dark-button{
 	height: 42px;
   text-transform: uppercase;
 	width: 108px;
@@ -3940,7 +3941,7 @@ div#uniform-shipping-address-select>span{
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-}
+} */
 .video-caption {
 	position: absolute;
 	width: 84px;
@@ -3951,6 +3952,11 @@ div#uniform-shipping-address-select>span{
 	background: url('../images/back_video.png') no-repeat scroll 0 0 transparent;
 	background-size: 100%;
 }
+
 .catalog-category-view .fancybox-nav{
 	display: none;
 }
+.quickview-index-index .product-shop {
+  margin-top: 38px;
+}
+

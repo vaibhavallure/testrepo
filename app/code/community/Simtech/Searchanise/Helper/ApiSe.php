@@ -94,6 +94,13 @@ class Simtech_Searchanise_Helper_ApiSe
         return true;
     }
 
+    public static function getSummaryAttr()
+    {
+        $attr = self::getSetting('summary_attr');
+
+        return !empty($attr) ? $attr : 'short_description';
+    }
+
     public static function checkCronAsync()
     {
         return self::getSetting('cron_async_enabled');
@@ -112,6 +119,11 @@ class Simtech_Searchanise_Helper_ApiSe
     public static function getSearchInputSelector()
     {
         return self::getSetting('search_input_selector');
+    }
+
+    public static function useDirectImageLinks()
+    {
+        return self::getSetting('use_direct_image_links') == 1;
     }
 
     public static function isRealtimeSyncMode()

@@ -16,7 +16,7 @@
 .t_Tooltip .t_Content_customcart { padding: 0; }
 
 /* Font styling for all skins */
-/* .t_ContentContainer {
+.t_ContentContainer {
   color: #38393c;
   font-size: 11px;
   line-height: 17px;
@@ -30,8 +30,8 @@
 	border-left-style: solid;
 	border-top-color: #a5a8b1;
 	border-right-color: #a5a8b1;
-	border-left-color: #a5a8b1;
-}*/
+	border-left-color: #a5a8b1;*/
+}
 /* Skins with a different font color */
 .t_Content_black,
 .t_Content_gray {
@@ -261,13 +261,14 @@
   left: auto;
   width: 100%;
 }
-/* .t_Tooltip .t_ContentContainer {
+.t_Tooltip_white {  }
+.t_Tooltip .t_ContentContainer {
 	float: left;
 	clear: both;
 	position: relative;
 	font-size:13px;
-	/* font-family:Arial, Helvetica, sans-serif;
-} */
+	/* font-family:Arial, Helvetica, sans-serif; */
+}
 .t_Tooltip .t_ContentContainer ul{ margin-top:5px;}
 .t_Tooltip .t_ContentContainer li { line-height:26px; text-transform:uppercase; }
 /*.t_Tooltip .t_ContentContainer #tooltip-id-customer-care li{float:left;width:100%;}*/
@@ -278,12 +279,12 @@
 }
 
 /* custom tiny */
-/* .t_Content_customTiny {
-  /*color: #FFF;
+.t_Content_customTiny {
+  /*color: #FFF;*/
   font-size: 11px;
   line-height: 16px;
   padding: 6px 9px;
-} */
+}
 .t_Content_customTiny a,
 .t_Content_customTiny a:hover {
   color: #b3b3b3;

@@ -16,6 +16,7 @@ errors/local.xml
 .hg
 .htaccess
 .hgignore
+.buildpath
 sftp-config.json
 *.komodoproject
 .DS_Store
