@@ -899,6 +899,7 @@ body.cms-index-index.cms-home .login-dropdown{
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
+    padding-bottom: 50px;
   }
   .filterButton::before{
     left: 10px;
