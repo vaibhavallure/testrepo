@@ -163,4 +163,3 @@ class Simtech_Searchanise_Model_Mysql4_Fulltext_Collection extends Mage_CatalogS
         return $this;
     }
 }
-
