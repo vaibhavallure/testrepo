@@ -3959,3 +3959,7 @@ div#uniform-shipping-address-select>span{
 .quickview-index-index .add-to-cart-left {
 	margin-top: 18px;
 }
+
+.catalog-category-view .fancybox-nav{
+	display: none;
+}
