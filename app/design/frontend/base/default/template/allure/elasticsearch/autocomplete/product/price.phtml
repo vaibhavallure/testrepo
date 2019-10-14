@@ -1,0 +1,44 @@
+<?php
+/**
+ * @category    Allure
+ * @package     Allure_ElasticSearch
+ * @version     1.0.0
+ * @copyright   Copyright (c) 2019 Allure Software, Inc. (https://www.allureinc.co)
+ */
+/**
+ * @var $this Allure_ElasticSearch_Block_Autocomplete_Product_Price
+ */
+$_product = $this->getEntity();
+$_prices = $_product->getData('_prices_'.$this->getCustomerGroup());
+//$_prices_ht = $_product->getData('_prices_ht_'.$this->getCustomerGroup());
+?>
+<div class="price-box">
+    <?php if ($_product->getTypeId() == 'bundle'): ?>
+        <span class="price-from">
+            <span class="price-label"><?php echo $this->getLabel('From:') ?>&nbsp;</span>
+            <span class="price"><?php echo $this->formatPrice($_prices['min_price']) ?></span>
+        </span>
+        <span class="price-to">
+            <span class="price-label"><?php echo $this->getLabel('To:') ?>&nbsp;</span>
+            <span class="price"><?php echo $this->formatPrice($_prices['max_price']) ?></span>
+        </span>
+    <?php elseif (in_array($_product->getTypeId(), array('grouped'))): ?>
+        <span class="minimal-price">
+            <span class="price-label"><?php echo $this->getLabel('Starting at:') ?>&nbsp;</span>
+            <span class="price"><?php echo $this->formatPrice($_prices['min_price']) ?></span>
+        </span>
+    <?php else: ?>
+        <?php if ($_prices['final_price'] < $_prices['price']): ?>
+            <span class="old-price">
+                <span class="price"><?php echo $this->formatPrice($_prices['price']) ?></span>
+            </span>
+            <span class="special-price">
+                <span class="price"><?php echo $this->formatPrice($_prices['final_price']) ?></span>
+            </span>
+        <?php else: ?>
+            <span class="regular-price">
+                <span class="price"><?php echo $this->formatPrice($_prices['price']) ?></span>
+            </span>
+        <?php endif ?>
+    <?php endif ?>
+</div>
