@@ -19,6 +19,7 @@ class Simtech_Searchanise_Helper_ApiPages extends Mage_Core_Helper_Data
         'enable-cookies', // Enable Cookies
         'privacy-policy-cookie-restriction-mode', // Privacy Policy
         'service-unavailable', // 503 Service Unavailable
+        'service-unavialable', // 503 Service Unavailable
         'private-sales', // Welcome to our Exclusive Online Store
         'home', // Home
     );

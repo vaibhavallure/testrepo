@@ -33,6 +33,18 @@ class Simtech_Searchanise_Model_Mysql4_Fulltext_Collection extends Mage_CatalogS
         $this->_searchaniseCollection->setCollection($this);
     }
 
+    public function __construct($resource=null)
+    {
+        parent::__construct($resource);
+
+        if (Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
+            $this->setSearchaniseRequest(Mage::helper('searchanise')->getSearchaniseRequest());
+            if ($this->checkSearchaniseResult()) {
+                $this->addSearchaniseFilter();
+            }
+        }
+    }
+
     public function initSearchaniseRequest()
     {
         return $this->_searchaniseCollection->initSearchaniseRequest();
@@ -101,6 +113,54 @@ class Simtech_Searchanise_Model_Mysql4_Fulltext_Collection extends Mage_CatalogS
     public function getLastPageNumberParent()
     {
         return parent::getLastPageNumber();
+    }
+
+    public function getSize()
+    {
+        if ($this->checkSearchaniseResult()) {
+            return $this->getSearchaniseRequest()->getTotalProduct();
+        } else {
+            return parent::getSize();
+        }
+    }
+
+    public function _loadEntities($printQuery = false, $logQuery = false)
+    {
+        $args = func_get_args();
+
+        if (!$this->checkSearchaniseResult()) {
+            return call_user_func_array(array(__CLASS__, 'parent::_loadEntities'), $args);
+        }
+
+        // Load items and add them to the magento result manually
+        $results = $this->_searchaniseCollection->getSearchaniseRequest()->getSearchResult();
+
+        if (!empty($results['items'])) {
+            $productIds = array_map(function($product_data) {
+                return $product_data['product_id'];
+            }, $results['items']);
+
+            $products = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addIdFilter($productIds)
+                ->addMinimalPrice()
+                ->addFinalPrice()
+                ->addTaxPercents()
+                ->load();
+
+            // Sort items accoring to returning searchanise result
+            foreach ($results['items'] as $item) {
+                foreach ($products as $product) {
+                    if ($item['product_id'] == $product->getId()) {
+                        $this->addItem($product);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $this;
     }
 }
 

@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Simtech_Searchanise>
-            <version>3.1.8</version>
+            <version>3.1.11</version>
         </Simtech_Searchanise>
     </modules>
     <frontend>
@@ -599,17 +599,18 @@
                 <!-- default sync init method -->
                 <object_async_enabled>1</object_async_enabled>
                 <search_input_selector>#search,form input[name="q"]</search_input_selector>
+                <use_direct_image_links>0</use_direct_image_links>
                 <enabled_searchanise_search>1</enabled_searchanise_search>
                 <redirect_to_admin_after_install>1</redirect_to_admin_after_install>
                 <sync_mode>realtime</sync_mode>
+                <summary_attr>short_description</summary_attr>
             </config>
         </searchanise>
     </default>
-    <crontab>
+    <!-- <crontab>
         <jobs>
             <searchanise_indexer>
-                <!-- runs every 1 minutes as below. Change to (0 1 * * *) to run every night at 1am -->
-                <schedule><cron_expr>10 1 * * *</cron_expr></schedule>
+                <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>
                 <run><model>searchanise/observer::autoSync</model></run>
             </searchanise_indexer>
             <searchanise_reimporter>
@@ -617,5 +618,5 @@
                 <run><model>searchanise/observer::reimport</model></run>
             </searchanise_reimporter>
         </jobs>
-    </crontab>
+    </crontab> -->
 </config>

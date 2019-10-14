@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Wyomind_Elasticsearch>
-            <version>4.8.5</version>
+            <version>4.8.3</version>
         </Wyomind_Elasticsearch>
     </modules>
     <global>
@@ -238,7 +238,7 @@
         <elasticsearch>
             <license>
                 <label>ElasticSearch</label>
-                <version>4.8.5</version>
+                <version>4.8.3</version>
                 <extension_code>els</extension_code>
                 <get_online_license>1</get_online_license>
             <activation_key>ENY6QMP8IC8XLT1MR</activation_key></license>
@@ -270,7 +270,6 @@
                 <limit/>
                 <show_path>1</show_path>
                 <attributes><![CDATA[name,description]]></attributes>
-                <not_included_in_menu>0</not_included_in_menu>
             </category>
             <cms>
                 <enable>1</enable>
