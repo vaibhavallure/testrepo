@@ -1,5 +1,5 @@
 <?php
-class Teamwork_Universalcustomers_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Address
+class Teamwork_Universalcustomers_Model_Sales_Quote_Address extends Allure_RedesignCheckout_Model_Sales_Quote_Address
 {
     public function validate()
     {
