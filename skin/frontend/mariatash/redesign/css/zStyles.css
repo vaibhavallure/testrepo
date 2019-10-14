@@ -1333,6 +1333,24 @@
 	left: 0!important;
 }
 
+/*.cms-store-locations-html .fancybox-inner{
+	background: white;
+	padding: 70px 86px;
+}*/
+.cms-store-locations-html .fancybox-wrap{
+	top:20px;
+}
+.cms-store-locations-html .fancybox-outer{
+	padding: 70px 86px;
+	background: white;
+}
+.fancybox-inner{
+	width: 100%!important;
+}
+.fancybox-skin{
+	width: 804px!important;
+	margin: 0 auto;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
