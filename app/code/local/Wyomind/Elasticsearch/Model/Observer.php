@@ -50,6 +50,7 @@ class Wyomind_Elasticsearch_Model_Observer
                 }
                 $ids[] = $item->getProductId();
             }
+            $ids[] = $item->getProductId();
         }
         
         if (Mage::helper('elasticsearch')->isActiveEngine()) {

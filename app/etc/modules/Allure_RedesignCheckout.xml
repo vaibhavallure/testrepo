@@ -4,9 +4,9 @@
     <Allure_RedesignCheckout>
       <active>true</active>
       <codePool>local</codePool>
-      <depends>
+      <!-- <depends>
       	<Teamwork_Universalcustomers />
-      </depends>
+      </depends> -->
     </Allure_RedesignCheckout>
   </modules>
 </config>
