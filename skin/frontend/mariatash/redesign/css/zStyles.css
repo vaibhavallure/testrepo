@@ -1313,7 +1313,7 @@
 
 .customer-account-edit .messages{
 	position: absolute;
-	top: 10px;
+	top: 65px;
 	display: block;
 }
 .customer-account-edit .messages:first-of-type,
@@ -1323,8 +1323,14 @@
 
 .customer-address-index .messages{
 	position: absolute;
-	top: 44px;
+	top: 105px;
 	display: block;
+}
+
+.mt-new-myaccount-dashbord .messages{
+	position: absolute!important;
+	top: 92%!important;
+	left: 0!important;
 }
 
 /*=====================*/
@@ -1394,6 +1400,9 @@
 
 
 @media(max-width:991px){
+	.customer-address-index .messages{
+		top: 117px;
+	}
 	.category-shop-our-instagram .fs-timeline-detail .quick_link{
 		margin-top: 0;
 	}
@@ -1506,6 +1515,9 @@
 	}
 }
 @media(max-width: 767px){
+	.my_addresses{
+		padding-top: 40px!important;
+	}
 	.login_security{
 		padding-top: 40px;
 	}
@@ -1658,6 +1670,9 @@
 	}
 }
 @media(max-width: 576px){
+	.acc-products-wrapper{
+		margin-top: 8px!important;
+	}
 	.add-primary{
 		padding-left: 0;
 	}
