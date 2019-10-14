@@ -37,23 +37,31 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
         $this->addColumn('id', array(
             'header' => $helper->__('App. Id'),
             'width' => '50px',
-            'index'  => 'id'
+            'index'  => 'id',
+            'filter_index'=>'id',
+            'filter_condition_callback' => array($this,'_filterIdConditionCallback')
         ));
 
         $this->addColumn('firstname', array(
             'header' => $helper->__('Name'),
             'index'  => 'firstname',
-            'renderer' => 'appointments/adminhtml_appointments_edit_renderer_name'
+            'renderer' => 'appointments/adminhtml_appointments_edit_renderer_name',
+            'filter_index'=>'firstname',
+            'filter_condition_callback' => array($this,'_filterFirstnameConditionCallback')
         ));
 
         $this->addColumn('email', array(
             'header' => $helper->__('Email'),
-            'index'  => 'email'
+            'index'  => 'email',
+            'filter_index'=>'email',
+            'filter_condition_callback' => array($this,'_filterEmailConditionCallback')
         ));
 
         $this->addColumn('phone', array(
             'header' => $helper->__('Phone'),
-            'index'  => 'phone'
+            'index'  => 'phone',
+            'filter_index'=>'phone',
+            'filter_condition_callback' => array($this,'_filterPhoneConditionCallback')
         ));
         date_default_timezone_set(Mage::getStoreConfig('general/locale/timezone'));
         $this->addColumn('appointment_start', array(
@@ -231,6 +239,37 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
             return $this;
         }
         $this->getCollection()->getSelect()->having('no_of_checkup = '.$value);
+        return $this;
+    }
+    public function _filterFirstnameConditionCallback($collection,$column){
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()->getSelect()->having("firstname LIKE '%".$value."%' OR lastname LIKE '%".$value."%'");
+        return $this;
+    }
+    public function _filterIdConditionCallback($collection,$column){
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()->getSelect()->having('id='.$value);
+        return $this;
+    }
+    public function _filterEmailConditionCallback($collection,$column){
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()->getSelect()->having("email LIKE '%".$value."%'");
+        return $this;
+    }
+    public function _filterPhoneConditionCallback($collection,$column){
+
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        $this->getCollection()->getSelect()->having("phone LIKE '%".$value."%'");
         return $this;
     }
 }
