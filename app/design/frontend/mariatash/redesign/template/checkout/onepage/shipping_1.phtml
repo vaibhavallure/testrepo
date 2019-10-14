@@ -40,7 +40,7 @@
         <ul class="form-list p-0">
             <?php if ($this->customerHasAddresses()): ?>
                 <li class="wide">
-                    <label for="shipping-address-select"><?php echo $this->__('Select a shipping address from your address book or enter a new address.') ?></label>
+                    <label for="shipping-address-select" class="info-text-two"><?php echo $this->__('Please select your Shipping address:') ?></label>
                     <div class="input-box">
                         <?php echo $this->getAddressesHtmlSelect('shipping') ?>
                     </div>
@@ -232,9 +232,9 @@
                     </ul>
                 </fieldset>
             </li>
-            
+
             <?= $this->getChildhtml("billing");?>
-            
+
             <fieldset class="shipp">
             	<li class="control">
                     <label class="para-normal mb-4 custom-checkbox custom-checkbox-two" for="shipping:same_as_billing"
@@ -274,7 +274,7 @@
                     <li class="no-display"><input type="hidden" name="shipping[save_in_address_book]" value="1"/></li>
                 <?php endif; ?>
             </fieldset>
-            
+
         </ul>
         <div class="buttons-set" id="shipping-buttons-container">
             <!-- <p class="required"><//?php echo $this->__('* Required Fields') ?></p> -->
