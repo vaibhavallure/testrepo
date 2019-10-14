@@ -15,7 +15,7 @@ class Wyomind_Elasticsearch_Helper_Autocomplete extends Wyomind_Elasticsearch_He
     public function getAutocompleteLimit($entity)
     {
         $store = Mage::app()->getStore();
-
+        
         return Mage::getStoreConfig('elasticsearch/' . $entity . '/autocomplete_limit', $store);
     }
 
@@ -46,7 +46,7 @@ class Wyomind_Elasticsearch_Helper_Autocomplete extends Wyomind_Elasticsearch_He
     public function isAutocompleteEnabled($entity, $store = null)
     {
         return $this->isIndexationEnabled($entity, $store) &&
-            Mage::getStoreConfigFlag('elasticsearch/' . $entity . '/enable_autocomplete', $store);
+                Mage::getStoreConfigFlag('elasticsearch/' . $entity . '/enable_autocomplete', $store);
     }
 
     /**
@@ -69,7 +69,7 @@ class Wyomind_Elasticsearch_Helper_Autocomplete extends Wyomind_Elasticsearch_He
     public function isFastAutocompleteEnabled($store = null)
     {
         return $this->isGlobalAutocompleteEnabled($store) &&
-            Mage::getStoreConfigFlag('elasticsearch/autocomplete/enable_fast', $store);
+                Mage::getStoreConfigFlag('elasticsearch/autocomplete/enable_fast', $store);
     }
 
     /**
@@ -82,26 +82,17 @@ class Wyomind_Elasticsearch_Helper_Autocomplete extends Wyomind_Elasticsearch_He
         $currency_list = array();
         $rate_list = array();
 
-
-        //echo "<pre>";
-        //var_dump($currency_list[$currency]);;
-        //die();
+        $currencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies();
+        foreach ($currencies as $currency) {
+            $currency_list[$currency] = Mage::app()->getLocale()->currency($currency);
+        }
         foreach (Mage::app()->getStores() as $store) {
             /** @var Mage_Core_Model_Store $store */
             if ($store->getIsActive()) {
                 Mage::app()->setCurrentStore($store);
 
-                $currency_list = array();
-
-
                 $locale = Mage::getSingleton('core/locale');
-
                 $locale->emulate($store->getId());
-                $currencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies();
-                foreach ($currencies as $currency) {
-                    $currency_list[$currency] = $locale->currency($currency);
-                }
-
                 $base_currency = $store->getBaseCurrency();
                 foreach ($currencies as $currency) {
                     $rate_list[$currency] = floatval($base_currency->getRate($currency));
@@ -153,9 +144,9 @@ class Wyomind_Elasticsearch_Helper_Autocomplete extends Wyomind_Elasticsearch_He
         $config = array();
 
         $seachTerms = Mage::getModel("CatalogSearch/Query")->getCollection()
-            ->addFieldToFilter("synonym_for", array("notnull" => true))
-            ->addFieldToFilter("synonym_for", array("neq" => ""))
-            ->addFieldToFilter("is_active", array("eq" => 1));
+                ->addFieldToFilter("synonym_for", array("notnull" => true))
+                ->addFieldToFilter("synonym_for", array("neq" => ""))
+                ->addFieldToFilter("is_active", array("eq" => 1));
         foreach ($seachTerms as $seachTerm) {
             $config[] = array(
                 "query_text" => $seachTerm->getData("query_text"),
