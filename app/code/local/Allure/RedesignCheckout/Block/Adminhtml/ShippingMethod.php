@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- * @author allures
+ * @author allure
  *
  */
 class Allure_RedesignCheckout_Block_Adminhtml_ShippingMethod extends Mage_Adminhtml_Block_Sales_Order_Shipment_Create_Form

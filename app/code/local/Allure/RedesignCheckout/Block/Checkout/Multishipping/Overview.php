@@ -8,6 +8,8 @@ require_once ('app/code/core/Mage/Checkout/Block/Multishipping/Overview.php');
 class Allure_RedesignCheckout_Block_Checkout_Multishipping_Overview 
 extends Mage_Checkout_Block_Multishipping_Overview
 {
+    const GIFT_TYPE = "gift";
+    
     public function addGiftItemRender($type, $block, $template)
     {
         parent::addItemRender($type, $block, $template);
@@ -22,18 +24,17 @@ extends Mage_Checkout_Block_Multishipping_Overview
      */
     public function getGiftItemHtml(Varien_Object $item)
     {
-        $type = "gift";
-        $block = $this->getGiftItemRenderer($type);
+        $block = $this->getGiftItemRenderer(self::GIFT_TYPE);
         $block->setItem($item);
         $this->_prepareItem($block);
         return $block->toHtml();
     }
     
        
-    public function getGiftItemRenderer($type)
+    public function getGiftItemRenderer($type = self::GIFT_TYPE)
     {
         if (!isset($this->_itemRenders[$type])) {
-            $type = 'gift';
+            $type = self::GIFT_TYPE;
         }
 
         if (is_null($this->_itemRenders[$type]['renderer'])) {

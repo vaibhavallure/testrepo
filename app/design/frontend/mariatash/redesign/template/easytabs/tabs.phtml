@@ -59,8 +59,8 @@ if($iEasyTabGroupId > 0){
 $tabHtml = array();
 ?>
 <div class="pdp-tabs row">
-  <div class="col-12 tab-section p-0">
-    <ul class="tabs row">
+  <div class="col-12 tab-section w-100">
+    <ul class="tabs row p-0">
         <?php $i = 0; ?>
         <?php foreach ($this->getTabs() as $_index => $_tab): ?>
             <?php $tabHtml[$_tab['alias']] = $this->getChildHtml($_tab['alias']) ?>
@@ -104,7 +104,7 @@ $tabHtml = array();
     <?php foreach ($this->getTabs() as $_index => $_tab): ?>
         <?php //if ($this->getChildHtml($_tab['alias'])): ?>
         <?php if ($tabHtml[$_tab['alias']]): ?>
-            <div class="col-12" id="product_tabs_<?php echo $_tab['alias'] ?>_contents"><?php /*echo $this->getChildHtml($_tab['alias']);*/ echo $tabHtml[$_tab['alias']] ?></div>
+            <div class="col-12 p-0" id="product_tabs_<?php echo $_tab['alias'] ?>_contents"><?php /*echo $this->getChildHtml($_tab['alias']);*/ echo $tabHtml[$_tab['alias']] ?></div>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>

@@ -28,7 +28,7 @@
 <?php $_product = $this->getProduct(); ?>
 <?php $buttonTitle = $this->__('Add to Bag'); ?>
 <?php if ($_product->isSaleable()): ?>
-    <div class="add-to-cart col-12">
+    <div class="add-to-cart col-12 p-0">
     	<div class="add-to-cart-left row">
 			<?php if (!$_product->isGrouped() && $_product->getTypeId() != 'giftcards') { ?>
                 <div class="col-12">
@@ -164,7 +164,7 @@
 
 
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
-        <div class="col-6 float-left">
+        <div class="col-6 float-left add-to-bag">
           <div class="row">
               <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
               <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)">

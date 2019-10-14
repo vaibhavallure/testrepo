@@ -19,45 +19,48 @@
   <?php if ($_product->isSaleable() && count($_attributes)):?>
     <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
     <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
-    <hr>
-    <div class="row">
+    <div class="">
         <?php foreach($_attributes as $_attribute): ?>
             <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
-            <div class="swatch-section col-12 <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
-                <div class="input-box row">
+            <div class="swatch-section row <?php if ($_attribute->decoratedIsLast){?> last<?php }?>">
+                <div class="input-box col-12">
                     <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
-                    <div class="col">
-                    <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
+                    <div class="row">
+                      <div class="col">
+                    <h3 class="product-attribute-name mb-0"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                     </div>
-                    <div class="col">
-
+                      <div class="col">
+                        <div class="row metal-swatch">
                         <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="display: none">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
-
+                      </div>
                     <?php else:?>
-                        <div class="col">
-                            <div id="label-attr<?php echo $_attribute->getAttributeId() ?>" class="d-none">
-                                <h3 class="product-attribute-name"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
+                        <div class="row">
+                            <div id="label-attr<?php echo $_attribute->getAttributeId() ?>" class="d-none rowßß col-12 ">
+                                <h3 class="product-attribute-name mb-0"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                             </div>
-                        <div class="attribute_select_default row justify-content-end m-0" id="<?php echo $_attribute->getAttributeId() ?>">
-                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select d-none" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
-                                <option><?php echo $this->__('Select an Option') ?></option>
-                            </select>
-                        </div>
+                            <div class="attribute_select_default col-12 justify-content-end <?= $_attribute->getProductAttribute()->getAttributeCode();?>" id="<?php echo $_attribute->getAttributeId() ?>">
+                                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select change_select d-none" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
+                                    <option><?php echo $this->__('Select an Option') ?></option>
+                                </select>
+                            </div>
                     <?php endif;?>
 
                     </div>
+                  </div>
                 </div>
                     <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
-                    <hr>
+
                     <?php endif; ?>
             </div>
-
+            </div>
         <?php endforeach; ?>
-    </div>
+
     <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
+        var MariaTash = {};
+        MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
         //call priceHtml via ajax, to avoid varnish caching
@@ -144,33 +147,47 @@
                 ?>
 
 
-                jQuery(function () {
+ jQuery(function () {
   var i=1;
   jQuery('.change_select').each(function (index, element) {
   var select_id=jQuery(this).attr("id");
   var attr_id=jQuery(this).attr("data-attr_id");
   var selectlabel=jQuery('#label-attr'+attr_id).html();
   var selectlabel2=jQuery('#label-attr'+attr_id+' h3').html();
+  var selectedValue=jQuery(this).find(":selected").val();
   var attrClass=selectlabel2.toLowerCase();
   attrClass=attrClass.replace(" ","-");
 
-  jQuery(this).parent()
-  .after()
-  .append("<div class='chooseList col-12 "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul class='row p-0'></ul></div>");
-  var selectlabel=jQuery('#label-attr'+attr_id).html();
-  jQuery('#label-attr'+attr_id).hide();
-  var j=1;
-  jQuery('#chooseList'+select_id+' ul:last').append('<li class="label li-'+j+'">'+selectlabel+'</li>');
-  jQuery(element).each(function (idx, elm) {
-  jQuery('option', elm).each(function (id, el) {
-  if(el.value!="") {
-  j++;
-  jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option col li-'+j+'"><span>' + el.text.toLowerCase() + '</span></li>');
-  }
+  jQuery(this).parent().after().append("<div class='chooseList row "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
+      var selectlabel=jQuery('#label-attr'+attr_id).html();
+      jQuery('#label-attr'+attr_id).hide();
+      var j=1;
+
+      var optioncount=jQuery(this).find('option').length;
+
+      jQuery('#chooseList'+select_id+' ul:last').append('<li class="label li-'+j+'">'+selectlabel+'</li>');
+      jQuery(element).each(function (idx, elm) {
+          var liCounter=1;
+      jQuery('option', elm).each(function (id, el) {
+   if(el.value!="") {
+        j++;
+
+       var liRow="";
+
+       var classes="";
+        if(selectedValue==el.value)
+        {
+             classes="active";
+        }
+        jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option  li-'+j+' '+classes+' ' + liRow + '"><span>' + el.text.toLowerCase() + '</span></li>');
+       liCounter++;
+
+   }
+      });
+    });
+    i++;
   });
-  });
-  i++;
-  });
+
   jQuery('.chooseList ul li.option').on('click', function () {
   var selected_id = jQuery(this).data("select_id");
   var option_value = jQuery(this).data("option_value");
@@ -181,8 +198,7 @@
   jQuery('.change_select').hide();
   });
                 jQuery('.chooseList').slideDown(1000);
-
-            });
+ });
     </script>
   <?php endif;?>
   <script type="text/javascript">
@@ -271,7 +287,7 @@
             }
         }
     </script>
-    <div class="size-links__container cf">
+    <div class="size-links__container cf row">
         <?php
         if (!Mage::registry('sizeChartDisplay')) {
             $_product = Mage::registry('current_product');
@@ -331,7 +347,7 @@
                     <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
                 </div>
             <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
-  <!--                <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>-->
+                  <div class="size_chart col pl-0"><a class="size_chart_link link-button" href="#inline_sample">Size Chart</a></div>
             <?php endif; ?>
             <?php
             endif;
@@ -341,8 +357,17 @@
             <div class="sampleAlreadyInCart">
                 <div class="content-sample-already-in-cart display_none">You can only add one sample to your cart</div>
             </div>
-            <div class="get_size_sample">
-                <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+            <div class="get_size_sample col pr-0 text-right">
+                <?php
+                $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
+                if($isMobile):
+
+                    $productSampleRings =Mage::getModel('catalog/product')->loadByAttribute('sku','SAMPLERINGS');
+                ?>
+                <a class="link-button" href="<?= $productSampleRings->getProductUrl()?>"><span>Get Size Samples</span></a>
+                <?php else: ?>
+                <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index/sourceOfReq/quickview/', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+                <?php endif; ?>
             </div>
 
             <div id="inline" style="display: none;">
@@ -368,37 +393,31 @@
         win.close();
     }
 
-    jQuery('a.size_sample_quickview').attr('rel', 'gallery').fancybox({
-        openEffect: 'none',
-        closeEffect: 'none',
-        nextEffect: 'none',
-        prevEffect: 'none',
-        padding: 0,
-        mouseWheel: false,
-        scrolling: 'no',
-        loop: false,
-        wrapCSS: 'fancybox-sample-size',
-        helpers: {
-            title: null
-        },
-        margin: [20, 60, 20, 60], // Increase left/right margin
-        width: 785,
-        minWidth: 785,
-        maxWidth: 785,
-        minHeight: 510,
-        height: 510,
-        afterLoad: function(current, previous) {
+    if (jQuery(window).width() >= 1024) {
+        jQuery('a.size_sample_quickview').attr('rel', 'gallery').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none',
+            nextEffect: 'none',
+            prevEffect: 'none',
+            padding: 0,
+            mouseWheel: false,
+            scrolling: 'yes',
+            loop: false,
+            wrapCSS: 'fancybox-sample-size',
+            helpers: {
+                title: null
+            },
+            margin: [20, 60, 20, 60], // Increase left/right margin
+            width: 1200,
+            minWidth: 1200,
+            maxWidth: 1200,
+            height: 610,
+            minHeight: 610,
+            maxHeight: 610,
+            afterLoad: function (current, previous) {
 
-            jQuery('.fancybox-iframe')
-                .attr('scrolling', 'no')
-                .contents().find('.product-view.sample-size')
-                .addClass('sample-rings');
-            if (current.href == jQuery("div.category-products ul li:first-child div.actions a.btn-quickview").attr('href')) {
-                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5" class="fancybox-nav fancybox-prev first_preview" title=""><span></span></a>');
-            } else if (current.href == jQuery("div.category-products ul li:last-child div.actions a.btn-quickview").attr('href')) {
-                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5 " class="fancybox-nav fancybox-next last_next" title=""><span></span></a>');
             }
-        }
 
-    });
+        });
+    }
   </script>

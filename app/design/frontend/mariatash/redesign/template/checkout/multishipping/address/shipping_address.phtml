@@ -27,7 +27,6 @@
  */
 ?>
 <select class="ship-select select-type-one mb-3">
-  	<option value="">Select Address</option>
     <?php foreach ($this->getAddressCollection() as $_address):?>
     <option value="<?= $_address->getId()?>"><?= $_address->format('oneline')?></option>
     <?php endforeach;?>

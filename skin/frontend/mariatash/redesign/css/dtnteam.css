@@ -10,19 +10,19 @@
 	background: url(../images/radio-button-checked.png) no-repeat left;
 } */
 
-.size-links__container {
+/* .size-links__container {
   margin: -9px 0 6px;
-}
+} */
 
-.size_chart{
+/* .size_chart{
     float: left;
-    /*margin: 0 26px 0 0;*/
+    /*margin: 0 26px 0 0;
     margin: 10px 10px 0 0;
-}
-.size_chart a{ text-decoration: underline;}
+} */
+/* .size_chart a{ text-decoration: underline;} */
 /* .get_size_sample{
     margin: 10px 10px 0 0;
     float: left;
 } */
-.get_size_sample a{ text-decoration: underline;cursor: pointer; }
+/* .get_size_sample a{ text-decoration: underline;cursor: pointer; } */
 .product-shop .product-collateral .sample{ float:left;}
