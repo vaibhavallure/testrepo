@@ -3952,7 +3952,10 @@ div#uniform-shipping-address-select>span{
 	background: url('../images/back_video.png') no-repeat scroll 0 0 transparent;
 	background-size: 100%;
 }
-
+/*Quick-View Css*/
 .quickview-index-index .product-shop {
   margin-top: 38px;
+}
+.quickview-index-index .add-to-cart-left {
+	margin-top: 18px;
 }
