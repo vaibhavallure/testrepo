@@ -210,8 +210,9 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 // convert requestArgs to json
                 if ($requestArgs != null) {
                     $json_arguments = json_encode($requestArgs);
-                    $this->salesforceLog("sendRequest Data -".$json_arguments);
-                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+                    $json_arguments = str_replace('\n',' ',$json_arguments);
+                    $this->salesforceLog("sendRequest Data -".utf8_encode($json_arguments));
+                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, utf8_encode($json_arguments));
                 }
             }
 
@@ -541,7 +542,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
             if (!$salesforcePricebkEntryId) {
                 $this->salesforceLog("Failed to create order: Product not present in SF");
-                return;
+                $salesforcePricebkEntryId = $this->createAndGetSFPriceBookEntry($product,$isTeamwork,$customerGroup);
+                //return;
             }
 
             $magOrderItemArr[] = array("item_id" => $item->getItemId(),
@@ -703,6 +705,101 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             $this->salesforceLog("Return merged array for BULK Update");
             return array("order" => $request, "orderItem" => $orderItemList);
         }
+    }
+
+    public function createAndGetSFPriceBookEntry($product, $isTeamwork, $customerGroup)
+    {
+        $salesforceProductId = $product->getSalesforceProductId();
+
+        if ($salesforceProductId) {
+            $this->salesforceLog("IN createAndGetSFPriceBookEntry - Product Present in SF - {$product->getId()}");
+            $priceBookIds = $this->getSFPricebookEntries($salesforceProductId);
+            $mainStoreId = 1;
+            $fieldsArray = array();
+            $request = array();
+            $helper = $this->getDataHelper();
+
+            $retailerPrice = $product->getPrice();
+            $wholesalePrice = 0;
+            foreach ($product->getData('group_price') as $gPrice) {
+                if ($gPrice["cust_group"] == 2) { //wholesaler group : 2
+                    $wholesalePrice = $gPrice["price"];
+                }
+            }
+
+            if ($priceBookIds['wholesale_pbk']) {
+                $fieldsArray[self::S_WHOLESALE_PRICEBK] = $priceBookIds['wholesale_pbk'];
+            } else {
+                if ($wholesalePrice) {
+                    $request["records"][] = array(
+                        "attributes" => array(
+                            "type" => "PricebookEntry",
+                            "referenceId" => "productG-" . $product->getId()
+                        ),
+                        "Pricebook2Id" => $helper->getWholesalePricebook(),//$this::RETAILER_PRICEBOOK_ID,
+                        "Product2Id" => $salesforceProductId,
+                        "UnitPrice" => $wholesalePrice
+                    );
+                }
+            }
+            if ($priceBookIds['standard_pbk']) {
+                $fieldsArray[self::S_STANDARD_PRICEBK] = $priceBookIds['standard_pbk'];
+            } else {
+                $request["records"][] = array(
+                    "attributes" => array(
+                        "type" => "PricebookEntry",
+                        "referenceId" => "productG-" . $product->getId()
+                    ),
+                    "Pricebook2Id" => $helper->getGeneralPricebook(),
+                    "Product2Id" => $salesforceProductId,
+                    "UnitPrice" => $retailerPrice
+                );
+            }
+
+            if(!empty($fieldsArray)) {
+                //print_r($fieldsArray);
+                Mage::getResourceSingleton('catalog/product_action')
+                    ->updateAttributes(array($product->getId()), $fieldsArray, $mainStoreId);
+            }else {
+                //print_r($request);
+                $response = $this->sendRequest(self::PRODUCT_PRICEBOOK_URL,"POST",$request,false,null);
+                $responseArr = json_decode($response,true);
+                $this->bulkProcessResponse($responseArr,"products");
+            }
+        } else {
+            $this->salesforceLog("IN createAndGetSFPriceBookEntry - Product not Present in SF - {$product->getId()}");
+            $requestParam = $this->getProductData($product, true, false);
+            $response = $this->sendRequest("/services/data/v42.0/composite/tree/Product2","POST",$requestParam,false,null);
+            $responseArr = json_decode($response,true);
+            $this->bulkProcessResponse($responseArr,"products");
+        }
+
+        $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
+        if ($customerGroup == 2) {
+            $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+        }
+        return $salesforcePricebkEntryId;
+    }
+
+    public function getSFPricebookEntries($salesforceProductId) {
+        $query = "/services/data/v46.0/query?q=SELECT+Id,PriceBook2Id,ProductCode+FROM+PricebookEntry+WHERE+Product2Id+=+'{$salesforceProductId}'";
+
+        $helper = $this->getDataHelper();
+        $response = $this->sendRequest($query,"GET",null,false,null);
+        $resArr = json_decode($response,true);
+
+        $mappedResponse = array();
+        $gpbk = $helper->getGeneralPricebook();
+        $wpbk = $helper->getWholesalePricebook();
+        foreach ($resArr['records'] as $rec) {
+            if($rec['Pricebook2Id'] === $gpbk) {
+                $mappedResponse['standard_pbk'] = $rec['Id'];
+            }else if($rec['Pricebook2Id'] === $wpbk){
+                $mappedResponse['wholesale_pbk'] = $rec['Id'];
+            }
+        }
+
+        return $mappedResponse;
     }
 
     public function getCustomerRequestData($customer,$create,$isFromEvent)
@@ -1509,7 +1606,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 "credit_memo" => array("sales_flat_creditmemo", "salesforce_creditmemo_id"),
                 "shipment" => array("sales_flat_shipment", "salesforce_shipment_id"),
                 "shipment_track" => array("sales_flat_shipment_track","salesforce_shipment_track_id"),
-                "products" =>  array("_", "salesforce_product_id"),
+                "product" =>  array("_", "salesforce_product_id"),
                 "productG" =>  array("_", "salesforce_standard_pricebk"),
                 "productW" =>  array("_", "salesforce_wholesale_pricebk"),
             );
