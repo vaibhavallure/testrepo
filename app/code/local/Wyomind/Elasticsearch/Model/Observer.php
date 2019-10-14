@@ -32,26 +32,16 @@ class Wyomind_Elasticsearch_Model_Observer
 
     public function onSubmitAllAfter(Varien_Event_Observer $observer)
     {
-        $ord = $observer->getEvent()->getOrder();
-        $orderArray = array();
-        if($ord){
-            $orderArray[] = $ord;
-        }else{
-            $orderArray = $observer->getEvent()->getOrders();
-        }
-        
+        $order = $observer->getEvent()->getOrder();
+        $items = $order->getItemsCollection();
         $ids = array();
-        foreach ($orderArray as $order){
-            $items = $order->getItemsCollection();
-            
-            foreach ($items as $item) {
-                if ($item->getParentItem()) {
-                    continue;
-                }
-                $ids[] = $item->getProductId();
+
+        foreach ($items as $item) {
+            if ($item->getParentItem()) {
+                continue;
             }
+            $ids[] = $item->getProductId();
         }
-        
         if (Mage::helper('elasticsearch')->isActiveEngine()) {
             try {
                 $store = Mage::app()->getStore();

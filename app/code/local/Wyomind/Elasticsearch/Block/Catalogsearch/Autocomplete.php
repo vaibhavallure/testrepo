@@ -196,7 +196,7 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete extends Wyomind_Ela
 
     /**
      * Returns autocomplete limit
-     * 
+     *
      * @param string $entity
      * @return int
      */

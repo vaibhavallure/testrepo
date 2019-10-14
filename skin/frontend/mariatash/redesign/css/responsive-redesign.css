@@ -899,6 +899,7 @@ body.cms-index-index.cms-home .login-dropdown{
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
+    padding-bottom: 50px;
   }
   .filterButton::before{
     left: 10px;
@@ -1436,5 +1437,9 @@ body.cms-index-index.cms-home .login-dropdown{
 @media (min-width:1025px) and (max-width:1432px) {
   .swatches li{
     margin-left: 7px;
+  }
+  .post_optio .chooseList ul li.option{
+    flex: 0 0 49%;
+    max-width: 49%;
   }
 }
