@@ -3248,9 +3248,10 @@ margin-top: 10%;
 #review-buttons-container {
   margin-top: 25px;
 }
-.billing-address.billing-address-selection {
+/* .billing-address.billing-address-selection {
   margin-top: 22px;
-}
+} */
+
 .address-method-common {
   margin-bottom: 10px;
 }
@@ -3282,7 +3283,13 @@ margin-top: 10%;
 	display: flex;
 	justify-content: center;
 }
-/*Noemal Checkout CSS*/
+.shipping-method-parent .box-title {
+  margin-bottom: 25px;
+}
+.shipping-method-parent .gift-messages {
+  margin-bottom: 19px;
+}
+/*Normal Checkout CSS*/
 .mt-shipping-methods .mt-shipment-title{
 	padding: 5px;
 	text-align: center;
