@@ -203,7 +203,11 @@ class Simtech_Searchanise_Helper_ApiSe
             return false;
         }
 
-        if (self::getStatusModule($store) == 'Y' && self::checkExportStatus($store) && !empty($searchaniseRequest)) {
+        if (
+            self::getStatusModule($store) == 'Y'
+            && (self::checkExportStatusIsQueued($store) || self::checkExportStatusIsDone($store))
+            && !empty($searchaniseRequest)
+        ) {
             if ($searchaniseRequest === true) {
                 return true;
             }
@@ -687,7 +691,7 @@ class Simtech_Searchanise_Helper_ApiSe
             $all_stores_done = true;
             $stores = self::getStores();
             foreach ($stores as $store) {
-                if (!self::checkExportStatus($store)) {
+                if (!self::checkExportStatusIsDone($store)) {
                     $all_stores_done = false;
                     break;
                 }
@@ -997,9 +1001,19 @@ class Simtech_Searchanise_Helper_ApiSe
         return self::getSettingStore('export_status', $store, self::CONFIG_PREFIX);
     }
 
-    public static function checkExportStatus($store = null)
+    public static function checkExportStatusIsDone($store = null)
     {
         return self::getExportStatus($store) == self::EXPORT_STATUS_DONE;
+    }
+
+    public static function checkExportStatusIsQueued($store = null)
+    {
+        return in_array(self::getExportStatus($store), array(
+            self::EXPORT_STATUS_QUEUED,
+            self::EXPORT_STATUS_START,
+            self::EXPORT_STATUS_PROCESSING,
+            self::EXPORT_STATUS_SENT,
+        ));
     }
 
     public static function getExportStatuses($store = null)

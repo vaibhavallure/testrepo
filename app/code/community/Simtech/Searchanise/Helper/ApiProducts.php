@@ -264,15 +264,12 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
         $_priceModel = $product->getPriceModel();
 
         if ($_priceModel && $product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE) {
-            // [1.5]
-            if (version_compare(Mage::getVersion(), '1.6', '<')) {
-                $minimalPrice = $_priceModel->getPrices($product, 'min');
-            // [/1.5]
-            // [v1.6] [v1.7] [v1.8] [v1.9]
-            } else {
+            if (method_exists($_priceModel, 'getTotalPrices')) {
                 $minimalPrice = $_priceModel->getTotalPrices($product, 'min', null, false);
+            } else {
+                $minimalPrice = $_priceModel->getPrices($product, 'min');
             }
-            // [/v1.6] [/v1.7] [/v1.8] [/v1.9]
+
             $minimalPrice = self::getProductShowPrice($product, $minimalPrice);
 
         } elseif ($product->isGrouped() && $childrenProducts) {
@@ -574,6 +571,8 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 } elseif ($attributeCode == 'thumbnail_label') {
                 } elseif ($attributeCode == 'tax_class_id') {
                 } elseif ($attributeCode == 'url_key') { // seo name
+                } elseif ($attributeCode == 'category_ids') {
+                } elseif ($attributeCode == 'categories') {
                 // <system_attributes>
 
                 } elseif ($attributeCode == 'group_price') {
@@ -614,10 +613,18 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                     $dateTimestamp = Mage::getModel('core/date')->timestamp(strtotime($value));
                     $item[$attributeCode] = $dateTimestamp;
                 } elseif ($inputType == 'media_image') {
-                    $image = self::generateImage($product, $attributeCode, true, 0, 0);
-                    if (!empty($image)) {
-                        $imageLink = '' . $image;
-                        $item[$attributeCode] = $imageLink;
+                    if (Mage::helper('searchanise/ApiSe')->useDirectImageLinks()) {
+                        $image = $product->getData($attributeCode);
+
+                        if (!empty($image)) {
+                            $item[$attributeCode] = Mage::getBaseUrl() . 'media/catalog/product'. $image;
+                        }
+                    } else {
+                        $image = self::generateImage($product, $attributeCode, true, 0, 0);
+                        if (!empty($image)) {
+                            $imageLink = '' . $image;
+                            $item[$attributeCode] = $imageLink;
+                        }    
                     }
                 } elseif ($inputType == 'gallery') {
                     // Nothing.
@@ -652,7 +659,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         $item['id'] = $product->getId();
         $item['title'] = $product->getName();
-        $item['summary'] = $product->getData('short_description');
+        $item['summary'] = $product->getData(Mage::helper('searchanise/ApiSe')->getSummaryAttr());
         $item['link'] = $product->getProductUrl(false);
         $item['product_code'] = $product->getSku();
 
@@ -690,6 +697,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         $categoryIds = $categoryCollection->getAllIds();
 
+        $item['category_ids'] = $item['categories'] = array();
         if (!empty($categoryIds)) {
             $categoryNames = array();
             foreach ($categoryIds as $catKey => $categoryId) {
@@ -780,13 +788,24 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             }
 
             if (isset($item['type'])) {
-                $item['title'] = $attribute->getStoreLabel();
+                $item['title'] = self::_getAttributeTitle($attribute);
                 $item['position']  = ($inputType == 'price')? $attribute->getPosition() : $attribute->getPosition() + 20;
                 $item['attribute'] = $attribute->getAttributeCode();
             }
         }
 
         return $item;
+    }
+
+    private static function _getAttributeTitle($attribute)
+    {
+        $label = $attribute->getStoreLabel();
+
+        if (empty($label)) {
+            $label = $attribute->getFrontendLabel();
+        }
+
+        return $label;
     }
 
     private static function _generateFacetFromCustom($title = '', $position = 0, $attribute = '', $type = '')
@@ -890,7 +909,8 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             $products = Mage::getModel('catalog/product')
                 ->getCollection()
                 ->addAttributeToSelect('*')
-                ->addUrlRewrite();
+                ->addUrlRewrite()
+                ->addFinalPrice();
 
             if ($customerGroupId != null) {
                 if ($store) {
@@ -1086,7 +1106,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         $type = '';
         $name = $attribute->getAttributeCode();
-        $title = $attribute->getStoreLabel();
+        $title = self::_getAttributeTitle($attribute);
         $sorting = $usedForSortBy ? 'Y' : 'N';
         $textSearch = $isSearchable ? 'Y' : 'N';
         $attributeWeight = 0;
@@ -1110,6 +1130,8 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
         } elseif ($attributeCode == 'tax_class_id') {
         } elseif ($attributeCode == 'url_key') { // seo name
         } elseif ($attributeCode == 'group_price') {
+        } elseif ($attributeCode == 'category_ids') {
+        } elseif ($attributeCode == 'categories') {
         // <system_attributes>
 
         } elseif ($attributeCode == 'name' || $attributeCode == 'sku' || $attributeCode == 'short_description') {
@@ -1143,7 +1165,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             $type = 'text';
             $name  = 'se_grouped_' . $attributeCode;
             $sorting = 'N';
-            $title = $attribute->getStoreLabel() . ' - Grouped';
+            $title = self::_getAttributeTitle($attribute) . ' - Grouped';
             $attributeWeight = ($attributeCode == 'short_description')? self::WEIGHT_SHORT_DESCRIPTION : self::WEIGHT_SHORT_TITLE;
 
         } elseif (
@@ -1171,7 +1193,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 $name = 'full_description';
                 $items[] = array(
                     'name'   => 'se_grouped_full_' . $attributeCode,
-                    'title'  => $attribute->getStoreLabel() . ' - Grouped',
+                    'title'  => self::_getAttributeTitle($attribute) . ' - Grouped',
                     'type'   => $type,
                     'weight' => $isSearchable ? self:: WEIGHT_DESCRIPTION_GROUPED : 0,
                     'text_search' => $textSearch,

@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Simtech_Searchanise>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Simtech_Searchanise>
     </modules>
