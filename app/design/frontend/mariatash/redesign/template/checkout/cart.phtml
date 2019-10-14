@@ -43,11 +43,14 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 //$lastVisitedProduct = $recent->getFirstItem()->getProductUrl();
 //$sContinueShoppingUrl = !empty($lastVisitedProduct) ? $lastVisitedProduct : Mage::getBaseUrl();
 ?>
+
+<?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
+
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <?php if ($priceAlert): ?>
         <div class="priceUpdate"><p><?php echo $this->__('The price of the items in your cart has been updated since you added them.'); ?></p></div>
     <?php endif; ?>
-<div class="cart-mt container row mx-auto">
+<div class="cart-mt container row mx-auto <?php if($customerGroupId == 2):?>wholesale-cart-container<?php endif;?>">
 
     <?php echo $this->getChildHtml('form_before') ?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>

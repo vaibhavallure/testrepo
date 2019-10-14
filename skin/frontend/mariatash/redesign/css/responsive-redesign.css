@@ -940,6 +940,9 @@ body.cms-index-index.cms-home .login-dropdown{
     background-size: 35px;
     height: 79px;
   }
+  .gift-message-section {
+    margin-bottom: 30px;
+  }
 }
 
 /* Mobile Portrait */
@@ -1214,9 +1217,6 @@ body.cms-index-index.cms-home .login-dropdown{
   .coupons .discount {
     margin-bottom: 0;
   }
-  .gift-message-section {
-    margin-bottom: 30px;
-  }
   .to-from-section input {
     width: 100%;
   }
@@ -1322,6 +1322,9 @@ body.cms-index-index.cms-home .login-dropdown{
   }
   ul.tabs li:first-child{
     max-width: 25% !important;
+  }
+  .checkout-multishipping-success .multiple-checkout {
+    margin-top: 110px;
   }
 }
 
