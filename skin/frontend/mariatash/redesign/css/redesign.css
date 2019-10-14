@@ -3851,7 +3851,7 @@ div#uniform-shipping-address-select>span{
   margin-top: 18px;
 }
 .add-to-cart-left{
-	margin-top: 3px;
+	margin-top: 4px;
 }
 .add-to-cart-left .minus_qty, .add-to-cart-left .plus_qty, .add-to-cart-left .total_qty{
 	margin-top: 6px;
@@ -3860,16 +3860,16 @@ div#uniform-shipping-address-select>span{
   margin-top: 17px;
 }
 .fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label,
-.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label {
+.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label .neck_lengt .chooseList ul li.label {
 	width: 100%;
 }
 .fr_size .chooseList .label, .c_length .chooseList .label, .gauge .chooseList .label, .post_optio .chooseList .label, .nose_bend .chooseList .label,
-.color .chooseList .label {
+.color .chooseList .label .neck_lengt .chooseList .label {
   width: 100%;
   margin-top: 5px;
 }
 .fr_size .chooseList li.label, .c_length .chooseList li.label, .gauge .chooseList li.label, .post_optio .chooseList li, .nose_bend .chooseList li.label,
-.color .chooseList li.label {
+.color .chooseList li.label .neck_lengt .chooseList li.label {
   margin-top: 5px;
 }
 .fr_size .chooseList ul li.option{
@@ -3895,9 +3895,9 @@ div#uniform-shipping-address-select>span{
 	flex: 0 0 45%;
 	max-width: 45%;
 }
-.color .chooseList ul li.option{
+/* .color .chooseList ul li.option{
 	margin-top: 17px;
-}
+} */
 .custom-options .ajax-error-messages{
 	top: 25px;
 }
@@ -3914,7 +3914,7 @@ div#uniform-shipping-address-select>span{
 	display: none;
 }
 dt.post-lengthds-lbl {
-    margin-top: 18px;
+  margin-top: 18px;
 }
 /* #sign-up-out-of-stock{
   -webkit-appearance: none;
@@ -3958,10 +3958,15 @@ dt.post-lengthds-lbl {
 .quickview-index-index .product-shop {
   margin-top: 38px;
 }
-.quickview-index-index .add-to-cart-left {
-	margin-top: 18px;
+.material .ajax-error-messages{
+	top: 38px;
 }
-
 .catalog-category-view .fancybox-nav{
 	display: none;
+}
+.quickview-index-index .product-shop{
+	padding: 0 10px;
+}
+.quickview-index-index .add-to-cart-left{
+	margin-top: 18px;
 }
