@@ -1311,6 +1311,22 @@
 	padding-left: 0;
 }
 
+.customer-account-edit .messages{
+	position: absolute;
+	top: 10px;
+	display: block;
+}
+.customer-account-edit .messages:first-of-type,
+.customer-address-index .messages:first-of-type{
+	display: none;
+}
+
+.customer-address-index .messages{
+	position: absolute;
+	top: 44px;
+	display: block;
+}
+
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1778,14 +1794,6 @@
 }
 
 @media(min-width: 1300px){
-
-	.customer-account-edit .messages{
-		position: absolute;
-		top: 300px;
-		width: 100%;
-		float: none;
-		padding-left: 292px;
-	}
 
 	.login_security{
 		padding-left: 248px;
