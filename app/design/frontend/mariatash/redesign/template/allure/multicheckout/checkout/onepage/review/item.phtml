@@ -80,7 +80,7 @@ $typeId = $_item->getProduct()->getTypeId();
     <td  class="cart_col3 text-right">
         <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>
-    <td class="text-center"><?php echo $_item->getQty() ?></td>
+    <td class="text-center quantity-count"><?php echo $_item->getQty() ?></td>
     <td  class="cart_col5 text-right">
         <div class="cart-price-box">
 
