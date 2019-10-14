@@ -4789,13 +4789,13 @@ width: 170px !important;
 /*End Safari style*/
 /*Firefox style*/
 @
--moz-document url-prefix () { .product-shop .product-collateral
+/* -moz-document url-prefix () { .product-shop .product-collateral
 							  .product-options div.styled select {
 								  padding-right: 22px;
 								  padding-left: 2px;
 							  }
 
-}
+} */
 /*End Firefox style*/
 /*IE style*/
 .product-shop .product-collateral .product-options div.styled select::-ms-expand
@@ -12120,10 +12120,10 @@ li.item h2.product-name {text-align: center;}
 	line-height: 15px;
 }
 
-.product-info-right-quickview .availability {
+/* .product-info-right-quickview .availability {
 	line-height: 16px;
 	font-size: 11px;
-}
+} */
 
 .catalog-category-view .actions div#color-option {
 	display: none;
