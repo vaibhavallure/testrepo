@@ -27,7 +27,7 @@
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
-            <groups>
+            <groups> 
                 <config translate="label" module="searchanise">
                     <label>Configuration Settings</label>
                     <frontend_type>text</frontend_type>
@@ -48,7 +48,7 @@
                             <show_in_store>1</show_in_store>
                         </search_input_selector>
                         <!-- Hided the "Sync Init Method" option -->
-                        <!--
+                        <!-- 
                             <type_async translate="label comment">
                             <label><![CDATA[Sync Init Method]]></label>
                             <comment><![CDATA[
@@ -61,7 +61,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </type_async>
+                        </type_async> 
                         -->
                         <enabled_searchanise_search translate="labe comment">
                             <label><![CDATA[Use Searchanise for full-text search]]></label>

@@ -294,273 +294,273 @@
         </helpers>
         <events>
             <!-- SYSTEM -->
-            <clean_catalog_images_cache_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>cleanCatalogImagesCacheAfter</method>
-                    </rating>
-                </observers>
-            </clean_catalog_images_cache_after>
+                <clean_catalog_images_cache_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>cleanCatalogImagesCacheAfter</method>
+                        </rating>
+                    </observers>
+                </clean_catalog_images_cache_after>
             <!-- END SYSTEM -->
             <!-- CATALOG -->
-            <!-- products -->
-            <catalog_product_save_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogProductSaveBefore</method>
-                    </rating>
-                </observers>
-            </catalog_product_save_before>
-            <catalog_product_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogProductSaveAfter</method>
-                    </rating>
-                </observers>
-            </catalog_product_save_after>
-            <catalog_product_delete_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogProductDeleteBefore</method>
-                    </rating>
-                </observers>
-            </catalog_product_delete_before>
-            <!-- [v1.6] [v1.7] [v1.8] [v1.9] -->
-            <catalog_product_attribute_update_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogProductAttributeUpdateBefore</method>
-                    </rating>
-                </observers>
-            </catalog_product_attribute_update_before>
-            <!-- [/v1.6] [/v1.7] [/v1.8] [/v1.9] -->
-            <!-- [v1.5] -->
-            <searchanise_product_attribute_update_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogProductAttributeUpdateBefore</method>
-                    </rating>
-                </observers>
-            </searchanise_product_attribute_update_before>
-            <!-- [/v1.5] -->
-            <catalog_product_website_update_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogProductWebsiteUpdateBefore</method>
-                    </rating>
-                </observers>
-            </catalog_product_website_update_before>
-            <catalog_category_tree_move_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogCategoryTreeMoveAfter</method>
-                    </rating>
-                </observers>
-            </catalog_category_tree_move_after>
-            <!-- facets-->
-            <catalog_entity_attribute_save_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogEntityAttributeSaveBefore</method>
-                    </rating>
-                </observers>
-            </catalog_entity_attribute_save_before>
-            <catalog_entity_attribute_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogEntityAttributeSaveAfter</method>
-                    </rating>
-                </observers>
-            </catalog_entity_attribute_save_after>
-            <catalog_entity_attribute_delete_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogEntityAttributeDeleteAfter</method>
-                    </rating>
-                </observers>
-            </catalog_entity_attribute_delete_after>
-            <!-- categories -->
-            <catalog_category_delete_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogCategoryDeleteBefore</method>
-                    </rating>
-                </observers>
-            </catalog_category_delete_before>
-            <catalog_category_save_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogCategorySaveBefore</method>
-                    </rating>
-                </observers>
-            </catalog_category_save_before>
-            <catalog_category_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>catalogCategorySaveAfter</method>
-                    </rating>
-                </observers>
-            </catalog_category_save_after>
-            <!-- pages -->
-            <cms_page_delete_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>cmsPageDeleteBefore</method>
-                    </rating>
-                </observers>
-            </cms_page_delete_before>
-            <cms_page_save_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>cmsPageSaveBefore</method>
-                    </rating>
-                </observers>
-            </cms_page_save_before>
-            <cms_page_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>cmsPageSaveAfter</method>
-                    </rating>
-                </observers>
-            </cms_page_save_after>
+                <!-- products -->
+                <catalog_product_save_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogProductSaveBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_product_save_before>
+                <catalog_product_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogProductSaveAfter</method>
+                        </rating>
+                    </observers>
+                </catalog_product_save_after>
+                <catalog_product_delete_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogProductDeleteBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_product_delete_before>
+                <!-- [v1.6] [v1.7] [v1.8] [v1.9] -->
+                <catalog_product_attribute_update_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogProductAttributeUpdateBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_product_attribute_update_before>
+                <!-- [/v1.6] [/v1.7] [/v1.8] [/v1.9] -->
+                <!-- [v1.5] -->
+                <searchanise_product_attribute_update_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogProductAttributeUpdateBefore</method>
+                        </rating>
+                    </observers>
+                </searchanise_product_attribute_update_before>
+                <!-- [/v1.5] -->
+                <catalog_product_website_update_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogProductWebsiteUpdateBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_product_website_update_before>
+                <catalog_category_tree_move_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogCategoryTreeMoveAfter</method>
+                        </rating>
+                    </observers>
+                </catalog_category_tree_move_after>
+                <!-- facets-->
+                <catalog_entity_attribute_save_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogEntityAttributeSaveBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_entity_attribute_save_before>
+                <catalog_entity_attribute_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogEntityAttributeSaveAfter</method>
+                        </rating>
+                    </observers>
+                </catalog_entity_attribute_save_after>
+                <catalog_entity_attribute_delete_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogEntityAttributeDeleteAfter</method>
+                        </rating>
+                    </observers>
+                </catalog_entity_attribute_delete_after>
+                <!-- categories -->
+                <catalog_category_delete_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogCategoryDeleteBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_category_delete_before>
+                <catalog_category_save_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogCategorySaveBefore</method>
+                        </rating>
+                    </observers>
+                </catalog_category_save_before>
+                <catalog_category_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>catalogCategorySaveAfter</method>
+                        </rating>
+                    </observers>
+                </catalog_category_save_after>
+                <!-- pages -->
+                <cms_page_delete_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>cmsPageDeleteBefore</method>
+                        </rating>
+                    </observers>
+                </cms_page_delete_before>
+                <cms_page_save_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>cmsPageSaveBefore</method>
+                        </rating>
+                    </observers>
+                </cms_page_save_before>
+                <cms_page_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>cmsPageSaveAfter</method>
+                        </rating>
+                    </observers>
+                </cms_page_save_after>
             <!-- END CATALOG-->
             <!-- SALES -->
-            <!-- products -->
-            <sales_order_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>salesOrderSaveAfter</method>
-                    </rating>
-                </observers>
-            </sales_order_save_after>
+                <!-- products -->
+                <sales_order_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>salesOrderSaveAfter</method>
+                        </rating>
+                    </observers>
+                </sales_order_save_after>
             <!-- END SALES -->
             <!-- IMPORTEXPORT -->
-            <!-- products -->
-            <searchanise_import_save_product_entity_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseImportSaveProductEntityAfter</method>
-                    </rating>
-                </observers>
-            </searchanise_import_save_product_entity_after>
-            <searchanise_import_delete_product_entity_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseImportDeleteProductEntityAfter</method>
-                    </rating>
-                </observers>
-            </searchanise_import_delete_product_entity_after>
+                <!-- products -->
+                <searchanise_import_save_product_entity_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseImportSaveProductEntityAfter</method>
+                        </rating>
+                    </observers>
+                </searchanise_import_save_product_entity_after>
+                <searchanise_import_delete_product_entity_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseImportDeleteProductEntityAfter</method>
+                        </rating>
+                    </observers>
+                </searchanise_import_delete_product_entity_after>
             <!-- END IMPORTEXPORT -->
             <!-- CORE -->
-            <!-- store -->
-            <searchanise_core_save_store_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseCoreSaveStoreBefore</method>
-                    </rating>
-                </observers>
-            </searchanise_core_save_store_before>
-            <searchanise_core_save_store_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseCoreSaveStoreAfter</method>
-                    </rating>
-                </observers>
-            </searchanise_core_save_store_after>
-            <searchanise_core_delete_store_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseCoreDeleteStoreAfter</method>
-                    </rating>
-                </observers>
-            </searchanise_core_delete_store_after>
-            <!-- ADMINHTML-->
-            <searchanise_adminhtml_config_data_save_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseAdminhtmlConfigDataSaveBefore</method>
-                    </rating>
-                </observers>
-            </searchanise_adminhtml_config_data_save_before>
-            <searchanise_adminhtml_config_data_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseAdminhtmlConfigDataSaveAfter</method>
-                    </rating>
-                </observers>
-            </searchanise_adminhtml_config_data_save_after>
+                <!-- store -->
+                <searchanise_core_save_store_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseCoreSaveStoreBefore</method>
+                        </rating>
+                    </observers>
+                </searchanise_core_save_store_before>
+                <searchanise_core_save_store_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseCoreSaveStoreAfter</method>
+                        </rating>
+                    </observers>
+                </searchanise_core_save_store_after>
+                <searchanise_core_delete_store_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseCoreDeleteStoreAfter</method>
+                        </rating>
+                    </observers>
+                </searchanise_core_delete_store_after>
+                <!-- ADMINHTML-->
+                <searchanise_adminhtml_config_data_save_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseAdminhtmlConfigDataSaveBefore</method>
+                        </rating>
+                    </observers>
+                </searchanise_adminhtml_config_data_save_before>
+                <searchanise_adminhtml_config_data_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseAdminhtmlConfigDataSaveAfter</method>
+                        </rating>
+                    </observers>
+                </searchanise_adminhtml_config_data_save_after>
             <!-- END ADMINHTML -->
             <!-- TAG -->
-            <!-- tag -->
-            <tag_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>tagSaveAfter</method>
-                    </rating>
-                </observers>
-            </tag_save_after>
-            <tag_delete_before>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>tagDeleteBefore</method>
-                    </rating>
-                </observers>
-            </tag_delete_before>
-            <!-- tag_relation -->
-            <searchanise_tag_relation_save_after>
-                <observers>
-                    <rating>
-                        <class>searchanise/observer</class>
-                        <method>searchaniseTagRelationSaveAfter</method>
-                    </rating>
-                </observers>
-            </searchanise_tag_relation_save_after>
+                <!-- tag -->
+                <tag_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>tagSaveAfter</method>
+                        </rating>
+                    </observers>
+                </tag_save_after>
+                <tag_delete_before>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>tagDeleteBefore</method>
+                        </rating>
+                    </observers>
+                </tag_delete_before>
+                <!-- tag_relation -->
+                <searchanise_tag_relation_save_after>
+                    <observers>
+                        <rating>
+                            <class>searchanise/observer</class>
+                            <method>searchaniseTagRelationSaveAfter</method>
+                        </rating>
+                    </observers>
+                </searchanise_tag_relation_save_after>
             <!-- END TAG -->
         </events>
         <blocks>
             <!-- [disabled_searchanise_search] -->
-            <!-- OVERRIDE BLOCK CATALOG -->
-            <!-- <catalog>
-                <rewrite>
-                    <product_list_toolbar>Simtech_Searchanise_Block_Product_List_Toolbar</product_list_toolbar>
-                </rewrite>
-            </catalog> -->
-            <!-- END -->
-            <!-- OVERRIDE BLOCK CATALOGSEARCH -->
-            <!-- <catalogsearch>
-                <rewrite>
-                    <result>Simtech_Searchanise_Block_Result</result>
-                    <autocomplete>Simtech_Searchanise_Block_Autocomplete</autocomplete>
-                </rewrite>
-            </catalogsearch> -->
-            <!-- END -->
+                <!-- OVERRIDE BLOCK CATALOG -->
+                <!-- <catalog>
+                    <rewrite>
+                        <product_list_toolbar>Simtech_Searchanise_Block_Product_List_Toolbar</product_list_toolbar>
+                    </rewrite>
+                </catalog> -->
+                <!-- END -->
+                <!-- OVERRIDE BLOCK CATALOGSEARCH -->
+                <!-- <catalogsearch>
+                    <rewrite>
+                        <result>Simtech_Searchanise_Block_Result</result>
+                        <autocomplete>Simtech_Searchanise_Block_Autocomplete</autocomplete>
+                    </rewrite>
+                </catalogsearch> -->
+                <!-- END -->
             <!-- [/disabled_searchanise_search] -->
             <searchanise>
                 <rewrite>
@@ -588,7 +588,7 @@
                 <cron_async_enabled>1</cron_async_enabled>
                 <ajax_async_enabled>0</ajax_async_enabled>
                 <!-- default sync init method -->
-                <object_async_enabled>1</object_async_enabled>
+                <object_async_enabled>1</object_async_enabled> 
                 <search_input_selector>#search,form input[name="q"]</search_input_selector>
                 <enabled_searchanise_search>1</enabled_searchanise_search>
                 <redirect_to_admin_after_install>1</redirect_to_admin_after_install>

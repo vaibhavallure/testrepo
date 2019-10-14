@@ -12,7 +12,8 @@
 
 <?php $url = $this->getResultUrl(); ?>
 <?php $url = substr($url, 0, strpos($url, "q=") + 2); ?>
-<?php $url = preg_replace("/(.*)(\?SID=.*)(catalog.*)/", "\$1\$3", $url);?>
+<?php $url = preg_replace("/(.*)(\?SID=.*)(catalog.*)/", "\$1\$3", $url); ?>
+
 <div class="dropdown-arrow"><div class="arrow-outer"></div><div class="arrow-inner arrow-inner-label"></div></div>
 <ul class="wyomind-elasticsearch">
     <li style="display:none;"></li>
