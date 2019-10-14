@@ -133,11 +133,7 @@
 .myaccount-index-index .breadcrumbs,
 .customer-account-edit .breadcrumbs,
 .customer-address-index .breadcrumbs{
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%,0);
 	padding-left: 0;
-	padding-top: 17px;
 }
 
 .myaccount-index-index .breadcrumbs ul,
@@ -307,7 +303,7 @@
 }
 .flex-box{
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
 }
 .acc-products-wrapper table .para-normal{
@@ -379,7 +375,7 @@
 	background: transparent!important;
 	padding: 0!important;
 	width: 35px!important;
-	height: 35px!important;
+	height: 22px!important;
 	border:none!important;
 }
 .minus-btn,.plus-btn,.qty-wrap input{
@@ -392,7 +388,7 @@
 }
 .plus_icon,.minus_icon{
 	margin: 0!important;
-	height: 36px;
+	height: 25px;
 	display: flex;
 	align-items: center;
 }
@@ -560,7 +556,7 @@
 .my_addresses h1{
 	font-size: 30px;
 	margin-bottom: 30px;
-	margin-top: 30px;
+	margin-top: 37px;
 }
 .my_addresses ol,
 .my_addresses ol li{
@@ -614,14 +610,14 @@
 	padding-top: 20px;
 }
 .ship-primary{
-	width: 42%;
+	width: 50%;
 }
 
 .my_addresses #additional-addresses li:nth-of-type(odd){
-	width: 42%;
+	width: 50%;
 }
 .my_addresses #additional-addresses li:nth-of-type(even){
-	width: 58%;
+	width: 50%;
 	padding-left: 20px;
 }
 .mt-addresses-additional li.item p{
@@ -1274,6 +1270,48 @@
 	padding-bottom: 0;
 }
 /*=====================*/
+/*BREADCRUMBS*/
+/*=====================*/
+.customer-account-index .mt-new-myaccount-dashbord .page-title,
+.myaccount-index-index .page-title,
+.customer-account-edit .page-title{
+	position: relative;
+}
+.myaccount-index-index .page-title h1{
+	display: block!important;
+}
+.customer-address-index .box-title{
+	position: relative;
+}
+.customer-address-index .breadcrumbs{
+	margin-top: 0!important;
+}
+.mt-wishlist-share-form .breadcrumbs{
+	display: none!important;
+}
+.customer-address-index .breadcrumbs a{
+	display: block!important;
+}
+.customer-account-index .breadcrumbs,
+.myaccount-index-index .breadcrumbs,
+.customer-account-edit .breadcrumbs,
+.customer-address-index .breadcrumbs{
+	position: absolute;
+	top: 0;
+	left:0;
+	padding-left: 0;
+	margin-top: 17px;
+}
+.customer-account-edit .col-xl-5.col-lg-6 .breadcrumbs{
+	position: absolute!important;
+	padding-left: 15px;
+	margin-top: 0;
+}
+.customer-account-index .breadcrumbs ul{
+	padding-left: 0;
+}
+
+/*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
 
@@ -1452,6 +1490,9 @@
 	}
 }
 @media(max-width: 767px){
+	.login_security{
+		padding-top: 40px;
+	}
 	.catalog-product-view .quick_link{
 		padding-left: 38px;
 	}

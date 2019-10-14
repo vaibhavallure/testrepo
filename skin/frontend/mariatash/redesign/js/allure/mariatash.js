@@ -1,8 +1,19 @@
 jQuery(document).ready(function() {
 
-    jQuery(".close-del").on('click',function(){
-                    jQuery("body").css({"overflow": "scroll", "position": "static"});
-                });
+
+   jQuery('.customer-account-index .breadcrumbs,.customer-account-index .messages').appendTo('.mt-new-myaccount-dashbord .page-title');
+
+    jQuery('.myaccount-index-index .breadcrumbs,.myaccount-index-index .messages ').appendTo('.myaccount-index-index .page-title');
+
+     jQuery('.customer-account-edit .breadcrumbs, .customer-account-edit .messages').appendTo('.customer-account-edit .col-xl-5.col-lg-6');
+
+        jQuery('.customer-address-index .breadcrumbs, .customer-address-index .messages').appendTo('.customer-address-index .box-title');
+
+
+
+   jQuery(".close-del").on('click',function(){
+    jQuery("body").css({"overflow": "scroll", "position": "static"});
+});
 
      if (jQuery(window).width() >= 1025){
     /*jQuery('body').mouseover(function(){
@@ -19,18 +30,18 @@ jQuery(document).ready(function() {
 
     if (jQuery(window).width() >= 992){
 
-        var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page,.customer-address-index .addresses-list').outerWidth();
-        jQuery('.myaccount-index-index .breadcrumbs,.customer-address-index .breadcrumbs').css({
-            'width': cont_width
-        });
+        // var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page,.customer-address-index .addresses-list').outerWidth();
+        // jQuery('.myaccount-index-index .breadcrumbs,.customer-address-index .breadcrumbs').css({
+        //     'width': cont_width
+        // });
 
         
 
         var nav_height=jQuery('header').outerHeight();
         jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top",nav_height);
 
-        jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs,.customer-address-index .breadcrumbs').css("margin-top",nav_height/2);
-    }
+    //     jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs,.customer-address-index .breadcrumbs').css("margin-top",nav_height/2);
+     }
 
 
     var box_width=jQuery('.fs-entry-container').outerWidth();
@@ -238,12 +249,12 @@ jQuery(window).bind("load resize scroll",function(e){
         jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top",'0px');
     }
 
-     var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page').outerWidth();
-        jQuery('.myaccount-index-index .breadcrumbs').css({
-            'width': cont_width
-        });
+     // var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page').outerWidth();
+     //    jQuery('.myaccount-index-index .breadcrumbs').css({
+     //        'width': cont_width
+     //    });
 
-        jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs').css("margin-top",nav_height/2);
+        // jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs').css("margin-top",nav_height/2);
 
     
 
