@@ -3917,14 +3917,14 @@ div#uniform-shipping-address-select>span{
 .quickview-index-index p.required {
 	display: none;
 }
-#sign-up-out-of-stock{
+/* #sign-up-out-of-stock{
   -webkit-appearance: none;
 	margin: 10px -15px;
 }
 .sign-up-in-stock {
   margin: 0 -15px;
   display: block;
-}
+} */
 /* .t_Tooltip{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;
@@ -3932,7 +3932,7 @@ div#uniform-shipping-address-select>span{
   left: 979px !important;
 	top: 375px !important;
 } */
-.sign-up-email-panel .dark-button{
+/* .sign-up-email-panel .dark-button{
 	height: 42px;
   text-transform: uppercase;
 	width: 108px;
@@ -3941,7 +3941,7 @@ div#uniform-shipping-address-select>span{
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-}
+} */
 .video-caption {
 	position: absolute;
 	width: 84px;
