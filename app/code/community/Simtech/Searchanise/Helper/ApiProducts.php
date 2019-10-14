@@ -142,13 +142,21 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
         $image = null;
 
         if ($product) {
-            $image = self::generateImage($product, 'small_image', $flagKeepFrame, $width, $height);
+            if (Mage::helper('searchanise/ApiSe')->useDirectImageLinks()) {
+                $image = $product->getImage();
 
-            if (empty($image)) {
-                $image = self::generateImage($product, 'image', $flagKeepFrame, $width, $height);
-            }
-            if (empty($image)) {
-                $image = self::generateImage($product, 'thumbnail', $flagKeepFrame, $width, $height);
+                if (!empty($image)) {
+                    $image = Mage::getBaseUrl() . 'media/catalog/product'. $image;
+                }
+            } else {
+                $image = self::generateImage($product, 'small_image', $flagKeepFrame, $width, $height);
+
+                if (empty($image)) {
+                    $image = self::generateImage($product, 'image', $flagKeepFrame, $width, $height);
+                }
+                if (empty($image)) {
+                    $image = self::generateImage($product, 'thumbnail', $flagKeepFrame, $width, $height);
+                }
             }
         }
 

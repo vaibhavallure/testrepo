@@ -377,7 +377,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
 
-        if (empty($params['queryBy']) && (!isset($params['q']) || $params['q'] == '')) {
+        if ($type == self::TEXT_FIND && (!isset($params['q']) || $params['q'] == '')) {
             return;
         }
 

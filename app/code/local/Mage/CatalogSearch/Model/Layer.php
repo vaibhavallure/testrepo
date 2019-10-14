@@ -48,9 +48,6 @@ return $collection;
             ->addStoreFilter()
             ->addUrlRewrite();
 
-        $search_text = Mage::helper('catalogsearch')->getQuery()->getQueryText();
-        $collection->getSelect()->where("e.sku like '%".$search_text."%' or e.name like '%".$search_text."%'");
-        
         /*Filter By Group Code Starts Here*/
 
             /*Find Group of Customer Start*/
