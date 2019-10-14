@@ -3078,7 +3078,7 @@ margin-top: 10%;
 	position: fixed!important;
 	background: #1f1e1e61!important;
 }
-.fancybox-lock .fancybox-sample-size .fancybox-close {
+.fancybox-lock .fancybox-sample-size .fancybox-close,.fancybox-item.fancybox-close {
 	background-image: url(../images/redesign/login-cross.png);
 	width: 25px;
 	height: 26px;
@@ -3711,6 +3711,24 @@ z-index: 1!important;
 
 
 
+.checkout-cart-index .fancybox-opened .fancybox-skin{
+	background: #ffffff!important;
+}
+.checkout-cart-index .fancybox-opened .fancybox-skin #inline{
+	padding: 45px;
+}
+.checkout-cart-index a.fancybox-item.fancybox-close {
+	position: absolute;
+	right: 24px;
+	top: 24px;
+}
+.checkout-cart-index .shipping-estimation-form .validation-advice,.checkout-cart-index #inline .additional-message{
+	width: 322px;
+	margin: auto;
+}
+.checkout-cart-index #inline .additional-message{
+	font-size: 9px;
+}
 /*-------------------new alert box--------------------------*/
 
  #allureModalContainer {
@@ -3977,3 +3995,4 @@ dt.post-lengthds-lbl {
 .quickview-index-index .add-to-cart-left{
 	margin-top: 18px;
 }
+
