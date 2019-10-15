@@ -11,7 +11,7 @@ body, html {
     letter-spacing: 0.5px;
     line-height:normal;
     font-weight: 500;
-    margin-bottom:25px;
+    margin-bottom:17px;
 }
 
 h1{
@@ -20,7 +20,7 @@ h1{
     letter-spacing: 0.5px;
     line-height: normal;
     font-weight: 300;
-    margin-bottom:25px;
+    margin-bottom:17px;
 }
 h1.error{
     padding-top:15px;
@@ -33,9 +33,9 @@ h1.error{
 .page-background {
     background-image: url("../images/maintenance-background-img-full.jpg");
     height: 100%;
-    background-position: 0% 15%;
+    /*background-position: 0% 15%;*/
     background-repeat: no-repeat;
-    background-size:cover;
+    /*background-size:cover;*/
 }
 .text-center{
     text-align: center;
@@ -44,25 +44,28 @@ h1.error{
     margin-top: 81px;
     margin-bottom:95px;
 }
-.maintenance-logo-img{
-    width: 250px;
-    height: 50px;
-}
+/*.maintenance-logo-img{*/
+    /*width: 250px;*/
+    /*height: 50px;*/
+/*}*/
 
-@media screen and (min-width:320px) and (max-width:1024px) {
+@media screen and (max-width:767px)  {
     .page-background {
-        background-image: url("../images/maintenance-background-img.jpg");
-        background-position: 0% 50%;
+    background-position: center;
     }
     .maintenance-logo{
-        padding-top: 45px;
-        padding-bottom: 25px;
+        margin-bottom:25px;
+    }
+    h1{
+        font-size: 26px;
+    }
+    .medium-big-font{
+        font-size: 14px;
     }
 }
-@media screen and (min-width:320px) and (max-width:1366px) and (orientation: portrait){
+@media screen and (min-width:767px) and (max-width: 1024px)  {
     .page-background {
-        background-image: url("../images/maintenance-background-img.jpg");
-        background-position: 45%;
+        background-position: center 0;
     }
-
 }
+
