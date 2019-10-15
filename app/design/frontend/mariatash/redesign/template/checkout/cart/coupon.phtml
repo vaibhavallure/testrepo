@@ -24,28 +24,9 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<!--<form id="discount-gift-cart" action="#" method="post">
-<div class="discount">
-    <div class="discount-form">
-        <label for="coupon_code"><//?php // echo $this->__('Gift Card') ?></label>
-        <input type="hidden" name="remove" id="remove-coupone" value="0" />
-        <div class="input-cart">
-            <input class="input-text" id="coupon_code" name="coupon_code" value="<?php // echo $this->htmlEscape($this->getCouponCode()) ?>" />
-        </div>
-        <div class="buttons-set">
-            <button type="button" title="<?php // echo $this->__('Apply') ?>" class="button" onclick="discountForm.submit(false)" value="<?php // echo $this->__('Apply') ?>"><span><span><?php // echo $this->__('Apply') ?></span></span></button>
-            <p class="youhave">You have $35 on this Card</p>
-            <?php // if(strlen($this->getCouponCode())): ?>
-                &nbsp; <button type="button" title="<?php // echo $this->__('Cancel Coupon') ?>" class="button" onclick="discountForm.submit(true)" value="<?php // echo $this->__('Cancel Coupon') ?>"><span><span><?php // echo $this->__('Cancel Coupon') ?></span></span></button>
-            <?php // endif;?>
-        </div>
-    </div>
-</div>-->
-</form>
 <form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
     <div class="discount">
         <div class="discount-form">
-            <!-- <label for="coupon_code2"><//?php echo $this->__('Promo Code') ?></label> -->
             <input type="hidden" name="remove" id="remove-coupone" value="0" />
             <div class="input-cart position-relative">
                 <input class="input-text position-relative" id="coupon_code2" name="coupon_code" placeholder="Promo Code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" <?php echo (strlen($this->getCouponCode())) ? 'disabled' : '';?>/>
@@ -87,6 +68,8 @@ discountForm.submit = function (remove) {
 //]]>
 
     jQuery("#coupon_code2").blur(function() {
-        discountForm.submit();
+        if(jQuery("#coupon_code2").val()!= ''){
+        	discountForm.submit();
+        }
     });
 </script>
