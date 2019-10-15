@@ -324,6 +324,9 @@ select{
   background-repeat: no-repeat;
   background-position: 98% 50%;
 }
+:focus {
+	outline: none !important;
+}
 .select-type-one,
 .country-section select{
 	width: 322px;
@@ -4105,4 +4108,18 @@ dt.post-lengthds-lbl {
   font-family: urw-din-light;
   font-size: 18px;
   margin-top: 20px;
+}
+.right-cart-coupon{
+	position: absolute;
+  top: 3px;
+  right: 3px;
+  -webkit-appearance: none;
+  border: none;
+  background: #fff;
+  margin-top: 0 !important;
+}
+.cart-mt ul.messages {
+  position: relative;
+  width: 100%;
+	padding: 0 15px;
 }
