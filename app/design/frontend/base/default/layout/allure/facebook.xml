@@ -19,11 +19,11 @@
 	</default>
 	
 	<customer_account_login>
-		<reference name="content">
+		<!--<reference name="content">
     		<block type="facebook/template" template="allure/facebook/login.phtml" name="facebook_login">
     			<block type="facebook/button" name="facebook_login_button" />
     		</block>
-    	</reference>
+    	</reference>-->
 	</customer_account_login>
 	
 	
