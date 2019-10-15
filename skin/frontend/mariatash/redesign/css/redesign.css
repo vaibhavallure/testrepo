@@ -4071,3 +4071,38 @@ dt.post-lengthds-lbl {
 .data-table.cart-table .messages.wholesale-avail-row .item-msg{
 	margin-bottom: 20px;
 }
+
+/*Address Override*/
+.checkout-multishipping-address-newshipping .new_address .container {
+  padding-left: 0;
+}
+.checkout-multishipping-address-newshipping .new_address {
+  margin-top: 20px !important;
+}
+.checkout-multishipping-address-newshipping .checkout-new-address {
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+}
+.checkout-multishipping-address-newshipping .col-right.sidebar{
+	flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+  display: none;
+}
+.checkout-multishipping-address-newshipping .checkout-new-address .buttons-set {
+  text-align: left !important;
+	margin-top: 23px;
+}
+.checkout-multishipping-address-newshipping .checkout-new-address .buttons-set .save_button{
+	width: 322px !important;
+	height: 42px;
+	margin-bottom: 10px;
+}
+.checkout-multishipping-address-newshipping .checkout-new-address .intl-tel-input .selected-flag .iti-flag{
+	top: 2px;
+	left: 17px;
+}
+.checkout-multishipping-address-newshipping .checkout-new-address .fieldset .legend {
+  font-family: urw-din-light;
+  font-size: 18px;
+  margin-top: 20px;
+}
