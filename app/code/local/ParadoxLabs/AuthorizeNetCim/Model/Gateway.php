@@ -1227,10 +1227,10 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				}
 			}
 
-			if( $isRefund !== true && $this->_testMode !== true) {
+			if( $isRefund !== true) {
 				// Set order identifiers!
 				$params['solution'] = array(
-					'id' => self::SOLUTION_ID,
+				    'id' => ($this->_testMode !== true ? self::SOLUTION_ID : 'AAA100303')
 				);
 			}
 
