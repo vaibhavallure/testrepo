@@ -4029,6 +4029,13 @@ dt.post-lengthds-lbl {
 	margin-top: 18px;
 }
 
+/*-----------------*/
+.chooseNewPassword{
+	width: 320px;
+	margin: 100px auto;
+}
+/*------------*/
+
 /*Checkout Popup*/
 .guest-checkout button {
   height: 42px;

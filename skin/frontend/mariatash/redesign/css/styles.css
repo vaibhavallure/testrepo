@@ -1061,9 +1061,9 @@ label.zip-label {
 
 .customer-account-login .input-box input.input-text,
 .checkout-multishipping-login .input-box input.input-text {
-	width: 220px;
+	/*width: 220px;
 	height: 19px;
-	float: left;
+	float: left;*/
 }
 
 .customer-account-login h2.legend, .checkout-multishipping-login h2.legend
