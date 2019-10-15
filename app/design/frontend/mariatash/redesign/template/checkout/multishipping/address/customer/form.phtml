@@ -166,7 +166,9 @@ if(strtolower($controllerName) == strtolower("multishipping")){
                 		</div>
                     	<div class="buttons-set text-right">
                         	<button type="submit" title="<?php echo $this->__('Save Address') ?>" class="dark-button save_button next-button"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
-                          <p class="back-link link-button"><a><?php echo $this->__('Back') ?></a></p>
+                          	<?php if($flag):?>
+                          	<p class="back-link link-button"><a><?php echo $this->__('Back') ?></a></p>
+                          	<?php endif;?>
                     	</div>
             		</form>
                 	<script type="text/javascript">

@@ -281,7 +281,19 @@
         initializeItelTelInput();
 
         //set first option of country as placeholder
-        //jQuery('.country-section select option[value=""]').text("Country*");
+        jQuery('.country-section select option[value=""]').text("Country*");
+		if(jQuery('.country-section select option[value=""]')){
+        	jQuery('.country-section select').addClass('select-country-placeholder');
+		}
+
+		jQuery('.country-section select[name="billing[country_id]"]').on('change',function(){
+			if(jQuery(this).val() == ''){
+				jQuery(this).addClass('select-country-placeholder');
+			}else{
+				jQuery(this).removeClass('select-country-placeholder');
+			}
+		});
+		
     });
 
     function updatePoscodeShipping(obj) {
