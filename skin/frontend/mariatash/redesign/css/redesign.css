@@ -1969,7 +1969,7 @@ div#narrow-by-list {
   left: 50%;
   transform: translate(-50%,-50%);
   max-height: calc(100vh - 10px);
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 .pop-title a {
   margin: 24px 24px 0 0;
@@ -2015,7 +2015,7 @@ div#narrow-by-list {
 	justify-content: center;
 	padding: 0;
 }
-button#signin-btn-popup {
+button#signin-btn-popup, .sign-in-register {
 	margin: 25px 0 38px;
 }
 .mt-amazon-btn, .mt-googleconnect-btn {
@@ -3563,7 +3563,7 @@ margin-top: 10%;
 	font-family: urw-din-regular;
 }
 .checkoutPopupLoginModel .pop-up-cover{
-	width: fit-content;
+	width: 910px;
 }
 .catalog-category-view .price_tax_text{
 	display: none;
@@ -4024,4 +4024,28 @@ dt.post-lengthds-lbl {
 }
 .quickview-index-index .add-to-cart-left{
 	margin-top: 18px;
+}
+
+/*Checkout Popup*/
+.guest-right{
+	background: #f2f2f2;
+}
+.guest-checkout button {
+  height: 42px;
+	width: 213px;
+}
+.guest-checkout button:hover{
+	background: transparent;
+}
+.guest-right > .row {
+  height: 100%;
+}
+.sign-in-cross{
+	right: 25px;
+  top: 25px;
+  z-index: 1;
+}
+.checkoutPopupLoginModel .submit-login {
+  display: flex;
+  justify-content: space-between;
 }

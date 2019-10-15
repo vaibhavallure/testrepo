@@ -1329,6 +1329,9 @@ body.cms-index-index.cms-home .login-dropdown{
   .checkout-multishipping-success .multiple-checkout {
     margin-top: 110px;
   }
+  .pop-up-cover{
+    overflow-y: auto;
+  }
 }
 
 
