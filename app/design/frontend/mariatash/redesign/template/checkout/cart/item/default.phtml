@@ -225,10 +225,10 @@ if(!is_null($parentId)){
             <div class="item-msg float-left">
                 <p class="info-text-three"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
             </div>
-            <div class="w-remove float-right">
-            <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
-        </div>
         <?php if($customerGroupId == 2):?>
+        	<div class="w-remove float-right">
+            	<a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
+        	</div>
             <?php if ($this->helper('customer')->isLoggedIn()): ?>
                 <div class="ad-to-fav float-right">
                     <a class="info-text-three" id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Move to Wishlist</a>
