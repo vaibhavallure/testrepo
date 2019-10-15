@@ -3335,7 +3335,7 @@ margin-top: 10%;
   margin-bottom: 25px;
 }
 .select-shipping-method.select-type-one.validate-select {
-  margin-bottom: 10px;
+  margin-bottom: 23px;
 }
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
@@ -3397,6 +3397,18 @@ margin-top: 10%;
 .giftcard-payment-method .button_coupon, .discount .button_coupon {
   margin-top: 10px;
   display: block;
+}
+.shipping-form.shipping-estimation-form .input-box {
+  margin-bottom: 21px !important;
+}
+.shipping-estimation-form .form-list .buttons-set {
+  padding: 2px 0 0;
+}
+#estimate-result {
+  margin-top: 22px;
+}
+.additional-message p {
+  margin-bottom: 0;
 }
 /* cccc */
 /*MINI CART CSS*/
@@ -3729,14 +3741,11 @@ z-index: 1!important;
 .category-shop-our-instagram .fs-timeline-detail .quick_link{
 	margin-left: 30px;
 }
-
-
-
 .checkout-cart-index .fancybox-opened .fancybox-skin{
 	background: #ffffff!important;
 }
 .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
-	padding: 45px;
+	padding: 45px 99px;
 }
 .checkout-cart-index a.fancybox-item.fancybox-close {
 	position: absolute;
@@ -4016,4 +4025,3 @@ dt.post-lengthds-lbl {
 .quickview-index-index .add-to-cart-left{
 	margin-top: 18px;
 }
-
