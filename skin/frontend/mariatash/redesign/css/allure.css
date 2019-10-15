@@ -609,9 +609,9 @@ width: 94%;
 .product-options-bottom .add-to-cart-left .ajax-error-messages {
     left: 150px;
 }
-.cart-mt ul.messages{
+/* .cart-mt ul.messages{
     position: static;
-}
+} */
 
 /* #popup-login-form .pop-title h2{
     font-weight: normal;

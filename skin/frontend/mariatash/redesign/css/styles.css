@@ -391,9 +391,9 @@ button, input[type="button"], input[type="reset"], input[type="submit"]
 /*
  * Re-set default cursor for disabled elements
  */
-button[disabled], input[disabled] {
+/* button[disabled], input[disabled] {
 	cursor: default;
-}
+} */
 
 /*
  * 1. Addresses box sizing set to content-box in IE8/9
@@ -2232,9 +2232,9 @@ select#region_id {
 	border: 2px solid #830000;
 }
 
-.checkout-cart-index ul.messages {
+/* .checkout-cart-index ul.messages {
 	position: absolute;
-}
+} */
 
 .customer-account-index.messages {
 	width: 100%;

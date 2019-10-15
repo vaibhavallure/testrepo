@@ -32,11 +32,21 @@
  * @var Mage_Customer_Block_Address_Edit $this
  */
 ?>
+<?php $controllerName = Mage::app()->getRequest()->getControllerName();?>
+<?php
+$flag = false;
+if(strtolower($controllerName) == strtolower("multishipping")){
+    $flag = true;
+}
+?>
 <div class="new_address">
     <div class="container">
         <div class="">
-            <div class="col-lg-12">
+            <div class="col-lg-12 checkout-new-address">
                 <?php if($this->getTitle()): ?>
+                	<?php if(!$flag):?>
+                		<h1><?php echo $this->getTitle() ?></h1>
+                	<?php endif;?>
                     <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
                     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
@@ -46,6 +56,9 @@
                             <?php echo $this->getBlockHtml('formkey')?>
                             <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
                             <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+                            <?php if(!$flag):?>
+                            <h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
+                            <?php endif;?>
                             <ul class="form-list">
                                 <li class="fields">
                                     <?php //echo $this->getNameBlockHtml() ?>
@@ -94,13 +107,13 @@
                                 <li class="fields">
                                     <div class="field">
                                         <div class="input-box">
-                                            <input placeholder="City" type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                                            <input placeholder="City*" type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
                                         </div>
                                     </div>
                                     <div class="field">
                                         <div class="input-box region_edit">
                                             <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select required-entry main-dropdown-box" style="display:none;">
-                                                <option value=""><?php echo $this->__('State/Province') ?></option>
+                                                <option value=""><?php echo $this->__('State/Province*') ?></option>
                                             </select>
                                             <script type="text/javascript">
                                                 //<![CDATA[
@@ -114,7 +127,7 @@
                                 <li class="fields">
                                     <div class="field">
                                         <div class="input-box">
-                                            <input placeholder="zip" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="required-entry-dtn input-patern validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                                            <input placeholder="zip Code*" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="required-entry-dtn input-patern validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
                                         </div>
                                     </div>
                                 </li>
@@ -153,7 +166,9 @@
                 		</div>
                     	<div class="buttons-set text-right">
                         	<button type="submit" title="<?php echo $this->__('Save Address') ?>" class="dark-button save_button next-button"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
-                          <p class="back-link link-button"><a><?php echo $this->__('Back') ?></a></p>
+                          	<?php if($flag):?>
+                          	<p class="back-link link-button"><a><?php echo $this->__('Back') ?></a></p>
+                          	<?php endif;?>
                     	</div>
             		</form>
                 	<script type="text/javascript">

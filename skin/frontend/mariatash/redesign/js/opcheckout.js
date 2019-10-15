@@ -575,6 +575,13 @@ Shipping.prototype = {
         $('shipping:same_as_billing').checked = flag;
 // #5599. Also it hangs up, if the flag is not false
 //        $('billing:use_for_shipping_yes').checked = flag;
+        
+        if($('shipping:country_id').value == ''){
+        	$('shipping:country_id').addClassName('select-country-placeholder');
+        }else{
+        	$('shipping:country_id').removeClassName('select-country-placeholder');
+        }
+        
         if (flag) {
             this.syncWithBilling();
         }
