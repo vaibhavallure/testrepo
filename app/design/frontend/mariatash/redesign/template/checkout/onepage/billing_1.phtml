@@ -22,7 +22,7 @@
  * @package     base_default
  * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * 
+ *
  * @var Mage_Checkout_Block_Onepage_Billing $this
  */
 ?>
@@ -41,10 +41,10 @@
 </style>
 
 <fieldset id="fieldset-billing" style="display: none;">
-	<ul class="form-list p-0">
+	<ul class="form-list p-0 row justify-content-center">
     	<?php if ($_hasAddresses): ?>
-    	<li class="wide">
-        	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Select a billing address from your address book or enter a new address:') ?></label>
+    	<li class="wide col-12">
+        	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please select your Billing address:') ?></label>
             	<div class="input-box">
                 	<?php Varien_Profiler::start('DTN: getHtmlSelect binling'); ?>
                 	<?php echo $this->getAddressesHtmlSelect('billing') ?>
@@ -80,7 +80,7 @@
                                    	class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>"/>
                           	</div>
                       	</div>
-                      	
+
                       	<?php // if(!$this->isCustomerLoggedIn()): ?>
                        	<div class="field">
                         	<div class="input-box">
@@ -103,7 +103,7 @@
                         </div>
                         <?php // endif; ?>
              		</li>
-                    
+
                     <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
                     <li class="fields">
                     	<div class="field">
@@ -117,7 +117,7 @@
                           	</div>
                        	</div>
                     </li>
-                        
+
                     <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
                     <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
                     <li class="fields">
@@ -132,7 +132,7 @@
                        </div>
                  	</li>
                    <?php endfor; ?>
-                        
+
                    <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
                    <li class="fields">
                    		<div class="input-box">
@@ -256,9 +256,9 @@
                      	</div>
                     </li>
                     <?php endif; ?>
-                    
+
                     <?php if ($this->isCustomerLoggedIn() && $_hasAddresses): ?>
-                    <li class="control">
+                    <li class="control w-100 px-3">
                     	<label class="para-normal custom-checkbox custom-checkbox-two"
                       		for="billing:save_in_address_book">
                        	<input type="checkbox" name="billing[save_in_address_book]" value="1"

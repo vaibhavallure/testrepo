@@ -6,79 +6,66 @@
  */
 
 $quote = Mage::getModel('checkout/cart')->getQuote();
-$codeExists = ($quote->getCouponCode())
-? true
-: false;
+$codeExists = ($quote->getCouponCode()) ? true : false;
 ?>
-<div class='promoDiv row'>
+<div class='promoDiv'>
     <div class="coupons col-12">
-
-
 		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
+		<div class="discount row">
+    		<div class="sp-methods">
+        		<form method="post" action="<?php echo $this->getUrl('giftcards/cart/giftcardActive'); ?>" id="giftcardAgree">
+            		<div class="input-box">
+                		<input type="checkbox" value="1" name="giftcard_use" id="giftcard_use" class="checkbox"  <?php echo $oGiftCardSession->getActive() ? 'checked="checked"' : '' ?>>
+            		</div>
+        		</form>
+    		</div>
+    
+    		<div class="discount-form giftcard-payment-method col-12">
+        		<form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
+                    <div class="input-box col-lg-4 col-md-4 col-12">
+                        <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-two">
+                    </div>
+                    <div class="buttons-set col">
+                        <a value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon link-button"
+                                title="Apply" type="button" ><span><span><?php echo $this->__('Apply') ?></span></span>
+                        </a>
+                    </div>
+                </form>
 
-<div class="discount row">
-    <div class="sp-methods">
-        <form method="post" action="<?php echo $this->getUrl('giftcards/cart/giftcardActive'); ?>" id="giftcardAgree">
-            <div class="input-box">
-                <input type="checkbox" value="1" name="giftcard_use" id="giftcard_use" class="checkbox"  <?php echo $oGiftCardSession->getActive() ? 'checked="checked"' : '' ?>>
-                <!-- <label for="giftcard_use"><//?php echo $this->__('Gift Card'); ?></label> -->
-            </div>
-        </form>
-    </div>
-    <?php if(1==1): ?>
-    <div class="discount-form giftcard-payment-method col-12">
-        <form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
-            <div class="input-box col-lg-6 col-md-6 col-12">
-                <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-one">
-            </div>
-            <div class="buttons-set col">
-                <a value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon link-button"
-                        title="Apply" type="button" ><span><span><?php echo $this->__('Apply') ?></span></span>
-                </a>
-            </div>
-        </form>
-
-        <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); $temp = 0; ?>
-        <?php if($oGiftCardSession->getActive()) {
-            foreach($oGiftCardSession->getFrontOptions() as $k => $v)
-            {
-                if($temp) {
-                    echo '<br/><br/>';
-                }
-                echo '<p><b>'.$currencySymbol.$v['applied'].' '.$this->__('applied from Gift Card').' **********'.$v['code'].'.</b><br/>';
-                echo $this->__('Remaining card balance').': '.$currencySymbol.$v['remaining'].'.</p><a href="#" onclick="deActivateGiftCard.deactivate('.$k.');" class="button_coupon" style="position:relative; top:-9px;"><span><span>'.$this->__('Remove').'</span></span></a>';
-                $temp = 1;
-            }
-        }
-        ?>
-    </div>
-
-    <?php endif;?>
-
-</div>
-<div class="discount row">
-            <div class="discount-form col-12">
-                <!-- <label>Promo Code</label> -->
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <input placeholder="Promo Code" class="input-text input-patern select-type-one" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
-                  </div>
-                  <div class="buttons-set col">
-                    <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
-                    <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
-                  </div>
-					<span style="display:none;" id="advice-required-entry-promoCode_code" ></span>
-              </div>
-            </div>
-        </div>
-    </div>
+        		<?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
+            	<?php if($oGiftCardSession->getActive()):?>
+                	<?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
+                    <p>
+                    	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
+                    	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
+                    	<a href="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon" style="position:relative; top:-20px;">
+                    		<span><span><?= $this->__('Remove')?></span></span>
+                    	</a>
+                    </p>
+           		 	<?php endforeach;?>
+       		 	<?php endif;?>
+    		</div>
+		</div>
+		<div class="discount row">
+        	<div class="discount-form col-12">
+             	<div class="row">
+                 	<div class="col-lg-4 col-md-4 col-12">
+                   		<input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
+                   	</div>
+                    <div class="buttons-set col">
+                        <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
+                        <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
+                    </div>
+    				<span style="display:none;" id="advice-required-entry-promoCode_code" ></span>
+              	</div>
+           	</div>
+  		</div>
+	</div>
 </div>
 
 <!--gift card section-->
 <?php if(Mage::getStoreConfig('giftcards/default/show_as_payment_method')): ?>
-    <script type="text/javascript" src="<?php //echo $this->getJsUrl('webtex/giftcards/onepagegiftcard_t.js') ?>"></script>
-    <script type="text/javascript">
-
+<script type="text/javascript">
     var OnepageGiftcard = Class.create();
     OnepageGiftcard.prototype = {
         initialize: function(form, saveUrl){
@@ -156,15 +143,11 @@ $codeExists = ($quote->getCouponCode())
         }
     }
 
-        //&lt;![CDATA[
+    //&lt;![CDATA[
         var activateGiftCard = new OnepageGiftcard('activateGiftCard',"<?php echo $this->getUrl('checkout/multishipping/ajaxActivateGiftCard', array('_secure'=>true)) ?>");
         var agreeMethod = new OnepageGiftcard('giftcardAgree', "<?php echo $this->getUrl('checkout/multishipping/agreeToUse', array('_secure'=>true)) ?>");
         var deActivateGiftCard = new OnepageGiftcard( null, "<?php echo $this->getUrl('checkout/multishipping/ajaxDeActivateGiftCard', array('_secure'=>true)) ?>");
-        //]]&gt;
-    </script>
-
-
-
-
+    //]]&gt;
+</script>
 <?php endif; ?>
 <!-- end gift card section-->
