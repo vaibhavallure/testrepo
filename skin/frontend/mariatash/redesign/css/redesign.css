@@ -1825,7 +1825,7 @@ div#narrow-by-list {
   text-align: center;
   padding: 0;
 }
-.catalog-category-view .light-button {
+.catalog-category-view .list-mt-w .light-button {
   width: 128px;
   height: 33px;
 	text-transform: uppercase;
@@ -1969,7 +1969,7 @@ div#narrow-by-list {
   left: 50%;
   transform: translate(-50%,-50%);
   max-height: calc(100vh - 10px);
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 .pop-title a {
   margin: 24px 24px 0 0;
@@ -2015,8 +2015,8 @@ div#narrow-by-list {
 	justify-content: center;
 	padding: 0;
 }
-button#signin-btn-popup {
-	margin: 25px 0 38px;
+button#signin-btn-popup, .sign-in-register {
+	margin: 25px 0 48px;
 }
 .mt-amazon-btn, .mt-googleconnect-btn {
   margin-right: 21px;
@@ -3335,7 +3335,7 @@ margin-top: 10%;
   margin-bottom: 25px;
 }
 .select-shipping-method.select-type-one.validate-select {
-  margin-bottom: 10px;
+  margin-bottom: 23px;
 }
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
@@ -3397,6 +3397,18 @@ margin-top: 10%;
 .giftcard-payment-method .button_coupon, .discount .button_coupon {
   margin-top: 10px;
   display: block;
+}
+.shipping-form.shipping-estimation-form .input-box {
+  margin-bottom: 21px !important;
+}
+.shipping-estimation-form .form-list .buttons-set {
+  padding: 2px 0 0;
+}
+#estimate-result {
+  margin-top: 22px;
+}
+.additional-message p {
+  margin-bottom: 0;
 }
 /* cccc */
 /*MINI CART CSS*/
@@ -3551,7 +3563,7 @@ margin-top: 10%;
 	font-family: urw-din-regular;
 }
 .checkoutPopupLoginModel .pop-up-cover{
-	width: fit-content;
+	width: 910px;
 }
 .catalog-category-view .price_tax_text{
 	display: none;
@@ -3729,14 +3741,11 @@ z-index: 1!important;
 .category-shop-our-instagram .fs-timeline-detail .quick_link{
 	margin-left: 30px;
 }
-
-
-
 .checkout-cart-index .fancybox-opened .fancybox-skin{
 	background: #ffffff!important;
 }
 .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
-	padding: 45px;
+	padding: 45px 99px;
 }
 .checkout-cart-index a.fancybox-item.fancybox-close {
 	position: absolute;
@@ -4017,3 +4026,48 @@ dt.post-lengthds-lbl {
 	margin-top: 18px;
 }
 
+/*Checkout Popup*/
+.guest-checkout button {
+  height: 42px;
+	width: 213px;
+}
+.guest-checkout button:hover{
+	background: #fff;
+}
+.guest-right > .row {
+  height: 100%;
+}
+.sign-in-cross{
+	right: 25px;
+  top: 25px;
+  z-index: 1;
+}
+.checkoutPopupLoginModel .submit-login {
+  display: flex;
+  justify-content: space-between;
+}
+.checkoutPopupLoginModel .pop-title h1{
+	margin-top: 91px;
+}
+.signin-left {
+  max-width: 508px;
+}
+.guest-right{
+	background: #f2f2f2;
+	max-width: 402px;
+	flex: 0 0 402px;
+}
+.checkoutPopupLoginModel #signin-btn-popup, .checkoutPopupLoginModel .sign-in-register {
+	margin: 25px 0 95px;
+}
+
+/*Wholesale separate css*/
+.wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove {
+  margin-top: 37px;
+}
+.wholesale-avail-row {
+  border-bottom: 1px solid #d8d8d8;
+}
+.data-table.cart-table .messages.wholesale-avail-row .item-msg{
+	margin-bottom: 20px;
+}

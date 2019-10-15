@@ -1660,9 +1660,9 @@ div.my-account div.col2-set div.box div.box-title div.pager-mt-1 div.pager div.l
 	width: 100%;
 }
 
-.checkout-cart-index .fancybox-opened .fancybox-skin {
+/* .checkout-cart-index .fancybox-opened .fancybox-skin {
 	background: #f1f1f1;
-}
+} */
 
 /* .shipping {
 	width: 370px;
@@ -1674,9 +1674,9 @@ label.required em {
 	color: red;
 }
 
-.shipping .shipping-form .form-list .buttons-set {
+/* .shipping .shipping-form .form-list .buttons-set {
 	padding: 0;
-}
+} */
 
 .shipping .shipping-form .form-list .buttons-set button#getQuote {
 	padding: 2px 7px;
