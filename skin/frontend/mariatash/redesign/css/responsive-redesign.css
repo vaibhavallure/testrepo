@@ -741,7 +741,7 @@ body.cms-index-index.cms-home .login-dropdown{
     margin-top: 106px;
   }
   .common-redesign-checkout .for-space-to-bottom{
-    height: 142px !important;
+    height: 252px !important;
   }
   .checkout-cart-index .for-space-to-bottom,
   .checkout-multishipping-addresses .for-space-to-bottom,
@@ -942,6 +942,9 @@ body.cms-index-index.cms-home .login-dropdown{
   }
   .gift-message-section {
     margin-bottom: 30px;
+  }
+  .second-shipment-method{
+    margin-top: 10px;
   }
 }
 
