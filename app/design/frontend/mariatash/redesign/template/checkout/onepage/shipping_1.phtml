@@ -37,9 +37,9 @@
 
 <form action="" id="co-shipping-form">
 	<fieldset>
-   		<ul class="form-list p-0 row">
+   		<ul class="form-list p-0">
        		<?php if ($this->customerHasAddresses()): ?>
-       		<li class="wide col-lg-6 col-md-6 col-12">
+       		<li class="wide">
             	<label for="shipping-address-select" class="info-text-two"><?php echo $this->__('Please select your Shipping address:') ?></label>
               	<div class="input-box">
                 	<?php echo $this->getAddressesHtmlSelect('shipping') ?>
@@ -198,7 +198,7 @@
             </li>
 
 			<?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()): ?>
-            <li class="control w-100 px-3" id="li_save_in_address_book">
+            <li class="control" id="li_save_in_address_book">
             	<input style="position: inherit;top: 0px;" type="checkbox" name="shipping[save_in_address_book]"
                 	value="1" title="<?php echo $this->__('Save in Address Book') ?>"
                     id="shipping:save_in_address_book"<?php if ($this->getAddress()->getSaveInAddressBook()): ?> checked="checked"<?php endif; ?>
@@ -216,7 +216,7 @@
             	<?= $this->getChildhtml("billing");?>
             </li>
 
-           	<li class="control w-100 px-3">
+           	<li class="control">
             	<label class="para-normal mb-4 custom-checkbox custom-checkbox-two" for="shipping:same_as_billing">
                 	<input type="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing"
                     	value="1"<?php if ($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?>
