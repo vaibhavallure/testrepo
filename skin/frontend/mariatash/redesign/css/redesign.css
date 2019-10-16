@@ -4147,10 +4147,12 @@ dt.post-lengthds-lbl {
 }
 .catalog-product-view .fancybox-sizechart .fancybox-inner{
 	background: #fff;
+	height: 100% !important;
 }
 .catalog-product-view .fancybox-sizechart #inline_sample img{
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
+	margin-top: 29px;
 }
 /* .catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close{
 	background: url(../images/redesign/exit-small-bk.png) scroll 0 0
