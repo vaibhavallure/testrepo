@@ -807,6 +807,30 @@
     left: 642px !important;
     top: 370px !important;
   } */
+
+  .catalog-category-view .footer:hover {
+    opacity: 1;
+  }
+  .pdp-image-section
+  {
+    margin-top: 153px;
+  }
+  .pdp-image-section .containerImage{
+    margin-top: -70px;
+  }
+  .quickview-index-index .pdp-image-section
+  {
+    margin-top: auto;
+  }
+  .quickview-index-index .pdp-image-section .containerImage{
+    margin-top: auto;
+  }
+  .containerVideo iframe{
+    display: block;
+    margin: auto;
+    width: 553px;
+    height: 312px;
+  }
 }
 
 /* ALl Mobiles */
@@ -1412,6 +1436,26 @@
   }
   .catalog-category-view .footer:hover {
     opacity: 1;
+  }
+  .pdp-image-section
+  {
+    margin-top: 153px;
+  }
+  .pdp-image-section .containerImage{
+    margin-top: -70px;
+  }
+  .quickview-index-index .pdp-image-section
+  {
+    margin-top: auto;
+  }
+  .quickview-index-index .pdp-image-section .containerImage{
+    margin-top: auto;
+  }
+  .containerVideo iframe{
+    display: block;
+    margin: auto;
+    width: 553px;
+    height: 312px;
   }
 }
 

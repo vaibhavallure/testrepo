@@ -38,7 +38,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
                     <p>
                     	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
                     	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
-                    	<a href="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon" style="position:relative; top:-20px;">
+                    	<a href="javascript:void();" onclick="deActivateGiftCard.deactivate(<?=$k ?>);" class="button_coupon" style="position:relative; top:-20px;">
                     		<span><span><?= $this->__('Remove')?></span></span>
                     	</a>
                     </p>

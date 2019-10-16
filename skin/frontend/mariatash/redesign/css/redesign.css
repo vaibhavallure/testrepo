@@ -2505,7 +2505,7 @@ ul#foo4 {
 /*product detail page-------------------------------------------*/
 .containerImage img{
 	display: flex;
-	margin: 98px auto 0;
+	margin: 0 auto 0;
 }
 .catalog-product-view .regular-price span {
   font-size: 22px;
@@ -2587,14 +2587,13 @@ ul.tabs {
 .add-to-cart .availability {
   margin: 40px 0 21px;
 }
-.thumb.thumb1 img{
-	margin-top: 153px;
-}
+/*.thumb.thumb1 img*/
+
 .thumb img{
 	border: 1px solid #D4D4D4;
 	margin-top: 10px;
 }
-.thumb .active img{
+.thumb .active img,.thumb.active img{
 	border: 1px solid rgba(41,41,41,0.9);
 	border-bottom-width: 3px;
 	transition: .5s;
@@ -2748,7 +2747,7 @@ ul.tabs li{
 	height: 100%;
 }
 .containerVideo{
-	margin-top: 20%;
+	/*margin-top: 20%;*/
 }
 
 
