@@ -666,6 +666,11 @@
     flex: 0 0 30%;
     max-width: 30%;
   }
+  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
+    left: 142px !important;
+    top: 1033px !important;
+    width: 413px !important;
+  } */
 }
 
 
@@ -788,6 +793,10 @@
   .product-shop{
     padding: 0 14px;
   }
+  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
+    left: 642px !important;
+    top: 370px !important;
+  } */
 }
 
 /* ALl Mobiles */
@@ -1267,6 +1276,11 @@
     margin-top: 15px;
     padding: 0 25px;
   }
+  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
+    width: 344px !important;
+    left: 12px !important;
+    top: 822px !important;
+  } */
 }
 
 /* Mobile landscape */

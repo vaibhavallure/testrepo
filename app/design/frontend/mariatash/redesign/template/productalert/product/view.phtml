@@ -35,15 +35,17 @@
             <a class="sign-up-in-stock" title="<?php echo $this->escapeHtml($this->__($this->getSignupLabel())); ?>" style="cursor: pointer">
                 <?php echo $this->escapeHtml($this->__($this->getSignupLabel())); ?>
             </a>
-            <div class="sign-up-email-panel" style="display:none; height: 50px">
-                <div class="content-email-panel" style="display: block; width: 100%; height: 20px">
+            <div class="sign-up-email-panel mt-2 row" style="display:none;">
+                <!--<div class="content-email-panel" style="display: block; width: 100%; height: 20px">
                     <div class="close close-tooltip" style="width:25px; font-size: 9px; display: block; float:right; cursor: pointer">Close</div>
-                </div>
+                </div>-->
                 <!--<form action="" name="non-loged-signup" method="post" id="non-loged-signup">-->
-                <div class="form-inputs">
+                <div class="form-group input-form w-100">
                     <input type="text" value="" style="display:none"/>
-                    <input type="text" id="email" name="email" class="required-entry text emailToNotification"/>
-                    <button type="button" class="button" onclick="sendEmailToNotification('<?php echo Mage::getUrl("ecpalertstock/index/saveEmailForStockAlert") ?>',<?php echo Mage::registry('current_product')->getData('entity_id')?>,jQuery('.emailToNotification').val());">
+                    <input type="text" id="email" name="email" class="ele_width form-control required-entry text emailToNotification"/>
+                </div>
+                <div class="col-12 p-0">
+                <button type="button" class="button dark-button  p-2 text-uppercase alert-signup-button" style="height: 42px;" onclick="sendEmailToNotification('<?php echo Mage::getUrl("ecpalertstock/index/saveEmailForStockAlert") ?>',<?php echo Mage::registry('current_product')->getData('entity_id')?>,jQuery('.emailToNotification').val());">
                         <span>Signup</span>
                     </button>
                 </div>
@@ -54,6 +56,8 @@
         <div class="validation-advice ajax-error-messages showMessages" style="display:none"></div>
 <script type="text/javascript">
     jQuery.noConflict();
+
+    jQuery("sign-up-in-stock")
 
 //    var productAddToCartForm = new VarienForm('product_addtocart_form');
 //    productAddToCartForm.submit = function(button, form) {
@@ -79,11 +83,15 @@
 //        });
 //    })(jQuery);
 
-    jQuery(document).ready(function(){
+   /* jQuery(document).ready(function(){
             Tipped.create(jQuery(".sign-up-in-stock"), jQuery(".sign-up-email-panel")[0], {
-                skin: 'customTiny',
+                skin: 'dark',
                 showOn: 'click',
                 hideOn: 'click'
             });
-    });
+    });*/
+
+   jQuery(".sign-up-in-stock").on("click",function () {
+      jQuery('.sign-up-email-panel').slideToggle();
+   });
 </script>

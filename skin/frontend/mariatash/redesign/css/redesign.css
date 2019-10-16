@@ -163,7 +163,7 @@ h4{
 	border: 0.5px solid rgba(41,41,41,0.90);
 }
 
-.link-button, .pay-caart li a, .checkout-onepage-index .back-link a{
+.link-button, .pay-caart li a, .checkout-onepage-index .back-link a, .catalog-product-view .product-detail-parent .product-shop.configurable .sign-up-in-stock{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.60) !important;
@@ -3979,27 +3979,31 @@ div#uniform-shipping-address-select>span{
 dt.post-lengthds-lbl {
   margin-top: 18px;
 }
-/* #sign-up-out-of-stock{
+ .catalog-product-view .product-detail-parent .product-shop.configurable #sign-up-out-of-stock{
   -webkit-appearance: none;
 	margin: 10px -15px;
 }
-.sign-up-in-stock {
-  margin: 0 -15px;
-  display: block;
-} */
-/* .t_Tooltip{ /*override tipped.css
+
+.catalog-product-view .product-detail-parent .product-shop.configurable .sign-up-in-stock {
+ margin: 0 -15px;
+ display: block;
+}
+/* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;
   width: 323px !important;
   left: 979px !important;
 	top: 375px !important;
-} */
-/* .sign-up-email-panel .dark-button{
+}
+.catalog-product-view .sign-up-email-panel button{
 	height: 42px;
   text-transform: uppercase;
-	width: 108px;
+  width: 108px;
+  font-family: urw-din-bold;
+  background: #292929;
+  color: #fff;
 }
-.sign-up-email-panel .form-inputs {
+.catalog-product-view .sign-up-email-panel .form-inputs {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
