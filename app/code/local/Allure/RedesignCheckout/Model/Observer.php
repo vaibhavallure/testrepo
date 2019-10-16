@@ -27,18 +27,16 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         $signatureDelivery = $observer->getEvent()->getRequest()->getParam('no_signature_delivery');
         Mage::log($signatureDelivery,Zend_Log::DEBUG,'abc.log',true);
         $quote = $observer->getEvent()->getQuote();
-        if(is_array($signatureDelivery)){
-            $addresses = $quote->getAllShippingAddresses();
-            foreach ($addresses as $address){
-                try{
-                    $address->setNoSignatureDelivery(0);
-                    if (isset($signatureDelivery[$address->getId()])) {
-                        if($signatureDelivery[$address->getId()]){
-                            $address->setNoSignatureDelivery(1);
-                        }
-                    } 
-                }catch (Exception $e){}
-            }
+        $addresses = $quote->getAllShippingAddresses();
+        foreach ($addresses as $address){
+            try{
+                $address->setNoSignatureDelivery(0);
+                if (isset($signatureDelivery[$address->getId()])) {
+                    if($signatureDelivery[$address->getId()]){
+                        $address->setNoSignatureDelivery(1);
+                    }
+                } 
+            }catch (Exception $e){}
         }
     }
     

@@ -44,93 +44,84 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 }
 </script>
 <div class="container">
-<ol id="checkoutSteps" class="opc">
+	<ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
-        <?php if($stepKey == 'multishipping_shipping'): ?>
-            <li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
-                <div class="step-title checkout-step-name col-12">
-                    <span class="number"><?php echo $cnt ?></span>
-                    <h3><?= $this->__($_step->getLabel()) ?></h3>
-                </div>
-                <div class="multiple-checkout shipping-method-parent">
-                    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-                    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
-                        <?php $shipAddressHtml = $this->getChildHtml("checkout_shipping_address_select");?>
+    <?php if($stepKey == 'multishipping_shipping'): ?>
+    	<li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
+        	<div class="step-title checkout-step-name col-12">
+            	<span class="number"><?php echo $cnt ?></span>
+                <h3><?= $this->__($_step->getLabel()) ?></h3>
+          	</div>
+            <div class="multiple-checkout shipping-method-parent">
+            	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+                <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="shipping_method_form">
+                	<?php $shipAddressHtml = $this->getChildHtml("checkout_shipping_address_select");?>
+                    <?php $shippingConfig = array();?>
+					<?php foreach ($this->getAddresses() as $_index => $_address): ?>
+					<div class="box">
+						<div class="box-title">
+                        	<p class="info-text-two"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a  class="link-button" href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a></p>
+                        </div>
+                        <div class="box-content">
+                       		<div class="col2-set">
+                            	<div class="gift-messages">
+                                	<p class="control">
+                                 		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
+            							<?php $isSignature = ($_address->getNoSignatureDelivery()) ? 1 : 0; ?>
+            							<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
+                                        	<input type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" 
+                                        		value="1" class="checkbox shipping-signature" 
+                                        		<?php if($isSignature):?>checked="checked"<?php endif;?> 
+                                        		data-address_id="<?= $_address->getId()?>" 
+                                        		data-is_international="<?= $isIternational?>" />
+                                            <span class="checkmark"></span>
+                                            <?= $this->__('Require signature upon delivery') ?>
+                                            <?php if($_address->getIsContainBackorder()):?>
+                                            	<?= $this->__('( Backordered shipment )'); ?>
+                                            <?php endif;?>.
+                                    	</label>
+            						</p>
+                             	</div>
+                       		</div>
 
-                        <?php $shippingConfig = array();?>
-
-                        <?php foreach ($this->getAddresses() as $_index => $_address): ?>
-						<div class="box">
-							<div class="box-title">
-                           	<p class="info-text-two"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a  class="link-button" href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a></p>
-                            </div>
-                            <div class="box-content">
-
-                            	<div class="col2-set">
-                                    <div class="gift-messages">
-                                     	<p class="control">
-                                     		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
-            								<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
-                                                <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
-                                                <span class="checkmark"></span>
-                                                <?= $this->__('Require signature upon delivery') ?>
-                                                <?php if($_address->getIsContainBackorder()):?>
-                                                <?= $this->__('( Backordered shipment )'); ?>
-                                                <?php endif;?>.
-                                                </label>
-            													</p>
-                                    </div>
-                            	</div>
-
-													<div class="address-method-common">
-														<div class="row">
-    												<div class="shipping-address-select col-lg-6 col-md-6 col-12 float-left" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
-    														<?= $shipAddressHtml?>
-                          	</div>
-
-                          	<?php if (!($_shippingRateGroups = $this->getShippingRates($_address))): ?>
-                            	<p class="col-12 validation-advice"><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
-                            <?php else: ?>
-															<div class="col-lg-6 col-md-6 col-12 text-lg-right text-md-right text-left">
-																<select class="select-type-one validate-select" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
-																	<option value="">Select Method</option>
-                           		<?php $ship_sign_national = array();?>
-                           		<?php $ship_sign_without_national = array();?>
-                           		<?php $ship_withoutsign_national = array();?>
-                           		<?php $ship_withoutsign_without_national = array();?>
-
-                           		<?php foreach ($_shippingRateGroups as $code => $_rates): ?>
-                            	<?php foreach ($_rates as $_rate): ?>
-                                	<?php if ($_rate->getErrorMessage()): ?>
-                                    <?php //echo $this->escapeHtml($_rate->getCarrierTitle()) ?>: <?php echo $this->escapeHtml($_rate->getErrorMessage()) ?>
+							<div class="address-method-common">
+								<div class="row">
+    								<div class="shipping-address-select col-lg-6 col-md-6 col-12 float-left" id="shipping-address-<?=$_index?>-<?=$_address->getId()?>" data-address_id="<?= $_address->getId()?>">
+    									<?= $shipAddressHtml?>
+                          			</div>
+                                  	<?php if (!($_shippingRateGroups = $this->getShippingRates($_address))): ?>
+                                    <p class="col-12 validation-advice"><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
                                     <?php else: ?>
+									<div class="col-lg-6 col-md-6 col-12 text-lg-right text-md-right text-left">
+										<select class="select-type-one validate-select" id="select-shipping-method-<?= $_address->getId()?>" name="shipping_method[<?= $_address->getId() ?>]" >
+											<option value="">Select Method</option>
+                                       		<?php $ship_sign_national = array();?>
+                                       		<?php $ship_sign_without_national = array();?>
+                                       		<?php $ship_withoutsign_national = array();?>
+                                       		<?php $ship_withoutsign_without_national = array();?>
 
-                                    	<?php $_excl = $this->getShippingPrice($_address, $_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                                    	<?php $_incl = $this->getShippingPrice($_address, $_rate->getPrice(), true); ?>
-
-                                       	<?php
-                                       	      $shipDataArr =  $_rate->getData();
-                                       	      $shipDataArr["excl"] = $_excl;
-                                       	      $shipDataArr["incl"] = $_incl;
-                                       	?>
-                                       	<?php if($code == "matrixrate"){
-                                                $shipCodeArr = explode("#",$_rate->getCode());
-                                                if(count($shipCodeArr) == 3){
-                                                    if($shipCodeArr[1] == 1){
-                                                        if($shipCodeArr[2] == 1){
-                                                            $ship_sign_national[$_rate->getCode()] = $shipDataArr;
-                                                        }else{
-                                                            $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
-                                                        }
+                           					<?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+                            					<?php foreach ($_rates as $_rate): ?>
+                                            	<?php if ($_rate->getErrorMessage()): ?>
+                                                <?php else: ?>
+                                    				<?php $_excl = $this->getShippingPrice($_address, $_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                    				<?php $_incl = $this->getShippingPrice($_address, $_rate->getPrice(), true); ?>
+                                                   	<?php
+                                                   	      $shipDataArr =  $_rate->getData();
+                                                   	      $shipDataArr["excl"] = $_excl;
+                                                   	      $shipDataArr["incl"] = $_incl;
+                                                   	?>
+                                       				<?php if($code == "matrixrate"){
+                                                            $shipCodeArr = explode("#",$_rate->getCode());
+                                                            if(count($shipCodeArr) == 3){
+                                                                if($shipCodeArr[1] == 1){
+                                                                    if($shipCodeArr[2] == 1){
+                                                                        $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                                                                    }else{
+                                                                        $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                                                                    }
                                                    ?>
-                                                   <?php }else{
-                                                           if($shipCodeArr[2] == 1){
-                                                               $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
-                                                           }else{
-                                                               $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
-                                                           }?>
-
-                                                       <?php if($isIternational == $shipCodeArr[2]):?>
+                                                   	   <?php if(($isIternational == $shipCodeArr[2]) && ($isSignature == $shipCodeArr[1])):?>
                                                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
                                                        <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                        <?php echo $_excl; ?>
@@ -139,8 +130,21 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                        <?php endif; ?>
                                                    		</option>
                                                        <?php endif;?>
-
-
+                                                   <?php }else{
+                                                           if($shipCodeArr[2] == 1){
+                                                               $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                                                           }else{
+                                                               $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+                                                           }?>
+                                                       <?php if(($isIternational == $shipCodeArr[2]) && ($isSignature == $shipCodeArr[1])):?>
+                                                       <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
+                                                       <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                                       <?php echo $_excl; ?>
+                                                       <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                                       (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                                       <?php endif; ?>
+                                                   		</option>
+                                                       <?php endif;?>
                                                   <?php }
                                                 }
                                              }else{
@@ -148,76 +152,73 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                  $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
-
                                              ?>
-                                             	<option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
+                                             		<option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
                                                        <?= $this->escapeHtml($this->getCarrierName($code))?>-<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                        <?php echo $_excl; ?>
                                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
                                                        (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                                                        <?php endif; ?>
                                                    </option>
-                                             <?php }?>
+                                             	<?php }?>
 
-                                  	<?php endif ?>
-                            	<?php endforeach; ?>
-              					<?php endforeach; ?>
-                      		</select>
-												</div>
-                      		<?php
-                      		    $shippingConfig[$_address->getId()] = array(
-                      		        '1_1' => $ship_sign_national,
-                      		        '1_0' => $ship_sign_without_national,
-                      		        '0_1' => $ship_withoutsign_national,
-                      		        '0_0' => $ship_withoutsign_without_national
-                      		    );
-                      		?>
-                      		<?php endif; ?>
-												</div>
-											</div>
-                    </div>
-                  </div>
-
-
-                        <script type="text/javascript">setShippingAddress('shipping-address-<?=$_index?>-<?=$_address->getId()?>', <?=$_address->getId()?> ,<?=$_address->getCustomerAddressId()?>)</script>
-                        <?php endforeach; ?>
-                        <?php echo $this->getChildHtml('checkout_billing_items') ?>
-                        <div class="buttons-set text-right">
-                            <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
-                            <button class="button continue light-button next-button" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
-                            <span id="multiaddress-shipping-method-please-wait" class="please-wait" style="display: none;">
-            					<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle info-text-two"> Loading next step...
-            				</span>
-                        </div>
-						<?php echo $this->getBlockHtml("formkey") ?>
-                    </form>
-                    <script type="text/javascript">
-                    var shippingForm = new VarienForm('shipping_method_form',true);
-                    </script>
+                                  				<?php endif ?>
+                            					<?php endforeach; ?>
+              								<?php endforeach; ?>
+                      					</select>
+									</div>
+                          		<?php
+                          		    $shippingConfig[$_address->getId()] = array(
+                          		        '1_1' => $ship_sign_national,
+                          		        '1_0' => $ship_sign_without_national,
+                          		        '0_1' => $ship_withoutsign_national,
+                          		        '0_0' => $ship_withoutsign_without_national
+                          		    );
+                          		?>
+                      			<?php endif; ?>
+								</div>
+							</div>
+        				</div>
+    				</div>
+                   	<script type="text/javascript">setShippingAddress('shipping-address-<?=$_index?>-<?=$_address->getId()?>', <?=$_address->getId()?> ,<?=$_address->getCustomerAddressId()?>)</script>
+                    <?php endforeach; ?>
+                    <?php echo $this->getChildHtml('checkout_billing_items') ?>
+                 	<div class="buttons-set text-right">
+                    	<p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
+                        <button class="button continue light-button next-button" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
+                        <span id="multiaddress-shipping-method-please-wait" class="please-wait" style="display: none;">
+            				<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle info-text-two"> Loading next step...
+            			</span>
+                  	</div>
+					<?php echo $this->getBlockHtml("formkey") ?>
+                </form>
+            	<script type="text/javascript">
+               		var shippingForm = new VarienForm('shipping_method_form',true);
+                </script>
+        	</div>
+		</li>
+   	<?php else: ?>
+   		<?php if($stepKey == 'multishipping_addresses'):?>
+        <li id="opc-<?= $stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
+        	<a href="<?= $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
+            	<div class="step-title checkout-step-name col-12">
+                	<span class="number"><?= $cnt ?></span>
+                    <h3><?= $this->__($_step->getLabel()) ?></h3>
                 </div>
-            </li>
-        <?php else: ?>
-            <?php if($stepKey == 'multishipping_addresses'):?>
-                <li id="opc-<?= $stepKey?>" title="<?= $_step->getLabel() ?>" class="section" >
-                 	<a href="<?= $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>">
-                     	<div class="step-title checkout-step-name col-12">
-                        	<span class="number"><?= $cnt ?></span>
-                        	<h3><?= $this->__($_step->getLabel()) ?></h3>
-                       	</div>
-                    </a>
-                </li>
-            <?php else:?>
-            	<li id="opc-billing" title="<?= $_step->getLabel() ?>" class="section" >
-                	<div class="step-title checkout-step-name col-12">
-                   		<span class="number"><?= $cnt ?></span>
-                    	<h3><?= $_step->getLabel() ?></h3>
-                    </div>
-                </li>
-            <?php endif;?>
-        <?php endif; ?>
+          	</a>
+     	</li>
+      	<?php else:?>
+        <li id="opc-billing" title="<?= $_step->getLabel() ?>" class="section" >
+        	<div class="step-title checkout-step-name col-12">
+            	<span class="number"><?= $cnt ?></span>
+                <h3><?= $_step->getLabel() ?></h3>
+          	</div>
+     	</li>
+        <?php endif;?>
+	<?php endif; ?>
     <?php $cnt++; ?>
     <?php endforeach; ?>
-</ol>
+	</ol>
 </div>
 
 <script type="text/javascript">
@@ -244,6 +245,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 			var isInternational = selector.data("is_international");
 			var value = (selector.is( ":checked" )) ? 1 : 0;
 			var genKey = value+"_"+isInternational;
+			var valueInv = (value) ? 1 : 2;
 			jQuery(this).val(value);
 			if(Object.entries(Allure.shippingConfig).length){
 				if(Allure.shippingConfig[addressId]){
