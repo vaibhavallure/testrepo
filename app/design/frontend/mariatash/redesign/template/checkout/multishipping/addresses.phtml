@@ -44,11 +44,12 @@
     		<div class="step-title checkout-step-name col-12">
                 <span class="number"><?php echo $cnt ?></span>
                 <h3><?php echo $this->__($_step->getLabel()) ?></h3>
-        </div>
+        	</div>
     		<?php echo $this->getMessagesBlock()->toHtml() ?>
             <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
                 <div class="multiple-checkout">
                     <div class="page-title title-buttons row">
+                    	<?php if(!$redesignHelper->isQuoteContainSingleQty()):?>
                     	<div class="col2-set col-12">
                         	<div class="gift-messages">
                             	<p class="control">
@@ -59,20 +60,19 @@
                                	</p>
                            	</div>
                         </div>
+                        <?php endif;?>
                         <div class="col-12 shipping-billing-retail">
-                          <div class="row">
-                            <div class="billing-address billing-address-selection select col-lg-6 col-md-6 col-12">
-                            			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
+                       		<div class="row">
+                            	<div class="billing-address billing-address-selection select col-lg-6 col-md-6 col-12">
+                          			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
                             		<?= $this->getChildHtml("checkout_address_select");?>
-            				        </div>
-
-                    				<div id="single-shipping-address" class="select single-shipping-address col-lg-6 col-md-6 col-12">
-                                    			<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
-                                    		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
-                    				</div>
-                          </div>
+            					</div>
+            					<div id="single-shipping-address" class="select single-shipping-address col-lg-6 col-md-6 col-12">
+                            		<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
+                               		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
+                    			</div>
+                          	</div>
                         </div>
-
                     </div>
                     <input type="hidden" name="continue" value="0" id="can_continue_flag" />
                     <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />

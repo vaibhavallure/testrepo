@@ -11,6 +11,13 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
      */
     const GIFT_WRAP_SKU = "GIFT_WRAP";
     
+    public function isQuoteContainSingleQty(){
+        $quote = Mage::getSingleton("checkout/session")->getQuote();
+        if($quote->getItemsQty() == 1)
+            return true;
+        return false;
+    }
+    
     /**
      * Get the gift wrap product details by using sku.
      */
