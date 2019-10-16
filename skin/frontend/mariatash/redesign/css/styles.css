@@ -4233,11 +4233,11 @@ textarea:focus, input:focus {
 	background: #DEDEDE;
 }
 
-.catalog-product-view .fancybox-sizechart .fancybox-skin {
+/* .catalog-product-view .fancybox-sizechart .fancybox-skin {
 	background: #3f4048;
 	padding: 35px 0 0 !important;
 	position: relative;
-}
+} */
 
 .catalog-product-view .fancybox-sizechart #inline_sample a {
 	height: 35px;
@@ -11257,7 +11257,7 @@ li.item h2.product-name {text-align: center;}
 	font-weight: bold;
 }
 
-.catalog-product-view .fancybox-skin, .category-celebrity-clientele .fancybox-skin,
+.category-celebrity-clientele .fancybox-skin,
 .ecp-tattoo-index-index .fancybox-skin, #send-mail,
 .category-about-the-designer .fancybox-skin {
 	padding: 15px !important;
