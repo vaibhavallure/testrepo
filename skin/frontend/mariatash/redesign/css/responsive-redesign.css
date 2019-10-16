@@ -372,7 +372,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 35px;
+    margin-bottom: 10px;
   }
   .celebPopup .product-info {
     position: relative;
@@ -457,6 +458,12 @@
   }
   .checkoutPopupLoginModel .social-options {
     padding-bottom: 60px;
+  }
+  .url-caption{
+    margin-top: 37px;
+  }
+  .video-caption {
+    margin-top: 39px;
   }
 }
 
@@ -1163,10 +1170,12 @@
   }
   .containerImage img {
     width: 90%;
+    margin: 20px auto 0;
   }
   .containerThumb {
     width: 340px;
     overflow-y: scroll;
+    padding-left: 65px;
 }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
@@ -1375,6 +1384,9 @@
   }
   .pop-up-cover{
     overflow-y: auto;
+  }
+  .product-shop{
+    margin-top: 35px;
   }
 }
 
