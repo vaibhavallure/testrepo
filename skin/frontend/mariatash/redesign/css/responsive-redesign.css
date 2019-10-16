@@ -822,6 +822,12 @@
   .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
   }
+  .containerVideo iframe{
+    display: block;
+    margin: auto;
+    width: 553px;
+    height: 312px;
+  }
 }
 
 /* ALl Mobiles */
@@ -1441,6 +1447,12 @@
   }
   .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
+  }
+  .containerVideo iframe{
+    display: block;
+    margin: auto;
+    width: 553px;
+    height: 312px;
   }
 }
 
