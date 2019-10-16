@@ -129,6 +129,7 @@ if($product->getTypeId() =='configurable'){
               <?php foreach ($_options as $_option) : ?>
                 <?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
                 <?php echo $_option['value'] ?>
+                  <?= "<br>"?>
             <?php endforeach; ?>
         </div>
 

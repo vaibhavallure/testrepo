@@ -20,7 +20,8 @@
               Require signature upon delivery.</label>
         </p>
     </div>
-	<div>
+    <div class="row">
+	<div class="col-lg-6 col-md-6 col-12 first-shipment-method">
 		<?php $shippingMethodHtml = "";?>
 		<div>
 			<p class="info-text-two">For 1st Shipment:
@@ -127,7 +128,7 @@
             </select>
     	</div>
 
-    	<div>
+    	<div class="col-lg-6 col-md-6 col-12 second-shipment-method">
     		<div>
     			<p class="info-text-two">For 2nd Shipment:
     				<br><span>(Shipped when items available)</span>
@@ -138,7 +139,7 @@
 				<?= $shippingMethodHtml;?>
 			</select>
     	</div>
-
+</div>
     	<?php
             $shippingConfig = array(
                 '1_1' => $ship_sign_national,

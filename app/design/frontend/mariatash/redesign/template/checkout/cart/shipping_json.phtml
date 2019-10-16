@@ -29,6 +29,7 @@
 <?php if (($_shippingRateGroups = $this->getEstimateRates())): ?>
 <div id="estimate-result" class="para-normal text-center">
     <form id="co-shipping-method-form" action="<?php echo $this->getUrl('checkout/cart/estimateUpdatePost') ?>" onsubmit="showBizi()">
+        <?php if(false):?>
         <dl class="sp-methods" style=" max-height:200px; overflow:auto;">
             <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
                 <dt><?php echo $this->escapeHtml($_helper->getCarrierName($code)) ?></dt>
@@ -55,8 +56,63 @@
                 </dd>
             <?php endforeach; ?>
         </dl>
-        <div class="buttons-set estimage">
-            <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button light-button text-uppercase" name="do" value="<?php echo $this->__('Update Total') ?>"><span><span><?php echo $this->__('Update Total') ?></span></span></button>
+        <?php endif;?>
+        <div>
+        <?php $_address = $this->getAddress();?>
+		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
+		<select class="select-shipping-method select-type-one validate-select" name="estimate_method"  >
+			<option value="">Select Method</option>
+
+          	<?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+           	<?php $_sole = $_sole && count($_rates) == 1;?>
+           	<?php foreach ($_rates as $_rate): ?>
+
+            	<?php if ($_rate->getErrorMessage()): ?>
+                <?php //echo $this->escapeHtml($_rate->getCarrierTitle()) ?>: <?php //echo $this->escapeHtml($_rate->getErrorMessage()) ?>
+                <?php else: ?>
+                <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+
+                <?php
+                    $shipDataArr =  $_rate->getData();
+                    $shipDataArr["excl"] = $_excl;
+                    $shipDataArr["incl"] = $_incl;
+                ?>
+                <?php if($code == "matrixrate"){
+                    $shipCodeArr = explode("#",$_rate->getCode());
+                    if(count($shipCodeArr) == 3){
+                        if($shipCodeArr[1] == 1){
+                        ?>
+                	<?php } else {?>
+
+                  	<?php if($isIternational == $shipCodeArr[2]):?>
+                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
+                       	<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                       	<?php echo $_excl; ?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                       		(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                       	<?php endif; ?>
+                      	</option>
+                   	<?php endif;?>
+                   	<?php }
+                        }
+                    } else {
+                    ?>
+                    <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
+                    	<?= $this->escapeHtml($this->getCarrierName($code))?>-<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                    	<?php echo $_excl; ?>
+                    	<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                        	(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                        <?php endif; ?>
+                   	</option>
+                  <?php } ?>
+            	<?php endif ?>
+                <?php endforeach; ?>
+              <?php endforeach; ?>
+            </select>
+    	</div>
+        <div class="buttons-set estimage text-right">
+            <button type="submit" title="<?php echo $this->__('Update Total') ?>" class="button dark-button text-uppercase pop-up-button" name="do" value="<?php echo $this->__('Update Total') ?>"><?php echo $this->__('Update Total') ?></button>
         </div>
     </form>
 </div>
@@ -70,4 +126,3 @@
     }
 //]]>
 </script>
-        

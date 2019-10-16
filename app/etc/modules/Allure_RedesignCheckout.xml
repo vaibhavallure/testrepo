@@ -5,7 +5,7 @@
       <active>true</active>
       <codePool>local</codePool>
       <depends>
-      	<Teamwork_Universalcustomers />
+      	<N98_CheckoutFilters />
       </depends>
     </Allure_RedesignCheckout>
   </modules>

@@ -48,8 +48,8 @@
     		<?php echo $this->getMessagesBlock()->toHtml() ?>
             <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
                 <div class="multiple-checkout">
-                    <div class="page-title title-buttons">
-                    	<div class="col2-set">
+                    <div class="page-title title-buttons row">
+                    	<div class="col2-set col-12">
                         	<div class="gift-messages">
                             	<p class="control">
                                    	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
@@ -59,25 +59,20 @@
                                	</p>
                            	</div>
                         </div>
-                        
-                        <div class="billing-address billing-address-selection select col-12">
-        					<div class="row">
-        						<div class="col-12 p-0">
-                        			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
-        						</div>
-                        		<?= $this->getChildHtml("checkout_address_select");?>
-                        	</div>
-        				</div>
-        				
-        				<div id="single-shipping-address" class="select col-12 single-shipping-address">
-        					<div class="row">
-        						<div class="col-12 p-0">
-                        			<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
-        						</div>
-                        		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
-                        	</div>
-        				</div>
-                        
+                        <div class="col-12 shipping-billing-retail">
+                          <div class="row">
+                            <div class="billing-address billing-address-selection select col-lg-6 col-md-6 col-12">
+                            			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
+                            		<?= $this->getChildHtml("checkout_address_select");?>
+            				        </div>
+
+                    				<div id="single-shipping-address" class="select single-shipping-address col-lg-6 col-md-6 col-12">
+                                    			<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
+                                    		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
+                    				</div>
+                          </div>
+                        </div>
+
                     </div>
                     <input type="hidden" name="continue" value="0" id="can_continue_flag" />
                     <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
@@ -121,7 +116,7 @@
                                                 <div class="gift-messages">
                                                  	<p class="control">
                                                         <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>" 
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"
                                                             	value="1" class="checkbox gift-item-checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>
                                                             	data-gift_wrap_id="<?= $_index."-".$_item->getQuoteItemId()?>">
                                                             <span class="checkmark"></span>
@@ -163,13 +158,13 @@
     						</div>
     					</div>
                     </div>
-                    
+
                     <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
                     <div class="buttons-set text-right">
                         <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shopping Cart') ?></a></p>
-                        <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue to Shipping Information')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next'); ?></span></span></button>
+                        <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Next')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next'); ?></span></span></button>
                         <span id="multiaddress-please-wait" class="please-wait" style="display: none;">
-            				<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...        
+            				<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...
             			</span>
                     </div>
                 </div>
@@ -199,7 +194,7 @@
 </script>
 <script type="text/javascript">
 	var addressesForm = new VarienForm('checkout_multishipping_form',true);
-	
+
 	jQuery(document).ready(function(){
 
 		jQuery('#checkout_multishipping_form button[type="submit"]').on('click',function(){
@@ -208,7 +203,7 @@
 				jQuery('#multiaddress-please-wait').show();
 			}
 		});
-						
+
 		jQuery('.multi-address-select-address-option select').append('<option value="">New Address</option>');
 
 		jQuery('.multi-address-select-address-option select').on('change',function(){

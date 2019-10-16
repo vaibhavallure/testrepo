@@ -41,7 +41,9 @@
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <form action="<?= $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
 						<?= $this->getBlockHtml("formkey") ?>
-
+						<input type="hidden" name="payment[cc_number]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcNumber())?>" />
+                        <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcCid())?>" />
+                        
                         <?php foreach ($this->getShippingAddresses() as $_index => $_address): ?>
 
                         	<div class="data-table overview-address-item" id="overview-address-item-<?= $_address->getId()?>">

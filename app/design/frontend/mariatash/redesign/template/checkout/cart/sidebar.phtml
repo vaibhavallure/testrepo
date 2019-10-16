@@ -101,7 +101,7 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 	<?php if(count($_items)) { ?>
 		<div class="tite_cart">
             <h1 class="text-center"><a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('Your Shopping Bag') ?></a></h1>
-            <a href="#"><div class="close-button close-tooltip" onclick="jQuery('#just_added').slideUp(300); "></div></a>
+<!--            <a href="#"><div class="close-button close-tooltip" onclick="jQuery('#just_added').slideUp(300); "></div></a>-->
 		</div>
 		<div><?php //echo $this->__('Just added to your cart'); ?></div>
         <ol id="cart-sidebar" class="mini-products-list col-12">

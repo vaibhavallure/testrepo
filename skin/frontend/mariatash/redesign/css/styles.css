@@ -391,9 +391,9 @@ button, input[type="button"], input[type="reset"], input[type="submit"]
 /*
  * Re-set default cursor for disabled elements
  */
-button[disabled], input[disabled] {
+/* button[disabled], input[disabled] {
 	cursor: default;
-}
+} */
 
 /*
  * 1. Addresses box sizing set to content-box in IE8/9
@@ -1061,9 +1061,9 @@ label.zip-label {
 
 .customer-account-login .input-box input.input-text,
 .checkout-multishipping-login .input-box input.input-text {
-	width: 220px;
+	/*width: 220px;
 	height: 19px;
-	float: left;
+	float: left;*/
 }
 
 .customer-account-login h2.legend, .checkout-multishipping-login h2.legend
@@ -1660,9 +1660,9 @@ div.my-account div.col2-set div.box div.box-title div.pager-mt-1 div.pager div.l
 	width: 100%;
 }
 
-.checkout-cart-index .fancybox-opened .fancybox-skin {
+/* .checkout-cart-index .fancybox-opened .fancybox-skin {
 	background: #f1f1f1;
-}
+} */
 
 /* .shipping {
 	width: 370px;
@@ -1674,9 +1674,9 @@ label.required em {
 	color: red;
 }
 
-.shipping .shipping-form .form-list .buttons-set {
+/* .shipping .shipping-form .form-list .buttons-set {
 	padding: 0;
-}
+} */
 
 .shipping .shipping-form .form-list .buttons-set button#getQuote {
 	padding: 2px 7px;
@@ -1744,27 +1744,27 @@ label.required em {
 }
 
 /********* Buttons Styling WZR ***********************/
-.quickview-index-index .product-view .product-img-box .product-image {
+/* .quickview-index-index .product-view .product-img-box .product-image {
 	margin: 0;
 }
 
 .quickview-index-index .col1-layout .col-main {
 	margin-bottom: 0;
-}
+} */
 
-.quickview-index-index .product-essential {
+/* .quickview-index-index .product-essential {
 	min-height: 510px;
 	padding: 0;
-	margin-bottom: 0 !important; /*min-height:500px;*/
-}
+	margin-bottom: 0 !important; /*min-height:500px;
+} */
 
-.quickview-index-index button.button span span {
+/* .quickview-index-index button.button span span {
 	color: #FFF;
 }
 
 .quickview-index-index .required {
 
-}
+} */
 
 .quickview-index-index .qty {
 	display: inline-block;
@@ -2073,7 +2073,7 @@ a.various_sample.non-color {
 	width: 110px;
 }
 
-.checkout-onepage-index #advice-required-entry-giftcard_code.false,
+/* .checkout-onepage-index #advice-required-entry-giftcard_code.false,
 .checkout-onepage-index #advice-required-entry-promoCode_code.false,
 .checkout-onepage-index #advice-required-entry-giftcard_code.applied,
 .checkout-onepage-index #advice-required-entry-promoCode_code.applied {
@@ -2083,7 +2083,7 @@ a.various_sample.non-color {
 
 .checkout-cart-index #advice-required-entry-giftcard_code {
 	position: absolute;
-}
+} */
 
 #co-payment-form .buttons-set {
 	position: relative;
@@ -2232,9 +2232,9 @@ select#region_id {
 	border: 2px solid #830000;
 }
 
-.checkout-cart-index ul.messages {
+/* .checkout-cart-index ul.messages {
 	position: absolute;
-}
+} */
 
 .customer-account-index.messages {
 	width: 100%;
@@ -3699,11 +3699,11 @@ textarea:focus, input:focus {
 	background: url(../images/cart_header_middle.png) top left repeat-y;
 } */
 
-.block-cart .mini-products-list li.item.even, .block-cart .mini-products-list li.item.odd
+/* .block-cart .mini-products-list li.item.even, .block-cart .mini-products-list li.item.odd
 {
 	background: url(../images/cart_item_bg.png) bottom left repeat-x;
 	width: 322px;
-}
+} */
 
 .block-cart .mini-products-list li.item.last.odd {
 	background: none;
@@ -4233,11 +4233,11 @@ textarea:focus, input:focus {
 	background: #DEDEDE;
 }
 
-.catalog-product-view .fancybox-sizechart .fancybox-skin {
+/* .catalog-product-view .fancybox-sizechart .fancybox-skin {
 	background: #3f4048;
 	padding: 35px 0 0 !important;
 	position: relative;
-}
+} */
 
 .catalog-product-view .fancybox-sizechart #inline_sample a {
 	height: 35px;
@@ -4251,7 +4251,7 @@ textarea:focus, input:focus {
 	width: auto;
 }
 
-.catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close
+/* .catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close
 {
 	background: url(../images/close-icon-fancy-chart.png) scroll 0 0
 	no-repeat;
@@ -4259,7 +4259,7 @@ textarea:focus, input:focus {
 	width: 13px;
 	margin-right: 2px;
 	top: 11px;
-}
+} */
 
 /*========================== FANCYBOX ARG ================================*/
 .checkout-cart-index .fancybox-inner {
@@ -4858,9 +4858,9 @@ div.styled {
 } */
 
 /* Product Images */
-.quickview-index-index .col1-layout .product-view {
-	width: 100%; /* margin:0 auto;*/
-}
+/* .quickview-index-index .col1-layout .product-view {
+	width: 100%; /* margin:0 auto;
+} */
 
 .col2-left-layout .product-view .product-img-box, .col2-right .product-view .product-img-box
 {
@@ -11257,7 +11257,7 @@ li.item h2.product-name {text-align: center;}
 	font-weight: bold;
 }
 
-.catalog-product-view .fancybox-skin, .category-celebrity-clientele .fancybox-skin,
+.category-celebrity-clientele .fancybox-skin,
 .ecp-tattoo-index-index .fancybox-skin, #send-mail,
 .category-about-the-designer .fancybox-skin {
 	padding: 15px !important;

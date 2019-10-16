@@ -7,19 +7,18 @@
                 <input value="" name="giftcard_code" id="giftcard_code" class="input-text" placeholder="Gift Card">
             </div>
         </form>
-
-        <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); $temp = 0; ?>
-        <?php if($oGiftCardSession->getActive())
-                    foreach($oGiftCardSession->getFrontOptions() as $k => $v)
-                    {
-                        if($temp) {
-                            echo '<br/><br/>';
-                        }
-                        echo '<p><b>'.$currencySymbol.$v['applied'].' '.$this->__('applied from Gift Card').' **********'.$v['code'].'.</b><br/>';
-                        echo $this->__('Remaining card balance').': '.$currencySymbol.$v['remaining'].'.</p><a href="'.$this->getUrl("giftcards/cart/deActivateGiftCard/id/$k").'" class="button_coupon" style="position:relative; top:-20px;"><span><span>'.$this->__('Remove').'</span></span></a>';
-                        $temp = 1;
-                    }
-        ?>
+        <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
+        <?php if($oGiftCardSession->getActive()):?>
+            <?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
+            <p>
+            	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
+            	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
+            	<a href="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon" style="position:relative; top:-20px;">
+            		<span><span><?= $this->__('Remove')?></span></span>
+            	</a>
+            </p>
+            <?php endforeach;?>
+        <?php endif;?>
     </div>
     <script type="text/javascript">
         //&lt;![CDATA[
@@ -27,8 +26,9 @@
         var giftCardForm = new VarienForm('activateGiftCard');
         //]]&gt;
         jQuery("#giftcard_code").blur(function() {
-            giftCardForm.submit(true);
+        	if(jQuery("#giftcard_code").val() != ''){
+        		giftCardForm.submit(true);
+        	}
         });
     </script>
-
 </div>

@@ -64,6 +64,8 @@
         MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
+
+        jQuery(document).ready(function(){
         //call priceHtml via ajax, to avoid varnish caching
         jQuery.ajax({
             type: "POST",
@@ -147,8 +149,6 @@
                 endif;
                 ?>
 
-
- jQuery(function () {
   var i=1;
   jQuery('.change_select').each(function (index, element) {
   var select_id=jQuery(this).attr("id");
@@ -197,8 +197,9 @@
   jQuery('#'+selected_id+'').val(option_value).trigger('change');
   });
   jQuery('.change_select').hide();
-  });
                 jQuery('.chooseList').slideDown(1000);
+
+ });
  });
     </script>
   <?php endif;?>
