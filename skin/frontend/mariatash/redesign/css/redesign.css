@@ -4135,3 +4135,24 @@ dt.post-lengthds-lbl {
   width: 100%;
 	padding: 0 15px;
 }
+
+
+/*Size chart popup*/
+.catalog-product-view .fancybox-sizechart .fancybox-skin {
+    padding: 0 !important;
+}
+.catalog-product-view .fancybox-sizechart .fancybox-wrap.fancybox-desktop.fancybox-type-inline.fancybox-opened{
+	top: 100px;
+  left: 0;
+}
+.catalog-product-view .fancybox-sizechart .fancybox-inner{
+	background: #fff;
+}
+.catalog-product-view .fancybox-sizechart #inline_sample img{
+	width: 80%;
+	margin: 0 auto;
+}
+/* .catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close{
+	background: url(../images/redesign/exit-small-bk.png) scroll 0 0
+	no-repeat;
+} */
