@@ -189,6 +189,7 @@ function setFacebook(){
 function loadImage(numImage,obj){
     jQuery('.containerImage').html("");
     jQuery(".thumb .active").removeClass("active");
+    jQuery('.thumb.thumb1').removeClass("active");
     jQuery(obj).addClass("active");
     jQuery(".containerImage").fadeIn(1000, function(){
        jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
