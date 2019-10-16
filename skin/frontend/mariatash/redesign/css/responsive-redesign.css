@@ -1480,9 +1480,13 @@
     flex: 0 0 49%;
     max-width: 49%;
   }
+  .s_length .chooseList ul li.option{
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
 }
 @media (min-width:1025px) and (max-width:1278px) {
-  .post_optio .chooseList ul li.option {
+  .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
     flex: 0 0 100%;
     max-width: 100%;
 }

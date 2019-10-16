@@ -3945,7 +3945,7 @@ div#uniform-shipping-address-select>span{
 	flex: 0 0 20%;
   max-width: 20%;
 }
-.gauge .chooseList ul, .s_length .swatch-section ul {
+.gauge .chooseList ul, .s_length .swatch-section ul, .s_length .swatch-section ul {
   justify-content: start;
 }
 .c_length .chooseList ul li.option, .gauge .chooseList ul li.option{
