@@ -3918,7 +3918,7 @@ div#uniform-shipping-address-select>span{
   margin-top: 17px;
 }
 .fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label,
-.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label .neck_lengt .chooseList ul li.label {
+.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label, .neck_lengt .chooseList ul li.label {
 	width: 100%;
 }
 .fr_size .chooseList .label, .c_length .chooseList .label, .gauge .chooseList .label, .post_optio .chooseList .label, .nose_bend .chooseList .label,
@@ -3927,7 +3927,7 @@ div#uniform-shipping-address-select>span{
   margin-top: 5px;
 }
 .fr_size .chooseList li.label, .c_length .chooseList li.label, .gauge .chooseList li.label, .post_optio .chooseList li, .nose_bend .chooseList li.label,
-.color .chooseList li.label .neck_lengt .chooseList li.label {
+.color .chooseList li.label, .neck_lengt .chooseList li.label {
   margin-top: 5px;
 }
 .fr_size .chooseList ul li.option{
