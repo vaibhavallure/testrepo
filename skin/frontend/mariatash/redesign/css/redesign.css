@@ -2321,7 +2321,7 @@ input[type='radio']{
 #currency-selector {
   position: absolute;
   top: 20px;
-  right: -20px;
+  right: -24px;
   z-index: 99999;
   width: 96px;
   height: auto;
@@ -3987,7 +3987,7 @@ dt.post-lengthds-lbl {
 .catalog-product-view .product-detail-parent .product-shop.configurable .sign-up-in-stock {
   margin: 0 -15px;
   display: block;
-} 
+}
 /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;
