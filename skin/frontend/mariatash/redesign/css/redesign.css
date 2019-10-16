@@ -428,7 +428,7 @@ input, select, textarea{
 	box-shadow: 0 0 0 0 !important;
 	border: 1px solid rgba(41,41,41,0.25);
 }
-.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg, .faveSuccess {
+.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg {
 	clear: both;
 	font-size: 10px;
 	color: #830000 !important;
@@ -2201,12 +2201,7 @@ input[type='radio']{
 #billing-new-address-form li.fields .field, #shipping-new-address-form li.fields .field, .paypal-express-review li.fields .field, .paypal-express-review li.wide, .paypal-express-review li.add-field{
 	margin-bottom: 24px;
 }
-.faveSuccess{
-	position: absolute;
-	width: 100%;
-  text-align: right;
-  padding: 0 15px;
-}
+
 
 /*Old from file recently.viewd.css*/
 .image_carousel img {
@@ -3970,11 +3965,16 @@ div#uniform-shipping-address-select>span{
 .custom-options .ajax-error-messages{
 	top: 25px;
 }
-.ajax-error-messages {
+.ajax-error-messages, .faveSuccess {
   position: absolute;
   right: 0;
   color: #830000;
   font-size: 10px;
+	padding: 0 15px;
+}
+.faveSuccess{
+	padding: 0;
+	text-align: right;
 }
 #product_tabs_details_tabbed_contents .data-table tbody tr th {
   padding-bottom: 2px;

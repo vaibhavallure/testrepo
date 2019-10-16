@@ -321,25 +321,25 @@
   	color: #fff;
     padding: 10px;
   }
-.form-subscribe-mt input {
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-.footer-item-list span {
-  font-size: 12px !important;
-  font-family: urw-din-medium;
-	letter-spacing: 0 !important;
-}
-.footer-items a:hover {
-    text-decoration: none;
-}
-.footerlink-icons .item-icons img {
-    width: 22px;
-}
-#foo4_next, #foo4_prev{
-  top: 40%;
-}
+  .form-subscribe-mt input {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+  .footer-item-list span {
+    font-size: 12px !important;
+    font-family: urw-din-medium;
+  	letter-spacing: 0 !important;
+  }
+  .footer-items a:hover {
+      text-decoration: none;
+  }
+  .footerlink-icons .item-icons img {
+      width: 22px;
+  }
+  #foo4_next, #foo4_prev{
+    top: 40%;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
@@ -464,6 +464,9 @@
   }
   .video-caption {
     margin-top: 39px;
+  }
+  .containerVideo {
+    margin-top: 40px;
   }
 }
 
@@ -1515,4 +1518,13 @@
   .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+}
+@media (min-width:1535px) and (max-width:1919px){
+  /* .common-redesign-checkout .for-space-to-bottom {
+    height: 452px !important;
+  } */
+  .checkout-multishipping-addresses .main-container.col2-right-layout, .checkout-cart-index .main-container.col2-right-layout {
+    margin-top: 70px;
+  }
 }
