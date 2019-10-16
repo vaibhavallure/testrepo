@@ -148,7 +148,8 @@ class Simtech_Searchanise_Helper_ApiSe
 
     public static function getEnabledSearchaniseSearch()
     {
-        return self::getSetting('enabled_searchanise_search');
+//        return self::getSetting('enabled_searchanise_search');
+        return 0;
     }
 
     public static function getLabelForPricesUsergroup() {
@@ -177,20 +178,21 @@ class Simtech_Searchanise_Helper_ApiSe
 
     public static function getServiceUrl($onlyHttp = true)
     {
-        $ret = self::getSetting('service_url');
-
-        if (!$onlyHttp) {
-            if (Mage::app()->getStore()->isCurrentlySecure()) {
-                $ret = str_replace('http://', 'https://', $ret);
-            }
-        }
+//        $ret = self::getSetting('service_url');
+//
+//        if (!$onlyHttp) {
+//            if (Mage::app()->getStore()->isCurrentlySecure()) {
+//                $ret = str_replace('http://', 'https://', $ret);
+//            }
+//        }
+        $ret = '';
 
         return $ret;
     }
 
     public static function getSearchWidgetsLink($onlyHttp = true)
     {
-        return self::getServiceUrl($onlyHttp) . '/widgets/v1.0/init.js';
+        return '';//self::getServiceUrl($onlyHttp) . '/widgets/v1.0/init.js';
     }
 
     public static function checkSearchaniseResult($searchaniseRequest = null, $store = null)
@@ -286,7 +288,7 @@ class Simtech_Searchanise_Helper_ApiSe
 
     public static function getSearchaniseLink()
     {
-        return 'adminhtml/searchanise/index';
+        return '';//'adminhtml/searchanise/index';
     }
 
     public static function getAsyncLink($flNotUserHttpRequest = false)
@@ -297,7 +299,7 @@ class Simtech_Searchanise_Helper_ApiSe
             $link .= '?' . self::getParamNotUseHttpRequest();
         }
 
-        return $link;
+        return '';//$link;
     }
 
     public static function getAsyncUrl($flNotUserHttpRequest = false, $storeId = '', $flCheckSecure = true)
@@ -307,17 +309,17 @@ class Simtech_Searchanise_Helper_ApiSe
 
     public static function getReSyncLink()
     {
-        return 'adminhtml/searchanise/resync';
+        return '';//'adminhtml/searchanise/resync';
     }
 
     public static function getOptionsLink()
     {
-        return 'adminhtml/searchanise/options';
+        return '';//'adminhtml/searchanise/options';
     }
 
     public static function getModuleLink()
     {
-        return 'adminhtml/searchanise/index';
+        return '';//'adminhtml/searchanise/index';
     }
 
     public static function getModuleUrl()
@@ -327,7 +329,7 @@ class Simtech_Searchanise_Helper_ApiSe
 
     public static function getConnectLink()
     {
-        return 'adminhtml/searchanise/signup';
+        return '';//'adminhtml/searchanise/signup';
     }
 
     public static function getConnectUrl($flNotUserHttpRequest = false, $storeId = '', $flCheckSecure = true)
@@ -1098,7 +1100,7 @@ class Simtech_Searchanise_Helper_ApiSe
             self::$parentPrivateKeySe = self::getSetting('parent_private_key', self::CONFIG_PREFIX);
         }
 
-        return self::$parentPrivateKeySe;
+        return '';//self::$parentPrivateKeySe;
     }
 
     public static function checkParentPrivateKey()
