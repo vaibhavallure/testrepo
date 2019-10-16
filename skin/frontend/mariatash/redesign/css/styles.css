@@ -4251,7 +4251,7 @@ textarea:focus, input:focus {
 	width: auto;
 }
 
-.catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close
+/* .catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close
 {
 	background: url(../images/close-icon-fancy-chart.png) scroll 0 0
 	no-repeat;
@@ -4259,7 +4259,7 @@ textarea:focus, input:focus {
 	width: 13px;
 	margin-right: 2px;
 	top: 11px;
-}
+} */
 
 /*========================== FANCYBOX ARG ================================*/
 .checkout-cart-index .fancybox-inner {
