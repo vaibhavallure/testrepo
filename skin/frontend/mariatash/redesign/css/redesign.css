@@ -2593,7 +2593,7 @@ ul.tabs {
 	border: 1px solid #D4D4D4;
 	margin-top: 10px;
 }
-.thumb .active img{
+.thumb .active img,.thumb.active img{
 	border: 1px solid rgba(41,41,41,0.9);
 	border-bottom-width: 3px;
 	transition: .5s;
