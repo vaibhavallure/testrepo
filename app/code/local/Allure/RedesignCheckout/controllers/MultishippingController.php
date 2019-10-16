@@ -280,6 +280,22 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     }
     
     /**
+     * Get refresh totals html
+     * @return string
+     */
+    protected function _getRefreshTotalsHtml ()
+    {
+        $layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_multishipping_refreshtotals');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        $layout->removeOutputBlock('root');
+        $output = $layout->getOutput();
+        return $output;
+    }
+    
+    /**
      * New action created
      * It's used only for multishipping checkout 
      * to apply the promocode from payment section.

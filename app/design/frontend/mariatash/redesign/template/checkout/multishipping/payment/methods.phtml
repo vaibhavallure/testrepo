@@ -106,6 +106,7 @@
                 ajax: 1,
                 remove: remove
          };
+        blockCheckoutUi();
         new Ajax.Request('<?php echo $this->getUrl('checkout/multishipping/couponPost', array('_secure'=>true)) ?>', {
             method:'post',
             parameters: params,
@@ -131,6 +132,7 @@
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
               }
+              unblockCheckoutUi();
               $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
               new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },

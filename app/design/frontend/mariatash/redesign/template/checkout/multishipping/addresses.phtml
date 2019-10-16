@@ -36,6 +36,7 @@
 <?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
+<?php $isSingleProduct = $redesignHelper->isQuoteContainSingleProduct();?>
 <div class="container">
     <ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
@@ -133,7 +134,7 @@
                                                    		</label>
                                                    </p>
                                                 </div>
-                                                <?php if(!empty($message)): ?>
+                                                <?php if(!empty($message) && !$isSingleProduct): ?>
                                                     <?php $tmpMessage = $message;?>
                                                     <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
                                                     <div class="gift-messages">
@@ -200,6 +201,7 @@
 		jQuery('#checkout_multishipping_form button[type="submit"]').on('click',function(){
 			if(addressesForm.validator.validate()) {
 				jQuery(this).hide();
+				blockCheckoutUi();
 				jQuery('#multiaddress-please-wait').show();
 			}
 		});

@@ -235,6 +235,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 		jQuery('#shipping_method_form button[type="submit"]').on('click',function(){
 			if(shippingForm.validator.validate()) {
 				jQuery(this).hide();
+				blockCheckoutUi();
 				jQuery('#multiaddress-shipping-method-please-wait').show();
 			}
 		});
@@ -267,6 +268,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 			var selector = jQuery(this);
 			var addressId = selector.data("address_id");
 			var customerAddrId = selector.val();
+			blockCheckoutUi();
 			window.location.href = Allure.baseUrl+'checkout/multishipping/changeshippingaddress/address_id/'+addressId+'/customer_address/'+customerAddrId;
 		});
 	});
