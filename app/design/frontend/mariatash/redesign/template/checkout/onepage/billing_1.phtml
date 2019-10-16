@@ -41,9 +41,9 @@
 </style>
 
 <fieldset id="fieldset-billing" style="display: none;">
-	<ul class="form-list p-0 row justify-content-center">
+	<ul class="form-list p-0">
     	<?php if ($_hasAddresses): ?>
-    	<li class="wide col-12">
+    	<li class="wide">
         	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please select your Billing address:') ?></label>
             	<div class="input-box">
                 	<?php Varien_Profiler::start('DTN: getHtmlSelect binling'); ?>
@@ -258,7 +258,7 @@
                     <?php endif; ?>
 
                     <?php if ($this->isCustomerLoggedIn() && $_hasAddresses): ?>
-                    <li class="control w-100 px-3">
+                    <li class="control">
                     	<label class="para-normal custom-checkbox custom-checkbox-two"
                       		for="billing:save_in_address_book">
                        	<input type="checkbox" name="billing[save_in_address_book]" value="1"
