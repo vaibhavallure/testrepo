@@ -1481,3 +1481,8 @@
     max-width: 49%;
   }
 }
+@media (min-width:1025px) and (max-width:1278px) {
+  .post_optio .chooseList ul li.option {
+    flex: 0 0 100%;
+    max-width: 100%;
+}

@@ -3918,16 +3918,16 @@ div#uniform-shipping-address-select>span{
   margin-top: 17px;
 }
 .fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label,
-.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label, .neck_lengt .chooseList ul li.label {
+.post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label, .neck_lengt .chooseList ul li.label, .s_length .chooseList ul li.label{
 	width: 100%;
 }
 .fr_size .chooseList .label, .c_length .chooseList .label, .gauge .chooseList .label, .post_optio .chooseList .label, .nose_bend .chooseList .label,
-.color .chooseList .label .neck_lengt .chooseList .label {
+.color .chooseList .label .neck_lengt .chooseList .label, .s_length .chooseList .label {
   width: 100%;
   margin-top: 5px;
 }
 .fr_size .chooseList li.label, .c_length .chooseList li.label, .gauge .chooseList li.label, .post_optio .chooseList li, .nose_bend .chooseList li.label,
-.color .chooseList li.label, .neck_lengt .chooseList li.label {
+.color .chooseList li.label, .neck_lengt .chooseList li.label, .s_length .chooseList li.label{
   margin-top: 5px;
 }
 .fr_size .chooseList ul li.option{
@@ -3940,7 +3940,12 @@ div#uniform-shipping-address-select>span{
 	flex: 0 0 auto;
   max-width: 100%;
 }
-.gauge .chooseList ul {
+.s_length .chooseList ul li.option{
+	margin-top: 17px;
+	flex: 0 0 20%;
+  max-width: 20%;
+}
+.gauge .chooseList ul, .s_length .swatch-section ul {
   justify-content: start;
 }
 .c_length .chooseList ul li.option, .gauge .chooseList ul li.option{
@@ -3953,9 +3958,9 @@ div#uniform-shipping-address-select>span{
 	flex: 0 0 45%;
 	max-width: 45%;
 }
-/* .color .chooseList ul li.option{
+.color .chooseList ul li.option{
 	margin-top: 17px;
-} */
+}
 .custom-options .ajax-error-messages{
 	top: 25px;
 }
