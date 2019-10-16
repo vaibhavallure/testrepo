@@ -3979,15 +3979,16 @@ div#uniform-shipping-address-select>span{
 dt.post-lengthds-lbl {
   margin-top: 18px;
 }
-/* .catalog-product-view .product-detail-parent .product-shop.configurable #sign-up-out-of-stock{
+ .catalog-product-view .product-detail-parent .product-shop.configurable #sign-up-out-of-stock{
   -webkit-appearance: none;
 	margin: 10px -15px;
 }
+
 .catalog-product-view .product-detail-parent .product-shop.configurable .sign-up-in-stock {
-  margin: 0 -15px;
-  display: block;
-} */
-/* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css 
+ margin: 0 -15px;
+ display: block;
+}
+/* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;
   width: 323px !important;
