@@ -275,7 +275,6 @@
     height: 110px !important;
   }
   /*Different Footer */
-  /* 1. Customer Care */
   .customer-care-list {
   	padding: 0;
     width: 100%;
@@ -289,7 +288,6 @@
   #piercing .inner-box{
     width: 100%;
   }
-  /* 2. Contact and 3. Our Jewelry*/
   .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
   	color: #fff;
   	font-size: 12px;
@@ -307,7 +305,6 @@
   #tooltip-id-our-jewelry a.next-content-block-seo{
     margin-right: -15px;
   }
-/*News Letter*/
   .form-subscribe-mt{
     margin-top: 10px;
     width: 100%;
@@ -324,7 +321,6 @@
   	color: #fff;
     padding: 10px;
   }
-/* ///// */
 .form-subscribe-mt input {
   width: 100%;
   margin: 0 auto;
@@ -345,107 +341,123 @@
   top: 40%;
 }
 /* Catalog Filter CSS */
-.m-filter-checkboxes{
-  display: flex;
-}
-.m-filter-checkboxes li {
-  flex-basis: 0;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  max-width: 25%;
-}
-.common-filter {
-  display: flex;
-}
-.thumb.thumb1 img {
-  margin-top: 0;
-}
-.pdp-image-section{
-  flex-direction: column-reverse;
-}
-.thumb img{
-  margin-top: 0;
-}
-.thumb {
-  margin-left: 5px;
-}
-.thumb:first-child {
-  margin-left: 0;
-}
-.containerThumb{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-}
-.celebPopup .product-info {
-  position: relative;
-  bottom: 0;
-}
-.big-popup-body{
-  padding: 28px 93px !important;
-}
-.popup-below-content {
-  margin-top: 8px;
-  padding: 0 36px 0px 35px;
-}
-.catalog-category-view .category-title{
-  padding-left: 77px !important;
-}
-.category-image-bleed{ /* Head Image */
-  display: none;
-}
-ul.tabs li{
-  flex: 0 0 33.33% !important;
-  max-width: 33.33% !important;
-}
-.catalog-category-view .simple-page-title{
-  padding: 0!important;
-}
-.btn-quickview {
-  display: none !important;
-}
-#tooltip-id-our-jewelry a.previous-content-block-seo {
-  background: url(../images/white-active-arrow.png) no-repeat 0 0;
-  width: 14px;
-  height: 20px;
-  display: block;
-  float: right;
-  margin-right: 10px;
-  text-indent: -9000px;
-  background-size: 100% 100%;
-  position: relative;
-  transform: rotate(180deg);
-}
-#tooltip-id-our-jewelry a.next-content-block-seo {
-  background: url(../images/white-active-arrow.png) no-repeat 0 0;
-  width: 14px;
-  height: 20px;
-  display: block;
-  float: right;
-  margin-right: 10px;
-  text-indent: -9000px;
-  background-size: 100% 100%;
-  position: relative;
-  margin-left: 10px;
-}
-#tooltip-id-our-jewelry #container{
-  height: auto;
-}
-#total_item_counts_holder{
-  display: none;
-}
-.login-dropdown {
-  position: absolute;
-  width: 137px;
-  right: 0px;
-  top: 22px;
-  padding-top: 18px;
-  line-height: 25px;
-}
-body.cms-index-index.cms-home .login-dropdown{
-  right: -40px;
-}
+  .m-filter-checkboxes{
+    display: flex;
+  }
+  .m-filter-checkboxes li {
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 25%;
+  }
+  .common-filter {
+    display: flex;
+  }
+  .thumb.thumb1 img {
+    margin-top: 0;
+  }
+  .pdp-image-section{
+    flex-direction: column-reverse;
+  }
+  .thumb img{
+    margin-top: 0;
+  }
+  .thumb {
+    margin-left: 5px;
+  }
+  .thumb:first-child {
+    margin-left: 0;
+  }
+  .containerThumb{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  .celebPopup .product-info {
+    position: relative;
+    bottom: 0;
+  }
+  .big-popup-body{
+    padding: 28px 93px !important;
+  }
+  .popup-below-content {
+    margin-top: 8px;
+    padding: 0 36px 0px 35px;
+  }
+  .catalog-category-view .category-title{
+    padding-left: 77px !important;
+  }
+  .category-image-bleed{ /* Head Image */
+    display: none;
+  }
+  ul.tabs li{
+    flex: 0 0 33.33% !important;
+    max-width: 33.33% !important;
+  }
+  .catalog-category-view .simple-page-title{
+    padding: 0!important;
+  }
+  .btn-quickview {
+    display: none !important;
+  }
+  #tooltip-id-our-jewelry a.previous-content-block-seo {
+    background: url(../images/white-active-arrow.png) no-repeat 0 0;
+    width: 14px;
+    height: 20px;
+    display: block;
+    float: right;
+    margin-right: 10px;
+    text-indent: -9000px;
+    background-size: 100% 100%;
+    position: relative;
+    transform: rotate(180deg);
+  }
+  #tooltip-id-our-jewelry a.next-content-block-seo {
+    background: url(../images/white-active-arrow.png) no-repeat 0 0;
+    width: 14px;
+    height: 20px;
+    display: block;
+    float: right;
+    margin-right: 10px;
+    text-indent: -9000px;
+    background-size: 100% 100%;
+    position: relative;
+    margin-left: 10px;
+  }
+  #tooltip-id-our-jewelry #container{
+    height: auto;
+  }
+  #total_item_counts_holder{
+    display: none;
+  }
+  .login-dropdown {
+    position: absolute;
+    width: 137px;
+    right: 0px;
+    top: 22px;
+    padding-top: 18px;
+    line-height: 25px;
+  }
+  body.cms-index-index.cms-home .login-dropdown{
+    right: -40px;
+  }
+  .checkoutPopupLoginModel .pop-up-cover{
+    width: 520px;
+  }
+  .guest-right{
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  .checkoutPopupLoginModel #signin-btn-popup, .checkoutPopupLoginModel .sign-in-register{
+    margin: 25px 0 75px;
+  }
+  .guest-checkout button{
+    margin-top: 60px;
+  }
+  .checkoutPopupLoginModel .social-options {
+    padding-bottom: 60px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -741,7 +753,7 @@ body.cms-index-index.cms-home .login-dropdown{
     margin-top: 106px;
   }
   .common-redesign-checkout .for-space-to-bottom{
-    height: 142px !important;
+    height: 252px !important;
   }
   .checkout-cart-index .for-space-to-bottom,
   .checkout-multishipping-addresses .for-space-to-bottom,
@@ -819,7 +831,7 @@ body.cms-index-index.cms-home .login-dropdown{
   .agreement{
     margin: 16px 0 0;
   }
-  .pop-title h1{
+  .pop-title h1, .checkoutPopupLoginModel .pop-title h1{
     margin-top: 30px;
     margin-bottom: 25px;
   }
@@ -939,6 +951,30 @@ body.cms-index-index.cms-home .login-dropdown{
   #foo4_next, #foo6_next, #foo4_prev, #foo6_prev {
     background-size: 35px;
     height: 79px;
+  }
+  .gift-message-section {
+    margin-bottom: 30px;
+  }
+  .second-shipment-method{
+    margin-top: 10px;
+  }
+  .checkoutPopupLoginModel #signin-btn-popup, .checkoutPopupLoginModel .sign-in-register{
+    width: 100%;
+  }
+  .checkoutPopupLoginModel #signin-btn-popup{
+    margin: 25px 0 0px;
+  }
+  .checkoutPopupLoginModel .sign-in-register{
+    margin: 15px 0 20px;
+  }
+  .checkoutPopupLoginModel .submit-login{
+    flex-direction: column-reverse;
+  }
+  .guest-checkout button {
+    margin-top: 40px;
+  }
+  .checkoutPopupLoginModel .social-options{
+    padding-bottom: 40px;
   }
 }
 
@@ -1214,9 +1250,6 @@ body.cms-index-index.cms-home .login-dropdown{
   .coupons .discount {
     margin-bottom: 0;
   }
-  .gift-message-section {
-    margin-bottom: 30px;
-  }
   .to-from-section input {
     width: 100%;
   }
@@ -1322,6 +1355,12 @@ body.cms-index-index.cms-home .login-dropdown{
   }
   ul.tabs li:first-child{
     max-width: 25% !important;
+  }
+  .checkout-multishipping-success .multiple-checkout {
+    margin-top: 110px;
+  }
+  .pop-up-cover{
+    overflow-y: auto;
   }
 }
 
@@ -1430,7 +1469,6 @@ body.cms-index-index.cms-home .login-dropdown{
   .categorypath-jewelry-ear-cartilage-jewelry-html .category-products{
     margin-top: 56px;
   }
-
 }
 
 /* Small Laptops : 1366px */
@@ -1442,4 +1480,13 @@ body.cms-index-index.cms-home .login-dropdown{
     flex: 0 0 49%;
     max-width: 49%;
   }
+  .s_length .chooseList ul li.option{
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+}
+@media (min-width:1025px) and (max-width:1278px) {
+  .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
+    flex: 0 0 100%;
+    max-width: 100%;
 }

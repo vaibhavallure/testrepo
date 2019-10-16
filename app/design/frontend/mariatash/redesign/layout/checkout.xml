@@ -220,7 +220,7 @@ Multi address shipping checkout selection of address per item page
     <checkout_multishipping_customer_address translate="label">
         <label>Multishipping Checkout Customer Address Edit Form</label>
         <reference name="content">
-            <block type="customer/address_edit" name="customer_address_edit" template="customer/address/edit.phtml"/>
+            <block type="customer/address_edit" name="customer_address_edit" template="checkout/multishipping/address/customer/form.phtml"/>
         </reference>
     </checkout_multishipping_customer_address>
 

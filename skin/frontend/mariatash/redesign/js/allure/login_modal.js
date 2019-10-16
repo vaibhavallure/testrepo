@@ -18,9 +18,14 @@ jQuery(document).ready(function(){
 	});
 
 	$j(".popupLoginModel .close").on('click',function(){
-		$j('#wishlist_input').val('');
-		$j(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
-		scrollBody();
+		if($j('body').hasClass("allure_login_page")) {
+            window.location = "/";
+        }
+        else {
+            $j('#wishlist_input').val('');
+            $j(".popupLoginModel").css({"opacity": "0", "pointer-events": "none"});
+            scrollBody();
+        }
 	});
     $j(".checkoutPopupLoginModel .close").on('click',function(){
         $j(".checkoutPopupLoginModel").css({"opacity":"0","pointer-events":"none"});
@@ -53,7 +58,14 @@ jQuery(document).ready(function(){
 					if (data.success) {
 						 $j('#login_msg_div').css('display','none');
 						 $j(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-						 location.reload();
+
+						 if($j('body').hasClass("allure_login_page")) {
+                            window.location = "/";
+                        }
+                        else {
+                            location.reload();
+						 }
+
 					} else {
 						$j('#login_msg_div').css('display','block');
 						$j('#login-msg').html(data.error);
@@ -72,9 +84,14 @@ jQuery(document).ready(function(){
 	 */
 
 	$j(".popupRegisterModel .close").on('click',function(){
-		$j('#wishlist_input').val('');
-		$j(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
-		scrollBody();
+        if($j('body').hasClass("allure_login_page")) {
+            window.location = "/";
+        }
+        else {
+            $j('#wishlist_input').val('');
+            $j(".popupRegisterModel").css({"opacity": "0", "pointer-events": "none"});
+            scrollBody();
+        }
 	});
 
     $j(".popupSignUpConfirmationModel .close").on('click',function(){
@@ -142,8 +159,13 @@ jQuery(document).ready(function(){
 	 * Reset Password Popup Start
 	 */
 	$j(".popupResetPasswordModel .close").on('click',function(){
-		$j(".popupResetPasswordModel").css({"opacity":"0","pointer-events":"none"});
-        scrollBody();
+        if($j('body').hasClass("allure_login_page")) {
+            window.location = "/";
+        }
+        else {
+            $j(".popupResetPasswordModel").css({"opacity": "0", "pointer-events": "none"});
+            scrollBody();
+        }
 	});
 
 	$j("#reset_pass_btn").on('click',function(){

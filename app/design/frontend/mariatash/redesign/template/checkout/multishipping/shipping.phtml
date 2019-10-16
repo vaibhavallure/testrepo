@@ -62,7 +62,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                         <?php foreach ($this->getAddresses() as $_index => $_address): ?>
 						<div class="box">
 							<div class="box-title">
-                           	<p class="info-text-two mt-3"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a></p>
+                           	<p class="info-text-two"><?php echo $this->__('Address %s', ($_index+1), $this->getAddressCount()) ?><a  class="link-button" href="<?php echo $this->getAddressEditUrl($_address) ?>"><?php echo $this->__('Edit Address') ?></a></p>
                             </div>
                             <div class="box-content">
 
@@ -73,12 +73,12 @@ function setShippingAddress(eleId, addrId ,custAddrId){
             								<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
                                                 <input data-address_id="<?= $_address->getId()?>" data-is_international="<?= $isIternational?>" type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" value="0" class="checkbox shipping-signature"  />
                                                 <span class="checkmark"></span>
-                                                <?= $this->__('Require signature upon delivery') ?> 
+                                                <?= $this->__('Require signature upon delivery') ?>
                                                 <?php if($_address->getIsContainBackorder()):?>
                                                 <?= $this->__('( Backordered shipment )'); ?>
                                                 <?php endif;?>.
                                                 </label>
-            							</p>
+            													</p>
                                     </div>
                             	</div>
 
@@ -186,7 +186,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Select Addresses') ?></a></p>
                             <button class="button continue light-button next-button" type="submit" title="<?php echo $this->__('Next') ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
                             <span id="multiaddress-shipping-method-please-wait" class="please-wait" style="display: none;">
-            					<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...        
+            					<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle info-text-two"> Loading next step...
             				</span>
                         </div>
 						<?php echo $this->getBlockHtml("formkey") ?>
@@ -237,7 +237,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 				jQuery('#multiaddress-shipping-method-please-wait').show();
 			}
 		});
-		
+
 		jQuery('.shipping-signature').on('change',function(){
 			var selector = jQuery(this);
 			var addressId = selector.data("address_id");

@@ -219,20 +219,37 @@ if(!is_null($parentId)){
 </tr>
 
 <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-<?php if(!empty($message)): ?>  <tr class="messages">
+<?php if(!empty($message)): ?>  <tr class="messages <?php if($customerGroupId == 2):?>wholesale-avail-row<?php endif;?>">
         <td></td>
-        <td colspan="6">
-            <div class="item-msg">
+        <td colspan="<?= ($customerGroupId == 2) ? 5 : 6?>">
+            <div class="item-msg float-left">
                 <p class="info-text-three"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
             </div>
+        <?php if($customerGroupId == 2):?>
+        	<div class="w-remove float-right">
+            	<a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
+        	</div>
+            <?php if ($this->helper('customer')->isLoggedIn()): ?>
+                <div class="ad-to-fav float-right">
+                    <a class="info-text-three" id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Move to Wishlist</a>
+                </div>
+                <script type="text/javascript">
+                    jQuery("#saveToFave").click(function(){
+                        if(jQuery('select.color-attribute').val() == ''){
+                            jQuery('.ajax-error-messages').html('Please select a color');
+                        }
+                    });
+                </script>
+            <?php endif; ?>
+        <?php endif;?>
         </td>
     </tr>
 <?php endif; ?>
 
+<?php if($customerGroupId != 2):?>
 <tr class="w-100 gift-row">
       <td></td>
     <td colspan="5">
-    	<?php if($customerGroupId != 2):?>
         <div class="gift-messages float-left">
             <label for="is_gift_<?= $_item->getId() ?>" class="custom-checkbox custom-checkbox-two">
                 <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
@@ -240,7 +257,7 @@ if(!is_null($parentId)){
                 <span class="para-normal">This item is a gift.</span>
             </label>
         </div>
-        <?php endif;?>
+        
         <div class="w-remove float-right">
             <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         </div>
@@ -258,6 +275,7 @@ if(!is_null($parentId)){
         <?php endif; ?>
     </td>
 </tr>
+<?php endif;?>
 
 <script>
     jQuery(document).ready(function(){

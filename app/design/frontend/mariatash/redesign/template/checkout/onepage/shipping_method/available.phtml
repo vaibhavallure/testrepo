@@ -24,10 +24,10 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php 
-/** 
- * @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available 
- * 
+<?php
+/**
+ * @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available
+ *
  */ ?>
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
 <?php if (!$_shippingRateGroups): ?>
@@ -39,8 +39,11 @@
 	<div class="gift-messages">
         <p class="info-text-two"><?= $this->__('Delivery Signature Option.')?></p>
         <p class="control">
-            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="0" class="checkbox shipping-signature" data-is_international="<?= $isIternational?>">
-            <label for="no_signature_delivery" class="para-normal">Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.</label>
+            <label for="no_signature_delivery" class="para-normal custom-checkbox custom-checkbox-two">
+              <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="0" class="checkbox shipping-signature" data-is_international="<?= $isIternational?>">
+                <span class="checkmark"></span>
+                  Require signature upon delivery.
+              </label>
         </p>
     </div>
 	<div>
@@ -54,7 +57,7 @@
           	<?php foreach ($_shippingRateGroups as $code => $_rates): ?>
            	<?php $_sole = $_sole && count($_rates) == 1;?>
            	<?php foreach ($_rates as $_rate): ?>
-           		
+
             	<?php if ($_rate->getErrorMessage()): ?>
                 <?php //echo $this->escapeHtml($_rate->getCarrierTitle()) ?>: <?php echo $this->escapeHtml($_rate->getErrorMessage()) ?>
                 <?php else: ?>
@@ -79,7 +82,7 @@
                 	<?php } else {
                             if($shipCodeArr[2] == 1){
                                 $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
-                            } else { 
+                            } else {
                                 $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
                             } ?>
 
@@ -92,7 +95,7 @@
                        	<?php endif; ?>
                       	</option>
                    	<?php endif;?>
-                   	<?php } 
+                   	<?php }
                         }
                     } else {
                             $ship_sign_national[$_rate->getCode()] = $shipDataArr;
@@ -121,7 +124,7 @@
                 '0_0' => $ship_withoutsign_without_national
             );
        ?>
-       
+
  <script type="text/javascript">
     if (typeof Allure == "undefined") {
         var Allure = {};
@@ -155,8 +158,3 @@
 	});
 </script>
 <?php endif;?>
-      
-
-
-
-
