@@ -1367,14 +1367,24 @@
 			padding: 50px 46px;
 		}
 		.cms-store-locations-html .fancybox-outer{
-		height: 500px!important;
-	}
+			height: 500px!important;
+		}
 	}
 
 	.cms-store-locations-html .img-wrap a{
 		display: block!important;
 	}
+	.fs-detail-content .box{
+		width: 100%;
+	}
 
+	.customer-address-form .input-box{
+		position: relative;
+	}
+	.customer-address-form .input-box .validation-advice{
+		position: absolute;
+		left: 0;
+	}
 	/*=====================*/
 	/*MEDIA QUERIES*/
 	/*=====================*/
@@ -1775,6 +1785,9 @@
 		}
 	}
 	@media(max-width: 480px){
+		.customer-account-edit .popup-content{
+			padding: 25px;
+		}
 		.cms-store-locations-html .fancybox-outer{
 			padding: 50px 30px;
 		}
