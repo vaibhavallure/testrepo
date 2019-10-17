@@ -34,7 +34,7 @@ h1.error{
 .page-background {
     background-image: url("../images/maintenance-background-img-full.jpg");
     height: 100%;
-    background-position: center 0;
+    background-position: center 20%;
     background-repeat: no-repeat;
     background-size:cover;
 }
@@ -42,7 +42,7 @@ h1.error{
     text-align: center;
 }
 .maintenance-logo{
-    margin-top: 81px;
+    margin-top: 65px;
     margin-bottom:65px;
 }
 
@@ -53,18 +53,18 @@ h1.error{
     }
     .maintenance-logo{
         margin-bottom:25px;
-        margin-top: 50px;
+        margin-top: 30px;
     }
     h1{
-        font-size: 25px;
+        font-size: 22px;
     }
     .medium-big-font{
         font-size: 13px;
     }
-    .page-background {
-        background-image: url("../images/maintenance-background-img.jpg");
-        background-position: 45%;
+    .page-background{
+        background-image: url("../images/maintenance-background-img-mobile.jpg");
     }
+
 }
 
 @media screen and (max-width: 767px) and (orientation:landscape){
