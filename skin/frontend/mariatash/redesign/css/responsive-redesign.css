@@ -1234,12 +1234,12 @@
   .ad-to-fav, .w-remove{
     margin-top: 5px;
   }
-  .w-remove{
+  /* .w-remove{
     width: 67%;
   }
   .ad-to-fav{
     width: 33%;
-  }
+  } */
   #shopping-cart-table tr.messages-tr {
     margin-top: 20px;
   }
@@ -1327,6 +1327,15 @@
   }
   .data-table.cart-table .gift-messages{
     margin-bottom: 10px;
+  }
+  .checkout-cart-index .fancybox-wrap.fancybox-desktop.fancybox-type-inline.fancybox-opened {
+    width: 100% !important;
+  }
+  .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
+    padding: 45px 0;
+  }
+  .checkout-cart-index .selectboxit-container{
+    display: block;
   }
 }
 
