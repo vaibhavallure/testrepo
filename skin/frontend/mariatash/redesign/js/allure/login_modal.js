@@ -286,10 +286,12 @@ function openDelMyAccountModal(){
     unScrollBody();
 };
 function scrollBody() {
-    jQuery("body").css({"position":"static","overflow":"auto","width":"auto"});
+	jQuery("body").removeClass("fancybox-lock");
+    // jQuery("body").css({"position":"static","overflow":"auto","width":"auto"});
 }
 function unScrollBody() {
-    jQuery("body").css({"position":"fixed","overflow":"hidden","width":"100%"});
+    jQuery("body").addClass("fancybox-lock");
+    // jQuery("body").css({"position":"fixed","overflow":"hidden","width":"100%"});
 }
 function checkoutLogin(redirectUrls) {
     jQuery(".checkoutPopupLoginModel").css({"opacity":"1","pointer-events":"auto"});
