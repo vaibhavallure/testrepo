@@ -1025,6 +1025,18 @@
   .checkout-cart-index .messages-tr .product-name{
     padding-right: 0;
   }
+  .to-from-section input, .gift-message-section textarea {
+    width: 100%;
+  }
+  .checkout-cart-index .fancybox-inner {
+    width: 100% !important;
+  }
+  .checkout-cart-index .fancybox-inner .selectboxit-container, .checkout-cart-index .fancybox-opened .selectboxit-container .selectboxit{
+    width: 100% !important;
+  }
+  .checkout-list-title{
+    margin-bottom: 10px;
+  }
 }
 
 /* Mobile Portrait */
@@ -1210,7 +1222,7 @@
     overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
-}
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
     display: grid;
@@ -1234,12 +1246,13 @@
   .ad-to-fav, .w-remove{
     margin-top: 5px;
   }
-  /* .w-remove{
-    width: 67%;
+  .wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove{
+    margin-top: 0;
+    margin-bottom: 20px;
   }
-  .ad-to-fav{
-    width: 33%;
-  } */
+  .data-table.cart-table .messages.wholesale-avail-row .item-msg {
+    margin-bottom: 0px;
+  }
   #shopping-cart-table tr.messages-tr {
     margin-top: 20px;
   }
@@ -1292,9 +1305,6 @@
   .messages-tr .plus_icon, .messages-tr .minus_icon{
     display: block;
   }
-  .checkout-list-title{
-    margin-bottom: 10px;
-  }
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
@@ -1307,9 +1317,6 @@
   }
   .coupons .discount {
     margin-bottom: 0;
-  }
-  .to-from-section input {
-    width: 100%;
   }
   #reset_pass_btn, #signup-btn-popup {
     width: 149px !important;
@@ -1329,13 +1336,10 @@
     margin-bottom: 10px;
   }
   .checkout-cart-index .fancybox-wrap.fancybox-desktop.fancybox-type-inline.fancybox-opened {
-    width: 100% !important;
+    width: 90% !important;
   }
   .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
     padding: 45px 0;
-  }
-  .checkout-cart-index .selectboxit-container{
-    display: block;
   }
 }
 
@@ -1434,6 +1438,9 @@
   }
   .product-shop{
     margin-top: 35px;
+  }
+  .checkout-cart-index .fancybox-inner {
+    height: 100% !important;
   }
 }
 

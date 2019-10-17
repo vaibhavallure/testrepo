@@ -26,6 +26,8 @@
  * @var $this Mage_Checkout_Block_Multishipping_Overview
  */
 ?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>charcount.js"></script>
+
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
 <div class="container">
@@ -43,7 +45,7 @@
 						<?= $this->getBlockHtml("formkey") ?>
 						<input type="hidden" name="payment[cc_number]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcNumber())?>" />
                         <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcCid())?>" />
-                        
+
                         <?php foreach ($this->getShippingAddresses() as $_index => $_address): ?>
 
                         	<div class="data-table overview-address-item" id="overview-address-item-<?= $_address->getId()?>">
