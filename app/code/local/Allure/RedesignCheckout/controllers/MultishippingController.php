@@ -462,20 +462,13 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $oSession->setGiftCardBalance($newSessionBalance);
         $oSession->setGiftCardsIds($cardIds);
         
-        $block = $this->getLayout()
-            ->createBlock('checkout/cart_totals')
-            ->setTemplate('checkout/multishipping/totals.phtml');
-        $childBlock = $this->getLayout()
-            ->createBlock('checkout/cart_shipping')
-            ->setTemplate('checkout/cart/shipping.phtml');
-        $block->setChild("shipping", $childBlock);
+        $this->_getCheckout()->getQuote()->collectTotals()->save();
         
         $result['giftcard_section'] = array(
             'html' => $this->_getUpdatedCoupon(),
             'totals_html' => $this->_getRefreshTotalsHtml()
         );
         
-        $this->_getCheckout()->getQuote()->collectTotals()->save();
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
