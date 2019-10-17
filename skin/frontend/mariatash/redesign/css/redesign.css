@@ -3439,6 +3439,10 @@ margin-top: 10%;
 .checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
 	font-size: 18px;
 }
+.giftcard-output-content {
+  margin: 10px 0;
+	border-bottom: 1px solid #d8d8d8;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{

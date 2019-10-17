@@ -19,7 +19,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             		</div>
         		</form>
     		</div>
-    
+
     		<div class="discount-form giftcard-payment-method col-12">
         		<form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
                     <div class="input-box col-lg-4 col-md-4 col-12">
@@ -35,10 +35,10 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
         		<?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
             	<?php if($oGiftCardSession->getActive()):?>
                 	<?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
-                    <p>
+                    <p class="para-normal text-left p-1 giftcard-output-content">
                     	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
                     	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
-                    	<a href="javascript:void();" onclick="deActivateGiftCard.deactivate(<?=$k ?>);" class="button_coupon" style="position:relative; top:-20px;">
+                    	<a href="javascript:void();" onclick="deActivateGiftCard.deactivate(<?=$k ?>);" class="button_coupon link-button">
                     		<span><span><?= $this->__('Remove')?></span></span>
                     	</a>
                     </p>
@@ -89,7 +89,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //    checkout.setLoadWaiting('payment');
             	blockCheckoutUi();
             	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-            	
+
                 var request = new Ajax.Request(
                     this.saveUrl,
                     {
@@ -107,7 +107,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //checkout.setLoadWaiting('payment');
             blockCheckoutUi();
             $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-            
+
             var request = new Ajax.Request(
                 this.saveUrl,
                 {
@@ -146,7 +146,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             if(response.giftcard_section) {
                 $('giftcard-section').update(response.giftcard_section.html);
             }
-            
+
             //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
             //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
 
