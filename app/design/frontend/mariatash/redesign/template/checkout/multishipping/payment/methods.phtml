@@ -254,6 +254,8 @@ function changeCard(method){
 	}else{
 		jQuery('#'+method+'_saved_cc_cid').hide();
 	}
+	jQuery('#'+method+'_saved_cc_cid').val('');
+	jQuery('#'+method+'_cc_cid').val('');
 	
 	addCardClass(method);
 

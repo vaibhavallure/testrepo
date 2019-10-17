@@ -363,6 +363,7 @@ function toggleCreditInfo(method){
 	var cardSelector = jQuery('#'+method+'_card_id');
 	cardSelector.val('');
 	jQuery('#'+method+'_saved_cc_cid').hide();
+	jQuery('#'+method+'_saved_cc_cid').val('');
 	
 	if(diffCardSelector.is(':visible')){
 		cardSelector.removeClass('required-entry');
@@ -390,6 +391,8 @@ function changeCard(method){
 	}else{
 		jQuery('#'+method+'_saved_cc_cid').hide();
 	}
+	jQuery('#'+method+'_saved_cc_cid').val('');
+	jQuery('#'+method+'_cc_cid').val('');
 
 	addCardClass(method);
 
