@@ -1,22 +1,29 @@
 body, html {
     height: 100%;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+
 }
+
 .medium-big-font{
     font-family: urw-din;
     font-size: 18px;
-    line-height: normal;
+    letter-spacing: 0.5px;
+    line-height:normal;
+    font-weight: 500;
+    margin-bottom:25px;
 }
 
 h1{
     font-family: urw-din-xlight;
-    font-size: 22px;
-    letter-spacing: Normal;
-    line-height: 1.13;
-    font-weight: normal;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    line-height: normal;
+    font-weight: 300;
+    margin-bottom:25px;
 }
 h1.error{
-    padding-top:20px;
+    padding-top:15px;
 }
 
 .font-wight a,
@@ -34,26 +41,28 @@ h1.error{
     text-align: center;
 }
 .maintenance-logo{
-    padding-top: 5%;
+    margin-top: 81px;
+    margin-bottom:95px;
 }
 .maintenance-logo-img{
     width: 250px;
     height: 50px;
 }
-.maintenance-content{
-    padding-top: 50px;
-}
+
 @media screen and (min-width:320px) and (max-width:1024px) {
     .page-background {
         background-image: url("../images/maintenance-background-img.jpg");
         background-position: 0% 50%;
     }
+    .maintenance-logo{
+        padding-top: 45px;
+        padding-bottom: 25px;
+    }
 }
-@media screen and (min-width:320px) and (max-width:1024px) and (orientation: portrait){
+@media screen and (min-width:320px) and (max-width:1366px) and (orientation: portrait){
     .page-background {
+        background-image: url("../images/maintenance-background-img.jpg");
         background-position: 45%;
     }
-    .maintenance-content {
-        padding-top: 30px;
-    }
+
 }
