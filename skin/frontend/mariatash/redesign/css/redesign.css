@@ -3414,6 +3414,12 @@ margin-top: 10%;
 .additional-message p {
   margin-bottom: 0;
 }
+.checkout-cart-index .messages-tr .product-name{
+	padding-right: 24px;
+}
+.cart_col2 .item-options {
+  display: inline-block;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{

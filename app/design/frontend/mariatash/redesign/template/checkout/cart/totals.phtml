@@ -76,18 +76,7 @@
        		<?php $tax += $totals2['tax']->getValue();?>
        	<?php endif;?>
        	<tfoot>
-        	<?php if($tax != 0): ?>
-       		<tr class="summary-total">
-				<td>
-					<div class="info-text-three">
-						<span><?= $this->__('Estimated Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
-					</div>
-				</td>
-				<td class="text-right">
-					<span class="reg-price price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
-				</td>
-			</tr>
-			<?php endif; ?>
+
         	<tr>
 				<td class="cart-subtotals-left" colspan="1">
 					<strong><span class="total-title"><?= $this->__('Total')?></span></strong>
@@ -106,6 +95,18 @@
 					<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>
 				</td>
 			</tr>
+			<?php if($tax != 0): ?>
+			<tr class="summary-total">
+		<td>
+			<div class="info-text-three">
+				<span><?= $this->__('Estimated Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+			</div>
+		</td>
+		<td class="text-right">
+			<span class="reg-price price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+		</td>
+	</tr>
+	<?php endif; ?>
 			<tr id="mt-shipping">
 				<td colspan="1">
 					<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
@@ -140,7 +141,7 @@
    		<?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
    		<?php if(!empty($baseGrandTotal)):?>
             <p class="para-normal text-center">
-            <?php echo $this->__("All orders are charged in USD You will be charged( ".$baseGrandTotal." )");?>
+            <?php echo $this->__("All orders are charged in USD. You will be charged( ".$baseGrandTotal." )");?>
             </p>
         <?php endif;?>
  	<?php endif;?>
