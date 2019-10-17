@@ -361,7 +361,22 @@ function toggleCreditInfo(method){
 	var diffCardSelector = jQuery('.'+method+'_new');
 	diffCardSelector.toggle();
 	var cardSelector = jQuery('#'+method+'_card_id');
-	cardSelector.val(0);
+	cardSelector.val('');
+	jQuery('#'+method+'_saved_cc_cid').hide();
+	jQuery('#'+method+'_saved_cc_cid').val('');
+	if(jQuery('#advice-required-entry-'+method+'_saved_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_saved_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_card_id'))
+		jQuery('#advice-required-entry-'+method+'_card_id').hide();
+	
+	jQuery('#'+method+'_card_id').removeClass('required-entry');
+
+	jQuery('#'+method+'_cc_number').removeAttr("disabled");
+	jQuery('#'+method+'_cc_holdername').removeAttr("disabled");
+	jQuery('#'+method+'_cc_cid').removeAttr("disabled");
+	
 	if(diffCardSelector.is(':visible')){
 		cardSelector.removeClass('required-entry');
 
@@ -369,6 +384,7 @@ function toggleCreditInfo(method){
 
 		diffCardSelector.find('select').addClass('required-entry');
 		diffCardSelector.find('input').addClass('required-entry');
+		jQuery('#'+method+'_save').removeClass('required-entry');
 	}else{
 		cardSelector.addClass('required-entry');
 
@@ -382,7 +398,20 @@ function toggleCreditInfo(method){
 function changeCard(method){
 	var cardSelector = jQuery('#'+method+'_card_id');
 	cardSelector.addClass('required-entry');
-
+	if(cardSelector.val() != ''){
+		jQuery('#'+method+'_saved_cc_cid').show();
+	}else{
+		jQuery('#'+method+'_saved_cc_cid').hide();
+	}
+	jQuery('#'+method+'_saved_cc_cid').val('');
+	jQuery('#'+method+'_cc_cid').val('');
+	if(jQuery('#advice-required-entry-'+method+'_saved_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_saved_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_card_id'))
+		jQuery('#advice-required-entry-'+method+'_card_id').hide();
+	
 	addCardClass(method);
 
 	var diffCardSelector = jQuery('.'+method+'_new');

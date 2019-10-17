@@ -131,7 +131,16 @@
 			});
 
 			$('<?php echo $this->getMethodCode(); ?>_card_id').setValue(0);
-
+			$('<?php echo $this->getMethodCode(); ?>_saved_cc_cid').hide();
+			$('<?php echo $this->getMethodCode(); ?>_saved_cc_cid').value = '';
+			if($('advice-required-entry-<?php echo $this->getMethodCode(); ?>_card_id'))
+				$('advice-required-entry-<?php echo $this->getMethodCode(); ?>_card_id').hide();
+			if($('advice-required-entry-<?php echo $this->getMethodCode(); ?>_saved_cc_cid'))
+				$('advice-required-entry-<?php echo $this->getMethodCode(); ?>_saved_cc_cid').hide();
+			if($('advice-required-entry-<?php echo $this->getMethodCode(); ?>_cc_cid'))
+			$('advice-required-entry-<?php echo $this->getMethodCode(); ?>_cc_cid').hide();
+			
+			
 			return false;
 		});
 

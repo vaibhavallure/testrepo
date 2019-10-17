@@ -11,9 +11,32 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
      */
     const GIFT_WRAP_SKU = "GIFT_WRAP";
     
+    /**
+     * Get quote
+     * @return Mage_Sales_Model_Quote
+     */
+    private function getQuote(){
+        return Mage::getSingleton("checkout/session")->getQuote();
+    }
+    
+    /**
+     * Check quote contain single qty or not
+     * @return boolean
+     */
     public function isQuoteContainSingleQty(){
-        $quote = Mage::getSingleton("checkout/session")->getQuote();
+        $quote = $this->getQuote();
         if($quote->getItemsQty() == 1)
+            return true;
+        return false;
+    }
+    
+    /**
+     * Check quote contain single product.
+     * @return boolean
+     */
+    public function isQuoteContainSingleProduct(){
+        $quote = $this->getQuote();
+        if($quote->getItemsCount() == 1)
             return true;
         return false;
     }
