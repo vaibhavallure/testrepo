@@ -28,7 +28,7 @@
 <?php if ($this->helper('customer')->isLoggedIn()): ?>
 	<?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
     <?php if($customerGroupId == 2):?>
-        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Checkout')) ?>" class="dark-button  btn-proceed-checkout btn-checkout<?php if ($this->isDisabled()):?> no-checkout<?php endif; ?>"<?php if ($this->isDisabled()):?> disabled="disabled"<?php endif; ?> onclick="window.location='<?php echo $this->getCheckoutUrl() ?>';"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Checkout')) ?>" class="dark-button  btn-proceed-checkout btn-checkout<?php if ($this->isDisabled()):?> no-checkout<?php endif; ?>"<?php if ($this->isDisabled()):?> disabled="disabled"<?php endif; ?> onclick="blockCheckoutUi();window.location='<?php echo $this->getCheckoutUrl() ?>';"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
     <?php endif;?>
 <?php else: ?>
         <button onclick="checkoutLogin('<?= $this->getCheckoutUrl() ?>')" type="button"  class="dark-button  btn-proceed-checkout btn-checkout checkout-btn" <?php if ($this->isDisabled()):?> disabled="disabled"<?php endif; ?> ><span><span><?php echo $this->__('Checkout') ?></span></span></button>
