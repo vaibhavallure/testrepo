@@ -355,7 +355,9 @@ if ($_product->getSizeSample() == 1) {
 			<?php endif; ?>
 			
 			<?php //Gift special instruction ?>
-			<?php if ($_product->getShowSpecialInstruction()):?>
+			<?php if ($_product->getShowSpecialInstruction()):
+                 if(Mage::helper("customerloginmonitor")->isWholesaler()):
+                ?>
 			 <div class="product-special-instructions">
 				<div class="special-instruction-label">
 					<label>Special Instructions:</label>
@@ -369,7 +371,8 @@ if ($_product->getSizeSample() == 1) {
                 </div>
 			</div>
 			<?php endif;?>
-			
+			<?php endif;?>
+
             <div class="product-collateral">
                 <?php if (!$this->hasOptions()): ?>
                     <div id="product-options-wrapper" class="product-options"></div>
