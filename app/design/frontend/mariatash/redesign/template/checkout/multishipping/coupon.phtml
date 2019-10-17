@@ -5,7 +5,7 @@
  * @see Mage_Checkout_Block_Onepage_Payment_Methods
  */
 
-$quote = Mage::getModel('checkout/cart')->getQuote();
+$quote = Mage::getSingleton('checkout/session')->getQuote();
 $codeExists = ($quote->getCouponCode()) ? true : false;
 ?>
 <div class='promoDiv'>
@@ -38,7 +38,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
                     <p>
                     	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
                     	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
-                    	<a href="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon" style="position:relative; top:-20px;">
+                    	<a href="javascript:void();" onclick="deActivateGiftCard.deactivate(<?=$k ?>);" class="button_coupon" style="position:relative; top:-20px;">
                     		<span><span><?= $this->__('Remove')?></span></span>
                     	</a>
                     </p>
@@ -87,6 +87,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
 
             //if (checkout.loadWaiting!=false) return;
             //    checkout.setLoadWaiting('payment');
+            	blockCheckoutUi();
                 var request = new Ajax.Request(
                     this.saveUrl,
                     {
@@ -102,6 +103,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
         deactivate: function(id) {
             //if (checkout.loadWaiting!=false) return;
             //checkout.setLoadWaiting('payment');
+            blockCheckoutUi();
             var request = new Ajax.Request(
                 this.saveUrl,
                 {
@@ -137,6 +139,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             if(response.giftcard_section) {
                 $('giftcard-section').update(response.giftcard_section.html);
             }
+            unblockCheckoutUi();
             $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
             new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
 

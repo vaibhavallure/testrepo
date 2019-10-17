@@ -280,6 +280,22 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     }
     
     /**
+     * Get refresh totals html
+     * @return string
+     */
+    protected function _getRefreshTotalsHtml ()
+    {
+        $layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_multishipping_refreshtotals');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        $layout->removeOutputBlock('root');
+        $output = $layout->getOutput();
+        return $output;
+    }
+    
+    /**
      * New action created
      * It's used only for multishipping checkout 
      * to apply the promocode from payment section.
@@ -401,13 +417,10 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $result = array();
         $giftCardCode = trim((string)$this->getRequest()->getParam('giftcard_code'));
         $card = Mage::getModel('giftcards/giftcards')->load($giftCardCode, 'card_code');
-        
         if ($card->getId() && ($card->getCardStatus() == 1)) {
-            
             Mage::getSingleton('giftcards/session')->setActive('1');
             $this->_setSessionVars($card);
             $this->_getCheckout()->getQuote()->collectTotals();
-            
         } else {
             if($card->getId() && ($card->getCardStatus() == 2)) {
                 $result['error'] = $this->__('Gift Card "%s" was used.', Mage::helper('core')->escapeHtml($giftCardCode));
@@ -418,7 +431,6 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $result['giftcard_section'] = array(
             'html' => $this->_getUpdatedCoupon()
         );
-        
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
@@ -463,14 +475,12 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             if (!array_key_exists($card->getId(), $giftCardsIds)) {
                 $giftCardsIds[$card->getId()] =  array('balance' => $card->getCardBalance(), 'code' => substr($card->getCardCode(), -4));
                 $oSession->setGiftCardsIds($giftCardsIds);
-                
                 $newBalance = $oSession->getGiftCardBalance() + $card->getCardBalance();
                 $oSession->setGiftCardBalance($newBalance);
             }
         } else {
             $giftCardsIds[$card->getId()] = array('balance' => $card->getCardBalance(), 'code' => substr($card->getCardCode(), -4));
             $oSession->setGiftCardsIds($giftCardsIds);
-            
             $oSession->setGiftCardBalance($card->getCardBalance());
         }
     }

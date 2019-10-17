@@ -169,7 +169,8 @@
 					return false;
 				}
 				jQuery(this).hide();
-				jQuery('#multiaddress-billing-method-please-wait').show();
+				blockCheckoutUi();
+				//jQuery('#multiaddress-billing-method-please-wait').show();
 			}
 		});
 	});

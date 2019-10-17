@@ -10932,12 +10932,12 @@ li.item h2.product-name {text-align: center;}
 	position: relative;
 }
 
-.faveSuccess {
+/* .faveSuccess {
 	position: absolute;
 	font-size: 10px;
 	text-align: left;
 	color: #3F4048 !important;
-}
+} */
 
 .filters-mt .combo1 span, .filters-mt .combo2 span, .filters-mt .combo3 span
 {
@@ -11467,7 +11467,7 @@ li.item h2.product-name {text-align: center;}
 	text-transform: uppercase;
 }
 
-.faveSuccess {
+/* .faveSuccess {
 	width: 250px;
 	text-align: right;
 	line-height: 120%;
@@ -11476,7 +11476,7 @@ li.item h2.product-name {text-align: center;}
 	margin-left: -142px;
 	font-size: 12px;
 	margin-top: 0;
-}
+} */
 
 #tooltip-id-customer-care p {
 	display: none;

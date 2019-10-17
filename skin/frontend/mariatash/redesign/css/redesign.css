@@ -56,7 +56,8 @@ h4{
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
-.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span{
+.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
+#product_tabs_rpolicy_tabbed_contents p{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -2202,6 +2203,7 @@ input[type='radio']{
 	margin-bottom: 24px;
 }
 
+
 /*Old from file recently.viewd.css*/
 .image_carousel img {
 	padding:0;
@@ -2321,7 +2323,7 @@ input[type='radio']{
 #currency-selector {
   position: absolute;
   top: 20px;
-  right: -20px;
+  right: -24px;
   z-index: 99999;
   width: 96px;
   height: auto;
@@ -2504,7 +2506,7 @@ ul#foo4 {
 /*product detail page-------------------------------------------*/
 .containerImage img{
 	display: flex;
-	margin: 98px auto 0;
+	margin: 0 auto 0;
 }
 .catalog-product-view .regular-price span {
   font-size: 22px;
@@ -2586,14 +2588,13 @@ ul.tabs {
 .add-to-cart .availability {
   margin: 40px 0 21px;
 }
-.thumb.thumb1 img{
-	margin-top: 153px;
-}
+/*.thumb.thumb1 img*/
+
 .thumb img{
 	border: 1px solid #D4D4D4;
 	margin-top: 10px;
 }
-.thumb .active img{
+.thumb .active img,.thumb.active img{
 	border: 1px solid rgba(41,41,41,0.9);
 	border-bottom-width: 3px;
 	transition: .5s;
@@ -2747,7 +2748,7 @@ ul.tabs li{
 	height: 100%;
 }
 .containerVideo{
-	margin-top: 20%;
+	/*margin-top: 20%;*/
 }
 
 
@@ -3413,6 +3414,12 @@ margin-top: 10%;
 .additional-message p {
   margin-bottom: 0;
 }
+.checkout-cart-index .messages-tr .product-name{
+	padding-right: 24px;
+}
+.cart_col2 .item-options {
+  display: inline-block;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
@@ -3915,7 +3922,7 @@ div#uniform-shipping-address-select>span{
 	margin-top: 6px;
 }
 .product-special-instructions {
-  margin-top: 17px;
+  margin-top: 24px;
 }
 .fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label,
 .post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label, .neck_lengt .chooseList ul li.label, .s_length .chooseList ul li.label{
@@ -3964,11 +3971,20 @@ div#uniform-shipping-address-select>span{
 .custom-options .ajax-error-messages{
 	top: 25px;
 }
-.ajax-error-messages {
+.ajax-error-messages, .faveSuccess {
   position: absolute;
   right: 0;
   color: #830000;
   font-size: 10px;
+	padding: 0 15px;
+}
+.faveSuccess{
+	padding: 0;
+	text-align: right;
+}
+.material + .ajax-error-messages{
+	padding: 0;
+  top: 39px;
 }
 #product_tabs_details_tabbed_contents .data-table tbody tr th {
   padding-bottom: 2px;
@@ -3987,7 +4003,7 @@ dt.post-lengthds-lbl {
 .catalog-product-view .product-detail-parent .product-shop.configurable .sign-up-in-stock {
   margin: 0 -15px;
   display: block;
-} 
+}
 /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;

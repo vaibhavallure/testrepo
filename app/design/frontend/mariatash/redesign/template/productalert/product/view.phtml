@@ -42,10 +42,10 @@
                 <!--<form action="" name="non-loged-signup" method="post" id="non-loged-signup">-->
                 <div class="form-group input-form w-100">
                     <input type="text" value="" style="display:none"/>
-                    <input type="text" id="email" name="email" class="ele_width form-control required-entry text emailToNotification"/>
+                    <input type="text" id="email" name="email" class="ele_width form-control required-entry text emailToNotification w-100 mb-3"/>
                 </div>
                 <div class="col-12 p-0">
-                <button type="button" class="button dark-button  p-2 text-uppercase alert-signup-button" style="height: 42px;" onclick="sendEmailToNotification('<?php echo Mage::getUrl("ecpalertstock/index/saveEmailForStockAlert") ?>',<?php echo Mage::registry('current_product')->getData('entity_id')?>,jQuery('.emailToNotification').val());">
+                <button type="button" class="button dark-button pop-up-button text-uppercase alert-signup-button" style="height: 42px;" onclick="sendEmailToNotification('<?php echo Mage::getUrl("ecpalertstock/index/saveEmailForStockAlert") ?>',<?php echo Mage::registry('current_product')->getData('entity_id')?>,jQuery('.emailToNotification').val());">
                         <span>Signup</span>
                     </button>
                 </div>

@@ -22,6 +22,14 @@
         </block>
     </checkout_multishipping_refreshtotals>
     
+    <checkout_multishipping_refreshtotals_handle>
+    	<remove name="right"/>
+        <remove name="left"/>
+        <block type="checkout/cart_totals" template="checkout/multishipping/totals.phtml" name="refresh_totals" output="toHtml" >
+            <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
+        </block>
+    </checkout_multishipping_refreshtotals_handle>
+    
     <checkout_multishipping_billing>
     	<reference name="checkout_billing">
             <block type="giftcards/coupon" name="onepage.giftcard" as="onepagegiftcard" template="checkout/multishipping/coupon.phtml" />
