@@ -447,7 +447,9 @@ if ($_product->getSizeSample() == 1) {
 
 				<?php //echo $this->getChildHtml('special_instruction')?>
 
-		       <?php if ($_product->getShowSpecialInstruction()):?>
+		       <?php if ($_product->getShowSpecialInstruction()):
+                   if(Mage::helper("customerloginmonitor")->isWholesaler()):
+                   ?>
 				<div class="product-special-instructions">
 					<div class="special-instruction-label">
 						<label>Special Instructions:</label>
@@ -460,6 +462,7 @@ if ($_product->getSizeSample() == 1) {
 					</div>
 				</div>
 				<?php endif;?>
+               <?php endif;?>
 
                 <?php echo $this->getChildHtml('product_additional_data') ?>
             </div>

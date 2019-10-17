@@ -170,7 +170,9 @@ billing.onSave = function(evt){
                     </script>
                 </div>
              <?php endif; ?>
-
+            <?php
+            if(Mage::helper("customerloginmonitor")->isWholesaler()):
+            ?>
              <h4 class="gift-message-or">OR</h4>
         
                  <h4>
@@ -238,7 +240,8 @@ billing.onSave = function(evt){
                          </li>
                          <?php endforeach; ?>
                      </ol>
-                 </div>           
+                 </div>
+            <?php endif; ?>
         </div>
     </div>
     <script type="text/javascript">
