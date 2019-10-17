@@ -230,8 +230,11 @@ if(!is_null($parentId)){
             	<a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         	</div>
             <?php if ($this->helper('customer')->isLoggedIn()): ?>
+            <?php $wishlist = Mage::helper("wishlist");
+                if(!$wishlist->alreadyInWishlist($productId)):
+            ?>
                 <div class="ad-to-fav float-right">
-                    <a class="info-text-three" id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Move to Wishlist</a>
+                    <a class="info-text-three" id="saveToFave" href="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>">Move to Wishlist</a>
                 </div>
                 <script type="text/javascript">
                     jQuery("#saveToFave").click(function(){
@@ -240,6 +243,7 @@ if(!is_null($parentId)){
                         }
                     });
                 </script>
+            <?php endif; ?>
             <?php endif; ?>
         <?php endif;?>
         </td>
@@ -262,16 +266,20 @@ if(!is_null($parentId)){
             <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
-            <div class="ad-to-fav float-right">
-                <a class="info-text-three" id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Move to Wishlist</a>
-            </div>
-            <script type="text/javascript">
-                jQuery("#saveToFave").click(function(){
-                    if(jQuery('select.color-attribute').val() == ''){
-                        jQuery('.ajax-error-messages').html('Please select a color');
-                    }
-                });
-            </script>
+            <?php $wishlist = Mage::helper("wishlist");
+            if(!$wishlist->alreadyInWishlist($productId)):
+                ?>
+                <div class="ad-to-fav float-right">
+                    <a class="info-text-three" id="saveToFave" href="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>">Move to Wishlist</a>
+                </div>
+                <script type="text/javascript">
+                    jQuery("#saveToFave").click(function(){
+                        if(jQuery('select.color-attribute').val() == ''){
+                            jQuery('.ajax-error-messages').html('Please select a color');
+                        }
+                    });
+                </script>
+            <?php endif; ?>
         <?php endif; ?>
     </td>
 </tr>
