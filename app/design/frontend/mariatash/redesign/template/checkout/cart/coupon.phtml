@@ -69,6 +69,7 @@ discountForm.submit = function (remove) {
 
     jQuery("#coupon_code2").blur(function() {
         if(jQuery("#coupon_code2").val()!= ''){
+        	blockCheckoutUi();
         	discountForm.submit();
         }
     });

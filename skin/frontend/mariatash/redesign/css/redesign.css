@@ -430,7 +430,7 @@ input, select, textarea{
 	box-shadow: 0 0 0 0 !important;
 	border: 1px solid rgba(41,41,41,0.25);
 }
-.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg {
+.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg, #advice-required-entry-promoCode_code {
 	clear: both;
 	font-size: 10px;
 	color: #830000 !important;
@@ -3445,6 +3445,17 @@ margin-top: 10%;
 }
 .checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
 	font-size: 18px;
+}
+.giftcard-output-content {
+  margin: 10px 0;
+	border-bottom: 1px solid #d8d8d8;
+}
+.giftcard-output-content a{
+	margin-bottom: 20px;
+}
+#advice-required-entry-promoCode_code{
+	width: 100%;
+  padding: 0 15px;
 }
 /* cccc */
 /*MINI CART CSS*/

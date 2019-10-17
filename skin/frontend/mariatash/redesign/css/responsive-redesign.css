@@ -957,7 +957,7 @@
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
   }
   .filterButton::before{
     left: 10px;
@@ -1073,6 +1073,7 @@
   }
   .pop-up-cover{
     width: 92% !important;
+    overflow-y: scroll;
   }
   .input-form input{
     width: 100%;
@@ -1587,6 +1588,9 @@
   .s_length .chooseList ul li.option{
     flex: 0 0 30%;
     max-width: 30%;
+  }
+  .menu-inner{
+    overflow-x: auto;
   }
 }
 @media (min-width:1025px) and (max-width:1278px) {

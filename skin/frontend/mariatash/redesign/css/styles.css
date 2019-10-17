@@ -2051,13 +2051,13 @@ a.various_sample.non-color {
 	float: right;
 }
 
-#advice-required-entry-giftcard_code,
+/* #advice-required-entry-giftcard_code,
 #advice-required-entry-promoCode_code {
 	color: #cc0000;
 	font-size: 10px;
-}
+} */
 
-#advice-required-entry-giftcard_code.applied,
+/* #advice-required-entry-giftcard_code.applied,
 #advice-required-entry-promoCode_code.applied {
 	color: #3f3f4d;
 	font-size: 10px;
@@ -2071,7 +2071,7 @@ a.various_sample.non-color {
 	font-size: 10px;
 	position: absolute;
 	width: 110px;
-}
+} */
 
 /* .checkout-onepage-index #advice-required-entry-giftcard_code.false,
 .checkout-onepage-index #advice-required-entry-promoCode_code.false,
