@@ -136,7 +136,7 @@ billing.onSave = function(evt){
         <h3><?php echo $this->__('Do you have any gift items in your order? If yes, the receipt will not include pricing information.'); ?></h3>
         <p class="control">
             <input type="checkbox" name="allow_gift_messages" id="allow_gift_messages" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif; ?> class="checkbox" />
-            <label for="allow_gift_messages"><?php echo $this->__('Check this checkbox if you want to send as a gift and add a gift message or for special instructions.') ?></label>
+            <label for="allow_gift_messages"><?php echo $this->__('Check this checkbox if you want to send as a gift and add a gift message');  echo (Mage::helper("customerloginmonitor")->isWholesaler())?$this->__(' or for special instructions.'):'.'; ?></label>
         </p>
     </div>
     <div class="gift-messages-form" id="allow-gift-message-container" style="display: none;">
@@ -170,7 +170,9 @@ billing.onSave = function(evt){
                     </script>
                 </div>
              <?php endif; ?>
-
+            <?php
+            if(Mage::helper("customerloginmonitor")->isWholesaler()):
+            ?>
              <h4 class="gift-message-or">OR</h4>
         
                  <h4>
@@ -238,7 +240,8 @@ billing.onSave = function(evt){
                          </li>
                          <?php endforeach; ?>
                      </ol>
-                 </div>           
+                 </div>
+            <?php endif; ?>
         </div>
     </div>
     <script type="text/javascript">
