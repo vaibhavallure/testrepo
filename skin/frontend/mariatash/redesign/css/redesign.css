@@ -56,7 +56,8 @@ h4{
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
-.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span{
+.banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
+#product_tabs_rpolicy_tabbed_contents p{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -3915,7 +3916,7 @@ div#uniform-shipping-address-select>span{
 	margin-top: 6px;
 }
 .product-special-instructions {
-  margin-top: 17px;
+  margin-top: 24px;
 }
 .fr_size .chooseList ul li.label, .c_length .chooseList ul li.label, .gauge .chooseList ul li.label,
 .post_optio .chooseList ul li.label, .nose_bend .chooseList ul li.label, .color .chooseList ul li.label, .neck_lengt .chooseList ul li.label, .s_length .chooseList ul li.label{
@@ -3974,6 +3975,10 @@ div#uniform-shipping-address-select>span{
 .faveSuccess{
 	padding: 0;
 	text-align: right;
+}
+.material + .ajax-error-messages{
+	padding: 0;
+  top: 39px;
 }
 #product_tabs_details_tabbed_contents .data-table tbody tr th {
   padding-bottom: 2px;

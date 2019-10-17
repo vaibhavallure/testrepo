@@ -658,7 +658,7 @@
     padding: 0;
   }
   .product-shop > .row{
-    padding: 0 130px;
+    padding: 0 50px;
   }
   .padder{
     min-height: 250px;
@@ -1203,6 +1203,7 @@
     width: 340px;
     overflow-y: scroll;
     padding-left: 65px;
+    padding-right: 52px;
 }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
