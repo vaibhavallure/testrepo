@@ -125,6 +125,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
         },
 
         nextStep: function(transport){
+        	unblockCheckoutUi();
             if (transport && transport.responseText){
                 try{
                     response = eval('(' + transport.responseText + ')');
@@ -134,8 +135,9 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
                 }
             }
 
+            $('totalsDivRightNav').innerHTML = response.giftcard_section.totals_html;
+
             if (response.error) {
-            	unblockCheckoutUi();
                 alert(response.error);
                 return false;
             }
@@ -143,9 +145,8 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //update gift card section
             if(response.giftcard_section) {
                 $('giftcard-section').update(response.giftcard_section.html);
-                $('totalsDivRightNav').innerHTML = response.giftcard_section.totals_html;
             }
-            unblockCheckoutUi();
+            
             //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
             //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
 
