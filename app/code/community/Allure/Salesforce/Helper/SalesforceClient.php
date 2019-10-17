@@ -49,6 +49,9 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     //invoice pdf link using document object
     const DOCUMENTLINK_URL                  = "/services/data/v43.0/sobjects/ContentDocumentLink";
 
+    //using for querying to SF
+    const QUERY_URL                         = "/services/data/v46.0/query";
+
     //Salesforce object's type
     const PRODUCT_OBJECT            = "PRODUCT";
     const PRODUCT_PRICEBOOK_OBJECT  = "PRODUCT_PRICE_BOOK";
@@ -168,7 +171,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
      * @param - requestMethod - contains GET|POST|DELETE|PUT|PATCH|OPTIONS|HEAD
      * @param - requestArgs - contains input parameters of request
      */
-    public function sendRequest($urlPath, $requestMethod = "GET", $requestArgs, $multipart = false,$boundary = null){
+    public function sendRequest($urlPath, $requestMethod = "GET", $requestArgs, $multipart = false,$boundary = null,$query=null){
         $salesfoeceSession = $this->getSalesforceSession();
         $oauthToken = $salesfoeceSession->getSOauthToken();
         $instaceUrl = $salesfoeceSession->getSInstanceUrl();
@@ -183,6 +186,11 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         if($oauthToken && $instaceUrl){
             $requestURL = $instaceUrl . $urlPath;
             $sendRequest = curl_init($requestURL);
+            if($query!=null) {
+                $requestURL = $requestURL . '?q=' . $query;
+                curl_setopt($sendRequest, CURLOPT_URL, $requestURL);
+            }
+
             curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
             curl_setopt($sendRequest, CURLOPT_HEADER, false);
             curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
@@ -212,7 +220,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                     $json_arguments = json_encode($requestArgs);
                     $json_arguments = str_replace('\n',' ',$json_arguments);
                     $this->salesforceLog("sendRequest Data -".utf8_encode($json_arguments));
-                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, utf8_encode($json_arguments));
+                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, stripslashes($json_arguments));
                 }
             }
 
@@ -339,7 +347,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         //check product is in salesforce or not.if not add into salesforce.
         $isTeamwork = false;
         $createOrderMethod = $order->getCreateOrderMethod();
-        if ($createOrderMethod) {
+        if ($createOrderMethod == 2) {
             $isTeamwork = true;
             $status = Mage::helper("allure_teamwork")->getTeamworkSalesforceStatus();
             if (!$status) {
@@ -535,15 +543,42 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                     if ($customerGroup == 2) {
                         $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
                     }
+                }else {
+                    $tmProduct = Mage::getModel("allure_teamwork/tmproduct")
+                        ->load($item->getSku(), "sku");
+                    if ($tmProduct->getId()) {
+                        $salesforcePricebkEntryId = $tmProduct->getSalesforceStandardPricebk();
+                        if ($customerGroup == 2) {
+                            $salesforcePricebkEntryId = $tmProduct->getSalesforceWholesalePricebk();
+                        }
+                    }
+                }
+
+                if(!$salesforcePricebkEntryId) {
+                    $deletedProduct = Mage::getModel('allure_salesforce/deletedproduct')
+                        ->load($item->getSku(), "sku");
+                    if ($deletedProduct->getId()) {
+                        $salesforcePricebkEntryId = $deletedProduct->getSalesforceStandardPricebk();
+                        if ($customerGroup == 2) {
+                            $salesforcePricebkEntryId = $deletedProduct->getSalesforceWholesalePricebk();
+                        }
+                    }
+
                 }
             }
 
             $this->salesforceLog("Product id - " . $item->getSku() . " salesforcePriceBookId - " . $salesforcePricebkEntryId);
 
             if (!$salesforcePricebkEntryId) {
-                $this->salesforceLog("Failed to create order: Product not present in SF");
-                $salesforcePricebkEntryId = $this->createAndGetSFPriceBookEntry($product,$isTeamwork,$customerGroup);
-                //return;
+                $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
+                $product = Mage::getModel("catalog/product")->load($productId);
+                if($productId) {
+                    $this->salesforceLog("Failed to create order: Product not present in SF");
+                    $salesforcePricebkEntryId = $this->createAndGetSFPriceBookEntry($product,$isTeamwork,$customerGroup);
+                }else {
+                    $this->salesforceLog("Product Not present in Magento for order-  {$orderId} with Product SKU - {$item->getSkU()}");
+                    return;
+                }
             }
 
             $magOrderItemArr[] = array("item_id" => $item->getItemId(),
@@ -757,11 +792,11 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             }
 
             if(!empty($fieldsArray)) {
-                //print_r($fieldsArray);
+                $this->salesforceLog("IN createAndGetSFPriceBookEntry - Updating PriceBookEntries in Magento - {$product->getId()}");
                 Mage::getResourceSingleton('catalog/product_action')
                     ->updateAttributes(array($product->getId()), $fieldsArray, $mainStoreId);
-            }else {
-                //print_r($request);
+            } if(!empty( $request["records"])) {
+                $this->salesforceLog("IN createAndGetSFPriceBookEntry - Creating PriceBookEntries SF - {$product->getId()}");
                 $response = $this->sendRequest(self::PRODUCT_PRICEBOOK_URL,"POST",$request,false,null);
                 $responseArr = json_decode($response,true);
                 $this->bulkProcessResponse($responseArr,"products");
@@ -769,7 +804,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         } else {
             $this->salesforceLog("IN createAndGetSFPriceBookEntry - Product not Present in SF - {$product->getId()}");
             $requestParam = $this->getProductData($product, true, false);
-            $response = $this->sendRequest("/services/data/v42.0/composite/tree/Product2","POST",$requestParam,false,null);
+            $request = array("records" => array($requestParam));
+            $response = $this->sendRequest("/services/data/v42.0/composite/tree/Product2","POST",$request,false,null);
             $responseArr = json_decode($response,true);
             $this->bulkProcessResponse($responseArr,"products");
         }
@@ -782,12 +818,13 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     }
 
     public function getSFPricebookEntries($salesforceProductId) {
-        $query = "/services/data/v46.0/query?q=SELECT+Id,PriceBook2Id,ProductCode+FROM+PricebookEntry+WHERE+Product2Id+=+'{$salesforceProductId}'";
+        $query = "SELECT+Id,PriceBook2Id,ProductCode+FROM+PricebookEntry+WHERE+Product2Id+=+'{$salesforceProductId}'";
 
         $helper = $this->getDataHelper();
-        $response = $this->sendRequest($query,"GET",null,false,null);
+        $response = $this->sendRequest(self::QUERY_URL,"GET",null,false,null,$query);
         $resArr = json_decode($response,true);
 
+        $this->salesforceLog("Query Response for {$salesforceProductId}  -   {$response}");
         $mappedResponse = array();
         $gpbk = $helper->getGeneralPricebook();
         $wpbk = $helper->getWholesalePricebook();
