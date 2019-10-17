@@ -1,6 +1,12 @@
 jQuery(document).ready(function() {
 
 
+
+    jQuery('a[href=#]').each(function () {
+        jQuery(this).attr('href', 'JavaScript:Void(0)');
+    });
+
+
    jQuery('.customer-account-index .breadcrumbs,.customer-account-index .messages').appendTo('.mt-new-myaccount-dashbord .page-title');
 
     jQuery('.myaccount-index-index .breadcrumbs,.myaccount-index-index .messages ').appendTo('.myaccount-index-index .page-title');
