@@ -3428,7 +3428,7 @@ margin-top: 10%;
   justify-content: flex-end;
 }
 .checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span,
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left{
+.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left, .checkout-cart-index #mt-shipping-method-fancybox span{
 	font-size: 13px;
 	font-family: urw-din-xlight;
 }

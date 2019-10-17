@@ -1034,6 +1034,9 @@
   .checkout-cart-index .fancybox-inner .selectboxit-container, .checkout-cart-index .fancybox-opened .selectboxit-container .selectboxit{
     width: 100% !important;
   }
+  .checkout-list-title{
+    margin-bottom: 10px;
+  }
 }
 
 /* Mobile Portrait */
@@ -1302,9 +1305,6 @@
   .messages-tr .plus_icon, .messages-tr .minus_icon{
     display: block;
   }
-  .checkout-list-title{
-    margin-bottom: 10px;
-  }
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
@@ -1438,6 +1438,9 @@
   }
   .product-shop{
     margin-top: 35px;
+  }
+  .checkout-cart-index .fancybox-inner {
+    height: 100% !important;
   }
 }
 
