@@ -256,6 +256,12 @@ function changeCard(method){
 	}
 	jQuery('#'+method+'_saved_cc_cid').val('');
 	jQuery('#'+method+'_cc_cid').val('');
+	if(jQuery('#advice-required-entry-'+method+'_saved_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_saved_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_card_id'))
+		jQuery('#advice-required-entry-'+method+'_card_id').hide();
 	
 	addCardClass(method);
 
