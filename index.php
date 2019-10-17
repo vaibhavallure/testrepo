@@ -841,7 +841,7 @@ function createCampaign(){
         $messageClass = new Millesima_Message();
 
         $type = $data['creation'];
-        $segSend = '';
+        $segSend = array();
         $messageIds = $data["checkbox-message"];
         $doctype = $campaignClass->getDoctype();
         
