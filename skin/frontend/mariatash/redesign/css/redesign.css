@@ -38,8 +38,8 @@ h4{
 }
 
 .info-text-three,
-.totals-table tbody tr td.cart-subtotals-left span, .cart-collaterals .special-total .total-title, .cart-subtotals-left{
-	font-family: urw-din-xlight;
+.cart-collaterals .special-total .total-title{
+	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0.25px;
@@ -355,9 +355,10 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span{
-	font-family: urw-din-medium !important;
-	font-size: 18px !important;
+.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .checkout-multishipping-addresses #shopping-cart-totals-table span.total-title,
+.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price {
+    font-size: 18px;
+    font-family: urw-din-medium;
 }
 
 /* STANDARD CSS ENDED */
@@ -1569,7 +1570,7 @@ input[type="checkbox"]:checked+label:before {
   bottom: 15px;
   width:100%;
 }
-.reg-price, .image-text h6, .cart-subtotals-right span,.overview-address-item .box .box-title{
+.reg-price, .image-text h6, .overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
   font-family: urw-din-regular;
@@ -3420,6 +3421,24 @@ margin-top: 10%;
 .cart_col2 .item-options {
   display: inline-block;
 }
+.charcount-safe {
+  margin: 9px 0 18px;
+}
+.gift-message-section .row {
+  justify-content: flex-end;
+}
+.checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span,
+.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left, .checkout-cart-index #mt-shipping-method-fancybox span{
+	font-size: 13px;
+	font-family: urw-din-xlight;
+}
+.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-right span.price{
+	font-size: 13px;
+	font-family: urw-din-regular;
+}
+.checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
+	font-size: 18px;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
@@ -3489,7 +3508,7 @@ margin-top: 10%;
   margin-top: 14px;
 }
 .data-table.cart-table .gift-messages {
-  margin-top: 8px;
+  margin-top: 9px;
 	margin-bottom: 30px;
 }
 .data-table.cart-table .messages .item-msg {
@@ -3863,7 +3882,7 @@ div#uniform-shipping-address-select>span{
 }
 
 .checkout-sidebar-bottom{
-	padding-top:47px;
+	padding-top: 52px;
 	width: 322px;
 	height: 338px;
 	margin: 0 auto;

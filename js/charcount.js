@@ -1,4 +1,4 @@
-/* 
+/*
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
  Title :		charcount.js
@@ -42,9 +42,9 @@ function charCounter(id, maxlimit, limited) {
         $('counter-' + id).removeClassName('charcount-safe');
     } else {
         $('counter-' + id).removeClassName('charcount-limit');
-        $('counter-' + id).addClassName('charcount-safe');
+        $('counter-' + id).addClassName('charcount-safe w-100 para-normal text-right');
     }
-    $('counter-' + id).update($F(id).length + ' out of ' + maxlimit + ' characters');
+    $('counter-' + id).update($F(id).length + '/'  + maxlimit);
 
 }
 
