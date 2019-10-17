@@ -129,6 +129,7 @@ will be rendered on all checkout pages
         <remove name="left"/>
 
         <reference name="head">
+        	<action method="addItem"><type>skin_js</type><name>js/allure/multicheckout.js</name></action>
             <action method="addCss"><stylesheet>css/multiship.css</stylesheet></action>
         </reference>
 

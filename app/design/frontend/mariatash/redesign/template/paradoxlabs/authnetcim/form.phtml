@@ -131,7 +131,9 @@
 			});
 
 			$('<?php echo $this->getMethodCode(); ?>_card_id').setValue(0);
-
+			$('<?php echo $this->getMethodCode(); ?>_saved_cc_cid').hide();
+			$('<?php echo $this->getMethodCode(); ?>_saved_cc_cid').value = '';
+			
 			return false;
 		});
 

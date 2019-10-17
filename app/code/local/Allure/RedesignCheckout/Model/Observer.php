@@ -7,6 +7,29 @@
 class Allure_RedesignCheckout_Model_Observer extends Varien_Object
 {
     /**
+     * if cart contains remove gift wrap item.
+     */
+    public function removeGiftWrapItem(){
+        try{
+            $quote = Mage::getSingleton('checkout/cart')->getQuote();
+            if($quote->getId()){
+                $helper = Mage::helper("allure_redesigncheckout");
+                foreach ($quote->getAllVisibleItems() as $item){
+                    if(strtolower($item->getSku()) == strtolower($helper::GIFT_WRAP_SKU)){
+                        $quote->removeItem($item->getId());
+                        $quote->setTotalsCollectedFlag(false);
+                        $quote->collectTotals();
+                        $quote->save();
+                        break;
+                    }
+                }
+            }
+        }catch (Exception $e){
+            
+        }
+    }
+    
+    /**
      * Set address item gift to order
      * @param Varien_Object $observer
      */
