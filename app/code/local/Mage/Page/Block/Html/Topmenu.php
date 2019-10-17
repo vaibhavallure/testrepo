@@ -209,6 +209,8 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
             $classes[] = 'parent';
             $classes[]='nav-item';
             $classes[]='main_menu';
+        }else{
+            $classes[]='noChild';
         }
 
         return $classes;
