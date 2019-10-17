@@ -27,6 +27,7 @@
         //]]&gt;
         jQuery("#giftcard_code").blur(function() {
         	if(jQuery("#giftcard_code").val() != ''){
+        		blockCheckoutUi();
         		giftCardForm.submit(true);
         	}
         });

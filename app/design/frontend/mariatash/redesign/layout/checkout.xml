@@ -59,6 +59,7 @@ Default layout, loads most of the pages
     <checkout_cart_index translate="label">
         <label>Shopping Cart</label>
         <reference name="head">
+        	<action method="addItem"><type>skin_js</type><name>js/allure/ui_block.js</name></action>
             <action method="addJs"><script>jquery/shipping-links.js</script></action>
         </reference>
         <remove name="left"/>
@@ -129,7 +130,7 @@ will be rendered on all checkout pages
         <remove name="left"/>
 
         <reference name="head">
-        	<action method="addItem"><type>skin_js</type><name>js/allure/multicheckout.js</name></action>
+        	<action method="addItem"><type>skin_js</type><name>js/allure/ui_block.js</name></action>
             <action method="addCss"><stylesheet>css/multiship.css</stylesheet></action>
         </reference>
 

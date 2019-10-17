@@ -141,9 +141,16 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 </div>
 
 <script>
+	function processCartItem(evt){
+		var hrefUrl = jQuery(evt).data("url");
+		if(hrefUrl){
+			blockCheckoutUi();
+			window.location.href = hrefUrl;
+		}
+	}
+	
     function plusMinus(elementId,plus){
-        jQuery.fancybox.showLoading();
-        jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+    	blockCheckoutUi();
         var qty = parseInt(jQuery(elementId).val()) + plus ;
         if(qty > 0) {
             jQuery(elementId).val(qty);
@@ -153,8 +160,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
     }
     jQuery( ".qty-wrap input" ).focusout(function() {
         if(this.next().value != this.value) {
-            jQuery.fancybox.showLoading();
-            jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+        	blockCheckoutUi();
             jQuery( "#shopping-cart-form" ).submit();
         }
     })
