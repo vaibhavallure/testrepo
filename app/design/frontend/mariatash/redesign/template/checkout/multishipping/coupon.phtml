@@ -88,6 +88,8 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //if (checkout.loadWaiting!=false) return;
             //    checkout.setLoadWaiting('payment');
             	blockCheckoutUi();
+            	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            	
                 var request = new Ajax.Request(
                     this.saveUrl,
                     {
@@ -104,6 +106,8 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //if (checkout.loadWaiting!=false) return;
             //checkout.setLoadWaiting('payment');
             blockCheckoutUi();
+            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            
             var request = new Ajax.Request(
                 this.saveUrl,
                 {
@@ -131,6 +135,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             }
 
             if (response.error) {
+            	unblockCheckoutUi();
                 alert(response.error);
                 return false;
             }
@@ -138,10 +143,11 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //update gift card section
             if(response.giftcard_section) {
                 $('giftcard-section').update(response.giftcard_section.html);
+                $('totalsDivRightNav').innerHTML = response.giftcard_section.totals_html;
             }
             unblockCheckoutUi();
-            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-            new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+            //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
 
         }
     }
