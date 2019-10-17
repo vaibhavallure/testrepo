@@ -88,6 +88,8 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //if (checkout.loadWaiting!=false) return;
             //    checkout.setLoadWaiting('payment');
             	blockCheckoutUi();
+            	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            	
                 var request = new Ajax.Request(
                     this.saveUrl,
                     {
@@ -104,6 +106,8 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             //if (checkout.loadWaiting!=false) return;
             //checkout.setLoadWaiting('payment');
             blockCheckoutUi();
+            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            
             var request = new Ajax.Request(
                 this.saveUrl,
                 {
@@ -121,6 +125,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
         },
 
         nextStep: function(transport){
+        	unblockCheckoutUi();
             if (transport && transport.responseText){
                 try{
                     response = eval('(' + transport.responseText + ')');
@@ -129,6 +134,8 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
                     response = {};
                 }
             }
+
+            $('totalsDivRightNav').innerHTML = response.giftcard_section.totals_html;
 
             if (response.error) {
                 alert(response.error);
@@ -139,9 +146,9 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
             if(response.giftcard_section) {
                 $('giftcard-section').update(response.giftcard_section.html);
             }
-            unblockCheckoutUi();
-            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-            new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+            
+            //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
 
         }
     }

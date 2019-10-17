@@ -1028,6 +1028,12 @@
   .to-from-section input, .gift-message-section textarea {
     width: 100%;
   }
+  .checkout-cart-index .fancybox-inner {
+    width: 100% !important;
+  }
+  .checkout-cart-index .fancybox-inner .selectboxit-container, .checkout-cart-index .fancybox-opened .selectboxit-container .selectboxit{
+    width: 100% !important;
+  }
 }
 
 /* Mobile Portrait */
@@ -1330,16 +1336,10 @@
     margin-bottom: 10px;
   }
   .checkout-cart-index .fancybox-wrap.fancybox-desktop.fancybox-type-inline.fancybox-opened {
-    width: 100% !important;
+    width: 90% !important;
   }
   .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
     padding: 45px 0;
-  }
-  .checkout-cart-index .selectboxit-container{
-    display: block;
-  }
-  .checkout-cart-index .shipping-form.shipping-estimation-form .input-box{
-    text-align: left !important;
   }
 }
 

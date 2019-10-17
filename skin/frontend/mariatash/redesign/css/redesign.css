@@ -3427,9 +3427,17 @@ margin-top: 10%;
 .gift-message-section .row {
   justify-content: flex-end;
 }
-.checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span{
+.checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span,
+.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left{
 	font-size: 13px;
 	font-family: urw-din-xlight;
+}
+.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-right span.price{
+	font-size: 13px;
+	font-family: urw-din-regular;
+}
+.checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
+	font-size: 18px;
 }
 /* cccc */
 /*MINI CART CSS*/
