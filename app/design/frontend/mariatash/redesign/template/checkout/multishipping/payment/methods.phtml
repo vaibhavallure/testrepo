@@ -249,7 +249,12 @@ function toggleCreditInfo(method){
 function changeCard(method){
 	var cardSelector = jQuery('#'+method+'_card_id');
 	cardSelector.addClass('required-entry');
-
+	if(cardSelector.val() != ''){
+		jQuery('#'+method+'_saved_cc_cid').show();
+	}else{
+		jQuery('#'+method+'_saved_cc_cid').hide();
+	}
+	
 	addCardClass(method);
 
 	var diffCardSelector = jQuery('.'+method+'_new');

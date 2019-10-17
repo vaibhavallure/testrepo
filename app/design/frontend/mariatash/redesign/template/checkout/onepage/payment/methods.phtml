@@ -361,7 +361,9 @@ function toggleCreditInfo(method){
 	var diffCardSelector = jQuery('.'+method+'_new');
 	diffCardSelector.toggle();
 	var cardSelector = jQuery('#'+method+'_card_id');
-	cardSelector.val(0);
+	cardSelector.val('');
+	jQuery('#'+method+'_saved_cc_cid').hide();
+	
 	if(diffCardSelector.is(':visible')){
 		cardSelector.removeClass('required-entry');
 
@@ -369,6 +371,7 @@ function toggleCreditInfo(method){
 
 		diffCardSelector.find('select').addClass('required-entry');
 		diffCardSelector.find('input').addClass('required-entry');
+		jQuery('#'+method+'_save').removeClass('required-entry');
 	}else{
 		cardSelector.addClass('required-entry');
 
@@ -382,6 +385,11 @@ function toggleCreditInfo(method){
 function changeCard(method){
 	var cardSelector = jQuery('#'+method+'_card_id');
 	cardSelector.addClass('required-entry');
+	if(cardSelector.val() != ''){
+		jQuery('#'+method+'_saved_cc_cid').show();
+	}else{
+		jQuery('#'+method+'_saved_cc_cid').hide();
+	}
 
 	addCardClass(method);
 
