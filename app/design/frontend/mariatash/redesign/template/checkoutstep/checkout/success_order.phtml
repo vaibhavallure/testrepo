@@ -14,7 +14,7 @@
 
     <?php if ($this->getOrderId() && $this->getOrderIdSecond()):?>
         <?php if ($this->getCanViewOrder() && $this->getCanViewOrderSecond()) :?>
-            <p><?php echo $this->__('Your order # is: %s , %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId())),sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrlSecond()), $this->escapeHtml($this->getOrderIdSecond()))) ?></p>
+            <p><?php echo $this->__('Your order # is: %s , %s.', sprintf('<a class="link-button" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId())),sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrlSecond()), $this->escapeHtml($this->getOrderIdSecond()))) ?></p>
         <?php  else :?>
             <p><?php echo $this->__('Your order # is: %s , %s.', $this->escapeHtml($this->getOrderIdSecond()), $this->escapeHtml($this->getOrderId())) ?></p>
         <?php endif;?>
@@ -51,7 +51,7 @@
 
 <!--<div class="billing-address-mt">
 <h4 class="title-order">ORDER INFORMATION</h4>
-<?php 
+<?php
 //$order = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
 //var_dump($order);
 //$shipping_address_data    = $order->getShippingAddress();
@@ -65,7 +65,7 @@
 
 <div class="success-order-date">
 <h4>Order Date</h4>
-<p><?php 
+<p><?php
 //$datetime  = explode(" ",$order_date);
 //$time  = $datetime[1];
 //$date  = $datetime[0];
@@ -119,10 +119,10 @@
 
 <hr>
 <div class="succcess-">
-<?php 
+<?php
 
 ?>
-<?php 
+<?php
 	//$order_items = $order->getAllVisibleItems();
 	//echo "<ul>";
 	//echo "<li class='title-name-product'>PRODUCT</li>";
@@ -130,17 +130,17 @@
 	//echo "<li>PRICE</li>";
 	//echo "<li>QTY</li>";
 	//echo "<li>SUBTOTAL</li>";
-	//echo "</ul>"; 
+	//echo "</ul>";
 	//foreach($order_items as $item){
-		
+
 		/*$productId = $item->getProductId();
 		$product = Mage::getModel('catalog/product')->load($productId);
-		 
+
 		if($product->getTypeId() === 'configurable'){
 		    $simpleProduct = Mage::helper('ecp_wishlist')->getWishlistSimpleProduct($item);
 			$superAttributes = Mage::helper('ecp_wishlist')->getSupperAttributes($item);
-         }	
-		
+         }
+
 		foreach ($superAttributes as $key => $value){
 			$attributeValue =  $simpleProduct->getResource()->getAttribute($key)->getFrontend()->getValue($simpleProduct);
 			$attributeLabel = $simpleProduct->getResource()->getAttribute($key)->getFrontend()->getLabel();
@@ -151,14 +151,14 @@
 	    <a href="<?php //echo $product->getProductUrl() ?>" title="" class="product-image">
                         <img  src="<?php //echo $product->getImageUrl(); ?>" width="210" height="210"  />
                     </a>
-	    <?php 
+	    <?php
 	    /*echo "</li>";
 		echo "<li class='items-products-description'>";
 		echo "<p>" .$item->getName() . "</p>";
 		echo "<p>" .$attributeLabel . "</p>";
 		echo "<p>".$item->getSize() . "</p>";
 		echo "</li>";
-		
+
 		echo "<li class='items-products-sku'>";
 		echo $item->getSku();
 		echo "</li>";
@@ -171,27 +171,26 @@
 		echo "<li class='items-products-subtotal'>";
 		echo $item->getBaseRowTotal();
 		echo "</li>";
-		echo "</ul>";		
+		echo "</ul>";
 	}
-	   echo "</ul>"; 
+	   echo "</ul>";
 	  */
 ?>
 
 </div>
 
 <div class = "success-sumary">
-  <p><?php 
+  <p><?php
 //  var_dump($order);
-  
+
   ?></p>
   <p><?php // echo "Merchandise" . $order->getSubtotal()?></p>
   <p><?php // echo "Shipping" . $order->getShippingAmount()?></p>
   <p><?php  //echo "Discounts" . $order->getDiscountAmount()?></p>
   <p><?php // echo "Estimated Tax" . $order->getTaxAmount()?></p>
   <p><?php  //echo "Total ".$order->getBaseGrandTotal();?></p>
-</div> 
+</div>
 
 <div class="success-message">
 <h3>THANK YOU!</h3>
 </div>-->
-
