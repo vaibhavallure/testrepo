@@ -166,7 +166,7 @@ jQuery(document).ready(function () {
         if (jQuery('.mobile-main_menu').hasClass('active')) {
             jQuery('section.sub-menu').hide();
         }
-        jQuery('body').toggleClass("overflow-hidden");
+        jQuery('body').toggleClass("fancybox-lock");
         jQuery(".menu_overlay").toggleClass("d-none");
 
         jQuery('.mobile-main_menu').toggleClass('active');
