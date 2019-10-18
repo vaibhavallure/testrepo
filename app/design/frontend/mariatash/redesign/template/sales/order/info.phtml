@@ -67,7 +67,7 @@
                     <div class="col-wrap">
                         <div class="box">
                             <div class="box-title">
-                                <h2><?php echo $this->__('Shipping Address') ?></h2>
+                                <h2 class="para-bold"><?php echo $this->__('Shipping Address') ?></h2>
                             </div>
                             <div class="box-content">
                                 <address class="para-normal"><?php echo $_order->getShippingAddress()->format('html') ?></address>
@@ -77,7 +77,7 @@
                     <div class="col-wrap">
                         <div class="box">
                             <div class="box-title">
-                                <h2><?php echo $this->__('Shipping Method') ?></h2>
+                                <h2 class="para-bold"><?php echo $this->__('Shipping Method') ?></h2>
                             </div>
                             <div class="box-content para-normal">
                                 <?php if ($_order->getShippingDescription()): ?>
@@ -94,7 +94,7 @@
                     <div class="col-wrap">
                         <div class="box">
                             <div class="box-title">
-                                <h2><?php echo $this->__('Billing Address') ?></h2>
+                                <h2 class="para-bold"><?php echo $this->__('Billing Address') ?></h2>
                             </div>
                             <div class="box-content para-normal">
                                 <address class="para-normal"><?php echo $_order->getBillingAddress()->format('html') ?></address>
@@ -104,7 +104,7 @@
                     <div class="col-wrap">
                         <div class="box box-payment">
                             <div class="box-title">
-                                <h2><?php echo $this->__('Payment Method') ?></h2>
+                                <h2 class="para-bold"><?php echo $this->__('Payment Method') ?></h2>
                             </div>
                             <div class="box-content para-normal">
                                 <?php echo $this->getPaymentInfoHtml() ?>
