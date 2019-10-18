@@ -1242,6 +1242,9 @@
   .shop_by_look .product-info .product_details{
     padding: 10px 30px;
   }
+  .shop_by_look .quick_link {
+    margin-bottom: 9px;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
     display: grid;
