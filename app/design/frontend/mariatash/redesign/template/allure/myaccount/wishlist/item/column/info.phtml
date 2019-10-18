@@ -112,7 +112,7 @@ if($product->getTypeId() =='configurable'){
 
     </script>
 
-    <h2 class="product-name">
+    <h2 class="product-name para-normal">
         <a href="<?php echo $productUrl; ?>" title="<?php echo $this->escapeHtml($defaultProduct->getName()) ?>"><?php echo $this->escapeHtml($defaultProduct->getName()) ?></a>
     </h2>
     <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
@@ -138,7 +138,7 @@ if($product->getTypeId() =='configurable'){
                 <div class="item">
                  <?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
              </div>
-             <div class="flex-box">
+             <div class="flex-box qty-wrap">
                  <?php if(0):?>
                     <input type="text" class="input-text qty validate-not-negative-number" name="qty[<?php echo $item->getId() ?>]" value="<?php echo (int) $item->getData('qty'); ?>"/>
                     <input type="hidden" class="item_id"value="<?php echo $item->getId() ?>"/>

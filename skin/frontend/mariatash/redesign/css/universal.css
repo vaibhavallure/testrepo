@@ -1390,7 +1390,6 @@ width: 63%;
     right: 0;
     overflow: hidden;
     z-index: 10001;
-    background-color: rgba(0, 0, 0, 0.61);
 }
 
 .mt-my-openorders .allure-fancybox-overlay {
