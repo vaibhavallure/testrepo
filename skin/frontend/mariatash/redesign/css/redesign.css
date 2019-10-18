@@ -4231,3 +4231,11 @@ dt.post-lengthds-lbl {
 	background: url(../images/redesign/exit-small-bk.png) scroll 0 0
 	no-repeat;
 } */
+
+/*Need to verify*/
+.wide {
+overflow: hidden;
+}
+.checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
+	max-width: 100%;
+}
