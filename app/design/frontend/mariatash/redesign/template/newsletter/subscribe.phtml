@@ -38,7 +38,7 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
                 <li title="sp">Spain</li>
             </ul>
             <div class="input-box">
-                <input type="text" autocomplete="off" name="email" id="email" class="input-text required-entry validate-email" placeholder="Email Address*" />
+                <input type="text" autocomplete="off" name="email" id="email" class="input-text required-entry validate-email" placeholder="Email*" />
                 <span id="msg-email" class="validation-advice maria-validation"></span>
             </div>
             <div class="input-box">
@@ -59,9 +59,9 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
             	<input  type="checkbox" name="mt-newsl-terms"
         		 id="mt-newsl-terms" value="1" class="checkbox">
         		 <span class="checkmark"></span>
-               <p>Yes, I want to sign up for Maria Tash emails.
-              By clicking the submit button I agree to receive Maria Tash emails and I agree to the Maria Tash
-              <a class="link-button" href="/privacy-policy/">privacy policy</a> for this website.</p>
+               <p>
+                   By clicking the sign up button, I agree to receive email marketing from Venus by Maria Tash, Inc. and have read the Venus by Maria Tash, Inc. <a class="link-button" href="/privacy-policy/">privacy policy</a> . You can unsubscribe at any time by clicking the link in our emails.
+                   </p>
             </label>
         </div>
 
@@ -71,7 +71,7 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
             <img src="<?php echo Mage::getBaseUrl('media') . 'loading.gif' ?>" />
         </div>
         <button type="button" onclick="sendNewsletterSubscription(this.form)" title="<?php echo $this->__('Sign up') ?>" class="button dark-button">
-            <?php echo $this->__('Sign up') ?>
+            <?php echo $this->__('SUBMIT') ?>
         </button>
 </form>
 </div>
