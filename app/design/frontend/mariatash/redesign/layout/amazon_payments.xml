@@ -481,7 +481,7 @@
     Login
     -->
     <customer_account_login translate="label">
-        <reference name="head">
+        <!--<reference name="head">
             <block type="amazon_payments/script" name="amazon_payments.script" template="amazon_payments/script.phtml" />
         </reference>
         <reference name="before_body_end">
@@ -490,13 +490,13 @@
 
         <block type="amazon_payments/login_button" name="amazon_login.button_create" template="amazon_payments/login/login.phtml" />
 
-        <!-- ifconfig only works with action -->
+        &lt;!&ndash; ifconfig only works with action &ndash;&gt;
         <reference name="content">
             <action method="append" ifconfig="payment/amazon_payments/active">
                 <block>amazon_login.button_create</block>
             </action>
         </reference>
-
+-->
     </customer_account_login>
 
     <customer_account_create translate="label">
