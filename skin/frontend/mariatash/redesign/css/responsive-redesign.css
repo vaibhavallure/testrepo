@@ -607,6 +607,7 @@
   }
   .big-popup-cover{
     height: 936px;
+    overflow-x: auto;
   }
   .celebPopup .next, .celebPopup .prev{
     top: 47%;
@@ -840,6 +841,9 @@
     margin: auto;
     width: 553px;
     height: 312px;
+  }
+  .pressPopup .big-popup-body{
+    height: 708px;
   }
 }
 
@@ -1126,6 +1130,7 @@
   }
   .big-popup-cover, .pressPopup .pop-up-cover{
     height: 550px;
+    overflow-x: scroll;
   }
   .celebPopup .next, .celebPopup .prev, .pressPopup .next, .pressPopup .prev{
     top: 40%;

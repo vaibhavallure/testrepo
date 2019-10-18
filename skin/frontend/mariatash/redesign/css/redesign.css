@@ -1473,7 +1473,7 @@ input[type="checkbox"]:checked+label:before {
 .maria-left-menus{
   left: 17px;
   z-index: 1;
-  top: -1px;
+  top: -11px;
 }
 .maria-right-menus{
   right: 15px;
@@ -2287,6 +2287,8 @@ input[type='radio']{
 }
 .pressPopup .big-popup-body {
 	padding-bottom: 22px !important;
+	overflow-y: scroll;
+	height: 808px;
 }
 .images-press li {
   padding: 0;
