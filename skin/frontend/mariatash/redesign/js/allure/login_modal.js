@@ -298,3 +298,8 @@ function checkoutLogin(redirectUrls) {
     jQuery("#redirectUrl").val(redirectUrls);
     unScrollBody();
 }
+function guestCheckout() {
+    jQuery(".checkoutPopupLoginModel").css({"opacity":"0","pointer-events":"none"});
+    scrollBody();
+    alert("Sorry! Guest checkout is not available for now.");
+}

@@ -152,7 +152,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 			  $method = Mage::getModel('shipping/rate_result_method');
 
 				$method->setCarrier('matrixrate');
-				$method->setCarrierTitle($this->getConfigData('title'));
+				//$method->setCarrierTitle($this->getConfigData('title'));
 
 				$method->setMethod('matrixrate_'.$rate['pk'].'#'.$rate['is_signature'].'#'.$rate['is_international']);
 

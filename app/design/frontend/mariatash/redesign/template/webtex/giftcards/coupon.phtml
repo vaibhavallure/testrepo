@@ -10,10 +10,10 @@
         <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
         <?php if($oGiftCardSession->getActive()):?>
             <?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
-            <p>
+            <p class="para-normal text-left p-1 giftcard-output-content">
             	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
             	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
-            	<a href="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon" style="position:relative; top:-20px;">
+            	<a href="javascript:void(0);" onclick="processCartItem(this);" data-url="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon link-button">
             		<span><span><?= $this->__('Remove')?></span></span>
             	</a>
             </p>
@@ -27,6 +27,7 @@
         //]]&gt;
         jQuery("#giftcard_code").blur(function() {
         	if(jQuery("#giftcard_code").val() != ''){
+        		blockCheckoutUi();
         		giftCardForm.submit(true);
         	}
         });

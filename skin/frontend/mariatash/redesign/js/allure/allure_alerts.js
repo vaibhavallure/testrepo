@@ -28,7 +28,7 @@ function createCustomAlert(txt) {
 
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "closeBtn";
-    btn.className="btn btn-primary btn-sm light-button";
+    btn.className="btn-sm light-button";
     btn.appendChild(d.createTextNode("OK"));
     btn.href = "javascript:void()";
     btn.focus();
@@ -78,7 +78,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
 
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "okConfirm";
-    btn.className="btn btn-primary btn-sm light-button";
+    btn.className="btn-sm light-button";
     btn.appendChild(d.createTextNode(okBtn));
     btn.href = "javascript:void()";
     btn.focus();

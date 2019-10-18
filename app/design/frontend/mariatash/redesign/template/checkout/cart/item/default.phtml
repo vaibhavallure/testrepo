@@ -227,14 +227,14 @@ if(!is_null($parentId)){
             </div>
         <?php if($customerGroupId == 2):?>
         	<div class="w-remove float-right">
-            	<a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
+            	<a href="javascript:void(0);" onclick="processCartItem(this);" data-url="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         	</div>
             <?php if ($this->helper('customer')->isLoggedIn()): ?>
             <?php $wishlist = Mage::helper("wishlist");
                 if(!$wishlist->alreadyInWishlist($productId)):
             ?>
                 <div class="ad-to-fav float-right">
-                    <a class="info-text-three" id="saveToFave" href="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>">Move to Wishlist</a>
+                    <a href="javascript:void(0);" onclick="processCartItem(this);" class="info-text-three" id="saveToFave" data-url="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>">Move to Wishlist</a>
                 </div>
                 <script type="text/javascript">
                     jQuery("#saveToFave").click(function(){
@@ -263,14 +263,14 @@ if(!is_null($parentId)){
         </div>
         
         <div class="w-remove float-right">
-            <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
+            <a href="javascript:void(0);" onclick="processCartItem(this);" data-url="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov info-text-three"><?php echo $this->__('Remove ');?></a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
             <?php $wishlist = Mage::helper("wishlist");
             if(!$wishlist->alreadyInWishlist($productId)):
                 ?>
                 <div class="ad-to-fav float-right">
-                    <a class="info-text-three" id="saveToFave" href="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>">Move to Wishlist</a>
+                    <a href="javascript:void(0);" onclick="processCartItem(this);" class="info-text-three" id="saveToFave" data-url="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>">Move to Wishlist</a>
                 </div>
                 <script type="text/javascript">
                     jQuery("#saveToFave").click(function(){
