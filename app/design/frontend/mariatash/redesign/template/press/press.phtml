@@ -104,6 +104,11 @@
 
     jQuery('.main-press-block').on('click', '.press-img',function(){
         clearPage();
+
+
+        unScrollBody();
+        jQuery(".catalog-category-view .footer").css("display","none");
+
         jQuery(".pressPopup").css({"opacity": "1", "pointer-events": "auto"});
         jQuery(".press-loader").show();
         var pressId=jQuery(this).attr("data-id");
@@ -203,6 +208,10 @@
     }
 
     jQuery(".pressPopup .close").on('click',function(){
+
+        scrollBody();
+        jQuery(".catalog-category-view .footer").css("display","block");
+
         jQuery(".pressPopup").css({"opacity":"0","pointer-events":"none"});
     });
     
