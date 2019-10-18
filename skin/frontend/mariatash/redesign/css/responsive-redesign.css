@@ -1052,6 +1052,14 @@
   .pressPopup .big-popup-body{
     height: 538px;
   }
+  .only-celeb .big-popup-image{
+    height: 362.4px;
+  }
+  .only-celeb .prev, .only-celeb .prev, .only-celeb .next, .only-celeb .next{
+    top: 193px;
+    height: 45px;
+    width: 20px;
+  }
 }
 
 /* Mobile Portrait */
@@ -1477,6 +1485,13 @@
   }
   .checkout-cart-index .fancybox-inner {
     height: 100% !important;
+  }
+  .big-popup-cover{
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .only-celeb .big-popup-image{
+    height: 347.4px;
   }
 }
 

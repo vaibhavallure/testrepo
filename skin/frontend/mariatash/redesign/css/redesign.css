@@ -179,12 +179,18 @@ h4{
 }
 
 .simple-page-title{
-	margin: 24px 0 46px !important;
+	margin: 24px 0 42px !important;
 	padding: 0 !important;
 }
 
 .simple-page-title h1{
 	text-align: center;
+}
+#shop_our_instagram{
+	margin-top: 23px;
+}
+.catalog-category-view.category-press .for-space-to-bottom {
+  height: 307px;
 }
 
 /* BIG POPUP COMMON CSS */
@@ -2952,7 +2958,7 @@ ul.tabs li{
 	padding: 0;
 }
 .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
-	height: 250px !important;
+	height: 242px !important;
 }
 /*press page--------------------------------------------*/
 .category-press .top-bar {
@@ -3592,10 +3598,10 @@ margin-top: 10%;
 .shop_by_look .product_img img{
 	border: 1px solid #D0D0D0;
 }
-.shop_by_look .product-info.scroll
-{
+.shop_by_look .product-info.scroll{
 	height: 433px;
-	overflow: auto;
+	overflow-x: hidden;
+  overflow-y: auto;
 }
 .shop_by_look .product-info ul li{
 	margin-bottom: 5px;

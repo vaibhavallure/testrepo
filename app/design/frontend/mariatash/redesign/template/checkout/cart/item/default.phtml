@@ -47,10 +47,6 @@ if(!is_null($parentId)){
     $customerGroupId = $_item->getQuote()->getCustomerGroupId();
     $isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
 ?>
-<?php 
-    $wishlist = Mage::helper("wishlist");
-    $isProductWishlist = ($wishlist->alreadyInWishlist($productId)) ? true : false;
-?>
 
 <tr <?php if ($messages):?>class="messages-tr"<?php endif;?>>
 	<td class="cart_col1" data-th="Product">
@@ -231,7 +227,10 @@ if(!is_null($parentId)){
         	</a>
       	</div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
-       	<?php if(!$isProductWishlist):?>
+       	<?php 
+            $wishlist = Mage::helper("wishlist");
+            if(!$wishlist->alreadyInWishlist($productId)):
+        ?>
       	<div class="ad-to-fav float-right">
          	<a href="javascript:void(0);" onclick="processCartItem(this);" 
          		class="info-text-three" id="saveToFave" 
@@ -265,7 +264,10 @@ if(!is_null($parentId)){
           	</a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
-        <?php if(!$isProductWishlist):?>
+        <?php 
+            $wishlist = Mage::helper("wishlist");
+            if(!$wishlist->alreadyInWishlist($productId)):
+        ?>
         <div class="ad-to-fav float-right">
         	<a href="javascript:void(0);" onclick="processCartItem(this);" 
         		class="info-text-three" id="saveToFave" 
