@@ -303,7 +303,7 @@
 }
 .flex-box{
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 }
 .acc-products-wrapper table .para-normal{
@@ -1452,6 +1452,31 @@
 
 
 	@media(max-width:991px){
+		.acc-products-wrapper .mt-my-wishlist .product-w-mt h1{
+			margin-bottom: 10px;
+		}
+		.acc-products-wrapper .mt-my-wishlist .product-w-mt .item{
+			margin-bottom: 8px;
+		}
+		.myaccount-index-index .flex-box{
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		.qty-wrap{
+			display: flex;
+			flex-direction: row!important;
+		}
+		.acc-products-wrapper .mt-my-wishlist .product-w-mt .fprice .price{
+			margin-left: 0;
+		}
+		.product-w-mt{
+			width: 100%;
+		}
+		.myaccount-index-index .line-w-mt{
+			display: flex!important;
+			flex-direction: column;
+			align-items: flex-start;
+		}
 		.locations-wrapper p{
 			margin-bottom: 15px;
 		}
