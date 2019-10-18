@@ -274,6 +274,9 @@
   .checkout-multishipping-overview .for-space-to-bottom{
     height: 110px !important;
   }
+  .collat-wrap{
+    margin: 0 auto;
+  }
   /*Different Footer */
   .customer-care-list {
   	padding: 0;
@@ -687,11 +690,9 @@
     flex: 0 0 30%;
     max-width: 30%;
   }
-  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
-    left: 142px !important;
-    top: 1033px !important;
-    width: 413px !important;
-  } */
+  .containerImage img{
+    margin: 30px auto 0;
+  }
 }
 
 
@@ -1241,6 +1242,9 @@
   .shop_by_look .product-info .product_details{
     padding: 10px 30px;
   }
+  .shop_by_look .quick_link {
+    margin-bottom: 9px;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
     display: grid;
@@ -1392,7 +1396,10 @@
     max-width: 50%;
   }
   .container.celebrities{
-    padding: 0 45px 120px;
+    padding: 0 15px 120px;
+  }
+  .celeb-img-block{
+    margin-bottom: 10px;
   }
   .big-popup-image {
     height: 707.4px;
@@ -1404,9 +1411,20 @@
   .caroufredsel_wrapper{
     width: 82%;
   }
-  .popup-left-section, .popup-right-section {
-    max-width: 50%;
-    flex: 0 0 50%;
+  .popup-left-section{
+    max-width: 54%;
+    flex: 0 0 54%;
+  }
+  .popup-right-section {
+    max-width: 46%;
+    flex: 0 0 46%;
+    padding: 0 0px 0 10px;
+  }
+  .shop_by_look .big-popup-body{
+    padding: 48px 10px 48px 10px !important;
+  }
+  .shop_by_look .product-info .product_details{
+    padding: 10px 20px;
   }
   .shop_by_look .celeb-info {
     margin-top: 0;
@@ -1451,9 +1469,9 @@
   .checkout-multishipping-success .multiple-checkout {
     margin-top: 110px;
   }
-  .pop-up-cover{
+  /* .pop-up-cover{
     overflow-y: auto;
-  }
+  } */
   .product-shop{
     margin-top: 35px;
   }
@@ -1609,7 +1627,12 @@
   .menu-inner{
     overflow-x: auto;
   }
+  .div-row {
+    width: 1500px;
+    overflow-x: scroll;
+  }
 }
+
 @media (min-width:1025px) and (max-width:1278px) {
   .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
     flex: 0 0 100%;

@@ -29,65 +29,43 @@
  * Shopping cart template
  *
  * @see Mage_Checkout_Block_Cart
+ * @var Mage_Checkout_Block_Cart $this
  */
 ?>
-<?php
-$lastProductAddedToCartId = Mage::getSingleton('checkout/session')->getLastAddedProductId();
-if ($lastProductAddedToCartId) {
-    $productCategoryIdsArray = Mage::getModel('catalog/product')->load($lastProductAddedToCartId)->getCategoryIds();
-    $continueShoppingCategoryUrl = Mage::getModel('catalog/category')->load($productCategoryIdsArray[0])->getUrl();
-}
-$priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
-
-//$recent = Mage::getSingleton('Mage_Reports_Block_Product_Viewed')->getItemsCollection();
-//$lastVisitedProduct = $recent->getFirstItem()->getProductUrl();
-//$sContinueShoppingUrl = !empty($lastVisitedProduct) ? $lastVisitedProduct : Mage::getBaseUrl();
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
+<?php $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();?>
+<?php 
+    $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+    $isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
 ?>
 
-<?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
-
-<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <?php if ($priceAlert): ?>
-        <div class="priceUpdate"><p><?php echo $this->__('The price of the items in your cart has been updated since you added them.'); ?></p></div>
-    <?php endif; ?>
-<div class="cart-mt container row mx-auto <?php if($customerGroupId == 2):?>wholesale-cart-container<?php endif;?>">
+<div class="priceUpdate">
+	<p><?php echo $this->__('The price of the items in your cart has been updated since you added them.'); ?></p>
+</div>
+<?php endif; ?>
 
-    <?php echo $this->getChildHtml('form_before') ?>
+<div class="cart-mt container row mx-auto <?php if($isWholesaleCustomer):?>wholesale-cart-container<?php endif;?>">
+	<?php echo $this->getChildHtml('form_before') ?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-    <?php /*if(!$this->hasError()): ?>
-        <ul class="checkout-types">
-        <?php foreach ($this->getMethods('methods') as $method): ?>
-            <?php $methodHtml = $this->getMethodHtml($method); ?>
-            <?php if ($methodHtml): ?>
-            <li><?php echo $methodHtml; ?></li>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        </ul>
-    <?php endif;*/ ?>
     <form id="shopping-cart-form" class="col-lg-8 col-md-12 col-12" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
-       <?php echo $this->getBlockHtml('formkey'); ?>
-        <fieldset>
-          <div class="checkout-list-title">
-            <h1>Your Shopping Bag</h1>
-          </div>
-            <table id="shopping-cart-table" class="data-table cart-table" width="100%" border="0">
-                <thead class="shop-titles">
-                <tr>
-                    <th class="product-column" colspan="2" data-th="Product"><?php echo $this->__('Product'); ?></th>
-                    <th class="price-column text-right" data-th="Price"><?php echo $this->__('Price'); ?></th>
-                    <th class="quantity-column text-center" data-th="Quantity"><?php echo $this->__('Quantity '); ?></th>
-                    <th class="subtotal-column text-right" data-th="Subtotal"><?php echo $this->__('Subtotal'); ?></th>
-                </tr>
+    	<?php echo $this->getBlockHtml('formkey'); ?>
+   		<fieldset>
+        	<div class="checkout-list-title">
+            	<h1><?= $this->__('Your Shopping Bag')?></h1>
+          	</div>
+       		<table id="shopping-cart-table" class="data-table cart-table" width="100%" border="0">
+            	<thead class="shop-titles">
+                	<tr>
+                    	<th class="product-column" colspan="2" data-th="Product"><?= $this->__('Product'); ?></th>
+                    	<th class="price-column text-right" data-th="Price"><?= $this->__('Price'); ?></th>
+                    	<th class="quantity-column text-center" data-th="Quantity"><?= $this->__('Quantity '); ?></th>
+                    	<th class="subtotal-column text-right" data-th="Subtotal"><?= $this->__('Subtotal'); ?></th>
+                	</tr>
                 </thead>
                 <tbody>
-                    <?php $i = 0; $prices = array(); $skus = array(); ?>
                     <?php foreach ($this->getItems() as $_item): ?>
                         <?php echo $this->getItemHtml($_item) ?>
-                        <?php
-                            $prices[$i] = floatval($_item->getPrice());
-                            $skus[$i] = $_item->getSku();
-                            $i++
-                        ?>
                     <?php endforeach ?>
                 </tbody>
             </table>
@@ -95,35 +73,30 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
     </form>
 
     <div class="cart-collaterals col-lg-4 col-md-12 col-12 fix-section">
-        <div class="collat-wrap">
-            <table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table w-100">
-                <tr>
-                    <!-- <td class="banner-bg">
-                        <div class="banner-c-code">
-            			          <div class="banner-c-code1"><//?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('shoppingcart_banner')->toHtml(); ?></div>
-                        </div>
-                    </td> -->
-                    <td>
-                        <div class="coupons-mt">
-                            <div class="coupons text-center"><?php echo$this->getChildHtml('coupon'). "</br>" .  $this->getChildHtml('giftcards')  ?></div>
+    	<div class="collat-wrap">
+        	<table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table w-100">
+            	<tr>
+                	<td>
+                    	<div class="coupons-mt">
+                        	<div class="coupons text-center">
+                        		<?= $this->getChildHtml('coupon');?>
+                        		<br/>
+                        		<?= $this->getChildHtml('giftcards');?>
+                        	</div>
                             <div class="totals">
-                                <?php // if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
-                                <?php echo $this->getChildHtml('totals'); ?>
-                                <?php if (!$this->hasError()): ?>
-                                <?php endif; ?>
+                            	<?= $this->getChildHtml('totals');?>
                             </div>
                         </div>
                     </td>
                 </tr>
             </table>
-
             <div class="crosssell-wrap">
-                <?php echo $this->getChildHtml('crosssell') ?>
+                <?= $this->getChildHtml('crosssell');?>
             </div>
-            <div>
-                <div class="pay-caart text-center">
-                    <ul class="checkout-types p-0">
-                        <?php foreach ($this->getMethods('methods') as $method): ?>
+        	<div>
+            	<div class="pay-caart text-center">
+                	<ul class="checkout-types p-0">
+                    	<?php foreach ($this->getMethods('methods') as $method): ?>
                             <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
                                     <li class="mb-2 side-cart-redirects"><?php echo $methodHtml; ?></li>
                             <?php endif; ?>
@@ -131,13 +104,8 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
                     </ul>
                 </div>
             </div>
-
-            <?php if ($this->getContinueShoppingUrl()): ?>
-            <?php endif; ?>
         </div>
-
-    </div>
-
+	</div>
 </div>
 
 <script>
@@ -170,9 +138,6 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
             e.preventDefault();
             return false;
         }
-    });
-    jQuery(document).ready(function () {
-        jQuery(".non-total-title").parent().parent().parent().addClass("grand_total_section");
     });
 </script>
 <script>
