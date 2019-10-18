@@ -1612,7 +1612,12 @@
   .menu-inner{
     overflow-x: auto;
   }
+  .div-row {
+    width: 1500px;
+    overflow-x: scroll;
+  }
 }
+
 @media (min-width:1025px) and (max-width:1278px) {
   .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
     flex: 0 0 100%;
