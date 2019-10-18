@@ -1080,7 +1080,6 @@
   }
   .pop-up-cover{
     width: 92% !important;
-    overflow-y: scroll;
   }
   .input-form input{
     width: 100%;
@@ -1618,4 +1617,14 @@
   .main-nav-title li {
     margin-right: 48px;
   }
+}
+
+@media (min-width:768px) and (max-width:992px){
+.maria-left-menus{
+    top: 4px;
+    left: 70px;
+}
+.navbar-toggler{
+    top: 28px;
+}
 }
