@@ -1393,7 +1393,10 @@
     max-width: 50%;
   }
   .container.celebrities{
-    padding: 0 45px 120px;
+    padding: 0 15px 120px;
+  }
+  .celeb-img-block{
+    margin-bottom: 10px;
   }
   .big-popup-image {
     height: 707.4px;
@@ -1412,6 +1415,13 @@
   .popup-right-section {
     max-width: 46%;
     flex: 0 0 46%;
+    padding: 0 0px 0 10px;
+  }
+  .shop_by_look .big-popup-body{
+    padding: 48px 10px 48px 10px !important;
+  }
+  .shop_by_look .product-info .product_details{
+    padding: 10px 20px;
   }
   .shop_by_look .celeb-info {
     margin-top: 0;
@@ -1456,9 +1466,9 @@
   .checkout-multishipping-success .multiple-checkout {
     margin-top: 110px;
   }
-  .pop-up-cover{
+  /* .pop-up-cover{
     overflow-y: auto;
-  }
+  } */
   .product-shop{
     margin-top: 35px;
   }
