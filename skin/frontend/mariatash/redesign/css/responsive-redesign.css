@@ -343,6 +343,10 @@
   #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
   	color: red !important;
   }
+  #newsletter-form .validation-advice{
+    position: relative;
+    top:0;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
