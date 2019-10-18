@@ -264,6 +264,7 @@
 }
 .acc-products-wrapper table h2{
 	padding-top: 0;
+	font-family: urw-din-light;
 }
 .acc-products-wrapper table h2 a{
 	display: block;
@@ -429,6 +430,7 @@
 .acc-products-wrapper #new-mt-myproduct-receipts table td{
 	width: 16.666%;
 	text-align: center;
+	font-family: urw-din-regular;
 }
 
 /*=====================*/
@@ -1394,6 +1396,12 @@
 		display: block;
 		text-align: right;
 	}
+	.acc-products-wrapper #new-mt-myproduct-openorders table .a-center span,
+	.acc-products-wrapper #new-mt-myproduct-openorders table td,
+	.acc-products-wrapper #new-mt-myproduct-openorders table .a-center strong,
+	.mt-myaccount-new .order-items table th, .mt-myaccount-new .order-items table td{
+		font-family: urw-din-light;
+	}
 	/*=====================*/
 	/*MEDIA QUERIES*/
 	/*=====================*/
@@ -1461,31 +1469,7 @@
 
 
 	@media(max-width:991px){
-		.acc-products-wrapper .mt-my-wishlist .product-w-mt h1{
-			margin-bottom: 10px;
-		}
-		.acc-products-wrapper .mt-my-wishlist .product-w-mt .item{
-			margin-bottom: 8px;
-		}
-		.myaccount-index-index .flex-box{
-			flex-direction: column;
-			align-items: flex-start;
-		}
-		.qty-wrap{
-			display: flex;
-			flex-direction: row!important;
-		}
-		.acc-products-wrapper .mt-my-wishlist .product-w-mt .fprice .price{
-			margin-left: 0;
-		}
-		.product-w-mt{
-			width: 100%;
-		}
-		.myaccount-index-index .line-w-mt{
-			display: flex!important;
-			flex-direction: column;
-			align-items: flex-start;
-		}
+		
 		.locations-wrapper p{
 			margin-bottom: 15px;
 		}
