@@ -75,8 +75,7 @@
        	<?php if(isset($totals2['tax']) && $totals2['tax']->getValue()):?>
        		<?php $tax += $totals2['tax']->getValue();?>
        	<?php endif;?>
-       	<tfoot>
-
+       	<tfoot class="grand_total_section">
         	<tr>
 				<td class="cart-subtotals-left" colspan="1">
 					<strong><span class="total-title"><?= $this->__('Total')?></span></strong>
@@ -127,7 +126,7 @@
 			<?php endif;?>
         </tbody>
         <?php else:?>
-       	<tfoot>
+       	<tfoot class="grand_total_section">
         	<?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
             <?php echo $this->renderTotals('footer'); ?>
         </tfoot>
