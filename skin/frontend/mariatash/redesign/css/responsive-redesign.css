@@ -340,6 +340,13 @@
   #foo4_next, #foo4_prev{
     top: 40%;
   }
+  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
+  	color: red !important;
+  }
+  #newsletter-form .validation-advice{
+    position: relative;
+    top:0;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
@@ -957,7 +964,7 @@
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
   }
   .filterButton::before{
     left: 10px;
@@ -1073,6 +1080,7 @@
   }
   .pop-up-cover{
     width: 92% !important;
+    overflow-y: scroll;
   }
   .input-form input{
     width: 100%;
@@ -1449,6 +1457,10 @@
   .close-section{
     display: none;
   }
+  .level-top.parent.active_menu span {
+    border-bottom: 6px solid #fff;
+    padding-bottom: 28px;
+  }
 }
 
 @media (min-width:1025px){
@@ -1584,6 +1596,9 @@
     flex: 0 0 30%;
     max-width: 30%;
   }
+  .menu-inner{
+    overflow-x: auto;
+  }
 }
 @media (min-width:1025px) and (max-width:1278px) {
   .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
@@ -1597,5 +1612,10 @@
   } */
   .checkout-multishipping-addresses .main-container.col2-right-layout, .checkout-cart-index .main-container.col2-right-layout {
     margin-top: 70px;
+  }
+}
+@media (min-width:992px) and (max-width:1278px) {
+  .main-nav-title li {
+    margin-right: 48px;
   }
 }

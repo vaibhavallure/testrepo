@@ -36,7 +36,7 @@
                         <div class="submit-login text-right position-relative">
                     <span id="popup_loader" class="please-wait-popup" style="display: none;">
                     <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
-                            <button class="light-button pop-up-button sign-in-register" onclick="openRegisterModal()"><?php echo $this->__("Register")?></button>
+                            <button type="button" class="light-button pop-up-button sign-in-register" onclick="openRegisterModal()"><?php echo $this->__("Register")?></button>
                             <button type="button" id="signin-btn-popup" class="button dark-button pop-up-button"><?php echo $this->__("LogIn")?></button>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                           <div class="soc-login-btn row">
                             <div class="col-12 guest-checkout">
                               <div class="row justify-content-center">
-                                <button class="light-button text-uppercase">Checkout as Guest</button>
+                                <button type="button" onclick="guestCheckout()" class="light-button text-uppercase">Checkout as Guest</button>
                                 </div>
                               </div>
                               <div class="option-text col-12">
