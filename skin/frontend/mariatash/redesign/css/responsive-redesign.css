@@ -1489,6 +1489,9 @@
   .big-popup-cover{
     overflow-y: scroll;
   }
+  .only-celeb .big-popup-image{
+    height: 347.4px;
+  }
 }
 
 
