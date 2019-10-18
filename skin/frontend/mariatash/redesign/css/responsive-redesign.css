@@ -274,6 +274,9 @@
   .checkout-multishipping-overview .for-space-to-bottom{
     height: 110px !important;
   }
+  .collat-wrap{
+    margin: 0 auto;
+  }
   /*Different Footer */
   .customer-care-list {
   	padding: 0;
