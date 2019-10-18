@@ -1048,6 +1048,9 @@
   .checkout-list-title{
     margin-bottom: 10px;
   }
+  .pressPopup .big-popup-body{
+    height: 538px;
+  }
 }
 
 /* Mobile Portrait */
@@ -1129,7 +1132,7 @@
     padding: 0 40px 120px;
   }
   .big-popup-cover, .pressPopup .pop-up-cover{
-    height: 550px;
+    height: 490px;
     overflow-x: scroll;
   }
   .celebPopup .next, .celebPopup .prev, .pressPopup .next, .pressPopup .prev{
@@ -1152,7 +1155,7 @@
   .press-popup-image {
     background-size: 100% !important;
     width: 100%;
-    height: 436px;
+    height: 388px;
     background-repeat: no-repeat;
   }
   .popup-below-content{
@@ -1234,6 +1237,9 @@
     overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
+  }
+  .shop_by_look .product-info .product_details{
+    padding: 10px 30px;
   }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody{
