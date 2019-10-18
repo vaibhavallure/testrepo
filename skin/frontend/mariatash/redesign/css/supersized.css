@@ -75,11 +75,16 @@ body { background:#111; height:auto; width:auto; }
 
 
 @media (max-width:767px) and (orientation:landscape) {
+	body.cms-index-index.cms-home{
+		height: 400px!important;
+	}
 	#supersized{
 		position: absolute;
+		height: 400px;
 	}
 	#supersized li{
 		position: absolute;
+		height: 400px;
 	}
 	#slidecaption {
 		display: block;
@@ -92,7 +97,7 @@ body { background:#111; height:auto; width:auto; }
 		display: block;
 		width: 140px;
 		top: auto;
-		bottom: 11%;
+		bottom: 0%;
 		left: 0%;
 	}
 	.homepageSliderControllers .prevS,.homepageSliderControllers .nextS{
