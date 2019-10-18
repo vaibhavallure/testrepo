@@ -71,6 +71,10 @@
     jQuery(".celebrity-img").on('click',function(){
         clear();
         jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto","z-index":"1"});
+
+        unScrollBody();
+        jQuery(".catalog-category-view .footer").css("display","none");
+
         jQuery(".celeb-loader").show();
         var celebId=jQuery(this).attr("data-id");
         jQuery.post(popupActionUrl,
@@ -96,7 +100,12 @@
 
     jQuery(".celebPopup .close").on('click',function(){
         jQuery(".celeb-loader").hide();
+
+        scrollBody();
+        jQuery(".catalog-category-view .footer").css("display","block");
+
         jQuery(".celebPopup").css({"opacity":"0","pointer-events":"none"});
+
     });
     jQuery(".celebPopup .next").on("click",function () {
         var current_id=parseInt(jQuery(this).attr("data-current"));

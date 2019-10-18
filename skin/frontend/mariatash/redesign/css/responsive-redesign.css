@@ -340,6 +340,13 @@
   #foo4_next, #foo4_prev{
     top: 40%;
   }
+  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
+  	color: red !important;
+  }
+  #newsletter-form .validation-advice{
+    position: relative;
+    top:0;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
@@ -1449,6 +1456,10 @@
 @media (min-width:1024px){
   .close-section{
     display: none;
+  }
+  .level-top.parent.active_menu span {
+    border-bottom: 6px solid #fff;
+    padding-bottom: 28px;
   }
 }
 

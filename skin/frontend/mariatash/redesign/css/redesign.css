@@ -430,7 +430,7 @@ input, select, textarea{
 	box-shadow: 0 0 0 0 !important;
 	border: 1px solid rgba(41,41,41,0.25);
 }
-.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg, #advice-required-entry-promoCode_code {
+.validation-advice, .error-msg, .success-msg, .note-msg, .notice-msg, #advice-required-entry-promoCode_code{
 	clear: both;
 	font-size: 10px;
 	color: #830000 !important;
@@ -438,6 +438,16 @@ input, select, textarea{
 	/* float: left; */
 	font-family: urw-din-medium;
 	text-align: left;
+}
+.label-error-validate p, .label-error-validate a, .custom-checkbox.label-error-validate{
+	color: #830000 !important;
+}
+.pop-up-cover .validation-advice, #newsletter-form .validation-advice {
+    position: absolute;
+}
+#newsletter-form .validation-advice{
+		left: 0;
+    top: 40px;
 }
 .category-products .note-msg {
   text-align: center;
@@ -634,6 +644,13 @@ nav.mariatash-header {
     .mariatash-content {
         padding-top: 120px;
     }
+}
+.menu_overlay {
+	position: fixed;
+	background: #2929297d;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
 }
 
 .mariatash-header .navbar-nav li a {
@@ -3665,6 +3682,7 @@ margin-top: 10%;
 
 .t_Content_allure_footer .input-box{
 	margin-bottom: 24px;
+	position: relative;
 }
 .t_Content_allure_footer .input-box input{
 	width: 100%;
@@ -3702,6 +3720,7 @@ margin-top: 10%;
 .t_Content_allure_footer button:hover{
 	background: white!important;
 }
+
 
 
 /*currency block*/
