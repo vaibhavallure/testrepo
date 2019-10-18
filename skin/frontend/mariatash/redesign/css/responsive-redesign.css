@@ -1478,6 +1478,9 @@
   .checkout-cart-index .fancybox-inner {
     height: 100% !important;
   }
+  .big-popup-cover{
+    overflow-y: scroll;
+  }
 }
 
 
