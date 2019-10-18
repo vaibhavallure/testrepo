@@ -340,6 +340,9 @@
   #foo4_next, #foo4_prev{
     top: 40%;
   }
+  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
+  	color: red !important;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
