@@ -690,11 +690,9 @@
     flex: 0 0 30%;
     max-width: 30%;
   }
-  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
-    left: 142px !important;
-    top: 1033px !important;
-    width: 413px !important;
-  } */
+  .containerImage img{
+    margin: 30px auto 0;
+  }
 }
 
 
@@ -1407,9 +1405,13 @@
   .caroufredsel_wrapper{
     width: 82%;
   }
-  .popup-left-section, .popup-right-section {
-    max-width: 50%;
-    flex: 0 0 50%;
+  .popup-left-section{
+    max-width: 54%;
+    flex: 0 0 54%;
+  }
+  .popup-right-section {
+    max-width: 46%;
+    flex: 0 0 46%;
   }
   .shop_by_look .celeb-info {
     margin-top: 0;
