@@ -3480,6 +3480,10 @@ margin-top: 10%;
 	width: 100%;
   padding: 0 15px;
 }
+.checkout-multishipping-addresses #totalsDivRightNav #shopping-cart-totals-table tr .cart-subtotals-left {
+  font-size: 13px;
+  font-family: urw-din-light;
+}
 /* cccc */
 /*MINI CART CSS*/
 .block-cart .cart_sidebar{
