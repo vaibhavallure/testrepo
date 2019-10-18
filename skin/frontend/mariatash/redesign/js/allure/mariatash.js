@@ -248,8 +248,8 @@ jQuery(window).bind("load resize scroll", function (e) {
 
 
 
-fixit(".cart-mt",'.fix-section',10,43);
-fixit("#checkoutSteps",'.col-right.sidebar',10,110);
+// fixit(".cart-mt",'.fix-section',10,43);
+// fixit("#checkoutSteps",'.col-right.sidebar',10,110);
 
 
 });
