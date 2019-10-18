@@ -2767,6 +2767,11 @@ ul.tabs li{
 	-webkit-appearance: none;
 	font-size: 18px;
 }
+.minus_qty button, .plus_qty button{
+	-webkit-appearance: none;
+	font-size: 18px;
+	border: none;
+}
 .containerVideo iframe{
 	display: block;
 	margin: auto;

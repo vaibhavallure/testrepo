@@ -815,11 +815,6 @@
   .product-shop{
     padding: 0 14px;
   }
-  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
-    left: 642px !important;
-    top: 370px !important;
-  } */
-
   .catalog-category-view .footer:hover {
     opacity: 1;
   }
@@ -845,6 +840,9 @@
   }
   .pressPopup .big-popup-body{
     height: 708px;
+  }
+  .catalog-category-view.category-press .for-space-to-bottom{
+    height: 220px !important;
   }
 }
 
