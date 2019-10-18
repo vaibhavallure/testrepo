@@ -69,6 +69,7 @@ jQuery(document).ready(function(){
 					} else {
 						$j('#login_msg_div').css('display','block');
 						$j('#login-msg').html(data.error);
+						$j('#popup-login-form #passwd-login').val("");
 					}
 				}
 			});
