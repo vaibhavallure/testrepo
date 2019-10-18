@@ -1614,3 +1614,8 @@
     margin-top: 70px;
   }
 }
+@media (min-width:992px) and (max-width:1278px) {
+  .main-nav-title li {
+    margin-right: 48px;
+  }
+}
