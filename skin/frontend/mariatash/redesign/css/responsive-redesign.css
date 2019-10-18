@@ -1488,6 +1488,7 @@
   }
   .big-popup-cover{
     overflow-y: scroll;
+    overflow-x: hidden;
   }
   .only-celeb .big-popup-image{
     height: 347.4px;
