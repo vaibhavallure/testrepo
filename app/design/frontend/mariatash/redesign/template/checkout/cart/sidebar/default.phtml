@@ -27,20 +27,20 @@
 
 <?php
 $_item = $this->getItem();
-$messages = $this->getMessages();
 $_product = $_item->getProduct();
 $isVisibleProduct = $_product->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_product, Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
-
 ?>
-<?php $productId = $this->getProduct()->getId();
+<?php 
+$productId = $this->getProduct()->getId();
 $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
 $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
 $url = $this->getProductUrl();
 if(!is_null($parentId)){
-    $url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+    $product = Mage::getModel("catalog/product")->load($parentId);
+    $url = $product->getProductUrl();
+    $product = null;
 }
-
 ?>
 
 <li class="item<?php echo ' '.$_product->getTypeId()?> row mx-auto">
