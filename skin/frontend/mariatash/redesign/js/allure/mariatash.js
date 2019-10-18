@@ -113,7 +113,7 @@ jQuery(document).ready(function () {
             jQuery(".main_menu").removeClass('active_menu');
             jQuery(".menu_overlay").removeClass("d-none");
             jQuery(this).addClass('active_menu');
-            jQuery('section.sub-menu').slideUp();
+            jQuery('section.sub-menu').hide();
             jQuery(section_id).slideDown();
             unScrollBody();
         }
@@ -226,6 +226,7 @@ jQuery(document).ready(function () {
     }
     /*filter popup end---------------------------------*/
 
+
 });
 
 
@@ -244,4 +245,43 @@ jQuery(window).bind("load resize scroll", function (e) {
     var box_width = jQuery('.fs-entry-container').outerWidth();
     jQuery('.fs-entry-container').css('height', box_width);
 
+
+
+
+fixit(".cart-mt",'.fix-section',10,43);
+fixit("#checkoutSteps",'.col-right.sidebar',10,110);
+
+
 });
+
+
+var fixit=function (parent,el,top,right,left) {
+
+if (jQuery(window).width() >= 1024) {
+
+    if(jQuery(parent).length) {
+        var scroll = jQuery(window).scrollTop();
+        if (scroll > jQuery(parent).offset().top) {
+
+            //if(jQuery('.fix-section'))
+            jQuery(el).css({
+                'position': 'fixed',
+                'top': top,
+                'right': right,
+                'padding-top': jQuery('.navbar').outerHeight() + 5
+            });
+        } else {
+            jQuery(el).css({
+                'position': 'static',
+                'top': '0px'
+            });
+        }
+    }
+}
+else{
+    jQuery(el).css({
+        'position':'static',
+        'top' : '0px'
+    });
+}
+}
