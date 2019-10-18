@@ -264,6 +264,7 @@
 }
 .acc-products-wrapper table h2{
 	padding-top: 0;
+	font-family: urw-din-light;
 }
 .acc-products-wrapper table h2 a{
 	display: block;
@@ -429,6 +430,7 @@
 .acc-products-wrapper #new-mt-myproduct-receipts table td{
 	width: 16.666%;
 	text-align: center;
+	font-family: urw-din-regular;
 }
 
 /*=====================*/
@@ -1393,6 +1395,12 @@
 		width: 100%;
 		display: block;
 		text-align: right;
+	}
+	.acc-products-wrapper #new-mt-myproduct-openorders table .a-center span,
+	.acc-products-wrapper #new-mt-myproduct-openorders table td,
+	.acc-products-wrapper #new-mt-myproduct-openorders table .a-center strong,
+	.mt-myaccount-new .order-items table th, .mt-myaccount-new .order-items table td{
+		font-family: urw-din-light;
 	}
 	/*=====================*/
 	/*MEDIA QUERIES*/
