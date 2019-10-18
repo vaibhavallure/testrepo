@@ -106,12 +106,19 @@
                 ajax: 1,
                 remove: remove
          };
+        
         blockCheckoutUi();
+        $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        
         new Ajax.Request('<?php echo $this->getUrl('checkout/multishipping/couponPost', array('_secure'=>true)) ?>', {
             method:'post',
             parameters: params,
             onSuccess: function(transport) {
               var data = transport.responseText.evalJSON();
+
+              unblockCheckoutUi();
+              $('totalsDivRightNav').innerHTML = data.totals_html;
+              
               if(data.error){
                   $('advice-required-entry-promoCode_code').innerHTML = data.message;
                   $('advice-required-entry-promoCode_code').removeClassName('applied');
@@ -132,11 +139,13 @@
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
               }
-              unblockCheckoutUi();
-              $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-              new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+              //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+              //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
             },
             onFailure: function() {
+            	unblockCheckoutUi();
+            	$('totalsDivRightNav').innerHTML = data.totals_html;
+            	
                 alert('Error applying coupon code!');
             }
           });

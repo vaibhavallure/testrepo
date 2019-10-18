@@ -148,11 +148,13 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
             over: function(){
                 if(!jQuery('#topcart-popup').hasClass('just_added'))
                     jQuery('#cart-sidebar-content').slideDown(300);
+                unScrollBody();
             },
             timeout: 200,
             out: function(){
                 if(!jQuery('#topcart-popup').hasClass('just_added'))
                     jQuery('#cart-sidebar-content').slideUp(300);
+                scrollBody();
             }
         };
 

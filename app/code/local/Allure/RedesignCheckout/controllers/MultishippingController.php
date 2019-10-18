@@ -285,13 +285,14 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
      */
     protected function _getRefreshTotalsHtml ()
     {
-        $layout = $this->getLayout();
-        $update = $layout->getUpdate();
-        $update->load('checkout_multishipping_refreshtotals');
-        $layout->generateXml();
-        $layout->generateBlocks();
-        $layout->removeOutputBlock('root');
-        $output = $layout->getOutput();
+        $block = $this->getLayout()
+            ->createBlock('checkout/cart_totals')
+            ->setTemplate('checkout/multishipping/totals.phtml');
+        $childBlock = $this->getLayout()
+            ->createBlock('checkout/cart_shipping')
+            ->setTemplate('checkout/cart/shipping.phtml');
+        $block->setChild("shipping", $childBlock);
+        $output = $block->toHtml();
         return $output;
     }
     
@@ -313,6 +314,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
          * No reason continue with empty shopping cart
          */
         if (!$this->_getCheckout()->getQuote()->getItemsCount()) {
+            $response["totals_html"] = $this->_getRefreshTotalsHtml();
             if (!$isAjax) 
                 $this->_redirect('checkout/cart');
             else 
@@ -327,6 +329,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $oldCouponCode = $this->_getCheckout()->getQuote()->getCouponCode();
         
         if (!strlen($couponCode) && !strlen($oldCouponCode)) {
+            $response["totals_html"] = $this->_getRefreshTotalsHtml();
             if (!$isAjax) 
                 $this->_redirect('checkout/multishipping/billing');
             else 
@@ -389,6 +392,8 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             Mage::logException($e);
         }
         
+        $response["totals_html"] = $this->_getRefreshTotalsHtml();
+        
         if (!$isAjax)
             $this->_redirect('checkout/multishipping/billing');
         else
@@ -428,8 +433,10 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 $result['error'] = $this->__('Gift Card "%s" is not valid.', Mage::helper('core')->escapeHtml($giftCardCode));
             }
         }
+              
         $result['giftcard_section'] = array(
-            'html' => $this->_getUpdatedCoupon()
+            'html' => $this->_getUpdatedCoupon(),
+            'totals_html' => $this->_getRefreshTotalsHtml()
         );
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
@@ -455,8 +462,17 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $oSession->setGiftCardBalance($newSessionBalance);
         $oSession->setGiftCardsIds($cardIds);
         
+        $block = $this->getLayout()
+            ->createBlock('checkout/cart_totals')
+            ->setTemplate('checkout/multishipping/totals.phtml');
+        $childBlock = $this->getLayout()
+            ->createBlock('checkout/cart_shipping')
+            ->setTemplate('checkout/cart/shipping.phtml');
+        $block->setChild("shipping", $childBlock);
+        
         $result['giftcard_section'] = array(
-            'html' => $this->_getUpdatedCoupon()
+            'html' => $this->_getUpdatedCoupon(),
+            'totals_html' => $this->_getRefreshTotalsHtml()
         );
         
         $this->_getCheckout()->getQuote()->collectTotals()->save();
