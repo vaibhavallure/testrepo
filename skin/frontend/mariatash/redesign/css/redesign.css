@@ -2771,6 +2771,7 @@ ul.tabs li{
 	-webkit-appearance: none;
 	font-size: 18px;
 	border: none;
+	background: none;
 }
 .containerVideo iframe{
 	display: block;
