@@ -1,111 +1,46 @@
-<?php ?>
-<div id="checkout-delivery-method">
-    <div id="checkout-delivery-option-load">
-       <!-- Content loaded dynamically -->
+<?php 
+/**
+ * checkout delivery option details.
+ * 
+ * @var Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption $this
+ */
+?>
+<?php
+    $status = $this->getShipmentStatus();
+    $status_tt = $status['us_two_ship'];
+    $two_ship_status = $status['two_ship'];
 
-    <?php
-
-    	$status = $this->getShipmentStatus();
-    	$status_tt = $status['us_two_ship'];
-    	$two_ship_status = $status['two_ship'];
-
-    	$oneShipMsg = "In one shipment - Ship all the items together once all items are available.";
-    	if($two_ship_status)
-    		$oneShipMsg = "In one shipment - Ship all items together once all items are available. (This is your latest backordered item date)";
-    	elseif ($status['in_order'])
-    		$oneShipMsg = "Your order will ship within 24 hours (Monday-Friday)";
-    	else
-    		$oneShipMsg = "In one shipment - Ship once all items are available. (This is your latest backordered item date)";
+    $oneShipMsg = "In one shipment - Ship all the items together once all items are available.";
+    if($two_ship_status)
+        $oneShipMsg = "In one shipment - Ship all items together once all items are available. (This is your latest backordered item date)";
+    elseif ($status['in_order'])
+        $oneShipMsg = "Your order will ship within 24 hours (Monday-Friday)";
+    else
+    	$oneShipMsg = "In one shipment - Ship once all items are available. (This is your latest backordered item date)";
 
     ?>
-
-    <div class="shipment-delivery-method">
-    	<ul class="form-list p-0">
-    		<li class="control shipment-one">
-    			<label class="para-normal custom-radio">
-            <input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]"
-            <?php echo (!$status_tt)?"checked='checked'":"";?>  class="radio shipment-one" onclick="switchMethod(this);" />
-            <span class="radiomark"></span>
-            <?php echo $oneShipMsg;?></label>
-    		</li>
-    		<?php if($two_ship_status): ?>
-    		<li class="control">
-    			<label class="para-normal custom-radio">
-            <input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" <?php echo ( $status_tt)?"checked='checked'":"";?>  class="radio" onclick="switchMethod(this);" />
-            <span class="radiomark"></span>
-            In two Shipments - Ship what is available today,then ship remaining item(s) once all are available.(Two shipping charges will be applied.)</label>
-    		</li>
-    		<?php  endif;?>
-    	</ul>
-    </div>
-
-    <?php if(0):?>
-    <div id="two-shipping-method-layout" style="<?php echo $status?'':'display: none;' ?>">
-    	<h2>Shipping Method for Second Shipment</h2>
-    	<div class="input-box">
-			<select id="select-delivery-shipment" class="form-control" name="delivery-shipping-method">
-				<option value="1">Use as same above</option>
-				<option value="2">Choose different method</option>
-			</select>
-    	</div>
-    </div>
-
-    <div id="shipping-method-two" style="display:none;">
-    	<div id="delivery-shiping-option" >
-    		<div id="checkout-step-shipping_method">
-				<div id="checkout-shipping-method-load">
-					<?php echo $this->getLayout()->createBlock('checkout/onepage_shipping_method_available')->setTemplate('checkout/onepage/shipping_method/available.phtml')->toHtml();?>
-				</div>
-				<div id="onepage-checkout-shipping-method-additional-load">
-					<?php //echo $this->getLayout()->createBlock('checkout/onepage_shipping_method_additional')->setTemplate('checkout/onepage/shipping_method/additional.phtml')->toHtml();?>
-				</div>
-			</div>
-		</div>
-    </div>
-    <?php endif;?>
-
+<div id="checkout-delivery-method">
+	<div id="checkout-delivery-option-load">
+        <div class="shipment-delivery-method">
+        	<ul class="form-list p-0">
+        		<li class="control shipment-one">
+        			<label class="para-normal custom-radio">
+                        <input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]"
+                        <?php echo (!$status_tt)?"checked='checked'":"";?>  class="radio shipment-one" onclick="switchMethod(this);" />
+                        <span class="radiomark"></span>
+                        <?php echo $oneShipMsg;?>
+                    </label>
+        		</li>
+        		<?php if($two_ship_status): ?>
+        		<li class="control">
+        			<label class="para-normal custom-radio">
+                		<input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" <?php echo ( $status_tt)?"checked='checked'":"";?>  class="radio" onclick="switchMethod(this);" />
+                		<span class="radiomark"></span>
+                		In two Shipments - Ship what is available today,then ship remaining item(s) once all are available.(Two shipping charges will be applied.)
+                	</label>
+        		</li>
+        		<?php  endif;?>
+        	</ul>
+        </div>
+	</div>
 </div>
-</div>
-
-
-<script>
-jQuery(document).ready(function(){
-	var $ = jQuery;
-	$('.shipment-delivery-method li').click(function(){
-		$('.shipment-delivery-method li').each(function(i){jQuery(this).find('input').removeAttr('checked')});
-		$(this).find('input').attr('checked',true);
-		if($(this).find('input').hasClass('shipment-one')){
-			$('#two-shipping-method-layout').hide();
-			$('#shipping-method-two').hide();
-		}else{
-			$('#two-shipping-method-layout').show();
-		}
-	});
-
-	$('#select-delivery-shipment').on('change',function(){
-		if($(this).val()==2){
-			$('#shipping-method-two').show();
-		}else{
-			$('#shipping-method-two').hide();
-		}
-	});
-
-	$('#co-delivery-method-form .sp-methods li').click(function(){
-		$(this).find('input').attr('checked',true)
-	});
-});
-
-function switchMethod(that){
-	console.log(that.id);
-	var $ = jQuery;
-	$(that).checked = true;
-	if($(that).hasClass('shipment-one')){
-		$('#two-shipping-method-layout').hide();
-		$('#delivery-shiping-option').hide();
-	}else{
-		$('#two-shipping-method-layout').show();
-		$('#delivery-shiping-option').show();
-	}
-
-}
-</script>
