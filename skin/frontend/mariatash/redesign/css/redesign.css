@@ -392,13 +392,13 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   padding-right: 11px;
 	padding-top: 17px;
 }
-.control label {
+/* .control label {
   padding: 1px 0 0 40px;
   background: url(../images/checkbox-login.png) no-repeat 0 0;
 }
 .control input:checked+label{
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
-}
+} */
 .gift-messages label:before {
   content: none !important;
 }
@@ -3334,7 +3334,7 @@ margin-top: 10%;
 .checkout-onepage-index #billing-address-select,.checkout-onepage-index #shipping-address-select {
   width: 323px;
 	margin-top: 14px;
-	margin-bottom: 24px;
+	margin-bottom: 13px;
 }
 .ship-to li:first-child {
   margin-bottom: 17px;
@@ -3484,6 +3484,10 @@ margin-top: 10%;
 .checkout-multishipping-addresses #totalsDivRightNav #shopping-cart-totals-table tr .cart-subtotals-left {
   font-size: 13px;
   font-family: urw-din-light;
+}
+#co-shipping-form .control label {
+  margin-bottom: 26px !important;
+	margin-top: 12px;
 }
 /* cccc */
 /*MINI CART CSS*/
