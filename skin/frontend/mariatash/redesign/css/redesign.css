@@ -1933,7 +1933,7 @@ div#narrow-by-list {
 }
 
 /* FAQ PAGE CSS */
-.customer-care-page .faq-question span:after{
+.faq-question span:after{
   background: url(../images/redesign/plus.png) no-repeat;
   content: '';
   height: 30px;
@@ -1944,7 +1944,7 @@ div#narrow-by-list {
   transition: 0.5s;
   cursor: pointer;
 }
-.customer-care-page .faq-question.active span:after{
+.faq-question.active span:after{
   background: url(../images/redesign/minus.png) no-repeat;
   background-position: right;
   content: '';
@@ -1982,10 +1982,24 @@ div#narrow-by-list {
 }
 .faq-main {
   margin-top: 36px !important;
-  margin-bottom: 43px !important;
+  margin-bottom: 36px !important;
 }
 .faq-image-section img {
   padding-right: 20px;
+}
+/*Gift Card FAQ*/
+.gift-card-main .faq-image-section img {
+  padding-right: 14px;
+}
+.gift-card-main{
+	margin-top: 18px !important;
+	margin-bottom: 84px !important;
+}
+.gift-card-main h1 {
+  margin-bottom: 42px;
+}
+#faq-one {
+  margin-top: -6px; /*Font is creating lil space from top. This CSS to make qustion align with the image.*/
 }
 
 /* POP-UP Changes */
