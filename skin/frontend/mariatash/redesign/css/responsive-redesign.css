@@ -159,8 +159,18 @@
     padding-right: 0px;
     width: 100%;
   }
-  .faq-main{
-    margin-top: 0 !important;
+  .gift-card-main > .row {
+    flex-direction: initial;
+  }
+  .gift-card-main .faq-image-section img {
+    padding-right: 0;
+    width: 100%;
+  }
+  #faq-one {
+    margin-top: 15px;
+  }
+  .faq-main h1 {
+    text-align: center;
   }
   .customer-care-page .main {
     padding-bottom: 0;
@@ -815,11 +825,6 @@
   .product-shop{
     padding: 0 14px;
   }
-  /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{
-    left: 642px !important;
-    top: 370px !important;
-  } */
-
   .catalog-category-view .footer:hover {
     opacity: 1;
   }
@@ -845,6 +850,13 @@
   }
   .pressPopup .big-popup-body{
     height: 708px;
+  }
+  .catalog-category-view.category-press .for-space-to-bottom{
+    height: 220px !important;
+  }
+  .gift-card-main .faq-image-section img {
+    padding-right: 10px;
+    width: 100%;
   }
 }
 
@@ -914,6 +926,9 @@
   }
   .faq-main{
     margin-bottom: 0 !important;
+  }
+  .gift-card-main h1 {
+    margin-bottom: 0;
   }
   .input-form input{
     height: 35px !important;
@@ -1059,6 +1074,15 @@
     top: 193px;
     height: 45px;
     width: 20px;
+  }
+  .faq-main{
+    margin-top: 0 !important;
+  }
+  .gift-card-main h1 {
+    margin: 29px 0;
+  }
+  .gift-card-main .content-customer{
+    margin-bottom: 50px;
   }
 }
 
@@ -1333,7 +1357,7 @@
     margin-bottom: 9px;
   }
   .messages-tr .plus_icon, .messages-tr .minus_icon{
-    display: block;
+    display: inline-table;
   }
   /*Checkout*/
   #checkoutSteps {

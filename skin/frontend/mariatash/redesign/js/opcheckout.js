@@ -645,7 +645,7 @@ Shipping.prototype = {
     
     syncWithShipping: function () {
         $('shipping-address-select') && this.newAddress(!$('shipping-address-select').value);
-        //$('shipping:same_as_billing').checked = true;
+        $('shipping:same_as_billing').checked = true;
         if (!$('shipping-address-select') || !$('shipping-address-select').value) {
             arrElements = Form.getElements(this.form);
             for (var elemIndex in arrElements) {
