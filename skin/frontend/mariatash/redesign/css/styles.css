@@ -2134,8 +2134,8 @@ a.various_sample.non-color {
 
 .lt-ie9 .product-gift-card .product-shop.giftcards .add-to-cart button.button,
 .product-gift-card .product-shop.giftcards .add-to-cart button.button {
-	position: absolute;
-	right: 0px;
+	/*position: absolute;
+	right: 0px;*/
 }
 
 body.checkout-onepage-index #advice-validate-email-login-email {
@@ -9271,8 +9271,8 @@ span.customStyleSelectBox.changed {
 
 .product-gift-card select#cart-amount, .product-gift-card .giftcard-left-form>span.customStyleSelectBox
 {
-	margin: 7px 0 11px 25px;
-	border: none;
+	/*margin: 7px 0 11px 25px;
+	border: none;*/
 }
 
 .my-account span.customStyleSelectBox {
@@ -9589,6 +9589,7 @@ span.customStyleSelectBox.changed {
 /* ============*/
 
 /* ================================== GIFT CARD ARG ===================================================*/
+/*
 .catalog-product-view catalog-product-view product-gift-card {
 
 }
@@ -9602,92 +9603,92 @@ span.customStyleSelectBox.changed {
 }
 
 .product-gift-card .col-main {
-	background: url(../images/bg_giftCard.png) no-repeat;
+	!*background: url(../images/bg_giftCard.png) no-repeat;
 	width: 962px;
 	margin: 10px auto;
 	font-size: 13px;
 	height: 661px;
-	min-height: 661px !important;
+	min-height: 661px !important;*!
 }
 
 .product-gift-card .giftcard-static-block-message {
-	font-size: 13px;
+!*	font-size: 13px;
 	line-height: 16px;
 	margin: 0 auto;
 	padding-top: 100px;
 	text-align: justify;
-	width: 415px;
+	width: 415px;*!
 }
 
 .product-gift-card .giftcard-static-block-message .titleGC {
-	text-transform: uppercase;
+!*	text-transform: uppercase;
 	font-family: dinmittelschriftregular;
 	font-size: 32px;
 	margin: 0;
 	text-align: right;
 	float: right;
-	color: #38393D;
+	color: #38393D;*!
 }
 
 .product-gift-card .giftcard-static-block-message .logoGC {
-	background: url(../images/logoGC.png) no-repeat;
+	!*background: url(../images/logoGC.png) no-repeat;
 	width: 163px;
 	height: 26px;
 	margin: -5px 0 0 0;
-	position: absolute;
+	position: absolute;*!
 }
 
 .product-gift-card .giftcard-static-block-message p {
-	margin-top: 14px;
+	!*margin-top: 14px;
 	float: left;
-	font-size: 13px;
+	font-size: 13px;*!
 }
 
 .product-gift-card .giftcard-info {
-	width: 960px;
+!*	width: 960px;
 	margin: 0 auto;
 	padding-top: 82px;
-	float: left;
+	float: left;*!
 }
 
 .product-gift-card .giftcard-info fieldset.giftt {
-	margin: 0 0 0 103px;
+	!*margin: 0 0 0 103px;
 	width: 28%;
-	padding: 0;
+	padding: 0;*!
 }
 
 .product-gift-card .giftcard-info fieldset#giftcard-fieldset {
-	width: 80%;
+	!*width: 80%;
 	margin: 0 0 0 103px;
 	padding: 0;
-	height: 317px;
+	height: 317px;*!
 }
 
 .product-gift-card .giftcard-info fieldset div {
-	margin: 9px 0;
+	!*margin: 9px 0;*!
 }
 
 .product-gift-card .giftcard-info fieldset.giftt div label {
-	margin: 0;
+	!*margin: 0;*!
 }
 
 .product-gift-card .giftcard-info fieldset.giftt .field-label {
-	font-weight: bold;
+	!*font-weight: bold;*!
 }
 
 .product-gift-card .giftcard-info fieldset.giftt div input {
-	margin: 0;
-	width: 10px !important;
+!*	margin: 0;
+	width: 10px !important;*!
 }
 
 .product-gift-card .add-to-box {
-	float: right;
+	!*float: right;
 	margin: -48px 49px 60px 0;
-	width: 387px;
+	width: 387px;*!
 }
 
 .product-gift-card .add-to-box .add-to-cart label {
-	margin-right: 5px;
+	!*margin-right: 5px;*!
 }
 
 .product-gift-card .breadcrumbs {
@@ -9695,8 +9696,8 @@ span.customStyleSelectBox.changed {
 }
 
 .product-gift-card .field-label {
-	margin-left: 103px;
-	margin-bottom: -20px;
+	!*margin-left: 103px;*!
+	!*margin-bottom: -20px;*!
 }
 
 .product-gift-card .breadcrumbs {
@@ -9776,7 +9777,7 @@ span.customStyleSelectBox.changed {
 	border-bottom: 1px solid #cfcfcf;
 	border-right: 1px solid #cfcfcf;
 }
-/*.giftcard-info  label.required  { display:block; float:left; height:20px; clear:both; margin:0;}*/
+!*.giftcard-info  label.required  { display:block; float:left; height:20px; clear:both; margin:0;}*!
 .giftcard-info label {
 	display: block;
 	float: left;
@@ -9799,7 +9800,7 @@ span.customStyleSelectBox.changed {
 
 .giftcard-info select {
 	width: 75px !important;
-	/* float:right; height:20px; padding:0 0 0 3px; margin: 9px 166px 12px 0; border:none;*/
+	!* float:right; height:20px; padding:0 0 0 3px; margin: 9px 166px 12px 0; border:none;*!
 }
 
 .giftcard-info div.cart-amount {
@@ -9845,13 +9846,13 @@ span.customStyleSelectBox.changed {
 	border: none;
 }
 
-/* .product-shop #qty {
+!* .product-shop #qty {
 	float: left;
 	width: 46px;
 	height: 17px;
 	margin: 0 10px 0 1px;
 	border: none;
-} */
+} *!
 
 .giftcard-info .date_selector_div .div_selector_month {
 
@@ -9953,6 +9954,7 @@ span.customStyleSelectBox.changed {
 	margin-left: -20px;
 }
 
+*/
 
 .footer { /*border-top: 1px solid #ccc;*/
 	padding: 0;
@@ -12630,7 +12632,7 @@ input.giftcard-radio1 {
 	margin-left: 20px;
 }
 .email_delivery_option2{
-	margin-left: 138px !important;
+	/*margin-left: 138px !important;*/
 }
 
 .mt-review-charge-note{
