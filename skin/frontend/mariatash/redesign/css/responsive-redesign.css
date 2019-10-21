@@ -703,6 +703,15 @@
   .containerImage img{
     margin: 30px auto 0;
   }
+  .navbar-brand{
+    margin-top: 2px;
+  }
+  .homepage-menu{
+    padding-top: 21px !important;
+  }
+  .navbar-toggler {
+    top: 21px !important;
+  }
 }
 
 
@@ -1500,6 +1509,9 @@
   }
   .checkout-multishipping-success .multiple-checkout {
     margin-top: 110px;
+  }
+  .navbar-brand{
+    margin-top: 2px;
   }
   /* .pop-up-cover{
     overflow-y: auto;
