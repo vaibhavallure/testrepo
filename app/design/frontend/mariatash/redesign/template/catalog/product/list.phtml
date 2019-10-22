@@ -69,8 +69,11 @@ $mode  = $this->getMode();
                     .done(function(response) {
                     if (response.colors != '') {
                        jQuery("#color-icons-"+product_id).html(response.colors);
+
+
                        jQuery('#list-img-'+product_id).text('1') ;
 
+                       var iCounter=1;
                        jQuery('#color-icons-' + product_id + ' li').each(function(){
                             var color_id  = jQuery(this).attr('id'),
                                 color_title = jQuery(this).attr('title');
@@ -98,6 +101,12 @@ $mode  = $this->getMode();
                                 }
                                 jQuery('.price-box').show();
                             });
+
+                            if(iCounter==1)
+                            {
+                                jQuery(this).trigger("click");
+                            }
+                            iCounter++;
                         });
                     }
 
@@ -468,6 +477,8 @@ $mode  = $this->getMode();
                                     jQuery("#color-icons-"+product_id).html(response.colors);
                                     jQuery('#list-img-'+product_id).text('1') ;
 
+                                    var iCounter=1;
+
                                     jQuery('#color-icons-' + product_id + ' li').each(function(){
                                         var color_id  = jQuery(this).attr('id'),
                                             color_title = jQuery(this).attr('title');
@@ -495,6 +506,11 @@ $mode  = $this->getMode();
                                             }
                                             jQuery('.price-box').show();
                                         });
+
+                                        if(iCounter==1)
+                                            jQuery(this).trigger("click");
+
+                                        iCounter++;
                                     });
                                 }
 
