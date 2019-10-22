@@ -285,3 +285,13 @@ else{
     });
 }
 }
+
+var setLoader = function(){
+    jQuery.fancybox.showLoading();
+    jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+}
+
+var unsetLoader= function(){
+    jQuery.fancybox.hideLoading();
+    jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+}
