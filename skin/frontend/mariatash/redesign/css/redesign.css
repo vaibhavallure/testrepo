@@ -4089,6 +4089,9 @@ dt.post-lengthds-lbl {
   margin: 0 -15px;
   display: block;
 }
+.giftcard-fieldset textarea {
+	height: 126px!important;
+}
 /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;

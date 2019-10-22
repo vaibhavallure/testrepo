@@ -24,12 +24,24 @@
 
                 jQuery(this).hide();
 
-                jQuery(this).wrap('<div class="date_selector_div" />');
+                jQuery(this).wrap('<div class="date_selector_div row" />');
 
                 var _element = this;
 
                 var parent_div = jQuery(this).parent();
-                parent_div.before('<input type="radio" class="giftcard-radio1" id="mail_delivery_option" name="mail_delivery_option" value="1" checked="checked">')
+
+                var radioOptionOne='<div class="email_delivery_option2 text-left">' +
+                    '<label class="product-attribute-name " >Delivery:</label>'+
+                    '<label class="para-normal custom-checkbox custom-checkbox-two" for="deliver_immediately">\n' +
+                    '                                      <input type="checkbox" id="deliver_immediately" value="2" class="checkbox">\n' +
+                    '                                      <span class="checkmark"></span>Deliver Immediately' +
+                    '                                   </label>' +
+                    '<input type="hidden" id="mail_delivery_option"  name="mail_delivery_option" value="1"></div>';
+
+                parent_div.before(radioOptionOne);
+                parent_div.prepend('<div class="text-left col-12"><label class="product-attribute-name " >Or</label></div>');
+
+
                 var i,d,cd = new Date();
                 if (jQuery(_element).val()) {
                     var vals = jQuery(_element).val().split('-');
@@ -48,7 +60,7 @@
                 jQuery(_element).data('year',year);
 
                 //month                                
-                parent_div.append('<div class="div_selector_month styled"><select class="date_selector_month '+options.selectClass+'" /></div>');
+                parent_div.append('<div class="div_selector_month col-4"><select class="date_selector_month '+options.selectClass+'" /></div>');
                 if (options.hasEmpty) {
                     parent_div.find('.date_selector_month').append('<option value="-1">'+options.emptyText+'</option>');
                 }
@@ -82,7 +94,7 @@
                 });
                                 
                 //day
-                parent_div.append('<div class="div_selector_day styled" ><select class="date_selector_day '+options.selectClass+'" /></div>');
+                parent_div.append('<div class="div_selector_day col-4" ><select class="date_selector_day '+options.selectClass+'" /></div>');
                 if (options.hasEmpty) {
                     parent_div.find('.date_selector_day').append('<option value="-1">'+options.emptyText+'</option>');
                 }
@@ -105,7 +117,7 @@
                 });				
 
                 //year
-                parent_div.append('<div class="div_selector_year styled"><select class="date_selector_year '+options.selectClass+'" /></div>');
+                parent_div.append('<div class="div_selector_year col-4"><select class="date_selector_year '+options.selectClass+'" /></div>');
                 if (options.hasEmpty) {
                     parent_div.find('.date_selector_year').append('<option value="-1">'+options.emptyText+'</option>');
                 } 
@@ -147,8 +159,7 @@
                                 
                 parent_div.append('<div id="advice-required-entry-date" class="validation-advice" style="display:none"></div>');
                 parent_div.append('<div class="date-input-info"><em>*</em> Based on Eastern Standard Time.</div>');
-                parent_div.after('<div class="email_delivery_option2"><input type="radio" id="mail_delivery_option" class="giftcard-radio" name="mail_delivery_option" value="2">Deliver Immediately</div>');
-                                
+
                 if (!options.hasEmpty || options.defaultToday) {
                     //set the dates
                     parent_div.find('.date_selector_day').val(day);

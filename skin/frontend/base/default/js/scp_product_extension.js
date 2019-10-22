@@ -467,12 +467,14 @@ Product.Config.prototype.getTaxPrices = function(price) {
 document.observe("dom:loaded", function() {
     //Really only needs to be the first element that has configureElement set on it,
     //rather than all.
-    $('product_addtocart_form').getElements().each(function(el) {
-        if(el.type == 'select-one') {
-            if(el.options && (el.options.length > 1)) {
-                el.options[0].selected = true;
-                spConfig.reloadOptionLabels(el);
+    if(jQuery('product_addtocart_form').length) {
+        $('product_addtocart_form').getElements().each(function (el) {
+            if (el.type == 'select-one') {
+                if (el.options && (el.options.length > 1)) {
+                    el.options[0].selected = true;
+                    spConfig.reloadOptionLabels(el);
+                }
             }
-        }
-    });
+        });
+    }
 });
