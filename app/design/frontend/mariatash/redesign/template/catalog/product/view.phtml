@@ -470,10 +470,13 @@ if ($_product->getSizeSample() == 1) {
             			                 <?php endif;?>
         			                        <input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
                                       <?php //echo $this->getPriceHtml($_product) ?>
-                    <div id="ajax-price" class="col-12 pl-0"><?php echo $this->getPriceHtml($_product) ?></div>
+                    <?php if(!$isGiftCard): ?>
+                      <div id="ajax-price" class="col-12 pl-0"><?php echo $this->getPriceHtml($_product) ?></div>
+                   <?php endif; ?>
                     <div class="product-collateral col-12">
                         <?php if (!$this->hasOptions()): ?>
                             <div id="product-options-wrapper" class="product-options row"></div>
+
                               <div class="product-options-bottom row">
                                   <?php if ($_product->isSaleable()): ?>
                                       <?php echo $this->getChildHtml('addtocart') ?>

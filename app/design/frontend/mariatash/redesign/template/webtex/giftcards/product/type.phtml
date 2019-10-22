@@ -64,6 +64,9 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                     </select>
                 </div>
             </div>
+                <?php
+                $url =  Mage::getModel('catalog/product')->loadByAttribute('sku',"STORECARD")->getProductUrl();
+                ?>
                 <hr>
                 <div class="swatch-section">
                     <div class="chooseList row giftcardtype">
@@ -72,7 +75,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                                 <h3 class="product-attribute-name mb-0">format</h3>
                             </li>
                             <li data-option_value="egift" class="option  li-2 active"><span>eGift Card</span></li>
-                            <li data-option_value="egift" class="option  li-3 "><span>Gift Card</span></li>
+                            <li data-option_value="storecard"  onclick="setLoader()" class="option  li-3 "><a href="<?= $url ?>"><span>Gift Card</span></a></li>
                         </ul>
                     </div>
                 </div>
