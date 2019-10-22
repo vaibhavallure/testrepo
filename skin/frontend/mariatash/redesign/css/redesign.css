@@ -54,6 +54,11 @@ h4{
 	line-height: 17px;
 }
 
+.info-text-one, .login-dropdown li a{
+	font-family: urw-din-regular;
+	color: rgba(41,41,41,0.90);
+}
+
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
@@ -510,22 +515,14 @@ input, select, textarea{
   height: 10px;
   margin-top: 3px;
 }
-
 .login-dropdown li {
-	background: white;
-	text-align: center;
-	padding: 2px 0px;
-	width: 100px;
-	height: 25px;
-}
-.login-dropdown li:first-child {
-  padding-top: 5px;
+	text-align: right;
+	width: 100%;
+	margin-bottom: 8px;
 }
 .login-dropdown li a {
-  color: #292929;
-	font-size: 12px;
-  letter-spacing: 1px;
-  font-family: urw-din-light;
+	font-size: 11px;
+  letter-spacing: 0.33px;
 }
 .login-dropdown ul{
 	padding: 0px;
@@ -547,16 +544,27 @@ input, select, textarea{
   float: none;
 }
 
-.login-dropdown {
-  position: absolute;
-  width: 137px;
-  right: -22px;
-  top: 22px;
-	padding-top: 10px;
-  line-height: 15px;
+.login-dropdown-cover{
+	position: absolute;
+	right: -25px;
+  top: 16px;
+	padding-top: 20px;
 }
-body.cms-index-index.cms-home .login-dropdown{
-	right: -40px;
+
+.login-dropdown {
+  width: 137px;
+  line-height: 15px;
+	height: 161px;
+	padding: 23px 24px 22px;
+	background: #fff;
+}
+.user-sign-out {
+  border-top: 1px solid #d8d8d8;
+  padding-top: 8px;
+  margin-bottom: 0 !important;
+}
+.user-address{
+	margin-bottom: 13px !important;
 }
 
 #narrow-by-list li div dt{
@@ -1429,12 +1437,18 @@ input[type="checkbox"]:checked+label:before {
 }
 .number-circle span {
   position: absolute;
-  top: -30px;
+  top: -22px;
   right: 0;
   bottom: 0;
-  left: 14px;
+  left: 7px;
   font-family: urw-din-bold;
   font-size: 9px;
+	border: 1px solid #d8d8d8;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  padding: 2px 0 0 5px;
+  background: #fff;
 }
 #top-nav > li{
   font-family: urw-din-medium;
@@ -1507,9 +1521,9 @@ input[type="checkbox"]:checked+label:before {
 .select-currency img {
 	margin: 0 0 5px 3px;
 }
-.main-nav-link li:nth-child(2) {
+/* .main-nav-link li:nth-child(2) {
   margin-right: 16px;
-}
+} */
 
 /*Navigation dropdown*/
 .main-nav-title .sub-menu .sub{
@@ -1593,6 +1607,7 @@ input[type="checkbox"]:checked+label:before {
   bottom: 15px;
   width:100%;
 }
+
 .reg-price, .image-text h6, .overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
@@ -2378,7 +2393,7 @@ input[type='radio']{
   top: 1px;
   right: 10px;
 }
-.home span {
+.home span, .login-dropdown li.user-sign-out a {
   font-family: urw-din-xlight;
 }
 .breadcrumbs li{
@@ -3420,9 +3435,6 @@ margin-top: 10%;
 }
 .multi-column-2 .gift-messages:last-child {
   margin-top: 24px;
-}
-.login-dropdown li:first-child {
-  padding-top: 5px;
 }
 .product-description-section:last-child {
 	border: none;
