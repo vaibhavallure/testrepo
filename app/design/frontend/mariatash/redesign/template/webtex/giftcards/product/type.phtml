@@ -72,7 +72,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                             <li class="label li-1">
                                 <h3 class="product-attribute-name mb-0">format</h3>
                             </li>
-                            <li data-option_value="egift" class="option  li-2 active"><span>eGift Card</span></li>
+                            <li data-option_value="egift" class="option  li-2 active"><span class="egift-text">eGift Card</span></li>
                             <li data-option_value="storecard"  onclick="setLoader()" class="option  li-3 "><a href="<?= $url ?>"><span>Gift Card</span></a></li>
                         </ul>
                     </div>
@@ -100,7 +100,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                 <input  type="text" placeholder="<?php echo $this->__('Recipient\'s Name') ?>" id="mail-to" name="mail_to" class="input-text required-entry"/>
             </div>
             <div class="field input-form">
-                <input  placeholder="<?php echo $this->__('Recipient\'s Email') ?>" type="text" id="mail-to-email" name="mail_to_email" class="input-text required-entry validate-email"/>
+                <input  placeholder="<?php echo $this->__('Recipient\'s Email*') ?>" type="text" id="mail-to-email" name="mail_to_email" class="input-text required-entry validate-email"/>
             </div>
 
         </div>

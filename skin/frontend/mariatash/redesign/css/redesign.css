@@ -4328,6 +4328,11 @@ dt.post-lengthds-lbl {
 .date_wrapper-column select {
   width: 100%;
 }
+.date_wrapper select {
+ 	background-position: 89% 50% !important;
+	height: 32px !important;
+  padding: 0px 20px !important;
+}
 .giftcards .div_selector_month {
   width: 105px;
 }
@@ -4371,4 +4376,16 @@ dt.post-lengthds-lbl {
 }
 .product-maria-tash-in-store-gift-card select {
   margin-bottom: 11px;
+}
+.product-gift-card .box-collateral .block-viewed .block-content, .product-maria-tash-in-store-gift-card .box-collateral .block-viewed .block-content {
+  margin-bottom: 120px;
+}
+.egift-text{
+	text-transform: none;
+}
+.date-input-info.text-left {
+	margin-top: 10px;
+}
+.giftcard-left-form .chooseList .label{
+	margin-right: 20%;
 }
