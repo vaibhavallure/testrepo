@@ -38,7 +38,7 @@ alpha_redesign:
   only:
     - redesign
   script:
-    - mage-deploy redesign-staging
+    - mage-deploy redesign
     - echo 'Deployed on Nascense Gama - Redesign'
     
 alpha_redesign_staging:
