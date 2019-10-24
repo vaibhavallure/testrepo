@@ -15,6 +15,10 @@ h1{
   letter-spacing: 0;
 }
 
+h1.mt-logo-onscroll {
+	font-size: 22px !important;
+}
+
 h2, h3{
 	font-family: urw-din;
 }
