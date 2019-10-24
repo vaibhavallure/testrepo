@@ -60,7 +60,7 @@ alpha_redesign_stage:
   only:
     - redesign_staging
   script:
-    - mage-deploy redesign-staging
+    - mage-deploy redesign
     - echo 'Deployed on Nascense Gama - Redesign Stage'
     
 alpha_elasticsearch:
