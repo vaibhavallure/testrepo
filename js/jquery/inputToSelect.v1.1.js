@@ -39,7 +39,8 @@
                     '<input type="hidden" id="mail_delivery_option"  name="mail_delivery_option" value="1"></div>';
 
                 parent_div.before(radioOptionOne);
-                parent_div.prepend('<div class="text-left col-12"><label class="product-attribute-name " >Or</label></div>');
+                parent_div.prepend('<div class="text-left col-12"><label class="product-attribute-name " >Or:</label></div>');
+
 
 
                 var i,d,cd = new Date();
@@ -59,8 +60,9 @@
                 jQuery(_element).data('month',month);
                 jQuery(_element).data('year',year);
 
-                //month                                
-                parent_div.append('<div class="div_selector_month col-4"><select class="date_selector_month '+options.selectClass+'" /></div>');
+                parent_div.append('<div class="date_wrapper-column col-12"><div class="date_wrapper row"></div></div>');
+                //month
+                parent_div.find(".date_wrapper").append('<div class="div_selector_month"><select class="date_selector_month '+options.selectClass+'" /></div>');
                 if (options.hasEmpty) {
                     parent_div.find('.date_selector_month').append('<option value="-1">'+options.emptyText+'</option>');
                 }
@@ -69,10 +71,10 @@
                 }
                 parent_div.find('.date_selector_month').change(function(){
                     jQuery(_element).data('month',jQuery(this).val());
-					
+
                     if (jQuery(this).val()!=-1) {
                         parent_div.find('.date_selector_day').empty();
-						
+
                         if (options.hasEmpty) {
                             parent_div.find('.date_selector_day').append('<option value="-1">'+options.emptyText+'</option>');
                         }
@@ -92,9 +94,9 @@
                         parent_div.find('.date_selector_year').val('-1');
                     }
                 });
-                                
+
                 //day
-                parent_div.append('<div class="div_selector_day col-4" ><select class="date_selector_day '+options.selectClass+'" /></div>');
+                parent_div.find(".date_wrapper").append('<div class="div_selector_day" ><select class="date_selector_day '+options.selectClass+'" /></div>');
                 if (options.hasEmpty) {
                     parent_div.find('.date_selector_day').append('<option value="-1">'+options.emptyText+'</option>');
                 }
@@ -114,19 +116,19 @@
                         parent_div.find('.date_selector_month').val('-1');
                         parent_div.find('.date_selector_year').val('-1');
                     }
-                });				
+                });
 
                 //year
-                parent_div.append('<div class="div_selector_year col-4"><select class="date_selector_year '+options.selectClass+'" /></div>');
+                parent_div.find(".date_wrapper").append('<div class="div_selector_year"><select class="date_selector_year '+options.selectClass+'" /></div>');
                 if (options.hasEmpty) {
                     parent_div.find('.date_selector_year').append('<option value="-1">'+options.emptyText+'</option>');
-                } 
+                }
                 for (i=currentYear+options.yearsOverToday;i>currentYear-options.years;i--) {
                     parent_div.find('.date_selector_year').append('<option value="'+i+'">'+i+'</option>');
                 }
                 parent_div.find('.date_selector_year').change(function(){
                     jQuery(_element).data('year',jQuery(this).val());
-					
+
                     if (jQuery(this).val()!=-1) {
                         if (jQuery(this).val()%4==0 && options.useLeapYear) {
                             _private.days[1] = 29;
@@ -135,7 +137,7 @@
                         }
                         if (jQuery(_element).data('month')==1) { //is february
                             parent_div.find('.date_selector_day').empty();
-							
+
                             if (options.hasEmpty) {
                                 parent_div.find('.date_selector_day').append('<option value="-1">'+options.emptyText+'</option>');
                             }
@@ -156,9 +158,9 @@
                         parent_div.find('.date_selector_year').val('-1');
                     }
                 });
-                                
+
                 parent_div.append('<div id="advice-required-entry-date" class="validation-advice" style="display:none"></div>');
-                parent_div.append('<div class="date-input-info"><em>*</em> Based on Eastern Standard Time.</div>');
+                parent_div.append('<div class="date-input-info text-left col-12"><p class="para-normal mb-0">Based on Eastern Standard Time.</p></div>');
 
                 if (!options.hasEmpty || options.defaultToday) {
                     //set the dates
@@ -174,7 +176,7 @@
                     parent_div.find('.date_selector_day').val('-1');
                     parent_div.find('.date_selector_month').val('-1');
                     parent_div.find('.date_selector_year').val('-1');
-					
+
                     parent_div.find('input').val(options.emptyValue);
                 }
 

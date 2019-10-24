@@ -367,7 +367,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 }
 
 .medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .checkout-multishipping-addresses #shopping-cart-totals-table span.total-title,
-.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price {
+.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price, .gift-card-faq-link a {
     font-size: 18px;
     font-family: urw-din-medium;
 }
@@ -683,9 +683,9 @@ nav.mariatash-header {
   float: left;
 }
 
-.icon-bar .icon-item:last-child {
+/* .icon-bar .icon-item:last-child {
   margin-left: 34px;
-}
+} */
 .icon-bar .icon-item .icon-link img {
   width: 18px;
 }
@@ -1512,7 +1512,6 @@ input[type="checkbox"]:checked+label:before {
 }
 .nav-links-left span {
   color: #fff;
-  text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1px;
   font-family: urw-din-light;
@@ -2375,14 +2374,14 @@ input[type='radio']{
 .products-grid .availability{
 	line-height: 13px;
 }
-#currency-selector {
+/* #currency-selector {
   position: absolute;
   top: 20px;
   right: -24px;
   z-index: 99999;
   width: 96px;
   height: auto;
-}
+} */
 
 /* BREADCRUM */
 .breadcrumbs li strong{
@@ -3779,31 +3778,18 @@ margin-top: 10%;
 
 .block-currency  #currency-selector {
 	position: absolute;
-	top: 20px;
-	/*right: 0;*/
+	top: 21px;
 	z-index: 99999;
-	width: 96px;
+	width: 222px;
 	height: auto;
-	background: white;
-}
-.block-currency  #currency-selector ul {
-	margin: 6px 0 11px 0;
-	padding: 0;
-	width: 96px;
-	height: auto;
-	text-align: right;
-	overflow: hidden;
+	background: #fff;
+	height: 253px;
+  overflow: scroll;
+	padding-top: 6px;
+	left: -24px;
 }
 
-.block-currency  #currency-selector ul li:first-child {
-	margin-top: 15px;
-}
-
-.block-currency  #currency-selector ul li:last-child {
-	margin-bottom: 4px;
-}
-
-.block-currency  #currency-selector ul li {
+/* .block-currency  #currency-selector ul li {
 	font-size: 12px;
 	display: block;
 	float: none;
@@ -3811,17 +3797,33 @@ margin-top: 10%;
 	padding: 0 17px;
 	text-align: left;
 	color: #3f3f47;
-}
+} */
 
-.block-currency  #currency-selector ul li a i {
+/* .block-currency  #currency-selector ul li a i {
 	position: absolute;
 	right: 60px;
-}
+} */
 
-.block-currency  #currency-selector ul li a span {
+/* .block-currency  #currency-selector ul li a span {
 	padding-left: 36px;
+} */
+#currency-selector li {
+	width: 100%;
+	margin-bottom: 3px;
 }
-
+.block-currency  #currency-selector ul li a i{
+	width: 43px !important;
+  display: block;
+  float: left;
+	text-align: center;
+	font-family: urw-din-regular;
+  font-size: 11px;
+	line-height: 2;
+	font-style: normal;
+}
+.select-currency.main-nav-link-dropdown span span {
+  margin-right: 15px;
+}
 .block-currency .block-title {
 	border: 0;
 	background: none;
@@ -4103,6 +4105,7 @@ dt.post-lengthds-lbl {
 }
 .giftcard-fieldset textarea {
 	height: 126px!important;
+	border: 1px solid #d8d8d8;
 }
 /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
@@ -4283,8 +4286,85 @@ dt.post-lengthds-lbl {
 
 /*Need to verify*/
 .wide {
-overflow: hidden;
+	overflow: hidden;
 }
 .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
 	max-width: 100%;
+}
+
+/*Gift Card Detail CSS*/
+.product-gift-card .main-container {
+  margin-top: 8px;
+}
+.giftcard-left-form .cart-amount {
+	border-bottom: 1px solid #d8d8d8;
+  padding: 18px 0 28px;
+}
+.giftcard-left-form .swatch-section, .product-maria-tash-in-store-gift-card .swatch-section{
+	border-bottom: 1px solid #d8d8d8;
+  padding: 13px 0 17px;
+}
+.giftcard-fieldset .field{
+	margin-top: 23px;
+}
+.gift-delivery-section .product-attribute-name, .gift-delivery-section .email_delivery_option2 {
+  margin-bottom: 20px;
+}
+.giftcard-fieldset select.cart-amount, .giftcard-fieldset input, .giftcard-fieldset textarea {
+  background: transparent;
+  width: 100%;
+}
+.giftcard-fieldset select, .product-maria-tash-in-store-gift-card select{
+	background-image: url(../images/redesign/arrow-down-bk.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: 98% 50% !important;
+	border: 1px solid rgba(41,41,41,0.25) !important;
+	background: transparent;
+}
+.date_wrapper-column select {
+  width: 100%;
+}
+.giftcards .div_selector_month {
+  width: 105px;
+}
+.giftcards .div_selector_day {
+  width: 81px;
+}
+.giftcards .div_selector_year {
+  width: 90px;
+}
+.gift-card-faq-link {
+  margin: 17px 0 40px;
+	padding: 0;
+}
+.gift-card-faq-link a{
+	text-decoration: underline;
+}
+.giftcards .add-to-bag, .product-maria-tash-in-store-gift-card .add-to-bag	 {
+  margin-bottom: 7px;
+}
+.giftcards .padder, .product-maria-tash-in-store-gift-card .padder{
+	min-height: auto;
+}
+.product-gift-card .for-bottom-space, .product-maria-tash-in-store-gift-card .for-bottom-space {
+  display: none;
+}
+.product-gift-card .footer, .product-maria-tash-in-store-gift-card .footer{
+	padding-top: 0 !important;
+}
+.product-gift-card .product-detail-parent, .product-maria-tash-in-store-gift-card .product-detail-parent{
+	padding-bottom: 92px;
+}
+.date_wrapper{
+	justify-content: space-between;
+	margin: 0;
+}
+.product-maria-tash-in-store-gift-card .swatch-section .input-box{
+	border-bottom: none;
+}
+.product-maria-tash-in-store-gift-card .swatch-section .input-box{
+	padding: 0;
+}
+.product-maria-tash-in-store-gift-card select {
+  margin-bottom: 11px;
 }

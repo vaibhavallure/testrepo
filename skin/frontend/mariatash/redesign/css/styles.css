@@ -2158,7 +2158,7 @@ body.checkout-onepage-index #advice-validate-email-login-email {
 	margin-right: 70px;
 }
 
-.giftcard-left-form .validation-advice {
+/* .giftcard-left-form .validation-advice {
 	min-height: 13px;
 	margin: -5px 0;
 	font-size: 11px;
@@ -2172,9 +2172,9 @@ body.checkout-onepage-index #advice-validate-email-login-email {
 	position: absolute;
 	bottom: -14px;
 	right: 0;
-}
+} */
 
-#advice-required-entry-date.validation-advice {
+/* #advice-required-entry-date.validation-advice {
 	min-height: 13px;
 	margin: -5px 0;
 	font-size: 11px;
@@ -2184,7 +2184,7 @@ body.checkout-onepage-index #advice-validate-email-login-email {
 	width: 200px;
 	float: right;
 	text-align: right;
-}
+} */
 
 select#region_id {
 	z-index: 1;
@@ -3280,17 +3280,17 @@ textarea:focus, input:focus {
 	z-index: 999;
 }
 
-.form-search .search-autocomplete ul {
+/* .form-search .search-autocomplete ul {
 	border: 1px solid #999;
 	background-color: #f9f5f0;
-}
+} */
 
-.form-search .search-autocomplete li {
+/* .form-search .search-autocomplete li {
 	text-align: left;
 	border-bottom: 1px solid #f4eee7;
 	padding: 2px 8px 1px 8px;
 	cursor: pointer;
-}
+} */
 
 .form-search .search-autocomplete li .amount {
 	float: right;
@@ -4714,14 +4714,14 @@ f /********** Product Prices > */
 	position: relative;
 }
 
-.add-to-box {
+/* .add-to-box {
 	margin: 10px 0;
-}
+} */
 
-.add-to-box .add-to-cart {
-	/*margin:10px 0; border:1px solid #eee; background-color:#f8f8f8; padding:10px; text-align:right;*/
+/* .add-to-box .add-to-cart {
+	/*margin:10px 0; border:1px solid #eee; background-color:#f8f8f8; padding:10px; text-align:right;
 	position: relative;
-}
+} */
 
 .add-to-box .add-to-cart .paypal-logo {
 	float: right;

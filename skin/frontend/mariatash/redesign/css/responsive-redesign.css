@@ -712,6 +712,18 @@
   .navbar-toggler {
     top: 21px !important;
   }
+  .giftcards.product-shop > .row{
+    padding: 0 130px;
+  }
+  .giftcards .div_selector_month{
+    width: 40%;
+  }
+  .giftcards .div_selector_day{
+    width: 30%;
+  }
+  .giftcards .div_selector_year {
+    width: 20%;
+  }
 }
 
 

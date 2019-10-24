@@ -94,7 +94,7 @@
                             </li>
                             <?php $location=Mage::getModel('ecp_menu/menu')->load(1); ?>
                             <li class="icon-item">
-                                <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-bitmap.png'); ?>"></a>
+                                <a class="icon-link" href="<?= $location->getUrl() ?>"><img width="14px" src="<?php echo $this->getSkinUrl('images/redesign/nav-bitmap.png'); ?>"></a>
                             </li>
                             <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
                               <?php $wish=Mage::getModel('ecp_menu/menu')->load(3); ?>
