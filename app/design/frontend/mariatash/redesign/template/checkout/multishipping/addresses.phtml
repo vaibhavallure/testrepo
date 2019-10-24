@@ -150,7 +150,7 @@
                                             </div>
                                 		</div>
                                     	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option multishipping-address-common invisible" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
-                                    		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
+                                    		<p class="para-normal"><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?></p>
                                     	</div>
     								</div>
     							</div>

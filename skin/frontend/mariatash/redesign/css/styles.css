@@ -2959,7 +2959,7 @@ div.wrapper div.page div.main-container div.main div.col-main div.cart-mt div.ca
 	white-space: nowrap;
 }
 
-.btn-remove {
+/* .btn-remove {
 	display: block;
 	overflow: hidden;
 	margin: 1px 4px 0 0;
@@ -2967,7 +2967,7 @@ div.wrapper div.page div.main-container div.main div.col-main div.cart-mt div.ca
 	font-weight: bold;
 	color: #777 !important;
 	text-decoration: none;
-}
+} */
 
 .btn-remove2 {
 	display: block;
@@ -3705,10 +3705,10 @@ textarea:focus, input:focus {
 	width: 322px;
 } */
 
-.block-cart .mini-products-list li.item.last.odd {
+/* .block-cart .mini-products-list li.item.last.odd {
 	background: none;
 	padding-top: 0;
-}
+} */
 
 .block-cart .mini-products-list li.item.last.even {
 	background: none;
@@ -5923,13 +5923,13 @@ ul.crosssell-products-list {
 	margin: 5px 10px 0 0;
 }
 
-.please-wait {
+/* .please-wait {
 	float: right;
-}
+} */
 
-.please-wait img {
+/* .please-wait img {
 	vertical-align: middle;
-}
+} */
 
 .multiple-checkout .box-content .sp-methods #payment_form_authorizenet .input-box .cvv-what-is-this
 {
@@ -7122,10 +7122,10 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	display: none;
 }
 
-.multiple-checkout .product, .multiple-checkout .updateQty,
+/* .multiple-checkout .product, .multiple-checkout .updateQty,
 #shipping_method_form .col2-set {
 	border-bottom: 1px solid #D1D1D1;
-}
+} */
 
 .multiple-checkout .col2-set .col-2 .products .product
 	/*.checkout-multishipping-addresses .multiple-checkout .product*/ {
@@ -7267,12 +7267,12 @@ li#shipping-new-address-form fieldset ul li.fields div.field div.input-box,
 	display: none;
 }
 
-.checkout-multishipping-overview .multiple-checkout form div.col2-set div.col-1,
+/* .checkout-multishipping-overview .multiple-checkout form div.col2-set div.col-1,
 .multiple-checkout .col2-set .col-1.col-narrow {
 	border-right: 1px solid #d1d1d1;
 	padding-right: 27px;
 	width: 260px;
-}
+} */
 
 .multiple-checkout .col2-set .box-sp-methods .box-title {
 	display: none;
