@@ -2,10 +2,7 @@ before_script:
   - echo 'Start Deployment'
 stages:
   - development
-  - redesign
-  - alpha
-  - popup
-  - beta
+  - staging
   - deploy
 
 development:
@@ -24,7 +21,7 @@ development:
     
 alpha_teamwork:
   environment: teamwork
-  stage: alpha
+  stage: staging
   tags:
     - alpha
   only:
@@ -35,7 +32,7 @@ alpha_teamwork:
     
 alpha_redesign:
   environment: redesign
-  stage: redesign
+  stage: staging
   tags:
     - gama
   only:
@@ -44,9 +41,20 @@ alpha_redesign:
     - mage-deploy mt-redesign
     - echo 'Deployed on Nascense Gama'
     
+alpha_redesign_stage:
+  environment: redesign_staging
+  stage: staging
+  tags:
+    - gama
+  only:
+    - redesign_staging
+  script:
+    - mage-deploy redesign-staging
+    - echo 'Deployed on Nascense Gama - Redesign Stage'
+    
 alpha_elasticsearch:
   environment: elasticsearch
-  stage: alpha
+  stage: staging
   tags:
     - alpha
   only:
@@ -57,7 +65,7 @@ alpha_elasticsearch:
     
 alpha_parispopup:
   environment: popup
-  stage: alpha
+  stage: staging
   tags:
     - alpha
   only:
@@ -68,7 +76,7 @@ alpha_parispopup:
 
 alpha_bugfixes:
   environment: bugfixes
-  stage: alpha
+  stage: staging
   tags:
     - alpha
   only:
@@ -79,7 +87,7 @@ alpha_bugfixes:
 
 beta:
   environment: beta
-  stage: beta
+  stage: staging
   tags:
     - beta
   only:
