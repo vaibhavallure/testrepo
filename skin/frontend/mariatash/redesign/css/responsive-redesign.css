@@ -8,9 +8,9 @@
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
   }
-  .nav-links-right li:nth-child(3){
+  /* .nav-links-right li:nth-child(3){
     display: none;
-  }
+  } */
   .main-nav-link li:nth-child(2) {
     margin-right: 18px;
   }
@@ -75,9 +75,9 @@
   .maria-right-menus{
     right: 0;
   }
-  .main-nav-link li:nth-child(3){
+  /* .main-nav-link li:nth-child(3){
     margin-right: 0;
-  }
+  } */
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
     overflow-y: auto;
@@ -455,13 +455,10 @@
   .login-dropdown {
     position: absolute;
     width: 137px;
-    right: 0px;
+    right: 10px;
     top: 22px;
     padding-top: 18px;
     line-height: 25px;
-  }
-  body.cms-index-index.cms-home .login-dropdown{
-    right: -40px;
   }
   .checkoutPopupLoginModel .pop-up-cover{
     width: 520px;
@@ -592,7 +589,7 @@
     width: 380px !important;
   }
   .mobile-main_menu{
-    top: 83px;
+    top: 76px;
   }
   .five-col{
     width: 49%;
@@ -1155,7 +1152,7 @@
     width: 100%;
   }
   .form-search input.input-text{
-    width: 255px;
+    width: 305px;
     height: 25px !important;
   }
   .pop-up-button-set .col{
@@ -1418,6 +1415,9 @@
   }
   .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
     padding: 45px 0;
+  }
+  .login-dropdown{
+    right: 23px;
   }
 }
 

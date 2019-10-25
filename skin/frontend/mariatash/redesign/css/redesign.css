@@ -558,7 +558,7 @@ input, select, textarea{
 .login-dropdown {
   width: 137px;
   line-height: 15px;
-	height: 161px;
+	min-height: 161px;
 	padding: 23px 24px 22px;
 	background: #fff;
 }

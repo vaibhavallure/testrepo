@@ -71,6 +71,12 @@
                                 <li class="icon-item d-lg-none d-block mt-1">
                                     <a class="icon-link" href="<?= $location->getUrl() ?>"><img width="14px" src="<?php echo $this->getSkinUrl('images/redesign/nav-bitmap.png'); ?>"></a>
                                 </li>
+                                <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+                                <?php $wish=Mage::getModel('ecp_menu/menu')->load(3); ?>
+                                <li class="icon-item d-lg-none d-block mt-1">
+                                    <a class="icon-link" href="<?= $wish->getUrl() ?>"><img width="20px" src="<?php echo $this->getSkinUrl('images/redesign/nav-wishlist.png'); ?>"></a>
+                                </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
@@ -98,15 +104,15 @@
                             </li>
                             <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
                               <?php $wish=Mage::getModel('ecp_menu/menu')->load(3); ?>
-                            <li class="icon-item">
-                                <a class="icon-link" href="<?= $wish->getUrl() ?>"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-wishlist.png'); ?>"></a>
+                            <li class="icon-item d-lg-block d-none">
+                                <a class="icon-link" href="<?= $wish->getUrl() ?>"><img width="20px" src="<?php echo $this->getSkinUrl('images/redesign/nav-wishlist.png'); ?>"></a>
                             </li>
                           <?php endif; ?>
                             <li class="icon-item"><div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div></li>
 
                             <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
                             <li class="icon-user position-relative">
-                              <a><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a>
+                              <a><img width="18px" src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a>
 
                               <div class="login-dropdown-cover">
                                 <ul class="login-dropdown">
@@ -119,7 +125,7 @@
                               </div>
                             </li>
                             <?php else: ?>
-                                <li class="icon-item" id="sign_in_label"><a href="javascript:void(0)"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a></li>
+                                <li class="icon-item" id="sign_in_label"><a href="javascript:void(0)"><img width="18px" src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a></li>
                             <?php endif; ?>
                         </ul>
                     </div>
