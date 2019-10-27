@@ -3402,9 +3402,9 @@ margin-top: 10%;
 #allow-gift-messages-for-items-container .product-img-box {
   margin-bottom: 25px;
 }
-.select-shipping-method.select-type-one.validate-select {
+/* .first-shipment-method, .second-shipment-method {
   margin-bottom: 23px;
-}
+} */
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
 }
@@ -3442,10 +3442,13 @@ margin-top: 10%;
 .product-description-section:last-child {
 	border: none;
 }
-#backordered-two-ship, #ordered-two-ship{
-	margin-top: 30px;
+#ordered-two-ship{
+	margin-top: 10px;
   border-top: 1px solid #d8d8d8;
   padding: 15px 0;
+}
+#backordered-two-ship{
+	padding: 15px 0;
 }
 #checkout-review-table thead {
   border-bottom: 2px solid #d8d8d8;
@@ -3454,7 +3457,7 @@ margin-top: 10%;
   border-bottom: 1px solid #d8d8d8;
 }
 #checkout-delivery-option-load .control {
-  margin-bottom: 13px;
+  margin-bottom: 14px;
 }
 .method-count {
   margin-top: 22px;
@@ -3487,16 +3490,16 @@ margin-top: 10%;
 .gift-message-section .row {
   justify-content: flex-end;
 }
-.checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span,
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left, .checkout-cart-index #mt-shipping-method-fancybox span{
+#shopping-cart-totals-table .grand_total_section span.total-title, #shopping-cart-totals-table .cart-subtotals-left span,
+#shopping-cart-totals-table .cart-subtotals-left, #mt-shipping-method-fancybox span, #shopping-cart-totals-table .cart-subtotals-left, #mt-shipping .mt-shipping-method span{
 	font-size: 13px;
 	font-family: urw-din-xlight;
 }
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-right span.price{
+#shopping-cart-totals-table .cart-subtotals-right span.price{
 	font-size: 13px;
 	font-family: urw-din-regular;
 }
-.checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
+#shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
 	font-size: 18px;
 }
 .giftcard-output-content {
@@ -3517,6 +3520,24 @@ margin-top: 10%;
 #co-shipping-form .control label {
   margin-bottom: 26px !important;
 	margin-top: 12px;
+}
+.checkout-onepage-index .buttons-set.disabled {
+  text-align: right;
+}
+.checkout-onepage-index .please-wait{
+	padding: 0 0 10px;
+}
+.checkout-onepage-index #opc-payment fieldset{
+	margin: 10px 0 0px;
+}
+.checkout-two-shipment-shipping-method-mt {
+  margin-bottom: 30px;
+}
+#checkout-review-submit .checkout-block {
+  margin-bottom: 20px;
+}
+.checkout-onepage-index #checkout-review-table .cart_col4{
+	display: table-cell;
 }
 /* cccc */
 /*MINI CART CSS*/
@@ -4210,12 +4231,14 @@ dt.post-lengthds-lbl {
 /*Wholesale separate css*/
 .wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove {
   margin-top: 37px;
+	margin-bottom: 32px;
 }
 .wholesale-avail-row {
   border-bottom: 1px solid #d8d8d8;
 }
 .data-table.cart-table .messages.wholesale-avail-row .item-msg{
 	margin-bottom: 20px;
+	max-width: 402px;
 }
 
 /*Address Override*/
@@ -4296,9 +4319,9 @@ dt.post-lengthds-lbl {
 .wide {
 	overflow: hidden;
 }
-.checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
+/* .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
 	max-width: 100%;
-}
+} */
 
 /*Gift Card Detail CSS*/
 .product-gift-card .main-container {

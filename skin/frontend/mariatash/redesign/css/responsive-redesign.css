@@ -721,6 +721,9 @@
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
+  .data-table.cart-table .messages.wholesale-avail-row .item-msg{
+    max-width: 382px;
+  }
 }
 
 
@@ -875,6 +878,9 @@
   .gift-card-main .faq-image-section img {
     padding-right: 10px;
     width: 100%;
+  }
+  .data-table.cart-table .messages.wholesale-avail-row .item-msg{
+    max-width: 332px;
   }
 }
 
@@ -1299,13 +1305,13 @@
     margin-bottom: 9px;
   }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
-  #shopping-cart-form tbody{
+  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody{
     display: grid;
   }
-  #shopping-cart-form thead{
+  #shopping-cart-form thead, .checkout-onepage-index #checkout-review-table thead{
     display: none;
   }
-  #shopping-cart-table tbody td:before {
+  #shopping-cart-table tbody td:before, .checkout-onepage-index #checkout-review-table tbody td:before {
     content: attr(data-th);
     font-size: 12px;
     font-family: urw-din-bold;
@@ -1314,7 +1320,7 @@
     letter-spacing: 1.08px;
     line-height: 0px;
   }
-  #shopping-cart-table .price{
+  #shopping-cart-table .price, .checkout-onepage-index #checkout-review-table .price{
     font-size: 15px;
     display: block;
   }
@@ -1343,12 +1349,13 @@
     float: left;
     margin-top: 0;
   }
-  #shopping-cart-table td.cart_col2{
+  #shopping-cart-table td.cart_col2, .checkout-onepage-index #checkout-review-table tbody td.cart_col1{
     width: 100%;
     display: block;
     min-height: 120px;
   }
-  #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5 {
+  #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5,
+  #checkout-review-table tbody td.cart_col3, #checkout-review-table tbody td.cart_col4, #checkout-review-table tbody td.cart_col5 {
     width: 28%;
     display: block;
     float: left;
@@ -1361,11 +1368,23 @@
     float: left;
     flex: 0 0 33.33%;
   }
-  #shopping-cart-table .cart_col3 {
+  #shopping-cart-table .cart_col3, #checkout-review-table .cart_col3 {
     text-align: left !important;
   }
   #shopping-cart-table .cart_col4{
     text-align: center;
+  }
+  .checkout-onepage-index #checkout-review-table{
+    border-top: 1px solid #d8d8d8;
+  }
+  .checkout-onepage-index #checkout-review-table tr.messages-tr {
+    padding: 20px 0;
+  }
+  .checkout-onepage-index #checkout-review-table tr.messages{
+    padding-bottom: 20px;
+  }
+  .checkout-onepage-index #checkout-review-table .quantity-count{
+    font-size: 12px;
   }
   .messages-tr .product-name a{
     font-size: 15px;
@@ -1742,4 +1761,7 @@
 .navbar-toggler{
     top: 28px;
 }
+}
+@media (min-width:1025px) {
+
 }

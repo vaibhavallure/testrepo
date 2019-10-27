@@ -6363,10 +6363,10 @@ ul.crosssell-products-list {
 	font-weight: normal;
 }
 
-.checkout-onepage-index #opc-payment fieldset {
+/* .checkout-onepage-index #opc-payment fieldset {
 	padding: 0 0 0 11px;
 	margin: 24px 0 9px;
-}
+} */
 
 .checkout-onepage-index #opc-payment #checkout-shipping-method-load {
 	display: block;
