@@ -375,10 +375,14 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .checkout-multishipping-addresses #shopping-cart-totals-table span.total-title,
-.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price, .gift-card-faq-link a {
+.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .gift-card-faq-link a {
     font-size: 18px;
     font-family: urw-din-medium;
+}
+
+.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price{
+	font-size: 18px !important;
+	font-family: urw-din-regular;
 }
 
 /* STANDARD CSS ENDED */

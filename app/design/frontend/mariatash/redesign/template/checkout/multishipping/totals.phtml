@@ -93,14 +93,14 @@
 				<span class="shipping-label para-lighter"><?= $this->__('Shipping')?></span>
 			</td>
 			<td class="text-right">
-				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
 			</td>
 		</tr>
 		<?php if($discount != 0): ?>
 		<tr>
-			<td colspan="1" class="cart-subtotals-left"><?= $this->__('Discount')?></td>
+			<td colspan="1" class="cart-subtotals-left para-lighter"><?= $this->__('Discount')?></td>
 			<td class="cart-subtotals-right">
-				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($discount)?></span>
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($discount)?></span>
 			</td>
 		</tr>
 		<?php endif;?>
@@ -113,7 +113,7 @@
 					<span class="total-title text-uppercase para-lighter"><?= $this->__('Total')?></span>
 			</td>
 			<td class="cart-subtotals-right">
-				<span class="price medium-price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span>
+				<span class="price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span>
 			</td>
 		</tr>
 	</tfoot>
