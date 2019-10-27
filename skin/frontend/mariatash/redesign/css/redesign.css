@@ -90,6 +90,11 @@ h4{
 	line-height: 25px;
 }
 
+.para-lighter{
+	font-family: urw-din-xlight;
+	font-size: 13px;
+}
+
 .para-bold{
 	font-family: urw-din-bold;
 	font-size: 15px;
@@ -3491,7 +3496,7 @@ margin-top: 10%;
   justify-content: flex-end;
 }
 #shopping-cart-totals-table .grand_total_section span.total-title, #shopping-cart-totals-table .cart-subtotals-left span,
-#shopping-cart-totals-table .cart-subtotals-left, #mt-shipping-method-fancybox span, #shopping-cart-totals-table .cart-subtotals-left, #mt-shipping .mt-shipping-method span{
+.cart-subtotals-left, #mt-shipping-method-fancybox span, .cart-subtotals-left, #mt-shipping .mt-shipping-method span{
 	font-size: 13px;
 	font-family: urw-din-xlight;
 }
