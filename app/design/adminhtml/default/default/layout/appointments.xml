@@ -144,11 +144,20 @@
   </appointments_adminhtml_appointments_new>
 
 
+	<appointments_adminhtml_appointments_newsystem>
+		<reference name="content">
+			<block type="core/template" name="book_appointment_special" template="appointments/book_appointment_new.phtml" />
+		</reference>
+	</appointments_adminhtml_appointments_newsystem>
+
+
+
 	<appointments_adminhtml_appointments_newspecial>
 		<reference name="content">
 			<block type="core/template" name="book_appointment_special" template="appointments/book_appointment_special.phtml" />
 		</reference>
 	</appointments_adminhtml_appointments_newspecial>
+
 	<!--     <appointments_adminhtml_appointments_print>
         <reference name="head">
 

@@ -34,7 +34,7 @@ $typeId = $_item->getProduct()->getTypeId();
 ?>
 
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
-    <td class="cart_col1"> 
+    <td class="cart_col1">
         <?php if ($this->hasProductUrl()):?>
             <a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
         <?php endif;?>
@@ -82,7 +82,7 @@ $typeId = $_item->getProduct()->getTypeId();
             <!--div class="qty-wrap">
                 <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
                 <span<?php if ($this->getQty() == 1) echo ' style="display:none;"' ?>>×</span>
-            </div-->                        
+            </div-->
 
         </div>
 
@@ -202,10 +202,10 @@ $typeId = $_item->getProduct()->getTypeId();
         <div class="w-remove">
         <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov"><?php echo $this->__('Remove ');?></a>
         </div>
-        <?php if ($this->helper('customer')->isLoggedIn()): ?>            
+        <?php if ($this->helper('customer')->isLoggedIn()): ?>
          <div class="ad-to-fav">
                 <a id="saveToFave" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">Save to Favorites</a>
-            </div> 
+            </div>
             <script type="text/javascript">
             	jQuery("#saveToFave").click(function(){
             		if(jQuery('select.color-attribute').val() == ''){

@@ -927,4 +927,50 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $show;
     }
+
+
+    public function isRealAppointmentId($appointment_id,$getColumnValueOf=null)
+    {
+        $collection =  Mage::getModel('appointments/appointments')->getCollection();
+        $collection->addFieldToFilter('id', $appointment_id);
+
+        if(!$collection->getSize())
+            return false;
+
+        if($getColumnValueOf)
+            return $collection->getFirstItem()->getData($getColumnValueOf);
+        else
+            return true;
+    }
+
+    public function getStoreData($storeId,$key){
+        $configData     = $this->getAppointmentStoreMapping();
+        $storeKey = array_search ($storeId, $configData['stores']);
+        $data = $configData[$key][$storeKey];
+
+        return $data;
+    }
+
+    public function getActiveStore()
+    {
+        $configData     = $this->getAppointmentStoreMapping();
+        $storesAdded    = $configData['stores'];
+        $storesEnabled  = $configData['enable_store'];
+        $appearsName    = $configData['appears'];
+        $activeStores   = array();
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+            $virtualStoreHelper = Mage::helper("allure_virtualstore");
+            $stores = $virtualStoreHelper->getVirtualStores();
+        }else{
+            $stores = Mage::app()->getStores();
+        }
+
+        foreach ($storesAdded as $key=>$val){
+            if($key == 0 || $storesEnabled[$key]==0){
+                continue;
+            }
+            $activeStores[$val] = ($appearsName[$key])?$appearsName[$key]:$stores[$val]->getName();
+        }
+        return $activeStores;
+    }
 }
