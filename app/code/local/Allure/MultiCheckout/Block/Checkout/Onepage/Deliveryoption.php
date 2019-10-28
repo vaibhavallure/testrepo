@@ -1,17 +1,24 @@
 <?php
-
+/**
+ * Onepage checkout delivery option step block
+ * that is used for customer choose they want
+ * order in one shipment(available product) & 
+ * two shipment(non available product).
+ */
 class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Checkout_Block_Onepage_Abstract
 {
     protected function _construct ()
     {
-        $this->getCheckout()->setStepData("delivery_option",
-            array(
+        $this->getCheckout()->setStepData("delivery_option",array(
                 "label" => Mage::helper("checkout")->__("Delivery Option"),
                 "is_show" => $this->isShow()
             ));
         parent::_construct();
     }
 
+    /**
+     * get customer checkout quote.
+     */
     public function getQuote ()
     {
         return Mage::getSingleton("checkout/session")->getQuote();
@@ -97,19 +104,19 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         return $_checkoutHelper->isQuoteContainsBackorderProduct();
     }
 
+    /**
+     * check shipping address country is US or not.
+     * @return boolean
+     */
     public function isUSCountry ()
     {
+        $isUSCountry = false;
         $countryName = $this->getQuote()
             ->getShippingAddress()
             ->getData('country_id');
-
         $country = Mage::getModel('directory/country')->load($countryName);
-
-        $isUSCountry = false;
-
-        if ($country->getId() == "US")
+        if (strtoupper($country->getId()) == "US")
             $isUSCountry = true;
-
         return $isUSCountry;
     }
 
@@ -130,16 +137,25 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
 
     public function getShipmentStatus ()
     {
-        $is_inorder = $this->isQuoteContainsAvailableProducts();
-        $is_backorder = $this->isQuoteContainsBackorder();
-
+        //$is_inorder = $this->isQuoteContainsAvailableProducts();
+        //$is_backorder = $this->isQuoteContainsBackorder();
+        
+        /** new code added here. */
+        Mage::log("ship",Zend_Log::DEBUG,'abc.log',true);
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
+        $quoteItemStatus = $_checkoutHelper->getQuoteItemStockStatus();
+        $is_inorder = isset($quoteItemStatus["instock"]) ? $quoteItemStatus["instock"] : 0;
+        $is_backorder = isset($quoteItemStatus["backorder"]) ? $quoteItemStatus["backorder"] : 0;
+        $is_backorder_with_some_available_qty = isset($quoteItemStatus["available"]) ? $quoteItemStatus["available"] : 0;
+        
+        
         $is_two_ship = $is_inorder && $is_backorder;
 
         /* this function check if back order product contain any qty greater than one
     * jira number MT-906
     * start-----------------------
     * */
-        $is_backorder_with_some_available_qty = $this->isQuoteContainsBackorderWithInStockQty();
+        //$is_backorder_with_some_available_qty = $this->isQuoteContainsBackorderWithInStockQty();
         if(!$is_two_ship && $is_backorder)
             $is_two_ship = $is_backorder_with_some_available_qty && $is_backorder;
         /*end----------------------------------------------*/
