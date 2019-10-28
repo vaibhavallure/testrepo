@@ -44,6 +44,9 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
             return $storep;
         elseif ($appointment_id)
             return $this->helper()->isRealAppointmentId($appointment_id,"store_id");
+        elseif (Mage::app()->getRequest()->getParam("id"))
+            return $this->helper()->isRealAppointmentId(Mage::app()->getRequest()->getParam("id"),"store_id");
+
 
         $storeCode = $this->getRequest()->getParam('code');
         $storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
@@ -135,5 +138,20 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
     public function helper()
     {
         return Mage::helper("appointments/data");
+    }
+    public function isModify()
+    {
+        $controller=Mage::app()->getRequest()->getControllerName();
+        $action=Mage::app()->getRequest()->getActionName();
+        $id=$this->getPara("id");
+
+        if($controller=="book" && $action=="index" && !empty($id))
+            return true;
+        else
+            return false;
+    }
+    public function getPara($key)
+    {
+        return Mage::app()->getRequest()->getParam($key);
     }
 }

@@ -1,6 +1,6 @@
 <?php
-var_dump(Mage::registry('appointment_modified'));
-
+if($this->isAdmin())
+    echo "<style>header{display: none} .footer{display: none}</style>";
 ?>
 
 
