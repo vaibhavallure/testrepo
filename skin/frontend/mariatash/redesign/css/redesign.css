@@ -4417,7 +4417,7 @@ dt.post-lengthds-lbl {
   margin-bottom: 120px;
 }
 .egift-text{
-	text-transform: none;
+	text-transform: none !important;
 }
 .date-input-info.text-left {
 	margin-top: 10px;
