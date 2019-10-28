@@ -7,6 +7,14 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
 {
     public function indexAction()
     {
+        if(Mage::helper('core')->isModuleEnabled('Allure_MultiCheckout')){
+            $_checkoutHelper = Mage::helper('allure_multicheckout');
+            $_checkoutHelper->changeCustomQuoteStatus();
+            if($this->_getQuote()){
+                $this->_getQuote()->setDeliveryMethod('one_ship')->save();
+            }
+        }
+        
         $cart = $this->_getCart();
         if ($cart->getQuote()->getItemsCount()) {
         

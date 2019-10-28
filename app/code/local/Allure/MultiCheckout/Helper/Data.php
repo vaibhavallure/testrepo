@@ -149,4 +149,29 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
             $status = true;
             return $status;
     }
+    
+    public function changeCustomQuoteStatus(){
+        $instockSession = Mage::getSingleton("allure_multicheckout/ordered_session");
+        $backorderSession = Mage::getSingleton("allure_multicheckout/backordered_session");
+        $orederdQuoteId = $instockSession->getOrdered();
+        $backOrderdQuoteId = $backorderSession->getBackorder();
+        if (isset($orederdQuoteId) && ! empty($orederdQuoteId)) {
+            if ($instockSession->getQuote()->getId() != 0 && $instockSession->getQuote()->getId() != $this->getQuote()->getId()) {
+                $instockSession->getQuote()
+                    ->setIsActive(false)
+                    ->save();
+            }
+            $instockSession->setOrdered(null);
+        }
+        
+        if (isset($backOrderdQuoteId) && ! empty($backOrderdQuoteId)) {
+            if ($backorderSession->getQuote()->getId() != 0 &&
+                $backorderSession->getQuote()->getId() != $this->getQuote()->getId()) {
+                $backorderSession->getQuote()
+                    ->setIsActive(false)
+                    ->save();
+            }
+            $backorderSession->setBackorder(null);
+        }
+    }
 }

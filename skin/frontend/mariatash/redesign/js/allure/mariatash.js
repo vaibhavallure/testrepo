@@ -293,5 +293,5 @@ var setLoader = function(){
 
 var unsetLoader= function(){
     jQuery.fancybox.hideLoading();
-    jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+    jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
 }
