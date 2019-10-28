@@ -1765,3 +1765,14 @@
 @media (min-width:1025px) {
 
 }
+@media (min-width:1200px) and (max-width:1430px) {
+  .inner-box{
+    margin-left: 57px;
+  }
+  .catalog-category-view .list-mt-w .light-button{
+    width: 110px;
+  }
+  .list-mt-w .actions > .row img + div.col {
+    padding-right: 0;
+  }
+}
