@@ -24,7 +24,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php 
+<?php
     $checkout = Mage::getSingleton('checkout/session')->getQuote();
     $billing = $checkout->getBillingAddress();
     $shipping = $checkout->getShippingAddress();
@@ -38,7 +38,7 @@
        		<?= $shipping->getFormated('html');?>
       	</address>
       <?php if( $this->helper('customer')->isLoggedIn() ): ?>
-      	<span class="col">
+      	<span class="col review-edit text-right">
       		<a class="link-button" href="javascript: accordion.openSection('opc-shipping');">
       			<?= $this->__('Edit')?>
       		</a>
@@ -56,7 +56,7 @@
         	<?= $billing->getFormated('html');?>
       	</address>
 		<?php if( $this->helper('customer')->isLoggedIn() ): ?>
-        	<span class="col">
+        	<span class="col review-edit text-right">
         		<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?= $this->__('Edit')?></a>
         	</span>
 		<?php endif; ?>
@@ -71,7 +71,7 @@
     	<div class="col float-left">
     		<p class="para-normal"><?= $shipping->getShippingDescription() ?></p>
 		</div>
-		<span class="col">
+		<span class="col review-edit text-right">
 			<a class="link-button" href="javascript: accordion.openSection('opc-shipping_method');"><?= $this->__('Edit')?></a>
 		</span>
 	</div>
@@ -83,7 +83,7 @@
 	</h4>
   	<div class="row">
   		<div class="col float-left">
-            <?php 
+            <?php
             $payment = $checkout->getPayment();
             switch ($payment->getMethod()) {
                 case 'authorizenet':
@@ -98,7 +98,7 @@
             }
             ?>
   		</div>
-		<span class="col">
+		<span class="col review-edit text-right">
 			<a class="link-button" href="javascript: accordion.openSection('opc-payment');"><?= $this->__('Edit')?></a>
 		</span>
 	</div>
@@ -120,23 +120,28 @@
         <?php echo $this->__("All orders are charged in ".$currentCurrency.". You will be charged ".$baseGrandTotal);?>
         </p>
         <?php endif;?>
-        <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> 
+        <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?>
         	<a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a>
         </p>
         <div class="checkout-privacy-policy">
         	<p class="control f-left">
-                <label for="checkout_privacy_confirm" class="custom-checkbox para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                <label for="checkout_privacy_confirm" class="custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
                 	<input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
                 	<span class="checkmark"></span>
                 </label>
        		</p>
     	</div>
+      <div class="checkout-block">
+        <?php
+            echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
+        ?>
+        </div>
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
         </span>
     </div>
- 	<p class="text-right back-link"><a href="#" onclick="checkout.back(); return false;"><?php echo $this->__('Back') ?></a></p>
+ 	<!-- <p class="text-right back-link"><a href="#" onclick="checkout.back(); return false;"><?php //echo $this->__('Back') ?></a></p> -->
     <script type="text/javascript">
     //<![CDATA[
         review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder') ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));

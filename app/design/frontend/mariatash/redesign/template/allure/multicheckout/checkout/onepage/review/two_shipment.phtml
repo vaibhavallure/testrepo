@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
- * Onepage checkout two shipment 
+ * Onepage checkout two shipment
  * review page.
- * 
+ *
  */
 ?>
-<?php 
+<?php
     $count = 0;
     $mainQuote = Mage::getSingleton('checkout/session')->getQuote();
     $billing = $mainQuote->getBillingAddress();
@@ -24,7 +24,7 @@
   				</address>
 			</div>
             <?php if( $this->helper('customer')->isLoggedIn() ): ?>
-            <span class="col">
+            <span class="col review-edit text-right">
             	<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?=$this->__('Edit')?></a>
             </span>
             <?php endif; ?>
@@ -51,7 +51,7 @@
             }
             ?>
 			</div>
-			<span class="col">
+			<span class="col review-edit text-right">
 				<a class="link-button" href="javascript: accordion.openSection('opc-payment');"><?=$this->__('Edit')?></a>
 			</span>
 		</div>
@@ -59,7 +59,7 @@
 </div>
 
 <?php if(isset($one_ship) && !empty($one_ship)):?>
-<?php 
+<?php
 	$count += 1;
     $quote = Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
     $quote->collectTotals()->save();
@@ -88,13 +88,13 @@
     			<address><?=$shipping->getFormated('html')?></address>
     		</div>
             <?php if( $this->helper('customer')->isLoggedIn() ): ?>
-                <span class="col">
+                <span class="col review-edit text-right">
                 	<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?= $this->__('Edit')?></a>
                 </span>
             <?php endif; ?>
     	</div>
     </div>
-    
+
     <div class="checkout-two-shipment-shipping-method-mt">
     	<h4 class='info-text-two'>
     		<?= $this->__('Shipping method') ?>
@@ -105,12 +105,12 @@
     				<?= $shipping->getShippingDescription() ?>
     			</p>
     		</div>
-    		<span class="col">
+    		<span class="col review-edit text-right">
     			<a class="link-button" href="javascript: accordion.openSection('opc-shipping_method');"><?= $this->__('Edit')?></a>
     		</span>
     	</div>
     </div>
-    
+
     <?php echo $this->getChildHtml('items_after'); ?>
     <div id="checkout-review-table-wrapper">
         <table class="data-table cart-table-items" id="checkout-review-table">
@@ -127,8 +127,8 @@
             <?php endforeach ?>
         </table>
     </div>
-    
-    
+
+
 </div>
 <?php endif;?>
 
@@ -162,7 +162,7 @@
     			<address><?= $shipping->getFormated('html')?></address>
     		</div>
             <?php if( $this->helper('customer')->isLoggedIn() ): ?>
-                <span class="col">
+                <span class="col review-edit text-right">
                 	<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?=$this->__('Edit')?></a>
                 </span>
             <?php endif; ?>
@@ -178,12 +178,12 @@
     			<?= $shipping->getShippingDescription()?>
     			</p>
     		</div>
-    		<span class="col">
+    		<span class="col review-edit text-right">
     			<a class="link-button" href="javascript: accordion.openSection('opc-shipping_method');"><?=$this->__('Edit')?></a>
     		</span>
     	</div>
     </div>
-    
+
     <?php echo $this->getChildHtml('items_after'); ?>
 
     <div id="checkout-review-table-wrapper">
@@ -224,6 +224,20 @@
 </script>
 <div id="checkout-review-submit" class="two-shipment">
     <?php echo $this->getChildHtml('agreements') ?>
+    <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "Place Order" Below.') ?></p>
+      <div class="checkout-privacy-policy">
+          <p class="control">
+                <label for="checkout_privacy_confirm" class="mt-custom-checkbox custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link link-button" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                <span class="checkmark"></span>
+                </label>
+          </p>
+      </div>
+      <div class="checkout-block">
+        <?php
+            echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
+        ?>
+        </div>
     <div class="buttons-set" id="review-buttons-container">
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
@@ -236,17 +250,8 @@
         	<?= $this->__("All orders are charged in ".$currentCurrency.". You will be charged ".$baseGrandTotal);?>
         </p>
         <?php endif;?>
-        <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "Place Order" Below.') ?></p>
-    	<div class="checkout-privacy-policy">
-        	<p class="control">
-                <label for="checkout_privacy_confirm" class="mt-custom-checkbox custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link link-button" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
-                <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
-                <span class="checkmark"></span>
-                </label>
-       		</p>
-    	</div>
     </div>
-    <p class="link-button back-link"><a href="#" onclick="checkout.back(); return false;"><?php echo $this->__('Back') ?></a></p>
+    <!-- <p class="link-button back-link"><a href="#" onclick="checkout.back(); return false;"><//?php echo $this->__('Back') ?></a></p> -->
     <script type="text/javascript">
     //<![CDATA[
         review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/successorder') ?>', $('checkout-agreements'));

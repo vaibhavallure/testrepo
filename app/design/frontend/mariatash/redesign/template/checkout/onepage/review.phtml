@@ -28,6 +28,22 @@
     <?php echo $this->getChildHtml('info') ?>
 </div>
 
+<?php $_checkoutHelper = Mage::helper('allure_multicheckout');?>
+<?php $mainQuote = Mage::getSingleton('checkout/session')->getQuote();?>
+<?php if((strtolower($mainQuote->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP))):?>
+  <script type="text/javascript">
+  //<![CDATA[
+      review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/successorder') ?>', $('checkout-agreements'));
+  //]]>
+  </script>
+<?php else: ?>
+  <script type="text/javascript">
+  //<![CDATA[
+      review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder') ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
+  //]]>
+  </script>
+<?php endif?>
+
 <script>
 function placeOrder(){
 	var checkoutPrivacyPolicySelector = jQuery(".checkout-privacy-policy #checkout_privacy_confirm");

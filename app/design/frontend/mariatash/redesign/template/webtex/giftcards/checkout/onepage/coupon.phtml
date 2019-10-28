@@ -8,7 +8,7 @@
 $quote = Mage::getModel('checkout/cart')->getQuote();
 $codeExists = ($quote->getCouponCode()) ? true : false;
 ?>
-<div class='promoDiv'>
+<div class='promoDiv row'>
     <div class="coupons col-12">
 		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
 		<div class="discount row">
