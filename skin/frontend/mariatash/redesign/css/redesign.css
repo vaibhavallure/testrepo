@@ -15,6 +15,10 @@ h1{
   letter-spacing: 0;
 }
 
+h1.mt-logo-onscroll {
+	font-size: 22px !important;
+}
+
 h2, h3{
 	font-family: urw-din;
 }
@@ -52,6 +56,11 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0.25px;
 	line-height: 17px;
+}
+
+.info-text-one, .login-dropdown li a{
+	font-family: urw-din-regular;
+	color: rgba(41,41,41,0.90);
 }
 
 .para-normal,
@@ -362,7 +371,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 }
 
 .medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .checkout-multishipping-addresses #shopping-cart-totals-table span.total-title,
-.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price {
+.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price, .gift-card-faq-link a {
     font-size: 18px;
     font-family: urw-din-medium;
 }
@@ -510,22 +519,14 @@ input, select, textarea{
   height: 10px;
   margin-top: 3px;
 }
-
 .login-dropdown li {
-	background: white;
-	text-align: center;
-	padding: 2px 0px;
-	width: 100px;
-	height: 25px;
-}
-.login-dropdown li:first-child {
-  padding-top: 5px;
+	text-align: right;
+	width: 100%;
+	margin-bottom: 8px;
 }
 .login-dropdown li a {
-  color: #292929;
-	font-size: 12px;
-  letter-spacing: 1px;
-  font-family: urw-din-light;
+	font-size: 11px;
+  letter-spacing: 0.33px;
 }
 .login-dropdown ul{
 	padding: 0px;
@@ -547,16 +548,27 @@ input, select, textarea{
   float: none;
 }
 
-.login-dropdown {
-  position: absolute;
-  width: 137px;
-  right: -22px;
-  top: 22px;
-	padding-top: 10px;
-  line-height: 15px;
+.login-dropdown-cover{
+	position: absolute;
+	right: -25px;
+  top: 16px;
+	padding-top: 20px;
 }
-body.cms-index-index.cms-home .login-dropdown{
-	right: -40px;
+
+.login-dropdown {
+  width: 137px;
+  line-height: 15px;
+	height: 161px;
+	padding: 23px 24px 22px;
+	background: #fff;
+}
+.user-sign-out {
+  border-top: 1px solid #d8d8d8;
+  padding-top: 8px;
+  margin-bottom: 0 !important;
+}
+.user-address{
+	margin-bottom: 13px !important;
 }
 
 #narrow-by-list li div dt{
@@ -675,9 +687,9 @@ nav.mariatash-header {
   float: left;
 }
 
-.icon-bar .icon-item:last-child {
+/* .icon-bar .icon-item:last-child {
   margin-left: 34px;
-}
+} */
 .icon-bar .icon-item .icon-link img {
   width: 18px;
 }
@@ -1429,12 +1441,18 @@ input[type="checkbox"]:checked+label:before {
 }
 .number-circle span {
   position: absolute;
-  top: -30px;
+  top: -22px;
   right: 0;
   bottom: 0;
-  left: 14px;
+  left: 7px;
   font-family: urw-din-bold;
   font-size: 9px;
+	border: 1px solid #d8d8d8;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  padding: 2px 0 0 5px;
+  background: #fff;
 }
 #top-nav > li{
   font-family: urw-din-medium;
@@ -1498,7 +1516,6 @@ input[type="checkbox"]:checked+label:before {
 }
 .nav-links-left span {
   color: #fff;
-  text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1px;
   font-family: urw-din-light;
@@ -1507,9 +1524,9 @@ input[type="checkbox"]:checked+label:before {
 .select-currency img {
 	margin: 0 0 5px 3px;
 }
-.main-nav-link li:nth-child(2) {
+/* .main-nav-link li:nth-child(2) {
   margin-right: 16px;
-}
+} */
 
 /*Navigation dropdown*/
 .main-nav-title .sub-menu .sub{
@@ -1593,6 +1610,7 @@ input[type="checkbox"]:checked+label:before {
   bottom: 15px;
   width:100%;
 }
+
 .reg-price, .image-text h6, .overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
@@ -1933,7 +1951,7 @@ div#narrow-by-list {
 }
 
 /* FAQ PAGE CSS */
-.customer-care-page .faq-question span:after{
+.faq-question span:after{
   background: url(../images/redesign/plus.png) no-repeat;
   content: '';
   height: 30px;
@@ -1944,7 +1962,7 @@ div#narrow-by-list {
   transition: 0.5s;
   cursor: pointer;
 }
-.customer-care-page .faq-question.active span:after{
+.faq-question.active span:after{
   background: url(../images/redesign/minus.png) no-repeat;
   background-position: right;
   content: '';
@@ -1982,10 +2000,24 @@ div#narrow-by-list {
 }
 .faq-main {
   margin-top: 36px !important;
-  margin-bottom: 43px !important;
+  margin-bottom: 36px !important;
 }
 .faq-image-section img {
   padding-right: 20px;
+}
+/*Gift Card FAQ*/
+.gift-card-main .faq-image-section img {
+  padding-right: 14px;
+}
+.gift-card-main{
+	margin-top: 18px !important;
+	margin-bottom: 84px !important;
+}
+.gift-card-main h1 {
+  margin-bottom: 42px;
+}
+#faq-one {
+  margin-top: -6px; /*Font is creating lil space from top. This CSS to make qustion align with the image.*/
 }
 
 /* POP-UP Changes */
@@ -2346,14 +2378,14 @@ input[type='radio']{
 .products-grid .availability{
 	line-height: 13px;
 }
-#currency-selector {
+/* #currency-selector {
   position: absolute;
   top: 20px;
   right: -24px;
   z-index: 99999;
   width: 96px;
   height: auto;
-}
+} */
 
 /* BREADCRUM */
 .breadcrumbs li strong{
@@ -2364,7 +2396,7 @@ input[type='radio']{
   top: 1px;
   right: 10px;
 }
-.home span {
+.home span, .login-dropdown li.user-sign-out a {
   font-family: urw-din-xlight;
 }
 .breadcrumbs li{
@@ -3407,9 +3439,6 @@ margin-top: 10%;
 .multi-column-2 .gift-messages:last-child {
   margin-top: 24px;
 }
-.login-dropdown li:first-child {
-  padding-top: 5px;
-}
 .product-description-section:last-child {
 	border: none;
 }
@@ -3753,31 +3782,18 @@ margin-top: 10%;
 
 .block-currency  #currency-selector {
 	position: absolute;
-	top: 20px;
-	/*right: 0;*/
+	top: 21px;
 	z-index: 99999;
-	width: 96px;
+	width: 222px;
 	height: auto;
-	background: white;
-}
-.block-currency  #currency-selector ul {
-	margin: 6px 0 11px 0;
-	padding: 0;
-	width: 96px;
-	height: auto;
-	text-align: right;
-	overflow: hidden;
+	background: #fff;
+	height: 253px;
+  overflow: scroll;
+	padding-top: 6px;
+	left: -24px;
 }
 
-.block-currency  #currency-selector ul li:first-child {
-	margin-top: 15px;
-}
-
-.block-currency  #currency-selector ul li:last-child {
-	margin-bottom: 4px;
-}
-
-.block-currency  #currency-selector ul li {
+/* .block-currency  #currency-selector ul li {
 	font-size: 12px;
 	display: block;
 	float: none;
@@ -3785,17 +3801,33 @@ margin-top: 10%;
 	padding: 0 17px;
 	text-align: left;
 	color: #3f3f47;
-}
+} */
 
-.block-currency  #currency-selector ul li a i {
+/* .block-currency  #currency-selector ul li a i {
 	position: absolute;
 	right: 60px;
-}
+} */
 
-.block-currency  #currency-selector ul li a span {
+/* .block-currency  #currency-selector ul li a span {
 	padding-left: 36px;
+} */
+#currency-selector li {
+	width: 100%;
+	margin-bottom: 3px;
 }
-
+.block-currency  #currency-selector ul li a i{
+	width: 43px !important;
+  display: block;
+  float: left;
+	text-align: center;
+	font-family: urw-din-regular;
+  font-size: 11px;
+	line-height: 2;
+	font-style: normal;
+}
+.select-currency.main-nav-link-dropdown span span {
+  margin-right: 15px;
+}
 .block-currency .block-title {
 	border: 0;
 	background: none;
@@ -4075,6 +4107,10 @@ dt.post-lengthds-lbl {
   margin: 0 -15px;
   display: block;
 }
+.giftcard-fieldset textarea {
+	height: 126px!important;
+	border: 1px solid #d8d8d8;
+}
 /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
   height: 104px !important;
@@ -4254,8 +4290,85 @@ dt.post-lengthds-lbl {
 
 /*Need to verify*/
 .wide {
-overflow: hidden;
+	overflow: hidden;
 }
 .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
 	max-width: 100%;
+}
+
+/*Gift Card Detail CSS*/
+.product-gift-card .main-container {
+  margin-top: 8px;
+}
+.giftcard-left-form .cart-amount {
+	border-bottom: 1px solid #d8d8d8;
+  padding: 18px 0 28px;
+}
+.giftcard-left-form .swatch-section, .product-maria-tash-in-store-gift-card .swatch-section{
+	border-bottom: 1px solid #d8d8d8;
+  padding: 13px 0 17px;
+}
+.giftcard-fieldset .field{
+	margin-top: 23px;
+}
+.gift-delivery-section .product-attribute-name, .gift-delivery-section .email_delivery_option2 {
+  margin-bottom: 20px;
+}
+.giftcard-fieldset select.cart-amount, .giftcard-fieldset input, .giftcard-fieldset textarea {
+  background: transparent;
+  width: 100%;
+}
+.giftcard-fieldset select, .product-maria-tash-in-store-gift-card select{
+	background-image: url(../images/redesign/arrow-down-bk.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: 98% 50% !important;
+	border: 1px solid rgba(41,41,41,0.25) !important;
+	background: transparent;
+}
+.date_wrapper-column select {
+  width: 100%;
+}
+.giftcards .div_selector_month {
+  width: 105px;
+}
+.giftcards .div_selector_day {
+  width: 81px;
+}
+.giftcards .div_selector_year {
+  width: 90px;
+}
+.gift-card-faq-link {
+  margin: 17px 0 40px;
+	padding: 0;
+}
+.gift-card-faq-link a{
+	text-decoration: underline;
+}
+.giftcards .add-to-bag, .product-maria-tash-in-store-gift-card .add-to-bag	 {
+  margin-bottom: 7px;
+}
+.giftcards .padder, .product-maria-tash-in-store-gift-card .padder{
+	min-height: auto;
+}
+.product-gift-card .for-bottom-space, .product-maria-tash-in-store-gift-card .for-bottom-space {
+  display: none;
+}
+.product-gift-card .footer, .product-maria-tash-in-store-gift-card .footer{
+	padding-top: 0 !important;
+}
+.product-gift-card .product-detail-parent, .product-maria-tash-in-store-gift-card .product-detail-parent{
+	padding-bottom: 92px;
+}
+.date_wrapper{
+	justify-content: space-between;
+	margin: 0;
+}
+.product-maria-tash-in-store-gift-card .swatch-section .input-box{
+	border-bottom: none;
+}
+.product-maria-tash-in-store-gift-card .swatch-section .input-box{
+	padding: 0;
+}
+.product-maria-tash-in-store-gift-card select {
+  margin-bottom: 11px;
 }
