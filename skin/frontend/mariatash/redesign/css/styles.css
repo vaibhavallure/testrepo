@@ -30,7 +30,7 @@
 
 /*Indrajit*/
 /*REVIEW ORDER ISSUE AFTER PAY PAL REDIRECT*/
-.paypal-express-review .box-content,
+/* .paypal-express-review .box-content,
 .paypal-express-review .box-title
 {
 	padding-left: 20px;
@@ -38,14 +38,14 @@
 
 .paypal-express-review .data-table td {
 	padding:7px 20px;
-}
+} */
 
-.paypal-express-review tr.first,
+/* .paypal-express-review tr.first,
 .paypal-express-review .data-table tr.odd,
 .paypal-express-review .data-table tr.even   {
 	background-color: #dedede !important;
 
-}
+} */
 
 /*
  * Corrects block display not defined in IE6/7/8/9 & FF3
@@ -2999,9 +2999,9 @@ div.wrapper div.page div.main-container div.main div.col-main div.cart-mt div.ca
 	padding: 2px 0 2px 20px;
 }
 
-.separator {
+/* .separator {
 	margin: 0 3px;
-}
+} */
 
 /* .divider {
 	clear: both;
@@ -6135,7 +6135,7 @@ ul.crosssell-products-list {
 }
 
 /* Generic Info Set */
-.paypal-express-review .info-set {
+/* .paypal-express-review .info-set {
 	background: #dedede;
 }
 
@@ -6220,7 +6220,7 @@ ul.crosssell-products-list {
 
 .info-set .data-table .item-options {
 	margin: 5px 0 0;
-}
+} */
 /********** Common Checkout Styles > */
 
 /* One Page Checkout */
@@ -11370,10 +11370,10 @@ li.item h2.product-name {text-align: center;}
 	font-size: 11px;
 }
 
-.paypal-express-review .main {
+/* .paypal-express-review .main {
 	width: 970px;
 	margin: 0 auto;
-}
+} */
 
 .paypal-express-review .selectboxit-container .selectboxit {
 	width: 320px !important;
