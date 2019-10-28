@@ -553,9 +553,9 @@ label.popup-reg-privacy-lbl {
 	width: 130px;
     height: 27px !important;
 }
-#myaccount-shopping-cart-table a:hover {
+/* #myaccount-shopping-cart-table a:hover {
     color: #906E39;
-}
+} */
 
 .post-lengthds-lbl-options .product-custom-option{
 	padding-left: 1px;

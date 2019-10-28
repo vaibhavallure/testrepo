@@ -66,7 +66,7 @@ h4{
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -88,6 +88,11 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0;
 	line-height: 25px;
+}
+
+.para-lighter{
+	font-family: urw-din-xlight;
+	font-size: 13px;
 }
 
 .para-bold{
@@ -370,10 +375,14 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .checkout-multishipping-addresses #shopping-cart-totals-table span.total-title,
-.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price, .gift-card-faq-link a {
+.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .gift-card-faq-link a {
     font-size: 18px;
     font-family: urw-din-medium;
+}
+
+.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price{
+	font-size: 18px !important;
+	font-family: urw-din-regular;
 }
 
 /* STANDARD CSS ENDED */
@@ -558,7 +567,7 @@ input, select, textarea{
 .login-dropdown {
   width: 137px;
   line-height: 15px;
-	height: 161px;
+	min-height: 161px;
 	padding: 23px 24px 22px;
 	background: #fff;
 }
@@ -3402,9 +3411,9 @@ margin-top: 10%;
 #allow-gift-messages-for-items-container .product-img-box {
   margin-bottom: 25px;
 }
-.select-shipping-method.select-type-one.validate-select {
+/* .first-shipment-method, .second-shipment-method {
   margin-bottom: 23px;
-}
+} */
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
 }
@@ -3442,10 +3451,13 @@ margin-top: 10%;
 .product-description-section:last-child {
 	border: none;
 }
-#backordered-two-ship, #ordered-two-ship{
-	margin-top: 30px;
+#ordered-two-ship{
+	margin-top: 10px;
   border-top: 1px solid #d8d8d8;
   padding: 15px 0;
+}
+#backordered-two-ship{
+	padding: 15px 0;
 }
 #checkout-review-table thead {
   border-bottom: 2px solid #d8d8d8;
@@ -3454,7 +3466,7 @@ margin-top: 10%;
   border-bottom: 1px solid #d8d8d8;
 }
 #checkout-delivery-option-load .control {
-  margin-bottom: 13px;
+  margin-bottom: 14px;
 }
 .method-count {
   margin-top: 22px;
@@ -3487,16 +3499,16 @@ margin-top: 10%;
 .gift-message-section .row {
   justify-content: flex-end;
 }
-.checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span,
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left, .checkout-cart-index #mt-shipping-method-fancybox span{
+#shopping-cart-totals-table .grand_total_section span.total-title, #shopping-cart-totals-table .cart-subtotals-left span,
+.cart-subtotals-left, #mt-shipping-method-fancybox span, .cart-subtotals-left, #mt-shipping .mt-shipping-method span{
 	font-size: 13px;
 	font-family: urw-din-xlight;
 }
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-right span.price{
+#shopping-cart-totals-table .cart-subtotals-right span.price{
 	font-size: 13px;
 	font-family: urw-din-regular;
 }
-.checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
+#shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
 	font-size: 18px;
 }
 .giftcard-output-content {
@@ -3518,12 +3530,33 @@ margin-top: 10%;
   margin-bottom: 26px !important;
 	margin-top: 12px;
 }
+.checkout-onepage-index .buttons-set.disabled {
+  text-align: right;
+}
+.checkout-onepage-index .please-wait{
+	padding: 0 0 10px;
+}
+.checkout-onepage-index #opc-payment fieldset{
+	margin: 10px 0 0px;
+}
+.checkout-two-shipment-shipping-method-mt {
+  margin-bottom: 30px;
+}
+#checkout-review-submit .checkout-block {
+  margin-bottom: 20px;
+}
+.checkout-onepage-index #checkout-review-table .cart_col4{
+	display: table-cell;
+}
 /* cccc */
 /*MINI CART CSS*/
+.block-content.content_cart{
+	position: relative;
+}
 .block-cart .cart_sidebar{
 	position: absolute;
   width: 360px;
-	left: -220px;
+	right: 0;
 	border: 1px solid #292929;
 	background: #fff;
 }
@@ -3532,6 +3565,7 @@ margin-top: 10%;
 	border-bottom: 2px solid #d8d8d8;
   margin-top: 13px;
 	padding-bottom: 5px;
+	width: 100%;
 }
 .cart_sidebar .tite_cart {
   border-bottom: 2px solid #D8D8D8;
@@ -4206,12 +4240,14 @@ dt.post-lengthds-lbl {
 /*Wholesale separate css*/
 .wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove {
   margin-top: 37px;
+	margin-bottom: 32px;
 }
 .wholesale-avail-row {
   border-bottom: 1px solid #d8d8d8;
 }
 .data-table.cart-table .messages.wholesale-avail-row .item-msg{
 	margin-bottom: 20px;
+	max-width: 402px;
 }
 
 /*Address Override*/
@@ -4292,9 +4328,9 @@ dt.post-lengthds-lbl {
 .wide {
 	overflow: hidden;
 }
-.checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
+/* .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
 	max-width: 100%;
-}
+} */
 
 /*Gift Card Detail CSS*/
 .product-gift-card .main-container {
@@ -4327,6 +4363,11 @@ dt.post-lengthds-lbl {
 }
 .date_wrapper-column select {
   width: 100%;
+}
+.date_wrapper select {
+ 	background-position: 89% 50% !important;
+	height: 32px !important;
+  padding: 0px 20px !important;
 }
 .giftcards .div_selector_month {
   width: 105px;
@@ -4371,4 +4412,39 @@ dt.post-lengthds-lbl {
 }
 .product-maria-tash-in-store-gift-card select {
   margin-bottom: 11px;
+}
+.product-gift-card .box-collateral .block-viewed .block-content, .product-maria-tash-in-store-gift-card .box-collateral .block-viewed .block-content {
+  margin-bottom: 120px;
+}
+.egift-text{
+	text-transform: none;
+}
+.date-input-info.text-left {
+	margin-top: 10px;
+}
+.giftcard-left-form .chooseList .label{
+	margin-right: 20%;
+}
+#advice-required-entry-date {
+  padding: 0 15px;
+}
+.product-maria-tash-in-store-gift-card .ajax-error-messages{
+	padding: 0;
+	top: 43px;
+}
+.checkout-other-items{
+	border-top: 1px solid #d8d8d8;
+  padding-top: 23px;
+  margin-top: 20px;
+}
+.checkout-other-product-name > div {
+  margin-top: 24px;
+}
+#unavailable-shipping-table {
+  margin-bottom: 10px;
+}
+.please-wait{
+	width: 100%;
+  text-align: right;
+  padding: 0 15px;
 }
