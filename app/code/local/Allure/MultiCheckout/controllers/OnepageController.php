@@ -137,7 +137,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         }
 
         if ($this->getRequest()->isPost()) {
-            
+            Mage::log($this->getRequest()->getPost(),Zend_Log::DEBUG,'abc.log',true); 
             /** Save customer billing address. */
             $dataBilling = $this->getRequest()->getPost('billing', array());
             $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
