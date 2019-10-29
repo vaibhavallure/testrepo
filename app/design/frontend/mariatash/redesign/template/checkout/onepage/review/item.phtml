@@ -42,31 +42,7 @@ $typeId = $_item->getProduct()->getTypeId();
         </div>
         <!--a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a>-->
 
-        <div class="productname"><h1 class="product-name">
-            <?php if ($this->hasProductUrl()):?>
-                <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
-            <?php else: ?>
-                <?php echo $this->escapeHtml($this->getProductName()) ?>
-            <?php endif; ?>
-        </h1>
-        <?php if ($_options = $this->getOptionList()):?>
-            <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
-            <div class="product-options" style="display:none;">-->
-            <div class="item-options">
-                <?php foreach ($_options as $_option) : ?>
-                    <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                    <div><span class="para-three"><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
-                        <?php if (isset($_formatedOptionValue['full_view'])): ?>
-                            <?php echo $_formatedOptionValue['full_view'] ?>
-                        <?php else: ?>
-                            <?php echo $_formatedOptionValue['value'] ?>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?></span>
-            </div>
-            <!--</div>-->
-        <?php endif;?>
-        </div>
+
 
         <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
         <?php if ($addInfoBlock): ?>
@@ -83,6 +59,34 @@ $typeId = $_item->getProduct()->getTypeId();
         </div>
 
     </td>
+    <td class="cart_col2 w-100">
+      <h1 class="product-name">
+          <?php if ($this->hasProductUrl()):?>
+              <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+          <?php else: ?>
+              <?php echo $this->escapeHtml($this->getProductName()) ?>
+          <?php endif; ?>
+      </h1>
+      <?php if ($_options = $this->getOptionList()):?>
+          <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
+          <div class="product-options" style="display:none;">-->
+          <div class="item-options">
+              <?php foreach ($_options as $_option) : ?>
+                  <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                  <div><span class="para-three"><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                      <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                          <?php echo $_formatedOptionValue['full_view'] ?>
+                      <?php else: ?>
+                          <?php echo $_formatedOptionValue['value'] ?>
+                      <?php endif; ?>
+                  </div>
+              <?php endforeach; ?></span>
+          </div>
+          <!--</div>-->
+      <?php endif;?>
+    </td>
+
+
     <td  class="cart_col3 text-right">
         <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>

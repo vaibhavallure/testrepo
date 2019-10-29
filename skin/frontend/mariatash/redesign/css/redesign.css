@@ -3432,7 +3432,7 @@ margin-top: 10%;
 #checkout-shipping-method-load br {
   display: none;
 }
-#shopping-cart-table .cart_col1 {
+#shopping-cart-table .cart_col1, .paypal-express-review .cart_col1 {
   width: 14%;
 }
 .ad-to-fav, .w-remove {
