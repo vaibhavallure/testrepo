@@ -40,10 +40,10 @@
     <?php endif; ?>
     <thead>
         <tr>
-            <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product') ?></th>
-            <th colspan="<?php echo $colspan ?>" class="text-right"><?php echo $this->__('Price') ?></th>
-            <th rowspan="<?php echo $rowspan ?>" class="text-center"><?php echo $this->__('Quantity') ?></th>
-            <th colspan="<?php echo $colspan ?>" class="text-right"><?php echo $this->__('Subtotal') ?></th>
+            <th colspan="2"><?php echo $this->__('Product') ?></th>
+            <th class="text-right"><?php echo $this->__('Price') ?></th>
+            <th class="text-center"><?php echo $this->__('Quantity') ?></th>
+            <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
         </tr>
         <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
             <tr>
