@@ -45,12 +45,13 @@
         </div>
     </li>
 <?php endforeach ?>
-	<!-- <div class="checkout-block">
-    <?php
-      //  echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
-    ?>
-    </div> -->
+    <li>
+    	<div class="checkout-block">
+   			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
+		</div>
+    </li>
 </ol>
+
 </div>
 <script>
     jQuery('a.scl-popup').fancybox({
