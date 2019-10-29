@@ -232,7 +232,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         $booking_date = Mage::getModel('core/date')->date('Y-m-d H:i:s');
         $post_data['booking_time'] = $booking_date;
         $post_data['app_status'] = '2'; // Set appointment status assigned
-        $post_data['special_store'] = 1;
+        $post_data['special_store'] = 2;
 
         extract($post_data['customer'][1]);
 
@@ -431,6 +431,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
         $storeId = $this->getStoreId();
 
+
         if (!$this->getRequestedDate()) {
             $response = array('success' => 'false', 'error' => 'Invalid Requesting Date');
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
@@ -438,6 +439,14 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         }
 
         $date = $this->getRequestedDate();
+
+        if(!$this->requestedTime())
+        {
+            $response = array('success' => 'false', 'error' => 'Invalid Requesting time');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+            return;
+        }
+
 
         $appDay = date('l', strtotime($date));
         $slots = array();
@@ -623,6 +632,17 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         $this->log()->addStoreWiseLog('requested date:' . $date, $this->getStoreId());
 
         return $date;
+    }
+
+    private function requestedTime()
+    {
+        if ($this->currentDateFlag) {
+            $store_end_time=$this->helper()->getStoreData($this->getStoreId(),"end_work_time");
+            $currentTime = date("H:i", $this->helper()->getCurrentDatetime($this->getStoreId()));
+            if (strtotime($currentTime) > strtotime($this->helper()->getTimeByValue($store_end_time)))
+                return false;
+        }
+        return true;
     }
 
     private function getSlotTime()
