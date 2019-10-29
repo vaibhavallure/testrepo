@@ -320,7 +320,7 @@
   }
   .form-subscribe-mt{
     margin-top: 10px;
-    width: 100%;
+    width: auto;
   }
   #newsletter-form .link-button{
   	color: #fff !important;
@@ -334,7 +334,7 @@
   	color: #fff;
     padding: 10px;
   }
-  .form-subscribe-mt input {
+  .form-subscribe-mt input, .form-subscribe-mt select {
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
@@ -606,6 +606,9 @@
   .footlinks {
     margin: 20px 0 18px 0;
     padding: 0 10px;
+  }
+  #newsletter-form .dark-button{
+    float: right;
   }
   .social-media ul {
     padding-left: 22px;
@@ -1304,6 +1307,7 @@
   .shop_by_look .quick_link {
     margin-bottom: 9px;
   }
+
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody{
     display: grid;
@@ -1562,6 +1566,9 @@
   }
   .only-celeb .big-popup-image{
     height: 347.4px;
+  }
+  #newsletter-form .dark-button{
+    float: right;
   }
 }
 
