@@ -112,7 +112,8 @@
                                                 </div>
                                              </div>
     										<?php endif;?>
-
+											
+											<?php if(!$_item->getProduct()->getIsVirtual()):?>
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">
@@ -135,19 +136,21 @@
                                                    </p>
                                                 </div>
                                                 <?php if(!empty($message) && !$isSingleProduct): ?>
-                                                    <?php $tmpMessage = $message;?>
-                                                    <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
-                                                    <div class="gift-messages">
-                                                     	<p class="control">
-                                                            <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                              <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= ($_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
-                                                              <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
-                                                       		</label>
-                                                       </p>
-                                                    </div>
-                                                    <?php endif;?>
+                                                <?php $tmpMessage = $message;?>
+                                                <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
+                                                <div class="gift-messages">
+                                                	<p class="control">
+                                                  		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= ($_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
+                                                            <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
+                                                       	</label>
+                                                	</p>
+                                                </div>
+                                            	<?php endif;?>
                                                 <?php endif;?>
                                             </div>
+                                            <?php endif;?>
+                                            
                                 		</div>
                                     	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option multishipping-address-common invisible" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
                                     		<p class="para-normal"><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?></p>
