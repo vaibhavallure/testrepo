@@ -830,6 +830,12 @@ ShippingMethod.prototype = {
                     });
                 });
             }
+            
+            /** refresh total html */
+            if(response.update_section.totals_html){
+            	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            	$('totalsDivRightNav').innerHTML = response.update_section.totals_html;
+            }
         }
 
         payment.initWhatIsCvvListeners();

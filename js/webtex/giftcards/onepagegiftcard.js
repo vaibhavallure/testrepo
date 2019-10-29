@@ -16,7 +16,10 @@ OnepageGiftcard.prototype = {
     },
 
     save: function(){
-
+    	if($('gift-card-please-wait')){
+    		$('gift-card-please-wait').show();
+    	}
+    	
         if (checkout.loadWaiting!=false) return;
             checkout.setLoadWaiting('payment');
             var request = new Ajax.Request(
@@ -32,6 +35,11 @@ OnepageGiftcard.prototype = {
     },
 
     deactivate: function(id) {
+    	console.log($('gift-card-please-wait'));
+    	if($('gift-card-please-wait')){
+    		$('gift-card-please-wait').show();
+    	}
+    	
         if (checkout.loadWaiting!=false) return;
         checkout.setLoadWaiting('payment');
         var request = new Ajax.Request(
@@ -47,6 +55,10 @@ OnepageGiftcard.prototype = {
     },
 
     resetLoadWaiting: function(transport){
+    	if($('gift-card-please-wait')){
+    		$('gift-card-please-wait').hide();
+    	}
+    	
         checkout.setLoadWaiting(false);
     },
 
@@ -58,6 +70,12 @@ OnepageGiftcard.prototype = {
             catch (e) {
                 response = {};
             }
+        }
+        
+        /** refresh total html */
+        if(response.giftcard_section.totals_html){
+        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        	$('totalsDivRightNav').innerHTML = response.giftcard_section.totals_html;
         }
 
         if (response.error) {
