@@ -612,7 +612,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 
             //get version text of mail
             $versionText = $output;
-            $regex='/<style[^>]*>[^<>]*?<\/style>/';
+            $regex='/<style[^>]*>.*?<\/style>/s';
             $versionText = preg_replace($regex,' ',$versionText);
             $versionText = strip_tags($versionText);
             $versionText = trim(preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $versionText));
