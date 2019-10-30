@@ -394,7 +394,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 	padding: 0;
 	clear: both;
 }
-.checkout-step-name h3, .checkout-step-name span {
+.checkout-step-name h3, .checkout-step-name span, .paypal-review-legend {
   font-size: 13px;
   font-family: urw-din-bold;
   text-transform: uppercase;
@@ -1598,7 +1598,7 @@ input[type="checkbox"]:checked+label:before {
 	top:83px;
 }
 #appointments {
-  padding: 48px 21px;
+  padding: 48px 121px;
 }
 #appointments .col {
   width: 14.28%;
@@ -3192,7 +3192,7 @@ margin-top: 10%;
  .checkout-multishipping-delivery .main,
  .checkout-multishipping-billing .main,
  .checkout-multishipping-overview .main,
- .checkout-onepage-index .main{
+ .checkout-onepage-index .main, .paypal-express-review .main{
   max-width: 1205px;
   display: flex;
   margin: 0 auto;
@@ -3295,7 +3295,7 @@ margin-top: 10%;
 .multi-address-select-address-option .billing-address-select {
   margin-top: 18px;
 }
-.common-redesign-checkout .for-space-to-bottom {
+.common-redesign-checkout .for-space-to-bottom, .paypal-express-review .for-space-to-bottom {
   height: 352px;
 }
 .overview-quantity .para-three {
@@ -3432,7 +3432,7 @@ margin-top: 10%;
 #checkout-shipping-method-load br {
   display: none;
 }
-#shopping-cart-table .cart_col1 {
+#shopping-cart-table .cart_col1, .paypal-express-review .cart_col1 {
   width: 14%;
 }
 .ad-to-fav, .w-remove {
@@ -4450,4 +4450,9 @@ dt.post-lengthds-lbl {
 	width: 100%;
   text-align: right;
   padding: 0 15px;
+}
+
+/*Paypal Review*/
+.info-set.paypal-product-section {
+  margin-top: 44px;
 }

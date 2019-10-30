@@ -353,7 +353,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                     $result["goto_section"] = "payment";
                     $result["update_section"] = array(
                         "name" => "payment-method",
-                        "html" => $this->_getPaymentMethodsHtml()
+                        "html" => $this->_getPaymentMethodsHtml(),
+                        "totals_html" => $this->_getRefreshTotalsHtml()
                     );
                 }
             }
@@ -365,6 +366,23 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
+    }
+    
+    /**
+     * Get refresh totals html
+     * @return string
+     */
+    protected function _getRefreshTotalsHtml ()
+    {
+        $block = $this->getLayout()
+            ->createBlock('checkout/cart_totals')
+            ->setTemplate('checkout/cart/totals.phtml');
+        $childBlock = $this->getLayout()
+            ->createBlock('checkout/cart_shipping')
+            ->setTemplate('checkout/cart/shipping.phtml');
+        $block->setChild("shipping", $childBlock);
+        $output = $block->toHtml();
+        return $output;
     }
 
     public function saveDeliveryOptionAction ()

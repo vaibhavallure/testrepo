@@ -776,7 +776,7 @@
     overflow-x: auto;
   }
   .div-row{
-    width:1500px;
+    width:1250px;
     overflow-x: scroll;
   }
   #appointments {
@@ -1623,8 +1623,11 @@
 }
 @media (min-width:1030px) and (max-width:1200px){
 .div-row {
-  width: 1500px;
+  width: 1270px;
   overflow-x: scroll;
+ }
+ .row.menu-inner{
+   overflow: auto;
  }
  .inner-box{
    margin-left: 70px;
@@ -1728,8 +1731,11 @@
     overflow-x: auto;
   }
   .div-row {
-    width: 1500px;
+    width: 1250px;
     overflow-x: scroll;
+  }
+  #appointments{
+    padding:48px 30px 20px;
   }
 }
 
@@ -1762,6 +1768,27 @@
     top: 28px;
 }
 }
-@media (min-width:1025px) {
-
+@media (min-width:1025px) and (max-width:1199px) {
+  .catalog-category-view .list-mt-w .light-button{
+    width: 88px;
+    font-size: 11px;
+}
+}
+@media (min-width:1200px) and (max-width:1430px) {
+  .inner-box{
+    margin-left: 57px;
+  }
+  .catalog-category-view .list-mt-w .light-button{
+    width: 110px;
+  }
+  .list-mt-w .actions > .row img + div.col {
+    padding-right: 0;
+  }
+}
+@media (min-width:1318px) and (max-width:1432px) {
+  .div-row {
+    width: 100%;
+    overflow-x: scroll;
+    margin: 0;
+  }
 }

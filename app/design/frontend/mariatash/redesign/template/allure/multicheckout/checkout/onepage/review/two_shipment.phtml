@@ -204,18 +204,6 @@
 </div>
 <?php endif;?>
 
-<script>
-	jQuery(document).ready(function(){
-		var billingHeight = jQuery('.checkout-two-shipment-billing-address-mt').height();
-		if(billingHeight)
-			//jQuery('.checkout-two-shipment-payment-method-mt').css('height',billingHeight+'px');
-
-		var shippindAddrHeight = jQuery('.checkout-two-shipment-shipping-address-mt').height();
-		if(shippindAddrHeight)
-		//	jQuery('.checkout-two-shipment-shipping-method-mt').css('height',shippindAddrHeight+'px');
-	});
-</script>
-
 <script type="text/javascript">
 //<![CDATA[
     decorateTable('checkout-review-table');
@@ -225,19 +213,15 @@
 <div id="checkout-review-submit" class="two-shipment">
     <?php echo $this->getChildHtml('agreements') ?>
     <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "Place Order" Below.') ?></p>
-      <div class="checkout-privacy-policy">
-          <p class="control">
-                <label for="checkout_privacy_confirm" class="mt-custom-checkbox custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link link-button" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+    <div class="checkout-privacy-policy">
+    	<p class="control">
+        	<label for="checkout_privacy_confirm" class="mt-custom-checkbox custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link link-button" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
                 <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
                 <span class="checkmark"></span>
-                </label>
-          </p>
-      </div>
-      <div class="checkout-block">
-        <?php
-            echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
-        ?>
-        </div>
+          	</label>
+      	</p>
+   	</div>
+   	
     <div class="buttons-set" id="review-buttons-container">
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
