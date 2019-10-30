@@ -208,15 +208,16 @@ if(!is_null($parentId)){
 </tr>
 
 <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-<?php if(!empty($message)): ?>  
 <tr class="messages <?php if($isWholesaleCustomer):?>wholesale-avail-row<?php endif;?>">
 	<td></td>
     <td colspan="<?= ($isWholesaleCustomer) ? 5 : 6 ?>">
+    	<?php if(!empty($message)): ?> 
     	<div class="item-msg float-left">
         	<p class="info-text-three">
         		<span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?>
         	</p>
         </div>
+        <?php endif; ?>
         
         <?php if($isWholesaleCustomer):?>
        	<div class="w-remove float-right">
@@ -243,7 +244,7 @@ if(!is_null($parentId)){
         <?php endif;?>
 	</td>
 </tr>
-<?php endif; ?>
+
 
 <?php if(!$isWholesaleCustomer):?>
 <tr class="w-100 gift-row">
