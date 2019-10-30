@@ -1799,3 +1799,14 @@
     margin: 0;
   }
 }
+@media (min-width:1025px) and (max-width:1240px) {
+  #productsContainer-wrapper {
+    overflow-y: scroll;
+  }
+  .catalog-common-grid{
+    min-width: 1300px;
+  }
+  .five-col{
+    min-width: 325px;
+  }
+}
