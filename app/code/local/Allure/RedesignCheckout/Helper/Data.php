@@ -24,10 +24,28 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
      * @return boolean
      */
     public function isQuoteContainSingleQty(){
+        $flag = false;
         $quote = $this->getQuote();
-        if($quote->getItemsQty() == 1)
-            return true;
-        return false;
+        if($quote->getItemsQty() == 1){
+            $flag = true;
+        }else{
+            $quoteItems = $quote->getAllVisibleItems();
+            $qty = 0;
+            foreach ($quoteItems as $item){
+                if($item->getProduct()->getIsVirtual()){
+                    continue;
+                }
+                $qty += $item->getQty();
+                if($qty > 1){
+                    break;
+                }
+            }
+            if($qty == 1){
+                $flag = true;
+            }
+        }
+        
+        return $flag;
     }
     
     /**
@@ -36,9 +54,26 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function isQuoteContainSingleProduct(){
         $quote = $this->getQuote();
-        if($quote->getItemsCount() == 1)
-            return true;
-        return false;
+        $flag = false;
+        if($quote->getItemsCount() == 1){
+            $flag = true;
+        }else{
+            $quoteItems = $quote->getAllVisibleItems();
+            $cnt = 0;
+            foreach ($quoteItems as $item){
+                if($item->getProduct()->getIsVirtual()){
+                    continue;
+                }
+                $cnt++;
+                if($cnt > 1){
+                    break;
+                }
+            }
+            if($cnt == 1){
+                $flag = true;
+            }
+        }
+        return $flag;
     }
     
     /**

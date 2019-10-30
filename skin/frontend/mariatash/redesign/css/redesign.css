@@ -470,7 +470,7 @@ input, select, textarea{
     position: absolute;
 }
 #newsletter-form .validation-advice{
-		left: 0;
+		left: 15px;
     top: 40px;
 }
 .category-products .note-msg {
@@ -1687,12 +1687,12 @@ input[type="checkbox"]:checked+label:before {
   width: 100%;
   height: auto;
 	background: #eee;
-  transition: transform .3s;
+  /* transition: transform .3s; */
 }
 .catalog-common-grid .product-image img:hover{
-  -ms-transform: scale(1.3); /* IE 9 */
-  -webkit-transform: scale(1.3); /* Safari 3-8 */
-  transform: scale(1.3);
+  /* -ms-transform: scale(1.3); /* IE 9
+  -webkit-transform: scale(1.3); /* Safari 3-8
+  transform: scale(1.3); */
 }
 .catalog-grid-image{
   background: #eee;
@@ -4455,4 +4455,16 @@ dt.post-lengthds-lbl {
 /*Paypal Review*/
 .info-set.paypal-product-section {
   margin-top: 44px;
+}
+
+/*Desktop Scaling*/
+.desktop-device .five-col{
+	width: 20%;
+	/* height: 365px; */
+}
+.desktop-device .catalog-common-grid{
+	min-width: 1366px;
+}
+.desktop-device #productsContainer{
+	overflow-y: scroll !important;
 }

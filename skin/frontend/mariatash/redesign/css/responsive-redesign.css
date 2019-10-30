@@ -320,7 +320,7 @@
   }
   .form-subscribe-mt{
     margin-top: 10px;
-    width: 100%;
+    width: auto;
   }
   #newsletter-form .link-button{
   	color: #fff !important;
@@ -334,7 +334,7 @@
   	color: #fff;
     padding: 10px;
   }
-  .form-subscribe-mt input {
+  .form-subscribe-mt input, .form-subscribe-mt select {
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
@@ -529,6 +529,9 @@
   .footer{
     z-index:0;
   }
+  .desktop-device .products-grid li.item{
+    margin: 3px !important;
+  }
 }
 
 /*All ipads*/
@@ -606,6 +609,9 @@
   .footlinks {
     margin: 20px 0 18px 0;
     padding: 0 10px;
+  }
+  #newsletter-form .dark-button{
+    float: right;
   }
   .social-media ul {
     padding-left: 22px;
@@ -1304,6 +1310,7 @@
   .shop_by_look .quick_link {
     margin-bottom: 9px;
   }
+
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody{
     display: grid;
@@ -1563,6 +1570,9 @@
   .only-celeb .big-popup-image{
     height: 347.4px;
   }
+  #newsletter-form .dark-button{
+    float: right;
+  }
 }
 
 
@@ -1769,21 +1779,21 @@
 }
 }
 @media (min-width:1025px) and (max-width:1199px) {
-  .catalog-category-view .list-mt-w .light-button{
+  /* .catalog-category-view .list-mt-w .light-button{
     width: 88px;
     font-size: 11px;
-}
+} */
 }
 @media (min-width:1200px) and (max-width:1430px) {
   .inner-box{
     margin-left: 57px;
   }
-  .catalog-category-view .list-mt-w .light-button{
+  /* .catalog-category-view .list-mt-w .light-button{
     width: 110px;
-  }
-  .list-mt-w .actions > .row img + div.col {
+  } */
+  /* .list-mt-w .actions > .row img + div.col {
     padding-right: 0;
-  }
+  } */
 }
 @media (min-width:1318px) and (max-width:1432px) {
   .div-row {
@@ -1792,3 +1802,27 @@
     margin: 0;
   }
 }
+
+/* @media (min-width:1025px) and (max-width:1240px) {
+  #productsContainer-wrapper {
+    overflow-y: scroll;
+  }
+  .catalog-common-grid{
+    min-width: 1300px;
+  }
+  .five-col{
+    min-width: 325px;
+  }
+}
+
+@media (min-width:769px) and (max-width:1023px) {
+  #productsContainer-wrapper {
+    overflow-y: scroll;
+  }
+  .catalog-common-grid{
+    min-width: 1130px;
+  }
+  .five-col{
+    min-width: 319px;
+  }
+} */
