@@ -59,5 +59,14 @@
 </div>
 <?php echo $this->getAbsoluteFooter() ?>
 <?php echo $this->getChildHtml('footer') ?>
+<!--allure code-->
+<?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
+if(!$isMobile):
+    ?>
+    <script>
+        jQuery("body").addClass("desktop-device");
+    </script>
+<?php endif; ?>
+<!--allure code end-->
 </body>
 </html>
