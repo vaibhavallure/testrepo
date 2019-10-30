@@ -529,9 +529,7 @@
   .footer{
     z-index:0;
   }
-  .desktop-device .products-grid li.item{
-    margin: 3px !important;
-  }
+
 }
 
 /*All ipads*/
@@ -542,6 +540,12 @@
   .checkout-multishipping-success .next-button, .checkout-onepage-success .next-button, .checkout-onepage-successorder .next-button{
     width: 250px;
   }
+  .desktop-device .products-grid li.item{
+    margin: 3px !important;
+  }
+  /* .desktop-device .five-col{
+  	height: 362px;
+  } */
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
