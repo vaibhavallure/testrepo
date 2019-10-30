@@ -4458,9 +4458,11 @@ dt.post-lengthds-lbl {
 }
 
 /*Desktop Scaling*/
-.desktop-device .five-col{
+.desktop-device #narrow-by-list{
+	min-width: 1366px;
+}
+/* .desktop-device .five-col{
 	width: 20%;
-	/* height: 365px; */
 }
 .desktop-device .catalog-common-grid, #narrow-by-list{
 	min-width: 1366px;
@@ -4468,4 +4470,4 @@ dt.post-lengthds-lbl {
 }
 .desktop-device #productsContainer{
 	overflow-y: scroll !important;
-}
+} */
