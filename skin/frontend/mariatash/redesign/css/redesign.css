@@ -4459,12 +4459,12 @@ dt.post-lengthds-lbl {
 
 /*Desktop Scaling*/
 .desktop-device .five-col{
-	width: 281px;
-	height: 365px;
+	width: 20%;
+	/* height: 365px; */
 }
 .desktop-device .catalog-common-grid{
-	min-width: 1530px;
+	min-width: 1366px;
 }
 .desktop-device #productsContainer{
-	overflow-y: scroll;
+	overflow-y: scroll !important;
 }
