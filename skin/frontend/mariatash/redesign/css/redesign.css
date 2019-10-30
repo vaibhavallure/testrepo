@@ -4462,9 +4462,9 @@ dt.post-lengthds-lbl {
 	width: 281px;
 	height: 365px;
 }
-.catalog-common-grid{
+.desktop-device .catalog-common-grid{
 	min-width: 1530px;
 }
-#productsContainer{
+.desktop-device #productsContainer{
 	overflow-y: scroll;
 }
