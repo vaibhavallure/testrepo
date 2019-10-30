@@ -1810,3 +1810,15 @@
     min-width: 325px;
   }
 }
+
+@media (min-width:769px) and (max-width:831px) {
+  #productsContainer-wrapper {
+    overflow-y: scroll;
+  }
+  .catalog-common-grid{
+    min-width: 1300px;
+  }
+  .five-col{
+    min-width: 325px;
+  }
+}
