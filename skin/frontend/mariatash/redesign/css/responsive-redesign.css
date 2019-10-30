@@ -1811,7 +1811,7 @@
   }
 }
 
-@media (min-width:769px) and (max-width:831px) {
+@media (min-width:769px) and (max-width:1023px) {
   #productsContainer-wrapper {
     overflow-y: scroll;
   }
