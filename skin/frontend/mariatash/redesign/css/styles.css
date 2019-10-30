@@ -508,14 +508,14 @@ ul#tld_r_ul li:hover {
 	background-color: #c5c7ce;
 }
 
-.form-subscribe-mt .select-box input {
+/* .form-subscribe-mt .select-box input {
 	background: url(../images/arrow-form.jpg) no-repeat right 0 #5B5B63;
-}
+} */
 
-.select-box input.input-text {
+/* .select-box input.input-text {
 	padding: 0 9px;
 	width: 92%;
-}
+} */
 
 .category-celebrity-clientele .note-msg, .category-reviews .note-msg,
 .category-piercing-services .note-msg, .category-piercing-gallery .note-msg
@@ -10011,20 +10011,20 @@ span.customStyleSelectBox.changed {
 	color: #444;
 }
 
-.form-subscribe-mt .select-box input {
+/* .form-subscribe-mt .select-box input {
 	cursor: pointer;
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	font-size: 13px;
 	line-height: 19px;
-	text-transform: uppercase; /*background:#5b5b63;*/
+	text-transform: uppercase; /*background:#5b5b63;
 	height: 22px;
 	color: #caced7;
 	margin-bottom: 10px;
 	width: 78% !important;
 	border: none;
 	padding-right: 39px;
-}
+} */
 
 .form-subscribe-mt .select-box span {
 	float: right;
