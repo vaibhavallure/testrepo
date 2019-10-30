@@ -115,6 +115,10 @@ payment.singleMethod = true;
             method:'post',
             parameters: params,
             onSuccess: function(transport) {
+              if($('coupan-code-please-wait')){
+                 $('coupan-code-please-wait').hide();
+              }
+              
               var data = transport.responseText.evalJSON();
               if(data.error){
                   $('advice-required-entry-promoCode_code').innerHTML = data.message;
@@ -171,9 +175,7 @@ payment.singleMethod = true;
               });
               new Ajax.Updater('totalsDivRightNav', '<?php //echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
 			  */
-              if($('coupan-code-please-wait')){
-              	$('coupan-code-please-wait').hide();
-              }
+              
               $('totalsDivRightNav').innerHTML = data.totals_html;
             },
             onFailure: function() {
