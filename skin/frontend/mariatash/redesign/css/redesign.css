@@ -4456,3 +4456,15 @@ dt.post-lengthds-lbl {
 .info-set.paypal-product-section {
   margin-top: 44px;
 }
+
+/*Desktop Scaling*/
+.desktop-device .five-col{
+	width: 281px;
+	height: 365px;
+}
+.catalog-common-grid{
+	min-width: 1530px;
+}
+#productsContainer{
+	overflow-y: scroll;
+}
