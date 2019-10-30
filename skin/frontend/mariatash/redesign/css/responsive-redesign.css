@@ -1799,7 +1799,7 @@
     margin: 0;
   }
 }
-@media (min-width:1025px) and (max-width:1240px) {
+/* @media (min-width:1025px) and (max-width:1240px) {
   #productsContainer-wrapper {
     overflow-y: scroll;
   }
@@ -1821,4 +1821,4 @@
   .five-col{
     min-width: 319px;
   }
-}
+} */
