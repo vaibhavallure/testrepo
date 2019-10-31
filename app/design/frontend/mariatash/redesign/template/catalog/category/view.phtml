@@ -34,6 +34,10 @@
 <?php
     $_helper    = $this->helper('catalog/output');
     $_category  = $this->getCurrentCategory();
+    if($_category->getImageUrl()) {
+    $cat_image= $_category->getImageUrl();
+    list($width, $height) = getimagesize($cat_image);
+  }
 
     $_imgHtml   = '';
     if ($_imgUrl = $_category->getImageUrl()) {
@@ -51,7 +55,7 @@
                         jQuery(".col-main").addClass("with-category-image");
                     });
                 </script>';
-            $_imgHtml = '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></span></p>';
+            $_imgHtml = '<p class="category-image"><img data-height="'.$height.'" src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></span></p>';
         }
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
     }
