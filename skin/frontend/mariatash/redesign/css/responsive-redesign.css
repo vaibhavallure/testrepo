@@ -1688,7 +1688,13 @@
   .footer{
     padding: 0;
   }
+<<<<<<< HEAD
 
+=======
+  #narrow-by-list{
+    margin-top: 0;
+  }
+>>>>>>> ad437fb1aecb4ed86e1a8bd36c38ed6efaf64934
   .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 40px;
   }

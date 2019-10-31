@@ -4467,4 +4467,8 @@ dt.post-lengthds-lbl {
 }
 .for-space-to-bottom.cat-img-space {
     height: 300px;
+		height: 300px;
+		width: 100%;
+		background-size: contain;
+		background-position: center;
 }
