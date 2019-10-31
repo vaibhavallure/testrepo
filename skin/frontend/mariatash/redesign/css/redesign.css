@@ -1190,7 +1190,7 @@ ul.swatch .swatch-item a {
         padding-right: 15px;
     }
     .offset-66 {
-        margin-left: 58.33333%;
+			margin-left: 66.666%!important;
     }
     .fix-image {
         position: fixed;
@@ -4472,4 +4472,7 @@ dt.post-lengthds-lbl {
 
 .for-space-to-bottom{
 	height: 134px;
+}
+.for-space-to-bottom.cat-img-space {
+    height: 300px;
 }
