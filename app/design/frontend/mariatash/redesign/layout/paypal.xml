@@ -42,15 +42,18 @@
 
         <update handle="SHORTCUT_popup" />
     </checkout_cart_index>
+    
 
     <paypal_express_review translate="label">
         <label>PayPal Express Order Review Form</label>
+        
         <remove name="right"/>
         <remove name="left"/>
 
         <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
+        
         <reference name="content">
             <block type="paypal/express_review" name="paypal.express.review" template="paypal/express/review.phtml">
                 <block type="paypal/express_review" name="express.review.shipping.method" as="shipping_method" template="paypal/express/review/shipping/method.phtml"/>
@@ -80,7 +83,6 @@
                 	</block>
 		            
         		</block>
-        		
         		<!-- Allure Inc code end -->
                 
                 
@@ -92,6 +94,73 @@
         </reference>
         <block type="core/text_list" name="additional.product.info" />
     </paypal_express_review>
+    
+    <paypal_express_overview translate="label">
+        <label>PayPal Express Order Review Form</label>
+        
+        <!-- <remove name="right"/> -->
+        <remove name="left"/>
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/checkout/2columns-right.phtml</template></action>
+        </reference>
+        
+        <reference name="right">
+            <action method="unsetChildren"></action>
+            <block type="checkout/cart" name="checkout.cart">
+                <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+			 	<action method="addItemRender"><type>giftcards</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+
+
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                    <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                </block>
+            </block>
+        </reference>
+        
+        <reference name="content">
+            <block type="paypal/express_review" name="paypal.express.review" template="paypal/express/review.phtml">
+        		<block type="paypal/express_review" name="express.review.shipping.method" as="shipping_method" template="paypal/express/review/shipping/method.phtml"/>
+                <block type="paypal/express_review_details" name="paypal.express.review.details" as="details" template="paypal/express/review/details.phtml">
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+                    <block type="checkout/cart_totals" name="paypal.express.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+                </block>
+                
+        		<block type="checkout/multishipping_overview" name="checkout_overview" template="checkout/multishipping/overview.phtml">
+	                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/multishipping/item/default.phtml</template></action>
+	                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/item/default.phtml</template></action>
+	                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
+	                <action method="addRowItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/multishipping/overview/item.phtml</template></action>
+	                <action method="addRowItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/overview/item.phtml</template></action>
+	               	<action method="addGiftItemRender"><type>gift</type><block>allure_redesigncheckout/giftmessage</block><template>checkout/multishipping/giftmessage.phtml</template></action>
+					<block type="checkout/multishipping_payment_info" name="payment_info">
+	                    <action method="setInfoTemplate"><method></method><template></template></action>
+	                </block>
+	                <block type="checkout/agreements" name="checkout.multishipping.agreements" as="agreements" template="checkout/multishipping/agreements.phtml"/>
+	                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/multishipping/overview/totals.phtml">
+	                    <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+	                </block>
+	                <block type="core/text_list" name="checkout.multishipping.overview.items.after" as="items_after" translate="label">
+	                    <label>Overview Items After</label>
+	                </block>
+	            </block>
+                
+                <block type="checkout/agreements" name="paypal.express.review.details.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
+            </block>
+        </reference>
+        <reference name="head">
+        	<action method="addItem"><type>skin_js</type><name>js/allure/ui_block.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/checkout/review.js</name></action>
+        </reference>
+        <block type="core/text_list" name="additional.product.info" />
+    </paypal_express_overview>
 
     <paypal_express_review_details>
         <block type="paypal/express_review_details" name="root" output="toHtml" template="paypal/express/review/details.phtml">

@@ -41,8 +41,12 @@
                 </div>
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+                    <?php 
+                        $postUrl = $this->getPostActionUrl();
+                    ?>
                     <form action="<?= $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
 						<?= $this->getBlockHtml("formkey") ?>
+						<?php $payment = $this->getCheckout()->getQuote()->getPayment();?>
 						<input type="hidden" name="payment[cc_number]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcNumber())?>" />
                         <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcCid())?>" />
 

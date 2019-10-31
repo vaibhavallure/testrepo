@@ -193,6 +193,61 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     }
     
     /**
+     * Multishipping checkout place order page
+     */
+    public function overviewAction()
+    {
+        if (!$this->_validateMinimumAmount()) {
+            return $this;
+        }
+        
+        if ($this->isFormkeyValidationOnCheckoutEnabled() && !$this->_validateFormKey()) {
+            $this->_redirect('*/*/billing');
+            return;
+        }
+        
+        $this->_getState()->setActiveStep(Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW);
+        
+        try {
+            $payment = $this->getRequest()->getPost('payment', array());
+            $payment['checks'] = Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_MULTISHIPPING
+            | Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY
+            | Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_CURRENCY
+            | Mage_Payment_Model_Method_Abstract::CHECK_ORDER_TOTAL_MIN_MAX
+            | Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL;
+            $this->_getCheckout()->setPaymentMethod($payment);
+            
+            /** allow paypal method for single address */
+            $redirectUrl = $this->_getCheckout()
+                ->getQuote()
+                ->getPayment()
+                ->getCheckoutRedirectUrl();
+            
+            $this->_getState()->setCompleteStep(
+                Mage_Checkout_Model_Type_Multishipping_State::STEP_BILLING
+                );
+            
+            if($redirectUrl){
+                $this->_redirectUrl($redirectUrl);
+            }
+            
+            $this->loadLayout();
+            $this->_initLayoutMessages('checkout/session');
+            $this->_initLayoutMessages('customer/session');
+            $this->renderLayout();
+        }
+        catch (Mage_Core_Exception $e) {
+            $this->_getCheckoutSession()->addError($e->getMessage());
+            $this->_redirect('*/*/billing');
+        }
+        catch (Exception $e) {
+            Mage::logException($e);
+            $this->_getCheckoutSession()->addException($e, $this->__('Cannot open the overview page'));
+            $this->_redirect('*/*/billing');
+        }
+    }
+    
+    /**
      * Override the overviewPostAction.
      * In that success step of multishipping removed. 
      */
