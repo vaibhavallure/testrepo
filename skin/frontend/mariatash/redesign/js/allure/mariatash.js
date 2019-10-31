@@ -1,7 +1,15 @@
 jQuery(document).ready(function () {
 
     if(jQuery("p.category-image").length && jQuery("p.category-image").is(":visible")){
-      jQuery(".for-space-to-bottom").addClass("cat-img-present");
+      jQuery(".for-space-to-bottom").addClass("cat-img-space");
+      jQuery("body").addClass("cat-img-present");
+      //jQuery("body").css("background-image",'url('+jQuery("p.category-image").find("img").attr('src')+')');
+      //jQuery("p.category-image").hide();
+      var image_height = jQuery("p.category-image").find("img").attr("data-height");
+      jQuery(".for-space-to-bottom").css("height",image_height);
+    }
+    else {
+      jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
     }
 
     jQuery('a[href=#]').each(function () {
@@ -78,7 +86,7 @@ jQuery(document).ready(function () {
 
             var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
             var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-            if (jQuery('.owl-carousel').length) {
+            // if (jQuery('.owl-carousel').length) {
                 if ((productImageHeight) > (productDetailsHeight - scroll)) {
                     jQuery('#product-details-flow').removeClass('offset-66');
                     jQuery('#product-detail-image').removeClass('fix-image');
@@ -88,7 +96,7 @@ jQuery(document).ready(function () {
                     jQuery('#product-detail-image').addClass('fix-image');
                     jQuery('#product-detail-image > div').removeClass('position-bottom');
                 }
-            }
+            // }
             headerHeight = jQuery(".mariatash-header").outerHeight();
             jQuery('.open-navigation').css("padding-top", headerHeight);
 

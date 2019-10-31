@@ -203,9 +203,9 @@ h4{
 #shop_our_instagram{
 	margin-top: 23px;
 }
-.catalog-category-view.category-press .for-space-to-bottom {
+/* .catalog-category-view.category-press .for-space-to-bottom {
   height: 307px;
-}
+} */
 
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
@@ -740,14 +740,14 @@ nav.mariatash-header {
   margin-top: 5px;
 }
 
-.catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom,
+/* .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom,
 .checkout-cart-index .for-space-to-bottom, .checkout-multishipping-success .for-space-to-bottom{
   height:320px;
 }
 
 .for-space-to-bottom{
   height: 200px;
-}
+} */
 
 .category-image {
   position: absolute;
@@ -1181,6 +1181,9 @@ ul.swatch .swatch-item a {
 }
 
 @media(min-width:992px) {
+	.product-img-box{
+		width: 100%!important;
+	}
     .position-bottom {
         position: absolute;
         bottom: 0;
@@ -1191,8 +1194,8 @@ ul.swatch .swatch-item a {
     }
     .fix-image {
         position: fixed;
-        width: 58.333333%;
-        max-width: 58.333333%;
+        width: 66.666667%;
+        max-width: 66.666667%;
     }
     .more-details .nav-tabs {
         display: flex;
@@ -1202,7 +1205,7 @@ ul.swatch .swatch-item a {
 
 @media(min-width:1200px) {
     .offset-66 {
-        margin-left: 66.666%;
+        margin-left: 66.666%!important;
     }
     .cms-home .footer{
         padding: 60px 0;
@@ -2586,9 +2589,9 @@ ul#foo4 {
   background: #f2f2f2;
 	padding-bottom: 25px;
 }
-.catalog-product-view .for-space-to-bottom {
+/* .catalog-product-view .for-space-to-bottom {
   height: 127px;
-}
+} */
 .catalog-product-view .homepage-menu.mariatash-header{
 	background: rgba(40,40,40,0.9);
 }
@@ -2884,7 +2887,7 @@ ul.tabs li{
 }
 .breadcrumbs {
   padding-left: 71px;
-	margin-top: 3px;
+	margin-top: 22px;
 }
 .catalog-product-name-display {
 	margin-top: 32px;
@@ -3004,9 +3007,9 @@ ul.tabs li{
   margin-bottom: 18px;
 	padding: 0;
 }
-.categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+/* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
 	height: 242px !important;
-}
+} */
 /*press page--------------------------------------------*/
 .category-press .top-bar {
   display: none;
@@ -3295,9 +3298,9 @@ margin-top: 10%;
 .multi-address-select-address-option .billing-address-select {
   margin-top: 18px;
 }
-.common-redesign-checkout .for-space-to-bottom, .paypal-express-review .for-space-to-bottom {
+/* .common-redesign-checkout .for-space-to-bottom, .paypal-express-review .for-space-to-bottom {
   height: 352px;
-}
+} */
 .overview-quantity .para-three {
   line-height: 12px;
 }
@@ -4391,9 +4394,9 @@ dt.post-lengthds-lbl {
 .giftcards .padder, .product-maria-tash-in-store-gift-card .padder{
 	min-height: auto;
 }
-.product-gift-card .for-bottom-space, .product-maria-tash-in-store-gift-card .for-bottom-space {
+/* .product-gift-card .for-bottom-space, .product-maria-tash-in-store-gift-card .for-bottom-space {
   display: none;
-}
+} */
 .product-gift-card .footer, .product-maria-tash-in-store-gift-card .footer{
 	padding-top: 0 !important;
 }
@@ -4461,13 +4464,8 @@ dt.post-lengthds-lbl {
 .desktop-device #narrow-by-list{
 	min-width: 1366px;
 }
-/* .desktop-device .five-col{
-	width: 20%;
+
+.for-space-to-bottom{
+	height: 134px;
 }
-.desktop-device .catalog-common-grid, #narrow-by-list{
-	min-width: 1366px;
-	overflow-y: scroll;
-}
-.desktop-device #productsContainer{
-	overflow-y: scroll !important;
-} */
+

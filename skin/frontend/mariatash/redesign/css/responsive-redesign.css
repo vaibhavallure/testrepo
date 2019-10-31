@@ -1630,10 +1630,10 @@
   }
   .pdp-image-section
   {
-    margin-top: 153px;
+    margin-top: 80px;
   }
   .pdp-image-section .containerImage{
-    margin-top: -70px;
+    /*margin-top: -70px;*/
   }
   .quickview-index-index .pdp-image-section
   {
@@ -1706,21 +1706,21 @@
   .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 40px;
   }
-  .catalog-category-view .for-space-to-bottom{
+  /* .catalog-category-view .for-space-to-bottom{
     height: 430px !important;
-  }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+  } */
+  /* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
     height: 380px !important;
-  }
-  .catalog-category-view.category-press .for-space-to-bottom{
+  } */
+  /* .catalog-category-view.category-press .for-space-to-bottom{
     height: 410px !important;
-  }
+  } */
   .caroufredsel_wrapper{
     width: 88.3%;
   }
-  .common-redesign-checkout .for-space-to-bottom {
+  /* .common-redesign-checkout .for-space-to-bottom {
     height: 470px;
-  }
+  } */
   .categorypath-piercing-piercing-gallery-html .category-products {
     margin-top: 0;
   }
@@ -1785,9 +1785,6 @@
   }
 }
 @media (min-width:1535px) and (max-width:1919px){
-  /* .common-redesign-checkout .for-space-to-bottom {
-    height: 452px !important;
-  } */
   .checkout-multishipping-addresses .main-container.col2-right-layout, .checkout-cart-index .main-container.col2-right-layout {
     margin-top: 70px;
   }
@@ -1830,9 +1827,6 @@
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  /* .desktop-device .menu-common-section .row{
-    min-width: 1300px!important;
-  } */
   .desktop-device .inner-box{
     margin-left:46px;
   }
@@ -1848,21 +1842,6 @@
     width: 40%;
     margin-right: 10px;
   }
-/* .desktop-device .icon-item.d-lg-none {
-    display: block!important;
-  }
-.desktop-device .icon-item.d-lg-block {
-    display: none!important;
-  }
-.desktop-device #navbarNavDropdown{
-  display: none !important;
-  }
-.desktop-device .navbar-expand-lg .navbar-toggler{
-  display: block !important;
-  }
-.homepage-menu.mariatash-header {
-    background: rgb(41, 41, 41);
-  } */
 }
 @media (min-width:768px) and (max-width:991px) {
   .desktop-device .maria-left-menus{
