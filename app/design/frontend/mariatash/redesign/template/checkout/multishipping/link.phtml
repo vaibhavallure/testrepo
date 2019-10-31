@@ -24,10 +24,9 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-
 <?php if ($this->helper('customer')->isLoggedIn()): ?>
 	<?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
-    <?php if($customerGroupId != 2):?>
+    <?php if(false && $customerGroupId != 2):?>
     	<button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Checkout')) ?>" class="dark-button btn-proceed-checkout btn-checkout" onclick="blockCheckoutUi();window.location='<?php echo $this->getCheckoutUrl() ?>';"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
 	<?php endif;?>
 <?php endif;?>
