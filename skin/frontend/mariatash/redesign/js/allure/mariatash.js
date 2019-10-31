@@ -75,7 +75,7 @@ jQuery(document).ready(function () {
 
             var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
             var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-            if (jQuery('.owl-carousel').length) {
+            // if (jQuery('.owl-carousel').length) {
                 if ((productImageHeight) > (productDetailsHeight - scroll)) {
                     jQuery('#product-details-flow').removeClass('offset-66');
                     jQuery('#product-detail-image').removeClass('fix-image');
@@ -85,7 +85,7 @@ jQuery(document).ready(function () {
                     jQuery('#product-detail-image').addClass('fix-image');
                     jQuery('#product-detail-image > div').removeClass('position-bottom');
                 }
-            }
+            // }
             headerHeight = jQuery(".mariatash-header").outerHeight();
             jQuery('.open-navigation').css("padding-top", headerHeight);
 

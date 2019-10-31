@@ -1181,6 +1181,9 @@ ul.swatch .swatch-item a {
 }
 
 @media(min-width:992px) {
+	.product-img-box{
+		width: 100%!important;
+	}
     .position-bottom {
         position: absolute;
         bottom: 0;
@@ -1191,8 +1194,8 @@ ul.swatch .swatch-item a {
     }
     .fix-image {
         position: fixed;
-        width: 58.333333%;
-        max-width: 58.333333%;
+        width: 66.666667%;
+        max-width: 66.666667%;
     }
     .more-details .nav-tabs {
         display: flex;
@@ -1202,7 +1205,7 @@ ul.swatch .swatch-item a {
 
 @media(min-width:1200px) {
     .offset-66 {
-        margin-left: 66.666%;
+        margin-left: 66.666%!important;
     }
     .cms-home .footer{
         padding: 60px 0;
@@ -4468,3 +4471,4 @@ dt.post-lengthds-lbl {
 .desktop-device #productsContainer{
 	overflow-y: scroll !important;
 }
+

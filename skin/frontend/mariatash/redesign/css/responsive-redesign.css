@@ -1601,10 +1601,10 @@
   }
   .pdp-image-section
   {
-    margin-top: 153px;
+    margin-top: 80px;
   }
   .pdp-image-section .containerImage{
-    margin-top: -70px;
+    /*margin-top: -70px;*/
   }
   .quickview-index-index .pdp-image-section
   {
