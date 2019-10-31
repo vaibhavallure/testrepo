@@ -1,5 +1,8 @@
 jQuery(document).ready(function () {
 
+    if(jQuery("p.category-image").length && jQuery("p.category-image").is(":visible")){
+      jQuery(".for-space-to-bottom").addClass("cat-img-present");
+    }
 
     jQuery('a[href=#]').each(function () {
         jQuery(this).attr('href', 'JavaScript:Void(0)');

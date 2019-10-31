@@ -61,8 +61,11 @@
     width: 100%;
     margin-left: 30px !important;
   }
-  .mobile-device .sub-menu{
+  .sub-menu{
     width: 50% !important;
+  }
+  .desktop-device .sub-menu{
+    width: 100% !important;
   }
   #appointments .col{
     width: 100%;
@@ -1833,7 +1836,7 @@
   .desktop-device .inner-box{
     margin-left:46px;
   }
-  .common-option-div{
+  .desktop-device .common-option-div{
     max-width: 20%;
     flex: 0 0 20%;
   }
