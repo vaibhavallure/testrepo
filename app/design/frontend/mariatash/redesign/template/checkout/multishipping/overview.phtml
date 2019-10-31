@@ -185,7 +185,8 @@
 
                                 submitted = true;
                                 var step='review';
-                                Element.show(step+'-please-wait');
+                                blockCheckoutUi();
+                                //Element.show(step+'-please-wait');
                                 $(step+'-buttons-container').setStyle({opacity:.5});
                                 $(step+'-buttons-container').descendants().each(function(s) {
                                       s.disabled = true;
