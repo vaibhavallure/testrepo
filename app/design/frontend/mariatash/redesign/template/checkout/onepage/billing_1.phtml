@@ -53,6 +53,9 @@
      	</li>
       	<?php endif; ?>
        	<li id="billing-new-address-form"<?php if ($_hasAddresses): ?> style="display:none;"<?php endif; ?>>
+        	<?php if (!$_hasAddresses): ?>
+        	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please enter your billing address:') ?></label>
+        	<?php endif;?>
         	<fieldset>
             	<input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>"
                 	id="billing:address_id"/>
