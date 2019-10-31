@@ -25,26 +25,25 @@
  */
 /** @var $this Mage_Paypal_Block_Express_Review */
 ?>
-<p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="Jewelry" title="Jewelry"></p>
-<div class="page-title">
-    <h1><?php echo $this->__('Order Review') ?></h1>
-</div>
-
-<?php //Allure Inc code ?>
-<?php
-$quoteObj = $this->getQuote();
-$_checkoutstepHelper = Mage::helper('allure_multicheckout');
-if(strtolower($quoteObj->getDeliveryMethod())==strtolower($_checkoutstepHelper::TWO_SHIP)):?>
-	<div class="info-set">
-	    <h2 class="legend"><?php echo $this->__('Items in Your Shopping Cart') ?><span class="separator"> | </span><a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('Edit Shopping Cart') ?></a></h2>
-	    <div id="mt-details-reload">
-	        <?php echo $this->getChildHtml('two_ship_block');?>
-	    </div>
-	</div>
-<?php else:
-?>
-	<?php echo $this->getMessagesBlock()->toHtml() ?>
-	<?php if ($this->getShippingAddress()): ?>
+<?php $quoteObj = $this->getQuote();?>
+<?php if($quoteObj->getIsMultiShipping()):?>
+<?= $this->getChildHtml("checkout_overview");?>
+<?php else :?>
+    <p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="Jewelry" title="Jewelry"></p>
+    <div class="page-title">
+        <h1><?php echo $this->__('Order Review') ?></h1>
+    </div>
+	<?php $_checkoutstepHelper = Mage::helper('allure_multicheckout');?>
+	<?php if(strtolower($quoteObj->getDeliveryMethod())==strtolower($_checkoutstepHelper::TWO_SHIP)):?>
+    <div class="info-set">
+    	<h2 class="legend"><?php echo $this->__('Items in Your Shopping Cart') ?><span class="separator"> | </span><a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('Edit Shopping Cart') ?></a></h2>
+    	<div id="mt-details-reload">
+    		<?php echo $this->getChildHtml('two_ship_block');?>
+    	</div>
+    </div>
+	<?php else:?>
+		<?php echo $this->getMessagesBlock()->toHtml() ?>
+		<?php if ($this->getShippingAddress()): ?>
 	    <div class="info-set col2-set">
 	        <h2 class="legend paypal-review-legend"><?php echo $this->__('Shipping Information') ?></h2>
 	        <div class="">
@@ -193,3 +192,4 @@ if(strtolower($quoteObj->getDeliveryMethod())==strtolower($_checkoutstepHelper::
     PayPalExpressAjax.addPleaseWait($('review-please-wait'));
     //]]>
 </script>
+<?php endif;?>
