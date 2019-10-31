@@ -4465,7 +4465,11 @@ dt.post-lengthds-lbl {
 	min-width: 1366px;
 }
 
+.cat-img-present {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
 .for-space-to-bottom{
 	height: 134px;
 }
-
