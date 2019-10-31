@@ -60,6 +60,7 @@
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
     }
 ?>
+
  <div id="category-title" class="page-title category-title <?php echo ($_category->getCategoryBleed()) ? ' category-bleed' : ''?>">
     <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
         <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
@@ -70,6 +71,12 @@
 
 <?php if($_imgUrl): ?>
     <?php echo $_imgHtml ?>
+
+    <script>
+    jQuery(document).ready(function () {
+      jQuery(".cat-img-space").css("background-image",'url('+jQuery("p.category-image").find("img").attr('src')+')');
+});
+    </script>
 <?php endif; ?>
 
 <?php if($_description=$this->getCurrentCategory()->getDescription()): ?>
