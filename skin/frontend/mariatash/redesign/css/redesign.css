@@ -1190,7 +1190,7 @@ ul.swatch .swatch-item a {
         padding-right: 15px;
     }
     .offset-66 {
-        margin-left: 58.33333%;
+			margin-left: 66.666%!important;
     }
     .fix-image {
         position: fixed;
@@ -1308,17 +1308,9 @@ ul.swatch .swatch-item a {
     opacity: 1;
 }
 
-.filter-common-div{
-  top: 360px;
-}
-
-.block-layered-nav-bg {
-    position: absolute;
-}
-
 .category-products {
   position: relative;
-  margin-top: 95px;
+  margin-top: 100px;
 	margin-bottom: 100px;
 }
 
@@ -4472,4 +4464,12 @@ dt.post-lengthds-lbl {
 
 .for-space-to-bottom{
 	height: 134px;
+}
+.for-space-to-bottom.cat-img-space {
+    height: 300px;
+		height: 300px;
+		width: 100%;
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
 }
