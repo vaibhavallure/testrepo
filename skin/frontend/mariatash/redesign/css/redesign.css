@@ -4461,13 +4461,9 @@ dt.post-lengthds-lbl {
 .desktop-device #narrow-by-list{
 	min-width: 1366px;
 }
-/* .desktop-device .five-col{
-	width: 20%;
+
+/**/
+.cat-img-present {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
-.desktop-device .catalog-common-grid, #narrow-by-list{
-	min-width: 1366px;
-	overflow-y: scroll;
-}
-.desktop-device #productsContainer{
-	overflow-y: scroll !important;
-} */

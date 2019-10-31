@@ -1,7 +1,10 @@
 jQuery(document).ready(function () {
 
     if(jQuery("p.category-image").length && jQuery("p.category-image").is(":visible")){
-      jQuery(".for-space-to-bottom").addClass("cat-img-present");
+      jQuery("for-space-to-bottom").addClass("cat-img-space");
+      jQuery("body").addClass("cat-img-present");
+      jQuery("body").css("background-image",'url('+jQuery("p.category-image").find("img").attr('src')+')');
+      jQuery("p.category-image").hide();
     }
 
     jQuery('a[href=#]').each(function () {
