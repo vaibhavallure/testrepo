@@ -206,14 +206,14 @@ if ($_product->getSizeSample() == 1) {
 
         <div class="col-12 product-detail-parent">
             <div class="row">
-                <div class="product-view-left col-lg-8">
+                <div class="product-view-left col-lg-8 fix-image"  id="product-detail-image">
                     <div class="product-img-box">
                         <div id="galleria" class="mediaGallery">
                             <?php echo $this->getChildHtml('media') ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 offset-lg-1 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
+                <div id="product-details-flow" class="col-lg-3 offset-66 offset-lg-1 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
                     <div class="row">
                         <div class="product-name col-12 pl-0">
                             <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
@@ -381,7 +381,7 @@ if ($_product->getSizeSample() == 1) {
         </div>
         <div class="col-12 product-detail-parent">
           <div class="row">
-            <div class="product-view-left col-lg-8">
+            <div class="product-view-left col-lg-8 fix-image" id="product-detail-image">
                 <div class="product-img-box">
                     <div id="galleria" class="mediaGallery">
                         <?php echo $this->getChildHtml('media') ?>
@@ -457,7 +457,7 @@ if ($_product->getSizeSample() == 1) {
                 </script>
             </div>
 
-            <div class="col-lg-3 offset-lg-1 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
+            <div id="product-details-flow" class="col-lg-3 offset-66 offset-lg-1 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
               <div class="row">
                 <div class="col-12">
                   <div class="row">
