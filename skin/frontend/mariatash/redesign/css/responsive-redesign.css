@@ -555,9 +555,6 @@
   .desktop-device .catalog-category-view .for-space-to-bottom{
     height: 80px !important;
   }
-  .desktop-device .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .desktop-device .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 300px;
-  }
   .desktop-device .catalog-category-view .category-title{
     padding-left: 0 !important;
   }
@@ -764,9 +761,6 @@
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
-  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 257px;
-  }
   .about-designer{
     padding: 0 26px;
   }
@@ -1679,12 +1673,6 @@
     width: 742px;
     margin-left: 300px;
   }
-  .filter-common-div {
-    top: 505px;
-  }
-  .category-products{
-    margin-top: 133px;
-  }
   .custom-container{
     max-width: 1318px !important;
   }
@@ -1700,9 +1688,7 @@
   .footer{
     padding: 0;
   }
-  #narrow-by-list{
-    margin-top: 65px;
-  }
+
   .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 40px;
   }
