@@ -42,14 +42,14 @@
 <div class="wrapper">
     <?php echo $this->getChildHtml('global_notices') ?>
     <div class="page layout-grid">
-        <?php echo $this->getChildHtml('header') ?>        
+        <?php echo $this->getChildHtml('header') ?>
         <div class="main-container col2-left-layout">
             <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
             <div class="page-title"><h1>
                 <?php
                 $request = Mage::app()->getRequest();
                 if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
-                { 
+                {
                     echo $this->__('My Wishlist');
                 }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderview'){
                     echo $this->__('My Orders');
@@ -84,12 +84,11 @@
 <?php echo $this->getAbsoluteFooter() ?>
 <!--allure code-->
 <?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
-if(!$isMobile):
-    ?>
-    <script>
-        jQuery("body").addClass("desktop-device");
-    </script>
-<?php endif; ?>
+$deviceClass=($isMobile)?"mobile-device":"desktop-device";
+?>
+<script>
+jQuery("body").addClass("<?= $deviceClass ?>");
+</script>
 <!--allure code end-->
 </body>
 </html>

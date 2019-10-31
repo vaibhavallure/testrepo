@@ -1,5 +1,8 @@
 jQuery(document).ready(function () {
 
+    if(jQuery("p.category-image").length && jQuery("p.category-image").is(":visible")){
+      jQuery(".for-space-to-bottom").addClass("cat-img-present");
+    }
 
     jQuery('a[href=#]').each(function () {
         jQuery(this).attr('href', 'JavaScript:Void(0)');
@@ -47,11 +50,11 @@ jQuery(document).ready(function () {
     });
 
 
-    jQuery(window).scroll(function () {
+    jQuery(window).bind("resize scroll",function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
 
-        if (jQuery(window).width() >= 1025) {
+        if (jQuery(window).width() >= 1363) {
 
             var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
@@ -100,6 +103,13 @@ jQuery(document).ready(function () {
                 }
 
             }
+            jQuery(".mt-logo").removeClass('d-none');
+            jQuery(".nav-links-left").removeClass('d-none');
+            jQuery("#scroll-logo").addClass('d-none');
+            jQuery('.mariatash-header').removeClass('header-height');
+            //jQuery('.mariatash-header').removeClass('maria-black');
+            jQuery('.mariatash-header').removeClass('scrolled-menu');
+            jQuery("section.sub-menu").removeClass("scrolled");
         }
     });
 
