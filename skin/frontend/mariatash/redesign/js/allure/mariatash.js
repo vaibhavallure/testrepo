@@ -1,5 +1,11 @@
 jQuery(document).ready(function () {
 
+
+    /*move cartlage section to filter bottom*/
+    if(jQuery(".cartilage-section").length())
+    jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
+
+
     if(jQuery("p.category-image").length && jQuery("p.category-image").is(":visible")){
       jQuery(".for-space-to-bottom").addClass("cat-img-space");
       jQuery("body").addClass("cat-img-present");
