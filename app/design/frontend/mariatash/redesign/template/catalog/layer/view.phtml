@@ -34,6 +34,12 @@
 <?php if($this->canShowBlock()): ?>
 <?php if($this->getRequest()->getModuleName() == 'catalogsearch') { ?>
 <div class="m-block mb-mana-catalogsearch-leftnav">
+<?php } else {
+  $currentCategory = Mage::registry('current_category')
+  ?>
+  <div id="category-title" class="page-title category-title <?php echo ($currentCategory->getCategoryBleed()) ? ' category-bleed' : ''?>">
+         <h1><?php echo $currentCategory->getName(); ?></h1>
+ </div>
 <?php } ?>
 <div class="block-layered-nav-bg filter-common-div">
 <div class="block block-layered-nav mb-mana-catalogsearch-leftnav">

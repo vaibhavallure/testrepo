@@ -80,7 +80,7 @@
 		<tr class="summary-total">
 		<td>
 			<div class="">
-				<span class="para-lighter"><?= $this->__('Estimated Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+				<span class="para-lighter"><?= $this->__('Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
 			</div>
 		</td>
 		<td class="text-right">
