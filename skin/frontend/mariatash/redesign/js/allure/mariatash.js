@@ -17,6 +17,13 @@ jQuery(document).ready(function () {
         jQuery("p.category-image").hide();
     }
 
+    if(jQuery(".second-header-image").length) {
+        jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery(".second-header-image img").attr("src")+"')");
+        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+        jQuery("body").addClass("cat-img-present");
+        jQuery(".second-header-image").hide();
+    }
+
     jQuery('a[href=#]').each(function () {
         jQuery(this).attr('href', 'JavaScript:Void(0)');
     });
