@@ -756,6 +756,9 @@
   .data-table.cart-table .messages.wholesale-avail-row .item-msg{
     max-width: 382px;
   }
+  .product-shop{
+    padding: 0 45px;
+  }
 }
 
 
@@ -1556,7 +1559,7 @@
     padding-left: 140px;
   }
   .product-shop{
-    padding: 0 186px;
+    padding: 0 135px;
   }
   #foo4_next, #foo6_next{
     right: 0;

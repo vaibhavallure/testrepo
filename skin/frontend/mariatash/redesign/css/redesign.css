@@ -1793,7 +1793,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .catalog-category-view .category-title{
 	padding-left: 109px;
-	margin-top: 35px;
+	margin-top: 8px;
 }
 .catalog-category-view .mb-category-products .category-title h1 {
   font-size: 30px;
@@ -4466,10 +4466,15 @@ dt.post-lengthds-lbl {
 	height: 134px;
 }
 .for-space-to-bottom.cat-img-space {
-    height: 300px;
-		height: 300px;
-		width: 100%;
-		background-size: contain;
-		background-position: center;
-		background-repeat: no-repeat;
+  height: 300px;
+	height: 300px;
+	width: 100%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/************* New Changes: Catagory Pages *****************/
+.catalog-category-view .category-title h1 {
+  font-size: 30px;
 }
