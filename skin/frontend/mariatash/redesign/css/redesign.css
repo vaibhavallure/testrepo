@@ -1194,8 +1194,8 @@ ul.swatch .swatch-item a {
     }
     .fix-image {
         position: fixed;
-        width: 66.666667%;
-        max-width: 66.666667%;
+        width: 58.333333%;
+        max-width: 58.333333%;
     }
     .more-details .nav-tabs {
         display: flex;
@@ -1205,7 +1205,7 @@ ul.swatch .swatch-item a {
 
 @media(min-width:1200px) {
     .offset-66 {
-        margin-left: 66.666%!important;
+        margin-left: 58.333333%!important;
     }
     .cms-home .footer{
         padding: 60px 0;
@@ -2595,7 +2595,7 @@ ul#foo4 {
 }
 .product-shop {
   margin-top: 75px;
-	padding: 0 124px 0 0;
+	padding: 0 156px 0 51px;
 }
 .catalog-category-view .product-name{
   margin-bottom: 16px;
