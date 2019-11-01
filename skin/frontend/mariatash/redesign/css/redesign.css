@@ -4479,3 +4479,6 @@ dt.post-lengthds-lbl {
 .catalog-category-view .category-title h1 {
   font-size: 30px;
 }
+.catalog-product-view .for-space-to-bottom{
+	height: 129px;
+}
