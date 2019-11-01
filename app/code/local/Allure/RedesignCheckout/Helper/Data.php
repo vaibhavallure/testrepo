@@ -32,7 +32,7 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
             $quoteItems = $quote->getAllVisibleItems();
             $qty = 0;
             foreach ($quoteItems as $item){
-                if($item->getProduct()->getIsVirtual()){
+                if($item->getProduct()->getIsVirtual() || $item->getSku() == self::GIFT_WRAP_SKU){
                     continue;
                 }
                 $qty += $item->getQty();
@@ -61,7 +61,7 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
             $quoteItems = $quote->getAllVisibleItems();
             $cnt = 0;
             foreach ($quoteItems as $item){
-                if($item->getProduct()->getIsVirtual()){
+                if($item->getProduct()->getIsVirtual() || $item->getSku() == self::GIFT_WRAP_SKU){
                     continue;
                 }
                 $cnt++;
