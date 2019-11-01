@@ -4466,7 +4466,7 @@ dt.post-lengthds-lbl {
 .for-space-to-bottom.cat-img-space {
 		height: 222px;
     width: 100%;
-    background-size: contain;
+    background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-color: #010409;
