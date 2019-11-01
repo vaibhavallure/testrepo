@@ -1826,9 +1826,6 @@ input[type="checkbox"]:checked+label:before {
 .list-mt-upper {
   min-height: 39px;
 }
-.categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list {
-	margin-top: 73px;
-}
 
 div#narrow-by-list {
   position: absolute;
@@ -4467,12 +4464,12 @@ dt.post-lengthds-lbl {
 	height: 137px;
 }
 .for-space-to-bottom.cat-img-space {
-  height: 300px;
-	height: 300px;
-	width: 100%;
-	background-size: contain;
-	background-position: center;
-	/* background-repeat: no-repeat; */
+		height: 222px;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #010409;
 }
 
 /************* New Changes: Catagory Pages *****************/

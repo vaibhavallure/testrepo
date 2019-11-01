@@ -22,31 +22,25 @@
  * @package     default_iphone
  * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *
+ * @var Mage_Checkout_Block_Cart_Item_Renderer $this
  */
 ?>
 <?php
 $_item = $this->getItem();
-$isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 $messages = $this->getMessages();
-$typeId = $_item->getProduct()->getTypeId();
-
 ?>
-
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
-    <td class="cart_col1">
-        <?php if ($this->hasProductUrl()):?>
-        <a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
+	<td class="cart_col1">
+    <?php if ($this->hasProductUrl()):?>
+    	<a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?>
+    		<img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?>
+    	</a>
     <?php endif;?>
-
-        <?php // if ($isVisibleProduct && $this->getOptionList()): ?>
-        <!--<p><a class="link-edit" href="<?php // echo $this->getConfigureUrl() ?>" title="<?php // echo $this->__('Edit item parameters') ?>"><?php // echo $this->__('Edit') ?></a></p>-->
-        <?php // endif ?>
     </td>
 
     <td class="cart_col2">
-        <!--a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a>-->
-
         <h1 class="product-name">
             <?php if ($this->hasProductUrl()):?>
                 <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
@@ -55,9 +49,7 @@ $typeId = $_item->getProduct()->getTypeId();
             <?php endif; ?>
         </h1>
         <?php if ($_options = $this->getOptionList()):?>
-            <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
-            <div class="product-options" style="display:none;">-->
-            <div class="item-options">
+        <div class="item-options">
                 <?php foreach ($_options as $_option) : ?>
                     <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                     <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
@@ -69,7 +61,6 @@ $typeId = $_item->getProduct()->getTypeId();
                     </div>
                 <?php endforeach; ?>
             </div>
-            <!--</div>-->
         <?php endif;?>
 
         <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
@@ -78,27 +69,26 @@ $typeId = $_item->getProduct()->getTypeId();
         <?php endif;?>
 
         <div class="price-box">
-
-            <!--div class="qty-wrap">
-                <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
-                <span<?php if ($this->getQty() == 1) echo ' style="display:none;"' ?>>×</span>
-            </div-->
-
         </div>
 
     </td>
     <td  class="cart_col3 text-center">
         <?php echo "<span class='price_multi'>Price</span> ".$this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>
-    <td  class="cart_col4">
-        <div style="display:none">
-            <div class="qty-wrap">
-                <span>Qty </span><input name="cart[<?php echo $_item->getId() ?>][qty]" value="1" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
-            </div>
-            <button <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?> class="mt-btn-update" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="submit">Update Qty</button>
+    <td class="cart_col4" data-th="Quantity">
+    	<div class="minus_icon minus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+            <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus para-bold" title="<?= $this->__('Update Shopping Cart')?>" value="update_qty" name="update_cart_action" type="button">-</button>
+        </div>
+        <div class="qty-wrap total_qty col-1">
+          <span class="quantity-count" id="qtyid_<?php echo $_item->getId() ?>_span"><?php echo $this->getQty() ?></span>
+            <input type="hidden" id="qtyid_<?php echo $_item->getId() ?>" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+            <input type="hidden" value="<?php echo $this->getQty() ?>"/>
+        </div>
+        <div class="plus_icon plus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+            <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus para-bold" title="<?= $this->__('Update Shopping Cart')?>" value="update_qty" name="update_cart_action" type="button">+</button>
         </div>
     </td>
-    <td  class="cart_col5">
+    <td class="cart_col5">
         <div class="cart-price-box text-right">
 
             <?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
