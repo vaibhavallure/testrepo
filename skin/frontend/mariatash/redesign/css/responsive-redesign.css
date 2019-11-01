@@ -409,12 +409,12 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
-  .catalog-category-view .category-title{
+  .mobile-device.catalog-category-view .category-title{
     padding-left: 77px !important;
   }
-  .desktop-device.catalog-category-view .category-title{
+  /* .desktop-device.catalog-category-view .category-title{
     padding-left: 109px !important;
-  }
+  } */
   .category-image-bleed{ /* Head Image */
     display: none;
   }
@@ -681,15 +681,15 @@
   .ecp-celebrities-index-index .simple-page-title {
     margin: 0 0 46px !important;
   }
-  .catalog-product-name-display{
+  /* .catalog-product-name-display{
     padding-left: 77px;
-  }
+  } */
   .breadcrumbs {
     padding-left: 39px;
   }
-  .filterButton:before{
+  /* .filterButton:before{
     left: 19px !important;
-  }
+  } */
   .category-products {
     margin-top: 0px;
   }
@@ -1038,9 +1038,9 @@
   .filter-common-div{
     display: none;
   }
-  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
+  /* .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
     margin-top: -70px;
-  }
+  } */
   .filterPopup .pop-up-cover {
     margin-top: 5%;
     padding-bottom: 20px;
@@ -1852,4 +1852,12 @@
   .for-space-to-bottom.cat-img-space{
     background-image: none;
   }
+}
+@media (max-width:2323px){
+    #next3, #prev3{
+      display: block !important;
+    }
+}
+@media (min-width:786px) and (max-width:1023px) {
+
 }
