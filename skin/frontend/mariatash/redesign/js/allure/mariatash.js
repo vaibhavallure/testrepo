@@ -1,7 +1,7 @@
 jQuery(document).ready(function () {
 
 
-    /*move cartlage section to filter bottom*/
+    /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
@@ -22,6 +22,17 @@ jQuery(document).ready(function () {
         jQuery(".for-space-to-bottom").addClass("cat-img-space");
         jQuery("body").addClass("cat-img-present");
         jQuery(".second-header-image").hide();
+    }
+
+    if(jQuery(".catalog-product-view").length)
+    {
+        //.recently-view insta-main you_may_like
+        if(!jQuery(".recently-view").length && !jQuery(".insta-main").length && !jQuery(".you_may_like").length)
+        {
+         jQuery(".footer").attr("style","padding-top:0px!important");
+         jQuery(".for-bottom-space.p-5").removeClass("p-5");
+        }
+
     }
 
     jQuery('a[href=#]').each(function () {
