@@ -1858,6 +1858,13 @@
       display: block !important;
     }
 }
-@media (min-width:786px) and (max-width:1023px) {
-
+@media (min-width:786px) and (max-width:1059px) {
+  .for-space-to-bottom.cat-img-space{
+    height: 160px;
+  }
+}
+@media (min-width:768px) and (max-width:1023px) {
+  .homepage-menu.mariatash-header{
+    background: no-repeat;
+  }
 }

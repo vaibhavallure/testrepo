@@ -4479,3 +4479,7 @@ dt.post-lengthds-lbl {
 .catalog-product-view .for-space-to-bottom{
 	height: 129px;
 }
+
+.checkout-cart-index .cart-mt {
+    margin-top: 42px;
+}
