@@ -206,15 +206,7 @@
             </div>
         </button>
     </nav>
-    <?php if($this->getRequest()->getModuleName() == 'catalog') { ?>
-    <?php
-      $currentCategory = Mage::registry('current_category');
-
-      if ($currentCategory) {
-        $_categoryImage = $currentCategory->getImageUrl();
-    ?>
-    <div class="for-space-to-bottom" style="background-image:url(<?php echo $_categoryImage;?>)"><img src="<?php echo $_categoryImage;?>"/></div>
-  <?php }}?>
+    <div class="for-space-to-bottom"></div>
     <div class="mobile-main_menu" >
         <?php echo $this->getChildHtml('topMenu') ?>
     </div>

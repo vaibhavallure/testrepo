@@ -4464,11 +4464,12 @@ dt.post-lengthds-lbl {
 	height: 137px;
 }
 .for-space-to-bottom.cat-img-space {
-	height: 230px;
-	width: 100%;
-	background-size: contain;
-	background-position: center;
-	/* background-repeat: no-repeat; */
+		height: 222px;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #010409;
 }
 
 /************* New Changes: Catagory Pages *****************/
