@@ -6,7 +6,7 @@ jQuery(document).ready(function () {
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
 
-    if(!jQuery("p.category-image").length || !jQuery("p.category-image-bleed").length ){
+    if(!jQuery("p.category-image").length && !jQuery("p.category-image-bleed").length ){
       jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
     }
 
