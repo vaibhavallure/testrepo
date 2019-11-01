@@ -43,19 +43,28 @@
     $_imgHtml   = '';
     if ($_imgUrl = $_category->getImageUrl()) {
         if ($_category->getCategoryBleed()) {
-            echo '<script>
+            ?>
+            <script>
                     jQuery(document).ready(function(){
                         jQuery(".col-main").addClass("with-category-image-bleed");
+                        jQuery(".for-space-to-bottom").css("background-image","url('<?= $_imgUrl ?>')");
+                        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+                        jQuery("body").addClass("cat-img-present");
                     });
-                </script>';
-            $_imgHtml = '<p class="category-image-bleed"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></p>';
-        } else {
-            echo '<script>
+                </script>
+<?php
+            $_imgHtml = '<p class="category-image-bleed d-none"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></p>';
+        } else { ?>
+            <script>
                     jQuery(document).ready(function(){
                         jQuery(".col-main").addClass("with-category-image");
+                        jQuery(".for-space-to-bottom").css("background-image","url('<?= $_imgUrl ?>')");
+                        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+                        jQuery("body").addClass("cat-img-present");
                     });
-                </script>';
-            $_imgHtml = '<p class="category-image"><img data-height="'.$height.'" src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></span></p>';
+                </script>
+<?php
+            $_imgHtml = '<p class="category-image d-none"><img data-height="'.$height.'" src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></span></p>';
         }
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
     }
@@ -68,7 +77,6 @@
 
     <script>
     jQuery(document).ready(function () {
-      jQuery(".cat-img-space").css("background-image",'url('+jQuery("p.category-image").find("img").attr('src')+')');
 });
     </script>
 <?php endif; ?>
