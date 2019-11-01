@@ -2,19 +2,11 @@ jQuery(document).ready(function () {
 
 
     /*move cartlage section to filter bottom*/
-    if(jQuery(".cartilage-section").length)
+    if(jQuery(".cartilage-section").length())
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
 
-    if(jQuery("p.category-image").length && jQuery("p.category-image").is(":visible")){
-      jQuery(".for-space-to-bottom").addClass("cat-img-space");
-      jQuery("body").addClass("cat-img-present");
-      //jQuery("body").css("background-image",'url('+jQuery("p.category-image").find("img").attr('src')+')');
-      jQuery("p.category-image").hide();
-    //  var image_height = jQuery("p.category-image").find("img").attr("data-height");
-      //jQuery(".for-space-to-bottom").css("height",image_height);
-    }
-    else {
+    if(!jQuery("p.category-image").length || !jQuery("p.category-image-bleed").length ){
       jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
     }
 
