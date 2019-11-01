@@ -14,6 +14,7 @@ jQuery(document).ready(function () {
         jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery("p.category-image img").attr("src")+"')");
         jQuery(".for-space-to-bottom").addClass("cat-img-space");
         jQuery("body").addClass("cat-img-present");
+        jQuery("p.category-image").hide();
     }
 
     jQuery('a[href=#]').each(function () {
