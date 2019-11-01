@@ -1843,6 +1843,9 @@
     left: 70px;
     top: 5px;
   }
+  .for-space-to-bottom{
+    height: 77px;
+  }
 }
 
 @media (min-width:767px) and (max-width:1250px){
