@@ -31,6 +31,7 @@ jQuery(document).ready(function () {
         {
          jQuery(".footer").attr("style","padding-top:0px!important");
          jQuery(".for-bottom-space.p-5").removeClass("p-5");
+         jQuery(".product-detail-parent").css("padding-bottom", "65px");
         }
 
     }
