@@ -40,7 +40,6 @@ $_test = $this->getRequest()->getParam('test');
 $mode  = $this->getMode();
 ?>
 
-
 <?php if($isMobile): ?>
 <style>
     .price-box{
@@ -235,26 +234,6 @@ $mode  = $this->getMode();
                                                             </span>
                                                         </div>
                                                         <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
-                                                           <!-- <?php
-/*                                                            $j=0;
-                                                            foreach ($optionsValues['value'] as $option): */?>
-                                                                <?php
-/*                                                                $optionId = $option[$attribute_code];
-                                                                $optionLb = $option[$attribute_code . "_value"];
-                                                                $simple_id = $option['child_id'];
-                                                                if($j==0) $firstOption = $optionId;
-                                                                $j++;
-                                                                */?>
-                                                                <li id="<?php /*echo $simple_id */?>"
-                                                                   style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');width: 21px; height: 22px;"
-                                                                    class="colorSelector tipped-create" value="<?php /*echo $optionId */?>"
-                                                                    title="<?php /*echo $optionLb */?>" >
-                                                                    <div style="display: none">
-                                                                          <span id="img-<?php /*echo $simple_id; */?>"></span>
-                                                                          <span id="price-<?php /*echo $simple_id; */?>"></span>
-                                                                    </div>
-                                                                </li>
-                                                            --><?php /*endforeach; */?>
                                                             <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
                                                         </ul>
                                                     <?php endif;?>
@@ -486,7 +465,4 @@ $mode  = $this->getMode();
             }*/
         }
     });
-
-
-
 </script>
