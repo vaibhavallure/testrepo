@@ -10,6 +10,12 @@ jQuery(document).ready(function () {
       jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
     }
 
+    if(jQuery("p.category-image").length) {
+        jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery("p.category-image img").attr("src")+"')");
+        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+        jQuery("body").addClass("cat-img-present");
+    }
+
     jQuery('a[href=#]').each(function () {
         jQuery(this).attr('href', 'JavaScript:Void(0)');
     });
