@@ -599,7 +599,7 @@
     margin-bottom: 0;
   }
   .for-space-to-bottom{
-    height: 90px !important;
+    height: 77px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 73px !important;
@@ -756,6 +756,9 @@
   .data-table.cart-table .messages.wholesale-avail-row .item-msg{
     max-width: 382px;
   }
+  .product-shop{
+    padding: 0 45px;
+  }
 }
 
 
@@ -770,9 +773,9 @@
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
     height: 170px !important;
   }
-  .catalog-category-view .for-space-to-bottom{
+  /* .catalog-category-view .for-space-to-bottom{
     height: 250px;
-  }
+  } */
   .about-jewelry{
     padding: 0 26px;
   }
@@ -1556,7 +1559,7 @@
     padding-left: 140px;
   }
   .product-shop{
-    padding: 0 186px;
+    padding: 0 135px;
   }
   #foo4_next, #foo6_next{
     right: 0;
@@ -1839,5 +1842,14 @@
   .desktop-device .maria-left-menus{
     left: 70px;
     top: 5px;
+  }
+  .for-space-to-bottom{
+    height: 77px;
+  }
+}
+
+@media (min-width:767px) and (max-width:1250px){
+  .for-space-to-bottom.cat-img-space{
+    background-image: none;
   }
 }
