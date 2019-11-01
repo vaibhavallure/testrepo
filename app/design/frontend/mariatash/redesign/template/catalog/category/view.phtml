@@ -34,22 +34,22 @@
 <?php
     $_helper    = $this->helper('catalog/output');
     $_category  = $this->getCurrentCategory();
-    if($_category->getImageUrl()) {
-    $cat_image= $_category->getImageUrl();
-    list($width, $height) = getimagesize($cat_image);
-  }
+
+    if ($_category->getImageUrl()) {
+      $cat_image= $_category->getImageUrl();
+      list($width, $height) = getimagesize($cat_image);
+    }
 
     $_imgHtml   = '';
     if ($_imgUrl = $_category->getImageUrl()) {
-        if($_category->getCategoryBleed()) {
+        if ($_category->getCategoryBleed()) {
             echo '<script>
                     jQuery(document).ready(function(){
                         jQuery(".col-main").addClass("with-category-image-bleed");
                     });
                 </script>';
             $_imgHtml = '<p class="category-image-bleed"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></p>';
-        }
-        else {
+        } else {
             echo '<script>
                     jQuery(document).ready(function(){
                         jQuery(".col-main").addClass("with-category-image");
@@ -61,12 +61,6 @@
     }
 ?>
 
- <div id="category-title" class="page-title category-title <?php echo ($_category->getCategoryBleed()) ? ' category-bleed' : ''?>">
-    <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
-        <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
-	    <?php endif; ?>
-        <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
-</div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
 <?php if($_imgUrl): ?>

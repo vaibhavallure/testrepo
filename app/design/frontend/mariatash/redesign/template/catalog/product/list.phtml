@@ -39,6 +39,14 @@ $mediaUrl = Mage::getBaseUrl('media');
 $_test = $this->getRequest()->getParam('test');
 $mode  = $this->getMode();
 ?>
+
+<?php if($isMobile): ?>
+<style>
+    .price-box{
+        display: block!important;
+    }
+</style>
+<?php endif; ?>
 <script type="text/javascript">
     var BASE_URL = '<?php echo Mage::getBaseUrl('web'); ?>';
     function productItemHoverBinding(listSelector) {
@@ -58,7 +66,7 @@ $mode  = $this->getMode();
                 return false;
 
 
-            if(!jQuery(this).hasClass('ajax-request-sent')) {
+            if(false) {
                 jQuery(this).addClass('ajax-request-sent');
                 jQuery.ajax({
                     type: "POST",
@@ -226,26 +234,6 @@ $mode  = $this->getMode();
                                                             </span>
                                                         </div>
                                                         <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
-                                                           <!-- <?php
-/*                                                            $j=0;
-                                                            foreach ($optionsValues['value'] as $option): */?>
-                                                                <?php
-/*                                                                $optionId = $option[$attribute_code];
-                                                                $optionLb = $option[$attribute_code . "_value"];
-                                                                $simple_id = $option['child_id'];
-                                                                if($j==0) $firstOption = $optionId;
-                                                                $j++;
-                                                                */?>
-                                                                <li id="<?php /*echo $simple_id */?>"
-                                                                   style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');width: 21px; height: 22px;"
-                                                                    class="colorSelector tipped-create" value="<?php /*echo $optionId */?>"
-                                                                    title="<?php /*echo $optionLb */?>" >
-                                                                    <div style="display: none">
-                                                                          <span id="img-<?php /*echo $simple_id; */?>"></span>
-                                                                          <span id="price-<?php /*echo $simple_id; */?>"></span>
-                                                                    </div>
-                                                                </li>
-                                                            --><?php /*endforeach; */?>
                                                             <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
                                                         </ul>
                                                     <?php endif;?>
@@ -298,12 +286,12 @@ $mode  = $this->getMode();
                             <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                    class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>"
-                                                           src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(376, 490); ?>"
+                                                           src="<?php echo $this->getFirstOptionImage($_product) ?>"
                                                            width="376" height="490"
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
 
 
-                                <div class="list-mt-w">
+                                <div class="list-mt-w" <?=($isMobile)? 'style="display:block"':'' ?>>
                                   <div class="row justify-content-between">
                                         <div class="col-12">
                                           <div class="row list-mt-upper">
@@ -364,27 +352,32 @@ $mode  = $this->getMode();
                                                     </div>
                                                     <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
                                                         <?php
-/*                                                        $j=0;
+                                                        $j=0;
                                                         $firstOption = '';
-                                                        foreach ($optionsValues['value'] as $option): */?><!--
+                                                        foreach ($optionsValues['value'] as $option): ?>
                                                             <?php
-/*                                                            $optionId = $option[$attribute_code];
+                                                            $optionId = $option[$attribute_code];
                                                             $optionLb = $option[$attribute_code . "_value"];
                                                             $simple_id = $option['child_id'];
                                                             if($j==0) $firstOption = $optionId;
                                                             $j++;
-                                                            */?>
-                                                            <li id="<?php /*echo $simple_id */?>"
-                                                                style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');"
-                                                                class="colorSelector tipped-create" value="<?php /*echo $optionId */?>"
-                                                                title="<?php /*echo $optionLb */?>" >
+
+                                                            $simpleProduct = Mage::getModel('catalog/product')->load($simple_id);
+                                                            ?>
+                                                            <li id="<?php echo $simple_id ?>"
+                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');"
+                                                                class="colorSelector tipped-create <?=($j==1)?"active":"" ?>" value="<?php echo $optionId ?>"
+                                                                title="<?php echo $optionLb ?>"
+                                                                data-pid="<?php echo $_product->getId() ?>"
+                                                            data-image="<?=  Mage::helper('catalog/image')->init($simpleProduct, 'small_image')->resize(314, 409) ?>"
+                                                            >
                                                                 <div style="display: none">
-                                                                      <span id="img-<?php /*echo $simple_id; */?>"></span>
-                                                                      <span id="price-<?php /*echo $simple_id; */?>"></span>
+                                                                      <span id="img-<?php echo $simple_id; ?>"></span>
+                                                                      <span id="price-<?php echo $simple_id; ?>"></span>
                                                                 </div>
                                                             </li>
-                                                    --><?php /*endforeach; */?>
-                                                        <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." style="width: 25px;height: 25px">
+                                                    <?php endforeach; ?>
+<!--                                                        <img src="--><?php //echo $this->getSkinUrl('images/gene/loader.gif') ?><!--" alt="Loading..." style="width: 25px;height: 25px">-->
                                                     </ul>
                                                     <?php endif;?>
                                                 </div>
@@ -429,109 +422,15 @@ $mode  = $this->getMode();
 <script>
 
     jQuery(document).ready(function() {
-        jQuery('.price-box').show();
+        jQuery(document).on("click","li.colorSelector",function () {
+            var product_id=jQuery(this).data("pid");
+            var imgSrc=jQuery(this).data("image");
+            jQuery(this).parent().find("li.colorSelector").removeClass("active");
+            jQuery(this).addClass("active");
+            jQuery('#img-'+ product_id).attr('src',imgSrc);
 
-        <?php if($isMobile): ?>
-        jQuery.fn.isInViewport = function() {
-            var elementTop = jQuery(this).offset().top;
-            var elementBottom = elementTop + jQuery(this).outerHeight();
-
-            var viewportTop = jQuery(window).scrollTop();
-            var viewportBottom = viewportTop + jQuery(window).height();
-
-            return elementBottom > viewportTop && elementTop < viewportBottom;
-        };
-
-        jQuery(window).on('resize scroll', function() {
-
-            jQuery('ul.products-grid .item').each(function(){
-                jQuery(this).addClass('over');
-                jQuery('.price-box').show();
-
-                if (jQuery(this).isInViewport()) {
-
-                    var product_id = parseInt(jQuery(this).attr('id').replace('item-', ''));
-                    var superAtt  = 'super-attribute-' + product_id;
-                    var quickview = 'product-quickview-' + product_id;
-                    jQuery('#' + quickview).show();
-
-                    var listIds   = jQuery('#list-'+product_id).text();
-                    // Check configurable
-                    //if(!listIds) return false;
-                    if(!listIds) listIds = product_id;
-
-                    if (jQuery('#list-img-'+product_id).text()=='1')
-                        return false;
-
-
-                    if(!jQuery(this).hasClass('ajax-request-sent')) {
-                        jQuery(this).addClass('ajax-request-sent');
-                        jQuery.ajax({
-                            type: "POST",
-                            dataType : "json",
-                            url: BASE_URL + "ecpcolor/",
-                            data: {options: listIds,mode:'<?php echo $mode;?>', location: "Boston"}
-                        })
-                            .done(function(response) {
-                                if (response.colors != '') {
-                                    jQuery("#color-icons-"+product_id).html(response.colors);
-                                    jQuery('#list-img-'+product_id).text('1') ;
-
-                                    var iCounter=1;
-
-                                    jQuery('#color-icons-' + product_id + ' li').each(function(){
-                                        var color_id  = jQuery(this).attr('id'),
-                                            color_title = jQuery(this).attr('title');
-                                        /*Tipped.create(jQuery("#" + color_id), color_title, {
-                                                skin: 'customTiny',
-                                                showOn: ['click', 'mouseover'],
-                                                background: { color: '#fff', opacity: .7 }
-                                        });*/
-
-                                        jQuery(this).click(function(){
-                                            var option = jQuery(this).attr('value');
-                                            removeActive(product_id);
-                                            jQuery(this).addClass('active');
-                                            var imgSrc = jQuery('#img-'+ jQuery(this).attr('id')).text();
-                                            var price  = jQuery('#price-'+ jQuery(this).attr('id')).html();
-                                            var pv = jQuery('#link-pv-'+product_id).text() + '?optionId=' +option;
-                                            var qv = jQuery('#link-qv-'+product_id).text() + '?optionId=' +option;
-                                            if(price){
-                                                jQuery("#default-price-"+product_id).html(price);
-                                            }
-                                            if(imgSrc) {
-                                                jQuery('#img-'+ product_id).attr('src',imgSrc);
-                                                jQuery('a#' + product_id).attr('href',pv);
-                                                jQuery('#product-quickview-'+ product_id).attr('href',qv)
-                                            }
-                                            jQuery('.price-box').show();
-                                        });
-
-                                        if(iCounter==1)
-                                            jQuery(this).trigger("click");
-
-                                        iCounter++;
-                                    });
-                                }
-
-                                if (response.price != '') {
-                                    jQuery("#default-price-"+product_id).html(response.price);
-                                    jQuery("#default-price-"+product_id+" .price-box").show();
-                                }
-
-                            });
-                    }
-                }
-            });
         });
 
-
-        function removeActive(product_id){
-            jQuery('#color-icons-' + product_id + ' li').each(function(){
-                jQuery(this).removeClass('active') ;
-            });
-        }
-        <?php endif; ?>
     });
 
     jQuery.noConflict();
@@ -566,7 +465,4 @@ $mode  = $this->getMode();
             }*/
         }
     });
-
-
-
 </script>

@@ -62,6 +62,26 @@ jQuery(document).ready(function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
 
+
+
+
+
+        if(jQuery(window).width() >= 992)
+        {
+          var scroll = jQuery(window).scrollTop();
+          var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
+          var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
+          // if (jQuery('.owl-carousel').length) {
+              if ((productImageHeight) > (productDetailsHeight - scroll)) {
+                  jQuery('#product-details-flow').removeClass('offset-66');
+                  jQuery('#product-detail-image').removeClass('fix-image');
+                  jQuery('#product-detail-image > div').addClass('position-bottom');
+              } else {
+                  jQuery('#product-details-flow').addClass('offset-66');
+                  jQuery('#product-detail-image').addClass('fix-image');
+                  jQuery('#product-detail-image > div').removeClass('position-bottom');
+              }
+        }
         if (jQuery(window).width() >= 1363) {
 
             var scroll = jQuery(window).scrollTop();
@@ -84,18 +104,7 @@ jQuery(document).ready(function () {
 
             }
 
-            var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
-            var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-            // if (jQuery('.owl-carousel').length) {
-                if ((productImageHeight) > (productDetailsHeight - scroll)) {
-                    jQuery('#product-details-flow').removeClass('offset-66');
-                    jQuery('#product-detail-image').removeClass('fix-image');
-                    jQuery('#product-detail-image > div').addClass('position-bottom');
-                } else {
-                    jQuery('#product-details-flow').addClass('offset-66');
-                    jQuery('#product-detail-image').addClass('fix-image');
-                    jQuery('#product-detail-image > div').removeClass('position-bottom');
-                }
+
             // }
             headerHeight = jQuery(".mariatash-header").outerHeight();
             jQuery('.open-navigation').css("padding-top", headerHeight);
