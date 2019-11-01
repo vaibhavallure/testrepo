@@ -2,7 +2,7 @@ jQuery(document).ready(function () {
 
 
     /*move cartlage section to filter bottom*/
-    if(jQuery(".cartilage-section").length())
+    if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
 
