@@ -372,4 +372,19 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             }
             return null;
         }
+        public function getFirstOptionImage($_product)
+        {
+            if($_product->getTypeId() != 'configurable')
+                return Mage::helper('catalog/image')->init($_product, 'small_image')->resize(376, 490);
+
+           $options=$this->getIcons($_product->getId());
+           if(!count($options))
+               return Mage::helper('catalog/image')->init($_product, 'small_image')->resize(376, 490);
+
+            $child_product_id=$options['value'][0]['child_id'];
+            $childProduct = Mage::getModel('catalog/product')->load($child_product_id);
+
+            return Mage::helper('catalog/image')->init($childProduct, 'small_image')->resize(376, 490);
+
+        }
 }
