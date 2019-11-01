@@ -309,8 +309,9 @@ class Ecp_Shoppingcart_AddressController extends Mage_Customer_AddressController
                     $address->save();
                     if($this->getRequest()->getParam('default_billing', false)){
                         Mage::getModel('checkout/type_multishipping')
-                        ->setQuoteCustomerBillingAddress($addressId);
+                        ->setQuoteCustomerBillingAddress($address->getId());
                     }
+                    
                     $this->_getSession()->addSuccess($this->__('The address has been saved.'));
                     $this->_redirectSuccess(Mage::getUrl('checkout/multishipping/addresses', array('_secure'=>true)));
                     return;

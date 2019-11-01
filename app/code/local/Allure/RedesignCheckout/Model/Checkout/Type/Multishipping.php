@@ -44,14 +44,25 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $storeId = Mage::app()->getStore()->getId();
                     $_product = $helper->getGiftWrap();
                     if($_product){
-                        $_product->setPrice($_product->getPrice());
+                        /* $_product->setPrice($_product->getPrice());
                         $giftItem = Mage::getModel('sales/quote_item')
                             ->setProduct($_product);
                         $giftItem->setStoreId($storeId)
                             ->setPrice($_product->getPrice())
                             ->setBasePrice($_product->getPrice());
                         $giftItem->setQty($giftWrapQty);
-                        $quote->addItem($giftItem);
+                        $quote->addItem($giftItem); */
+                        /* $giftItem = $quote->addProduct($_product, $giftWrapQty);
+                        Mage::dispatchEvent('checkout_cart_product_add_after', array('quote_item' => $giftItem, 'product' => $_product));
+                        $this->getCheckoutSession()->setLastAddedProductId($_product->getId());
+                        Mage::dispatchEvent('checkout_cart_save_after', array('cart'=>Mage::getSingleton('checkout/cart'))); */
+                        $quote->setIsMultiShipping(0)->save();
+                        $cart = Mage::getSingleton('checkout/cart');
+                        $cart->init();
+                        $cart->addProduct($_product, $giftWrapQty);
+                        $cart->save();
+                        $quote->setIsMultiShipping(1)->save();
+                        $this->_init();
                     }
                 }else{
                     $giftItem->setQty($giftWrapQty);

@@ -409,12 +409,12 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
-  .catalog-category-view .category-title{
+  .mobile-device.catalog-category-view .category-title{
     padding-left: 77px !important;
   }
-  .desktop-device.catalog-category-view .category-title{
+  /* .desktop-device.catalog-category-view .category-title{
     padding-left: 109px !important;
-  }
+  } */
   .category-image-bleed{ /* Head Image */
     display: none;
   }
@@ -599,7 +599,7 @@
     margin-bottom: 0;
   }
   .for-space-to-bottom{
-    height: 90px !important;
+    height: 77px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 73px !important;
@@ -681,15 +681,15 @@
   .ecp-celebrities-index-index .simple-page-title {
     margin: 0 0 46px !important;
   }
-  .catalog-product-name-display{
+  /* .catalog-product-name-display{
     padding-left: 77px;
-  }
+  } */
   .breadcrumbs {
     padding-left: 39px;
   }
-  .filterButton:before{
+  /* .filterButton:before{
     left: 19px !important;
-  }
+  } */
   .category-products {
     margin-top: 0px;
   }
@@ -756,6 +756,9 @@
   .data-table.cart-table .messages.wholesale-avail-row .item-msg{
     max-width: 382px;
   }
+  .product-shop{
+    padding: 0 45px;
+  }
 }
 
 
@@ -770,9 +773,9 @@
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
     height: 170px !important;
   }
-  .catalog-category-view .for-space-to-bottom{
+  /* .catalog-category-view .for-space-to-bottom{
     height: 250px;
-  }
+  } */
   .about-jewelry{
     padding: 0 26px;
   }
@@ -1035,9 +1038,9 @@
   .filter-common-div{
     display: none;
   }
-  .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
+  /* .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
     margin-top: -70px;
-  }
+  } */
   .filterPopup .pop-up-cover {
     margin-top: 5%;
     padding-bottom: 20px;
@@ -1556,7 +1559,7 @@
     padding-left: 140px;
   }
   .product-shop{
-    padding: 0 186px;
+    padding: 0 135px;
   }
   #foo4_next, #foo6_next{
     right: 0;
@@ -1840,4 +1843,21 @@
     left: 70px;
     top: 5px;
   }
+  .for-space-to-bottom{
+    height: 77px;
+  }
+}
+
+@media (min-width:767px) and (max-width:1250px){
+  .for-space-to-bottom.cat-img-space{
+    background-image: none;
+  }
+}
+@media (max-width:2323px){
+    #next3, #prev3{
+      display: block !important;
+    }
+}
+@media (min-width:786px) and (max-width:1023px) {
+
 }

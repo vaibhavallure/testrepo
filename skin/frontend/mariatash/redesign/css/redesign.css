@@ -1187,15 +1187,15 @@ ul.swatch .swatch-item a {
     .position-bottom {
         position: absolute;
         bottom: 0;
-        padding-right: 15px;
+        padding-right: 30px;
     }
     .offset-66 {
 			margin-left: 66.666%!important;
     }
     .fix-image {
         position: fixed;
-        width: 66.666667%;
-        max-width: 66.666667%;
+        width: 58.333333%;
+        max-width: 58.333333%;
     }
     .more-details .nav-tabs {
         display: flex;
@@ -1205,7 +1205,7 @@ ul.swatch .swatch-item a {
 
 @media(min-width:1200px) {
     .offset-66 {
-        margin-left: 66.666%!important;
+        margin-left: 58.333333%!important;
     }
     .cms-home .footer{
         padding: 60px 0;
@@ -1310,7 +1310,7 @@ ul.swatch .swatch-item a {
 
 .category-products {
   position: relative;
-  margin-top: 20px;
+  margin-top: 8px;
 	margin-bottom: 100px;
 }
 
@@ -1793,7 +1793,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .catalog-category-view .category-title{
 	padding-left: 109px;
-	margin-top: 35px;
+	margin-top: 14px;
 }
 .catalog-category-view .mb-category-products .category-title h1 {
   font-size: 30px;
@@ -1826,17 +1826,14 @@ input[type="checkbox"]:checked+label:before {
 .list-mt-upper {
   min-height: 39px;
 }
-.categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list {
-	margin-top: 73px;
-}
 
 div#narrow-by-list {
   position: absolute;
   top: 330px;
 }
 #narrow-by-list{
-  margin-left: 64px;
-	margin-top: 25px;
+  margin-left: 62px;
+	margin-top: 21px;
 	position: relative;
 }
 #narrow-by-list li div dd{
@@ -2595,7 +2592,7 @@ ul#foo4 {
 }
 .product-shop {
   margin-top: 75px;
-	padding: 0 124px 0 0;
+	padding: 0 156px 0 51px;
 }
 .catalog-category-view .product-name{
   margin-bottom: 16px;
@@ -2866,7 +2863,7 @@ ul.tabs li{
 	text-transform: uppercase;
 }
 .caroufredsel_wrapper{
-	width: 84.5%;
+	width: 84.7%;
   margin: auto;
 	overflow: hidden;
   position: relative;
@@ -2882,11 +2879,12 @@ ul.tabs li{
 	margin-top: 22px;
 }
 .catalog-product-name-display {
-	margin-top: 32px;
+	margin-top: 14px;
 	font-size: 30px;
 }
 .cartilage-section {
-  margin-top: 78px;
+	margin-top: 17px;
+  margin-bottom: 19px;
 }
 #total_item_counts_holder {
   margin-top: 5px;
@@ -4453,9 +4451,9 @@ dt.post-lengthds-lbl {
 }
 
 /*Desktop Scaling*/
-.desktop-device #narrow-by-list{
+/* .desktop-device #narrow-by-list{
 	min-width: 1366px;
-}
+} */
 
 .cat-img-present {
   background-repeat: no-repeat;
@@ -4463,13 +4461,20 @@ dt.post-lengthds-lbl {
 }
 
 .for-space-to-bottom{
-	height: 134px;
+	height: 137px;
 }
 .for-space-to-bottom.cat-img-space {
-    height: 300px;
-		height: 300px;
-		width: 100%;
-		background-size: contain;
-		background-position: center;
-		background-repeat: no-repeat;
+	height: 230px;
+	width: 100%;
+	background-size: contain;
+	background-position: center;
+	/* background-repeat: no-repeat; */
+}
+
+/************* New Changes: Catagory Pages *****************/
+.catalog-category-view .category-title h1 {
+  font-size: 30px;
+}
+.catalog-product-view .for-space-to-bottom{
+	height: 129px;
 }

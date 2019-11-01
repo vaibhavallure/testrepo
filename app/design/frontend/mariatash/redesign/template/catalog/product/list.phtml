@@ -285,10 +285,16 @@ $mode  = $this->getMode();
                             ?>
                             <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
-                                   class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>"
+                                   class="product-image">
+                                    <img class="catalog-grid-image product-image-hover" data-pid="<?= $_product->getId() ?>" id="img-<?php echo $_product->getId() ?>"
                                                            src="<?php echo $this->getFirstOptionImage($_product) ?>"
                                                            width="376" height="490"
-                                                           alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
+                                                           alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/>
+                                    <img class="catalog-grid-image rollover-img" data-pid="<?= $_product->getId() ?>" id="rollover-img-<?php echo $_product->getId() ?>"
+                                         src="<?php echo ($this->getFirstOptionImage($_product,true))?$this->getFirstOptionImage($_product,true):"" ?>"
+                                         width="376" height="490"
+                                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'roll_over'), null, true) ?>" style="display:none;"/>
+                                </a>
 
 
                                 <div class="list-mt-w" <?=($isMobile)? 'style="display:block"':'' ?>>
@@ -369,7 +375,8 @@ $mode  = $this->getMode();
                                                                 class="colorSelector tipped-create <?=($j==1)?"active":"" ?>" value="<?php echo $optionId ?>"
                                                                 title="<?php echo $optionLb ?>"
                                                                 data-pid="<?php echo $_product->getId() ?>"
-                                                            data-image="<?=  Mage::helper('catalog/image')->init($simpleProduct, 'small_image')->resize(314, 409) ?>"
+                                                                data-image="<?=  Mage::helper('catalog/image')->init($simpleProduct, 'small_image')->resize(314, 409) ?>"
+                                                                data-rollover="<?=($simpleProduct->getRollOver())? Mage::helper('catalog/image')->init($simpleProduct, 'roll_over')->resize(314, 409) :"" ?>"
                                                             >
                                                                 <div style="display: none">
                                                                       <span id="img-<?php echo $simple_id; ?>"></span>
@@ -425,10 +432,28 @@ $mode  = $this->getMode();
         jQuery(document).on("click","li.colorSelector",function () {
             var product_id=jQuery(this).data("pid");
             var imgSrc=jQuery(this).data("image");
+            var rolloverSrc=jQuery(this).data("rollover");
             jQuery(this).parent().find("li.colorSelector").removeClass("active");
             jQuery(this).addClass("active");
             jQuery('#img-'+ product_id).attr('src',imgSrc);
 
+            jQuery('#rollover-img-'+ product_id).attr('src',rolloverSrc);
+
+
+        });
+        jQuery(document).on("hover",".product-image-hover",function () {
+           var roll_over_img=jQuery("#rollover-img-"+jQuery(this).data("pid"));
+           if(roll_over_img.attr("src")) {
+               jQuery(this).hide();
+               roll_over_img.show();
+           }
+        });
+        jQuery(document).on("mouseleave",".rollover-img",function () {
+            var img=jQuery("#img-"+jQuery(this).data("pid"));
+            if(img.length) {
+                jQuery(this).hide();
+                img.show();
+            }
         });
 
     });
