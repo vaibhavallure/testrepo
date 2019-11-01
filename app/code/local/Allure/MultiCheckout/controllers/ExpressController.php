@@ -391,6 +391,9 @@ class Allure_MultiCheckout_ExpressController extends Mage_Paypal_ExpressControll
 	            );
 	        
 	        $this->_initCheckout();
+	        $this->_getQuote()->setIsMultiShipping(false);
+	        //$this->_getQuote()->removeAllAddresses();
+	        
 	        $this->_checkout->place($this->_initToken());
 	        
 	        // prepare session to success or cancellation page
@@ -431,7 +434,7 @@ class Allure_MultiCheckout_ExpressController extends Mage_Paypal_ExpressControll
 	        }
 	        $this->_initToken(false); // no need in token anymore
 	        $state = Mage::getSingleton('checkout/type_multishipping_state');
-	        Mage::getSingleton('core/session')->setOrderIds(array($order->getId()));
+	        Mage::getSingleton('core/session')->setOrderIds(array($order->getId() => $order->getIncrementId()));
 	        $state->setCompleteStep(
 	            Mage_Checkout_Model_Type_Multishipping_State::STEP_OVERVIEW
 	            );
@@ -445,7 +448,7 @@ class Allure_MultiCheckout_ExpressController extends Mage_Paypal_ExpressControll
 	    } catch (Mage_Core_Exception $e) {
 	        Mage::helper('checkout')->sendPaymentFailedEmail($this->_getQuote(), $e->getMessage());
 	        $this->_getSession()->addError($e->getMessage());
-	        $this->_redirect('*/*/review');
+	        $this->_redirect('*/*/overview');
 	    } catch (Exception $e) {
 	        Mage::helper('checkout')->sendPaymentFailedEmail(
 	            $this->_getQuote(),
@@ -453,7 +456,7 @@ class Allure_MultiCheckout_ExpressController extends Mage_Paypal_ExpressControll
 	            );
 	        $this->_getSession()->addError($this->__('Unable to place the order.'));
 	        Mage::logException($e);
-	        $this->_redirect('*/*/review');
+	        $this->_redirect('*/*/overview');
 	    }
 	}
 	
