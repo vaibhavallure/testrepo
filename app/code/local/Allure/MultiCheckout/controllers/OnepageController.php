@@ -56,7 +56,9 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         parent::preDispatch();
         $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
         if($customerGroupId != self::WHOLESALE_GROUP_ID){
-            $this->_redirect("*/multishipping");
+            if(!$this->getOnepage()->getQuote()->isVirtual()){
+                $this->_redirect("*/multishipping");
+            }
         }
         $action = $this->getRequest()->getActionName();
         if(!empty($this->actionArray[$action])){

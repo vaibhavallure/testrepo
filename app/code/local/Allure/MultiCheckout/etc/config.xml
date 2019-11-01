@@ -97,6 +97,7 @@
 			
 			<paypal>
 				<rewrite>
+					<express>Allure_MultiCheckout_Model_Paypal_Express</express>
 					<express_checkout>Allure_MultiCheckout_Model_Paypal_Express_Checkout</express_checkout>
 				</rewrite>
 			</paypal>
