@@ -372,7 +372,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             }
             return null;
         }
-        public function getFirstOptionImage($_product)
+        public function getFirstOptionImage($_product,$roll_over=false)
         {
             if($_product->getTypeId() != 'configurable')
                 return Mage::helper('catalog/image')->init($_product, 'small_image')->resize(376, 490);
@@ -383,6 +383,13 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
 
             $child_product_id=$options['value'][0]['child_id'];
             $childProduct = Mage::getModel('catalog/product')->load($child_product_id);
+
+            if($roll_over) {
+                if ($childProduct->getRollOver())
+                    return Mage::helper('catalog/image')->init($childProduct, 'roll_over')->resize(376, 490);
+               else
+                   return false;
+            }
 
             return Mage::helper('catalog/image')->init($childProduct, 'small_image')->resize(376, 490);
 
