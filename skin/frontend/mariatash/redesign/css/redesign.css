@@ -4464,12 +4464,12 @@ dt.post-lengthds-lbl {
 	height: 137px;
 }
 .for-space-to-bottom.cat-img-space {
-  height: 300px;
-	height: 300px;
-	width: 100%;
-	background-size: contain;
-	background-position: center;
-	/* background-repeat: no-repeat; */
+		height: 222px;
+    width: 100%;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #010409;
 }
 
 /************* New Changes: Catagory Pages *****************/
@@ -4478,4 +4478,8 @@ dt.post-lengthds-lbl {
 }
 .catalog-product-view .for-space-to-bottom{
 	height: 129px;
+}
+
+.checkout-cart-index .cart-mt {
+    margin-top: 42px;
 }
