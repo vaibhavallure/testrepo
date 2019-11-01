@@ -6,8 +6,22 @@ jQuery(document).ready(function () {
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
 
-    if(!jQuery("p.category-image").length && !jQuery("p.category-image-bleed").length ){
+    if(!jQuery("p.category-image").length && !jQuery("p.category-image-bleed").length && !jQuery(".second-header-image").length ){
       jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
+    }
+
+    if(jQuery("p.category-image").length) {
+        jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery("p.category-image img").attr("src")+"')");
+        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+        jQuery("body").addClass("cat-img-present");
+        jQuery("p.category-image").hide();
+    }
+
+    if(jQuery(".second-header-image").length) {
+        jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery(".second-header-image img").attr("src")+"')");
+        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+        jQuery("body").addClass("cat-img-present");
+        jQuery(".second-header-image").hide();
     }
 
     jQuery('a[href=#]').each(function () {
