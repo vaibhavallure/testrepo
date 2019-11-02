@@ -42,7 +42,7 @@
                                 <h3 class="product-attribute-name mb-0"><?php echo ($label)? $label: $_attribute->getLabel() ?></h3>
                             </div>
                             <div class="attribute_select_default col-12 justify-content-end <?= $_attribute->getProductAttribute()->getAttributeCode();?>" id="<?php echo $_attribute->getAttributeId() ?>">
-                                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="w-100 required-entry super-attribute-select <?= (!Mage::helper("allure_catalog")->isGiftCard($_product->getId()))?"change_select d-none" :"" ?> data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
+                                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="w-100 required-entry super-attribute-select <?= (!Mage::helper("allure_catalog")->isGiftCard($_product->getId()))?"change_select d-none" :"" ?>" data-attr_id="<?php echo $_attribute->getAttributeId() ?>" >
                                     <option><?php echo $this->__('Select an Option') ?></option>
                                 </select>
                             </div>
