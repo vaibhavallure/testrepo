@@ -144,11 +144,11 @@
 		<?= $this->__('Shipment '. $count);?>
 	</h1>
 	<p class="shipment-message">
-		<span class="shipment-ref-number">
+		<span class="shipment-ref-number info-text-two">
 		<?= "Ref. #".$quote1->getId();?>
 		</span>
-		<span class="shipment-notice-sp">
-			<span class="shipment-color">This</span>
+		<span class="shipment-notice-sp info-text-two">
+			<span class="shipment-color info-text-two">This</span>
 			<span class="shipment-notice"> order will ship once the remaining items are in stock.</span>
 		</span>
 	</p>
@@ -221,7 +221,7 @@
           	</label>
       	</p>
    	</div>
-   	
+
     <div class="buttons-set" id="review-buttons-container">
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">

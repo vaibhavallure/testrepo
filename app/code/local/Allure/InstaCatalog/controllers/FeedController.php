@@ -147,7 +147,7 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
 	    			$shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
 	    			$createDate = $_post->getCreatedTimestamp();
 	    			if($createDate!=null){
-	    				$createDate = date('d M Y', $createDate);
+	    				$createDate = date('F d, Y', $createDate);
 	    			}
 
 	    			$instaCaption = json_decode($_post->getCaption());

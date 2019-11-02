@@ -1313,6 +1313,9 @@ ul.swatch .swatch-item a {
   margin-top: 8px;
 	margin-bottom: 100px;
 }
+.category-piercing-gallery .category-products{
+	margin-bottom: 0;
+}
 
 .dropdown-menu {
   padding: 5px 10px 10px;
@@ -3667,10 +3670,6 @@ margin-top: 10%;
 }
 .shop_by_look .big-popup-body{
 	padding: 48px 46px 48px 49px!important;
-}
-
-.shop_by_look .product_img img{
-	border: 1px solid #D0D0D0;
 }
 .shop_by_look .product-info.scroll{
 	height: 433px;
