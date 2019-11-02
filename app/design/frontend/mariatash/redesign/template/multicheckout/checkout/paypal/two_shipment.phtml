@@ -1,5 +1,5 @@
 <div class="two-shipment-billing-payment-mt">
-<?php  
+<?php
  $mainQuote = Mage::getSingleton('checkout/session')->getQuote();
  ?>
 <div class="checkout-two-shipment-billing-address-mt">
@@ -34,24 +34,25 @@ switch ($payment->getMethod()) {
 </div>
 
 
-<?php 
+<?php
 	$count = 0;
 	$one_ship = Mage::getSingleton('allure_multicheckout/ordered_session')->getOrdered();
 	if(isset($one_ship) && !empty($one_ship)):
 ?>
 
 <?php
-		$count = $count+1; 
+		$count = $count+1;
         $quote = Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
         $quote->collectTotals()->save();
-        
+
         ?>
 
 <div id="ordered-two-ship">
 <h2 class="shipment-title">Shipment <?php echo $count;?></h2>
 <p class="shipment-message">
-<span class="shipment-ref-number"><?php echo "Ref. #".$quote->getId();?></span>
-<span class="shipment-notice-sp"><span class="shipment-color">This</span><span class="shipment-notice"> order will ship within 24 hours (Mon-Fri).</span></span>
+<span class="shipment-ref-number info-text-two"><?php echo "Ref. #".$quote->getId();?></span>
+<span class="shipment-notice-sp info-text-two">
+  <span class="shipment-color info-text-two">This</span><span class="shipment-notice"> order will ship within 24 hours (Mon-Fri).</span></span>
 </p>
 <?php //echo $this->getChildHtml('items_before'); ?>
 
@@ -69,7 +70,7 @@ switch ($payment->getMethod()) {
                 <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
-        
+
         <?php foreach($this->getOrderedItems() as $_item): ?>
             <?php echo $this->getItemHtml($_item)?>
         <?php endforeach ?>
@@ -78,9 +79,9 @@ switch ($payment->getMethod()) {
 
 
 <div class="checkout-two-shipment-shipping-address-mt">
-<?php 
+<?php
 echo "<h4>Shipping address</h4>";
- 
+
 $shipping = $quote->getShippingAddress();
 echo '<p>' . $shipping->getFormated('html') . '</p>';
 ?>
@@ -92,7 +93,7 @@ echo '<p>' . $shipping->getFormated('html') . '</p>';
 
 
 <div class="checkout-two-shipment-shipping-method-mt">
-<?php 
+<?php
 echo "<h4>Shipping method</h4>";
 $shippingAddress = $quote->getShippingAddress();
 
@@ -133,13 +134,13 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 
 
 
-<?php 
+<?php
 	$two_ship = Mage::getSingleton('allure_multicheckout/backordered_session')->getBackorder();
 	if(isset($two_ship) && !empty($two_ship)):
 ?>
 
- <?php 
- 		$count = $count+1; 
+ <?php
+ 		$count = $count+1;
         $quote1 = Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote();
         $quote1->collectTotals()->save();
         ?>
@@ -147,8 +148,8 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 
 <div id="backordered-two-ship">
 <h2 class="shipment-title">Shipment <?php echo $count;?></h2>
-<p class="shipment-message"><span class="shipment-ref-number"><?php echo "Ref. #".$quote1->getId();?></span>
-<span class="shipment-notice-sp"><span class="shipment-color">This</span><span class="shipment-notice"> order will ship once the remaining items are in stock.</span></span></p>
+<p class="shipment-message"><span class="shipment-ref-number info-text-two"><?php echo "Ref. #".$quote1->getId();?></span>
+<span class="shipment-notice-sp info-text-two"><span class="shipment-color info-text-two">This</span><span class="shipment-notice"> order will ship once the remaining items are in stock.</span></span></p>
 <?php //echo $this->getChildHtml('items_before'); ?>
 
 
@@ -165,7 +166,7 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
                 <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
-        
+
         <?php foreach($this->getBackorderedItems() as $_item): ?>
             <?php echo $this->getItemHtml($_item)?>
         <?php endforeach ?>
@@ -174,9 +175,9 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 
 
 <div class="checkout-two-shipment-shipping-address-mt">
-<?php 
+<?php
 echo "<h4>Shipping address</h4>";
- 
+
 $shipping = $quote1->getShippingAddress();
 echo '<p>' . $shipping->getFormated('html') . '</p>';
 ?>
@@ -188,7 +189,7 @@ echo '<p>' . $shipping->getFormated('html') . '</p>';
 
 
 <div class="checkout-two-shipment-shipping-method-mt">
-<?php 
+<?php
 echo "<h4>Shipping method</h4>";
 $shippingAddress = $quote1->getShippingAddress();
 
@@ -236,7 +237,7 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 		var billingHeight = jQuery('.checkout-two-shipment-billing-address-mt').height();
 		if(billingHeight)
 			jQuery('.checkout-two-shipment-payment-method-mt').css('height',billingHeight+'px');
-		
+
 		var shippindAddrHeight = jQuery('.checkout-two-shipment-shipping-address-mt').height();
 		if(shippindAddrHeight)
 			jQuery('.checkout-two-shipment-shipping-method-mt').css('height',shippindAddrHeight+'px');
@@ -263,7 +264,7 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 	        }
 	    });
     });
-    
+
     jQuery('#shipping_method_2').on('change',function(){
     	var shippingMethod = jQuery('#shipping_method_2').val();
     	jQuery('#review-please-wait').show();
@@ -280,4 +281,3 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
     });
 
 </script>
-
