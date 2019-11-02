@@ -158,22 +158,27 @@ jQuery(document).ready(function () {
     /*-----------------------------new js code-----------------------------*/
 
     jQuery('.main_menu').mouseover(function () {
+
         var section_id = '#' + jQuery(this).attr('data-id');
 
         if(!jQuery(this).hasClass('active_menu')) {
             jQuery(".main_menu").removeClass('active_menu');
-            jQuery(".menu_overlay").removeClass("d-none");
             jQuery(this).addClass('active_menu');
             jQuery('section.sub-menu').hide();
-            jQuery(section_id).slideDown();
+            setTimeout(function() {
+                jQuery(".menu_overlay").removeClass("d-none");
+                jQuery(section_id).slideDown();
             unScrollBody();
+            }, 2);
         }
     });
     jQuery('#navbarNavDropdown').mouseleave(function () {
+        setTimeout(function() {
         jQuery(".main_menu").removeClass('active_menu');
         jQuery('section.sub-menu').slideUp();
         jQuery(".menu_overlay").addClass("d-none");
         scrollBody();
+        }, 5);
     });
 
     jQuery('.noChild').mouseover(function () {
