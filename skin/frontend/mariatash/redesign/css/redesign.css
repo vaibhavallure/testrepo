@@ -2595,7 +2595,13 @@ ul#foo4 {
 }
 .product-shop {
   margin-top: 75px;
-	padding: 0 156px 0 51px;
+	/* max-width: 457px;
+  width: 100%;
+  padding-left: 50px; */
+}
+.product-shop > .row{
+	width: 457px;
+  padding-left: 34px;
 }
 .catalog-category-view .product-name{
   margin-bottom: 16px;
