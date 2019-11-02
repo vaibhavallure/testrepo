@@ -87,22 +87,8 @@
 
 	var Filter_Store = '<?php echo $_GET['m_store']?>';
 	jQuery(document).ready(function(){
-		var type = window.location.hash.substr(1);
-		var typeArr = type.split("#");
-		type = typeArr[0];
-		if(type!="" && type!="undefined" && type!=null){
-			var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
-			changeTab(element);
-			if(typeArr.length >=2 ){
-				var info_typ = typeArr[1];
-				var order_no = typeArr[2];
-				autoLoadOrderData(type,info_typ,order_no);
-			}
-			
-		}else{
-			var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
-			changeTab(element);
-		}
+
+	    setTab();
 
 		jQuery('.mt-myaccount-store .mt-filter-select').on('change',function(){
 			//var storeParam = '?m_store='+jQuery(this).val();
@@ -129,6 +115,25 @@
 		});
 
 	});
+
+	function setTab() {
+        var type = window.location.hash.substr(1);
+        var typeArr = type.split("#");
+        type = typeArr[0];
+        if(type!="" && type!="undefined" && type!=null){
+            var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
+            changeTab(element);
+            if(typeArr.length >=2 ){
+                var info_typ = typeArr[1];
+                var order_no = typeArr[2];
+                autoLoadOrderData(type,info_typ,order_no);
+            }
+
+        }else{
+            var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
+            changeTab(element);
+        }
+    }
 
 	function autoLoadOrderData(type,info_typ,ord_no){
 		var order_typ = "open";
@@ -249,14 +254,21 @@
 
 		jQuery("."+class_selector1).hoverIntent(configSelector );
 		jQuery("."+class_selector1).click(function(){
-			var showOrHide = jQuery('.myaccount-filter-store').hasClass('show');
+			var showOrHide = jQuery("."+class_selector1.slice(0, -5)).hasClass('show');
 			if(!showOrHide){
 				jQuery("."+class_selectore2).addClass('show');
 				jQuery("."+class_selectore2).slideDown(300);
 			}
+			else {
+                jQuery("."+class_selectore2).removeClass('show');
+                jQuery("."+class_selectore2).slideUp(300);
+            }
 		});  
 	}
 
+    jQuery(window).on('popstate', function(event) {
+        setTab();
+    });
 	
 </script>
 
