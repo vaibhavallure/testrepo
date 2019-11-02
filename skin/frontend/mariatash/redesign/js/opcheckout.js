@@ -484,7 +484,8 @@ Shipping.prototype = {
             Element.hide('li_save_in_address_book');
         }
         if($('shipping-address-select') != undefined && $('billing-address-select').value != $('shipping-address-select').value) {
-            shipping.setSameAsBilling(false);
+            //shipping.setSameAsBilling(false);
+        	shipping.setSameAsShipping(false);
             //$('shipping:same_as_billing').disabled = false;
             $('shipping:same_as_billing').checked = false;
             //console.log('set same as billing = false in js file');
@@ -622,7 +623,7 @@ Shipping.prototype = {
     },
     
     setSameAsShipping: function(flag) {
-        //$('billing:same_as_billing').checked = flag;
+        $('shipping:same_as_billing').checked = flag;
         console.log("flag = "+flag);
     	if (flag) {
     		Element.hide('fieldset-billing');
@@ -644,8 +645,14 @@ Shipping.prototype = {
     },
     
     syncWithShipping: function () {
-        $('shipping-address-select') && this.newAddress(!$('shipping-address-select').value);
-        $('shipping:same_as_billing').checked = true;
+        //$('shipping-address-select') && this.newAddress(!$('shipping-address-select').value);
+    	if(!$('shipping-address-select').value){
+    		$('billing-address-select').value = '';
+    		shipping.newBillingAddress(true);
+    		Element.show('fieldset-billing');
+    	}
+    	
+    	$('shipping:same_as_billing').checked = true;
         if (!$('shipping-address-select') || !$('shipping-address-select').value) {
             arrElements = Form.getElements(this.form);
             for (var elemIndex in arrElements) {
@@ -822,6 +829,12 @@ ShippingMethod.prototype = {
                         }
                     });
                 });
+            }
+            
+            /** refresh total html */
+            if(response.update_section.totals_html){
+            	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            	$('totalsDivRightNav').innerHTML = response.update_section.totals_html;
             }
         }
 

@@ -1,3 +1,6 @@
+
+<?php if(!(Mage::helper("allure_catalog")->isGiftCard($this->getProduct()->getId()))  &&  $this->getProduct()->getTypeId() != 'giftcards'): ?>
+
 <?php
 $_helper = $this->helper('catalog/output');
 $attrCode = 'return_policy';
@@ -31,3 +34,6 @@ if ($attrCode) {
         }
     }
 }
+
+
+endif;

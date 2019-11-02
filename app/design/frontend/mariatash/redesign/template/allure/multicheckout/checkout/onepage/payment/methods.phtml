@@ -267,10 +267,13 @@ payment.singleMethod = true;
         });
     }
     jQuery(document).ready(function(){
-    	if($('totalsDivRightNav')!=null)
-        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-        $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
-        new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' ,
+        if(jQuery('input[name="payment[method]"]:checked').length){
+        	jQuery('input[name="payment[method]"]:checked').trigger("click");
+        }
+    	//if($('totalsDivRightNav')!=null)
+        	//$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        //$('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
+        /*new Ajax.Updater('totalsDivRightNav', '<?php //echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' ,
             onComplete: function(transport) {
                 jQuery("#country").selectBoxIt({
                         aggressiveChange: true
@@ -293,8 +296,8 @@ payment.singleMethod = true;
 
                 });
             }
-        });
-        jQuery("#co-payment-form select").selectBoxIt({aggressiveChange: true});
+        });*/
+        /*jQuery("#co-payment-form select").selectBoxIt({aggressiveChange: true});
         setTimeout(function() { new Ajax.Updater('reload_payment', '<?php echo $this->getUrl('checkout/onepage/reloadPayment') ?>',{
             onComplete: function(transport) {
                 // Fix payment check box for ie
@@ -325,7 +328,7 @@ payment.singleMethod = true;
         			}
         		});
             }
-        }); },1000);
+        }); },1000);*/
 
     });
 

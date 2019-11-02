@@ -44,14 +44,25 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $storeId = Mage::app()->getStore()->getId();
                     $_product = $helper->getGiftWrap();
                     if($_product){
-                        $_product->setPrice($_product->getPrice());
+                        /* $_product->setPrice($_product->getPrice());
                         $giftItem = Mage::getModel('sales/quote_item')
                             ->setProduct($_product);
                         $giftItem->setStoreId($storeId)
                             ->setPrice($_product->getPrice())
                             ->setBasePrice($_product->getPrice());
                         $giftItem->setQty($giftWrapQty);
-                        $quote->addItem($giftItem);
+                        $quote->addItem($giftItem); */
+                        /* $giftItem = $quote->addProduct($_product, $giftWrapQty);
+                        Mage::dispatchEvent('checkout_cart_product_add_after', array('quote_item' => $giftItem, 'product' => $_product));
+                        $this->getCheckoutSession()->setLastAddedProductId($_product->getId());
+                        Mage::dispatchEvent('checkout_cart_save_after', array('cart'=>Mage::getSingleton('checkout/cart'))); */
+                        $quote->setIsMultiShipping(0)->save();
+                        $cart = Mage::getSingleton('checkout/cart');
+                        $cart->init();
+                        $cart->addProduct($_product, $giftWrapQty);
+                        $cart->save();
+                        $quote->setIsMultiShipping(1)->save();
+                        $this->_init();
                     }
                 }else{
                     $giftItem->setQty($giftWrapQty);
@@ -632,54 +643,75 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
         $this->_validate();
         $shippingAddresses = $this->getQuote()->getAllShippingAddresses();
         $orders = array();
+        $addressCount = count($shippingAddresses);
         
-        if ($this->getQuote()->hasVirtualItems()) {
-            $shippingAddresses[] = $this->getQuote()->getBillingAddress();
+        if($addressCount > 1){
+            if ($this->getQuote()->hasVirtualItems()) {
+                $shippingAddresses[] = $this->getQuote()->getBillingAddress();
+            }
         }
         
         try {
-            
-            $_index = 1;
-            $quote = $this->getQuote();
-            $quote->unsReservedOrderId();
-            $quote->reserveOrderId();
-            $incrementId = $quote->getReservedOrderId();
-            foreach ($shippingAddresses as $address) {
-                
-                $backOrderPrefix =  "";
-                if($address->getIsContainBackorder()){
-                    $backOrderPrefix = "B";
+            if($addressCount > 1){
+                $_index = 1;
+                $quote = $this->getQuote();
+                $quote->unsReservedOrderId();
+                $quote->reserveOrderId();
+                $incrementId = $quote->getReservedOrderId();
+                foreach ($shippingAddresses as $address) {
+                    
+                    $backOrderPrefix =  "";
+                    if($address->getIsContainBackorder()){
+                        $backOrderPrefix = "B";
+                    }
+                    
+                    $newIncrementId = $incrementId."-".$_index . $backOrderPrefix;
+                    $order = $this->_prepareOrder($address, $newIncrementId);
+                    $_index++;
+                    
+                    $orders[] = $order;
+                    Mage::dispatchEvent(
+                        'checkout_type_multishipping_create_orders_single',
+                        array('order'=>$order, 'address'=>$address)
+                        );
                 }
                 
-                $newIncrementId = $incrementId."-".$_index . $backOrderPrefix;
-                $order = $this->_prepareOrder($address, $newIncrementId);
-                $_index++;
+                $storeId = $this->getQuote()->getStoreId();
+                $isAllowCombinedEmail = Mage::getStoreConfig(self::XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW, $storeId);
                 
-                $orders[] = $order;
-                Mage::dispatchEvent(
-                    'checkout_type_multishipping_create_orders_single',
-                    array('order'=>$order, 'address'=>$address)
-                    );
-            }
-            
-            $storeId = $this->getQuote()->getStoreId();
-            $isAllowCombinedEmail = Mage::getStoreConfig(self::XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW, $storeId);
-            
-            foreach ($orders as $order) {
-                $order->place();
-                $order->save();
-                if ($order->getCanSendNewEmailFlag()){
-                    if(!$isAllowCombinedEmail){
-                        //$order->queueNewOrderEmail();
-                        $orderArray = array($order->getId() => $order);
-                        $order->queueMultiAddressNewOrderEmail($orderArray);
+                foreach ($orders as $order) {
+                    $order->place();
+                    $order->save();
+                    if ($order->getCanSendNewEmailFlag()){
+                        if(!$isAllowCombinedEmail){
+                            //$order->queueNewOrderEmail();
+                            $orderArray = array($order->getId() => $order);
+                            $order->queueMultiAddressNewOrderEmail($orderArray);
+                        }
+                    }
+                    $orderIds[$order->getId()] = $order->getIncrementId();
+                }
+                
+                if($isAllowCombinedEmail){
+                    $order->queueMultiAddressNewOrderEmail($orders);
+                }
+                
+            }else{
+                $this->getQuote()->setIsMultiShipping(false)->save();
+                $this->getQuote()->collectTotals();
+                $service = Mage::getModel('sales/service_quote', $this->getQuote());
+                $service->submitAll();
+                $this->getQuote()->save();
+                $order = $service->getOrder();
+                if ($order) {
+                    $orderIds[$order->getId()] = $order->getIncrementId();
+                    
+                    try {
+                        $order->queueNewOrderEmail();
+                    } catch (Exception $e) {
+                        Mage::logException($e);
                     }
                 }
-                $orderIds[$order->getId()] = $order->getIncrementId();
-            }
-            
-            if($isAllowCombinedEmail){
-                $order->queueMultiAddressNewOrderEmail($orders);
             }
             
             Mage::getSingleton('core/session')->setOrderIds($orderIds);

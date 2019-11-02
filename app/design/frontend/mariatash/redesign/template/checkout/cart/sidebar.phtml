@@ -41,12 +41,12 @@
 	<?php $_cartQty = $this->getSummaryCount();?>
 	<div class="block-content content_cart">
 	<?php if ($_cartQty > 0):?>
-    	<div class="summary">
+       <div class="summary">
         	<p class="amount">
         		<a onclick="cartSymbolLink()">
         			<span>
-        				<img src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
-        				<div class="number-circle">
+        				<img width="13px" src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
+        				<div class="number-circle digit_<?=strlen($_cartQty)?>">
         					<span><?= $_cartQty ?></span>
         				</div>
         			</span>
@@ -69,7 +69,7 @@
 				<?php endforeach; ?>
         	</ol>
         	<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
-			
+
 			<div class="subtotal minicart-subtotal col-12 text-right">
 			<?php if ($this->canApplyMsrp()): ?>
 				<span class="map-cart-sidebar-total">
@@ -79,14 +79,14 @@
 				<div class="total-cover">
 					<span class="label">
 						<?php echo $this->__('Subtotal:') ?>
-					</span> 
+					</span>
 					<?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal());?>
 				</div>
 				<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
 				<br/>(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
 				<?php endif; ?>
 			<?php endif; ?>
-			
+
 			<?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
         		<?php echo $this->getChildHtml('extra_actions') ?>
         		<div class="col-12 text-center">
@@ -100,16 +100,16 @@
 			<p class="amount">
 				<a href="<?php echo $this->getUrl('checkout/cart')?>">
 					<span>
-						<img src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
-						<div class="number-circle">
+						<img width="13px" src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
+						<!--<div class="number-circle">
 							<span>0</span>
-						</div>
+						</div>-->
 					</span>
 				</a>
 			</p>
 		</div>
     <?php endif ?>
-    
+
 		<div class="cart_sidebar display_none" id="just_added">
 		<?php $_items = $this->getRecentItems() ?>
 		<?php if(count($_items)): ?>
@@ -124,7 +124,7 @@
 				<?php endforeach; ?>
         	</ol>
         	<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
-			
+
 			<div class="subtotal minicart-subtotal col-12 text-right">
 				<?php if ($this->canApplyMsrp()): ?>
 					<span class="map-cart-sidebar-total">
@@ -134,14 +134,14 @@
 					<div class="total-cover">
       					<span class="label">
       						<?php echo $this->__('Subtotal:') ?>
-      					</span> 
+      					</span>
       					<?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
       				</div>
 					<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
 					<br/>(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
 					<?php endif; ?>
 				<?php endif; ?>
-				
+
 				<?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
         			<?php echo $this->getChildHtml('extra_actions') ?>
                    	<div class="col-12">

@@ -58,10 +58,15 @@ h4{
 	line-height: 17px;
 }
 
+.info-text-one, .login-dropdown li a{
+	font-family: urw-din-regular;
+	color: rgba(41,41,41,0.90);
+}
+
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -83,6 +88,11 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0;
 	line-height: 25px;
+}
+
+.para-lighter{
+	font-family: urw-din-xlight;
+	font-size: 13px;
 }
 
 .para-bold{
@@ -193,9 +203,9 @@ h4{
 #shop_our_instagram{
 	margin-top: 23px;
 }
-.catalog-category-view.category-press .for-space-to-bottom {
+/* .catalog-category-view.category-press .for-space-to-bottom {
   height: 307px;
-}
+} */
 
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
@@ -365,10 +375,14 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   font-family: urw-din-medium;
 }
 
-.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .checkout-multishipping-addresses #shopping-cart-totals-table span.total-title,
-.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price {
+.medium-big-font .medium-price, .overview-dark-price span, .overview-grand span, .checkout-onepage-index #shopping-cart-totals-table td.cart-subtotals-left, .checkout-onepage-index #shopping-cart-totals-table .cart-subtotals-right .medium-price span.price, .gift-card-faq-link a {
     font-size: 18px;
     font-family: urw-din-medium;
+}
+
+.checkout-multishipping-addresses tfoot .cart-subtotals-right span.price{
+	font-size: 18px !important;
+	font-family: urw-din-regular;
 }
 
 /* STANDARD CSS ENDED */
@@ -380,7 +394,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 	padding: 0;
 	clear: both;
 }
-.checkout-step-name h3, .checkout-step-name span {
+.checkout-step-name h3, .checkout-step-name span, .paypal-review-legend {
   font-size: 13px;
   font-family: urw-din-bold;
   text-transform: uppercase;
@@ -456,7 +470,7 @@ input, select, textarea{
     position: absolute;
 }
 #newsletter-form .validation-advice{
-		left: 0;
+		left: 15px;
     top: 40px;
 }
 .category-products .note-msg {
@@ -514,22 +528,14 @@ input, select, textarea{
   height: 10px;
   margin-top: 3px;
 }
-
 .login-dropdown li {
-	background: white;
-	text-align: center;
-	padding: 2px 0px;
-	width: 100px;
-	height: 25px;
-}
-.login-dropdown li:first-child {
-  padding-top: 5px;
+	text-align: right;
+	width: 100%;
+	margin-bottom: 8px;
 }
 .login-dropdown li a {
-  color: #292929;
-	font-size: 12px;
-  letter-spacing: 1px;
-  font-family: urw-din-light;
+	font-size: 11px;
+  letter-spacing: 0.33px;
 }
 .login-dropdown ul{
 	padding: 0px;
@@ -551,16 +557,27 @@ input, select, textarea{
   float: none;
 }
 
-.login-dropdown {
-  position: absolute;
-  width: 137px;
-  right: -22px;
-  top: 22px;
-	padding-top: 10px;
-  line-height: 15px;
+.login-dropdown-cover{
+	position: absolute;
+	right: -25px;
+  top: 16px;
+	padding-top: 20px;
 }
-body.cms-index-index.cms-home .login-dropdown{
-	right: -40px;
+
+.login-dropdown {
+  width: 137px;
+  line-height: 15px;
+	min-height: 161px;
+	padding: 23px 24px 22px;
+	background: #fff;
+}
+.user-sign-out {
+  border-top: 1px solid #d8d8d8;
+  padding-top: 8px;
+  margin-bottom: 0 !important;
+}
+.user-address{
+	margin-bottom: 13px !important;
 }
 
 #narrow-by-list li div dt{
@@ -679,9 +696,9 @@ nav.mariatash-header {
   float: left;
 }
 
-.icon-bar .icon-item:last-child {
+/* .icon-bar .icon-item:last-child {
   margin-left: 34px;
-}
+} */
 .icon-bar .icon-item .icon-link img {
   width: 18px;
 }
@@ -723,14 +740,14 @@ nav.mariatash-header {
   margin-top: 5px;
 }
 
-.catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom,
+/* .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom,
 .checkout-cart-index .for-space-to-bottom, .checkout-multishipping-success .for-space-to-bottom{
   height:320px;
 }
 
 .for-space-to-bottom{
   height: 200px;
-}
+} */
 
 .category-image {
   position: absolute;
@@ -1164,13 +1181,16 @@ ul.swatch .swatch-item a {
 }
 
 @media(min-width:992px) {
+	.product-img-box{
+		width: 100%!important;
+	}
     .position-bottom {
         position: absolute;
         bottom: 0;
-        padding-right: 15px;
+        padding-right: 30px;
     }
     .offset-66 {
-        margin-left: 58.33333%;
+			margin-left: 66.666%!important;
     }
     .fix-image {
         position: fixed;
@@ -1185,7 +1205,7 @@ ul.swatch .swatch-item a {
 
 @media(min-width:1200px) {
     .offset-66 {
-        margin-left: 66.666%;
+        margin-left: 58.333333%!important;
     }
     .cms-home .footer{
         padding: 60px 0;
@@ -1288,18 +1308,13 @@ ul.swatch .swatch-item a {
     opacity: 1;
 }
 
-.filter-common-div{
-  top: 360px;
-}
-
-.block-layered-nav-bg {
-    position: absolute;
-}
-
 .category-products {
   position: relative;
-  margin-top: 95px;
+  margin-top: 8px;
 	margin-bottom: 100px;
+}
+.category-piercing-gallery .category-products{
+	margin-bottom: 0;
 }
 
 .dropdown-menu {
@@ -1433,12 +1448,18 @@ input[type="checkbox"]:checked+label:before {
 }
 .number-circle span {
   position: absolute;
-  top: -30px;
+  top: -22px;
   right: 0;
   bottom: 0;
-  left: 14px;
+  left: 7px;
   font-family: urw-din-bold;
   font-size: 9px;
+	border: 1px solid #d8d8d8;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  padding: 2px 0 0 5px;
+  background: #fff;
 }
 #top-nav > li{
   font-family: urw-din-medium;
@@ -1502,7 +1523,6 @@ input[type="checkbox"]:checked+label:before {
 }
 .nav-links-left span {
   color: #fff;
-  text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1px;
   font-family: urw-din-light;
@@ -1511,9 +1531,9 @@ input[type="checkbox"]:checked+label:before {
 .select-currency img {
 	margin: 0 0 5px 3px;
 }
-.main-nav-link li:nth-child(2) {
+/* .main-nav-link li:nth-child(2) {
   margin-right: 16px;
-}
+} */
 
 /*Navigation dropdown*/
 .main-nav-title .sub-menu .sub{
@@ -1576,7 +1596,7 @@ input[type="checkbox"]:checked+label:before {
 	top:83px;
 }
 #appointments {
-  padding: 48px 21px;
+  padding: 48px 121px;
 }
 #appointments .col {
   width: 14.28%;
@@ -1597,6 +1617,7 @@ input[type="checkbox"]:checked+label:before {
   bottom: 15px;
   width:100%;
 }
+
 .reg-price, .image-text h6, .overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
@@ -1664,12 +1685,12 @@ input[type="checkbox"]:checked+label:before {
   width: 100%;
   height: auto;
 	background: #eee;
-  transition: transform .3s;
+  /* transition: transform .3s; */
 }
 .catalog-common-grid .product-image img:hover{
-  -ms-transform: scale(1.3); /* IE 9 */
-  -webkit-transform: scale(1.3); /* Safari 3-8 */
-  transform: scale(1.3);
+  /* -ms-transform: scale(1.3); /* IE 9
+  -webkit-transform: scale(1.3); /* Safari 3-8
+  transform: scale(1.3); */
 }
 .catalog-grid-image{
   background: #eee;
@@ -1775,7 +1796,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .catalog-category-view .category-title{
 	padding-left: 109px;
-	margin-top: 35px;
+	margin-top: 14px;
 }
 .catalog-category-view .mb-category-products .category-title h1 {
   font-size: 30px;
@@ -1808,17 +1829,14 @@ input[type="checkbox"]:checked+label:before {
 .list-mt-upper {
   min-height: 39px;
 }
-.categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list {
-	margin-top: 73px;
-}
 
 div#narrow-by-list {
   position: absolute;
   top: 330px;
 }
 #narrow-by-list{
-  margin-left: 64px;
-	margin-top: 96px;
+  margin-left: 62px;
+	margin-top: 21px;
 	position: relative;
 }
 #narrow-by-list li div dd{
@@ -2364,14 +2382,14 @@ input[type='radio']{
 .products-grid .availability{
 	line-height: 13px;
 }
-#currency-selector {
+/* #currency-selector {
   position: absolute;
   top: 20px;
   right: -24px;
   z-index: 99999;
   width: 96px;
   height: auto;
-}
+} */
 
 /* BREADCRUM */
 .breadcrumbs li strong{
@@ -2382,7 +2400,7 @@ input[type='radio']{
   top: 1px;
   right: 10px;
 }
-.home span {
+.home span, .login-dropdown li.user-sign-out a {
   font-family: urw-din-xlight;
 }
 .breadcrumbs li{
@@ -2563,9 +2581,9 @@ ul#foo4 {
   background: #f2f2f2;
 	padding-bottom: 25px;
 }
-.catalog-product-view .for-space-to-bottom {
+/* .catalog-product-view .for-space-to-bottom {
   height: 127px;
-}
+} */
 .catalog-product-view .homepage-menu.mariatash-header{
 	background: rgba(40,40,40,0.9);
 }
@@ -2577,7 +2595,13 @@ ul#foo4 {
 }
 .product-shop {
   margin-top: 75px;
-	padding: 0 34px;
+	/* max-width: 457px;
+  width: 100%;
+  padding-left: 50px; */
+}
+.product-shop > .row{
+	width: 457px;
+  padding-left: 34px;
 }
 .catalog-category-view .product-name{
   margin-bottom: 16px;
@@ -2848,7 +2872,7 @@ ul.tabs li{
 	text-transform: uppercase;
 }
 .caroufredsel_wrapper{
-	width: 84.5%;
+	width: 84.7%;
   margin: auto;
 	overflow: hidden;
   position: relative;
@@ -2861,14 +2885,15 @@ ul.tabs li{
 }
 .breadcrumbs {
   padding-left: 71px;
-	margin-top: 3px;
+	margin-top: 22px;
 }
 .catalog-product-name-display {
-	margin-top: 32px;
+	margin-top: 14px;
 	font-size: 30px;
 }
 .cartilage-section {
-  margin-top: 78px;
+	margin-top: 17px;
+  margin-bottom: 19px;
 }
 #total_item_counts_holder {
   margin-top: 5px;
@@ -2981,9 +3006,9 @@ ul.tabs li{
   margin-bottom: 18px;
 	padding: 0;
 }
-.categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+/* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
 	height: 242px !important;
-}
+} */
 /*press page--------------------------------------------*/
 .category-press .top-bar {
   display: none;
@@ -3169,10 +3194,11 @@ margin-top: 10%;
  .checkout-multishipping-delivery .main,
  .checkout-multishipping-billing .main,
  .checkout-multishipping-overview .main,
- .checkout-onepage-index .main{
+ .checkout-onepage-index .main, .paypal-express-review .main{
   max-width: 1205px;
   display: flex;
   margin: 0 auto;
+	margin-top: 46px;
 }
 .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main,
 .checkout-multishipping-delivery .col-main,
@@ -3272,9 +3298,9 @@ margin-top: 10%;
 .multi-address-select-address-option .billing-address-select {
   margin-top: 18px;
 }
-.common-redesign-checkout .for-space-to-bottom {
+/* .common-redesign-checkout .for-space-to-bottom, .paypal-express-review .for-space-to-bottom {
   height: 352px;
-}
+} */
 .overview-quantity .para-three {
   line-height: 12px;
 }
@@ -3388,9 +3414,9 @@ margin-top: 10%;
 #allow-gift-messages-for-items-container .product-img-box {
   margin-bottom: 25px;
 }
-.select-shipping-method.select-type-one.validate-select {
+/* .first-shipment-method, .second-shipment-method {
   margin-bottom: 23px;
-}
+} */
 .discount-form.giftcard-payment-method {
   margin-bottom: 24px;
 }
@@ -3409,7 +3435,7 @@ margin-top: 10%;
 #checkout-shipping-method-load br {
   display: none;
 }
-#shopping-cart-table .cart_col1 {
+#shopping-cart-table .cart_col1, .paypal-express-review .cart_col1 {
   width: 14%;
 }
 .ad-to-fav, .w-remove {
@@ -3425,16 +3451,16 @@ margin-top: 10%;
 .multi-column-2 .gift-messages:last-child {
   margin-top: 24px;
 }
-.login-dropdown li:first-child {
-  padding-top: 5px;
-}
 .product-description-section:last-child {
 	border: none;
 }
-#backordered-two-ship, #ordered-two-ship{
-	margin-top: 30px;
+#ordered-two-ship{
+	margin-top: 10px;
   border-top: 1px solid #d8d8d8;
   padding: 15px 0;
+}
+#backordered-two-ship{
+	padding: 15px 0;
 }
 #checkout-review-table thead {
   border-bottom: 2px solid #d8d8d8;
@@ -3443,7 +3469,7 @@ margin-top: 10%;
   border-bottom: 1px solid #d8d8d8;
 }
 #checkout-delivery-option-load .control {
-  margin-bottom: 13px;
+  margin-bottom: 14px;
 }
 .method-count {
   margin-top: 22px;
@@ -3476,16 +3502,16 @@ margin-top: 10%;
 .gift-message-section .row {
   justify-content: flex-end;
 }
-.checkout-cart-index #shopping-cart-totals-table .grand_total_section span.total-title, .checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left span,
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-left, .checkout-cart-index #mt-shipping-method-fancybox span{
+#shopping-cart-totals-table .grand_total_section span.total-title, #shopping-cart-totals-table .cart-subtotals-left span,
+.cart-subtotals-left, #mt-shipping-method-fancybox span, .cart-subtotals-left, #mt-shipping .mt-shipping-method span{
 	font-size: 13px;
 	font-family: urw-din-xlight;
 }
-.checkout-cart-index #shopping-cart-totals-table .cart-subtotals-right span.price{
+#shopping-cart-totals-table .cart-subtotals-right span.price{
 	font-size: 13px;
 	font-family: urw-din-regular;
 }
-.checkout-cart-index #shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
+#shopping-cart-totals-table .special-total .cart-subtotals-right span.price{
 	font-size: 18px;
 }
 .giftcard-output-content {
@@ -3507,12 +3533,36 @@ margin-top: 10%;
   margin-bottom: 26px !important;
 	margin-top: 12px;
 }
+.checkout-onepage-index .buttons-set.disabled {
+  text-align: right;
+}
+.checkout-onepage-index .please-wait{
+	padding: 0 0 10px;
+}
+.checkout-onepage-index #opc-payment fieldset{
+	margin: 10px 0 0px;
+}
+.checkout-two-shipment-shipping-method-mt {
+  margin-bottom: 30px;
+}
+#checkout-review-submit .checkout-block {
+  margin-bottom: 20px;
+}
+.checkout-onepage-index #checkout-review-table .cart_col4{
+	display: table-cell;
+}
+.checkout-block {
+  clear: both;
+}
 /* cccc */
 /*MINI CART CSS*/
+.block-content.content_cart{
+	position: relative;
+}
 .block-cart .cart_sidebar{
 	position: absolute;
   width: 360px;
-	left: -220px;
+	right: 0;
 	border: 1px solid #292929;
 	background: #fff;
 }
@@ -3521,6 +3571,7 @@ margin-top: 10%;
 	border-bottom: 2px solid #d8d8d8;
   margin-top: 13px;
 	padding-bottom: 5px;
+	width: 100%;
 }
 .cart_sidebar .tite_cart {
   border-bottom: 2px solid #D8D8D8;
@@ -3625,10 +3676,6 @@ margin-top: 10%;
 }
 .shop_by_look .big-popup-body{
 	padding: 48px 46px 48px 49px!important;
-}
-
-.shop_by_look .product_img img{
-	border: 1px solid #D0D0D0;
 }
 .shop_by_look .product-info.scroll{
 	height: 433px;
@@ -3771,31 +3818,18 @@ margin-top: 10%;
 
 .block-currency  #currency-selector {
 	position: absolute;
-	top: 20px;
-	/*right: 0;*/
+	top: 21px;
 	z-index: 99999;
-	width: 96px;
+	width: 222px;
 	height: auto;
-	background: white;
-}
-.block-currency  #currency-selector ul {
-	margin: 6px 0 11px 0;
-	padding: 0;
-	width: 96px;
-	height: auto;
-	text-align: right;
-	overflow: hidden;
+	background: #fff;
+	height: 253px;
+  overflow: scroll;
+	padding-top: 6px;
+	left: -24px;
 }
 
-.block-currency  #currency-selector ul li:first-child {
-	margin-top: 15px;
-}
-
-.block-currency  #currency-selector ul li:last-child {
-	margin-bottom: 4px;
-}
-
-.block-currency  #currency-selector ul li {
+/* .block-currency  #currency-selector ul li {
 	font-size: 12px;
 	display: block;
 	float: none;
@@ -3803,17 +3837,33 @@ margin-top: 10%;
 	padding: 0 17px;
 	text-align: left;
 	color: #3f3f47;
-}
+} */
 
-.block-currency  #currency-selector ul li a i {
+/* .block-currency  #currency-selector ul li a i {
 	position: absolute;
 	right: 60px;
-}
+} */
 
-.block-currency  #currency-selector ul li a span {
+/* .block-currency  #currency-selector ul li a span {
 	padding-left: 36px;
+} */
+#currency-selector li {
+	width: 100%;
+	margin-bottom: 3px;
 }
-
+.block-currency  #currency-selector ul li a i{
+	width: 43px !important;
+  display: block;
+  float: left;
+	text-align: center;
+	font-family: urw-din-regular;
+  font-size: 11px;
+	line-height: 2;
+	font-style: normal;
+}
+.select-currency.main-nav-link-dropdown span span {
+  margin-right: 15px;
+}
 .block-currency .block-title {
 	border: 0;
 	background: none;
@@ -4051,8 +4101,8 @@ div#uniform-shipping-address-select>span{
 }
 .post_optio .chooseList ul li.option{
 	margin-top: 17px;
-	flex: 0 0 45%;
-	max-width: 45%;
+	/* flex: 0 0 45%;
+	max-width: 45%; */
 }
 .color .chooseList ul li.option{
 	margin-top: 17px;
@@ -4092,6 +4142,10 @@ dt.post-lengthds-lbl {
 .catalog-product-view .product-detail-parent .product-shop.configurable .sign-up-in-stock {
   margin: 0 -15px;
   display: block;
+}
+.giftcard-fieldset textarea {
+	height: 126px!important;
+	border: 1px solid #d8d8d8;
 }
 /* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
 	background: #f2f2f2;
@@ -4188,12 +4242,14 @@ dt.post-lengthds-lbl {
 /*Wholesale separate css*/
 .wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove {
   margin-top: 37px;
+	margin-bottom: 32px;
 }
 .wholesale-avail-row {
   border-bottom: 1px solid #d8d8d8;
 }
 .data-table.cart-table .messages.wholesale-avail-row .item-msg{
 	margin-bottom: 20px;
+	max-width: 402px;
 }
 
 /*Address Override*/
@@ -4272,8 +4328,167 @@ dt.post-lengthds-lbl {
 
 /*Need to verify*/
 .wide {
-overflow: hidden;
+	overflow: hidden;
 }
-.checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
+/* .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
 	max-width: 100%;
+} */
+
+/*Gift Card Detail CSS*/
+.product-gift-card .main-container {
+  margin-top: 8px;
+}
+.giftcard-left-form .cart-amount {
+	border-bottom: 1px solid #d8d8d8;
+  padding: 18px 0 28px;
+}
+.giftcard-left-form .swatch-section, .product-maria-tash-in-store-gift-card .swatch-section{
+	border-bottom: 1px solid #d8d8d8;
+  padding: 13px 0 17px;
+}
+.giftcard-fieldset .field{
+	margin-top: 23px;
+}
+.gift-delivery-section .product-attribute-name, .gift-delivery-section .email_delivery_option2 {
+  margin-bottom: 20px;
+}
+.giftcard-fieldset select.cart-amount, .giftcard-fieldset input, .giftcard-fieldset textarea {
+  background: transparent;
+  width: 100%;
+}
+.giftcard-fieldset select, .product-maria-tash-in-store-gift-card select{
+	background-image: url(../images/redesign/arrow-down-bk.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: 98% 50% !important;
+	border: 1px solid rgba(41,41,41,0.25) !important;
+	background: transparent;
+}
+.date_wrapper-column select, #checkout-review-table {
+  width: 100%;
+}
+.date_wrapper select {
+ 	background-position: 89% 50% !important;
+	height: 32px !important;
+  padding: 0px 20px !important;
+}
+.giftcards .div_selector_month {
+  width: 165px;
+}
+.giftcards .div_selector_day {
+  width: 141px;
+}
+.giftcards .div_selector_year {
+  width: 90px;
+}
+.gift-card-faq-link {
+  margin: 17px 0 40px;
+	padding: 0;
+}
+.gift-card-faq-link a{
+	text-decoration: underline;
+}
+.giftcards .add-to-bag, .product-maria-tash-in-store-gift-card .add-to-bag	 {
+  margin-bottom: 7px;
+}
+.giftcards .padder, .product-maria-tash-in-store-gift-card .padder{
+	min-height: auto;
+}
+/* .product-gift-card .for-bottom-space, .product-maria-tash-in-store-gift-card .for-bottom-space {
+  display: none;
+} */
+.product-gift-card .footer, .product-maria-tash-in-store-gift-card .footer{
+	padding-top: 0 !important;
+}
+.product-gift-card .product-detail-parent, .product-maria-tash-in-store-gift-card .product-detail-parent{
+	padding-bottom: 92px;
+}
+.date_wrapper{
+	justify-content: space-between;
+	margin: 0;
+}
+.product-maria-tash-in-store-gift-card .swatch-section .input-box{
+	border-bottom: none;
+}
+.product-maria-tash-in-store-gift-card .swatch-section .input-box{
+	padding: 0;
+}
+.product-maria-tash-in-store-gift-card select {
+  margin-bottom: 11px;
+}
+.product-gift-card .box-collateral .block-viewed .block-content, .product-maria-tash-in-store-gift-card .box-collateral .block-viewed .block-content {
+  margin-bottom: 120px;
+}
+.egift-text{
+	text-transform: none !important;
+}
+.date-input-info.text-left {
+	margin-top: 10px;
+}
+.giftcard-left-form .chooseList .label{
+	margin-right: 20%;
+}
+#advice-required-entry-date {
+  padding: 0 15px;
+}
+.product-maria-tash-in-store-gift-card .ajax-error-messages{
+	padding: 0;
+	top: 43px;
+}
+.product-maria-tash-in-store-gift-card .gift-card-faq-link{
+   margin: 37px 0 40px;
+}
+.checkout-other-items{
+	border-top: 1px solid #d8d8d8;
+  padding-top: 23px;
+  margin-top: 20px;
+}
+.checkout-other-product-name > div {
+  margin-top: 24px;
+}
+#unavailable-shipping-table {
+  margin-bottom: 10px;
+}
+.please-wait{
+	width: 100%;
+  text-align: right;
+  padding: 0 15px;
+}
+
+/*Paypal Review*/
+.info-set.paypal-product-section {
+  margin-top: 44px;
+}
+
+/*Desktop Scaling*/
+/* .desktop-device #narrow-by-list{
+	min-width: 1366px;
+} */
+
+.cat-img-present {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+.for-space-to-bottom{
+	height: 137px;
+}
+.for-space-to-bottom.cat-img-space {
+		height: 222px;
+    width: 100%;
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #010409;
+}
+
+/************* New Changes: Catagory Pages *****************/
+.catalog-category-view .category-title h1 {
+  font-size: 30px;
+}
+.catalog-product-view .for-space-to-bottom{
+	height: 129px;
+}
+
+.checkout-cart-index .cart-mt {
+  margin-top: 42px;
 }

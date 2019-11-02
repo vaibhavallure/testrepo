@@ -1,0 +1,31 @@
+<?php
+$fetch_model = Mage::registry('apt_modify_data');
+
+if($fetch_model){
+    $fetch_starttime = date('H:i', strtotime($fetch_model->getAppointmentStart()));
+    $fetch_endtime = date('H:i', strtotime($fetch_model->getAppointmentEnd()));
+    $fetch_piercer_id = $fetch_model->getPiercerId();
+}
+?>
+
+<div id="slots_section" class="  row justify-content-center message">
+    <p class="col-12  p-1 m-1 text-center translate-popup ">Choose type of Appointment to get available time slots</p>
+</div>
+<div class="col-12 text-center">
+<input type = "hidden"  value="<?= ($fetch_starttime)? $fetch_starttime : ""?>" name="appointment_start" id="starttime_hidden">
+<input type = "hidden"  value="<?= ($fetch_endtime)? $fetch_endtime : ""?>" name="appointment_end" id="endtime_hidden">
+<input type = "hidden"  value="<?= ($fetch_piercer_id)? $fetch_piercer_id : ""?>" name="piercer_id" id="piercer_id">
+</div>
+
+<script type="text/javascript">
+jQuery(document).on("click","#slots_section div",function () {
+    var obj=jQuery(this);
+    console.log(obj.data('start'));
+    jQuery("#slots_section div").removeClass("active");
+    jQuery("#starttime_hidden").attr("value",obj.data('start'));
+    jQuery("#endtime_hidden").attr("value",obj.data('end'));
+    jQuery("#piercer_id").attr("value",obj.data('p_id'));
+    obj.addClass("active");
+    jQuery("#starttime_hidden-error").remove();
+});
+</script>

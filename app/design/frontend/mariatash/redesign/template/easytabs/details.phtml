@@ -30,6 +30,10 @@
  * @see Mage_Catalog_Block_Product_View_Description
  */
 ?>
+
+<?php if(!(Mage::helper("allure_catalog")->isGiftCard($this->getProduct()->getId()))  &&  $this->getProduct()->getTypeId() != 'giftcards'): ?>
+
+
 <?php $_description = $this->getProduct()->getDescription(); ?>
 <?php if ($_description): ?>
     <div class="std">
@@ -92,4 +96,5 @@ foreach($attributes as $attribute){
 }
 ?>
 </table>
+<?php endif; ?>
 <?php endif; ?>

@@ -35,37 +35,50 @@
     $_helper    = $this->helper('catalog/output');
     $_category  = $this->getCurrentCategory();
 
+    if ($_category->getImageUrl()) {
+      $cat_image= $_category->getImageUrl();
+      list($width, $height) = getimagesize($cat_image);
+    }
+
     $_imgHtml   = '';
     if ($_imgUrl = $_category->getImageUrl()) {
-        if($_category->getCategoryBleed()) {
-            echo '<script>
+        if ($_category->getCategoryBleed()) {
+            ?>
+            <script>
                     jQuery(document).ready(function(){
                         jQuery(".col-main").addClass("with-category-image-bleed");
+                        jQuery(".for-space-to-bottom").css("background-image","url('<?= $_imgUrl ?>')");
+                        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+                        jQuery("body").addClass("cat-img-present");
                     });
-                </script>';
-            $_imgHtml = '<p class="category-image-bleed"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></p>';
-        }
-        else {
-            echo '<script>
+                </script>
+<?php
+            $_imgHtml = '<p class="category-image-bleed d-none"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></p>';
+        } else { ?>
+            <script>
                     jQuery(document).ready(function(){
                         jQuery(".col-main").addClass("with-category-image");
+                        jQuery(".for-space-to-bottom").css("background-image","url('<?= $_imgUrl ?>')");
+                        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+                        jQuery("body").addClass("cat-img-present");
                     });
-                </script>';
-            $_imgHtml = '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></span></p>';
+                </script>
+<?php
+            $_imgHtml = '<p class="category-image d-none"><img data-height="'.$height.'" src="'.$_imgUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" title="'.$this->htmlEscape($_category->getName()).'" /></span></p>';
         }
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
     }
 ?>
- <div id="category-title" class="page-title category-title <?php echo ($_category->getCategoryBleed()) ? ' category-bleed' : ''?>">
-    <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
-        <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
-	    <?php endif; ?>
-        <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
-</div>
+
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
 <?php if($_imgUrl): ?>
     <?php echo $_imgHtml ?>
+
+    <script>
+    jQuery(document).ready(function () {
+});
+    </script>
 <?php endif; ?>
 
 <?php if($_description=$this->getCurrentCategory()->getDescription()): ?>

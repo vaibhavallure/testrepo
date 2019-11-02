@@ -86,3 +86,11 @@
     payment.currentMethod = "<?php echo $this->getChild('methods')->getSelectedMethodCode() ?>";
 //]]>
 </script>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery(document).on('keyup blur','input[name="payment[cc_number]"]',function() {
+			var num = jQuery(this).val();
+			console.log(getCardType(num));
+		});
+	}); 
+</script>

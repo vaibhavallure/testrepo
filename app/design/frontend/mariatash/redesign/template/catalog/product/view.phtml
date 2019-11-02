@@ -196,15 +196,30 @@ if ($_product->getSizeSample() == 1) {
 <?php if ($_product->getTypeId() == 'giftcards'): ?>
     <?php $this->unsetChild('breadcrumbs'); ?>
 
-    <div class="giftcard-static-block-message"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('giftcard_block_message')->toHtml() ?></div>
     <form class="w-100" action="<?php echo $this->getSubmitUrl($_product) ?>" method="post"  id="product_addtocart_giftcard_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
         <div class="no-display">
             <input type="hidden" name="product" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="related_product" id="related-products-field" value=""/>
         </div>
-        <?php echo $this->getChildHtml('product_type_data') ?>
-        <div class="product-shop <?php echo $_product->getTypeId() ?>">
+
+
+        <div class="col-12 product-detail-parent">
+            <div class="row">
+                <div class="product-view-left col-lg-7 fix-image"  id="product-detail-image">
+                    <div class="product-img-box">
+                        <div id="galleria" class="mediaGallery">
+                            <?php echo $this->getChildHtml('media') ?>
+                        </div>
+                    </div>
+                </div>
+                <div id="product-details-flow" class="col-lg-5 offset-66 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
+                    <div class="row">
+                        <div class="product-name col-12 pl-0">
+                            <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                        </div>
+                    <?php echo $this->getChildHtml('product_type_data') ?>
+        <div class="col-12 p-0">
             <div class="add-to-box">
                 <?php if ($_product->isSaleable()): ?>
                     <?php echo $this->getChildHtml('addtocart') ?>
@@ -217,8 +232,54 @@ if ($_product->getSizeSample() == 1) {
                     <?php echo $this->getChildHtml('alert_urls') ?>
                 <?php endif; ?>
             </div>
+            <div class="clear-both col-12">
+            <?php echo $this->getChildHtml('product_additional_data') ?>
+            </div>
+        </div>
+
+                    </div>
+        </div>
+        </div>
         </div>
     </form>
+    <div class="product-collateral col-12 hide-for-quickview">
+        <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
+            <div class="row box-collateral <?php echo "box-{$alias}" ?>">
+                <?php if ($title = $this->getChildData($alias, 'title')): ?>
+                    <h2><?php echo $this->escapeHtml($title); ?></h2>
+                <?php endif;?>
+                <?php echo $html; ?>
+            </div>
+        <?php endforeach;?>
+    </div>
+
+    <div class="clearer col-12"></div>
+
+
+
+    <script type="text/javascript">
+        jQuery(window).load(function(){
+            if(!jQuery('#recent-view-ajax').html()){
+                var id = '<?php echo (int) $this->getRequest()->getParam('id');?>';
+                var category = '<?php echo (int) $this->getRequest()->getParam("category", false);?>';
+                jQuery.ajax({
+                    type:"POST",
+                    dataType: "html",
+                    url: "<?php echo Mage::getBaseUrl('web').'catalog/product/recent/';?>",
+                    data: { id : id, category: category}
+                }).done(function(data) {
+                    jQuery('#recent-view-ajax').html(data);
+                });
+            }
+        });
+    </script>
+
+
+
+
+
+
+
     <script type="text/javascript">
         //<![CDATA[
         jQuery(document).ready(function(){
@@ -273,6 +334,9 @@ if ($_product->getSizeSample() == 1) {
         }
         //]]>
     </script>
+
+
+
 <?php else: ?>
     <script type="text/javascript">
         var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
@@ -317,7 +381,7 @@ if ($_product->getSizeSample() == 1) {
         </div>
         <div class="col-12 product-detail-parent">
           <div class="row">
-            <div class="product-view-left col-lg-8">
+            <div class="product-view-left col-lg-7 fix-image" id="product-detail-image">
                 <div class="product-img-box">
                     <div id="galleria" class="mediaGallery">
                         <?php echo $this->getChildHtml('media') ?>
@@ -393,7 +457,7 @@ if ($_product->getSizeSample() == 1) {
                 </script>
             </div>
 
-            <div class="col-lg-3 offset-lg-1 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
+            <div id="product-details-flow" class="col-lg-5 offset-66 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
               <div class="row">
                 <div class="col-12">
                   <div class="row">
@@ -406,10 +470,13 @@ if ($_product->getSizeSample() == 1) {
             			                 <?php endif;?>
         			                        <input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
                                       <?php //echo $this->getPriceHtml($_product) ?>
-                    <div id="ajax-price" class="col-12 pl-0"><?php echo $this->getPriceHtml($_product) ?></div>
+                    <?php if(!$isGiftCard): ?>
+                      <div id="ajax-price" class="col-12 pl-0"><?php echo $this->getPriceHtml($_product) ?></div>
+                   <?php endif; ?>
                     <div class="product-collateral col-12">
                         <?php if (!$this->hasOptions()): ?>
                             <div id="product-options-wrapper" class="product-options row"></div>
+
                               <div class="product-options-bottom row">
                                   <?php if ($_product->isSaleable()): ?>
                                       <?php echo $this->getChildHtml('addtocart') ?>

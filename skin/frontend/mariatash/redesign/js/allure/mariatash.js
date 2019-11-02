@@ -1,6 +1,41 @@
 jQuery(document).ready(function () {
 
 
+    /*move cartilage section to filter bottom*/
+    if(jQuery(".cartilage-section").length)
+    jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
+
+
+    if(!jQuery("p.category-image").length && !jQuery("p.category-image-bleed").length && !jQuery(".second-header-image").length ){
+      jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
+    }
+
+    if(jQuery("p.category-image").length) {
+        jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery("p.category-image img").attr("src")+"')");
+        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+        jQuery("body").addClass("cat-img-present");
+        jQuery("p.category-image").hide();
+    }
+
+    if(jQuery(".second-header-image").length) {
+        jQuery(".for-space-to-bottom").css("background-image", "url('"+jQuery(".second-header-image img").attr("src")+"')");
+        jQuery(".for-space-to-bottom").addClass("cat-img-space");
+        jQuery("body").addClass("cat-img-present");
+        jQuery(".second-header-image").hide();
+    }
+
+    if(jQuery(".catalog-product-view").length)
+    {
+        //.recently-view insta-main you_may_like
+        if(!jQuery(".recently-view").length && !jQuery(".insta-main").length && !jQuery(".you_may_like").length)
+        {
+         jQuery(".footer").attr("style","padding-top:0px!important");
+         jQuery(".for-bottom-space.p-5").removeClass("p-5");
+         jQuery(".product-detail-parent").css("padding-bottom", "65px");
+        }
+
+    }
+
     jQuery('a[href=#]').each(function () {
         jQuery(this).attr('href', 'JavaScript:Void(0)');
     });
@@ -47,11 +82,31 @@ jQuery(document).ready(function () {
     });
 
 
-    jQuery(window).scroll(function () {
+    jQuery(window).bind("resize scroll",function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
 
-        if (jQuery(window).width() >= 1025) {
+
+
+
+
+        if(jQuery(window).width() >= 992)
+        {
+          var scroll = jQuery(window).scrollTop();
+          var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
+          var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
+          // if (jQuery('.owl-carousel').length) {
+              if ((productImageHeight) > (productDetailsHeight - scroll)) {
+                  jQuery('#product-details-flow').removeClass('offset-66');
+                  jQuery('#product-detail-image').removeClass('fix-image');
+                  jQuery('#product-detail-image > div').addClass('position-bottom');
+              } else {
+                  jQuery('#product-details-flow').addClass('offset-66');
+                  jQuery('#product-detail-image').addClass('fix-image');
+                  jQuery('#product-detail-image > div').removeClass('position-bottom');
+              }
+        }
+        if (jQuery(window).width() >= 1363) {
 
             var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
@@ -73,19 +128,8 @@ jQuery(document).ready(function () {
 
             }
 
-            var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
-            var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-            if (jQuery('.owl-carousel').length) {
-                if ((productImageHeight) > (productDetailsHeight - scroll)) {
-                    jQuery('#product-details-flow').removeClass('offset-66');
-                    jQuery('#product-detail-image').removeClass('fix-image');
-                    jQuery('#product-detail-image > div').addClass('position-bottom');
-                } else {
-                    jQuery('#product-details-flow').addClass('offset-66');
-                    jQuery('#product-detail-image').addClass('fix-image');
-                    jQuery('#product-detail-image > div').removeClass('position-bottom');
-                }
-            }
+
+            // }
             headerHeight = jQuery(".mariatash-header").outerHeight();
             jQuery('.open-navigation').css("padding-top", headerHeight);
 
@@ -100,6 +144,13 @@ jQuery(document).ready(function () {
                 }
 
             }
+            jQuery(".mt-logo").removeClass('d-none');
+            jQuery(".nav-links-left").removeClass('d-none');
+            jQuery("#scroll-logo").addClass('d-none');
+            jQuery('.mariatash-header').removeClass('header-height');
+            //jQuery('.mariatash-header').removeClass('maria-black');
+            jQuery('.mariatash-header').removeClass('scrolled-menu');
+            jQuery("section.sub-menu").removeClass("scrolled");
         }
     });
 
@@ -107,22 +158,27 @@ jQuery(document).ready(function () {
     /*-----------------------------new js code-----------------------------*/
 
     jQuery('.main_menu').mouseover(function () {
+
         var section_id = '#' + jQuery(this).attr('data-id');
 
         if(!jQuery(this).hasClass('active_menu')) {
             jQuery(".main_menu").removeClass('active_menu');
-            jQuery(".menu_overlay").removeClass("d-none");
             jQuery(this).addClass('active_menu');
             jQuery('section.sub-menu').hide();
-            jQuery(section_id).slideDown();
+            setTimeout(function() {
+                jQuery(".menu_overlay").removeClass("d-none");
+                jQuery(section_id).slideDown();
             unScrollBody();
+            }, 2);
         }
     });
     jQuery('#navbarNavDropdown').mouseleave(function () {
+        setTimeout(function() {
         jQuery(".main_menu").removeClass('active_menu');
         jQuery('section.sub-menu').slideUp();
         jQuery(".menu_overlay").addClass("d-none");
         scrollBody();
+        }, 5);
     });
 
     jQuery('.noChild').mouseover(function () {
@@ -284,4 +340,14 @@ else{
         'top' : '0px'
     });
 }
+}
+
+var setLoader = function(){
+    jQuery.fancybox.showLoading();
+    jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+}
+
+var unsetLoader= function(){
+    jQuery.fancybox.hideLoading();
+    jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
 }

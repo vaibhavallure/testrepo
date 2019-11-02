@@ -48,12 +48,15 @@
     jQuery("#mt-shipping-method-fancybox").fancybox(fancyboxOptions);
 </script>
 <?php if(($this->getRequest()->getControllerName() == 'cart') && !$this->getRequest()->isXmlHttpRequest()): ?>
+<?php $quote = Mage::getSingleton("checkout/session")->getQuote();?>
+<?php if(!$quote->isVirtual()):?>
 <tr id="estimate-shipping">
     <td class="cart-subtotals-left" >Shipping</td>
     <td class="cart-subtotals-right" >
         <a id="various-fancybox" class="various link-button" href="#inline">Estimate Shipping</a>
     </td>
 </tr>
+<?php endif; ?>
 <?php endif; ?>
 <div class="shipping-cart-mt">
 <div id="inline" class="shipping" style="display:none;">

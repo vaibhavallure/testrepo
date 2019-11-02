@@ -37,6 +37,9 @@
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
 <?php $isSingleProduct = $redesignHelper->isQuoteContainSingleProduct();?>
+<?php $shippingAddresses = $this->getCheckout()->getQuote()->getAllShippingAddresses();?>
+<?php $isMultiple = (count($shippingAddresses) > 1) ? true : false; ?>
+
 <div class="container">
     <ol id="checkoutSteps" class="opc">
     <?php foreach ($steps as $stepKey => $_step): ?>
@@ -50,12 +53,12 @@
             <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
                 <div class="multiple-checkout">
                     <div class="page-title title-buttons row">
-                    	<?php if(!$redesignHelper->isQuoteContainSingleQty()):?>
+                    	<?php if( (!$redesignHelper->isQuoteContainSingleQty()) || $isMultiple):?>
                     	<div class="col2-set col-12">
                         	<div class="gift-messages">
                             	<p class="control">
                                    	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
-                                      <input type="checkbox" id="shipping-to-more-than-one" value="0" class="checkbox">
+                                      <input type="checkbox" id="shipping-to-more-than-one" value="0" class="checkbox" <?php if($isMultiple):?>checked="checked"<?php endif;?>>
                                       <span class="checkmark"></span><?= $this->__('Shipping to more than one address?')?>
                                     </label>
                                	</p>
@@ -68,7 +71,7 @@
                           			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
                             		<?= $this->getChildHtml("checkout_address_select");?>
             					</div>
-            					<div id="single-shipping-address" class="select single-shipping-address col-lg-6 col-md-6 col-12">
+            					<div id="single-shipping-address" class="select single-shipping-address col-lg-6 col-md-6 col-12 <?php if($isMultiple):?>d-none<?php endif;?>">
                             		<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
                                		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
                     			</div>
@@ -112,7 +115,8 @@
                                                 </div>
                                              </div>
     										<?php endif;?>
-
+											
+											<?php if(!$_item->getProduct()->getIsVirtual()):?>
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">
@@ -135,22 +139,24 @@
                                                    </p>
                                                 </div>
                                                 <?php if(!empty($message) && !$isSingleProduct): ?>
-                                                    <?php $tmpMessage = $message;?>
-                                                    <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
-                                                    <div class="gift-messages">
-                                                     	<p class="control">
-                                                            <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                              <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= ($_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
-                                                              <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
-                                                       		</label>
-                                                       </p>
-                                                    </div>
-                                                    <?php endif;?>
+                                                <?php $tmpMessage = $message;?>
+                                                <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
+                                                <div class="gift-messages">
+                                                	<p class="control">
+                                                  		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= ($_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
+                                                            <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
+                                                       	</label>
+                                                	</p>
+                                                </div>
+                                            	<?php endif;?>
                                                 <?php endif;?>
                                             </div>
+                                            <?php endif;?>
+                                            
                                 		</div>
-                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option multishipping-address-common invisible" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
-                                    		<?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?>
+                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option multishipping-address-common <?php if(!$isMultiple):?>invisible<?php endif;?>" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
+                                    		<p class="para-normal"><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?></p>
                                     	</div>
     								</div>
     							</div>
@@ -212,6 +218,11 @@
 			newAddressForm(jQuery(this));
 		});
 
+		/* jQuery('#shipping-to-more-than-one').is(":checked"){
+			jQuery('#single-shipping-address').addClass('d-none');
+			jQuery('.multishipping-address-common').removeClass('invisible');
+		}); */
+
 		jQuery('#shipping-to-more-than-one').on('change',function(){
 			if(jQuery(this).is(":checked")){
 				jQuery('#single-shipping-address').addClass('d-none');
@@ -219,6 +230,8 @@
 			}else{
 				jQuery('#single-shipping-address').removeClass('d-none');
 				jQuery('.multishipping-address-common').addClass('invisible');
+				var addressId = jQuery('#single-shipping-address select').val();
+				jQuery('.multishipping-address-common select').val(addressId);
 			}
 		});
 

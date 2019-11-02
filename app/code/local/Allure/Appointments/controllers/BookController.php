@@ -7,6 +7,11 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
 		$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
 
+		if(!$storeId)
+        {
+            echo "<script>alert('booking store not found')</script>";
+            return;
+        }
         // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
@@ -37,468 +42,270 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         $this->renderLayout();
     }
 
-    /* Ajax Login action */
-    public function ajaxLoginAction ()
+    private $currentDateFlag = false;
+
+    public function indexAction()
     {
-        $session = Mage::getSingleton('customer/session');
-        if ($session->isLoggedIn()) {
-            // is already login redirect to account page
+        if ($this->getAppId()) {
+
+            $collection = $this->getValidAppointmentCollection();
+
+            if ($collection->getSize()) {
+
+                Mage::register('apt_modify_data', $collection->getFirstItem());
+                $this->session()->setData(
+                    'apt_customer_data', $this->getAppCustomers($this->getModifyDecryptedApptId()));
+
+                $this->session()->setData(
+                    'appointmentData_availablity', true);
+            } else {
+                $this->session()->setData(
+                    'appointmentData_availablity', false);
+            }
+        }
+
+        $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('Maria Tash'));
+        $this->renderLayout();
+    }
+
+    private function session()
+    {
+        return Mage::getSingleton("core/session");
+    }
+
+    public function saveAction()
+    {
+
+
+        $post_data = $this->getFormattedPostData();
+
+        /*------------------notification setting start ----------------------*/
+        $oldAppointment = null;
+        $oldCustomersCollection = null;
+        $isPiercingAppointment = false;
+        $type = "new";
+
+        if ($this->getAppId()) {
+            $oldAppointment = $this->appointment()->load($post_data['id']);
+            $oldCustomersCollection = $this->getAppCustomers()->getData();
+            $type = "modify";
+        }
+        /*------------notification setting end------------------------------*/
+
+
+        if (!$this->helper()->validatePostData($post_data, "user")) {
+            $this->log()->addStoreWiseLog('Sorry Something Went Wrong Please Try Again! validation error please check save_appointment_customer.log for more detail', $post_data['store_id']);
+            Mage::getSingleton('core/session')->setSomethingWrong("true");
+            // Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
+            $this->_redirectReferer();
             return;
         }
 
-        $result = array(
-            'success' => false
-        );
-        if ($this->getRequest()->getParam('request')) {
-            $request = $this->getRequest()->getParam('request');
-            if (empty($request['usrname']) || empty($request['passwd'])) {
-                $result['error'] = Mage::helper('appointments')->__(
-                    'Login and password are required.');
+
+        $this->taskStart();
+        if ($this->helper()->validateSlotBeforeBookAppointment($post_data)) {
+
+            $this->log()->addStoreWiseLog('Err => Sorry This Slot Has Been Already Taken', $post_data['store_id']);
+
+            $piercer = $this->helper()->checkIfAnotherPiercerAvailable($post_data);
+
+            $this->log()->addStoreWiseLog('checking for another piercer for requested slot', $post_data['store_id']);
+
+
+            if ($piercer['success']) {
+                $post_data['piercer_id'] = $piercer['p_id'];
+                $this->log()->addStoreWiseLog('New piercer assigned new_piercer_id=' . $piercer['p_id'], $post_data['store_id']);
+
             } else {
-                try {
-                    $session->login($request['usrname'], $request['passwd']);
-                    $block = $this->getLayout()->createBlock(
-                        'appointments/registration', 'appointments_register',
-                        array(
-                            'template' => 'appointments/signin_register.phtml'
-                        ));
-                    $output = $block->toHtml();
-                    $result['success'] = true;
-                    $result['msg'] = Mage::helper('appointments')->__(
-                        'Login Successfull');
-                    $result['output'] = $output;
-                } catch (Mage_Core_Exception $e) {
-                    switch ($e->getCode()) {
-                        case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
-                            $message = Mage::helper('appointments')->__(
-                            'Email is not confirmed. <a href="%s">Resend confirmation email.</a>',
-                            Mage::helper('customer')->getEmailConfirmationUrl(
-                            $request['usrname']));
-                            break;
-                        default:
-                            $message = $e->getMessage();
+                $this->log()->addStoreWiseLog('no piercer available for this slot', $post_data['store_id']);
+                $this->taskEnd();
+                Mage::getSingleton('core/session')->setSlotInvalid("true");
+                $this->_redirectReferer();
+                return;
+            }
+        }
+        $this->taskEnd();
+
+        try {
+
+            $model = $this->appointment()->addData($post_data)->save();
+
+            foreach ($post_data['customer'] as $customer) {
+                $customer['appointment_id'] = $model->getId();
+                $customer['sms_notification'] = ($customer['noti_sms'] == 'on') ? 1 : 0;
+                $customer['piercing'] = ($customer['piercing']) ? $customer['piercing'] : 0;
+
+                if ($customer['piercing'] > 0)
+                    $isPiercingAppointment = true;
+
+                $customer['checkup'] = ($customer['checkup']) ? 1 : 0;
+                $customer['language_pref'] = ($post_data['language_pref']) ? $post_data['language_pref'] : 'en';
+
+
+                $customerObj = $customers[] = Mage::getModel('appointments/customers')->addData($customer)->save();
+
+                if ($customerObj->getId())
+                    $customer_ids[] = $customerObj->getId();
+            }
+
+            if ($post_data['id'] && count($customer_ids) > 0) {
+                $customerCollection = $this->getAppCustomers($post_data['id'], $customer_ids);
+                if ($customerCollection->getSize()) {
+                    foreach ($customerCollection as $customer) {
+                        $customer->delete();
                     }
-                    $result['error'] = $message;
-                    $session->setUsername($request['usrname']);
                 }
             }
-        }
 
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-    }
+            $this->log()->addStoreWiseLog('appointment saved/updated successfully--------->', $post_data['store_id']);
 
-    public function stateAction ()
-    {
-        $countrycode = $this->getRequest()->getParam('country');
-        $html = "";
-        $statearray = Mage::getModel('directory/region')->getResourceCollection()
-        ->addCountryFilter($countrycode)
-        ->load();
-        if (count($statearray) > 0) {
-            $html .= "<select name='state' class='ele_width stateSelect'><option value=''>--Please Select--</option>";
-            foreach ($statearray as $_state) {
-                $html .= "<option value='" . $_state->getCode() . "'>" .
-                    $_state->getDefaultName() . "</option>";
-            }
-            $html .= "</select>";
-        } else {
-            $html .= "<input name='state' id='state' title='" .
-                Mage::helper('appointments')->__('State') .
-                "' value='' class='ele_width' type='text' />";
-        }
-        echo $html;
-    }
+            Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+            Mage::getSingleton("core/session")->setData('isPiercingAppointment', $isPiercingAppointment);
 
-    function date_convert($dt, $tz1, $df1, $tz2, $df2) {
-        // create DateTime object
-        $d = DateTime::createFromFormat($df1, $dt, new DateTimeZone($tz1));
-        // convert timezone
-        $d->setTimeZone(new DateTimeZone($tz2));
-        // convert dateformat
-        return $d->format($df2);
-    }
 
-    // To get the time depend on received qty by bhagya
-    public function ajaxGetTimeAction ()
-    {
-        $result = array(
-            'success' => false
-        );
-        $request = $this->getRequest()->getParam('request');
-        // Mage::log($request,Zend_Log::DEBUG,'my-log',true);
+            /*-----------------notification section start--------------------------------*/
+            if ($this->notify()->sendEmailNotification($model, $type, $oldAppointment, $oldCustomersCollection))
+                $this->log()->addStoreWiseLog('Notified by email type=>' . $type, $post_data['store_id']);
 
-        // $aptmodel =
-        // Mage::getModel('appointments/timing')->load($request['qty'],'qty');
-        $time = Mage::helper('appointments')->getTimeByStoreAndPeople(
-            $request['qty'], $request['store']);
+            if ($this->notify()->sendSmsNotification($model, $type))
+                $this->log()->addStoreWiseLog('Notified By SMS(if selected) type=>' . $type, $post_data['store_id']);
 
-        Mage::log($time, Zend_Log::DEBUG, 'appointments_time.log', true);
+//
+//            if($type=="new")
+//            {
+            if ($this->notify()->sendEmailNotification($model, 'release'))
+                $this->log()->addStoreWiseLog('Notified by email type=>release', $post_data['store_id']);
 
-        /*
-         * $coreResource = Mage::getSingleton('core/resource');
-         * $connection = $coreResource->getConnection('core_read');
-         * $sql = "SELECT * FROM allure_appointment_piercers
-         * WHERE your_field_here REGEXP
-         * '.*"array_key_here";s:[0-9]+:"your_value_here".*'";
-         * //Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
-         * $value = $connection->fetchRow($sql,
-         * array($item->getProductId(),$countryCode->getWarehouseId()));
-         */
+            if ($this->notify()->sendSmsNotification($model, 'release'))
+                $this->log()->addStoreWiseLog('Notified By SMS(if selected) type=>release', $post_data['store_id']);
 
-        $storeCurrentTime = "";
-        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
-        $storeKey = array_search ($request['store'], $configData['stores']);
-        $timeZone = $configData['timezones'][$storeKey];
-        if(!empty($timeZone) && $request['date']==date("m/d/Y")){
-            $storeCurrentTime = $this->date_convert(date('H:i'), 'UTC', 'H:i', $timeZone, 'H:i');
-            $storeCurrentTime = explode(":", $storeCurrentTime);
-            $storeCurrentTime = (($storeCurrentTime[0]*60)+$storeCurrentTime[1]) / 60;
-        }
+//            }
 
-        $block = $this->getLayout()
-        ->createBlock('core/template', 'appointments_picktime',
-            array(
-                'template' => 'appointments/pickurtime.phtml'
-            ))
-            ->setData("timing", $time)
-            ->setData("date", $request['date'])
-            ->setData("store_id", $request['store'])
-            ->setData("id", $request['id'])
-            ->setData("store_current_time",$storeCurrentTime);
-            $output = $block->toHtml();
+            /*---------------------------------notification section end--------------------------------*/
 
-            $result['success'] = true;
-            $result['msg'] = $time;
-            $result['output'] = $output;
 
-            $collection = Mage::getModel("appointments/pricing")->getCollection()
-            ->addFieldToFilter('store_id',$request['store']);
+            //  $this->getResponse()->setRedirect(Mage::getUrl("*/*/*", array('_secure' => true)));
+            // $this->_redirectReferer();
 
-            $helper = Mage::helper("appointments/storemapping");
-            $configData = $helper->getStoreMappingConfiguration();
-            $storeKey = array_search ($request['store'], $configData['stores']);
-            $storeMap = $configData['store_map'][$storeKey];
+           /* if ($post_data['user'] == "admin")
+                $this->_redirectUrl(Mage::getBaseUrl() . "appointments/book/index/user/admin");
+            else
+           */     $this->_redirectReferer();
 
-            $blockIdentifier = $configData['piercing_pricing_block'][$storeKey];
 
-            $pricingBlock = $this->getLayout()->createBlock('appointments/pricing','appointments_piercing_pricing',
-                array('template' => 'appointments/pricing.phtml'))
-                ->setPricingCollection($collection)
-                ->setStoreMap($storeMap)
-                ->setCmsBlockId($blockIdentifier);
-                $pricingHtml = $pricingBlock->toHtml();
-                $result['pricing_html'] = $pricingHtml;
+            return;
 
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        } catch (Exception $e) {
+            Mage::getSingleton("core/session")->addError($e->getMessage());
 
-            // $block =
-            // $this->getLayout()->createBlock('core/template')->setTemplate('/cart/mycart.phtml')->toHtml();
-    }
-
-    public function saveAction ()
-    {
-        if (! $this->_validateFormKey()) {
-            $this->_redirect('*/*/');
+            $this->_redirectReferer();
             return;
         }
 
-        Mage::getSingleton('core/session')->renewFormKey();
+
+    }
+
+    public function getFormattedPostData()
+    {
 
         $post_data = $this->getRequest()->getPost();
 
-        $embeded = $this->getRequest()->getParam('embedded');
-        $storep = $this->getRequest()->getParam('store');
 
-        if ($embeded == '1')
-            $appendUrl = "?embedded=" . $embeded;
-        if ($storep) {
-            if ($appendUrl)
-                $appendUrl .= "&";
+        if ($post_data['id'])
+            $action = 'update';
+        else
+            $action = 'save';
+
+        $this->log()->addStoreWiseLog('appointment_' . $action . '_action---------->', $post_data['store_id']);
+
+
+        $this->log()->addStoreWiseLog($this->baseurl() . '' . http_build_query($post_data), $post_data['store_id']);
+        $post_data['app_date'] = date('m/d/Y', strtotime($post_data['app_date']));
+        $post_data['appointment_start'] = strtotime($post_data['app_date'] . ' ' . $post_data['appointment_start']);
+        $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
+
+        $post_data['appointment_end'] = $post_data['app_date'] . " " . $post_data['appointment_end'];
+        $post_data['appointment_end'] = strtotime($post_data['appointment_end']);
+        $post_data['appointment_end'] = date('Y-m-d H:i:s', $post_data['appointment_end']);
+
+        $booking_date = Mage::getModel('core/date')->date('Y-m-d H:i:s');
+        $post_data['booking_time'] = $booking_date;
+        $post_data['app_status'] = '2'; // Set appointment status assigned
+        $post_data['special_store'] = 2;
+
+        extract($post_data['customer'][1]);
+
+        $post_data['firstname'] = $firstname;
+        $post_data['lastname'] = $lastname;
+        $post_data['email'] = $email;
+        $post_data['phone'] = $phone;
+
+        $post_data['ip'] = $this->get_client_ip();
+
+
+        return $post_data;
+    }
+
+    public function modifyAction()
+    {
+
+        Mage::register('appointment_booking_id', $this->getModifyDecryptedApptId());
+
+        $collection = $this->getValidAppointmentCollection();
+
+        if ($collection->getSize()) {
+
+            $model = $collection->getFirstItem();
+            $logdata = $model->getData();
+            $logdata['ip'] = $this->get_client_ip();
+
+            $this->log()->addStoreWiseLog('appointment_modify_init---------->' . $model->getId() . ' by user=>' . $this->getModifyDecryptedCustId(), $model->getStoreId());
+
+            if (strtotime($model->getAppointmentStart()) < $this->helper()->getCurrentDatetime($model->getStoreId()))
+                Mage::getSingleton("core/session")->setData('appointment_expired', true);
             else
-                $appendUrl = "?";
-            $appendUrl .= "store=" . $storep;
+                Mage::getSingleton("core/session")->setData('appointment_expired', false);
+
+            Mage::register('appointment_modified', $model);
+            Mage::getSingleton("core/session")->setData('appointment_availablity', true);
+        } else {
+            Mage::getSingleton("core/session")->setData('appointment_availablity', false);
         }
+        $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('Maria Tash'));
+        $this->renderLayout();
 
-       if ($post_data) {
-                $configData = $this->getAppointmentStoreMapping();
-            try {
-                if (isset($post_data['id'])) {
-                    $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
-                    if (empty($post_data['app_date']))
-                        $post_data['app_date'] = date('m/d/Y', strtotime($old_appointment->getAppointmentStart()));
-                }
-
-                // http://www.geoplugin.net/php.gp?ip=219.91.251.70
-                $post_data['ip'] = $this->get_client_ip();
-                $post_data['appointment_start'] = $post_data['app_date'] . " " . $post_data['appointment_start'];
-                $post_data['appointment_start'] = strtotime($post_data['appointment_start'] . ":00");
-                $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
-
-                $post_data['appointment_end'] = $post_data['app_date'] . " " . $post_data['appointment_end'];
-                $post_data['appointment_end'] = strtotime("-1 minutes", strtotime($post_data['appointment_end'] . ":59"));
-                $post_data['appointment_end'] = date('Y-m-d H:i:s', $post_data['appointment_end']);
-
-                $booking_date = Mage::getModel('core/date')->date('Y-m-d H:i:s');
-                $post_data['booking_time'] = $booking_date;
-                $post_data['app_status'] = '2'; // Set appointment status assigned
-
-                $phno = preg_replace('/\s+/', '', $post_data['phone']); // remove the whitespaces from phone no
-
-                $post_data['phone'] = $phno;
-                $storeId = $post_data['store_id'];
-
-                $storeKey = array_search($storeId, $configData['stores']);
-                $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
-
-                // Create customer if flag set
-                if ($post_data['password'] != null || $post_data['password'] != '') {
-                    $websiteId = Mage::app()->getWebsite()->getId();
-                    $cust_exist = $this->IscustomerEmailExists($model->getEmail(), $websiteId);
-
-                    if ($cust_exist) {
-                        Mage::getSingleton('customer/session')->addError('Customer Email Exists Already');
-                    } else {
-                        $this->createCust($model);
-                    }
-                } // End of If creating customer
-
-                // IF appointment is modified then send updates to ADMIN &
-                  // PIERCER & CUSTOMER
-
-                $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
-                if ($old_appointment) {
-                    // If SMS is checked for notify me.
-                    $oldAppointmentStart = date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
-                    $oldAppointmentEnd = date("F j, Y H:i", strtotime($old_appointment->getAppointmentEnd()));
-                }
-                $email = $model->getEmail();
-                $name = $model->getFirstname() . " " . $model->getLastname();
-                $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
-                    'id' => $model->getId(),
-                    'email' => $model->getEmail(),
-                    '_secure' => true
-                ));
-
-                if ($post_data['notification_pref'] === '2') {
-                    if ($old_appointment) {
-                        $smsText = $configData['modified_sms_message'][$storeKey];
-                    }else {
-                        $smsText = $configData['book_sms_message'][$storeKey];
-                    }
-                    $url=Mage::helper('appointments')->getShortUrl($apt_modify_link);
-                    $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
-                    $time = date('h:i A', strtotime($model->getAppointmentStart()));
-                    $smsText = str_replace("(time)", $time, $smsText);
-                    $smsText = str_replace("(date)", $date, $smsText);
-                    $smsText = str_replace("(modify_link)", $url, $smsText);
-
-                    if ($post_data['phone']) {
-                        $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'], $smsText, $storeId);
-                        $model->setSmsStatus($smsdata);
-                        $model->save();
-                    }
-                }
-
-                $vars = array(
-                    'pre_name' => $old_appointment ? $old_appointment->getFirstname() . " " . $old_appointment->getLastname() : '',
-                    'pre_customer_name' => $old_appointment ? $old_appointment->getFirstname() . " " . $old_appointment->getLastname() : '',
-                    'pre_customer_email' => $old_appointment ? $old_appointment->getEmail() : '',
-                    'pre_customer_phone' => $old_appointment ? $old_appointment->getPhone() : '',
-                    'pre_no_of_pier' => $old_appointment ? $old_appointment->getPiercingQty() : '',
-                    'pre_piercing_loc' => $old_appointment ? $old_appointment->getPiercingLoc() : '',
-                    'pre_special_notes' => $old_appointment ? $old_appointment->getSpecialNotes() : '',
-                    'pre_apt_starttime' => $old_appointment ? $oldAppointmentStart : '',
-                    'pre_apt_endtime' => $old_appointment ? $oldAppointmentEnd : '',
-
-                    'name' => $model->getFirstname() . " " . $model->getLastname(),
-                    'customer_name' => $model->getFirstname() . " " . $model->getLastname(),
-                    'customer_email' => $model->getEmail(),
-                    'customer_phone' => $model->getPhone(),
-                    'no_of_pier' => $model->getPiercingQty(),
-                    'piercing_loc' => $model->getPiercingLoc(),
-                    'special_notes' => $model->getSpecialNotes(),
-                    'apt_starttime' => $appointmentStart,
-                    'apt_endtime' => $appointmentEnd,
-                    'store_name' => $configData['store_name'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-                    'store_address' => $configData['store_address'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-                    'store_email_address' => $configData['store_email'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-                    'store_phone' => $configData['store_phone'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-                    'store_hours' => $configData['store_hours_operation'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-                    'store_map' => $configData['store_map'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                    'apt_modify_link' => $apt_modify_link
-                );
-
-                //send Customer email
-                $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
-                $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
-                $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
-                $sender = array(
-                    'name' => Mage::getStoreConfig("trans_email/bookings/name"),
-                    'email' => $configData['store_email'][$storeKey]
-                );
-
-                try {
-                    if ($old_appointment) {
-                        if($enableCustomerEmail){
-                            $templateId=$configData['email_template_appointment_modify'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                        if($enableAdminEmail){
-                            $adminEmail=$configData['admin_email_id'][$storeKey];
-                            $name='';
-                            $templateId=$configData['admin_email_template_modify'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                        if($enablePiercerEmail){
-                            $templateId=$configData['piercer_email_template_modify'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-
-                    }else{
-                        if($enableCustomerEmail){
-                            $templateId=$configData['email_template_appointment'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                        if($enableAdminEmail){
-                            $adminEmail=$configData['admin_email_id'][$storeKey];
-                            $name='';
-                            $templateId=$configData['admin_email_template'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                        if($enablePiercerEmail){
-                            $templateId=$configData['piercer_email_template'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                    }
-                } catch (Exception $e) {
-                    Mage::log("Exception Occured",Zend_log::DEBUG,'appointments.log',true);
-                    Mage::log($e->getMessage(),Zend_log::DEBUG,'appointments.log',true);
-                }
-                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
-                $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
-                $this->_redirectReferer() . $appendUrl;
-                return;
-            } catch(Exception $e) {
-                Mage::getSingleton("core/session")->addError($e->getMessage());
-                $this->_redirectReferer() . $appendUrl;
-                return;
-            }
-         }
-           $this->_redirectReferer().$appendUrl;
-           // $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
     }
 
-    /* Create the customer by bhagya */
-    public function createCust ($cust_data)
+    public function cancelaptAction()
     {
-        $customer_email = $cust_data->getEmail();
-        $customer_fname = $cust_data->getFirstname();
-        $customer_lname = $cust_data->getLastname();
-
-        // $passwordLength = 10; // the lenght of autogenerated password
-        $password = $cust_data->getPassword();
-        $customer_phone = $cust_data->getPhone();
-        $customer_street = $cust_data->getStreet();
-        $customer_country = $cust_data->getCountry();
-        $customer_state = $cust_data->getState();
-        $customer_city = $cust_data->getCity();
-        $customer_postal_code = $cust_data->getPostalCode();
-
-        $addressData = array(
-            'firstname' => $customer_fname,
-            'lastname' => $customer_lname,
-            'street' => $customer_street,
-            'city' => $customer_city,
-            'country_id' => $customer_country,
-            'region' => $customer_state,
-            // [region_id] => 1
-            'postcode' => $customer_postal_code,
-            'telephone' => $customer_phone,
-            'is_default_billing' => 1,
-            'is_default_shipping' => ''
-        );
-        $customer = Mage::getModel('customer/customer');
-        $customer->setWebsiteId(Mage::app()->getWebsite()
-            ->getId());
-        $customer->loadByEmail($customer_email);
-
-        $address = Mage::getModel('customer/address');
-        $address->addData($addressData);
-
-        // Check if the email exist on the system.If YES, it will not create a
-        // user account.
-        if (! $customer->getId()) {
-
-            // setting data such as email, firstname, lastname, and password
-            $customer->setEmail($customer_email);
-            $customer->setFirstname($customer_fname);
-            $customer->setLastname($customer_lname);
-
-            // $customer->setPassword($customer->generatePassword($passwordLength));
-            $customer->setPassword($password);
-            // $customer->password_hash = md5($password);
-            $customer->setPassword($password);
-            $customer->addAddress($address);
-        }
         try {
-            // the save the data and send the new account email.
-            $customer->save();
-            $customer->setConfirmation(null);
-            $customer->save();
-            $customer->sendNewAccountEmail();
-        }
-        catch (Exception $ex) {
-            Mage::log(
-                " Customer create when new customer book appointment :" .
-                $e->getMessage(), Zend_Log::DEBUG, 'appointments',
-                true);
-            // Mage::log($e->getMessage());
-            // print_r($e->getMessage());
+            if ($this->getAppId()) {
+                $appointment = $this->appointment()->load($this->getAppId());
+                $appointment->setData('app_status', Allure_Appointments_Model_Appointments::STATUS_CANCELLED);
+                $appointment->save();
+
+                $this->log()->addStoreWiseLog('appointment_canceled_action ------------->' . $appointment->getId(), $appointment->getStoreId());
+
+                echo "Your scheduled Appointment is Cancelled successfully.";
+
+                if ($this->notify()->sendEmailNotification($appointment, "cancel"))
+                    $this->log()->addStoreWiseLog('cancel Notified by email', $appointment->getStoreId());
+
+                if ($this->notify()->sendSmsNotification($appointment, "cancel"))
+                    $this->log()->addStoreWiseLog('cancel Notified By SMS(if selected)', $appointment->getStoreId());
+
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 
-    /* Check customer exists start */
-    function IscustomerEmailExists ($email, $websiteId = null)
+    private function getValidAppointmentCollection()
     {
-        $customer = Mage::getModel('customer/customer');
-
-        if ($websiteId) {
-            $customer->setWebsiteId($websiteId);
-        }
-        $customer->loadByEmail($email);
-        if ($customer->getId()) {
-            return $customer->getId();
-        }
-        return false;
-    }
-
-    /* Modify or Cancel URL Action by bhagya */
-    public function modifyAction ()
-    {
-        $apt_id = $this->getRequest()->getParam('id');
-        $apt_email = $this->getRequest()->getParam('email');
-
-        // $apt_id = Mage::helper('core')->decrypt($encryptedId);
-        // $apt_email = Mage::helper('core')->decrypt($encryptedEmail);
-
-        if ($apt_id && $apt_email) {
-            // $append_url = "?apt_id=".$apt_id."&email=".$apt_email;
-            $models = Mage::getModel('appointments/appointments')->getCollection();
-            $models->addFieldToFilter('id', $apt_id)
-            ->addFieldToFilter('email', $apt_email)
+        $collection = $this->appointment()->getCollection();
+        $collection->addFieldToFilter('id', $this->getModifyDecryptedApptId())
             ->addFieldToFilter('app_status',
                 array(
                     'in' => array(
@@ -506,237 +313,453 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
                         Allure_Appointments_Model_Appointments::STATUS_ASSIGNED
                     )
                 ));
-            if (count($models)) {
-                foreach ($models as $model) {
-                    $model = $model;
-                    break;
-                }
-                Mage::register('appointment_modified', $model);
-                Mage::getSingleton("core/session")->setData(
-                    'appointment_availablity', true);
-            } else {
-                Mage::getSingleton("core/session")->setData(
-                    'appointment_availablity', false);
-            }
-        }
-        $this->loadLayout();
-        $this->getLayout()
-        ->getBlock("head")
-        ->setTitle($this->__("Appointments"));
-        $this->renderLayout();
+
+        return $collection;
     }
 
-    /* CancelaptAction by bhagya */
-    public function cancelaptAction ()
+    private function getAppId()
     {
-        $apt_id = $this->getRequest()->getParam('id');
-        $apt_email = $this->getRequest()->getParam('email');
-
-        if ($apt_id || $apt_email) {
-            $data = array(
-                'app_status' => Allure_Appointments_Model_Appointments::STATUS_CANCELLED
-            );
-            $model = Mage::getModel('appointments/appointments')->load($apt_id);
-            $storeId = $model->getStoreId();
-            $model = Mage::getModel('appointments/appointments')->load($apt_id)->addData(
-                $data);
-
-            try {
-                $model->setId($apt_id)->save();
-                echo "Your scheduled Appointment is Cancelled successfully.";
-                $configData = $this->getAppointmentStoreMapping();
-                $storeKey = array_search ($storeId, $configData['stores']);
-
-                if ($model->getNotificationPref() === '2') {
-                    $smsText = $configData['cancel_sms_message'][$storeKey];
-                    $appointmentStart = date("F j, Y H:i",strtotime($model->getAppointmentStart()));
-                    $date = date("F j, Y ",strtotime($model->getAppointmentStart()));
-                    $time = date('h:i A', strtotime($model->getAppointmentStart()));
-
-                    $booking_link = Mage::getBaseUrl('web') . 'appointments/';
-                    $booking_link = Mage::helper('appointments')->getShortUrl($booking_link);
-                    $smsText = str_replace("(time)", $time, $smsText);
-                    $smsText = str_replace("(date)", $date, $smsText);
-                    $smsText = str_replace("(book_link)", $booking_link,$smsText);
-
-                    if ($model->getPhone()) {
-                        $phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
-                        $smsdata = Mage::helper('appointments')->sendsms($phno_forsms, $smsText, $storeId);
-                        $model->setSmsStatus($smsdata);
-                        $model->save();
-                    }
-                }
-                // SMS CODE TO CANCEL Appointment end
-                $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
-                $vars = array(
-                    'name' => $model->getFirstname() . " " .$model->getLastname(),
-                    'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
-                    'customer_email' => $model->getEmail(),
-                    'customer_phone' => $model->getPhone(),
-                    'no_of_pier' => $model->getPiercingQty(),
-                    'piercing_loc' => $model->getPiercingLoc(),
-                    'special_notes' => $model->getSpecialNotes(),
-                    'apt_starttime' => $appointmentStart,
-                    'apt_endtime' => $appointmentEnd,
-                    'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-                    'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-                    'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-                    'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-                    'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-                    'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                    'apt_modify_link' => $apt_modify_link
-                );
-
-                //send Customer email
-                $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
-                $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
-                $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
-                $sender = array(
-                    'name' => Mage::getStoreConfig("trans_email/bookings/name"),
-                    'email' => $configData['store_email'][$storeKey]
-                );
-
-                try {
-
-                        if($enableCustomerEmail){
-                            $email=$model->getEmail();
-                            $name=$model->getFirstname() . " " .$model->getLastname();
-                            $templateId=$configData['email_template_appointment_cancel'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                        if($enableAdminEmail){
-                            $adminEmail=$configData['admin_email_id'][$storeKey];
-                            $name='';
-                            $templateId=$configData['admin_email_template_cancel'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                        if($enablePiercerEmail){
-                            $piercer=Mage::getModel('appointment/piercer')->load($model->getPiercerId());
-                            $email=$piercer->getEmail();
-                            $name=$piercer->getFirstname();
-                            $templateId=$configData['piercer_email_template_cancel'][$storeKey];
-                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
-                                    $sender, $email, $name, $vars);
-                        }
-                }catch(Exception $e){
-                    echo $e->getMessage();
-                }
-
-
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
-            $model->save();
-        }
+        return $this->getRequest()->getParam('id');
     }
 
-    // To get the Working days depend on storeid by bhagya
-    public function ajaxGetWorkingDaysAction ()
+    private function getStoreId()
     {
-        $result = array(
-            'success' => false
-        );
-        $storeid = $this->getRequest()->getParam('storeid');
-        $id = $this->getRequest()->getParam('id');
-        if ($id) {
-            $models = Mage::getModel('appointments/appointments')->load($id);
-            // $models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
-            if ($models->getId())
-                Mage::register('apt_modify_data', $models);
-        }
-        // To modify the appointment get the data from registry end
-        $piercers = Mage::getModel('appointments/piercers')->getCollection()
-        ->addFieldToFilter('store_id', array(
-            'eq' => $storeid
-        ))
-        ->addFieldToFilter('is_active', array(
-            'eq' => '1'
-        ));
+        return $this->getRequest()->getParam('storeid');
+    }
 
-        $avial_workDays = array();
+    private function getAppEmail()
+    {
+        return $this->getRequest()->getParam('email');
+    }
+
+    private function getAppCustomers($appointment_id = null, $exceptCustomerId = null)
+    {
+        $appointment_id = ($appointment_id != null) ? $appointment_id : $this->getAppId();
+
+        $collection = Mage::getModel('appointments/customers')->getCollection();
+        $collection->addFieldToFilter('appointment_id', $appointment_id);
+
+        if ($exceptCustomerId != null) {
+            $collection->addFieldToFilter('id',
+                array(
+                    'nin' => $exceptCustomerId
+                ));
+        }
+
+        return $collection;
+    }
+
+    /**
+     * add customer log
+     */
+    private function addLog($data, $action)
+    {
+        Mage::helper("appointments/logs")->addCustomerLog($data, $action);
+    }
+
+    private function helper()
+    {
+        return Mage::helper("appointments/data");
+    }
+
+    private function log()
+    {
+        return Mage::helper("appointments/logs");
+    }
+
+    public function logStringAction()
+    {
+        echo "<pre>";
+        print_r($this->getRequest()->getParams());
+        die();
+    }
+
+    private function appointment()
+    {
+        return Mage::getModel('appointments/appointments');
+    }
+
+    private function baseurl()
+    {
+        return Mage::getBaseUrl() . 'appointments/popup/logstring?';
+    }
+
+    public function ajaxGetWorkingDaysAction()
+    {
+        $piercers = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $this->getStoreId()))->addFieldToFilter('is_active', array('eq' => '1'));
+        $available_wdays = array();
 
         foreach ($piercers as $piercer) {
-            // $workdays = explode(",",$piercer->getWorkingDays());
-            $workdays = array_map('trim',
-                explode(',', $piercer->getWorkingDays()));
-            $avial_workDays[] = $workdays;
+            $workdays = array_map('trim', explode(',', $piercer->getWorkingDays()));
+            $available_wdays = array_unique(array_merge($available_wdays, $workdays));
         }
-        $available_wdays = array();
-        foreach ($avial_workDays as $avail_wd) {
-            foreach ($avail_wd as $wd) {
-                $available_wdays[] = $wd;
+
+        $currentDate = $this->getCurrentDate();
+
+        if(strtotime("08/31/2019")>strtotime($currentDate))
+        {
+            $currentDate="08/31/2019";
+        }
+
+        $available_wdays = array_filter(array_map(function ($dateTime) use ($currentDate) {
+            $time1 = strtotime($dateTime);
+            $time2 = strtotime($currentDate);
+            if ($time1 >= $time2) {
+                return $dateTime;
             }
-        }
+        }, $available_wdays));
 
-        $notAvailableDatesCollection = Mage::getModel('appointments/dates')->getCollection()
-        ->addFieldToFilter('store_id', array(
-            'eq' => $storeid
-        ))
-        ->addFieldToFilter('is_available', array(
-            'eq' => '0'
-        ))
-        ->addFieldToFilter('exclude', array(
-            'eq' => '0'
-        ));
+        $result['current_date'] = $currentDate;
+        $result['available_dates'] = array_values($available_wdays);
 
-        $notAvailabledays = array();
-
-        foreach ($notAvailableDatesCollection as $singeDate) {
-            $formattedDate = date("m/d/Y", strtotime($singeDate->getDate()));
-            $notAvailabledays[strtotime($singeDate->getDate())] = $formattedDate;
-        }
-
-        $available_wdays = array();
-        foreach ($avial_workDays as $avail_wd) {
-            foreach ($avail_wd as $wd) {
-                if (! $notAvailabledays[strtotime($wd)]) {
-                    $dateCurrent = Mage::getModel('core/date')->date('m/d/Y');
-                    if (strtotime($dateCurrent) <= strtotime($wd)) {
-                        $available_wdays[strtotime($wd)] = $wd;
-                    }
-                }
-            }
-        }
-
-        $jsonDATA = "";
-
-        if (! empty($available_wdays)) {
-            $jsonDATA = json_encode(array_unique($available_wdays));
-        }
-
-        $configData = $this->getAppointmentStoreMapping();
-        $storeKey = array_search ($storeid, $configData['stores']);
-
-        $block = $this->getLayout()
-        ->createBlock('core/template', 'appointments_pickurday',
-            array(
-                'template' => 'appointments/pickurday.phtml'
-            ))
-            ->setData("workingdays", $jsonDATA);
-
-            $output = $block->toHtml();
-            //$schedule = Mage::getStoreConfig("appointments/piercer_schedule/schedule", $storeid);
-            $schedule = $configData['piercers_available'][$storeKey];
-            $result['success'] = true;
-            $result['output'] = $output;
-            $result['schedule'] = $schedule;
-
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
-    function get_client_ip ()
+    private function getCurrentDate()
     {
-        if (! empty($_SERVER['HTTP_CLIENT_IP'])) // check ip from share internet
+        return date('m/d/Y', $this->helper()->getCurrentDatetime($this->getStoreId()));
+    }
+
+
+    public function getAvailableSlotsAction()
+    {
+        if (empty($this->getStoreId()) || empty($this->getSlotTime()) || $this->getSlotTime() < 1) {
+            $response = array('success' => 'false', 'error' => 'Invalid store id or slot time');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+            return;
+        }
+
+        $storeId = $this->getStoreId();
+
+
+        if (!$this->getRequestedDate()) {
+            $response = array('success' => 'false', 'error' => 'Invalid Requesting Date');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+            return;
+        }
+
+        $date = $this->getRequestedDate();
+
+        if(!$this->requestedTime())
+        {
+            $response = array('success' => 'false', 'error' => 'Invalid Requesting time');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+            return;
+        }
+
+
+        $appDay = date('l', strtotime($date));
+        $slots = array();
+
+
+        try {
+            $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
+                ->addFieldToFilter('is_active', array('eq' => '1'));
+            $collection->addFieldToFilter('working_days', array('like' => '%' . date("m/d/Y", strtotime($date)) . '%'));
+
+            foreach ($collection as $piercer) {
+                $appCollection = Mage::getModel('appointments/appointments')->getCollection();
+                $appCollection->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+                    ->addFieldToFilter('appointment_start', array('like' => '%' . date("Y-m-d", strtotime($date)) . '%'))
+                    ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()))
+                    ->addFieldToSelect('appointment_start')
+                    ->addFieldToSelect('appointment_end');
+
+                $this->checkIfModifyAppointment($appCollection);
+
+                $booked_timeslots = $appCollection->getData();
+
+
+                $workingHours = $piercer->getWorkingHours();
+                $workingHours = unserialize($workingHours);
+
+                $options = array_shift(array_filter(array_map(function ($workSlot) use ($appDay, $date) {
+                    if (strtolower($workSlot['day']) == strtolower($appDay)) {
+                        $option['work']['start'] = $this->formatWorkTime($this->validatePiercerStartTime($this->helper()->getTimeByValue($workSlot['start'])));
+                        $option['work']['end'] = $this->formatWorkTime($this->helper()->getTimeByValue($workSlot['end']));
+                        $option['break']['appointment_start'] = $this->formatBreakTime($this->helper()->getTimeByValue($workSlot['break_start']));
+                        $option['break']['appointment_end'] = $this->formatBreakTime($this->helper()->getTimeByValue($workSlot['break_end']), "end");
+                        return $option;
+                    }
+                }, $workingHours)));
+
+                array_push($booked_timeslots, $options['break']);
+                $slots = array_merge($slots, $this->getSlots($options['work'], $booked_timeslots, $piercer->getId()));
+            }
+
+            $response['success'] = true;
+            $response['slots'] = $this->unique_multidim_array($slots, 'start');
+
+//            echo "<pre>";
+//            print_r($this->unique_multidim_array($slots,'start'));
+
+            $this->log()->addStoreWiseLog('slot array', $this->getStoreId());
+            $this->log()->addStoreWiseLog($this->unique_multidim_array($slots, 'start'), $this->getStoreId());
+
+
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+
+
+        } catch (Exception $e) {
+
+        }
+
+    }
+
+    private function checkIfModifyAppointment(&$appCollection)
+    {
+        if (!empty($this->getRequest()->getParam('appointment_id'))) {
+            $appCollection->addFieldToFilter('id', array('neq' => $this->getRequest()->getParam('appointment_id')));
+        }
+    }
+
+    private function getSlots($piercer_work_time, $booked, $piercer_id)
+    {
+        /* echo "<pre>";
+         print_r($booked);*/
+
+        $this->log()->addStoreWiseLog('booked slots--------' . $piercer_id, $this->getStoreId());
+        $this->log()->addStoreWiseLog($booked, $this->getStoreId());
+
+
+        $slot_time = $this->getSlotTime();
+
+        $start_time = $piercer_work_time['start'];
+        $end_time = $piercer_work_time['end'];
+
+        $slotArray = array();
+
+        $start = DateTime::createFromFormat('Y-m-d H:i', date("Y-m-d H:i", strtotime($start_time)));
+        $end = DateTime::createFromFormat('Y-m-d H:i', date("Y-m-d H:i", strtotime($end_time)));
+
+        for ($i = $start; $i < $end;) {
+            $booked_flag = false;
+            $booked_endtime = null;
+            $t1 = date_timestamp_get($i);
+            $t2 = $t1 + ((60 * $slot_time) - 1);
+//            echo "<br>" . date("H:i", $t1) . "-" . date("H:i", $t2);
+
+            $this->log()->addStoreWiseLog('slot start and end time', $this->getStoreId());
+            $this->log()->addStoreWiseLog(date("H:i", $t1) . "-" . date("H:i", $t2), $this->getStoreId());
+
+            foreach ($booked as $book) {
+
+                $st_datetime = DateTime::createFromFormat('Y-m-d H:i', date("Y-m-d H:i", strtotime($book['appointment_start'])));
+                $en_datetime = DateTime::createFromFormat('Y-m-d H:i', date("Y-m-d H:i", strtotime($book['appointment_end'])));
+                $st = date_timestamp_get($st_datetime);
+                $en = date_timestamp_get($en_datetime);
+                if (($t1 >= $st && $t1 < $en) || ($t2 > $st && $t2 <= $en) || ($st >= $t1 && $st < $t2) || ($en > $t1 && $en <= $t2) || ($t2 > date_timestamp_get($end))) {
+//                    echo " inside break";
+                    $this->log()->addStoreWiseLog('inside break', $this->getStoreId());
+
+                    $booked_flag = true;
+                    $booked_endtime = $en_datetime;
+                    break;
+                }
+
+            }
+
+            if (!$booked_flag) {
+                $slotArray[] = array('id' => $piercer_id, 'start' => date("H:i", $t1), 'end' => date("H:i", $t2));
+                $i->modify("+" . $slot_time . " minutes");
+
+            } else {
+                if ($booked_endtime) {
+                    if ($t2 < date_timestamp_get($end)) {
+                        $newStart = $booked_endtime;
+                        $i = $newStart;
+                        $i->modify("+1 minutes");
+                        $booked_endtime = null;
+                    } else {
+                        $i->modify("+" . $slot_time . " minutes");
+                    }
+                } else {
+                    $i->modify("+" . $slot_time . " minutes");
+                }
+            }
+
+        }
+
+        return $slotArray;
+    }
+
+    private function formatBreakTime($time, $s = null)
+    {
+        $datetime = date("Y-m-d " . $time . ":00", strtotime($this->getRequestedDate()));
+        if ($s == "end") {
+            $dateObj = DateTime::createFromFormat('Y-m-d H:i', date("Y-m-d H:i", strtotime($datetime)));
+            $dateObj->modify("-1 minutes");
+            $datetime = $dateObj->format('Y-m-d H:i:s');
+        }
+        return $datetime;
+    }
+
+    private function formatWorkTime($time, $s = null)
+    {
+        /*temporary break added for end time 20:00 and 20:30     note:Must remove after bonmarche popup*/
+        $this->addBuffer($time);
+
+        $datetime = date("Y-m-d " . $time . ":00", strtotime($this->getRequestedDate()));
+        return $datetime;
+    }
+
+    private function addBuffer(&$time)
+    {
+        $timeChange=array("20:00"=>"19:45","21:00"=>"20:45");
+
+        if(array_key_exists($time,$timeChange))
+            $time=$timeChange[$time];
+    }
+
+    private function getRequestedDate()
+    {
+        $currentStoreDate = date("m/d/Y", $this->helper()->getCurrentDatetime($this->getStoreId()));
+
+        if (!empty($this->getRequest()->getParam('date')))
+            $date = date("m/d/Y", strtotime($this->getRequest()->getParam('date')));
+        else
+            $date = date("m/d/Y", $this->helper()->getCurrentDatetime($this->getStoreId()));
+
+        if ($date == $currentStoreDate)
+            $this->currentDateFlag = true;
+        else
+            $this->currentDateFlag = false;
+
+        if (strtotime($this->getRequest()->getParam('date')) < strtotime($currentStoreDate))
+            return false;
+
+
+        $this->log()->addStoreWiseLog('requested date:' . $date, $this->getStoreId());
+
+        return $date;
+    }
+
+    private function requestedTime()
+    {
+        if ($this->currentDateFlag) {
+            $store_end_time=$this->helper()->getStoreData($this->getStoreId(),"end_work_time");
+            $currentTime = date("H:i", $this->helper()->getCurrentDatetime($this->getStoreId()));
+            if (strtotime($currentTime) > strtotime($this->helper()->getTimeByValue($store_end_time)))
+                return false;
+        }
+        return true;
+    }
+
+    private function getSlotTime()
+    {
+        return $this->getRequest()->getParam('slottime');
+    }
+
+    private function validatePiercerStartTime($time)
+    {
+        if ($this->currentDateFlag) {
+            $currentTime = date("H:i", $this->helper()->getCurrentDatetime($this->getStoreId()));
+            if (strtotime($currentTime) > strtotime($time))
+                return $this->roundToQuarterHour($currentTime);
+            else
+                return $time;
+        } else {
+            return $time;
+        }
+    }
+
+    private function roundToQuarterHour($time)
+    {
+        $time = strtotime($time);
+        $round = 10 * 60;
+        $rounded = ceil($time / $round) * $round;
+        return date("H:i", $rounded);
+    }
+
+    private function unique_multidim_array($array, $key)
+    {
+        $temp_array = array();
+        $i = 0;
+        $key_array = array();
+
+        foreach ($array as $val) {
+            if (!in_array($val[$key], $key_array)) {
+                $key_array[$i] = $val[$key];
+                $temp_array[$i] = $val;
+            }
+            $i++;
+        }
+
+        usort($temp_array, function ($a, $b) use ($key) {
+            return $a[$key] <=> $b[$key];
+        });
+
+        return $temp_array;
+    }
+
+    private function notify()
+    {
+        return Mage::helper('appointments/notification');
+    }
+
+    private function getModifyDecryptedApptId()
+    {
+        if ($this->getUser() == "admin")
+            return $this->getAppId();
+        else
+            return explode("-", Mage::getModel('core/encryption')->decrypt($this->getAppId()))[0];
+    }
+
+    private function getModifyDecryptedCustId()
+    {
+        if ($this->getUser() == "admin")
+            return "admin";
+
+        else
+            return explode("-", Mage::getModel('core/encryption')->decrypt($this->getAppId()))[1];
+
+    }
+
+    private function getUser()
+    {
+        return $this->getRequest()->getParam('user');
+    }
+
+
+    public function subscribeAction()
+    {
+        if (isset($_POST['email'])) {
+            $response = '';
+            $email = $_POST['email'];
+            try {
+                $status = Mage::getModel('newsletter/subscriber')->subscribe($email);
+                $response = ['status' => 'OK', 'msg' => 'Thank you for your subscription.', 'sta' => $status,];
+            } catch (Exception $exception) {
+                Mage::log('ERROR SUBSCRIBE ' . $exception->getMessage(), Zend_Log::DEBUG, 'appointment_la.log', true);
+                $response = ['status' => 'ERROR', 'msg' => 'Sorry there is problem in subscription.', 'sta' => $status,];
+            }
+        } else {
+            $response = ['status' => 'ERROR', 'msg' => 'Please enter your Email',];
+        }
+        $remarkety = Mage::getModel('mgconnector/observer');
+        $remarkety->makeRequest('customers/create', array('email' => $email, 'tags' => array("Paris_Popup"), 'accepts_marketing' => true));
+        Mage::log('Remarkety : ' . $email, Zend_Log::DEBUG, 'popup_remarkety.log', true);
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+    }
+
+    public function ajaxSupportDetailsAction()
+    {
+        $storeid = $this->getRequest()->getParam('storeid');
+
+        $result['message'] = $this->helper()->getSupportMessage($storeid);
+
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+
+    }
+
+
+    function get_client_ip()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) // check ip from share internet
         {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) // to check ip is pass
-        // from proxy
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) // to check ip is pass
+            // from proxy
         {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
@@ -745,42 +768,65 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         return $ip;
     }
 
-    public function facebookAction()
-	{
-		$storeCode = $this->getRequest()->getParam('code');
-
-		$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
-
-        // MODIFY ACTION start by bhagya
-        $apt_id = $this->getRequest()->getParam('id');
-        $apt_email = $this->getRequest()->getParam('email');
-
-        if ($apt_id && $apt_email) {
-
-            $models = Mage::getModel('appointments/appointments')->getCollection();
-            $models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email);
-
-            if (count($models)){
-                foreach ($models as $model){
-                    $model=$model;break;
-                }
-                Mage::register('apt_modify_data',$model);
-                Mage::getSingleton("core/session")->setData('appointmentData_availablity',true);
-            } else {
-                Mage::getSingleton("core/session")->setData('appointmentData_availablity',false);
-            }
-        }
-		
-        $this->loadLayout();
-        $this->getLayout()->getBlock("head")->setTitle($this->__("Appointments"));
-
-        $this->renderLayout();
-    }
 
     /**
      * return array of store mapping
      */
-    private function getAppointmentStoreMapping(){
+    private function getAppointmentStoreMapping()
+    {
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
+
+
+
+    /*------------------code to queue appointment request----------------------------*/
+    private function read()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        return $resource->getConnection('core_read');
+    }
+    private function write()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        return $resource->getConnection('core_write');
+    }
+    private function getAppFlag()
+    {
+        $results = $this->read()->fetchAll('SELECT `flag` FROM allure_appointment_flag');
+        return $results[0]['flag'];
+    }
+    private function enableAppFlag()
+    {
+        $this->write()->query("UPDATE `allure_appointment_flag` SET flag = 1");
+
+    }
+    private function disableAppFlag()
+    {
+        $this->write()->query("UPDATE `allure_appointment_flag` SET flag = 0");
+    }
+    private function taskStart()
+    {
+        $rand_value = rand(10000, 1000000);
+        usleep($rand_value);
+        while ($this->getAppFlag()==1) {
+            usleep(rand(1000000, 2000000));
+        }
+        $this->enableAppFlag();
+//        Mage::log("task start----------".date('H:i:s'), Zend_Log::DEBUG, 'adi.log', true);
+
+    }
+    private function taskEnd()
+    {
+//        Mage::log("task end----------".date('H:i:s'), Zend_Log::DEBUG, 'adi.log', true);
+        $this->disableAppFlag();
+    }
+
+    public function testAction()
+    {
+        $this->taskStart();
+
+        $this->taskEnd();
+    }
+
+
 }

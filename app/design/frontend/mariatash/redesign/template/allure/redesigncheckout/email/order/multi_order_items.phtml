@@ -70,7 +70,9 @@
                	<tbody>
                		<tr>
                     	<td valign="top" style="font-size:13px; line-height:17px; padding:0 9px 9px;">
+                    		<?php if(!$_order->getIsVirtual()):?>
                        		<?= $_order->getShippingAddress()->format('html')?>
+                        	<?php endif;?>
                         </td>
                       	<td valign="top" style="font-size:13px; line-height:17px; padding:0 9px 9px;">
                        		<?= $_order->getShippingDescription()?>

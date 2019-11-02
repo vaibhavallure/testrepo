@@ -29,6 +29,7 @@
 </div>
 <script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/allure/card_validate.js') ?>"></script>
 <div class="container">
 <ol class="opc" id="checkoutSteps">
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
@@ -45,12 +46,13 @@
         </div>
     </li>
 <?php endforeach ?>
-	<div class="checkout-block">
-    <?php
-        echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
-    ?>
-    </div>
+    <li>
+    	<div class="checkout-block">
+   			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
+		</div>
+    </li>
 </ol>
+
 </div>
 <script>
     jQuery('a.scl-popup').fancybox({

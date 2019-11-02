@@ -70,37 +70,37 @@
    	<tbody>
 		<tr>
 			<td class="cart-subtotals-left" colspan="1">
-				<span class="merchandise para-normal"><?= $this->__('Subtotal')?></span>
+				<span class="merchandise para-lighter"><?= $this->__('Subtotal')?></span>
 			</td>
 			<td class="cart-subtotals-right">
-				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($subtotal) ?></span>
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($subtotal) ?></span>
 			</td>
 		</tr>
 		<?php if($tax > 0): ?>
 		<tr class="summary-total">
 		<td>
-			<div class="info-text-three">
-				<span class="para-normal"><?= $this->__('Estimated Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+			<div class="">
+				<span class="para-lighter"><?= $this->__('Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
 			</div>
 		</td>
 		<td class="text-right">
-			<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+			<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
 		</td>
 	</tr>
 	<?php endif; ?>
 		<tr id="mt-shipping">
 			<td colspan="1">
-				<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
+				<span class="shipping-label para-lighter"><?= $this->__('Shipping')?></span>
 			</td>
 			<td class="text-right">
-				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
 			</td>
 		</tr>
 		<?php if($discount != 0): ?>
 		<tr>
-			<td colspan="1" class="cart-subtotals-left"><?= $this->__('Discount')?></td>
+			<td colspan="1" class="cart-subtotals-left para-lighter"><?= $this->__('Discount')?></td>
 			<td class="cart-subtotals-right">
-				<span class="price para-normal"><?= $this->helper('checkout')->formatPrice($discount)?></span>
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($discount)?></span>
 			</td>
 		</tr>
 		<?php endif;?>
@@ -110,10 +110,10 @@
 
      	<tr>
 			<td class="cart-subtotals-left" colspan="1">
-					<span class="total-title text-uppercase medium-price"><?= $this->__('Total')?></span>
+					<span class="total-title text-uppercase para-lighter"><?= $this->__('Total')?></span>
 			</td>
 			<td class="cart-subtotals-right">
-				<span class="price medium-price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span>
+				<span class="price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span>
 			</td>
 		</tr>
 	</tfoot>

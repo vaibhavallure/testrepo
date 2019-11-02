@@ -40,7 +40,7 @@
     }
 </style>
 
-<fieldset id="fieldset-billing" style="display: none;">
+<fieldset id="fieldset-billing" style="display: block;">
 	<ul class="form-list p-0">
     	<?php if ($_hasAddresses): ?>
     	<li class="wide">
@@ -53,6 +53,9 @@
      	</li>
       	<?php endif; ?>
        	<li id="billing-new-address-form"<?php if ($_hasAddresses): ?> style="display:none;"<?php endif; ?>>
+        	<?php if (!$_hasAddresses): ?>
+        	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please enter your billing address:') ?></label>
+        	<?php endif;?>
         	<fieldset>
             	<input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>"
                 	id="billing:address_id"/>
@@ -60,14 +63,14 @@
                 	<li class="fields">
                     	<div class="field">
                         	<div class="input-box">
-                            	<input name="billing[firstname]" placeholder="First Name*" class="input-text input-patern required-entry" value="<?= $this->getAddress()->getFirstname(); ?>" maxlength="255" />
+                            	<input id="billing:firstname" name="billing[firstname]" placeholder="First Name*" class="input-text input-patern required-entry" value="<?= $this->getAddress()->getFirstname(); ?>" maxlength="255" />
                           	</div>
                         </div>
                     </li>
                     <li class="fields">
                     	<div class="field">
                         	<div class="input-box">
-                            	<input name="billing[lastname]" placeholder="Last Name*" class="input-text input-patern required-entry" value="<?= $this->getAddress()->getLastname(); ?>" maxlength="255" />
+                            	<input id="billing:lastname" name="billing[lastname]" placeholder="Last Name*" class="input-text input-patern required-entry" value="<?= $this->getAddress()->getLastname(); ?>" maxlength="255" />
                             </div>
                         </div>
                    	</li>
