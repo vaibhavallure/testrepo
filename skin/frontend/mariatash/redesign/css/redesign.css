@@ -3189,6 +3189,7 @@ margin-top: 10%;
   max-width: 1205px;
   display: flex;
   margin: 0 auto;
+	margin-top: 46px;
 }
 .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main,
 .checkout-multishipping-delivery .col-main,
@@ -3540,6 +3541,9 @@ margin-top: 10%;
 }
 .checkout-onepage-index #checkout-review-table .cart_col4{
 	display: table-cell;
+}
+.checkout-block {
+  clear: both;
 }
 /* cccc */
 /*MINI CART CSS*/
@@ -4354,7 +4358,7 @@ dt.post-lengthds-lbl {
 	border: 1px solid rgba(41,41,41,0.25) !important;
 	background: transparent;
 }
-.date_wrapper-column select {
+.date_wrapper-column select, #checkout-review-table {
   width: 100%;
 }
 .date_wrapper select {
