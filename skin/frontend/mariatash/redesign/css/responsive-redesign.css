@@ -827,12 +827,12 @@
   .ecp-celebrities-index-index .for-space-to-bottom {
     height: 240px;
   }
-  /* .product-shop {
+  .desktop-device .product-shop {
     margin-top: 71px;
     width: 100%;
     max-width: 100%;
     flex: 0 0 30%;
-  } */
+  }
   .btn-quickview {
     display: none !important;
   }
@@ -1774,7 +1774,7 @@
 }
 
 @media (min-width:1025px) and (max-width:1278px) {
-  .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
+  .gauge .chooseList ul li.option {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -1839,22 +1839,21 @@
   }
 }
 @media (min-width:1024px) and (max-width:1199px){
-  .fix-image{
-    width: 55%;
-    flex: 0 0 55%;
-
+  .fix-image, .product-view-left{
+    width: 55.333333%;
+    flex: 0 0 55.333333%;
   }
   .offset-66{
-    margin-left: 52% !important;
+    margin-left: 55.333333% !important;
   }
   .position-bottom{
-    padding-right: 67px;
+    padding-right: 24px;
   }
 }
 @media (min-width:992px) and (max-width:1023px){
   .fix-image{
     width: 44.333333%;
-    max-width: 44.333333%;
+    flex:0 0 44.333333%;
   }
   .offset-66{
     margin-left: 44.333333% !important;
