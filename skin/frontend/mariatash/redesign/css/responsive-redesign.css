@@ -1,6 +1,6 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
-  .main-nav-title li {
+  .mobile-device .main-nav-title li {
     margin-right: 0;
     text-align: center;
     margin-top: 15px;
@@ -1859,9 +1859,9 @@
     }
 }
 @media (min-width:786px) and (max-width:1059px) {
-  .for-space-to-bottom.cat-img-space{
+  /* .for-space-to-bottom.cat-img-space{
     height: 160px;
-  }
+  } */
 }
 @media (min-width:768px) and (max-width:1023px) {
   .homepage-menu.mariatash-header{
