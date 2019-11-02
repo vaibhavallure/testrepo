@@ -4101,8 +4101,8 @@ div#uniform-shipping-address-select>span{
 }
 .post_optio .chooseList ul li.option{
 	margin-top: 17px;
-	flex: 0 0 45%;
-	max-width: 45%;
+	/* flex: 0 0 45%;
+	max-width: 45%; */
 }
 .color .chooseList ul li.option{
 	margin-top: 17px;
