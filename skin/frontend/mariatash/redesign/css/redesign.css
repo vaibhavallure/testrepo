@@ -1702,7 +1702,7 @@ input[type="checkbox"]:checked+label:before {
   background: #292929;
   width: 290px;
   left: -420px;
-  top: 69px;
+  top: 68px;
   position: fixed;
   z-index: 999;
   display: block;
@@ -1718,7 +1718,7 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .mobile-main_menu .main-nav-title li:first-child {
-  padding-top: 0;
+  padding-top: 20px;
 }
 .mobile-main_menu ul {
   padding-left: 15px;
