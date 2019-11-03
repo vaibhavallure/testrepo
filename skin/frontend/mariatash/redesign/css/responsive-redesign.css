@@ -1147,6 +1147,9 @@
   .gift-card-main .content-customer{
     margin-bottom: 50px;
   }
+  .mobile-main_menu .main-nav-title li:first-child {
+    padding-top: 20px;
+  }
 }
 
 /* Mobile Portrait */
