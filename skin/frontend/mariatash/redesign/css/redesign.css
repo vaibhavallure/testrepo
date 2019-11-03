@@ -193,7 +193,7 @@ h4{
 }
 
 .simple-page-title{
-	margin: 24px 0 42px !important;
+	margin: 24px 0 24px !important;
 	padding: 0 !important;
 }
 
@@ -1717,9 +1717,6 @@ input[type="checkbox"]:checked+label:before {
   text-transform: uppercase;
   position: relative;
 }
-.mobile-main_menu .main-nav-title li:first-child {
-  padding-top: 0;
-}
 .mobile-main_menu ul {
   padding-left: 15px;
 }
@@ -3147,9 +3144,11 @@ table thead {
 	margin-top: 78px;
 }
 .quickview-index-index .containerVideo {
-margin-top: 10%;
+	margin-top: 10%;
 }
-
+.quickview-index-index .product-img-box {
+  top: 70px;
+}
 .fancybox-close::before{
 	content: ""!important;
 }
