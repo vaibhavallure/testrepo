@@ -3134,6 +3134,14 @@ table thead {
 .fancybox-type-iframe{
 	position: fixed!important;
 }
+.quickview-index-index{
+	overflow: hidden;
+}
+.quickview-index-index .product-shop{
+	height: 525px;
+	overflow: auto;
+}
+
 .quickview-index-index  .hide-for-quickview
 {
 	display: none;
