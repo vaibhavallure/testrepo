@@ -265,6 +265,7 @@ $childProductArr = $this->getChildProductArray();
 		}
 		function closeView(e){
 			jQuery('#showcase').hide();
+			jQuery("body").removeClass("fancybox-lock");
 		}
 
 		jQuery("#fs-prev-post").click(function(){

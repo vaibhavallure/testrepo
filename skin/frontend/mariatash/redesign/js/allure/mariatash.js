@@ -90,7 +90,7 @@ jQuery(document).ready(function () {
 
 
 
-        if(jQuery(window).width() >= 992)
+        if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)
         {
           var scroll = jQuery(window).scrollTop();
           var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
@@ -105,6 +105,9 @@ jQuery(document).ready(function () {
                   jQuery('#product-detail-image').addClass('fix-image');
                   jQuery('#product-detail-image > div').removeClass('position-bottom');
               }
+        }else {
+            jQuery('#product-details-flow').removeClass('offset-66');
+            jQuery('#product-detail-image').removeClass('fix-image');
         }
         if (jQuery(window).width() >= 1363) {
 
