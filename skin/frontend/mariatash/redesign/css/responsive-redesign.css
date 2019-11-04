@@ -92,7 +92,7 @@
     width: 19px;
     background-position: right;
     position: absolute;
-    right: 15px;
+    right: 30px;
     transition: 0.5s;
   }
   .mobile-device #jewelry .menu-head span a.active:after {
@@ -102,7 +102,7 @@
     width: 19px;
     background-position: right;
     position: absolute;
-    right: 15px;
+    right: 30px;
     transition: 0.5s;
   }
   .menu-head {
@@ -110,6 +110,10 @@
   }
   .common-option-div{
     margin-bottom: 20px;
+  }
+  .mobile-device .common-option-div{
+    width: 100%;
+    padding: 0 14px;
   }
   .head-child ul {
     margin-bottom: 0;
@@ -485,6 +489,12 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
+  .mobile-device .main-nav-title li:first-child {
+    padding-top: 6px;
+  }
+  .mobile-device .menu-common-section{
+    margin-top: 13px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -569,7 +579,7 @@
     margin-right: 0px;
   }
   .mobile-sub_menu .sub-menu{
-    top: 83px;
+    top: 77px;
   }
   .about-designer{
     padding: 0 45px;
@@ -744,6 +754,9 @@
   .product-shop{
     padding: 0 25px !important;
   }
+  /* .mobile-main_menu .main-nav-title li:first-child {
+    padding-top: 0;
+  } */
 }
 
 
@@ -1130,9 +1143,6 @@
   }
   .gift-card-main .content-customer{
     margin-bottom: 50px;
-  }
-  .mobile-main_menu .main-nav-title li:first-child {
-    padding-top: 0;
   }
 }
 
@@ -1686,13 +1696,9 @@
   .footer{
     padding: 0;
   }
-<<<<<<< HEAD
-
-=======
   #narrow-by-list{
     margin-top: 0;
   }
->>>>>>> ad437fb1aecb4ed86e1a8bd36c38ed6efaf64934
   .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 40px;
   }
@@ -1817,7 +1823,7 @@
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  
+
 }
 @media (min-width:1024px) and (max-width:1199px){
   .fix-image, .product-view-left{

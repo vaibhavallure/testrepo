@@ -1581,6 +1581,9 @@ input[type="checkbox"]:checked+label:before {
 .right-section a:last-child {
   margin-left: 9px;
 }
+.mobile-sub_menu .right-section a:last-child {
+  margin-left: 0;
+}
 .menu-head {
   margin-bottom: 17px;
 }
@@ -1717,7 +1720,7 @@ input[type="checkbox"]:checked+label:before {
   text-align: left;
   border-bottom: 1px solid #fff;
   width: 93%;
-  padding: 30px 0px 10px;
+  padding: 20px 0px 10px;
   text-transform: uppercase;
   position: relative;
 }
@@ -1752,7 +1755,7 @@ input[type="checkbox"]:checked+label:before {
 .mobile-sub_menu .sub-menu {
   left: 0;
   width: 290px !important;
-  top: 63px;
+  top: 69px;
 }
 .mobile-sub_menu .right-section img {
   display: none;
@@ -1763,7 +1766,11 @@ input[type="checkbox"]:checked+label:before {
   text-align: left;
 }
 .mobile-sub_menu .right-section {
-  padding-left: 16px;
+  padding-left: 44px;
+}
+.mobile-sub_menu .right-section a{
+	width: 100%;
+	/* padding-left: 41px; */
 }
 .mobile-sub_menu .special-menu {
   margin-top: 0;
