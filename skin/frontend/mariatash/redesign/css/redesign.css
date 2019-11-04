@@ -193,7 +193,7 @@ h4{
 }
 
 .simple-page-title{
-	margin: 24px 0 42px !important;
+	margin: 24px 0 24px !important;
 	padding: 0 !important;
 }
 
@@ -1574,8 +1574,9 @@ input[type="checkbox"]:checked+label:before {
   letter-spacing: 1px;
 }
 .inner-box {
-  width: 655px;
-  margin-left: 137px;
+  /* width: 655px; */
+  margin-left: 27px;
+	justify-content: space-evenly;
 }
 .right-section a:last-child {
   margin-left: 9px;
@@ -1616,8 +1617,11 @@ input[type="checkbox"]:checked+label:before {
   position: absolute;
   bottom: 15px;
   width:100%;
+	text-align: center;
 }
-
+.special-menu {
+  position: relative;
+}
 .reg-price, .image-text h6, .overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
@@ -1716,9 +1720,6 @@ input[type="checkbox"]:checked+label:before {
   padding: 30px 0px 10px;
   text-transform: uppercase;
   position: relative;
-}
-.mobile-main_menu .main-nav-title li:first-child {
-  padding-top: 0;
 }
 .mobile-main_menu ul {
   padding-left: 15px;
@@ -3147,9 +3148,11 @@ table thead {
 	margin-top: 78px;
 }
 .quickview-index-index .containerVideo {
-margin-top: 10%;
+	margin-top: 10%;
 }
-
+.quickview-index-index .product-img-box {
+  top: 70px;
+}
 .fancybox-close::before{
 	content: ""!important;
 }
@@ -4372,10 +4375,10 @@ dt.post-lengthds-lbl {
   padding: 0px 20px !important;
 }
 .giftcards .div_selector_month {
-  width: 105px;
+  width: 165px;
 }
 .giftcards .div_selector_day {
-  width: 81px;
+  width: 141px;
 }
 .giftcards .div_selector_year {
   width: 90px;
@@ -4490,5 +4493,5 @@ dt.post-lengthds-lbl {
 }
 
 .checkout-cart-index .cart-mt {
-    margin-top: 42px;
+  margin-top: 42px;
 }

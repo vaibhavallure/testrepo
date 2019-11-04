@@ -2,7 +2,7 @@
 @media (max-width:1023px){
   .mobile-device .main-nav-title li {
     margin-right: 0;
-    text-align: center;
+    /* text-align: center; */
     margin-top: 15px;
   }
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
@@ -53,19 +53,6 @@
   .mobile-device .head-child, #appointments img {
     display: none;
     padding-left: 10px;
-  }
-  .menu-common-section{
-    margin-top: 20px;
-  }
-  .right-section a {
-    width: 100%;
-    margin-left: 30px !important;
-  }
-  .sub-menu{
-    width: 50% !important;
-  }
-  .desktop-device .sub-menu{
-    width: 100% !important;
   }
   #appointments .col{
     width: 100%;
@@ -204,7 +191,7 @@
   .newsletter-mt {
     display: none;
   }
-  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div{
+  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
     border-bottom: 1px solid #fff;
     padding-bottom: 10px;
     text-transform: uppercase;
@@ -253,9 +240,9 @@
   .maria-left-menus{
     top: 2px;
   }
-  .category-piercing-gallery .for-space-to-bottom{
+  /* .category-piercing-gallery .for-space-to-bottom{
     height: 20px !important;
-  }
+  } */
   .shop_by_look .big-popup-body {
     padding: 48px 26px 48px 29px!important;
   }
@@ -266,9 +253,6 @@
   .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main{
     flex: 0 0 100%;
     max-width: 100%;
-  }
-  .breadcrumbs{
-    margin-top: 30px;
   }
   #narrow-by-list li div dd ol li{
     width: auto;
@@ -346,6 +330,7 @@
     font-size: 12px !important;
     font-family: urw-din-medium;
   	letter-spacing: 0 !important;
+    text-transform: uppercase;
   }
   .footer-items a:hover {
     text-decoration: none;
@@ -757,7 +742,7 @@
     max-width: 382px;
   }
   .product-shop{
-    padding: 0 45px;
+    padding: 0 25px !important;
   }
 }
 
@@ -818,30 +803,27 @@
     width: 534px;
     margin-left: 15px;
   }
-  #jewelry .special-menu img {
-    width: 200px !important;
-  }
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
   .ecp-celebrities-index-index .for-space-to-bottom {
     height: 240px;
   }
-  /* .product-shop {
+  .desktop-device .product-shop {
     margin-top: 71px;
     width: 100%;
     max-width: 100%;
     flex: 0 0 30%;
-  } */
+  }
   .btn-quickview {
     display: none !important;
   }
   .block-layered-nav dd a, .block-layered-nav label{
     font-size: 10px !important;
   }
-  .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
+  /* .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 106px;
-  }
+  } */
   .common-redesign-checkout .for-space-to-bottom{
     height: 252px !important;
   }
@@ -888,10 +870,10 @@
   .pdp-image-section .containerImage{
     margin-top: -70px;
   }
-  .quickview-index-index .pdp-image-section
+  /* .quickview-index-index .pdp-image-section
   {
     margin-top: auto;
-  }
+  } */
   .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
   }
@@ -913,6 +895,12 @@
   }
   .data-table.cart-table .messages.wholesale-avail-row .item-msg{
     max-width: 332px;
+  }
+  .mobile-device .product-detail-parent > .row{
+  	width: 100%;
+  }
+  .mobile-device .position-bottom{
+    padding-right: 13px;
   }
 }
 
@@ -1143,6 +1131,9 @@
   .gift-card-main .content-customer{
     margin-bottom: 50px;
   }
+  .mobile-main_menu .main-nav-title li:first-child {
+    padding-top: 0;
+  }
 }
 
 /* Mobile Portrait */
@@ -1208,8 +1199,9 @@
   #narrow-by-list ol li{
     min-width: 50% !important;
   }
-  .product-shop > .row {
-    padding: 0 10px !important;
+  .mobile-device .product-shop > .row {
+    padding: 0 !important;
+    margin: 0 !important;
   }
   .big-popup-image {
     height: 434.4px;
@@ -1471,6 +1463,9 @@
   .login-dropdown{
     right: 23px;
   }
+  .product-shop > .row{
+    width: 100% !important;
+  }
 }
 
 /* Mobile landscape */
@@ -1636,9 +1631,9 @@
   {
     margin-top: auto;
   }
-  .quickview-index-index .pdp-image-section .containerImage{
+  /* .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
-  }
+  } */
   .containerVideo iframe{
     display: block;
     margin: auto;
@@ -1666,7 +1661,7 @@
    overflow: auto;
  }
  .inner-box{
-   margin-left: 70px;
+   margin-left: 0;
  }
 }
 
@@ -1774,7 +1769,7 @@
 }
 
 @media (min-width:1025px) and (max-width:1278px) {
-  .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
+  .gauge .chooseList ul li.option {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -1822,39 +1817,24 @@
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  .desktop-device .inner-box{
-    margin-left:46px;
-  }
-  .desktop-device .common-option-div{
-    max-width: 20%;
-    flex: 0 0 20%;
-  }
-  .desktop-device .left-section{
-    flex: 0 0 54.333333%;
-    max-width: 54.333333%;
-  }
-  .desktop-device .right-section a{
-    width: 40%;
-    margin-right: 10px;
-  }
+  
 }
 @media (min-width:1024px) and (max-width:1199px){
-  .fix-image{
-    width: 55%;
-    flex: 0 0 55%;
-
+  .fix-image, .product-view-left{
+    width: 55.333333%;
+    flex: 0 0 55.333333%;
   }
   .offset-66{
-    margin-left: 52% !important;
+    margin-left: 55.333333% !important;
   }
   .position-bottom{
-    padding-right: 67px;
+    padding-right: 24px;
   }
 }
 @media (min-width:992px) and (max-width:1023px){
   .fix-image{
     width: 44.333333%;
-    max-width: 44.333333%;
+    flex:0 0 44.333333%;
   }
   .offset-66{
     margin-left: 44.333333% !important;
@@ -1875,6 +1855,9 @@
   .product-shop > .row{
     width: 100%;
     margin: 0 auto;
+  }
+  .desktop-device .product-shop{
+    flex: 0 0 100%;
   }
 }
 @media (min-width:851px) and (max-width:991px){
@@ -1904,12 +1887,11 @@
   }
 }
 @media (max-width:749px){
-  .product-shop > .row{
+  .desktop-device .product-shop > .row{
     width: 100% !important;
     padding: 0 52px !important;
   }
 }
-
 @media (min-width:767px) and (max-width:1250px){
   .for-space-to-bottom.cat-img-space{
     background-image: none;
@@ -1920,13 +1902,13 @@
       display: block !important;
     }
 }
-@media (min-width:786px) and (max-width:1059px) {
-  /* .for-space-to-bottom.cat-img-space{
-    height: 160px;
-  } */
-}
 @media (min-width:768px) and (max-width:1023px) {
   .homepage-menu.mariatash-header{
     background: no-repeat;
+  }
+}
+@media (min-width:786px) and (max-width:1111px){
+  #jewelry .special-menu img {
+    width: 200px !important;
   }
 }
