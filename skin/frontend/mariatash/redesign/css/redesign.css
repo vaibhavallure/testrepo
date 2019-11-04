@@ -1528,7 +1528,7 @@ input[type="checkbox"]:checked+label:before {
 	cursor: pointer;
 }
 .select-currency img {
-	margin: 0 0 5px 3px;
+	margin: 0 0 -1px 3px;
 }
 /* .main-nav-link li:nth-child(2) {
   margin-right: 16px;
@@ -3844,6 +3844,7 @@ table thead {
   overflow: scroll;
 	padding-top: 6px;
 	left: -24px;
+	border: 1px solid #000;
 }
 
 /* .block-currency  #currency-selector ul li {
@@ -4508,4 +4509,8 @@ dt.post-lengthds-lbl {
 
 .checkout-cart-index .cart-mt {
   margin-top: 42px;
+}
+
+.category-celebrity-clientele .category-products{
+	margin-bottom: 0;
 }
