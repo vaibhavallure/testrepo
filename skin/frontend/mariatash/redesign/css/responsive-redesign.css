@@ -54,19 +54,6 @@
     display: none;
     padding-left: 10px;
   }
-  .menu-common-section{
-    margin-top: 20px;
-  }
-  /* .right-section a {
-    width: 100%;
-    margin-left: 30px !important;
-  } */
-  /* .sub-menu{
-    width: 50% !important;
-  } */
-  /* .desktop-device .sub-menu{
-    width: 100% !important;
-  } */
   #appointments .col{
     width: 100%;
     margin-bottom: 9px;
@@ -1830,21 +1817,7 @@
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  .desktop-device .inner-box{
-    margin-left:46px;
-  }
-  .desktop-device .common-option-div{
-    max-width: 20%;
-    flex: 0 0 20%;
-  }
-  .desktop-device .left-section{
-    flex: 0 0 54.333333%;
-    max-width: 54.333333%;
-  }
-  .desktop-device .right-section a{
-    width: 40%;
-    margin-right: 10px;
-  }
+  
 }
 @media (min-width:1024px) and (max-width:1199px){
   .fix-image, .product-view-left{
@@ -1934,7 +1907,7 @@
     background: no-repeat;
   }
 }
-@media (min-width:786px) and (max-width:1059px){
+@media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
     width: 200px !important;
   }
