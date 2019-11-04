@@ -57,16 +57,16 @@
   .menu-common-section{
     margin-top: 20px;
   }
-  .right-section a {
+  /* .right-section a {
     width: 100%;
     margin-left: 30px !important;
-  }
-  .sub-menu{
+  } */
+  /* .sub-menu{
     width: 50% !important;
-  }
-  .desktop-device .sub-menu{
+  } */
+  /* .desktop-device .sub-menu{
     width: 100% !important;
-  }
+  } */
   #appointments .col{
     width: 100%;
     margin-bottom: 9px;
@@ -816,9 +816,6 @@
     width: 534px;
     margin-left: 15px;
   }
-  #jewelry .special-menu img {
-    width: 200px !important;
-  }
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
@@ -1148,7 +1145,7 @@
     margin-bottom: 50px;
   }
   .mobile-main_menu .main-nav-title li:first-child {
-    padding-top: 20px;
+    padding-top: 0;
   }
 }
 
@@ -1677,7 +1674,7 @@
    overflow: auto;
  }
  .inner-box{
-   margin-left: 70px;
+   margin-left: 0;
  }
 }
 
@@ -1922,7 +1919,6 @@
     padding: 0 52px !important;
   }
 }
-
 @media (min-width:767px) and (max-width:1250px){
   .for-space-to-bottom.cat-img-space{
     background-image: none;
@@ -1933,13 +1929,13 @@
       display: block !important;
     }
 }
-@media (min-width:786px) and (max-width:1059px) {
-  /* .for-space-to-bottom.cat-img-space{
-    height: 160px;
-  } */
-}
 @media (min-width:768px) and (max-width:1023px) {
   .homepage-menu.mariatash-header{
     background: no-repeat;
+  }
+}
+@media (min-width:786px) and (max-width:1059px){
+  #jewelry .special-menu img {
+    width: 200px !important;
   }
 }

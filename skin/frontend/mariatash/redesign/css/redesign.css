@@ -1574,8 +1574,9 @@ input[type="checkbox"]:checked+label:before {
   letter-spacing: 1px;
 }
 .inner-box {
-  width: 655px;
-  margin-left: 137px;
+  /* width: 655px; */
+  margin-left: 27px;
+	justify-content: space-evenly;
 }
 .right-section a:last-child {
   margin-left: 9px;
@@ -1616,8 +1617,11 @@ input[type="checkbox"]:checked+label:before {
   position: absolute;
   bottom: 15px;
   width:100%;
+	text-align: center;
 }
-
+.special-menu {
+  position: relative;
+}
 .reg-price, .image-text h6, .overview-address-item .box .box-title{
   font-size: 13px;
   letter-spacing: 1px;
