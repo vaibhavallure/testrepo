@@ -54,19 +54,6 @@
     display: none;
     padding-left: 10px;
   }
-  .menu-common-section{
-    margin-top: 20px;
-  }
-  .right-section a {
-    width: 100%;
-    margin-left: 30px !important;
-  }
-  .sub-menu{
-    width: 50% !important;
-  }
-  .desktop-device .sub-menu{
-    width: 100% !important;
-  }
   #appointments .col{
     width: 100%;
     margin-bottom: 9px;
@@ -105,7 +92,7 @@
     width: 19px;
     background-position: right;
     position: absolute;
-    right: 15px;
+    right: 30px;
     transition: 0.5s;
   }
   .mobile-device #jewelry .menu-head span a.active:after {
@@ -115,7 +102,7 @@
     width: 19px;
     background-position: right;
     position: absolute;
-    right: 15px;
+    right: 30px;
     transition: 0.5s;
   }
   .menu-head {
@@ -123,6 +110,10 @@
   }
   .common-option-div{
     margin-bottom: 20px;
+  }
+  .mobile-device .common-option-div{
+    width: 100%;
+    padding: 0 14px;
   }
   .head-child ul {
     margin-bottom: 0;
@@ -498,6 +489,12 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
+  .mobile-device .main-nav-title li:first-child {
+    padding-top: 6px;
+  }
+  .mobile-device .menu-common-section{
+    margin-top: 13px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -582,7 +579,7 @@
     margin-right: 0px;
   }
   .mobile-sub_menu .sub-menu{
-    top: 83px;
+    top: 77px;
   }
   .about-designer{
     padding: 0 45px;
@@ -757,6 +754,9 @@
   .product-shop{
     padding: 0 25px !important;
   }
+  /* .mobile-main_menu .main-nav-title li:first-child {
+    padding-top: 0;
+  } */
 }
 
 
@@ -815,9 +815,6 @@
   .inner-box {
     width: 534px;
     margin-left: 15px;
-  }
-  #jewelry .special-menu img {
-    width: 200px !important;
   }
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
@@ -1146,9 +1143,6 @@
   }
   .gift-card-main .content-customer{
     margin-bottom: 50px;
-  }
-  .mobile-main_menu .main-nav-title li:first-child {
-    padding-top: 20px;
   }
 }
 
@@ -1677,7 +1671,7 @@
    overflow: auto;
  }
  .inner-box{
-   margin-left: 70px;
+   margin-left: 0;
  }
 }
 
@@ -1702,13 +1696,9 @@
   .footer{
     padding: 0;
   }
-<<<<<<< HEAD
-
-=======
   #narrow-by-list{
     margin-top: 0;
   }
->>>>>>> ad437fb1aecb4ed86e1a8bd36c38ed6efaf64934
   .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 40px;
   }
@@ -1833,21 +1823,7 @@
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  .desktop-device .inner-box{
-    margin-left:46px;
-  }
-  .desktop-device .common-option-div{
-    max-width: 20%;
-    flex: 0 0 20%;
-  }
-  .desktop-device .left-section{
-    flex: 0 0 54.333333%;
-    max-width: 54.333333%;
-  }
-  .desktop-device .right-section a{
-    width: 40%;
-    margin-right: 10px;
-  }
+
 }
 @media (min-width:1024px) and (max-width:1199px){
   .fix-image, .product-view-left{
@@ -1922,7 +1898,6 @@
     padding: 0 52px !important;
   }
 }
-
 @media (min-width:767px) and (max-width:1250px){
   .for-space-to-bottom.cat-img-space{
     background-image: none;
@@ -1933,13 +1908,13 @@
       display: block !important;
     }
 }
-@media (min-width:786px) and (max-width:1059px) {
-  /* .for-space-to-bottom.cat-img-space{
-    height: 160px;
-  } */
-}
 @media (min-width:768px) and (max-width:1023px) {
   .homepage-menu.mariatash-header{
     background: no-repeat;
+  }
+}
+@media (min-width:786px) and (max-width:1111px){
+  #jewelry .special-menu img {
+    width: 200px !important;
   }
 }

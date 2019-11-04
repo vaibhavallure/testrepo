@@ -244,31 +244,47 @@ jQuery(document).ready(function () {
 
     jQuery(".mobile-main_menu li.parent a").attr("href", "#");
 
-    /*filter popup start---------------------------------*/
+
+});
+
+
+/*filter popup start---------------------------------*/
+
+jQuery(window).bind("load resize", function (e) {
     var width = jQuery(window).width();
     if ((width < 1023)) {
 
         if (jQuery('.filter-common-div').length) {
-            var filter_popup = '<div id="openModal" class="filterPopup">\n' +
-                '\t<div class="pop-up-cover">\n' +
-                '\t\t<div class="pop-title modal-header">\n' +
-                '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
-                '\t\t\t\t<div></div>\n' +
-                '\t\t\t</a>\n' +
-                '\t\t</div>\n' +
-                '\t\t<div class="body modal-body">\n' +
-                '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
-                '\t\t</div>\n' +
-                '\t</div>\n' +
-                '</div>';
-            var filterButton = '<a href="#" class="filterButton">' +
-                '</a>';
 
-            jQuery('.filter-common-div').html("");
+            if(!jQuery('.filterPopup').length) {
+                var filter_popup = '<div id="openModal" class="filterPopup">\n' +
+                    '\t<div class="pop-up-cover">\n' +
+                    '\t\t<div class="pop-title modal-header">\n' +
+                    '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
+                    '\t\t\t\t<div></div>\n' +
+                    '\t\t\t</a>\n' +
+                    '\t\t</div>\n' +
+                    '\t\t<div class="body modal-body">\n' +
+                    '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
+                    '\t\t</div>\n' +
+                    '\t</div>\n' +
+                    '</div>';
+                var filterButton = '<a href="#" class="filterButton">' +
+                    '</a>';
 
-            jQuery("body").append(filter_popup);
-            jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
+                jQuery('.filter-common-div').html("");
+                jQuery('.filter-common-div').hide();
 
+                jQuery("body").append(filter_popup);
+                jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
+
+            }
+            else {
+                jQuery('.filter-common-div').html("");
+                jQuery('.filter-common-div').hide();
+                jQuery('.filterButton').show();
+
+            }
             jQuery(".filterButton").on('click', function () {
                 jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
                 unScrollBody();
@@ -279,13 +295,13 @@ jQuery(document).ready(function () {
                 scrollBody();
             });
         }
+    }else {
+        jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
+        jQuery('.filter-common-div').show();
+        jQuery('.filterButton').hide();
     }
-    /*filter popup end---------------------------------*/
-
-
 });
-
-
+/*filter popup end---------------------------------*/
 
 jQuery(window).bind("load resize scroll", function (e) {
 
