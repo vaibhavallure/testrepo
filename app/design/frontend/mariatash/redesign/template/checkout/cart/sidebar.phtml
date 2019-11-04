@@ -187,7 +187,7 @@
     });
 
     function cartSymbolLink() {
-    	if(jQuery(window).width() < 768){
+    	if(jQuery(window).width() < 768 || jQuery("body").hasClass("desktop-device")){
        		window.location = cartLink;
     	}
     }
