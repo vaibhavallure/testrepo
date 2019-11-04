@@ -287,19 +287,13 @@ if ($_product->getSizeSample() == 1) {
         });
         var productAddToCartForm = new VarienForm('product_addtocart_giftcard_form');
         productAddToCartForm.submit = function (button, form) {
-
-            if(jQuery("#deliver_immediately").prop("checked"))
-            {
-                addToShoppingCart(button, form);
-            }else {
-                if (this.validator.validate()) {
-                    if (!compare_dates()) {
-                        jQuery('div#advice-required-entry-date').html('Select a date greater than or equal to the day of today');
-                        jQuery('div#advice-required-entry-date').show();
-                    } else {
-                        jQuery('div#advice-required-entry-date').hide();
-                        addToShoppingCart(button, form);
-                    }
+            if (this.validator.validate()) {
+                if (!compare_dates() && jQuery("#deliver_immediately").prop("checked")==false) {
+                    jQuery('div#advice-required-entry-date').html('Select a date greater than or equal to the day of today');
+                    jQuery('div#advice-required-entry-date').show();
+                } else {
+                    jQuery('div#advice-required-entry-date').hide();
+                    addToShoppingCart(button, form);
                 }
             }
         }.bind(productAddToCartForm);
