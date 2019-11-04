@@ -635,36 +635,35 @@ html {
 }
 
 .homepage-menu.mariatash-header {
-    /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
-    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
+  /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
+  background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
 }
-
 nav.mariatash-header {
-    background: var(--light-black);
-		transition: all 1s;
+  background: var(--light-black);
+	transition: all 1s;
 }
 
 .menu-dropdown {
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.33px;
-    cursor: pointer;
-    text-transform: uppercase;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.33px;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .dropdown-toggle::after {
-    vertical-align: 0em;
-    border-top: .5em solid #717171;
-    border-right: .35em solid transparent;
-    border-left: .35em solid transparent;
+  vertical-align: 0em;
+  border-top: .5em solid #717171;
+  border-right: .35em solid transparent;
+  border-left: .35em solid transparent;
 }
 
 .mariatash-content {
-    padding-top: 59px;
+  padding-top: 59px;
 }
 
 @media (min-width: 992px) {
@@ -1581,6 +1580,9 @@ input[type="checkbox"]:checked+label:before {
 .right-section a:last-child {
   margin-left: 9px;
 }
+.mobile-sub_menu .right-section a:last-child {
+  margin-left: 0;
+}
 .menu-head {
   margin-bottom: 17px;
 }
@@ -1605,8 +1607,8 @@ input[type="checkbox"]:checked+label:before {
   text-align: center;
 }
 #piercing .inner-box{
-	width: 80%;
-	margin-left: 0;
+	/* width: 80%;
+	margin-left: 0; */
   margin: 0 auto;
 }
 #piercing .left-section{
@@ -1717,7 +1719,7 @@ input[type="checkbox"]:checked+label:before {
   text-align: left;
   border-bottom: 1px solid #fff;
   width: 93%;
-  padding: 30px 0px 10px;
+  padding: 20px 0px 10px;
   text-transform: uppercase;
   position: relative;
 }
@@ -1752,7 +1754,7 @@ input[type="checkbox"]:checked+label:before {
 .mobile-sub_menu .sub-menu {
   left: 0;
   width: 290px !important;
-  top: 63px;
+  top: 69px;
 }
 .mobile-sub_menu .right-section img {
   display: none;
@@ -1763,7 +1765,11 @@ input[type="checkbox"]:checked+label:before {
   text-align: left;
 }
 .mobile-sub_menu .right-section {
-  padding-left: 16px;
+  padding-left: 44px;
+}
+.mobile-sub_menu .right-section a{
+	width: 100%;
+	/* padding-left: 41px; */
 }
 .mobile-sub_menu .special-menu {
   margin-top: 0;
