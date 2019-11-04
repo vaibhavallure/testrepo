@@ -687,11 +687,8 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom{
-    height: 30px !important;
-  }
   #category-title{
-    margin: 16px 0 40px !important;
+    margin: 16px 0 20px !important;
     padding: 0 !important;
   }
   .catalog-category-view #category-title{
@@ -1025,9 +1022,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom{
+  /* .categorypath-celebrity-clientele-html .for-space-to-bottom{
     height: 0 !important;
-  }
+  } */
   #category-title{
     margin: 16px 0 20px !important;
     padding: 0 !important;
