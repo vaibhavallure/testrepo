@@ -1918,3 +1918,11 @@
     width: 200px !important;
   }
 }
+@media (min-width:992px){
+  .cms-home .homepage-menu.mariatash-header {
+    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
+  }
+  .cms-home .homepage-menu.mariatash-header:hover{
+  	background: rgba(41, 41, 41, 0.9) !important;
+  }
+}

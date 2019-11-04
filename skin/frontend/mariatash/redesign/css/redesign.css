@@ -635,36 +635,35 @@ html {
 }
 
 .homepage-menu.mariatash-header {
-    /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
-    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
+  /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
+  background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
 }
-
 nav.mariatash-header {
-    background: var(--light-black);
-		transition: all 1s;
+  background: var(--light-black);
+	transition: all 1s;
 }
 
 .menu-dropdown {
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.33px;
-    cursor: pointer;
-    text-transform: uppercase;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.33px;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .dropdown-toggle::after {
-    vertical-align: 0em;
-    border-top: .5em solid #717171;
-    border-right: .35em solid transparent;
-    border-left: .35em solid transparent;
+  vertical-align: 0em;
+  border-top: .5em solid #717171;
+  border-right: .35em solid transparent;
+  border-left: .35em solid transparent;
 }
 
 .mariatash-content {
-    padding-top: 59px;
+  padding-top: 59px;
 }
 
 @media (min-width: 992px) {
