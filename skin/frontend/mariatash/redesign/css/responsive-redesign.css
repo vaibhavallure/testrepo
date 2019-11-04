@@ -395,9 +395,7 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
-  .mobile-device.catalog-category-view .category-title{
-    padding-left: 77px !important;
-  }
+
   /* .desktop-device.catalog-category-view .category-title{
     padding-left: 109px !important;
   } */
@@ -680,15 +678,9 @@
   .ecp-celebrities-index-index .simple-page-title {
     margin: 0 0 46px !important;
   }
-  /* .catalog-product-name-display{
-    padding-left: 77px;
-  } */
   .breadcrumbs {
     padding-left: 39px;
   }
-  /* .filterButton:before{
-    left: 19px !important;
-  } */
   .category-products {
     margin-top: 0px;
   }
@@ -758,9 +750,9 @@
   .product-shop{
     padding: 0 25px !important;
   }
-  /* .mobile-main_menu .main-nav-title li:first-child {
-    padding-top: 0;
-  } */
+  .mobile-device.catalog-category-view .category-title{
+    padding-left: 77px !important;
+  }
 }
 
 
