@@ -288,7 +288,7 @@ if ($_product->getSizeSample() == 1) {
         var productAddToCartForm = new VarienForm('product_addtocart_giftcard_form');
         productAddToCartForm.submit = function (button, form) {
             if (this.validator.validate()) {
-                if (!compare_dates()) {
+                if (!compare_dates() && jQuery("#deliver_immediately").prop("checked")==false) {
                     jQuery('div#advice-required-entry-date').html('Select a date greater than or equal to the day of today');
                     jQuery('div#advice-required-entry-date').show();
                 } else {
