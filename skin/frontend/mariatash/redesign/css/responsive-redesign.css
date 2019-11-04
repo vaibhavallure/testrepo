@@ -85,7 +85,7 @@
   .form-search input.input-text{
     padding-bottom: 2px;
   }
-  .mobile-device #jewelry .menu-head span a:after {
+  #jewelry .menu-head span a:after {
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
     height: 19px;
@@ -95,7 +95,7 @@
     right: 30px;
     transition: 0.5s;
   }
-  .mobile-device #jewelry .menu-head span a.active:after {
+  #jewelry .menu-head span a.active:after {
     background: url(../images/redesign/minus.png) no-repeat;
     content: '';
     height: 19px;
@@ -111,10 +111,10 @@
   .common-option-div{
     margin-bottom: 20px;
   }
-  .mobile-device .common-option-div{
+  /* .mobile-device .common-option-div{
     width: 100%;
     padding: 0 14px;
-  }
+  } */
   .head-child ul {
     margin-bottom: 0;
   }
@@ -244,9 +244,6 @@
   .maria-left-menus{
     top: 2px;
   }
-  /* .category-piercing-gallery .for-space-to-bottom{
-    height: 20px !important;
-  } */
   .shop_by_look .big-popup-body {
     padding: 48px 26px 48px 29px!important;
   }
@@ -493,6 +490,13 @@
     padding-top: 6px;
   }
   .mobile-device .menu-common-section{
+    margin-top: 13px;
+  }
+  .common-option-div{
+    width: 100%;
+    padding: 0 16px;
+  }
+  .menu-common-section{
     margin-top: 13px;
   }
 }
@@ -1848,6 +1852,16 @@
   .position-bottom{
     padding-right: 67px;
   }
+  .desktop-device .common-option-div {
+    width: auto;
+    padding: 0;
+  }
+  .desktop-device .menu-common-section{
+    margin-top: 43px;
+  }
+  .desktop-device #jewelry .menu-head span a:after{
+    content: none;
+  }
 }
 @media (min-width:768px) and (max-width:850px){
   .product-view-left{
@@ -1889,8 +1903,11 @@
     height: 77px;
   }
   .catalog-product-view .for-space-to-bottom{
-      height: 73px;
+    height: 73px;
   }
+  /* .common-option-div{
+    width: 100%;
+  } */
 }
 @media (max-width:749px){
   .desktop-device .product-shop > .row{
@@ -1909,7 +1926,7 @@
     }
 }
 @media (min-width:768px) and (max-width:1023px) {
-  .homepage-menu.mariatash-header{
+  .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
   }
 }
@@ -1925,4 +1942,7 @@
   .cms-home .homepage-menu.mariatash-header:hover{
   	background: rgba(41, 41, 41, 0.9) !important;
   }
+}
+@media (max-width:1023px){
+
 }
