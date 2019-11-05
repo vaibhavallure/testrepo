@@ -40,10 +40,10 @@
     }
 </style>
 
-<fieldset id="fieldset-billing" style="display: block;">
+<fieldset id="fieldset-billing" style="display: none;">
 	<ul class="form-list p-0">
-    	<?php if ($_hasAddresses): ?>
-    	<li class="wide">
+    	<?php //if($_hasAddresses): ?>
+    	<li class="wide" <?php if (!$_hasAddresses): ?> style="display:none;"<?php endif; ?>>
         	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please select your Billing address:') ?></label>
             	<div class="input-box">
                 	<?php Varien_Profiler::start('DTN: getHtmlSelect binling'); ?>
@@ -51,7 +51,7 @@
                     <?php Varien_Profiler::stop('DTN: getHtmlSelect binling'); ?>
              	</div>
      	</li>
-      	<?php endif; ?>
+      	<?php //endif; ?>
        	<li id="billing-new-address-form"<?php if ($_hasAddresses): ?> style="display:none;"<?php endif; ?>>
         	<?php if (!$_hasAddresses): ?>
         	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please enter your billing address:') ?></label>
@@ -161,7 +161,7 @@
                         	<select id="billing:region_id" name="billing[region_id]"
                             	title="<?php echo $this->__('State/Province') ?>" class="validate-select select-type-one"
                                 style="display:none;">
-                           		<option value=""><?php echo $this->__('') ?></option>
+                           		<option value=""><?php echo $this->__('State/Province*')?></option>
                            	</select>
                             <script type="text/javascript">
                             	//<![CDATA[
