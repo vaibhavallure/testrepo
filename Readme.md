@@ -1,7 +1,7 @@
 # Projet Millesima Emailing
 ## Requirements
-- Docker
-- Composer & php7.2+
+- Docker & docker-compose
+- Composer & php7.2+ with enabled extensions soap, gd, mysql, curl, zip
 
 ## Containers
 - millesima-emailing-php-fpm responsible for php-fpm service
