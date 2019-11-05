@@ -291,13 +291,13 @@
 		}
 
 		//check billing & shipping address is same or not.
-		var billingAddressId = jQuery('#shipping-address-select').val();
+		/* var billingAddressId = jQuery('#shipping-address-select').val();
 		var shippingAddressId = jQuery('#billing-address-select').val();
 		if(billingAddressId && shippingAddressId){
 			if(billingAddressId == shippingAddressId){
-				jQuery('input[type=shipping[same_as_billing]]').is(":checked")
+				jQuery('input[name="shipping[same_as_billing]"]').is(":checked")
 			}
-		}
+		} */
 
 		jQuery('.country-section select[name="billing[country_id]"]').on('change',function(){
 			if(jQuery(this).val() == ''){
