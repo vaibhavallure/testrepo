@@ -1138,7 +1138,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         return $this;
     }
     
-    public function saveGiftItem($giftItems){
+    public function saveGiftItem($giftItems = null){
         try{
             $newGiftItemArray = array();
             $giftWrapQty = 0;
