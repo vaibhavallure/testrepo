@@ -192,11 +192,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.0
         </div>
-        <?php
-        $arraydeblague = array('Dim Président', 'Dim un homme bon, un homme fier ...', 'Champomy', 'TEAM DIMOU');
-        $rand = rand(0, count($arraydeblague) - 1);
-        ?>
-        <strong>Copyright &copy; Dgorski 2015-2016 <a><?php echo $arraydeblague[$rand]; ?></a></strong> Tous droits
+        <strong>Copyright &copy; Mill&eacute;sima</strong> Tous droits
         reservés.
     </footer>
 </div><!-- ./wrapper -->
