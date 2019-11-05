@@ -2,7 +2,7 @@
 @media (max-width:1023px){
   .mobile-device .main-nav-title li {
     margin-right: 0;
-    text-align: center;
+    /* text-align: center; */
     margin-top: 15px;
   }
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
@@ -54,19 +54,6 @@
     display: none;
     padding-left: 10px;
   }
-  .menu-common-section{
-    margin-top: 20px;
-  }
-  .right-section a {
-    width: 100%;
-    margin-left: 30px !important;
-  }
-  .sub-menu{
-    width: 50% !important;
-  }
-  .desktop-device .sub-menu{
-    width: 100% !important;
-  }
   #appointments .col{
     width: 100%;
     margin-bottom: 9px;
@@ -98,24 +85,24 @@
   .form-search input.input-text{
     padding-bottom: 2px;
   }
-  .mobile-device #jewelry .menu-head span a:after {
+  #jewelry .menu-head span a:after {
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
     height: 19px;
     width: 19px;
     background-position: right;
     position: absolute;
-    right: 15px;
+    right: 30px;
     transition: 0.5s;
   }
-  .mobile-device #jewelry .menu-head span a.active:after {
+  #jewelry .menu-head span a.active:after {
     background: url(../images/redesign/minus.png) no-repeat;
     content: '';
     height: 19px;
     width: 19px;
     background-position: right;
     position: absolute;
-    right: 15px;
+    right: 30px;
     transition: 0.5s;
   }
   .menu-head {
@@ -124,6 +111,10 @@
   .common-option-div{
     margin-bottom: 20px;
   }
+  /* .mobile-device .common-option-div{
+    width: 100%;
+    padding: 0 14px;
+  } */
   .head-child ul {
     margin-bottom: 0;
   }
@@ -204,7 +195,7 @@
   .newsletter-mt {
     display: none;
   }
-  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div{
+  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
     border-bottom: 1px solid #fff;
     padding-bottom: 10px;
     text-transform: uppercase;
@@ -253,9 +244,6 @@
   .maria-left-menus{
     top: 2px;
   }
-  .category-piercing-gallery .for-space-to-bottom{
-    height: 20px !important;
-  }
   .shop_by_look .big-popup-body {
     padding: 48px 26px 48px 29px!important;
   }
@@ -266,9 +254,6 @@
   .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main{
     flex: 0 0 100%;
     max-width: 100%;
-  }
-  .breadcrumbs{
-    margin-top: 30px;
   }
   #narrow-by-list li div dd ol li{
     width: auto;
@@ -346,6 +331,7 @@
     font-size: 12px !important;
     font-family: urw-din-medium;
   	letter-spacing: 0 !important;
+    text-transform: uppercase;
   }
   .footer-items a:hover {
     text-decoration: none;
@@ -409,9 +395,7 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
-  .mobile-device.catalog-category-view .category-title{
-    padding-left: 77px !important;
-  }
+
   /* .desktop-device.catalog-category-view .category-title{
     padding-left: 109px !important;
   } */
@@ -500,6 +484,19 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
+  .mobile-device .main-nav-title li:first-child {
+    padding-top: 6px;
+  }
+  .mobile-device .menu-common-section{
+    margin-top: 13px;
+  }
+  .common-option-div{
+    width: 100%;
+    padding: 0 16px;
+  }
+  .menu-common-section{
+    margin-top: 13px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -584,7 +581,7 @@
     margin-right: 0px;
   }
   .mobile-sub_menu .sub-menu{
-    top: 83px;
+    top: 77px;
   }
   .about-designer{
     padding: 0 45px;
@@ -681,26 +678,17 @@
   .ecp-celebrities-index-index .simple-page-title {
     margin: 0 0 46px !important;
   }
-  /* .catalog-product-name-display{
-    padding-left: 77px;
-  } */
   .breadcrumbs {
     padding-left: 39px;
   }
-  /* .filterButton:before{
-    left: 19px !important;
-  } */
   .category-products {
     margin-top: 0px;
   }
   .cartilage-section {
     margin-top: 28px;
   }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom{
-    height: 30px !important;
-  }
   #category-title{
-    margin: 16px 0 40px !important;
+    margin: 16px 0 20px !important;
     padding: 0 !important;
   }
   .catalog-category-view #category-title{
@@ -757,7 +745,10 @@
     max-width: 382px;
   }
   .product-shop{
-    padding: 0 45px;
+    padding: 0 25px !important;
+  }
+  .mobile-device.catalog-category-view .category-title{
+    padding-left: 77px !important;
   }
 }
 
@@ -818,16 +809,13 @@
     width: 534px;
     margin-left: 15px;
   }
-  #jewelry .special-menu img {
-    width: 200px !important;
-  }
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
   .ecp-celebrities-index-index .for-space-to-bottom {
     height: 240px;
   }
-  .product-shop {
+  .desktop-device .product-shop {
     margin-top: 71px;
     width: 100%;
     max-width: 100%;
@@ -839,9 +827,9 @@
   .block-layered-nav dd a, .block-layered-nav label{
     font-size: 10px !important;
   }
-  .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
+  /* .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
     margin-top: 106px;
-  }
+  } */
   .common-redesign-checkout .for-space-to-bottom{
     height: 252px !important;
   }
@@ -868,13 +856,13 @@
   .address-method-common .select-type-one{
     width: 100%;
   }
-  .product-view-left{
+  /* .product-view-left{
     flex: 0 0 63.666667%;
     max-width: 63.666667%;
-  }
-  .product-shop{
+  } */
+  /* .product-shop{
     flex: 0 0 33%;
-  }
+  } */
   .product-shop{
     padding: 0 14px;
   }
@@ -888,10 +876,10 @@
   .pdp-image-section .containerImage{
     margin-top: -70px;
   }
-  .quickview-index-index .pdp-image-section
+  /* .quickview-index-index .pdp-image-section
   {
     margin-top: auto;
-  }
+  } */
   .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
   }
@@ -913,6 +901,12 @@
   }
   .data-table.cart-table .messages.wholesale-avail-row .item-msg{
     max-width: 332px;
+  }
+  .mobile-device .product-detail-parent > .row{
+  	width: 100%;
+  }
+  .mobile-device .position-bottom{
+    padding-right: 13px;
   }
 }
 
@@ -1028,9 +1022,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom{
+  /* .categorypath-celebrity-clientele-html .for-space-to-bottom{
     height: 0 !important;
-  }
+  } */
   #category-title{
     margin: 16px 0 20px !important;
     padding: 0 !important;
@@ -1208,8 +1202,9 @@
   #narrow-by-list ol li{
     min-width: 50% !important;
   }
-  .product-shop > .row {
-    padding: 0 10px !important;
+  .mobile-device .product-shop > .row {
+    padding: 0 !important;
+    margin: 0 !important;
   }
   .big-popup-image {
     height: 434.4px;
@@ -1325,7 +1320,7 @@
     margin: 20px auto 0;
   }
   .containerThumb {
-    width: 340px;
+    /* width: 340px; */
     overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
@@ -1470,6 +1465,9 @@
   }
   .login-dropdown{
     right: 23px;
+  }
+  .product-shop > .row{
+    width: 100% !important;
   }
 }
 
@@ -1636,9 +1634,9 @@
   {
     margin-top: auto;
   }
-  .quickview-index-index .pdp-image-section .containerImage{
+  /* .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
-  }
+  } */
   .containerVideo iframe{
     display: block;
     margin: auto;
@@ -1666,7 +1664,7 @@
    overflow: auto;
  }
  .inner-box{
-   margin-left: 70px;
+   margin-left: 0;
  }
 }
 
@@ -1691,42 +1689,11 @@
   .footer{
     padding: 0;
   }
-<<<<<<< HEAD
-
-=======
-  #narrow-by-list{
-    margin-top: 0;
-  }
->>>>>>> ad437fb1aecb4ed86e1a8bd36c38ed6efaf64934
-  .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
-    margin-top: 40px;
-  }
-  /* .catalog-category-view .for-space-to-bottom{
-    height: 430px !important;
-  } */
-  /* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
-    height: 380px !important;
-  } */
-  /* .catalog-category-view.category-press .for-space-to-bottom{
-    height: 410px !important;
-  } */
   .caroufredsel_wrapper{
     width: 88.3%;
   }
-  /* .common-redesign-checkout .for-space-to-bottom {
-    height: 470px;
-  } */
   .categorypath-piercing-piercing-gallery-html .category-products {
     margin-top: 0;
-  }
-  .categorypath-jewelry-ear-cartilage-jewelry-html .catalog-product-name-display {
-    margin-top: 30px;
-  }
-  .catalog-category-view.category-ear-cartilage-jewelry .mb-mana-catalog-leftnav .block-layered-nav-bg{
-  	margin-top: 25px;
-  }
-  .categorypath-jewelry-ear-cartilage-jewelry-html .cartilage-section{
-    margin-top: 140px;
   }
   .categorypath-jewelry-ear-cartilage-jewelry-html .category-products{
     margin-top: 56px;
@@ -1774,7 +1741,7 @@
 }
 
 @media (min-width:1025px) and (max-width:1278px) {
-  .post_optio .chooseList ul li.option, .gauge .chooseList ul li.option {
+  .gauge .chooseList ul li.option {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -1822,20 +1789,71 @@
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  .desktop-device .inner-box{
-    margin-left:46px;
+
+}
+@media (min-width:1024px) and (max-width:1199px){
+  .fix-image, .product-view-left{
+    width: 55.333333%;
+    flex: 0 0 55.333333%;
   }
-  .desktop-device .common-option-div{
-    max-width: 20%;
-    flex: 0 0 20%;
+  .offset-66{
+    margin-left: 55.333333% !important;
   }
-  .desktop-device .left-section{
-    flex: 0 0 54.333333%;
-    max-width: 54.333333%;
+  .position-bottom{
+    padding-right: 24px;
   }
-  .desktop-device .right-section a{
-    width: 40%;
-    margin-right: 10px;
+}
+@media (min-width:992px) and (max-width:1023px){
+  .fix-image{
+    width: 44.333333%;
+    flex:0 0 44.333333%;
+  }
+  .offset-66{
+    margin-left: 44.333333% !important;
+  }
+  .position-bottom{
+    padding-right: 67px;
+  }
+  .desktop-device .common-option-div {
+    width: auto;
+    padding: 0;
+  }
+  .desktop-device .menu-common-section{
+    margin-top: 43px;
+  }
+  .desktop-device #jewelry .menu-head span a:after{
+    content: none;
+  }
+}
+@media (min-width:768px) and (max-width:850px){
+  .product-view-left{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .product-shop{
+    flex: 0 0 100%;
+    padding: 0 135px;
+  }
+  .product-shop > .row{
+    width: 100%;
+    margin: 0 auto;
+  }
+  .desktop-device .product-shop{
+    flex: 0 0 100%;
+  }
+}
+@media (min-width:851px) and (max-width:991px){
+  .product-view-left {
+    flex: 0 0 48.666667%;
+    max-width: 48.666667%;
+  }
+  .product-shop > .row{
+    padding-left: 14px;
+    width: 407px;
+  }
+  .product-img-box {
+    display: flex;
+    justify-content: center;
   }
 }
 @media (min-width:768px) and (max-width:991px) {
@@ -1846,8 +1864,19 @@
   .for-space-to-bottom{
     height: 77px;
   }
+  .catalog-product-view .for-space-to-bottom{
+    height: 73px;
+  }
+  /* .common-option-div{
+    width: 100%;
+  } */
 }
-
+@media (max-width:749px){
+  .desktop-device .product-shop > .row{
+    width: 100% !important;
+    padding: 0 52px !important;
+  }
+}
 @media (min-width:767px) and (max-width:1250px){
   .for-space-to-bottom.cat-img-space{
     background-image: none;
@@ -1858,13 +1887,27 @@
       display: block !important;
     }
 }
-@media (min-width:786px) and (max-width:1059px) {
-  /* .for-space-to-bottom.cat-img-space{
-    height: 160px;
-  } */
-}
 @media (min-width:768px) and (max-width:1023px) {
-  .homepage-menu.mariatash-header{
+  .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
   }
+}
+@media (min-width:786px) and (max-width:1111px){
+  #jewelry .special-menu img {
+    width: 200px !important;
+  }
+}
+@media (min-width:992px){
+  .cms-home .homepage-menu.mariatash-header {
+    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
+  }
+  .cms-home .homepage-menu.mariatash-header:hover{
+  	background: rgba(41, 41, 41, 0.9) !important;
+  }
+  .zopim {
+    bottom: 59px!important;
+  }
+}
+@media (max-width:1023px){
+
 }

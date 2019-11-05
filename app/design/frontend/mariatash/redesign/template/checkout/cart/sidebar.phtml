@@ -41,12 +41,12 @@
 	<?php $_cartQty = $this->getSummaryCount();?>
 	<div class="block-content content_cart">
 	<?php if ($_cartQty > 0):?>
-    	<div class="summary">
+       <div class="summary">
         	<p class="amount">
         		<a onclick="cartSymbolLink()">
         			<span>
         				<img width="13px" src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
-        				<div class="number-circle">
+        				<div class="number-circle digit_<?=strlen($_cartQty)?>">
         					<span><?= $_cartQty ?></span>
         				</div>
         			</span>
@@ -101,9 +101,9 @@
 				<a href="<?php echo $this->getUrl('checkout/cart')?>">
 					<span>
 						<img width="13px" src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
-						<div class="number-circle">
+						<!--<div class="number-circle">
 							<span>0</span>
-						</div>
+						</div>-->
 					</span>
 				</a>
 			</p>
@@ -187,7 +187,7 @@
     });
 
     function cartSymbolLink() {
-    	if(jQuery(window).width() < 768){
+    	if(jQuery(window).width() < 768 || jQuery("body").hasClass("desktop-device")){
        		window.location = cartLink;
     	}
     }

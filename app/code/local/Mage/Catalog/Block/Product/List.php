@@ -385,7 +385,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             $childProduct = Mage::getModel('catalog/product')->load($child_product_id);
 
             if($roll_over) {
-                if ($childProduct->getRollOver())
+                if ($childProduct->getRollOver() && $childProduct->getRollOver()!="no_selection")
                     return Mage::helper('catalog/image')->init($childProduct, 'roll_over')->resize(376, 490);
                else
                    return false;

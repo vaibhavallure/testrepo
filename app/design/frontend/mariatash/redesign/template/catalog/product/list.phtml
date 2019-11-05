@@ -293,7 +293,7 @@ $mode  = $this->getMode();
                                     <img class="catalog-grid-image rollover-img" data-pid="<?= $_product->getId() ?>" id="rollover-img-<?php echo $_product->getId() ?>"
                                          src="<?php echo ($this->getFirstOptionImage($_product,true))?$this->getFirstOptionImage($_product,true):"" ?>"
                                          width="376" height="490"
-                                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'roll_over'), null, true) ?>" style="display:none;"/>
+                                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" style="display:none;"/>
                                 </a>
 
 
@@ -376,7 +376,7 @@ $mode  = $this->getMode();
                                                                 title="<?php echo $optionLb ?>"
                                                                 data-pid="<?php echo $_product->getId() ?>"
                                                                 data-image="<?=  Mage::helper('catalog/image')->init($simpleProduct, 'small_image')->resize(314, 409) ?>"
-                                                                data-rollover="<?=($simpleProduct->getRollOver())? Mage::helper('catalog/image')->init($simpleProduct, 'roll_over')->resize(314, 409) :"" ?>"
+                                                                data-rollover="<?=($simpleProduct->getRollOver() && $simpleProduct->getRollOver()!="no_selection")? Mage::helper('catalog/image')->init($simpleProduct, 'roll_over')->resize(314, 409) :"" ?>"
                                                             >
                                                                 <div style="display: none">
                                                                       <span id="img-<?php echo $simple_id; ?>"></span>

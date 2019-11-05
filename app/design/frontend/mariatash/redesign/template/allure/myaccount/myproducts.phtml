@@ -11,23 +11,23 @@
 			<div class="tab">
 				<button data-link="purchase" id="mt-myproduct-purchase" data-tab="tab1" class="tablinks active" onclick="changeTab(this);">Purchased</button>
 
-				<button data-link="wishlist" id="mt-myproduct-wishlist" data-tab="tab2" class="tablinks" 
+				<button data-link="wishlist" id="mt-myproduct-wishlist" data-tab="tab2" class="tablinks"
 				onclick="changeTab(this);">Wishlist
 				<!-- <span id="myaccount-wishlist-total-item" class="total-wishlist-count total-count-box"></span> -->
 			</button>
 
-	 <!--  <button data-link="cart" id="mt-myproduct-cart" data-tab="tab3" class="tablinks" 
+	 <!--  <button data-link="cart" id="mt-myproduct-cart" data-tab="tab3" class="tablinks"
 	  	onclick="changeTab(this);">Cart
 	  	<span id="myaccount-cart-total-item" class="total-cart-count total-count-box"></span>
 	  </button> -->
-	  
-	  
+
+
 	  <button data-link="openorders" id="mt-myproduct-openorders" data-tab="tab5" class="tablinks"
 	  onclick="changeTab(this);">Open Orders
 	 <!--  <span id="total-openorders-count" class="total-orders-count total-count-box"></span> -->
 	</button>
 
-	<button data-link="receipt" id="mt-myproduct-receipts" data-tab="tab4" class="tablinks" 
+	<button data-link="receipt" id="mt-myproduct-receipts" data-tab="tab4" class="tablinks"
 	onclick="changeTab(this);">All Orders
 	<!-- <span data-count="0" id="total-orders-count" class="total-orders-count total-count-box"></span> -->
 </button>
@@ -87,22 +87,8 @@
 
 	var Filter_Store = '<?php echo $_GET['m_store']?>';
 	jQuery(document).ready(function(){
-		var type = window.location.hash.substr(1);
-		var typeArr = type.split("#");
-		type = typeArr[0];
-		if(type!="" && type!="undefined" && type!=null){
-			var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
-			changeTab(element);
-			if(typeArr.length >=2 ){
-				var info_typ = typeArr[1];
-				var order_no = typeArr[2];
-				autoLoadOrderData(type,info_typ,order_no);
-			}
-			
-		}else{
-			var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
-			changeTab(element);
-		}
+
+	    setTab();
 
 		jQuery('.mt-myaccount-store .mt-filter-select').on('change',function(){
 			//var storeParam = '?m_store='+jQuery(this).val();
@@ -123,12 +109,31 @@
 			var params = getParams('m_sort',mval);
 			var host = uri.origin;
 			var path = uri.pathname + params;
-			var hash = uri.hash; 
+			var hash = uri.hash;
 			var url = host + path + hash;
 			window.location.href = url;
 		});
 
 	});
+
+	function setTab() {
+        var type = window.location.hash.substr(1);
+        var typeArr = type.split("#");
+        type = typeArr[0];
+        if(type!="" && type!="undefined" && type!=null){
+            var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
+            changeTab(element);
+            if(typeArr.length >=2 ){
+                var info_typ = typeArr[1];
+                var order_no = typeArr[2];
+                autoLoadOrderData(type,info_typ,order_no);
+            }
+
+        }else{
+            var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
+            changeTab(element);
+        }
+    }
 
 	function autoLoadOrderData(type,info_typ,ord_no){
 		var order_typ = "open";
@@ -183,7 +188,7 @@
 		}
 		return params;
 	}
-	
+
 	function changeTab(event){
 		var element = jQuery(event);
 		var currentTab = element.attr('data-tab');
@@ -192,7 +197,7 @@
 		//document.cookie = 'tab=' + dataLink;    //temp disable
 		jQuery('.tablinks').removeClass('active');
 		element.addClass('active');
-		jQuery('.tabcontent').removeClass('active');		
+		jQuery('.tabcontent').removeClass('active');
 		jQuery('.tabcontent.'+currentTab).addClass('active');
 	}
 
@@ -236,35 +241,42 @@
 	}
 
 	function configSelectorOfFilter(class_selector1,class_selectore2){
-		var configSelector = {            
+		var configSelector = {
 			over: function(){
-		    	//jQuery('.myaccount-filter-store').slideDown(300);                
-		    },            
-		    timeout: 200,            
-		    out: function(){  
+		    	//jQuery('.myaccount-filter-store').slideDown(300);
+		    },
+		    timeout: 200,
+		    out: function(){
 		    	jQuery("."+class_selectore2).removeClass('show');
-		    	jQuery("."+class_selectore2).slideUp(300);                
-		    }            
+		    	jQuery("."+class_selectore2).slideUp(300);
+		    }
 		};
 
 		jQuery("."+class_selector1).hoverIntent(configSelector );
 		jQuery("."+class_selector1).click(function(){
-			var showOrHide = jQuery('.myaccount-filter-store').hasClass('show');
+			var showOrHide = jQuery("."+class_selector1.slice(0, -5)).hasClass('show');
 			if(!showOrHide){
 				jQuery("."+class_selectore2).addClass('show');
 				jQuery("."+class_selectore2).slideDown(300);
 			}
-		});  
+			else {
+                jQuery("."+class_selectore2).removeClass('show');
+                jQuery("."+class_selectore2).slideUp(300);
+            }
+		});
 	}
 
-	
+    jQuery(window).on('popstate', function(event) {
+        setTab();
+    });
+
 </script>
 
 
 
-<script type="text/javascript"> 
+<script type="text/javascript">
 	jQuery(document).ready(function(){
-		var $jj = jQuery;        
+		var $jj = jQuery;
 		configSelectorOfFilter("myaccount-filter-store-list","myaccount-filter-store");
 		configSelectorOfFilter("myaccount-filter-sort-order-list","myaccount-filter-sort-order");
 		configSelectorOfFilter("myaccount-filter-order-status-list","myaccount-filter-order-status");
@@ -343,15 +355,15 @@
 		jQuery(document).ready(function(){
 
 		if (jQuery(window).width() >= 992){
-			var nav_height=jQuery('header').outerHeight();
-			jQuery('.acc-products-wrapper').css("margin-top",nav_height/2);
+			//var nav_height=jQuery('header').outerHeight();
+			//jQuery('.acc-products-wrapper').css("margin-top",nav_height/2);
 		}
 	});
 
 	jQuery(window).bind("load resize scroll",function(e){
 		if (jQuery(window).width() >= 992){
-			var nav_height=jQuery('header').outerHeight();
-			jQuery('.acc-products-wrapper').css("margin-top",nav_height/2);
+			//var nav_height=jQuery('header').outerHeight();
+		//	jQuery('.acc-products-wrapper').css("margin-top",nav_height/2);
 		}
 	});
 	</script>

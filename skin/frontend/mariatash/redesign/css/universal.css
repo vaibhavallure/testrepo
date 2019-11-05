@@ -24,7 +24,6 @@
 	display:none;
 }
 
-.my-account .page-title,
 .my-account .box .box-title{
 	/*background:none;*/
 	margin-bottom: 4px;
@@ -966,7 +965,7 @@ div.a-column.a-span-last {
 }
 
 .mt-myaccount-new .myaccount-page-tilte{
-	margin: 16px 0 10px ! important;
+	margin: 6px 0 0px;
 }
 
 .acc-link-img{

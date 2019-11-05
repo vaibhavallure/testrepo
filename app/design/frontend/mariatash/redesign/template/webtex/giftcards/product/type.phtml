@@ -216,7 +216,6 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
     jQuery(document).ready(function() {
     jQuery("#deliver_immediately").bind("change",function () {
 
-        console.log("hiiiiii");
        if(jQuery(this).prop("checked")==true)
        {
           jQuery("#mail_delivery_option").val(2);
@@ -243,7 +242,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
 
     jQuery.ajax({
         url: '<?php echo Mage::getBaseUrl(); ?>checkout/cart/getemail/'
-    }).done(function(data) {mmediately
+    }).done(function(data) {
         jQuery('#mail-from-email').val(data);
     });
     jQuery(document).ready(function(){

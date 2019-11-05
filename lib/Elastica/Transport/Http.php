@@ -60,16 +60,16 @@ class Http extends AbstractTransport
             $baseUri = $this->_scheme.'://'.$connection->getHost().':'.$connection->getPort().'/'.ltrim('/', $connection->getPath());
         }
         $baseUri .= $request->getPath();
+        
 
-
-
+        
         $query = $request->getQuery();
 
         if (!empty($query)) {
             $baseUri .= '?'.http_build_query($query);
         }
 
-
+        
         curl_setopt($conn,CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($conn, CURLOPT_URL, $baseUri);
         curl_setopt($conn, CURLOPT_TIMEOUT, $connection->getTimeout());
@@ -108,8 +108,6 @@ class Http extends AbstractTransport
 
         $headersConfig = $connection->hasConfig('headers') ? $connection->getConfig('headers') : [];
 
-        //$headersConfig['Content-Type'] = 'application/json';
-
         $headers = [];
 
         if (!empty($headersConfig)) {
@@ -122,8 +120,6 @@ class Http extends AbstractTransport
         // TODO: REFACTOR
         $data = $request->getData();
         $httpMethod = $request->getMethod();
-
-        $content = '';
 
         if (!empty($data) || '0' === $data) {
             if ($this->hasParam('postWithRequestBody') && $this->getParam('postWithRequestBody') == true) {
@@ -178,7 +174,6 @@ class Http extends AbstractTransport
         }
 
         if ($response->hasError()) {
-            //print_r($request->getData());print_r($responseString);die('ONE');
             throw new ResponseException($request, $response);
         }
 
@@ -187,7 +182,6 @@ class Http extends AbstractTransport
         }
 
         if ($errorNumber > 0) {
-            //die('TWO');
             throw new HttpException($errorNumber, $request, $response);
         }
 

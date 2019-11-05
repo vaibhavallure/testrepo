@@ -55,23 +55,6 @@ jQuery(document).ready(function () {
     });
 
 
-
-
-    if (jQuery(window).width() >= 992) {
-
-        // var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page,.customer-address-index .addresses-list').outerWidth();
-        // jQuery('.myaccount-index-index .breadcrumbs,.customer-address-index .breadcrumbs').css({
-        //     'width': cont_width
-        // });
-
-
-        var nav_height = jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top", nav_height);
-
-        //     jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs,.customer-address-index .breadcrumbs').css("margin-top",nav_height/2);
-    }
-
-
     var box_width = jQuery('.fs-entry-container').outerWidth();
     jQuery('.fs-entry-container').css('height', box_width);
 
@@ -90,7 +73,7 @@ jQuery(document).ready(function () {
 
 
 
-        if(jQuery(window).width() >= 992)
+        if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)
         {
           var scroll = jQuery(window).scrollTop();
           var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
@@ -105,6 +88,9 @@ jQuery(document).ready(function () {
                   jQuery('#product-detail-image').addClass('fix-image');
                   jQuery('#product-detail-image > div').removeClass('position-bottom');
               }
+        }else {
+            jQuery('#product-details-flow').removeClass('offset-66');
+            jQuery('#product-detail-image').removeClass('fix-image');
         }
         if (jQuery(window).width() >= 1363) {
 
@@ -158,22 +144,27 @@ jQuery(document).ready(function () {
     /*-----------------------------new js code-----------------------------*/
 
     jQuery('.main_menu').mouseover(function () {
+
         var section_id = '#' + jQuery(this).attr('data-id');
 
         if(!jQuery(this).hasClass('active_menu')) {
             jQuery(".main_menu").removeClass('active_menu');
-            jQuery(".menu_overlay").removeClass("d-none");
             jQuery(this).addClass('active_menu');
             jQuery('section.sub-menu').hide();
-            jQuery(section_id).slideDown();
+            setTimeout(function() {
+                jQuery(".menu_overlay").removeClass("d-none");
+                jQuery(section_id).slideDown("slow");
             unScrollBody();
+            }, 300);
         }
     });
     jQuery('#navbarNavDropdown').mouseleave(function () {
+        setTimeout(function() {
         jQuery(".main_menu").removeClass('active_menu');
-        jQuery('section.sub-menu').slideUp();
+        jQuery('section.sub-menu').slideUp("slow");
         jQuery(".menu_overlay").addClass("d-none");
         scrollBody();
+        }, 600);
     });
 
     jQuery('.noChild').mouseover(function () {
@@ -239,31 +230,47 @@ jQuery(document).ready(function () {
 
     jQuery(".mobile-main_menu li.parent a").attr("href", "#");
 
-    /*filter popup start---------------------------------*/
+
+});
+
+
+/*filter popup start---------------------------------*/
+
+jQuery(window).bind("load resize", function (e) {
     var width = jQuery(window).width();
     if ((width < 1023)) {
 
         if (jQuery('.filter-common-div').length) {
-            var filter_popup = '<div id="openModal" class="filterPopup">\n' +
-                '\t<div class="pop-up-cover">\n' +
-                '\t\t<div class="pop-title modal-header">\n' +
-                '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
-                '\t\t\t\t<div></div>\n' +
-                '\t\t\t</a>\n' +
-                '\t\t</div>\n' +
-                '\t\t<div class="body modal-body">\n' +
-                '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
-                '\t\t</div>\n' +
-                '\t</div>\n' +
-                '</div>';
-            var filterButton = '<a href="#" class="filterButton">' +
-                '</a>';
 
-            jQuery('.filter-common-div').html("");
+            if(!jQuery('.filterPopup').length) {
+                var filter_popup = '<div id="openModal" class="filterPopup">\n' +
+                    '\t<div class="pop-up-cover">\n' +
+                    '\t\t<div class="pop-title modal-header">\n' +
+                    '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
+                    '\t\t\t\t<div></div>\n' +
+                    '\t\t\t</a>\n' +
+                    '\t\t</div>\n' +
+                    '\t\t<div class="body modal-body">\n' +
+                    '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
+                    '\t\t</div>\n' +
+                    '\t</div>\n' +
+                    '</div>';
+                var filterButton = '<a href="#" class="filterButton">' +
+                    '</a>';
 
-            jQuery("body").append(filter_popup);
-            jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
+                jQuery('.filter-common-div').html("");
+                jQuery('.filter-common-div').hide();
 
+                jQuery("body").append(filter_popup);
+                jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
+
+            }
+            else {
+                jQuery('.filter-common-div').html("");
+                jQuery('.filter-common-div').hide();
+                jQuery('.filterButton').show();
+
+            }
             jQuery(".filterButton").on('click', function () {
                 jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
                 unScrollBody();
@@ -274,30 +281,18 @@ jQuery(document).ready(function () {
                 scrollBody();
             });
         }
+    }else {
+        jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
+        jQuery('.filter-common-div').show();
+        jQuery('.filterButton').hide();
     }
-    /*filter popup end---------------------------------*/
-
-
 });
-
-
+/*filter popup end---------------------------------*/
 
 jQuery(window).bind("load resize scroll", function (e) {
 
-
-    if (jQuery(window).width() >= 992) {
-        var nav_height = jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top", nav_height / 2 + 20);
-    }
-    else {
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top", '0px');
-    }
-
     var box_width = jQuery('.fs-entry-container').outerWidth();
     jQuery('.fs-entry-container').css('height', box_width);
-
-
-
 
 // fixit(".cart-mt",'.fix-section',10,43);
 // fixit("#checkoutSteps",'.col-right.sidebar',10,110);

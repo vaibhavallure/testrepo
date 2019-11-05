@@ -37,7 +37,7 @@
 					$isSidebar = true;
 					$request = Mage::app()->getRequest();
 					if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
-					{ 
+					{
 						echo $this->__('My Wishlist');
 					}elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderview'){
 						echo $this->__('My Orders');
@@ -187,14 +187,14 @@
 
 		if (jQuery(window).width() >= 992){
 			var nav_height=jQuery('header').outerHeight();
-			jQuery('.dashboard').css("margin-top",nav_height/2);
+			//jQuery('.dashboard').css("margin-top",nav_height/2);
 		}
 	});
 
 	jQuery(window).bind("load resize scroll",function(e){
 		if (jQuery(window).width() >= 992){
-			var nav_height=jQuery('header').outerHeight();
-			jQuery('.dashboard').css("margin-top",nav_height/2);
+			//var nav_height=jQuery('header').outerHeight();
+			//jQuery('.dashboard').css("margin-top",nav_height/2);
 		}
 	});
 </script>
