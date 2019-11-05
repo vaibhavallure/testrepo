@@ -84,6 +84,14 @@ class JSON
         // extract arguments
         $args = func_get_args();
 
+
+        if (defined("JSON_PRESERVE_ZERO_FRACTION")) { // php >= 5.6.6
+            if (isset($args[1])) {
+                $args[1] |= JSON_PRESERVE_ZERO_FRACTION;
+            } else {
+                $args[1] = JSON_PRESERVE_ZEON_FRACTION;
+            }
+        }
         // run encode and output
         $string = call_user_func_array('json_encode', $args);
 

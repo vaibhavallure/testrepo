@@ -1,374 +1,47 @@
-/*Indrajit : CSS as Per Searchanise Result Format*/
-ul.wyomind-elasticsearch {
-
-    position: absolute;
-    width: 380px;
-    right: 0px;
-    top: 100%;
-}
-li.product-separator {
-    color: #3F4048;
-    border-top: 1px solid #DEDEDE;
-    padding: 0;
-}
-span.sku,
-span.description{
-    color: #6D6E74;
-}
-span.sku {
-    display: block;
-    margin-top: 5px;
-    margin-bottom: -2px;
-    color: #747474;
-    font-size: 70%;
-}
-span.description {
-    display: block;
-    margin-top: 5px;
-    color: #aaa;
-}
-span.name {
-    color: #3F4048;
-}
-span.name {
-    display: block;
-    color: #fff;
-    font-weight: bold;
-    font-size: 100%;
-    margin-top: 3px;
-}
-
-span.info {
-    display: block;
-    overflow: hidden;
-}
-
-.image-thumbnail {
-    display: inline-block;
-    float: left;
-    margin: 5px 10px 5px 0px;
-    text-align: center;
-    width: 70px;
-}
-span.image-thumbnail img {
-    display: inline;
-}
-img {
-    border: none;
-}
-img {
-    border: 0;
-    vertical-align: top;
-}
-a.result-item {
-    clear: both;
-    display: block;
-    padding: 2px;
-    min-height: 60px;
-    outline: none;
-    opacity: 1;
-    text-decoration: none;
-    -moz-outline-style: none;
-}
-a.result-item .clearfix {
-    zoom: 1;
-}
-.search-product{
-    margin: 6px 10px;
-    box-shadow: 0 0 5px rgba(0,0,0,.25);
-    border-radius: 4px;
-}
-.search-product .info > span.name {
-    color: #3F4048;
-    font-weight: bold;
-}
-
-.search-product .info > span.sku,
-.search-product .info > span.description {
-    color: #6D6E74;
-}
-
-.search-product .info .price-box .regular-price .price,
-.search-product .info .price-box .special-price .price {
-    color: #A68A57;
-    font-weight: bold;
-}
-.form-search .search-autocomplete li:hover {
-    background-color:#CACED7;
-}
-.search-product a:hover {
-    text-decoration: none;
-}
-/*End*/
-.search-autocomplete {
-    z-index: 2147483647;
-    margin-top: -1px;
-    padding: 0;
-    background-color: #282828;
-    box-shadow: 0 0 5px rgba(0,0,0,.25);
-    text-align: left;
-    border-radius: 0px;
-    border: 1px solid #343434;
-}
-
-.search-autocomplete div.dropdown-arrow {
-    position: absolute;
-    top: -14px;
-    right: 15px;
-    float: left;
-    overflow: hidden;
-    width: 21px;
-    height: 14px;
-}
-.search-autocomplete div.arrow-outer,
-.search-autocomplete div.arrow-inner {
-    position: absolute;
-    top: 1px;
-    left: 0;
-    display: inline-block;
-    margin-left: -2px;
-}
-.search-autocomplete div.arrow-outer {
-    border-right: 11px solid rgba(255,255,255,0);
-    border-left: 11px solid rgba(255,255,255,0);
-    border-bottom: 15px solid #4e4e4e;
-}
-.search-autocomplete div.arrow-inner {
-    top: 2px;
-    left: 2px;
-    display: inline-block;
-    border-right: 9px solid rgba(255,255,255,0);
-    border-left: 9px solid rgba(255,255,255,0);
-    border-bottom: 13px solid #ffffff;
-}
-.search-autocomplete div.arrow-inner.arrow-inner-label {
-    border-bottom: 13px solid #DEDEDE;
-}
-
-.search-autocomplete ul.allure-elasticsearch li.title,
-.search-autocomplete ul.allure-elasticsearch li.title a {
-    display: block;
-    padding: 3px 10px;
-    color: #3F4048;
-    text-align: center;
+.search-autocomplete ul.wyomind-elasticsearch li.title,
+.search-autocomplete ul.wyomind-elasticsearch li.title a {
+    padding: 6px;
+    background-color: #f4f4f4;
+    color: #636363;
     text-transform: uppercase;
-    font-size: 10px;
-    font-weight: bold;
-    line-height: 14px;
-    border-bottom: none;
-    background-color: rgba(222, 222, 222, 0.45);
-    cursor: auto;
-    box-shadow: 0 0 5px rgba(0,0,0,.25);
-    border-bottom: 1px solid #DEDEDE;
-    border-top: 1px solid #DEDEDE;
 }
 
-.search-autocomplete ul.allure-elasticsearch li:first-child {
-    border-top: 1px solid transparent;
-    margin: 0 0 3px;
-}
-
-.search-autocomplete ul.allure-elasticsearch {
+.search-autocomplete ul.wyomind-elasticsearch {
     background-color: #fff;
     border: 1px solid #d5e4eb;
     border-bottom: 0;
 }
 
-.search-autocomplete ul.allure-elasticsearch li,
-.search-autocomplete ul.allure-elasticsearch li a {
+.search-autocomplete ul.wyomind-elasticsearch li {
     padding: 0;
-    color: #3F4048;
-    border-bottom: none;
-}
-.search-autocomplete ul.allure-elasticsearch li.search-product {
-    padding: 5px 10px !important;
-}
-.search-autocomplete ul.allure-elasticsearch li a:hover {
-    background: #CACED7;
+    border-bottom: 1px solid #d5e4eb;
 }
 
-.search-autocomplete ul.allure-elasticsearch li.search-product-title {
-    margin-bottom: 5px;
-}
-
-.search-autocomplete ul.allure-elasticsearch li.search-product a {
-    box-shadow: 0 0 5px rgba(0,0,0,.25);
-    border-radius: 4px;
-}
-
-.search-autocomplete ul.allure-elasticsearch li .image {
+.search-autocomplete ul.wyomind-elasticsearch li .image {
     float: left;
     margin-right: 6px;
-    background-color: transparent;
+    background-color: #fff;
 }
 
-.search-autocomplete ul.allure-elasticsearch li a {
+.search-autocomplete ul.wyomind-elasticsearch li a {
     display: block;
     padding: 6px;
     text-decoration: none;
 }
 
-.search-product .info > span {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.search-product .info > span.sku {
-    font-size: 70%;
-}
-
-.search-autocomplete ul.allure-elasticsearch li.all-results a {
-    line-height: 1.5em;
-    text-align: center;
-    border-top: 1px solid #343434;
-}
-
-.search-autocomplete ul.allure-elasticsearch li.selected a {
+.search-autocomplete ul.wyomind-elasticsearch li.selected a {
     text-decoration: none;
     background-color: #ecf3f6;
 }
 
-.search-autocomplete ul.allure-elasticsearch li .price-box {
+.search-autocomplete ul.wyomind-elasticsearch li .price-box {
     margin: 0;
-    text-align: left;
 }
 
-.search-autocomplete ul.allure-elasticsearch li a .price-box .minimal-price-link {
+.search-autocomplete ul.wyomind-elasticsearch li a .price-box .minimal-price-link {
     padding: 0;
 }
 
-.search-autocomplete ul.allure-elasticsearch li .clearer {
+.search-autocomplete ul.wyomind-elasticsearch li .clearer {
     clear: both;
-}
-
-li.title {
-    border-top: 1px solid transparent;
-    margin: 0 0 3px;
-    color: #3F4048;
-    background-color: #DEDEDE;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    box-shadow: 0 0 5px rgba(0,0,0,.25);
-    cursor: auto;
-    text-align: center !important;
-    text-transform: uppercase;
-    font-size: 10px;
-    font-weight: bold;
-    line-height: 18px;
-}
-
-.search-suggestions a {
-    color: #3F4048;
-}
-
-@media only screen and (max-width: 767px) {
-    ul.wyomind-elasticsearch {
-        background: #ffffff;
-    }
-
-    .search-suggestions {
-
-        border-bottom: 1px solid #282828 !important;
-        border-top: 0;
-        font-size: 16px;
-        line-height: 35px;
-        margin-left: 7px;
-        margin-right: 7px;
-        padding: 12px 10px 12px 10px;
-        box-sizing: border-box;
-    }
-    div#catalogSearch.modal {
-        position: absolute;
-        height: 100vh;
-    }
-    .wyomind-elasticsearch li{
-        padding-left: 5px;
-    }
-    .overlay-content .form-search button{
-        right: 15px;
-        top: 18px
-    }
-    .overlay-content .form-search{
-        background: #000;
-    }
-    .navbar .navbar-collapse {
-        height:100vh!important;
-        max-height: 100vh !important;
-    }
-
-    input#catalogSearchTxt,
-    .form-search input.input-text{
-     border-radius: 0px;
-    }
-}
-
-@media only screen and (min-width: 812px) and (orientation: landscape){
-    ul.wyomind-elasticsearch {
-        background: #ffffff;
-    }
-}
-
-.result-div{
-    padding-top: 20px;
-}
-
-.overlay {
-    height: 100vh;
-    width: 100%;
-    display: none;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
-    overflow: scroll;
-}
-
-.overlay-content {
-    position: relative;
-    top: 60px;
-    width: 95%;
-    text-align: center;
-    margin-top: 30px;
-    margin: auto;
-}
-
-.overlay .closebtn {
-    position: absolute;
-    top: 10px;
-    right:25px;
-    font-size: 30px;
-    cursor: pointer;
-    color: white;
-}
-
-.overlay .closebtn:hover {
-    color: #ccc;
-}
-
-.overlay input[type=text] {
-    padding: 10px;
-    font-size: 17px;
-    border: none;
-    float: left;
-    width: 80%;
-    background: white;
-}
-
-.overlay input[type=text]:hover {
-    background: #f1f1f1;
-}
-
-.overlay button {
-    float: left;
-    width: 15%;
-    padding: 10px;
-    font-size: 20px;
-    border: none;
-    cursor: pointer;
-}
-
-.overlay button:hover {
-    background: #bbb;
 }

@@ -197,7 +197,7 @@ class Action
     /**
      * @return string
      */
-    public function toString()
+        public function toString()
     {
         $string = JSON::stringify($this->getActionMetadata(), JSON_FORCE_OBJECT).Bulk::DELIMITER;
         if ($this->hasSource()) {
