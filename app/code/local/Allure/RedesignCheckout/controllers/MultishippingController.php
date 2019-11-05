@@ -18,9 +18,19 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     {
         parent::preDispatch();
         $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-        if($customerGroupId == self::WHOLESALE_GROUP_ID){
-            $this->_redirect("*/onepage");
+        
+        $isAmazonPaymentForGeneralCustomer = false;
+        if(Mage::helper('core')->isModuleEnabled("Amazon_Payments")){
+            $_helper = Mage::helper('amazon_payments/data');
+            if($_helper->getConfig()->isEnabled() && $_helper->isCheckoutAmazonSession() && $_helper->isEnableProductPayments()){
+                $isAmazonPaymentForGeneralCustomer = true;
+            }
         }
+        
+        if($customerGroupId == self::WHOLESALE_GROUP_ID || $isAmazonPaymentForGeneralCustomer){
+           $this->_redirect("*/onepage");
+        }
+            
         return $this;
     }
     

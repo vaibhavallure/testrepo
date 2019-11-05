@@ -1137,4 +1137,98 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         }
         return $this;
     }
+    
+    public function saveGiftItem($giftItems = null){
+        try{
+            $newGiftItemArray = array();
+            $giftWrapQty = 0;
+            if(isset($giftItems) && !empty($giftItems)){
+                foreach($giftItems as $data){
+                    foreach ($data as $itemId => $item){
+                        if(isset($item["is_gift_item"]) && $item["is_gift_item"]){
+                            $newGiftItemArray[$itemId]["is_gift_item"] = $item["is_gift_item"];
+                            $newGiftItemArray[$itemId]["gift_item_qty"] = $newGiftItemArray[$itemId]["gift_item_qty"] + 1;
+                            if(isset($item["is_gift_wrap"]) && $item["is_gift_wrap"]){
+                                $newGiftItemArray[$itemId]["is_gift_wrap"] = $item["is_gift_wrap"];
+                                $newGiftItemArray[$itemId]["gift_wrap_qty"] = $newGiftItemArray[$itemId]["gift_wrap_qty"] + 1;
+                                $giftWrapQty++;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            $quote =  $this->getQuote();
+            
+            foreach ($quote->getAllVisibleItems() as $quoteItem){
+                if($quoteItem){
+                    $quoteItem->setIsGiftItem(0);
+                    $quoteItem->setGiftItemQty(0);
+                    $quoteItem->setIsGiftWrap(0);
+                    $quoteItem->setGiftWrapQty(0);
+                    $itemId = $quoteItem->getId();
+                    if(isset($newGiftItemArray[$itemId]["is_gift_item"]) && $newGiftItemArray[$itemId]["is_gift_item"]){
+                        $quoteItem->setIsGiftItem($newGiftItemArray[$itemId]["is_gift_item"]);
+                        $quoteItem->setGiftItemQty($newGiftItemArray[$itemId]["gift_item_qty"]);
+                        if(isset($newGiftItemArray[$itemId]["is_gift_wrap"]) && $newGiftItemArray[$itemId]["is_gift_wrap"]){
+                            $quoteItem->setIsGiftWrap($newGiftItemArray[$itemId]["is_gift_wrap"]);
+                            $quoteItem->setGiftWrapQty($newGiftItemArray[$itemId]["gift_wrap_qty"]);
+                        }
+                    }
+                    $quoteItem->save();
+                }
+            }
+            
+            /* foreach ($newGiftItemArray as $itemId){
+                $quoteItem = $quote->getItemById($itemId);
+                if($quoteItem){
+                    if(isset($newGiftItemArray[$itemId]["is_gift_item"]) && $newGiftItemArray[$itemId]["is_gift_item"]){
+                        $quoteItem->setIsGiftItem($newGiftItemArray[$itemId]["is_gift_item"]);
+                        $quoteItem->setGiftItemQty($newGiftItemArray[$itemId]["gift_item_qty"]);
+                        if(isset($newGiftItemArray[$itemId]["is_gift_wrap"]) && $newGiftItemArray[$itemId]["is_gift_wrap"]){
+                            $quoteItem->setIsGiftWrap($newGiftItemArray[$itemId]["is_gift_wrap"]);
+                            $quoteItem->setGiftWrapQty($newGiftItemArray[$itemId]["gift_wrap_qty"]);
+                        }
+                        $quoteItem->save();
+                    }
+                }
+            } */
+            $this->addGiftWrap($giftWrapQty);
+            Mage::log($newGiftItemArray,Zend_Log::DEBUG,'abc.log',true);
+        }catch (Exception $e){
+            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+        }
+    }
+    
+    public function addGiftWrap($giftWrapQty = 0){
+        $helper = Mage::helper("allure_redesigncheckout");
+        $quote =  $this->getQuote();
+        $giftItem = null;
+        foreach ($quote->getAllVisibleItems() as $_item){
+            if($_item->getSku() == $helper::GIFT_WRAP_SKU){
+                $giftItem = $_item;
+                break;
+            }
+        }
+        if($giftWrapQty){
+            $_product = $helper->getGiftWrap();
+            if(!$giftItem){
+                if($_product){
+                    $cart = Mage::getSingleton('checkout/cart');
+                    $cart->init();
+                    $cart->addProduct($_product, $giftWrapQty);
+                    $cart->save();
+                }
+            }else{
+                $giftItem->setQty($giftWrapQty);
+            }
+        }else{
+            if($giftItem){
+                $giftItem->delete();
+            }
+        }
+        $quote->save();
+        $this->getCheckout()->clear();
+        $this->getCheckout()->setQuoteId($quote->getId());
+    }
 }

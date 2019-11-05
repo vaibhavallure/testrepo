@@ -98,7 +98,7 @@
 			<tr class="summary-total">
 		<td>
 			<div class="info-text-three">
-				<span><?= $this->__('Estimated Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+				<span><?= $this->__('Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
 			</div>
 		</td>
 		<td class="text-right">

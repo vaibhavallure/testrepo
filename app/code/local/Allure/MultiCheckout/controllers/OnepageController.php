@@ -57,8 +57,19 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
         $action = $this->getRequest()->getActionName();
         if($customerGroupId != self::WHOLESALE_GROUP_ID){
+            
+            $isAmazonPaymentForGeneralCustomer = false;
+            if(Mage::helper('core')->isModuleEnabled("Amazon_Payments")){
+                $_helper = Mage::helper('amazon_payments/data');
+                if($_helper->getConfig()->isEnabled() && $_helper->isCheckoutAmazonSession() && $_helper->isEnableProductPayments()){
+                    $isAmazonPaymentForGeneralCustomer = true;
+                }
+            }
+            
             if(strtolower($action) == "success"){
                return $this;                
+            }elseif($isAmazonPaymentForGeneralCustomer){
+                return $this;
             }elseif(!$this->getOnepage()->getQuote()->isVirtual()){
                 $this->_redirect("*/multishipping");
             }
@@ -142,6 +153,9 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         }
 
         if ($this->getRequest()->isPost()) {
+            /** gift item */
+            $this->getOnepage()->saveGiftItem();
+            
             Mage::log($this->getRequest()->getPost(),Zend_Log::DEBUG,'abc.log',true); 
             /** Save customer billing address. */
             $dataBilling = $this->getRequest()->getPost('billing', array());
@@ -485,6 +499,14 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $checkoutalert = 0;
         $isuuemessage ='';
         try {
+            
+            /** save gift item data */
+            Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method',
+                array(
+                    'request' => $this->getRequest(),
+                    'quote' => $this->getOnepage()->getQuote()
+                ));
+            
             $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
             if ($requiredAgreements) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
