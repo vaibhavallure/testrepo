@@ -723,8 +723,8 @@
     left: 10px;
   }
   .post_optio .chooseList ul li.option{
-    flex: 0 0 30%;
-    max-width: 30%;
+    flex: 0 0 25%;
+    max-width: 25%;
   }
   .containerImage img{
     margin: 30px auto 0;
@@ -1908,6 +1908,13 @@
     bottom: 59px!important;
   }
 }
-@media (max-width:1023px){
-
+@media (min-width:686px) and (max-width:850px){
+  .post_optio .chooseList ul li.option{
+    min-width: 110px;
+  }
+}
+@media (min-width:581px) and (max-width:650px){
+  .post_optio .chooseList ul li.option{
+    min-width: 120px;
+  }
 }
