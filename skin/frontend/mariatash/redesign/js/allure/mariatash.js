@@ -55,23 +55,6 @@ jQuery(document).ready(function () {
     });
 
 
-
-
-    if (jQuery(window).width() >= 992) {
-
-        // var cont_width=jQuery('.myaccount-index-index .mt-myaccount-page,.customer-address-index .addresses-list').outerWidth();
-        // jQuery('.myaccount-index-index .breadcrumbs,.customer-address-index .breadcrumbs').css({
-        //     'width': cont_width
-        // });
-
-
-        var nav_height = jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top", nav_height);
-
-        //     jQuery('.myaccount-index-index .breadcrumbs,.customer-account-edit .breadcrumbs,.customer-address-index .breadcrumbs').css("margin-top",nav_height/2);
-    }
-
-
     var box_width = jQuery('.fs-entry-container').outerWidth();
     jQuery('.fs-entry-container').css('height', box_width);
 
@@ -308,20 +291,8 @@ jQuery(window).bind("load resize", function (e) {
 
 jQuery(window).bind("load resize scroll", function (e) {
 
-
-    if (jQuery(window).width() >= 992) {
-        var nav_height = jQuery('header').outerHeight();
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top", nav_height / 2 + 20);
-    }
-    else {
-        jQuery('.login_security,.my_addresses,.new_address,.category-shop-our-instagram .main-container,.insta-details').css("margin-top", '0px');
-    }
-
     var box_width = jQuery('.fs-entry-container').outerWidth();
     jQuery('.fs-entry-container').css('height', box_width);
-
-
-
 
 // fixit(".cart-mt",'.fix-section',10,43);
 // fixit("#checkoutSteps",'.col-right.sidebar',10,110);

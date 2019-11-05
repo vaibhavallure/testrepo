@@ -1,0 +1,145 @@
+<?php
+/**
+ * @var Mage_Checkout_Block_Onepage_Review_Info $this
+ */
+?>
+<?php
+/** @var $quote Mage_Sales_Model_Quote*/
+$quote = Mage::getSingleton('checkout/session')->getQuote();
+$billing = $quote->getBillingAddress();
+/** @var Mage_Sales_Model_Quote_Address $shipping*/
+$shipping = $quote->getShippingAddress();
+?>
+<?php $items = $quote->getAllVisibleItems();?>
+<form action="" method="post" id="checkout-onepage-review-form">
+	<div class="data-table overview-address-item">
+		<div class="col-12 overview-product">
+			<?php $_coreHelper = $this->helper('core');?>
+			<?php foreach ($items as $_item):?>
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-4">
+               		<?php $_product = $_item->getProduct() ?>
+                    <?php
+                        if ($option = $_item->getOptionByCode('simple_product')) {
+                            $_product = $option->getProduct();
+                        }
+                    ?>
+                    <p class="product-image">
+                    	<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                   	</p>
+            	</div>
+            	<div class="col-lg-10 col-md-10 col-12">
+            		<?php echo $this->getItemHtml($_item)?>
+            		<div class="box"></div>
+            		<div class="box">
+            			<div class="box-content">
+            				<address>
+            					<?= $shipping->format('html') ?>
+            				</address>
+            			</div>
+            		</div>
+            		<div class="box">
+            			<div class="box-title">
+            				<?php if($_rate = $shipping->getShippingRateByCode($shipping->getShippingMethod())): ?>
+            					<?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+            				<?php endif;?>
+            			</div>
+            			<div class="box-content">
+            			<?php if($_rate = $shipping->getShippingRateByCode($shipping->getShippingMethod())): ?>
+            				<p>
+            					<?php $_excl = $this->helper('checkout')->formatPrice($shipping->getShippingAmount());//$this->getShippingPriceExclTax($_address); ?>
+            					<?php $_incl = $shipping->getShippingInclTax(); ?>
+            					<?php echo $_excl; ?>
+            					<?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+            						(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+            					<?php endif;?>
+            				</p>
+            			<?php endif;?>
+            			</div>
+            		</div>
+            		
+            		<?php if($quote->getNoSignatureDelivery()):?>
+            		<div class="box">
+            			<div class="box-content">
+            				<p class="para-normal"><?= $this->__('Signature required upon delivery.')?></p>
+            			</div>
+            		</div>
+            		<?php endif;?>
+            		
+            		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+            		<?php if(!empty($message)): ?>
+            		<div class="box">
+            			<div class="box-content row">
+            				<div class="item-msg col">
+            					<p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+            				</div>
+            				<div class="text-right overview-price-qty">
+            					<div class="">
+            						<p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getCalculationPrice())?></p>
+            					</div>
+            					<div class="overview-quantity">
+            						<p class="para-three"><?= $this->__('Quantity: ')?><?= $this->escapeHtml(round($_item->getQty()))?></p>
+            					</div>
+            				</div>
+            			</div>
+            		</div>
+            		<?php endif;?>
+            		
+            		<?php if($_item->getIsGiftItem()):?>
+            		<div class="box gift-input-section">
+            			<div class="box-content">
+            				<p class="para-normal"><?= $this->__('You have marked this item as a gift. Would you like to add a gift message?')?></p>
+            				<?= $this->getGiftItemHtml($_item)?>
+            			</div>
+            		</div>
+            		<?php endif;?>
+            		
+            	</div>
+			</div>
+			<?php endforeach;?>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    truncateOptions();
+//]]>
+</script>
+
+<div id="checkout-review-submit">
+    <?php echo $this->getChildHtml('agreements') ?>
+    <div class="buttons-set" id="review-buttons-container">
+    	<?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
+    	<?php $currentCurrency = strtoupper(Mage::app()->getStore()->getBaseCurrencyCode());?>
+    	<?php if(!empty($baseGrandTotal)):?>
+        <p class="mt-review-charge-note"><strong>Note: </strong>
+        <?php echo $this->__("All orders are charged in ".$currentCurrency.". You will be charged ".$baseGrandTotal);?>
+        </p>
+        <?php endif;?>
+        <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?>
+        	<a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a>
+        </p>
+        <div class="checkout-privacy-policy">
+        	<p class="control f-left">
+                <label for="checkout_privacy_confirm" class="custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                	<input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                	<span class="checkmark"></span>
+                </label>
+       		</p>
+    	</div>
+      <div class="checkout-block">
+        <?php
+            echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
+        ?>
+        </div>
+        <?php echo $this->getChildHtml('button') ?>
+        <span class="please-wait" id="review-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+        </span>
+    </div>
+    <script type="text/javascript">
+    //<![CDATA[
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder') ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
+    //]]>
+    </script>
+</div>
