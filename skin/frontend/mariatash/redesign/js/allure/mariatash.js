@@ -171,10 +171,12 @@ jQuery(document).ready(function () {
     });
     jQuery('#navbarNavDropdown').mouseleave(function () {
         setTimeout(function() {
-        jQuery(".main_menu").removeClass('active_menu');
-        jQuery('section.sub-menu').slideUp("slow");
-        jQuery(".menu_overlay").addClass("d-none");
-        scrollBody();
+            if (!jQuery('#navbarNavDropdown').is(':hover')) {
+                jQuery(".main_menu").removeClass('active_menu');
+                jQuery('section.sub-menu').slideUp("slow");
+                jQuery(".menu_overlay").addClass("d-none");
+                scrollBody();
+            }
         }, 600);
     });
 
