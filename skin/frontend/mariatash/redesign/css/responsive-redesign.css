@@ -1580,9 +1580,6 @@
   .navbar-brand{
     margin-top: 2px;
   }
-  /* .pop-up-cover{
-    overflow-y: auto;
-  } */
   .product-shop{
     margin-top: 35px;
   }
@@ -1598,6 +1595,9 @@
   }
   #newsletter-form .dark-button{
     float: right;
+  }
+  .product-shop > .row{
+    padding-left: 0;
   }
 }
 
