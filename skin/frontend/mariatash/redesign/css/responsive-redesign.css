@@ -8,9 +8,6 @@
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
   }
-  /* .nav-links-right li:nth-child(3){
-    display: none;
-  } */
   .main-nav-link li:nth-child(2) {
     margin-right: 18px;
   }
@@ -65,9 +62,6 @@
   .maria-right-menus{
     right: 0;
   }
-  /* .main-nav-link li:nth-child(3){
-    margin-right: 0;
-  } */
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
     overflow-y: auto;
@@ -111,10 +105,6 @@
   .common-option-div{
     margin-bottom: 20px;
   }
-  /* .mobile-device .common-option-div{
-    width: 100%;
-    padding: 0 14px;
-  } */
   .head-child ul {
     margin-bottom: 0;
   }
@@ -396,10 +386,6 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
-
-  /* .desktop-device.catalog-category-view .category-title{
-    padding-left: 109px !important;
-  } */
   .category-image-bleed{ /* Head Image */
     display: none;
   }
@@ -498,6 +484,9 @@
   .menu-common-section{
     margin-top: 13px;
   }
+  /* .wrapper{
+    height: auto !important;
+  } */
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -536,6 +525,7 @@
   .desktop-device .products-grid li.item .list-mt-w{
     position: absolute;
     background: transparent;
+    width: 100%;
   }
 }
 
@@ -1024,19 +1014,13 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  /* .categorypath-celebrity-clientele-html .for-space-to-bottom{
-    height: 0 !important;
-  } */
-  #category-title{
+  /* #category-title{
     margin: 16px 0 20px !important;
     padding: 0 !important;
-  }
+  } */
   .filter-common-div{
     display: none;
   }
-  /* .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
-    margin-top: -70px;
-  } */
   .filterPopup .pop-up-cover {
     margin-top: 5%;
     padding-bottom: 20px;

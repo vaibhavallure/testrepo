@@ -327,6 +327,7 @@ div.tab button.active {
 .myaccount-index-index .main-container {
     margin: 0 auto;
 /*    width: 980px;*/
+    min-height: 100%;
 }
 
 .myaccount-index-index .main-container>.page-title {
