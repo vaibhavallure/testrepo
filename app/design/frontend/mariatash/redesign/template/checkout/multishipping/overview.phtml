@@ -28,6 +28,7 @@
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>charcount.js"></script>
 
+<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
 <div class="container">
@@ -41,12 +42,8 @@
                 </div>
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-                    <?php 
-                        $postUrl = $this->getPostActionUrl();
-                    ?>
                     <form action="<?= $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
 						<?= $this->getBlockHtml("formkey") ?>
-						<?php $payment = $this->getCheckout()->getQuote()->getPayment();?>
 						<input type="hidden" name="payment[cc_number]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcNumber())?>" />
                         <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcCid())?>" />
 
@@ -56,6 +53,7 @@
                         		<div class="col-12 overview-product">
                         	<?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
                             	<?php if ($_item->getQuoteItem()) :?>
+                            	<?php $isGiftWrap = ($_item->getQuoteItem()->getSku() == $redesignHelper::GIFT_WRAP_SKU) ? true : false; ?>
                             	<div class="row">
                             		<div class="col-lg-2 col-md-2 col-4">
                                 		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
@@ -74,9 +72,6 @@
                                 		<div class="box"></div>
 
                                 		<div class="box">
-                                            <!-- <div class="box-title">
-                                                <h4><//?= $this->__('Shipping To') ?></h4>
-                                            </div> -->
                                             <div class="box-content">
                                                 <address>
                                                     <?= $_address->format('html') ?>
@@ -84,9 +79,9 @@
                                             </div>
                                     	</div>
 
+										<?php if(!$isGiftWrap):?>
                                     	<div class="box">
                                             <div class="box-title">
-                                                <!-- <h4><//?= $this->__('[Shipping Method]') ?></h4> -->
                                                 <?php if($_rate=$this->getShippingAddressRate($_address)): ?>
                                                 <?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                 <?php endif; ?>
@@ -113,25 +108,28 @@
                                         	</div>
                                         </div>
                                         <?php endif;?>
+                                        
+                                        <?php endif;?>
 
                                         <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-										<?php if(!empty($message)): ?>
 										<div class="box">
                                         	<div class="box-content row">
                                         		<div class="item-msg col">
-                                              <p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
-                                            </div>
-                                            <div class="text-right overview-price-qty">
-                                            <div class="">
-                                              <p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getCalculationPrice())?></p>
-                                            </div>
-                                            <div class="overview-quantity">
-                                            	<p class="para-three"><?= $this->__('Quantity: ')?><?= $this->escapeHtml(round($_item->getQty()))?></p>
-                                            </div>
+                                        			<?php if(!empty($message) && !$isGiftWrap): ?>
+                                              		<p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                            		<?php endif;?>
+                                            	</div>
+                                            	<div class="text-right overview-price-qty">
+                                            		<div class="">
+                                              			<p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getCalculationPrice())?></p>
+                                            		</div>
+                                            		<div class="overview-quantity">
+                                            			<p class="para-three"><?= $this->__('Quantity: ')?><?= $this->escapeHtml(round($_item->getQty()))?></p>
+                                            		</div>
+                                        		</div>
                                         	</div>
                                         </div>
-                                        </div>
-										<?php endif;?>
+										
                                         <div class="box gift-input-section">
                                         	<div class="box-content">
                                         		<?php if($_item->getIsGiftItem()):?>

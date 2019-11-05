@@ -6,16 +6,17 @@
 <?php
 /** @var $quote Mage_Sales_Model_Quote*/
 $quote = Mage::getSingleton('checkout/session')->getQuote();
-$billing = $quote->getBillingAddress();
+
 /** @var Mage_Sales_Model_Quote_Address $shipping*/
 $shipping = $quote->getShippingAddress();
 ?>
+<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
 <?php $items = $quote->getAllVisibleItems();?>
 <form action="" method="post" id="checkout-onepage-review-form">
 	<div class="data-table overview-address-item">
 		<div class="col-12 overview-product">
-			<?php $_coreHelper = $this->helper('core');?>
 			<?php foreach ($items as $_item):?>
+			<?php $isGiftWrap = ($_item->getSku() == $redesignHelper::GIFT_WRAP_SKU) ? true : false; ?>
 			<div class="row">
 				<div class="col-lg-2 col-md-2 col-4">
                		<?php $_product = $_item->getProduct() ?>
@@ -38,6 +39,8 @@ $shipping = $quote->getShippingAddress();
             				</address>
             			</div>
             		</div>
+            		
+            		<?php if(!$isGiftWrap):?>
             		<div class="box">
             			<div class="box-title">
             				<?php if($_rate = $shipping->getShippingRateByCode($shipping->getShippingMethod())): ?>
@@ -66,12 +69,15 @@ $shipping = $quote->getShippingAddress();
             		</div>
             		<?php endif;?>
             		
+            		<?php endif;?>
+            		
             		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-            		<?php if(!empty($message)): ?>
             		<div class="box">
             			<div class="box-content row">
             				<div class="item-msg col">
+            					<?php if(!empty($message) && !$isGiftWrap): ?>
             					<p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+            					<?php endif;?>
             				</div>
             				<div class="text-right overview-price-qty">
             					<div class="">
@@ -83,7 +89,6 @@ $shipping = $quote->getShippingAddress();
             				</div>
             			</div>
             		</div>
-            		<?php endif;?>
             		
             		<?php if($_item->getIsGiftItem()):?>
             		<div class="box gift-input-section">
@@ -127,11 +132,7 @@ $shipping = $quote->getShippingAddress();
                 </label>
        		</p>
     	</div>
-      <div class="checkout-block">
-        <?php
-            echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();
-        ?>
-        </div>
+     
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
