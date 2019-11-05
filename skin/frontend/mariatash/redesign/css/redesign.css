@@ -4500,9 +4500,11 @@ dt.post-lengthds-lbl {
   font-size: 22px !important;
 }
 .white-circle span {
-  font-size: 10px;
   top: 50%;
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.product-maria-tash-in-store-gift-card .wrapper{
+	background: #f2f2f2;
 }

@@ -159,6 +159,7 @@
   .gift-card-main .faq-image-section img {
     padding-right: 0;
     width: 100%;
+    height: 100%;
   }
   #faq-one {
     margin-top: 15px;
@@ -802,7 +803,7 @@
     width:1250px;
     overflow-x: scroll;
   }
-  #appointments {
+  .mobile-device #appointments {
     padding: 55px 32px 32px 32px;
   }
   .inner-box {
@@ -896,8 +897,9 @@
     height: 220px !important;
   }
   .gift-card-main .faq-image-section img {
-    padding-right: 10px;
+    padding: 10px;
     width: 100%;
+    height: 100%;
   }
   .data-table.cart-table .messages.wholesale-avail-row .item-msg{
     max-width: 332px;
@@ -1578,9 +1580,6 @@
   .navbar-brand{
     margin-top: 2px;
   }
-  /* .pop-up-cover{
-    overflow-y: auto;
-  } */
   .product-shop{
     margin-top: 35px;
   }
@@ -1596,6 +1595,9 @@
   }
   #newsletter-form .dark-button{
     float: right;
+  }
+  .product-shop > .row{
+    padding-left: 0;
   }
 }
 
@@ -1867,9 +1869,6 @@
   .catalog-product-view .for-space-to-bottom{
     height: 73px;
   }
-  /* .common-option-div{
-    width: 100%;
-  } */
 }
 @media (max-width:749px){
   .desktop-device .product-shop > .row{
