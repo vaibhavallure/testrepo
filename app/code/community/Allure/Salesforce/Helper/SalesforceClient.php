@@ -227,6 +227,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             // execute sendRequest
             $response       = curl_exec($sendRequest);
             $responseArr    = json_decode($response,true);
+            $this->salesforceLog($response);
             //$this->salesforceLog("count = ".$this->_retry_count);
             if($responseArr[0]["errorCode"] == "INVALID_SESSION_ID"){
                 $this->salesforceLog("retry count is = ".$this->_retry_count);
@@ -537,13 +538,15 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 }
             } else {
                 $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
-                $product = Mage::getModel("catalog/product")->load($productId);
-                if ($product) {
-                    $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
-                    if ($customerGroup == 2) {
-                        $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+                if($productId){
+                    $product = Mage::getModel("catalog/product")->load($productId);
+                    if ($product) {
+                        $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
+                        if ($customerGroup == 2) {
+                            $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+                        }
                     }
-                }else {
+                } else {
                     $tmProduct = Mage::getModel("allure_teamwork/tmproduct")
                         ->load($item->getSku(), "sku");
                     if ($tmProduct->getId()) {
@@ -571,8 +574,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
             if (!$salesforcePricebkEntryId) {
                 $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
-                $product = Mage::getModel("catalog/product")->load($productId);
                 if($productId) {
+                    $product = Mage::getModel("catalog/product")->load($productId);
                     $this->salesforceLog("Failed to create order: Product not present in SF");
                     $salesforcePricebkEntryId = $this->createAndGetSFPriceBookEntry($product,$isTeamwork,$customerGroup);
                 }else {
@@ -837,6 +840,72 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         }
 
         return $mappedResponse;
+    }
+
+    public function getSFPricebookEntriesBySku($sku) {
+        $query = "SELECT+Id,PriceBook2Id,ProductCode,Product2Id,UnitPrice,Product2.Name+FROM+PricebookEntry+WHERE+Product2.StockKeepingUnit+=+'{$sku}'";
+        $mainStoreId = 1;
+        $helper = $this->getDataHelper();
+        $response = $this->sendRequest(self::QUERY_URL,"GET",null,false,null,$query);
+        $resArr = json_decode($response,true);
+
+        $this->salesforceLog("Query Response for {$sku}  -   {$response}");
+        $mappedResponse = array();
+        $gpbk = $helper->getGeneralPricebook();
+        $wpbk = $helper->getWholesalePricebook();
+        foreach ($resArr['records'] as $rec) {
+            $mappedResponse[self::S_PRODUCTID] = $rec['Product2Id'];
+            $mappedResponse['product_name'] = $rec['Product2']['Name'];
+            $mappedResponse['product_price'] = $rec['UnitPrice'];
+            if($rec['Pricebook2Id'] === $gpbk) {
+                $mappedResponse['standard_pbk'] = $rec['Id'];
+            }else if($rec['Pricebook2Id'] === $wpbk){
+                $mappedResponse['wholesale_pbk'] = $rec['Id'];
+            }
+        }
+
+        if ($mappedResponse['wholesale_pbk']) {
+            $fieldsArray[self::S_WHOLESALE_PRICEBK] = $mappedResponse['wholesale_pbk'];
+        }
+        if ($mappedResponse['standard_pbk']) {
+            $fieldsArray[self::S_STANDARD_PRICEBK] = $mappedResponse['standard_pbk'];
+        }
+
+        if(!empty($fieldsArray)) {
+            $this->salesforceLog("IN getSFPricebookEntriesBySku - Updating PriceBookEntries in Magento - {$sku}");
+            $productId = Mage::getModel("catalog/product")->getIdBySku($sku);
+            if($productId){
+                Mage::getResourceSingleton('catalog/product_action')
+                    ->updateAttributes(array($productId, $fieldsArray, $mainStoreId));
+            }else {
+                $product = Mage::getModel("allure_teamwork/tmproduct")
+                    ->load($sku,"sku");
+                if($product){
+                    try{
+                        $product->setData(self::S_STANDARD_PRICEBK,$mappedResponse['standard_pbk']);
+                        $product->setData(self::S_PRODUCTID,$mappedResponse[self::S_PRODUCTID]);
+                        $product->setData(self::S_WHOLESALE_PRICEBK,$mappedResponse['wholesale_pbk']);
+                        $product->save();
+                    }catch (Exception $e) {
+                        try {
+                            $product = Mage::getModel("allure_teamwork/tmproduct");
+                            $product->setName($mappedResponse['product_name']);
+                            $product->setSku($sku);
+                            $product->setPrice($mappedResponse['product_price']);
+                            $product->setData(self::S_STANDARD_PRICEBK,$mappedResponse['standard_pbk']);
+                            $product->setData(self::S_PRODUCTID,$mappedResponse[self::S_PRODUCTID]);
+                            $product->setData(self::S_WHOLESALE_PRICEBK,$mappedResponse['wholesale_pbk']);
+                            $product->save();
+                            //$this->saveTeamworkProductToSalesforce($product);
+                        }catch (Exception $e) {
+                            $helper->salesforceLog("Exception in saving TW-Product {$sku}.");
+                        }
+                    }
+                }else {
+
+                }
+            }
+        }
     }
 
     public function getCustomerRequestData($customer,$create,$isFromEvent)
@@ -1601,8 +1670,12 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
                     if($create){
                         $this->salesforceLog("PRODUCT: Adding PriceBookEntries for CREATE");
-                        $request["PriceBookEntries"] = $sRequest;
-                        return $request;
+                        if($sRequest['StockKeepingUnit'] != null){
+                            $request["PriceBookEntries"] = $sRequest;
+                            return $request;
+                        }else {
+                            return null;
+                        }
                     } else {
                         $this->salesforceLog("PRODUCT: Splitting Product and PricebookEntries for UPDATE");
                         return array("product" => $request,"pricebookEntries" => $sRequest["records"]);
