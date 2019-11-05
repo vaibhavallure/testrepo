@@ -4112,7 +4112,7 @@ div#uniform-shipping-address-select>span{
 .gauge .chooseList ul, .s_length .swatch-section ul, .s_length .swatch-section ul {
   justify-content: start;
 }
-.c_length .chooseList ul li.option, .gauge .chooseList ul li.option{
+.gauge .chooseList ul li.option{
 	margin-top: 17px;
 	flex: 0 0 50%;
 	max-width: 50%;
@@ -4122,7 +4122,7 @@ div#uniform-shipping-address-select>span{
 	/* flex: 0 0 45%;
 	max-width: 45%; */
 }
-.color .chooseList ul li.option{
+.color .chooseList ul li.option, .c_length .chooseList ul li.option{
 	margin-top: 17px;
 }
 .custom-options .ajax-error-messages{
@@ -4506,11 +4506,15 @@ dt.post-lengthds-lbl {
 .catalog-product-view .for-space-to-bottom{
 	height: 129px;
 }
-
 .checkout-cart-index .cart-mt {
   margin-top: 42px;
 }
-
 .category-celebrity-clientele .category-products{
 	margin-bottom: 0;
+}
+.contact-us-wrapper {
+  margin-top: 23px;
+}
+.cms-contact-us h1 {
+  font-size: 22px !important;
 }
