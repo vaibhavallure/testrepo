@@ -20,8 +20,8 @@ var Elasticsearch = {
                         } else {
                             html += "<span class='success'>SUCCESS</span><br/><br/>";
                             html += "<b>Name</b> : " + host_data.data.name + "<br/>";
-                            html += "<b>Cluster Name</b> : " + host_data.data.cluster_name + "<br/>";
-                            html += "<b>Elasticsearch Version</b> : " + host_data.data.version.number + "<br/>";
+                            html += "<b>Cluster name</b> : " + host_data.data.cluster_name + "<br/>";
+                            html += "<b>Elasticsearch version</b> : " + host_data.data.version.number + "<br/>";
                         }
                         html += "<br/><br/>";
                     });
