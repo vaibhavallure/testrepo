@@ -408,6 +408,12 @@ function loadAmazonConsent() {
 
 <?php endif; ?>
 
+//Cancel and log user out of Amazon
+function amazonCheckoutCancel() {
+    amazon.Login.logout();
+    window.top.location.href = "<?php echo $this->getUrl('amazon_payments/checkout/clear'); ?>";
+}
+
 </script>
 
 
