@@ -33,13 +33,23 @@
 
     <div id="additional-form-fields">
       <?php if ($this->isNewsletterEnabled()): ?>
-      <p>
-          <input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed" class="checkbox" />
-          <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter') ?></label>
-      </p>
+      <div class="gift-messages">
+  	  	  <p class="control">
+              <label class="custom-checkbox custom-checkbox-two" for="is_subscribed">
+              	<input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed" class="checkbox" />
+              	<span class="checkmark"></span>
+               	<span class="para-normal"><?= $this->__('Sign Up for Newsletter.')?></span>
+             </label>
+    	 </p>
+     </div>
+     
       <?php endif; ?>
 
       <?php echo $this->getAdditionalForm(); ?>
+    </div>
+    
+    <div class="buttons-set">
+    	<button type="button" class="button dark-button next-button amazon-change-pay" onclick="amazonCheckoutCancel();"><span><span><?php echo $this->__('Change Payment Method'); ?></span></span></button>
     </div>
 
     <?php if ($this->isTokenEnabled()) : ?>
