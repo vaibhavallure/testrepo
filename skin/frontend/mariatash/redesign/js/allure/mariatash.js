@@ -1,6 +1,17 @@
 jQuery(document).ready(function () {
 
 
+
+    if(jQuery("body").hasClass("catalog-product-view") && !jQuery("body").hasClass("quickview-index-index")) {
+        jQuery(document)
+            .ajaxStart(function () {
+                setLoader();
+            })
+            .ajaxStop(function () {
+                unsetLoader();
+            });
+    }
+
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
@@ -341,3 +352,4 @@ var unsetLoader= function(){
     jQuery.fancybox.hideLoading();
     jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
 }
+
