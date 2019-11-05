@@ -1904,6 +1904,9 @@
   .cms-home .homepage-menu.mariatash-header:hover{
   	background: rgba(41, 41, 41, 0.9) !important;
   }
+  .zopim {
+    bottom: 59px!important;
+  }
 }
 @media (max-width:1023px){
 
