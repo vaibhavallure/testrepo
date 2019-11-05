@@ -1445,7 +1445,7 @@ input[type="checkbox"]:checked+label:before {
 .number-circle{
   position: relative;
 }
-.number-circle span {
+.number-circle .white-circle {
   position: absolute;
   top: -22px;
   right: 0;
@@ -1455,8 +1455,8 @@ input[type="checkbox"]:checked+label:before {
   font-size: 9px;
 	border: 1px solid #d8d8d8;
   border-radius: 100%;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   padding: 2px 0 0 5px;
   background: #fff;
 }
@@ -4002,7 +4002,7 @@ z-index: 1!important;
 }
 
 /*alert end*/
-.custom-checkbox-two .checkmark:after {
+/* .custom-checkbox-two .checkmark:after {
 	left: 6.5px;
 	top: -1px;
 	width: 9px;
@@ -4013,7 +4013,7 @@ z-index: 1!important;
 	-ms-transform: rotate(45deg);
 	transform: rotate(38deg);
 	background: transparent;
-}
+} */
 
 div#uniform-shipping-address-select>span{
 	display: none;
@@ -4112,7 +4112,7 @@ div#uniform-shipping-address-select>span{
 .gauge .chooseList ul, .s_length .swatch-section ul, .s_length .swatch-section ul {
   justify-content: start;
 }
-.c_length .chooseList ul li.option, .gauge .chooseList ul li.option{
+.gauge .chooseList ul li.option{
 	margin-top: 17px;
 	flex: 0 0 50%;
 	max-width: 50%;
@@ -4122,7 +4122,7 @@ div#uniform-shipping-address-select>span{
 	/* flex: 0 0 45%;
 	max-width: 45%; */
 }
-.color .chooseList ul li.option{
+.color .chooseList ul li.option, .c_length .chooseList ul li.option{
 	margin-top: 17px;
 }
 .custom-options .ajax-error-messages{
@@ -4322,7 +4322,7 @@ dt.post-lengthds-lbl {
   margin-top: 0px !important;
 }
 
-/*Size chart popup*/
+/***********************Size chart popup********************/
 .catalog-product-view .fancybox-sizechart .fancybox-skin {
     padding: 0 !important;
 }
@@ -4339,20 +4339,11 @@ dt.post-lengthds-lbl {
 	margin: 0 auto;
 	margin-top: 29px;
 }
-/* .catalog-product-view .fancybox-sizechart .fancybox-item.fancybox-close{
-	background: url(../images/redesign/exit-small-bk.png) scroll 0 0
-	no-repeat;
-} */
-
 /*Need to verify*/
 .wide {
 	overflow: hidden;
 }
-/* .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select {
-	max-width: 100%;
-} */
-
-/*Gift Card Detail CSS*/
+/*********************Gift Card Detail CSS********************/
 .product-gift-card .main-container {
   margin-top: 8px;
 }
@@ -4411,9 +4402,6 @@ dt.post-lengthds-lbl {
 .giftcards .padder, .product-maria-tash-in-store-gift-card .padder{
 	min-height: auto;
 }
-/* .product-gift-card .for-bottom-space, .product-maria-tash-in-store-gift-card .for-bottom-space {
-  display: none;
-} */
 .product-gift-card .footer, .product-maria-tash-in-store-gift-card .footer{
 	padding-top: 0 !important;
 }
@@ -4472,21 +4460,14 @@ dt.post-lengthds-lbl {
   padding: 0 15px;
 }
 
-/*Paypal Review*/
+/********************Paypal Review************************/
 .info-set.paypal-product-section {
   margin-top: 44px;
 }
-
-/*Desktop Scaling*/
-/* .desktop-device #narrow-by-list{
-	min-width: 1366px;
-} */
-
 .cat-img-present {
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-
 .for-space-to-bottom{
 	height: 137px;
 }
@@ -4498,7 +4479,6 @@ dt.post-lengthds-lbl {
     background-repeat: no-repeat;
     background-color: #010409;
 }
-
 /************* New Changes: Catagory Pages *****************/
 .catalog-category-view .category-title h1 {
   font-size: 30px;
@@ -4506,11 +4486,23 @@ dt.post-lengthds-lbl {
 .catalog-product-view .for-space-to-bottom{
 	height: 129px;
 }
-
 .checkout-cart-index .cart-mt {
   margin-top: 42px;
 }
-
+/***********Fixes*********/
 .category-celebrity-clientele .category-products{
 	margin-bottom: 0;
+}
+.contact-us-wrapper {
+  margin-top: 23px;
+}
+.cms-contact-us h1 {
+  font-size: 22px !important;
+}
+.white-circle span {
+  font-size: 10px;
+  top: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

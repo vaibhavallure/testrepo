@@ -134,6 +134,10 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
+		 if (typeof Allure == "undefined") {
+		 	var Allure = {};
+		 }
+		Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
 		jQuery('.shipping-signature').on('change',function(){
 			var selector = jQuery(this);
 			var isInternational = selector.data("is_international");

@@ -156,10 +156,15 @@
 .dashboard .flex-row .flex-item .img-wrap{
 	height: 253px;
 }
-.dashboard h1,
+.dashboard h1{
+	padding-top: 50px;
+	margin-bottom: 20px;
+	font-size: 30px;
+	text-transform: capitalize;
+}
 .acc-products-wrapper h1{
-	padding-top: 60px;
-	margin-bottom: 30px;
+	padding-top: 55px;
+	margin-bottom: 16px;
 	font-size: 30px;
 	text-transform: capitalize;
 }
@@ -438,7 +443,7 @@
 /*=====================*/
 .login_security h1{
 	margin-bottom: 15px;
-	margin-top: 41px;
+	margin-top: 56px;
 	font-size: 30px;
 }
 .login_security .my-account li.control input:checked+label,
@@ -557,8 +562,8 @@
 /*=====================*/
 .my_addresses h1{
 	font-size: 30px;
-	margin-bottom: 30px;
-	margin-top: 37px;
+	margin-bottom: 18px;
+	margin-top: 49px;
 }
 .my_addresses ol,
 .my_addresses ol li{
@@ -1285,9 +1290,6 @@
 .customer-address-index .box-title{
 	position: relative;
 }
-.customer-address-index .breadcrumbs{
-	margin-top: 0!important;
-}
 .mt-wishlist-share-form .breadcrumbs{
 	display: none!important;
 }
@@ -1302,12 +1304,10 @@
 	top: 0;
 	left:0;
 	padding-left: 0;
-	margin-top: 17px;
+	/* margin-top: 17px; */
 }
 .customer-account-edit .col-xl-5.col-lg-6 .breadcrumbs{
-	position: absolute!important;
 	padding-left: 15px;
-	margin-top: 0;
 }
 .customer-account-index .breadcrumbs ul{
 	padding-left: 0;
@@ -1486,10 +1486,10 @@
 			width: 720px!important;
 			padding-left: 0!important;
 		}
-		.customer-address-index .breadcrumbs{
+		/* .customer-address-index .breadcrumbs{
 			margin-top: 0!important;
 			width: 690px!important;
-		}
+		} */
 		#shop_our_instagram{
 			margin-top: 0;
 		}
@@ -1588,12 +1588,6 @@
 		}
 	}
 	@media(max-width: 767px){
-		.my_addresses{
-			padding-top: 40px!important;
-		}
-		.login_security{
-			padding-top: 40px;
-		}
 		.catalog-product-view .quick_link{
 			padding-left: 38px;
 		}

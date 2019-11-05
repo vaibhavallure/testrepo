@@ -42,6 +42,27 @@
 
     </checkout_cart_index>
 
+	<checkout_multishipping>
+		<reference name="head">
+			<action method="addItem"><type>skin_css</type><name>amazon_payments/css/styles_onepage.css</name><params/></action>
+            <block type="amazon_payments/script" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+        </reference>
+
+        <reference name="before_body_end">
+            <block type="amazon_payments/script" name="amazon_payments.script.async" template="amazon_payments/script_async.phtml" />
+        </reference>
+        
+        <!-- <reference name="content">
+        	<block type="amazon_payments/onepage_widget" name="amazon_payments.onepage.widget" as="widget" template="amazon_payments/onepage/multi_widget.phtml" />
+        </reference> -->
+        
+	</checkout_multishipping>
+	
+	<!-- <checkout_multishipping_addresses translate="label">
+		<reference name="checkout_addresses">
+			<block type="amazon_payments/onepage_widget" name="amazon_payments.onepage.widget" as="widget" template="amazon_payments/onepage/multi_widget.phtml" />
+		</reference>
+	</checkout_multishipping_addresses> -->
 
     <!--
     OnePage checkout
@@ -109,7 +130,9 @@
 
             <block type="checkout/onepage_login" name="checkout.onepage.login" as="login" template="amazon_payments/onepage/login_cancel.phtml" />
 
-            <block type="amazon_payments/onepage_widget" name="amazon_payments.onepage.widget" as="widget" template="amazon_payments/onepage/widget.phtml" />
+            <block type="amazon_payments/onepage_widget" name="amazon_payments.onepage.widget" as="widget" template="amazon_payments/onepage/widget.phtml" >
+            	
+            </block>
 
 			
 			

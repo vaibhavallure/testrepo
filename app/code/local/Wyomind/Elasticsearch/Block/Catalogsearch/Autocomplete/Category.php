@@ -23,7 +23,7 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete_Category
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('allure/elasticsearch/autocomplete/category.phtml');
+        $this->setTemplate('wyomind/elasticsearch/autocomplete/category.phtml');
     }
 
     /**
