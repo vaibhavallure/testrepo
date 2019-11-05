@@ -51,6 +51,7 @@
         	</div>
     		<?php echo $this->getMessagesBlock()->toHtml() ?>
             <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
+                <?php echo $this->getChildHtml("widget");?>
                 <div class="multiple-checkout">
                     <div class="page-title title-buttons row">
                     	<?php if( (!$redesignHelper->isQuoteContainSingleQty()) || $isMultiple):?>

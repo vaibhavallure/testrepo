@@ -63,14 +63,23 @@
 		</resources>
 		<fieldsets>
 			<sales_convert_quote_item>
-				<is_gift>
+				<is_gift_item>
 					<to_order_item>*</to_order_item>
-				</is_gift>
+				</is_gift_item>
+				<gift_item_qty>
+					<to_order_item>*</to_order_item>
+				</gift_item_qty>
+				<is_gift_wrap>
+					<to_order_item>*</to_order_item>
+				</is_gift_wrap>
+				<gift_wrap_qty>
+					<to_order_item>*</to_order_item>
+				</gift_wrap_qty>
 			</sales_convert_quote_item>
 			<sales_convert_order_item>
-				<is_gift>
+				<is_gift_item>
 					<to_quote_item>*</to_quote_item>
-				</is_gift>
+				</is_gift_item>
 			</sales_convert_order_item>
 		</fieldsets>
 	</global>
