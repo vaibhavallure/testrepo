@@ -1912,7 +1912,7 @@ div#narrow-by-list {
 	width: 100%;
 }
 .about-designer {
-  margin-top: 16px;
+  margin-top: 47px;
   padding: 0 81px;
   margin-bottom: 11px;
 }
@@ -1921,6 +1921,7 @@ div#narrow-by-list {
   text-transform: none;
   margin-bottom: 38px;
   letter-spacing: 0;
+	margin-top: -8px;
 }
 .about-designer .para-normal {
   margin-bottom: 20px;
@@ -4513,4 +4514,11 @@ dt.post-lengthds-lbl {
 }
 .myaccount-index-index .page.layout-grid {
   height: 100vh;
+}
+.add-to-cart-left .total_qty{
+	text-align: center;
+  padding: 0;
+}
+.amazon-widget .amazon-change-pay{ /****By Sagar******/
+	width:auto;
 }

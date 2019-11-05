@@ -133,7 +133,7 @@
     margin-top: 0;
     margin-bottom: 0px;
   }
-  .designer-copy{
+  .mobile-device .designer-copy{
     margin: 30px 0 5px;
   }
   .faq-main > .row{
@@ -749,7 +749,7 @@
   .about-designer{
     padding: 0 26px;
   }
-  .about-designer h1{
+  .mobile-device .about-designer h1{
     margin-bottom: 20px;
   }
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
@@ -1654,7 +1654,7 @@
  }
 }
 
-/* Big Screen Laptops */
+/************** Big Screen Laptops ***************/
 @media (min-width:1920px){
   .inner-box{
     width: 742px;
@@ -1701,7 +1701,7 @@
   }
 }
 
-/* Small Laptops : 1366px */
+/*************Small Laptops : 1366px ***********/
 @media (min-width:1025px) and (max-width:1432px) {
   .swatches li{
     margin-left: 7px;
@@ -1827,6 +1827,15 @@
   .desktop-device .product-shop{
     flex: 0 0 100%;
   }
+  .about-designer h1{
+    margin-bottom: 0;
+  }
+  .about-designer{
+    margin-top: 27px;
+  }
+  .about-designer.designer-image-section {
+    margin-top: 20px;
+  }
 }
 @media (min-width:851px) and (max-width:991px){
   .product-view-left {
@@ -1840,6 +1849,16 @@
   .product-img-box {
     display: flex;
     justify-content: center;
+  }
+  .designer-image, .designer-copy{
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .d-block.d-lg-none.about-designer{
+    display: none !important;
+  }
+  .designer-copy .d-lg-block.d-none{
+    display: block !important;
   }
 }
 @media (min-width:768px) and (max-width:991px) {
@@ -1871,9 +1890,9 @@
     }
 }
 @media (min-width:768px) and (max-width:1023px) {
-  .desktop-device .homepage-menu.mariatash-header{
+  /* .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
-  }
+  } */
 }
 @media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
@@ -1887,9 +1906,9 @@
   .cms-home .homepage-menu.mariatash-header:hover{
   	background: rgba(41, 41, 41, 0.9) !important;
   }
-  .zopim {
+  /* .zopim {
     bottom: 59px!important;
-  }
+  } */
 }
 @media (min-width:686px) and (max-width:850px){
   .post_optio .chooseList ul li.option{
