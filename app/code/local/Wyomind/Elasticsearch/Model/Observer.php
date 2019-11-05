@@ -39,11 +39,11 @@ class Wyomind_Elasticsearch_Model_Observer
         }else{
             $orderArray = $observer->getEvent()->getOrders();
         }
-        
+
         $ids = array();
         foreach ($orderArray as $order){
             $items = $order->getItemsCollection();
-            
+
             foreach ($items as $item) {
                 if ($item->getParentItem()) {
                     continue;
@@ -52,7 +52,7 @@ class Wyomind_Elasticsearch_Model_Observer
             }
             $ids[] = $item->getProductId();
         }
-        
+
         if (Mage::helper('elasticsearch')->isActiveEngine()) {
             try {
                 $store = Mage::app()->getStore();
@@ -95,7 +95,7 @@ class Wyomind_Elasticsearch_Model_Observer
                 9 => 9,
                 10 => 10,
             ),
-                ), 'is_searchable');
+        ), 'is_searchable');
 
         if ($attribute->getAttributeCode() == 'name') {
             $form->getElement('is_searchable')->setDisabled(1);
@@ -113,7 +113,7 @@ class Wyomind_Elasticsearch_Model_Observer
         /** @var Mage_Catalog_Model_Category $category */
         $category = $observer->getEvent()->getCategory();
         Mage::getSingleton('index/indexer')
-                ->processEntityAction($category, Mage_Catalog_Model_Category::ENTITY, Mage_Index_Model_Event::TYPE_DELETE);
+            ->processEntityAction($category, Mage_Catalog_Model_Category::ENTITY, Mage_Index_Model_Event::TYPE_DELETE);
     }
 
     /**
@@ -127,7 +127,7 @@ class Wyomind_Elasticsearch_Model_Observer
         /** @var Mage_Cms_Model_Page $page */
         $page = $observer->getEvent()->getObject();
         Mage::getSingleton('index/indexer')
-                ->processEntityAction($page, 'cms_page', Mage_Index_Model_Event::TYPE_SAVE);
+            ->processEntityAction($page, 'cms_page', Mage_Index_Model_Event::TYPE_SAVE);
     }
 
     /**
@@ -141,7 +141,7 @@ class Wyomind_Elasticsearch_Model_Observer
         /** @var Mage_Cms_Model_Page $page */
         $page = $observer->getEvent()->getObject();
         Mage::getSingleton('index/indexer')
-                ->processEntityAction($page, 'cms_page', Mage_Index_Model_Event::TYPE_DELETE);
+            ->processEntityAction($page, 'cms_page', Mage_Index_Model_Event::TYPE_DELETE);
     }
 
     /**

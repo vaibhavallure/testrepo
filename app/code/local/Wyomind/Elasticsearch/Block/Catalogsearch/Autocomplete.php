@@ -38,7 +38,7 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete extends Wyomind_Ela
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('allure/elasticsearch/autocomplete.phtml');
+        $this->setTemplate('wyomind/elasticsearch/autocomplete.phtml');
         $this->_helper = Mage::helper('elasticsearch/autocomplete');
     }
 
@@ -122,7 +122,6 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete extends Wyomind_Ela
             $collection = $this->_helper->getProductCollection($query);
 
             $collection->addAttributeToSelect($this->_helper->getProductAttributes())
-                ->addAttributeToSelect('short_description')
                 ->addMinimalPrice()
                 ->addFinalPrice()
                 ->addTaxPercents()
@@ -196,7 +195,7 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete extends Wyomind_Ela
 
     /**
      * Returns autocomplete limit
-     *
+     * 
      * @param string $entity
      * @return int
      */
@@ -284,7 +283,7 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete extends Wyomind_Ela
      */
     public function getAllResultsLabel()
     {
-        $label = $this->getLabel('View all %d items');
+        $label = $this->getLabel('All Results') . ' (%d)';
 
         return sprintf($label, $this->getProductCollection()->getSize());
     }

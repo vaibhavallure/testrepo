@@ -2,7 +2,7 @@
 <layout version="0.1.0">
     <default>
         <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>css/allure/elasticsearch.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/wyomind/elasticsearch.css</name></action>
         </reference>
         <reference name="after_body_start">
             <block type="core/template" name="wyomind.elasticsearch.form.js" template="wyomind/elasticsearch/form/js.phtml" />
