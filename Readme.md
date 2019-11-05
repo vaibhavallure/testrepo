@@ -1,7 +1,7 @@
 # Projet Millesima Emailing
 ## Requirements
 - Docker & docker-compose
-- Composer & php7.2+ with enabled extensions soap, gd, mysql, curl, zip
+- Composer & php7.2+ with enabled extensions soap, gd, mysql, curl, zip, dom, mbstring
 
 ## Containers
 - millesima-emailing-php-fpm responsible for php-fpm service
@@ -58,10 +58,17 @@ If you want to use phpmyadmin :
 - check phpdocker/php-fpm/php-ini-overrides.ini 
 - see section below
 
+## Access php logs
+> docker exec -it millesima-emailing-webserver sh
+>
+> cd /var/log/nginx/
+- check your stuffs 
+
+
 ## Getting Production Ready
 - Setup cron* files on project root in a crontab
 - Setup mails on server so that sales, marketing etc.. can be aware of their tasks
-- Edit /class/millesima_abstract.php to setup Host server
+- Edit /class/millesima_abstract.php to setup DOCKER_HOST_IP and DOCKER_HOST_PORT
 - Test stuffs before deploying ...
 
 ## Todos
