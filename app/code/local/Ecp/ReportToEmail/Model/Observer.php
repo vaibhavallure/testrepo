@@ -68,6 +68,7 @@ class Ecp_ReportToEmail_Model_Observer
 
         $from = $yesterday."00:00:00";
         $to = $yesterday."23:59:59";
+
         /* if($storeId==1){
             $from = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($from)));
             $to = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($to)));
@@ -104,6 +105,7 @@ class Ecp_ReportToEmail_Model_Observer
         $curTime = new DateTime();
         if ($time != (int) $curTime->format("H") && $runFrom!="manual")
             return;
+
 
         $collection = Mage::getModel('sales/order')->getCollection();
         $collection->getSelect()
@@ -314,10 +316,9 @@ class Ecp_ReportToEmail_Model_Observer
         $to2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($to1)));
 
         $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
-
         $curTime = new DateTime();
-//        if ($time != (int) $curTime->format("H") && $runFrom!="manual")
-//            return;
+        if ($time != (int) $curTime->format("H") && $runFrom!="manual")
+            return;
 
 
 
@@ -331,7 +332,6 @@ class Ecp_ReportToEmail_Model_Observer
 
     public function sendReportNew($date=null,$ismail=null,$runFrom=null)
     {
-
 
         $this->add_log("new script executed");
         if($runFrom=="manual")
@@ -361,7 +361,6 @@ class Ecp_ReportToEmail_Model_Observer
                 // Mage::log($emails);
 
                 $symbol="$";
-
                 $dataArray = $this->getDataForReportNew($storesId,$date,$runFrom);
                 $data = $dataArray["data"];
                 $data2 = $dataArray["data2"];
@@ -659,8 +658,8 @@ class Ecp_ReportToEmail_Model_Observer
                 }
 
                 $storesId = $storeObj->getData('store_id');
-//                if (! $emails)
-//                    return;
+                if (! $emails)
+                    return;
                 $emails = explode(',', $emails);
                 // Mage::log($emails);
 
