@@ -1890,9 +1890,9 @@
     }
 }
 @media (min-width:768px) and (max-width:1023px) {
-  /* .desktop-device .homepage-menu.mariatash-header{
+  .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
-  } */
+  }
 }
 @media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
