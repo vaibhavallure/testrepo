@@ -133,7 +133,7 @@
     margin-top: 0;
     margin-bottom: 0px;
   }
-  .designer-copy{
+  .mobile-device .designer-copy{
     margin: 30px 0 5px;
   }
   .faq-main > .row{
@@ -1842,9 +1842,9 @@
   .about-designer h1{
     margin-bottom: 0;
   }
-  /* .about-designer{
+  .about-designer, .jewelry-container{
     margin-top: 27px;
-  } */
+  }
   .about-designer.designer-image-section {
     margin-top: 20px;
   }
@@ -1875,10 +1875,11 @@
   .responsive-direction {
     flex-direction: initial;
   }
+}
+@media (min-width:851px) and (max-width:992px){
   .copy-section {
     padding: 0 15px;
   }
-
 }
 @media (min-width:768px) and (max-width:991px) {
   .desktop-device .maria-left-menus{
@@ -1890,9 +1891,6 @@
   }
   .catalog-product-view .for-space-to-bottom{
     height: 73px;
-  }
-  .jewelry-container{
-    margin-top: 27px;
   }
 }
 @media (max-width:991px){
