@@ -688,62 +688,39 @@ class Ecp_ReportToEmail_Model_Observer
 
                 $mailbody = <<<EOT
                         <div style="border-top:3px solid white;text-align:center;float:left;background:linear-gradient(to right,#374254,#374281);display: inline-flex;margin: 0.3rem;">
-                        <table width="300" cellpadding="7" style="border-right: 1px solid #373c59;">
-                            <tbody>
+                        <table width="400" cellpadding="7">
+                            <tbody>                            
                             <tr>
-                                <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
-                                                style="font-size:16px"><u><strong>Magento</strong></u></span></span></td>
+                                <td colspan="3" style="text-align:center"><span style="color:#ffffff"><span
+                                                style="font-size:16px"><u><strong>{$storeObj->getData("name")}</strong></u></span></span></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
-                                                style="font-size:16px"><u><strong>{$storeObj->getData("name")}</strong></u></span></span></td>
+                                                style="font-size:16px"><u><strong>Magento</strong></u></span></span></td>
+                                                <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
+                                                style="font-size:16px"><u><strong>Teamwork</strong></u></span></span></td>
                             </tr>
                             <tr>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
                                                     style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px">{$data['orders_count']}</span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
-                                                    style="font-size:14px"><strong>Total Units Sold</strong></span></span></span></td>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px">{$data['total_qty_ordered']}</span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
-                                                    style="font-size:14px"><strong>Net Sales Amount</strong></span></span></span></td>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$data['total_profit']}</span></span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table width="300" cellpadding="7">
-                            <tbody>
-                            <tr>
-                                <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
-                                                style="font-size:16px"><u><strong>Teamwork</strong></u></span></span></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
-                                                style="font-size:16px"><u><strong>{$storeObj->getData("name")}</strong></u></span></span></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
-                                                    style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px">{$twTrans}</span></span></td>
                             </tr>
                             <tr>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
                                                     style="font-size:14px"><strong>Total Units Sold</strong></span></span></span></td>
+                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px">{$data['total_qty_ordered']}</span></span></td>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px">{$twSoldQty}</span></span></td>
                             </tr>
                             <tr>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
                                                     style="font-size:14px"><strong>Net Sales Amount</strong></span></span></span></td>
+                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$data['total_profit']}</span></span>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$twNetSales}</span></span>
                                 </td>
                             </tr>
                             </tbody>
-                        </table>
+                        </table>                        
                     </div>                    
 EOT;
 
