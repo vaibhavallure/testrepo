@@ -93,6 +93,7 @@ h4{
 .para-lighter{
 	font-family: urw-din-xlight;
 	font-size: 13px;
+	color: rgba(41,41,41,0.9) !important;
 }
 
 .para-bold{
@@ -203,9 +204,14 @@ h4{
 #shop_our_instagram{
 	margin-top: 23px;
 }
-/* .catalog-category-view.category-press .for-space-to-bottom {
-  height: 307px;
-} */
+
+.text-underline{
+	text-decoration: underline;
+}
+
+.text-underline:hover {
+    text-decoration: underline;
+}
 
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
@@ -766,7 +772,7 @@ nav.mariatash-header {
   margin-right: 40px;
 }
 .container-footlinks {
-  background: rgba(41, 41, 41, 0.5);
+  background: rgba(41, 41, 41, 0.9);
 	width: 100%;
   margin: 0;
 	transition: all 1s;
@@ -1519,7 +1525,7 @@ input[type="checkbox"]:checked+label:before {
 .last.nav-item, .main-nav-link li:last-child {
   margin-right: 0;
 }
-.mariatash-header:hover, .container-footlinks:hover{
+.mariatash-header:hover{
   background-color: rgba(41,41,41,0.90);
 }
 .maria-black{
@@ -4502,7 +4508,7 @@ dt.post-lengthds-lbl {
 	margin-bottom: 0;
 }
 .contact-us-wrapper {
-  margin-top: 23px;
+  margin-top: 40px;
 }
 .cms-contact-us h1 {
   font-size: 22px !important;
@@ -4528,4 +4534,13 @@ dt.post-lengthds-lbl {
 }
 .zopim.bottom-change{
 	bottom:60px!important;
+}
+#footer8 .nav-item span {
+  letter-spacing: 0;
+}
+.product-collateral .para-lighter{
+	color: #000 !important;
+}
+.contact-us-wrapper h1 {
+  font-size: 30px !important;
 }
