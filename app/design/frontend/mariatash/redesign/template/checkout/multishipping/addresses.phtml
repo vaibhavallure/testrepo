@@ -192,6 +192,11 @@
     	<?php endif;?>
     	<?php $cnt++; ?>
     <?php endforeach;?>
+    	<li>
+    		<div class="checkout-block">
+   				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
+			</div>
+    	</li>
     </ol>
 </div>
 <script type="text/javascript">
