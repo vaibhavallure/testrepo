@@ -64,6 +64,11 @@ If you want to use phpmyadmin :
 > cd /var/log/nginx/
 - check your stuffs 
 
+## Update products (table baseok)
+- Ask Picks to put csv file base_complete.csv in bdd folder (using a samba share)
+- Ask then Pick to call wget -O -http://srv-v-zend:8080/LaunchSqlBaseProduit.php
+- Launch this process using Pick Menu : 7/10/6/12 
+- Rework this process asap...
 
 ## Getting Production Ready
 - Setup cron* files on project root in a crontab
