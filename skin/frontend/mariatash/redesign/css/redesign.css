@@ -1941,6 +1941,7 @@ div#narrow-by-list {
   text-transform: none;
   letter-spacing: 0;
   margin-bottom: 30px;
+	margin-top: -8px;
 }
 .about-jewelry h3{
   font-family: urw-din-bold;
@@ -1960,7 +1961,7 @@ div#narrow-by-list {
   padding: 0 29px 0 27px;
 }
 .jewelry-container {
-  margin-top: 32px;
+  margin-top: 47px;
   margin-bottom: 40px;
 }
 .about-jewelry .para-normal{

@@ -129,7 +129,7 @@
   .image-section, .copy-section{
     padding: 0;
   }
-  .jewelry-container{
+  .mobile-device .jewelry-container{
     margin-top: 0;
     margin-bottom: 0px;
   }
@@ -527,6 +527,7 @@
     background: transparent;
     width: 100%;
   }
+
 }
 
 /*All ipads*/
@@ -549,13 +550,6 @@
   .desktop-device .category-image img{
     display: block;
   }
-  /* .desktop-device .homepage-menu.mariatash-header{
-    background: transparent;
-  } */
-
-  /* .desktop-device .five-col{
-  	height: 362px;
-  } */
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
@@ -741,6 +735,10 @@
   .mobile-device.catalog-category-view .category-title{
     padding-left: 77px !important;
   }
+  .jewelry-container{
+    margin-top: 0;
+    padding: 0 30px;
+  }
 }
 
 
@@ -925,8 +923,8 @@
   .catalog-product-view .for-space-to-bottom{
     height: 60px !important;
   }
-  .copy-section{
-    margin: 30px 0 0;
+  .mobile-device .copy-section{
+    margin: 20px 0 0;
   }
   .about-jewelry h1{
     margin-bottom: 20px;
@@ -1122,6 +1120,9 @@
   }
   .gift-card-main .content-customer{
     margin-bottom: 50px;
+  }
+  .jewelry-container{
+    margin-top: 20px;
   }
 }
 
@@ -1751,6 +1752,9 @@
 .navbar-toggler{
     top: 28px;
   }
+  .copy-section {
+    padding: 0;
+  }
 }
 @media (min-width:1200px) and (max-width:1430px) {
   .inner-box{
@@ -1772,6 +1776,14 @@
 @media (min-width:992px) and (max-width:1023px){
 .desktop-device .maria-left-menus li:first-child, .desktop-device .maria-left-menus li:nth-child(2){
   display: block;
+  }
+.responsive-direction {
+  flex-direction: initial;
+  }
+}
+@media (max-width: 1200px){
+  .about-jewelry{
+    padding: 0 26px;
   }
 }
 @media (min-width:992px) and (max-width:1200px){
@@ -1830,9 +1842,9 @@
   .about-designer h1{
     margin-bottom: 0;
   }
-  /* .about-designer{
+  .about-designer, .jewelry-container{
     margin-top: 27px;
-  } */
+  }
   .about-designer.designer-image-section {
     margin-top: 20px;
   }
@@ -1850,15 +1862,23 @@
     display: flex;
     justify-content: center;
   }
-  .designer-image, .designer-copy{
+  .designer-image, .designer-copy, .image-section, .copy-section{
     flex: 0 0 50%;
     max-width: 50%;
   }
-  .d-block.d-lg-none.about-designer{
+  .d-block.d-lg-none.about-designer, .d-block.d-lg-none.jewelry-title{
     display: none !important;
   }
-  .designer-copy .d-lg-block.d-none{
+  .designer-copy .d-lg-block.d-none, .jewelry-title h1.d-lg-block.d-none{
     display: block !important;
+  }
+  .responsive-direction {
+    flex-direction: initial;
+  }
+}
+@media (min-width:851px) and (max-width:992px){
+  .copy-section {
+    padding: 0 15px;
   }
 }
 @media (min-width:768px) and (max-width:991px) {
@@ -1871,6 +1891,11 @@
   }
   .catalog-product-view .for-space-to-bottom{
     height: 73px;
+  }
+}
+@media (max-width:991px){
+  .desktop-device .image-section{
+    margin-bottom: 30px;
   }
 }
 @media (max-width:749px){
@@ -1893,6 +1918,9 @@
   .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
   }
+}
+@media (min-width:768px) and (max-width:1024px) {
+
 }
 @media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
@@ -1918,5 +1946,10 @@
 @media (min-width:581px) and (max-width:650px){
   .post_optio .chooseList ul li.option{
     min-width: 120px;
+  }
+}
+@media (max-width:850px){
+  .about-jewelry h1{
+    margin-top: 0;
   }
 }
