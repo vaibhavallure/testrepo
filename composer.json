@@ -12,7 +12,19 @@
         "ckeditor/ckeditor": "^4.12",
         "fancyapps/fancybox": "^2.1",
         "voku/html-min": "^4.0",
-        "datatables/datatables": "^1.10"
+        "datatables/datatables": "^1.10",
+        "jakoch/phantomjs-installer": "^2.1"
     },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ],
+    "post-update-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ]
+  },
     "minimum-stability": "stable"
 }
