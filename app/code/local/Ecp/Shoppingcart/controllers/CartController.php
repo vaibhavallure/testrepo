@@ -189,8 +189,15 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
             
             if ($ajax) {
                 
+               /*  Mage::dispatchEvent('checkout_cart_add_product_complete',
+                    array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
+                    ); */
+                
                 $content = $this->getLayout()
                         ->createBlock('checkout/cart_sidebar')
+                        ->addItemRender('simple', 'checkout/cart_item_renderer', 'checkout/cart/sidebar/default.phtml')
+                        ->addItemRender('grouped', 'checkout/cart_item_renderer_grouped', 'checkout/cart/sidebar/default.phtml')
+                        ->addItemRender('configurable', 'checkout/cart_item_renderer_configurable', 'checkout/cart/sidebar/default.phtml')
                         ->setTemplate('checkout/cart/sidebar.phtml')                    
                         ->toHtml();
                 $this->getResponse()->setBody($content);
