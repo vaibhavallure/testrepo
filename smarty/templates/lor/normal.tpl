@@ -30,9 +30,10 @@
     <!-- Here comes all the responsive part -->
     <style type="text/css">
         /* RESET CSS */
-         p{
-            padding-right:20px;
-            padding-left:20px
+
+        .t_fz15px > P{
+            margin:auto;
+            max-width:495px;
         }
 
         #outlook a {
@@ -383,7 +384,7 @@
                 font-size: 30px!important
             }
             .m_pl8p {
-                padding-left: 8%!important
+                padding-left: 3%!important
             }
             .m_lh32px {
                 line-height: 32px!important
@@ -395,7 +396,7 @@
                 padding-top: 15px!important
             }
             .m_pr8p {
-                padding-right: 8%!important
+                padding-right: 3%!important
             }
             .m_lh21px {
                 line-height: 21px!important
@@ -575,8 +576,10 @@
 <!--==============Logo ===============-->
 {include file="$tpl/bandeaux/bandeau.tpl"}
 <!--==============Bandeau noir offre===============-->
-{if $bdheader.title OR $bdheader.detail OR $bdheader.asterisque}
-    {include file="$tpl/informations_importantes/structure_info.tpl"}
+{if $typecgv != "primeurs"}
+    {if $bdheader.title OR $bdheader.detail OR $bdheader.asterisque}
+        {include file="$tpl/informations_importantes/structure_info.tpl"}
+    {/if}
 {/if}
 <!--==============Image principale/Bandeau===============-->
 {if isset($titregen)}
@@ -606,8 +609,10 @@
     {include file="$tpl/articles/article.tpl"}
 {/if}
 <!--==============Bandeau Frais de port==============-->
-{if isset($fdpo.ssphrase)}
-    {include file="$tpl/informations_importantes/structure_fdpo.tpl"}
+{if $typecgv != "primeurs"}
+    {if isset($fdpo.ssphrase)}
+        {include file="$tpl/informations_importantes/structure_fdpo.tpl"}
+    {/if}
 {/if}
 <!--=============Bloc push debut===============-->
 {include file="$tpl/push/push.tpl"}

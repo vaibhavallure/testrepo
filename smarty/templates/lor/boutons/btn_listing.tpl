@@ -19,8 +19,8 @@
                 </center>
             </v:roundrect>
             <![endif]-->
-			<a href="{$siteweb}{$produit->url_produit}.html?{$tracking}" style="background-color:{$codecouleur};border-radius:3px;color:{$couleurtxtbtn};font-family:Georgia,Times,Times New Roman,serif;font-weight:bold;font-size:16px;height:40px;text-align:center;line-height:40px;mso-hide:all;display:inline-block;-webkit-text-size-adjust:none;text-decoration:none;width:161px"
-			   class="t_fwbold t_fsnormal t_w100p m_fwbold m_fsnormal m_w100p crimsontext">
+			<a href="{$siteweb}{$produit->url_produit}.html?{$tracking}" style="background-color:{$codecouleur};border-radius:3px;color:{$couleurtxtbtn};font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:13px;height:40px;text-align:center;line-height:40px;mso-hide:all;display:inline-block;-webkit-text-size-adjust:none;text-decoration:none;width:161px"
+			   class="t_fwbold t_fsnormal t_w100p m_fwbold m_fsnormal m_w100p opensans">
 				{$tradbtns.savr.$country}
 			</a>
 		</td>

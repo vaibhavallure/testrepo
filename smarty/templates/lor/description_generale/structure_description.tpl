@@ -12,7 +12,7 @@
                         <!-- Début titre -->
                         <table cellpadding="0" cellspacing="0" border="0" width="495" align="center" style="margin:auto;width:495px" class="t_w100p m_w100p" role="presentation">
                             <tr>
-                                <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#0a0a0a;text-align:left;font-size:25px;padding-top:20px;vertical-align:middle;line-height:30px" class="t_fz30px t_pl8p t_lh32px m_fz30px m_pl8p m_lh32px crimsontext">
+                                <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#0a0a0a;text-align:center;font-size:25px;padding-top:20px;vertical-align:middle;line-height:30px" class="t_fz30px t_pl8p t_lh32px m_fz30px m_pl8p m_lh32px crimsontext">
                                     {if $desc.titre}{$desc.titre}{/if}
                                 </td>
                             </tr>
@@ -23,7 +23,7 @@
                         <!-- Fin titre -->
 
                         <!-- Début texte-->
-                        <table cellpadding="0" cellspacing="0" border="0" width="495" align="center" style="width:495px" class="t_w100p m_w100p" role="presentation">
+                        <table cellpadding="0" cellspacing="0" border="0" width="495" align="center" style="width:495px;" class="t_w100p m_w100p" role="presentation">
                             <tr>
                                 <td style="font-family:Arial,Helvetica,sans-serif;color:#272727;text-align:{$desc.textalign};font-size:13px;padding-top:30px;padding-bottom:20px;vertical-align:middle;line-height:18px" class="t_fz15px t_pt15px t_pr8p t_pb25px t_pl8p t_lh21px m_fz15px m_pt15px m_pr8p m_pb25px m_pl8p m_lh21px">
                                     {$desc.text}{if isset($lstprmodesc)}{if $desc.text != ""}<br /><br />{/if}{$lstpromotab.desc}{/if}
@@ -42,7 +42,7 @@
 
                         </table>
                         <!-- Fin texte -->
-                        <table cellpadding="0" cellspacing="0" border="0" width="200" align="left" style="width:200px" class="t_w100p m_w100p">
+                        <table cellpadding="0" cellspacing="0" border="0" width="200" align="center" style="width:200px" class="t_w100p m_w100p">
                             <tr>
                                 <td style="">
 

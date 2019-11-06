@@ -1,5 +1,5 @@
 <table width="650" border="0" cellspacing="0" cellpadding="0" align="center"><tr>
-<td><a href="http://www.millesima-usa.com/special-offers/promo-703.html?{$tracking}"><img src="http://cdn.millesima.com/templates/listing/staffpicks/bandeauU.jpg" border="0" width="650" height="300" alt="Our selection of the month" title="Our selection of the month" style="display:block;" /></a></td></tr>
+<td><a href="http://www.millesima-usa.com/special-offers/promo-703.html?{$tracking}"><img src="http://cdn.millesima.com/templates/listing/staffpicks/bandeauU.jpg" border="0" height="300" alt="Our selection of the month" title="Our selection of the month" style="display:block;" /></a></td></tr>
 <tr><td>&nbsp;</td></tr></table>
 {foreach from=$liste_produits item=produit name=mesprod}
 {if $smarty.foreach.mesprod.first}<table width="650"><tr><td height="7" style="font-size:5px;" colspan="4">&nbsp;</td></tr><tr>{/if}

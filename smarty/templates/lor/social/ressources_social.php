@@ -21,18 +21,21 @@ switch ($country) {
 		$social = array(    "titre"=>"Suivez notre actualité",
 		                    "facebook" => "https://www.facebook.com/millesima",
 							"twitter" => "https://twitter.com/MillesimaFR",
-							"instagram" => "https://www.instagram.com/millesima",
-							"youtube" => "http://www.youtube.com/user/Millesima"
+                            "linkedin" => "https://fr.linkedin.com/company/millesima-sa",
+							"youtube" => "http://www.youtube.com/user/Millesima",
+                            "instagram" => "https://www.instagram.com/millesima"
 						);
 		break;
 
 	case "D" :
 	case "O" :
 	case "SA" :
-		$social = array( "facebook" => "https://www.facebook.com/millesima",
+		$social = array(    "titre"=>"Millésima infos im sozialen netzwerk",
+                            "facebook" => "https://www.facebook.com/millesima",
 							"twitter" => "https://twitter.com/MillesimaDE",
-							"google" => "http://plus.google.com/+millesima", 
-							"youtube" => "http://www.youtube.com/user/Millesima"
+                            "linkedin" => "https://www.linkedin.com/company/millesima-sa",
+							"youtube" => "http://www.youtube.com/user/Millesima",
+                            "instagram" => "https://www.instagram.com/millesima"
 						);
 		break;
 
@@ -40,42 +43,52 @@ switch ($country) {
 	case "H" :
 	case "I" :
 	case "SG" :
-		$social = array( "facebook" => "https://www.facebook.com/millesima",
+		$social = array(    "titre"=>"Follow our latest news",
+                            "facebook" => "https://www.facebook.com/millesima",
 							"twitter" => "https://twitter.com/MillesimaENG",
-							"google" => "http://plus.google.com/+millesima", 
-							"youtube" => "http://www.youtube.com/user/Millesima"
+                            "linkedin" => "https://www.linkedin.com/company/millesima-sa",
+							"youtube" => "http://www.youtube.com/user/Millesima",
+                            "instagram" => "https://www.instagram.com/millesima"
 						);
 		break;
 
 	case "Y" :
-		$social = array( "facebook" => "https://www.facebook.com/millesima",
+		$social = array(    "titre"=>"Seguite le nostre news",
+                            "facebook" => "https://www.facebook.com/millesima",
 							"twitter" => "https://twitter.com/MillesimaIT",
-							"google" => "http://plus.google.com/+millesima", 
-							"youtube" => "http://www.youtube.com/user/Millesima"
+                            "linkedin" => "https://www.linkedin.com/company/millesima-sa",
+							"youtube" => "http://www.youtube.com/user/Millesima",
+                            "instagram" => "https://www.instagram.com/millesima"
 						);
 		break;
 
 	case "E" :
-		$social = array( "facebook" => "https://www.facebook.com/millesima",
+		$social = array(    "titre"=>"Siga toda nuestra actualidad",
+                            "facebook" => "https://www.facebook.com/millesima",
 							"twitter" => "https://twitter.com/MillesimaENG",
-							"google" => "http://plus.google.com/+millesima", 
-							"youtube" => "http://www.youtube.com/user/Millesima"
+                            "linkedin" => "https://www.linkedin.com/company/millesima-sa",
+							"youtube" => "http://www.youtube.com/user/Millesima",
+                            "instagram" => "https://www.instagram.com/millesima"
 						);
 		break;
 
 	case "P" :
-		$social = array( "facebook" => "https://www.facebook.com/millesima",
-							"twitter" => "https://twitter.com/MillesimaENG",
-							"google" => "http://plus.google.com/+millesima", 
-							"youtube" => "http://www.youtube.com/user/Millesima"
+		$social = array(    "titre"=>"Siga a actualidade da Millésima",
+                            "facebook" => "https://www.facebook.com/millesima",
+							"twitter" => "https://twitter.com/MillesimaFR",
+                            "linkedin" => "https://www.linkedin.com/company/millesima-sa",
+							"youtube" => "http://www.youtube.com/user/Millesima",
+                            "instagram" => "https://www.instagram.com/millesima"
 						);
 		break;
 	
 	case "U" :
-		$social = array( "facebook" => "https://www.facebook.com/Millesima.USA",
+		$social = array(    "titre"=>"Follow our latest news",
+                            "facebook" => "https://www.facebook.com/Millesima.USA",
 							"twitter" => "https://twitter.com/MillesimaUSA",
-							"google" => "https://plus.google.com/+Millesima-usa", 
-							"youtube" => "https://www.youtube.com/channel/UCZY1o_kNZID-qf0CyQN4X3w"
+                            "linkedin" => "https://www.linkedin.com/company/millesima-sa",
+                            "youtube" => "https://www.youtube.com/channel/UCZY1o_kNZID-qf0CyQN4X3w",
+                            "instagram" => "https://www.instagram.com/millesimausa"
 						);
 		break;
 	

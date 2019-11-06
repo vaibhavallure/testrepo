@@ -63,7 +63,7 @@
                                                                 <tr>
                                                                     <td style="text-align:center" class="m_pb20px">
                                                                        {if isset($numero) }
-                                                                        <a href="{$numero.href}" style="color:#000000;outline:none;border:none" title="Contactez-nous !">
+                                                                        <a href="{$numero.href}" style="color:#000000;outline:none;border:none" title="{$tabcontacts.alt}">
                                                                             <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-phone.png" alt="Phone" width="15" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
                                                                         </a>
                                                                        {/if}
@@ -82,12 +82,12 @@
                                                     <tr>
                                                         <td>
 
-                                                            <!-- Nuémro de téléphone-->
+                                                            <!-- Numero de téléphone-->
                                                             <table cellpadding="0" cellspacing="0" border="0" width="127" align="center" style="margin:auto;width:127px" class="t_w100p m_w100p" role="presentation">
                                                                 <tr>
                                                                     <td style="color:#ffffff;text-align:center;font-size:13px;padding-top:4px;padding-bottom:4px;vertical-align:middle;line-height:15px" class="m_pb24px">
                                                                         {foreach from=$tabcontacts.telephone item=numero name=numeros}{if $smarty.foreach.numeros.first}
-                                                                            <a href="{$numero.href}" style="color:#ffffff;line-height:15px;display:block;text-decoration:none;outline:none" title="Contactez-nous !">
+                                                                            <a href="{$numero.href}" style="color:#ffffff;line-height:15px;display:block;text-decoration:none;outline:none" title="{$tabcontacts.alt}">
                                                                                 <span style="text-decoration: underline">{$numero.label}</span>
                                                                             </a>
                                                                         {/if}
@@ -128,7 +128,7 @@
                                                                 <tr>
                                                                     <td style="text-align:center">
                                                                         {foreach from=$tabcontacts.emails item=email name=emails}
-                                                                            <a href="mailto:{$email}" style="color:#000000;outline:none;border:none" title="Contactez-nous !">
+                                                                            <a href="mailto:{$email}" style="color:#000000;outline:none;border:none" title="{$tabcontacts.alt}">
                                                                                 <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-mail.png" alt="email" width="25" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
                                                                             </a>
                                                                             {if not $smarty.foreach.emails.last}{/if}{/foreach}
@@ -150,7 +150,7 @@
                                                                 <tr>
                                                                     <td style="color:#ffffff;text-align:center;font-size:13px;padding-top:4px;padding-bottom:4px;vertical-align:middle;line-height:15px">
                                                                         {foreach from=$tabcontacts.emails item=email name=emails}
-                                                                            <a href="mailto:{$email}" style="color:#ffffff;line-height:15px;display:block;text-decoration:none;outline:none" title="Contactez-nous !">
+                                                                            <a href="mailto:{$email}" style="color:#ffffff;line-height:15px;display:block;text-decoration:none;outline:none" title="{$tabcontacts.alt}">
                                                                                 <span style="text-decoration: underline;font-size:12px">{$email}</span>
                                                                             </a>
                                                                             {if not $smarty.foreach.emails.last}<br />{/if}{/foreach}
@@ -836,19 +836,6 @@
                                 </td>
                             </tr>
                         </table>
-
-                        <!-- Logo footer -->
-                        <table cellpadding="0" cellspacing="0" border="0" width="126" align="center" style="margin:auto;width:126px" class="t_w126px m_w175px" role="presentation">
-                            <tr>
-                                <td style="padding-bottom:30px;text-align:center;text-transform:uppercase">
-                                    <a href="https://www.millesima.fr/" style="color:#ffffff;outline:none;border:none">
-                                        <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/logo_millesima_blanc.png" alt="Millesima" width="126" style="font-family:Georgia,Times,Times New Roman,serif;font-size:22px;line-height:22px;display:block;border:none"
-                                             class="t_w100p m_w100p" />
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-
 
                     </td>
                 </tr>

@@ -87,7 +87,7 @@
                                                     <tr>
                                                         <td style="font-family:Arial,Helvetica,sans-serif;color:#aaaaaa;text-align:right;font-size:12px;padding-top:8px;padding-bottom:5px;vertical-align:middle;line-height:16px" class="t_tacenter t_pb15px m_tacenter m_pt5px m_pb15px">
                                                             <a href="~PROBE(0)~" style="color:#aaaaaa;line-height:16px;display:block;text-decoration:none;outline:none" title="Version en ligne">
-                                                                <span style="text-decoration: underline">Online version<</span>
+                                                                <span style="text-decoration: underline">Online version</span>
                                                             </a>
                                                         </td>
                                                     </tr>

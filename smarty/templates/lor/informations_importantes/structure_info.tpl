@@ -19,7 +19,7 @@
         <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;width:640px" class="t_w100p m_w100p" role="presentation">
           {if $bdheader.title != ""}
           <tr>
-            <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#ffffff;text-align:center;font-size:25px;padding-top:40px;padding-bottom:10px;vertical-align:middle;line-height:27px" class="m_fz18px m_lh20px crimsontext">
+            <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#ffffff;text-align:center;font-size:25px;padding-top:25px;padding-bottom:10px;vertical-align:middle;line-height:27px" class="m_fz18px m_lh20px crimsontext">
               {$bdheader.title}
             </td>
           </tr>
@@ -32,7 +32,7 @@
           {if $bdheader.detail != "" }
           <tr>
             <td style="font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#9c9487;text-align:center;text-transform:uppercase;font-size:13px;padding-bottom:15px;vertical-align:middle;letter-spacing:3px;line-height:15px" class=" sourcesanspro">
-              {$phrasecodebd}&nbsp;<span style="font-weight: bold">{$bdheader.detail}</span>
+              {$bdheader.detail}
             </td>
           </tr>
           {/if}

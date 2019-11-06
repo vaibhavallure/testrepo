@@ -6,15 +6,15 @@
         <td>
             <!-- WRAPPER / 81e54611-a4e0-4a64-a023-c62b424761d9 -->
 
-            <table cellpadding="0" cellspacing="0" border="0" width="204" align="center" style="margin:auto;background-color:#f2f2f2;width:204px" class="t_w95p m_w100p">
+            <table cellpadding="0" cellspacing="0" border="0" width="204" align="center" style="margin:auto;background-color:#f2f2f2;width:204px;"  class="t_w95p m_w100p">
                 <tr>
                     <td style="">
 
                         <!-- text / 714ea1ee-ab47-4f8f-9943-86830907f57f -->
                         <table cellpadding="0" cellspacing="0" border="0" width="204" height="80" align="center" style="margin:auto;width:204px;height:80px;" class="t_w100p m_w100p" role="presentation">
                             <tr>
-                                <td style="background-color:#ccc7bc;font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:14px;vertical-align:middle">
-                                    <a href="{$siteweb}{$produit->url_produit}.html?{$tracking}" style="color:unset;display:inline-block;-webkit-text-size-adjust:none;text-decoration:none">
+                                <td height="80" style="background-color:#ccc7bc;font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:14px;vertical-align:middle;height: 80px;">
+                                    <a href="{$siteweb}{$produit->url_produit}.html?{$tracking}" style="color:#000000;display:inline-block;-webkit-text-size-adjust:none;text-decoration:none">
                                     <span style="">{$produit->libelle_internet_html}&nbsp;{if ($type != 'primeurs' OR !$isprimeur) AND $produit->millesime != 0 } {$produit->millesime}{/if}</span>
                                     </a>
                                 </td>
@@ -41,8 +41,8 @@
                         <table cellpadding="0" cellspacing="0" border="0" width="204" align="center" style="margin:auto;width:204px" class="t_w100p m_w100p" role="presentation">
                             <tr>
                                 <td style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:16px;vertical-align:middle;font-style:italic">
-                                                            <span style="font-size: 10px; color: #535512;">{if $produit->pays == 'G' OR $produit->pays == 'I' OR $produit->pays == 'H' OR $produit->pays == 'SG'}$produit->LLibelleCouleur}&nbsp;{$produit->typedevin}{elseif $produit->pays == 'D' OR $produit->pays == 'O' OR $produit->pays == 'SA'}{$produit->LibelleCouleur}{$produit->typedevin|lower}{elseif $produit->pays == 'U'}{$produit->LibelleCouleur}{else}{$produit->typedevin}&nbsp;{$produit->LibelleCouleur}{/if}
-                                                            </span>
+                                 <span style="font-size: 10px; color: #535512;">{if $produit->pays == 'G' OR $produit->pays == 'I' OR $produit->pays == 'H' OR $produit->pays == 'SG'}{$produit->LibelleCouleur}&nbsp;{$produit->typedevin}{elseif $produit->pays == 'D' OR $produit->pays == 'O' OR $produit->pays == 'SA'}{$produit->LibelleCouleur}{$produit->typedevin|lower}{elseif $produit->pays == 'U'}{$produit->LibelleCouleur}{else}{$produit->typedevin}&nbsp;{$produit->LibelleCouleur}{/if}
+                                 </span>
                                 </td>
                             </tr>
                         </table>
@@ -69,16 +69,15 @@
                                             style="v-text-anchor:middle;height:40px;width:163px"
                                             arcsize="8%"
                                             stroke="f"
-                                            fillcolor="#47453f"
+                                            fillcolor="{$codecouleur}"
                                             fill="t">
                                         <w:anchorlock/>
-                                        <center style="color:#ffffff;font-size:16px;font-family:Georgia,Times,Times New Roman,serif;font-weight:bold;height:40px;text-align:center;width:163px">
-                                            Learn More
+                                        <center style="color:{$couleurtxtbtn};font-size:16px;font-family:Georgia,Times,Times New Roman,serif;font-weight:bold;height:40px;text-align:center;width:163px">
+                                            {$tradbtns.savr.$country}
                                         </center>
                                     </v:roundrect>
                                     <![endif]-->
-                                    <a href="{$siteweb}{$produit->url_produit}.html?{$tracking}" style="background-color:{$codecouleur};border-radius:3px;color:{$couleurtxtbtn};font-family:Georgia,Times,Times New Roman,serif;font-weight:bold;font-size:16px;height:40px;text-align:center;line-height:40px;mso-hide:all;display:inline-block;-webkit-text-size-adjust:none;text-decoration:none;width:163px"
-                                       class="t_fwbold t_fsnormal t_w100p m_fwbold m_fsnormal m_w100p crimsontext">
+                                    <a href="{$siteweb}{$produit->url_produit}.html?{$tracking}" style="background-color:{$codecouleur};color:{$couleurtxtbtn};font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:13px;height:40px;text-align:center;line-height:40px;mso-hide:all;display:inline-block;-webkit-text-size-adjust:none;text-decoration:none;width:163px" class="t_fwbold t_fsnormal t_w100p m_fwbold m_fsnormal m_w100p opensans">
                                         {$tradbtns.savr.$country}
                                     </a>
                                 </td>
