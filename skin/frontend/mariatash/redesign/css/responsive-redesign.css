@@ -133,7 +133,7 @@
     margin-top: 0;
     margin-bottom: 0px;
   }
-  .mobile-device .designer-copy{
+  .designer-copy{
     margin: 30px 0 5px;
   }
   .faq-main > .row{
@@ -1948,5 +1948,10 @@
 @media (min-width:581px) and (max-width:650px){
   .post_optio .chooseList ul li.option{
     min-width: 120px;
+  }
+}
+@media (max-width:850px){
+  .about-jewelry h1{
+    margin-top: 0;
   }
 }

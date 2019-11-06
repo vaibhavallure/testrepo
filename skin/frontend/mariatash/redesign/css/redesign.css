@@ -1938,6 +1938,7 @@ div#narrow-by-list {
   text-transform: none;
   letter-spacing: 0;
   margin-bottom: 30px;
+	margin-top: -8px;
 }
 .about-jewelry h3{
   font-family: urw-din-bold;
