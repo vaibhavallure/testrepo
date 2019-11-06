@@ -14,6 +14,7 @@
 - Launch Docker using docker-compose up -d
 - Execute _**composer install**_ outside of any container
 - Setup class/millesima_bdd.php according to your needs or use included dump in /bdd
+- Edit /class/millesima_abstract.php to setup DOCKER_HOST_IP and DOCKER_HOST_PORT (localhost and 8080 for dev)
 - Acces project via http://localhost:8080
 
 ## Restoring included database dump
@@ -71,9 +72,11 @@ If you want to use phpmyadmin :
 - Rework this process asap...
 
 ## Getting Production Ready
-- Setup cron* files on project root in a crontab
-- Setup mails on server so that sales, marketing etc.. can be aware of their tasks
 - Edit /class/millesima_abstract.php to setup DOCKER_HOST_IP and DOCKER_HOST_PORT
+- Chmod 777 writable folders : bdd, fichiers, smarty, 
+- Share folders using samba 
+- Setup sendmail on server Cf : sendmailconfig and php-ini-overrides.ini, test with 
+> echo "test" | sendmail -v "youremail@millesima.com"
 - Test stuffs before deploying ...
 
 ## Todos
