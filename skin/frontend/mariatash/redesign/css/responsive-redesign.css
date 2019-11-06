@@ -1845,6 +1845,9 @@
   .about-designer, .jewelry-container{
     margin-top: 27px;
   }
+  .desktop-device .about-designer{
+    margin-top: 20px;
+  }
   .about-designer.designer-image-section {
     margin-top: 20px;
   }
