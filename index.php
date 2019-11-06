@@ -788,7 +788,7 @@ function traitementTinyclues(){
             unlink($oldfichier);
         }
     }
-    rmdir("/tinyclues/dedoublon");
+    rmdir("/application/tinyclues/dedoublon");
 
     fclose ( $logFile );
     getSegmentView($html,'../../');
