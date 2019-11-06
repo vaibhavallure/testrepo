@@ -51,6 +51,7 @@
 	padding-top: 50px;
 	padding-left: 48px;
 	background-color: #f3f3f3;
+	width: 323px;
 }
 .other-contact-options .details h4{
 	font-size: 13px;
@@ -58,8 +59,8 @@
 .img-responsive{
 	width: 100%;
 }
-.details{
-	padding-bottom: 2.5rem;
+.other-contact-options .details{
+	padding-bottom: 2.4rem;
 }
 /*=====================*/
 /*STORE LOCATIONS*/
