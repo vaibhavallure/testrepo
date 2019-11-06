@@ -1213,6 +1213,9 @@ ul.swatch .swatch-item a {
         position: fixed;
         bottom: -1px;
     }
+	.cms-home .zopim{
+		bottom: 60px!important;
+	}
 }
 
 .product-details-flow .availabilty-span {
@@ -4521,4 +4524,7 @@ dt.post-lengthds-lbl {
 }
 .amazon-widget .amazon-change-pay{ /****By Sagar******/
 	width:auto;
+}
+.zopim.bottom-change{
+	bottom:60px!important;
 }
