@@ -327,6 +327,7 @@ div.tab button.active {
 .myaccount-index-index .main-container {
     margin: 0 auto;
 /*    width: 980px;*/
+    min-height: 100%;
 }
 
 .myaccount-index-index .main-container>.page-title {
@@ -964,9 +965,9 @@ div.a-column.a-span-last {
 	font-size: 24px;
 }
 
-.mt-myaccount-new .myaccount-page-tilte{
+/* .mt-myaccount-new .myaccount-page-tilte{
 	margin: 6px 0 0px;
-}
+} */
 
 .acc-link-img{
 	width: 20px;

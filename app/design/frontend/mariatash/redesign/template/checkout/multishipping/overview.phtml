@@ -28,6 +28,7 @@
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>charcount.js"></script>
 
+<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
 <div class="container">
@@ -41,12 +42,8 @@
                 </div>
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-                    <?php 
-                        $postUrl = $this->getPostActionUrl();
-                    ?>
                     <form action="<?= $this->getPostActionUrl() ?>" method="post" onsubmit="return showLoader();">
 						<?= $this->getBlockHtml("formkey") ?>
-						<?php $payment = $this->getCheckout()->getQuote()->getPayment();?>
 						<input type="hidden" name="payment[cc_number]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcNumber())?>" />
                         <input type="hidden" name="payment[cc_cid]" value="<?php echo $this->escapeHtml($this->getPayment()->getCcCid())?>" />
 
@@ -56,6 +53,7 @@
                         		<div class="col-12 overview-product">
                         	<?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
                             	<?php if ($_item->getQuoteItem()) :?>
+                            	<?php $isGiftWrap = ($_item->getQuoteItem()->getSku() == $redesignHelper::GIFT_WRAP_SKU) ? true : false; ?>
                             	<div class="row">
                             		<div class="col-lg-2 col-md-2 col-4">
                                 		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
@@ -74,9 +72,6 @@
                                 		<div class="box"></div>
 
                                 		<div class="box">
-                                            <!-- <div class="box-title">
-                                                <h4><//?= $this->__('Shipping To') ?></h4>
-                                            </div> -->
                                             <div class="box-content">
                                                 <address>
                                                     <?= $_address->format('html') ?>
@@ -84,9 +79,9 @@
                                             </div>
                                     	</div>
 
+										<?php if(!$isGiftWrap):?>
                                     	<div class="box">
                                             <div class="box-title">
-                                                <!-- <h4><//?= $this->__('[Shipping Method]') ?></h4> -->
                                                 <?php if($_rate=$this->getShippingAddressRate($_address)): ?>
                                                 <?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                 <?php endif; ?>
@@ -113,25 +108,28 @@
                                         	</div>
                                         </div>
                                         <?php endif;?>
+                                        
+                                        <?php endif;?>
 
                                         <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-										<?php if(!empty($message)): ?>
 										<div class="box">
                                         	<div class="box-content row">
                                         		<div class="item-msg col">
-                                              <p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
-                                            </div>
-                                            <div class="text-right overview-price-qty">
-                                            <div class="">
-                                              <p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getCalculationPrice())?></p>
-                                            </div>
-                                            <div class="overview-quantity">
-                                            	<p class="para-three"><?= $this->__('Quantity: ')?><?= $this->escapeHtml(round($_item->getQty()))?></p>
-                                            </div>
+                                        			<?php if(!empty($message) && !$isGiftWrap): ?>
+                                              		<p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
+                                            		<?php endif;?>
+                                            	</div>
+                                            	<div class="text-right overview-price-qty">
+                                            		<div class="">
+                                              			<p class="overview-dark-price"><?= $this->helper('checkout')->formatPrice($_item->getCalculationPrice())?></p>
+                                            		</div>
+                                            		<div class="overview-quantity">
+                                            			<p class="para-three"><?= $this->__('Quantity: ')?><?= $this->escapeHtml(round($_item->getQty()))?></p>
+                                            		</div>
+                                        		</div>
                                         	</div>
                                         </div>
-                                        </div>
-										<?php endif;?>
+										
                                         <div class="box gift-input-section">
                                         	<div class="box-content">
                                         		<?php if($_item->getIsGiftItem()):?>
@@ -155,8 +153,22 @@
                         <?php echo $this->getChildHtml('agreements') ?>
                         	<div class="place-order row">
                             	<?= $this->getChildHtml("totals");?>
-                            	<div id="review-buttons-container" class="col-12 text-right">
-                                	<button type="submit" title="<?php echo $this->__('Checkout') ?>" class="button btn-checkout dark-button next-button" id="review-button"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+                            	<div id="review-buttons-container" class="col-12">
+                                	<p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "CHECKOUT" below.') ?>
+                                    	<a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a>
+                                    </p>
+                                    <div class="checkout-privacy-policy">
+                                    	<p class="control f-left">
+                                            <label for="checkout_privacy_confirm" class="custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                                            	<input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                                            	<span class="checkmark"></span>
+                                            </label>
+                                   		</p>
+                                	</div>
+                                	
+                                	<div class="text-right">
+                                		<button type="submit" title="<?php echo $this->__('Checkout') ?>" class="button btn-checkout dark-button next-button" id="review-button"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+                               		</div>
                                	</div>
                                 <span class="please-wait" id="review-please-wait" style="display:none;">
                                		<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
@@ -186,6 +198,19 @@
                                         }
                                     }
                                 }
+
+                                //check privacy policy checkboc checked or not
+                                var checkoutPrivacyPolicySelector = jQuery(".checkout-privacy-policy #checkout_privacy_confirm");
+                            	var len = checkoutPrivacyPolicySelector.length;
+                            	if(len){
+                            		var isCheck = checkoutPrivacyPolicySelector.prop('checked');
+                            		if(isCheck == false){
+                            			checkoutPrivacyPolicySelector.addClass("checkbox-error-validate");
+                            			checkoutPrivacyPolicySelector.parent().addClass("label-error-validate");
+                            			return false;
+                            		}
+                            	}
+                                
 
                                 submitted = true;
                                 var step='review';
@@ -242,5 +267,10 @@
         <?php endif; ?>
     <?php $cnt++; ?>
     <?php endforeach; ?>
+    <li>
+    	<div class="checkout-block">
+   			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
+		</div>
+    </li>
 </ol>
 </div>

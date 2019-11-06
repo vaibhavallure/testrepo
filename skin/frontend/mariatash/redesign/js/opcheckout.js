@@ -462,7 +462,9 @@ Shipping.prototype = {
         if (isNew) {
             this.resetSelectedAddress();   
             Element.show('shipping-new-address-form');
-            Element.show('li_save_in_address_book');
+            if($('li_save_in_address_book')){
+            	Element.show('li_save_in_address_book');
+            }
             var fields = ['shipping:firstname','shipping:lastname','shipping:company','shipping:email','shipping:country_id','shipping:region_id','shipping:street1','shipping:street2','shipping:city','shipping:postcode','shipping:telephone','shipping:fax'];
             for(i=0; i<fields.length; i++){                
                 if($(fields[i])){

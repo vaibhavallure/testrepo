@@ -31,7 +31,7 @@
  */
 ?>
 <?php header('X-Frame-Options: GOFORIT'); ?>
-<script type="text/javascript">// <![CDATA[
+<!--<script type="text/javascript">// <![CDATA[
 (function (w, d, load) {
  var script,
  first = d.getElementsByTagName('SCRIPT')[0],
@@ -54,7 +54,7 @@
 }(window, document,
  ['//assets.pinterest.com/js/pinit.js']
 ));
-// ]]></script>
+// ]]></script>-->
 <?php
 $isAjaxCall = $this->getRequest()->getControllerName() == 'media' && $this->getRequest()->getActionName() == 'index';
 $_product = $this->getProduct();
@@ -145,8 +145,10 @@ if($configProduct->isConfigurable()){
 $_helper = $this->helper('catalog/output');
 ?>
 <?php
-if($childId){
+if($childId && !$isAjaxCall){
     $_product = Mage::getModel('catalog/product')->load($childId);
+}else{
+    $_product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('id'));
 }
 $gallery = $_product->getMediaGalleryImages();
 $typeId   = $_product->getTypeId();

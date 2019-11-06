@@ -1,6 +1,17 @@
 jQuery(document).ready(function () {
 
 
+
+    if(jQuery("body").hasClass("catalog-product-view") && !jQuery("body").hasClass("quickview-index-index")) {
+        jQuery(document)
+            .ajaxStart(function () {
+                setLoader();
+            })
+            .ajaxStop(function () {
+                unsetLoader();
+            });
+    }
+
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
@@ -130,6 +141,16 @@ jQuery(document).ready(function () {
                 }
 
             }
+            if (jQuery(window).width() <= 1024 && jQuery('body').hasClass("desktop-device")) {
+
+                var scroll = jQuery(window).scrollTop();
+                if (scroll > jQuery(".mariatash-header").outerHeight()) {
+                    jQuery('.mariatash-header').addClass('maria-black');
+                } else {
+                    jQuery('.mariatash-header').removeClass('maria-black');
+                }
+
+            }
             jQuery(".mt-logo").removeClass('d-none');
             jQuery(".nav-links-left").removeClass('d-none');
             jQuery("#scroll-logo").addClass('d-none');
@@ -160,10 +181,12 @@ jQuery(document).ready(function () {
     });
     jQuery('#navbarNavDropdown').mouseleave(function () {
         setTimeout(function() {
-        jQuery(".main_menu").removeClass('active_menu');
-        jQuery('section.sub-menu').slideUp("slow");
-        jQuery(".menu_overlay").addClass("d-none");
-        scrollBody();
+            if (!jQuery('#navbarNavDropdown').is(':hover')) {
+                jQuery(".main_menu").removeClass('active_menu');
+                jQuery('section.sub-menu').slideUp("slow");
+                jQuery(".menu_overlay").addClass("d-none");
+                scrollBody();
+            }
         }, 600);
     });
 
@@ -341,3 +364,4 @@ var unsetLoader= function(){
     jQuery.fancybox.hideLoading();
     jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
 }
+

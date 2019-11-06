@@ -59,3 +59,11 @@ function luhnCheck(cardNum){
 
   	return (nCheck % 10) === 0;
 }
+
+jQuery(document).ready(function(){
+	jQuery(document).on('keyup blur','input[name="payment[cc_number]"]',function() {
+		var num = jQuery(this).val();
+		var cardType = getCardType(num);
+		jQuery('select[name="payment[cc_type]"]').val(cardType);
+	});
+}); 
