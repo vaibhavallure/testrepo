@@ -589,25 +589,25 @@ class Millesima_Message_Template extends Millesima_Abstract
 			if($country == 'F' || $country == 'B' || $country == 'L' || $country == 'SF'){
                 $briefClass = new Millesima_Brief();
                 $brief = $briefClass->getBrief($data['brief_id']);
-				$htmlfr .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$brief['objfr']."<br />";
+				$htmlfr .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$brief['objfr']."<br />";
 			}elseif($country == 'D' || $country == 'O' || $country == 'SA'){
 				$objet = $traductionClass->getValueTrad($data['brief_id'],'d','objtrad');
-                $htmlde .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+                $htmlde .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "'/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'G' || $country == 'I' || $country == 'H' || $country == 'SG'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'g','objtrad');
-				$htmluk .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmluk .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "'/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'Y'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'y','objtrad');
-				$htmlit .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmlit .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "'/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'E'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'e','objtrad');
-				$htmles .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmles .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "'/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'P'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'p','objtrad');
-				$htmlpt .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmlpt .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "'/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'U'){
                 $objet = $traductionClass->getValueTrad($data['brief_id'],'u','objtrad');
-				$htmlus .= "<a target='_blank' href='/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+				$htmlus .= "<a target='_blank' href='http://" . self::DOCKER_HOST_IP . ":" . self::DOCKER_HOST_PORT . "'/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}
 
             //get version text of mail
