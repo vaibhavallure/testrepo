@@ -141,6 +141,16 @@ jQuery(document).ready(function () {
                 }
 
             }
+            if (jQuery(window).width() <= 1024 && jQuery('body').hasClass("desktop-device")) {
+
+                var scroll = jQuery(window).scrollTop();
+                if (scroll > jQuery(".mariatash-header").outerHeight()) {
+                    jQuery('.mariatash-header').addClass('maria-black');
+                } else {
+                    jQuery('.mariatash-header').removeClass('maria-black');
+                }
+
+            }
             jQuery(".mt-logo").removeClass('d-none');
             jQuery(".nav-links-left").removeClass('d-none');
             jQuery("#scroll-logo").addClass('d-none');
