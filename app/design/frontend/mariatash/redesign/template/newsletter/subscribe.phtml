@@ -30,13 +30,13 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
         <div class="form-subscribe-mt row">
             <div class="newsletter-mt">Newsletter</div>
             <div id="errors" class="validation-advice" style="display:none"></div>
-            <ul id="tld_r_ul">
+            <!--<ul id="tld_r_ul">
                 <li title="us">United States</li>
                 <li title="mx">Mexico</li>
                 <li title="jp">Japan</li>
                 <li title="cn">Canada</li>
                 <li title="sp">Spain</li>
-            </ul>
+            </ul>-->
             <div class="input-box col-12">
                 <input type="text" autocomplete="off" name="email" id="email" class="input-text required-entry validate-email" placeholder="Email*" />
                 <span id="msg-email" class="validation-advice maria-validation"></span>
@@ -49,20 +49,27 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
                 <input type="text" autocomplete="off" name="lastname" id="last_name" class="input-text required-entry" placeholder="Last Name*"/>
                 <span id="msg-lastname" class="validation-advice"></span>
             </div>
+            <?php
+            $countryList = Mage::getModel('directory/country')->getResourceCollection()
+                ->loadByStore()
+                ->toOptionArray(true);
+            ?>
             <div class="input-box col-12">
-            <select class="input-text required-entry w-100">
-                <option>Country</option>
+            <select class="input-text required-entry w-100" name="country_subscribe">
+                <?php foreach ($countryList as $country):
+                      if($country['value']):
+                    ?>
+                <option value="<?= $country['value'] ?>" <?= ($country['value']=="US")? "selected":""  ?>><?= $country['label'] ?></option>
+                <?php
+                endif;
+                endforeach; ?>
                 <option title="us">United States</option>
-                <option title="mx">Mexico</option>
-                <option title="jp">Japan</option>
-                <option title="cn">Canada</option>
-                <option title="sp">Spain</option>
             </select>
           </div>
-            <div class="select-box col-12 input-box d-none">
+            <!--<div class="select-box col-12 input-box d-none">
                 <input type="text" autocomplete="off" name="country_subscribe" id="country_subscribe" class="tld_static input-text required-entry" />
                 <span id="msg-country" class="validation-advice"></span>
-            </div>
+            </div>-->
 
             <div class="mt-terms-condtions-policy col-12">
             <label for="mt-newsl-terms"  class="custom-checkbox">

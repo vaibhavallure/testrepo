@@ -76,12 +76,9 @@ jQuery(document).ready(function () {
     });
 
 
-    jQuery(window).bind("resize scroll",function () {
+    jQuery(window).bind("resize scroll load",function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
-
-
-
 
 
         if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)
@@ -99,6 +96,26 @@ jQuery(document).ready(function () {
                   jQuery('#product-detail-image').addClass('fix-image');
                   jQuery('#product-detail-image > div').removeClass('position-bottom');
               }
+
+
+            /*zopim -- to change margin from bottom */
+            jQuery('.catalog-category-view .footer').hover(
+                function () {
+                    jQuery(".zopim").addClass("bottom-change");
+                },
+                function () {
+                    setTimeout(function() {
+                        jQuery(".zopim").removeClass("bottom-change");
+                    }, 1000);
+                }
+            );
+                if(jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
+                    jQuery(".zopim").addClass("bottom-change");
+                }else{
+                    jQuery(".zopim").removeClass("bottom-change");
+                }
+            /*  zopim -code end-----------------*/
+
         }else {
             jQuery('#product-details-flow').removeClass('offset-66');
             jQuery('#product-detail-image').removeClass('fix-image');
@@ -138,6 +155,13 @@ jQuery(document).ready(function () {
                     jQuery('.mariatash-header').addClass('maria-black');
                 } else {
                     jQuery('.mariatash-header').removeClass('maria-black');
+                }
+
+            }else {
+                /*scaling close quick view*/
+                if(jQuery(".fancybox-desktop.fancybox-type-iframe.fancybox-opened").length)
+                {
+                      jQuery(".fancybox-item.fancybox-close").trigger("click");
                 }
 
             }
