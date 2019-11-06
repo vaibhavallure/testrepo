@@ -599,7 +599,9 @@ body{
 .wrapper{
 	min-height: 100%;
 	margin-bottom: -50px;
+	/* height: 100% !important; */
 }
+
 /*Aditya CSS_____Start*/
 body {
     font-family: urw-din, sans-serif;
@@ -1910,7 +1912,7 @@ div#narrow-by-list {
 	width: 100%;
 }
 .about-designer {
-  margin-top: 16px;
+  margin-top: 23px;
   padding: 0 81px;
   margin-bottom: 11px;
 }
@@ -1919,6 +1921,7 @@ div#narrow-by-list {
   text-transform: none;
   margin-bottom: 38px;
   letter-spacing: 0;
+	margin-top: -8px;
 }
 .about-designer .para-normal {
   margin-bottom: 20px;
@@ -2438,7 +2441,7 @@ ul#foo4 {
 	height: 49px;
 	margin-top: 50px;
 	text-indent: -9999px;
-	background: url('../images/back_view_url.png') no-repeat scroll 0 0;
+	/* background: url('../images/back_view_url.png') no-repeat scroll 0 0; */
 	background-size:100%;
 	transparent;
 }
@@ -4145,6 +4148,7 @@ div#uniform-shipping-address-select>span{
 }
 #product_tabs_details_tabbed_contents .data-table tbody tr th {
   padding-bottom: 2px;
+	text-transform: capitalize;
 }
 .containerVideo_first, .containerVideo_second {
 	display: none;
@@ -4507,4 +4511,14 @@ dt.post-lengthds-lbl {
 }
 .product-maria-tash-in-store-gift-card .wrapper{
 	background: #f2f2f2;
+}
+.myaccount-index-index .page.layout-grid {
+  height: 100vh;
+}
+.add-to-cart-left .total_qty{
+	text-align: center;
+  padding: 0;
+}
+.amazon-widget .amazon-change-pay{ /****By Sagar******/
+	width:auto;
 }
