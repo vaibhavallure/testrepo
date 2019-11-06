@@ -694,9 +694,10 @@ class Ecp_ReportToEmail_Model_Observer
                                                 style="font-size:16px"><u><strong>{$storeObj->getData("name")}</strong></u></span></span></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
+                            <td></td>
+                                <td style="text-align:left"><span style="color:#ffffff"><span
                                                 style="font-size:16px"><u><strong>Magento</strong></u></span></span></td>
-                                                <td colspan="2" style="text-align:center"><span style="color:#ffffff"><span
+                                                <td colspan="2" style="text-align:left"><span style="color:#ffffff"><span
                                                 style="font-size:16px"><u><strong>Teamwork</strong></u></span></span></td>
                             </tr>
                             <tr>
