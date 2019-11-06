@@ -140,6 +140,12 @@ jQuery(document).ready(function () {
                     jQuery('.mariatash-header').removeClass('maria-black');
                 }
 
+            }else {
+                /*scaling close quick view*/
+                if(jQuery(".fancybox-desktop.fancybox-type-iframe.fancybox-opened").length)
+                {
+                      jQuery(".fancybox-item.fancybox-close").trigger("click");
+                }
             }
             if (jQuery(window).width() <= 1024 && jQuery('body').hasClass("desktop-device")) {
 
