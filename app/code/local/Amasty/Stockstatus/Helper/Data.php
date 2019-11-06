@@ -10,9 +10,9 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 
     protected $_escape_stock_msg_array = array("STORECARD", "GIFT");
 
-    protected $_in_stock = "<span class='info-text-two'>In Stock: Ships Within 24 hours (Mon-Fri)</span>";
+    protected $_in_stock = "<span class='info-text-two'>In stock ships within 24 hours (Mon-Fri)</span>";
     protected $_out_stock = "<span class='info-text-three'>The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.</span>";
-    protected $_backorder_with_time = "<span class='info-text-two'>Order now and It will ship %s.</span><br><span class='info-text-three'>The metal color or length combination you selected is backordered.</span> ";
+    protected $_backorder_with_time = "<span class='info-text-two'>Order now and It will ship <span class='text-lowercase'>%s</span>.</span><br><span class='info-text-three'>The metal color or length combination you selected is backordered.</span> ";
     protected $_backorder_without_time = "<span class='info-text-three'>The metal color or length combination you selected is backordered.</span>";
     protected $_backorder_with_qty = "<span class='info-text-three'>This product is not available in the requested quantity.%s of the items will be backordered.</span>";
 

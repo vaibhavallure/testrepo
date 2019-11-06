@@ -8,9 +8,6 @@
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
   }
-  /* .nav-links-right li:nth-child(3){
-    display: none;
-  } */
   .main-nav-link li:nth-child(2) {
     margin-right: 18px;
   }
@@ -65,9 +62,6 @@
   .maria-right-menus{
     right: 0;
   }
-  /* .main-nav-link li:nth-child(3){
-    margin-right: 0;
-  } */
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
     overflow-y: auto;
@@ -111,10 +105,6 @@
   .common-option-div{
     margin-bottom: 20px;
   }
-  /* .mobile-device .common-option-div{
-    width: 100%;
-    padding: 0 14px;
-  } */
   .head-child ul {
     margin-bottom: 0;
   }
@@ -143,7 +133,7 @@
     margin-top: 0;
     margin-bottom: 0px;
   }
-  .designer-copy{
+  .mobile-device .designer-copy{
     margin: 30px 0 5px;
   }
   .faq-main > .row{
@@ -396,10 +386,6 @@
     margin-top: 8px;
     padding: 0 36px 0px 35px;
   }
-
-  /* .desktop-device.catalog-category-view .category-title{
-    padding-left: 109px !important;
-  } */
   .category-image-bleed{ /* Head Image */
     display: none;
   }
@@ -498,6 +484,9 @@
   .menu-common-section{
     margin-top: 13px;
   }
+  /* .wrapper{
+    height: auto !important;
+  } */
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -536,6 +525,7 @@
   .desktop-device .products-grid li.item .list-mt-w{
     position: absolute;
     background: transparent;
+    width: 100%;
   }
 }
 
@@ -759,7 +749,7 @@
   .about-designer{
     padding: 0 26px;
   }
-  .about-designer h1{
+  .mobile-device .about-designer h1{
     margin-bottom: 20px;
   }
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
@@ -1024,19 +1014,13 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  /* .categorypath-celebrity-clientele-html .for-space-to-bottom{
-    height: 0 !important;
-  } */
-  #category-title{
+  /* #category-title{
     margin: 16px 0 20px !important;
     padding: 0 !important;
-  }
+  } */
   .filter-common-div{
     display: none;
   }
-  /* .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav {
-    margin-top: -70px;
-  } */
   .filterPopup .pop-up-cover {
     margin-top: 5%;
     padding-bottom: 20px;
@@ -1670,7 +1654,7 @@
  }
 }
 
-/* Big Screen Laptops */
+/************** Big Screen Laptops ***************/
 @media (min-width:1920px){
   .inner-box{
     width: 742px;
@@ -1717,7 +1701,7 @@
   }
 }
 
-/* Small Laptops : 1366px */
+/*************Small Laptops : 1366px ***********/
 @media (min-width:1025px) and (max-width:1432px) {
   .swatches li{
     margin-left: 7px;
@@ -1843,6 +1827,15 @@
   .desktop-device .product-shop{
     flex: 0 0 100%;
   }
+  .about-designer h1{
+    margin-bottom: 0;
+  }
+  /* .about-designer{
+    margin-top: 27px;
+  } */
+  .about-designer.designer-image-section {
+    margin-top: 20px;
+  }
 }
 @media (min-width:851px) and (max-width:991px){
   .product-view-left {
@@ -1856,6 +1849,16 @@
   .product-img-box {
     display: flex;
     justify-content: center;
+  }
+  .designer-image, .designer-copy{
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .d-block.d-lg-none.about-designer{
+    display: none !important;
+  }
+  .designer-copy .d-lg-block.d-none{
+    display: block !important;
   }
 }
 @media (min-width:768px) and (max-width:991px) {
@@ -1903,9 +1906,9 @@
   .cms-home .homepage-menu.mariatash-header:hover{
   	background: rgba(41, 41, 41, 0.9) !important;
   }
-  .zopim {
+  /* .zopim {
     bottom: 59px!important;
-  }
+  } */
 }
 @media (min-width:686px) and (max-width:850px){
   .post_optio .chooseList ul li.option{

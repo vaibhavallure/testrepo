@@ -68,7 +68,7 @@
         <?php if ($this->helper('tax')->displayFullSummary()): ?>
             <div class="summary-collapse"><?php echo $this->getTotal()->getTitle() ?></div>
         <?php else: ?>            
-            <?php echo $this->__('Estimated Tax') ?> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+            <span><?php echo $this->__('Tax') ?> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?></span>
         <?php endif;?>
     </td>
     <td style="<?php echo $_style ?>" class="cart-subtotals-right"><?php echo $this->helper('checkout')->formatPrice($_value) ?></td>
