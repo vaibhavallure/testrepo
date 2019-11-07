@@ -127,7 +127,7 @@ var addCustomer = function (srno) {
 
 
    var iti= window.intlTelInput(document.querySelector("#phonenumber" + srno), {
-        initialCountry: 'fr',
+        // initialCountry: 'fr',
         autoFormat: false,
         autoHideDialCode: false,
         autoPlaceholder: false,
