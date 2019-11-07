@@ -13,7 +13,7 @@
         <td style="">
 
             <!-- WRAPPER / cfee392a-6492-48b0-a9ea-8775743c889c -->
-            <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;background-color:#9c9487;width:640px" class="t_w100p m_w100p">
+            <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;background-color:#6f2020;width:640px" class="t_w100p m_w100p">
                 <tr>
                     <td style="">
 

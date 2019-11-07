@@ -565,7 +565,7 @@
 
     </style>
     {/literal}
-    <!--==============Promotion card ===============-->
+<!--==============Promotion card ===============-->
     {if isset($isPromotionCard)}
         {include file="$tpl/card/structure_promotioncard.tpl"}
     {/if}
