@@ -11,6 +11,14 @@ foreach ($configArr as $_arr) {
 		$tmpSymbol[] = '';
 	}
 }
+
+
+$category = Mage::registry('current_category');
+$categoryPara="";
+if ($category && $category->getId())
+{
+    $categoryPara="categoryid/".$category->getId();
+}
 ?>
 <?php $arrayCurrencies = array();
 
@@ -47,7 +55,7 @@ if($this->getCurrencyCount()>0): ?>
         <div id="currency-selector" class="display_none">
             <ul class="icon-bar d-none d-lg-block usd-account">
             <?php foreach ($_arrayCurrencies as $_code => $_name): ?>
-                <li class="icon-item"><a href="<?php echo $this->getUrl('currencymanager/currency/switch/to/'.$_code); ?>" >
+                <li class="icon-item"><a href="<?php echo $this->getUrl('currencymanager/currency/switch/to/'.$_code."/".$categoryPara); ?>" >
                     <?php echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code).'</span>' ?>
                 </a></li>
             <?php endforeach; ?>
