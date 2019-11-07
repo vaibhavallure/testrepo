@@ -62,7 +62,10 @@
         <div id="amazon-widget-consent"></div>
     <?php endif; ?>
     
+    <?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
+    <?php if($customerGroupId != 2):?>
     <?php echo $this->getChildHtml("onepage.gift_item");?>
+    <?php endif;?>
 
     <div class="buttons-set text-right" id="widget-buttons-container">
         <button type="button" title="<?php echo $this->__('Next') ?>" class="button btn-widget-contd light-button next-button float-right" onclick="amazonWidgetStep.save()"><span><span><?php echo $this->__('Next') ?></span></span></button>

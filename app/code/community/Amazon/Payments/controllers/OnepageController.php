@@ -118,7 +118,16 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping_method', '');
+            $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
+            $no_signature_delivery = ($no_signature_delivery) ? 1 : 0;
+            
             $result = $this->_getOnepage()->saveShippingMethod($data);
+            
+            $this->_getOnepage()
+                ->getQuote()
+                ->setData('no_signature_delivery', $no_signature_delivery)
+                ->save();
+            
             // $result will contain error data if shipping method is empty
             if (!$result) {
                 Mage::dispatchEvent(
