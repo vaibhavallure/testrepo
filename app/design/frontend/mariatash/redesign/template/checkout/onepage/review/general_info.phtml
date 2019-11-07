@@ -103,6 +103,9 @@ $shipping = $quote->getShippingAddress();
 			</div>
 			<?php endforeach;?>
 		</div>
+		<table class="data-table">
+			<?php echo $this->getChildHtml("totals");?>
+		</table>
 	</div>
 </form>
 <script type="text/javascript">

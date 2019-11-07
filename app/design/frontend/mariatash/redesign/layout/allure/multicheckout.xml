@@ -171,7 +171,7 @@
             <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/multishipping/item/default.phtml</template></action>
             <action method="addGiftItemRender"><type>gift</type><block>allure_redesigncheckout/giftmessage</block><template>checkout/onepage/giftmessage.phtml</template></action> 
               
-            <block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+            <block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="checkout/onepage/review/general_totals.phtml"/>
             <block type="core/text_list" name="checkout.onepage.review.info.items.before" as="items_before" translate="label">
                 <label>Items Before</label>
             </block>
