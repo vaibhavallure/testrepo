@@ -219,7 +219,8 @@
 		});
 
 		jQuery('.multi-address-select-address-option select').append('<option value="">New Address</option>');
-
+		jQuery('.multi-address-select-address-option select').addClass('validate-select');
+		
 		jQuery('.multi-address-select-address-option select').on('change',function(){
 			newAddressForm(jQuery(this));
 		});
@@ -263,7 +264,7 @@
 
 	function newAddressForm(evt){
 		if(!(jQuery(evt).val())){
-			var addressId = jQuery(evt).parent().data("selected_address_id");
+			var addressId = jQuery(evt).closest( ".multi-address-select-address-option").data("selected_address_id");
 			if(jQuery(evt)){
 				jQuery(evt).val(addressId);
 			}
@@ -272,6 +273,8 @@
 		}else{
 			jQuery('#checkout_multishipping_form').show();
 			jQuery('#multiaddress-new-address').hide();
+			var addressId = jQuery(evt).val();
+			jQuery(evt).closest( ".multi-address-select-address-option").attr('data-selected_address_id', addressId);
 		}
 	}
 </script>
