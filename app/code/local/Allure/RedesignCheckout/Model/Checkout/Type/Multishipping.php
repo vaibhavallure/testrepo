@@ -699,9 +699,18 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             }else{
                 $this->getQuote()->setIsMultiShipping(false)->save();
                 $this->getQuote()->collectTotals();
+                $payment = Mage::app()->getRequest()->getPost('payment');
+                $paymentInstance = $this->getQuote()->getPayment();
+                if (isset($payment['cc_number'])) {
+                    $paymentInstance->setCcNumber($payment['cc_number']);
+                }
+                if (isset($payment['cc_cid'])) {
+                    $paymentInstance->setCcCid($payment['cc_cid']);
+                }
+                
                 $service = Mage::getModel('sales/service_quote', $this->getQuote());
                 $service->submitAll();
-                $this->getQuote()->save();
+                //$this->getQuote()->save();
                 $order = $service->getOrder();
                 if ($order) {
                     $orderIds[$order->getId()] = $order->getIncrementId();

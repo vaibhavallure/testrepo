@@ -582,7 +582,7 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
             $wishlist->addNewItem($productId, $buyRequest);
 
             $productIds[] = $productId;
-            //$cart->getQuote()->removeItem($itemId);
+            $cart->getQuote()->removeItem($itemId);
             $cart->save();
             Mage::helper('wishlist')->calculate();
             $productName = Mage::helper('core')->escapeHtml($item->getProduct()->getName());

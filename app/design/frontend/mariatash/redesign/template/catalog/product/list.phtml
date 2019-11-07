@@ -155,7 +155,7 @@ $mode  = $this->getMode();
 
                 //if($products->getSize() > 30) : ?>
                     <div class="toolbar d-none">
-                        <span id="total_item_counts"><?php echo $_productCollection->getSize(); ?> Items</span>
+                        <span id="total_item_counts"><?php echo $_productCollection->getSize(); ?> <?= ($_productCollection->getSize()==1)? "Item":"Items" ?></span>
                     </div>
                 <?php //endif; ?>
             <?php endif; ?>
