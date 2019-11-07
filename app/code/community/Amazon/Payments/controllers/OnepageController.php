@@ -91,6 +91,12 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
                 $result['message'] = $this->__('This order cannot be shipped to the selected state. Please use a different shipping address.');
             }
             
+            $_helper = Mage::helper('amazon_payments/data');
+            if($_helper->isCheckoutAmazonSession()){
+                $result['error'] = true;
+                $result['message'] = $this->__('Amazon session expired. Please login once again by using amazon account.');
+            }
+            
         }
         // Catch any API errors like invalid keys
         catch (Exception $e) {
@@ -129,6 +135,12 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
                     'name' => 'review',
                     'html' => $this->_getReviewHtml()
                 );
+            }
+            
+            $_helper = Mage::helper('amazon_payments/data');
+            if($_helper->isCheckoutAmazonSession()){
+                $result['error'] = true;
+                $result['message'] = $this->__('Amazon session expired. Please login once again by using amazon account.');
             }
 
             $this->_getOnepage()->getQuote()->collectTotals()->save();
