@@ -32,7 +32,7 @@
  * @package    Mage_Catalog
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstract
+class Allure_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_List
 {
     /**
      * Default toolbar block name
@@ -55,6 +55,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
      */
     protected function _getProductCollection()
     {
+
         if (is_null($this->_productCollection)) {
             $layer = $this->getLayer();
             /* @var $layer Mage_Catalog_Model_Layer */
@@ -80,7 +81,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
                     $layer->setCurrentCategory($category);
                     $this->addModelTags($category);
                 }
-            }z
+            }
             $this->_productCollection = $layer->getProductCollection();
 
             $this->prepareSortableFieldsByCategory($layer->getCurrentCategory());

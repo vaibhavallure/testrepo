@@ -27,11 +27,11 @@
                     <indexer_fulltext>Wyomind_Elasticsearch_Model_Indexer_Fulltext</indexer_fulltext>
                 </rewrite>
             </catalogsearch>
-            <catalogsearch_resource>
-                <rewrite>
-                    <fulltext_collection>Wyomind_Elasticsearch_Model_Resource_Fulltext_Collection</fulltext_collection>
-                </rewrite>
-            </catalogsearch_resource>
+            <!--<catalogsearch_resource>-->
+                <!--<rewrite>-->
+                    <!--<fulltext_collection>Wyomind_Elasticsearch_Model_Resource_Fulltext_Collection</fulltext_collection>-->
+                <!--</rewrite>-->
+            <!--</catalogsearch_resource>-->
         </models>
         <blocks>
             <elasticsearch>
