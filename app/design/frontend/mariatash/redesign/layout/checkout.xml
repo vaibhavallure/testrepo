@@ -346,6 +346,9 @@ Multi address shipping checkout success
         <label>Multishipping Checkout Success</label>
         <update handle="checkout_multishipping"/>
         <!-- Mage_Checkout -->
+        <reference name="head">
+            <action method="setTitle"><title>Order Success</title></action>
+        </reference>
         <reference name="content">
             <block type="checkout/multishipping_success" name="checkout_success" template="checkout/multishipping/success.phtml"/>
         </reference>
