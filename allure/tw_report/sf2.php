@@ -10,9 +10,13 @@ umask(0);
 Mage::app();
 echo "<pre>";
 
-
+$date = $_GET['date'];
+if(!isset($date)) {
+    echo "No date";
+    die;
+}
 $model = Mage::getModel('ecp_reporttoemail/observer');
-$model->integrationEmail("2018-11-06",null,"manual",null);
+$model->integrationEmail($date,null,"manual",null);
 die;
 
 try {

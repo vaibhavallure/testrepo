@@ -280,7 +280,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-    public function getDataForReportNew($storesId, $date,$runFrom) {
+    public function getDataForReportNew($storesId, $date,$runFrom,$isComparisonReport) {
         $storeId=$storesId;
 
         if($date!=null)
@@ -288,8 +288,8 @@ class Ecp_ReportToEmail_Model_Observer
         else
             $yesterday=date('Y-m-d');
 
-        $from1 = $yesterday."00:00:00";
-        $to1 = $yesterday."23:59:59";
+        $from1 = $yesterday." 00:00:00";
+        $to1 = $yesterday." 23:59:59";
 
 
         $local_tz = new DateTimeZone('UTC');
@@ -309,11 +309,17 @@ class Ecp_ReportToEmail_Model_Observer
         else
             $diffZone = '-' . $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
 
-        $from = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($from1)));
-        $to = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($to1)));
+        if(!$isComparisonReport) {
+            $from = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($from1)));
+            $to = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($to1)));
 
-        $from2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($from1)));
-        $to2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($to1)));
+            $from2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($from1)));
+            $to2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($to1)));
+        }else {
+            $from = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($from1)));
+            $to = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($to1)));
+        }
+
 
         $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
         $curTime = new DateTime();
@@ -321,11 +327,10 @@ class Ecp_ReportToEmail_Model_Observer
             return;
 
 
-
         Mage::app()->getStore()->setId($storeId);
 
-        $data=$this->getSalesCollection($storeId,$from,$to);
-        $data2=$this->getSalesCollection($storeId,$from2,$to2);
+        $data=$this->getSalesCollection($storeId,$from,$to,$isComparisonReport);
+        $data2=$this->getSalesCollection($storeId,$from2,$to2,$isComparisonReport);
 
         return array('data' => $data , 'data2' => $data2, "from" => $from , "from2" => $from2 , "to" => $to, "to2" => $to2);
     }
@@ -361,7 +366,7 @@ class Ecp_ReportToEmail_Model_Observer
                 // Mage::log($emails);
 
                 $symbol="$";
-                $dataArray = $this->getDataForReportNew($storesId,$date,$runFrom);
+                $dataArray = $this->getDataForReportNew($storesId,$date,$runFrom,false);
                 $data = $dataArray["data"];
                 $data2 = $dataArray["data2"];
                 $from = $dataArray["from"];
@@ -526,111 +531,205 @@ class Ecp_ReportToEmail_Model_Observer
     }
 
 
-    public function getSalesCollection($storeId,$from,$to)
+    public function getSalesCollection($storeId,$from,$to,$isComparisonReport=false)
     {
         $data='';
 
         $whr="old_store_id IN('$storeId')  AND (created_at >='$from' AND created_at <='$to')";
+        $condition = "created_at >='{$from}' and created_at <='{$to}'";
 
-
-
-        $collection = Mage::getModel('sales/order')->getCollection();
-        $collection->getSelect()
-            ->reset(Zend_Db_Select::COLUMNS);
-        $collection->getSelect()
-            ->columns('count(entity_id) orders_count')
-            ->columns('sum(IFNULL(total_qty_ordered,0)) total_qty_ordered')
+        if(!$isComparisonReport){
+            $collection = Mage::getModel('sales/order')->getCollection();
+            $collection->getSelect()
+                ->reset(Zend_Db_Select::COLUMNS);
+            $collection->getSelect()
+                ->columns('count(entity_id) orders_count')
+                ->columns('sum(IFNULL(total_qty_ordered,0)) total_qty_ordered')
 //                ->columns('sum(IFNULL(base_grand_total,0)-IFNULL(base_total_canceled,0)) total_income_amount')
-            ->columns('sum(IFNULL(base_grand_total,0)) gross_revenue')
+                ->columns('sum(IFNULL(base_grand_total,0)) gross_revenue')
 
-            ->columns('sum(
+                ->columns('sum(
                        (IFNULL(base_total_invoiced,0)-IFNULL(base_tax_invoiced,0)-IFNULL(base_shipping_invoiced,0)
                       -(IFNULL(base_total_refunded,0)-IFNULL(base_tax_refunded,0)-IFNULL(base_shipping_refunded,0))
                       )) total_revenue_amount')
 
-            ->columns('sum(
+                ->columns('sum(
                         (IFNULL(base_total_paid,0)-IFNULL(base_total_refunded,0))
                        -(IFNULL(base_tax_invoiced,0)-(IFNULL(base_tax_refunded,0))
                        -(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_invoiced,0))
                        -IFNULL(base_total_invoiced_cost,0))) total_profit_amount
                      ')
-            ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
-            ->columns('sum(IFNULL(base_total_canceled,0)) total_canceled_amount')
-            ->columns('sum(IFNULL(base_total_paid,0)) total_paid_amount')
+                ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
+                ->columns('sum(IFNULL(base_total_canceled,0)) total_canceled_amount')
+                ->columns('sum(IFNULL(base_total_paid,0)) total_paid_amount')
 
-            ->columns('sum(IFNULL(base_tax_invoiced,0)) base_tax_invoiced')
-            ->columns('sum(IFNULL(base_tax_refunded,0)) base_tax_refunded')
-            ->columns('sum(IFNULL(base_shipping_invoiced,0)) base_shipping_invoiced')
-            ->columns('sum(IFNULL(base_total_invoiced_cost,0)) base_total_invoiced_cost')
-
-
-
-
-            ->columns('sum(IFNULL(base_total_refunded,0)) total_refunded_amount')
-            ->columns('sum(IFNULL(base_tax_amount,0)-IFNULL(base_tax_canceled,0)) total_tax_amount')
-            ->columns('sum(IFNULL(base_tax_invoiced,0)-IFNULL(base_tax_refunded,0)) total_tax_amount_actual')
-            ->columns('sum(IFNULL(base_shipping_amount,0)-IFNULL(base_shipping_canceled,0)) total_shipping_amount')
-            ->columns('sum(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0)) total_shipping_amount_actual')
-            ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
-            ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
-            ->columns('sum(IF((base_discount_amount!=0) AND (base_discount_canceled is null),1,0)) total_discount_count')
-            ->columns('count(base_total_refunded) total_refunded_count')
-            ->where($whr);
+                ->columns('sum(IFNULL(base_tax_invoiced,0)) base_tax_invoiced')
+                ->columns('sum(IFNULL(base_tax_refunded,0)) base_tax_refunded')
+                ->columns('sum(IFNULL(base_shipping_invoiced,0)) base_shipping_invoiced')
+                ->columns('sum(IFNULL(base_total_invoiced_cost,0)) base_total_invoiced_cost')
 
 
 
-        $base_total_paid=$collection->getFirstItem()->getTotalPaidAmount();
-        $base_total_refunded=$collection->getFirstItem()->getTotalRefundedAmount();
-        $base_tax_invoiced=$collection->getFirstItem()->getBaseTaxInvoiced();
-        $base_tax_refunded=$collection->getFirstItem()->getBaseTaxRefunded();
-        $base_shipping_invoiced=$collection->getFirstItem()->getBaseShippingInvoiced();
-        $base_total_invoiced_cost=$collection->getFirstItem()->getBaseTotalInvoicedCost();
+
+                ->columns('sum(IFNULL(base_total_refunded,0)) total_refunded_amount')
+                ->columns('sum(IFNULL(base_tax_amount,0)-IFNULL(base_tax_canceled,0)) total_tax_amount')
+                ->columns('sum(IFNULL(base_tax_invoiced,0)-IFNULL(base_tax_refunded,0)) total_tax_amount_actual')
+                ->columns('sum(IFNULL(base_shipping_amount,0)-IFNULL(base_shipping_canceled,0)) total_shipping_amount')
+                ->columns('sum(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0)) total_shipping_amount_actual')
+                ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
+                ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
+                ->columns('sum(IF((base_discount_amount!=0) AND (base_discount_canceled is null),1,0)) total_discount_count')
+                ->columns('count(base_total_refunded) total_refunded_count')
+                ->where($whr);
 
 
 
-        $total_profit =($base_total_paid-$base_total_refunded)-($base_tax_invoiced-$base_tax_refunded)-($base_shipping_invoiced-$base_shipping_invoiced)-($base_total_invoiced_cost);
+            $base_total_paid=$collection->getFirstItem()->getTotalPaidAmount();
+            $base_total_refunded=$collection->getFirstItem()->getTotalRefundedAmount();
+            $base_tax_invoiced=$collection->getFirstItem()->getBaseTaxInvoiced();
+            $base_tax_refunded=$collection->getFirstItem()->getBaseTaxRefunded();
+            $base_shipping_invoiced=$collection->getFirstItem()->getBaseShippingInvoiced();
+            $base_total_invoiced_cost=$collection->getFirstItem()->getBaseTotalInvoicedCost();
 
 
 
-        $data=array();
-        if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
-            $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
-            $data['total_qty_ordered'] = $collection->getFirstItem()->getTotalQtyOrdered();
-            $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
-            $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
-            $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
-            $data['total_refunded_amount'] = $collection->getFirstItem()->getTotalRefundedAmount();
-            $data['total_tax_amount'] = $collection->getFirstItem()->getTotalTaxAmount();
-            $data['total_shipping_amount'] = $collection->getFirstItem()->getTotalShippingAmount();
-            $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
+            $total_profit =($base_total_paid-$base_total_refunded)-($base_tax_invoiced-$base_tax_refunded)-($base_shipping_invoiced-$base_shipping_invoiced)-($base_total_invoiced_cost);
 
-            $data['gross_revenue'] = $collection->getFirstItem()->getGrossRevenue();
-            $data['total_profit_amount'] = $collection->getFirstItem()->getTotalProfitAmount();
 
-            $data['total_discount_count'] = $collection->getFirstItem()->getTotalDiscountCount();
-            $data['total_refunded_count'] = $collection->getFirstItem()->getTotalRefundedCount();
 
-            $data['total_profit'] = $total_profit;
+            $data=array();
+            if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
+                $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
+                $data['total_qty_ordered'] = $collection->getFirstItem()->getTotalQtyOrdered();
+                $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
+                $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
+                $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
+                $data['total_refunded_amount'] = $collection->getFirstItem()->getTotalRefundedAmount();
+                $data['total_tax_amount'] = $collection->getFirstItem()->getTotalTaxAmount();
+                $data['total_shipping_amount'] = $collection->getFirstItem()->getTotalShippingAmount();
+                $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
 
-            $data['from']=$from;
-            $data['to']=$to;
+                $data['gross_revenue'] = $collection->getFirstItem()->getGrossRevenue();
+                $data['total_profit_amount'] = $collection->getFirstItem()->getTotalProfitAmount();
 
+                $data['total_discount_count'] = $collection->getFirstItem()->getTotalDiscountCount();
+                $data['total_refunded_count'] = $collection->getFirstItem()->getTotalRefundedCount();
+
+                $data['total_profit'] = $total_profit;
+
+                $data['from']=$from;
+                $data['to']=$to;
+
+            }else {
+                $data['orders_count'] = 0;
+                $data['total_qty_ordered'] = 0;
+                $data['total_income_amount'] = 0;
+                $data['total_invoiced_amount'] = 0;
+                $data['total_canceled_amount'] = 0;
+                $data['total_refunded_amount'] = 0;
+                $data['total_tax_amount'] = 0;
+                $data['total_shipping_amount'] = 0;
+                $data['total_discount_amount'] = 0;
+                $data['total_discount_count']=0;
+                $data['total_refunded_count']=0;
+
+                $data['gross_revenue'] = 0;
+                $data['total_profit'] = 0;
+            }
         }else {
-            $data['orders_count'] = 0;
-            $data['total_qty_ordered'] = 0;
-            $data['total_income_amount'] = 0;
-            $data['total_invoiced_amount'] = 0;
-            $data['total_canceled_amount'] = 0;
-            $data['total_refunded_amount'] = 0;
-            $data['total_tax_amount'] = 0;
-            $data['total_shipping_amount'] = 0;
-            $data['total_discount_amount'] = 0;
-            $data['total_discount_count']=0;
-            $data['total_refunded_count']=0;
 
-            $data['gross_revenue'] = 0;
-            $data['total_profit'] = 0;
+            $collection = Mage::getModel('sales/order')->getCollection();
+            $subquery = new Zend_Db_Expr("(SELECT * FROM sales_flat_order_payment GROUP BY parent_id )");
+            $collection->getSelect()->join(array("payment" => $subquery),
+                "main_table.entity_id = payment.parent_id");
+
+            $collection = $collection->addFieldToFilter("old_store_id",array("in"=>array($storeId)));
+            $collection->getSelect()
+                ->reset(Zend_Db_Select::COLUMNS);
+            $collection->getSelect()->columns('created_at');
+
+            $collection->getSelect()
+                ->columns('main_table.customer_group_id')
+                ->columns('count(IFNULL(.main_table.entity_id,0)) orders_count')
+                ->columns('sum(IFNULL(main_table.total_qty_ordered,0)) total_qty_ordered')
+                ->columns('sum(IFNULL(main_table.base_grand_total,0)-IFNULL(main_table.base_total_canceled,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_income_amount')
+                ->columns('sum(
+                       (IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.base_tax_invoiced,0)-IFNULL(base_shipping_invoiced,0)
+                      -(IFNULL(main_table.base_total_refunded,0)-IFNULL(main_table.base_tax_refunded,0)-IFNULL(main_table.base_shipping_refunded,0))
+                      )
+                        -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
+                        ) total_revenue_amount')
+                ->columns('sum(
+                         (IFNULL(base_subtotal,0)-IFNULL(base_subtotal_canceled,0)-IFNULL(base_subtotal_refunded,0))+
+                         (IFNULL(base_discount_amount,0)+IFNULL(base_discount_canceled,0)-IFNULL(base_discount_refunded,0)) ) 
+                         total_profit_amount_only_product
+                     ')
+                ->columns('sum(
+                        (IFNULL(main_table.base_total_paid,0)-IFNULL(base_total_refunded,0))
+                       -(IFNULL(main_table.base_tax_invoiced,0)-(IFNULL(base_tax_refunded,0))
+                       -(IFNULL(main_table.base_shipping_invoiced,0)-IFNULL(base_shipping_invoiced,0))
+                       -IFNULL(main_table.base_total_invoiced_cost,0))
+                        -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
+                        ) total_profit_amount
+                     ')
+                ->columns('sum(IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_invoiced_amount')
+                ->columns('sum(IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0))
+                                -sum(IFNULL(main_table.base_total_refunded,0))
+                                 total_net_sale')
+                ->columns('sum(IFNULL(main_table.base_total_canceled,0)) total_canceled_amount')
+                ->columns('sum(IFNULL(main_table.base_total_paid,0)) total_paid_amount')
+                ->columns('sum(IFNULL(main_table.base_total_refunded,0)) total_refunded_amount')
+                ->columns('sum(IFNULL(main_table.base_tax_amount,0)-IFNULL(main_table.base_tax_canceled,0)) total_tax_amount')
+                ->columns('sum(IFNULL(main_table.base_tax_invoiced,0)-IFNULL(main_table.base_tax_refunded,0)) total_tax_amount_actual')
+                ->columns('sum(IFNULL(main_table.base_shipping_amount,0)-IFNULL(main_table.base_shipping_canceled,0)) total_shipping_amount')
+                ->columns('sum(IFNULL(main_table.base_shipping_invoiced,0)-IFNULL(main_table.base_shipping_refunded,0)) total_shipping_amount_actual')
+                ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
+                ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
+                ->where($condition);
+
+            //print_r((string)$collection->getSelect());die;
+
+            $data=array();
+            if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
+                $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
+                $data['total_qty_ordered'] = $collection->getFirstItem()->getTotalQtyOrdered();
+//                $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
+//                $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
+//                $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
+//                $data['total_refunded_amount'] = $collection->getFirstItem()->getTotalRefundedAmount();
+//                $data['total_tax_amount'] = $collection->getFirstItem()->getTotalTaxAmount();
+//                $data['total_shipping_amount'] = $collection->getFirstItem()->getTotalShippingAmount();
+//                $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
+//
+//                $data['gross_revenue'] = $collection->getFirstItem()->getGrossRevenue();
+//                $data['total_profit_amount'] = $collection->getFirstItem()->getTotalProfitAmount();
+//
+//                $data['total_discount_count'] = $collection->getFirstItem()->getTotalDiscountCount();
+//                $data['total_refunded_count'] = $collection->getFirstItem()->getTotalRefundedCount();
+
+                $data['total_profit'] = $collection->getFirstItem()->getTotalNetSale();
+
+                $data['from']=$from;
+                $data['to']=$to;
+
+            }else {
+                $data['orders_count'] = 0;
+                $data['total_qty_ordered'] = 0;
+                $data['total_income_amount'] = 0;
+                $data['total_invoiced_amount'] = 0;
+                $data['total_canceled_amount'] = 0;
+                $data['total_refunded_amount'] = 0;
+                $data['total_tax_amount'] = 0;
+                $data['total_shipping_amount'] = 0;
+                $data['total_discount_amount'] = 0;
+                $data['total_discount_count']=0;
+                $data['total_refunded_count']=0;
+
+                $data['gross_revenue'] = 0;
+                $data['total_profit'] = 0;
+            }
         }
+
 
 
         return $data;
@@ -674,7 +773,7 @@ class Ecp_ReportToEmail_Model_Observer
 //                print_r($twNetSales."<br>");
 //                die;
 
-                $dataArray = $this->getDataForReportNew($storesId,$date,$runFrom);
+                $dataArray = $this->getDataForReportNew($storesId,$date,$runFrom,true);
                 $data = $dataArray["data"];
                 //$data2 = $dataArray["data2"];
                 //$from = $dataArray["from"];
