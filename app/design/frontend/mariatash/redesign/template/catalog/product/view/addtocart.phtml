@@ -38,7 +38,7 @@
                     <div class="row">
                         <label class="product-attribute-name col-4" for="qty"><?php echo $this->__('Quantity') ?></label>
                         <?php if(($_product->getItemSoldSingly() || $_product->getItemSoldSingly()==NULL) && !Mage::helper("allure_catalog")->isGiftCard($_product->getId())):?>
-                        <label class="info-text-three col-8 text-right" for="qty"><?php echo $this->__('Item Sold Singly.') ?></label>
+                        <label class="para-lighter col-8 text-right" for="qty"><?php echo $this->__('Item Sold Singly.') ?></label>
                         <?php endif;?>
                     </div>
                    <div class="row">
