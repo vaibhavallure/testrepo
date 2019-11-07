@@ -185,7 +185,10 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
                     $customer->setConfirmation(null);
                     $customer->save();
                     $customer->sendNewAccountEmail();
-                    Mage::getSingleton('customer/session')->loginById($customer->getId());
+                    $customerId = $customer->getId();
+                    Mage::getSingleton('customer/session')->loginById($customerId);
+                    Mage::getSingleton('customer/session')->logout();
+                    Mage::getSingleton('customer/session')->loginById($customerId);
                     $result['success'] = true;
                     $result['msg'] = Mage::helper('core')->__('Account created Successfully');
                 } catch (Exception $e) {
