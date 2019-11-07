@@ -35,13 +35,6 @@
 class Allure_CatalogSearch_Block_Result extends Mage_CatalogSearch_Block_Result
 {
     /**
-     * Catalog Product collection
-     *
-     * @var Mage_CatalogSearch_Model_Resource_Fulltext_Collection
-     */
-    protected $_productCollection;
-
-    /**
      * Retrieve query model object
      *
      * @return Mage_CatalogSearch_Model_Query
@@ -50,6 +43,13 @@ class Allure_CatalogSearch_Block_Result extends Mage_CatalogSearch_Block_Result
     {
         return $this->helper('catalogsearch')->getQuery();
     }
+
+    /**
+     * Catalog Product collection
+     *
+     * @var Mage_CatalogSearch_Model_Resource_Fulltext_Collection
+     */
+    protected $_productCollection;
 
     /**
      * Prepare layout

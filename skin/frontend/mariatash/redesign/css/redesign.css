@@ -99,6 +99,7 @@ h4{
 .para-bold{
 	font-family: urw-din-bold;
 	font-size: 15px;
+	color: rgba(41,41,41,0.9);
 }
 
 .options-text,
@@ -207,6 +208,7 @@ h4{
 
 .text-underline{
 	text-decoration: underline;
+	text-decoration-color: rgba(41,41,41,0.9);
 }
 
 .text-underline:hover {
@@ -601,6 +603,7 @@ input, select, textarea{
 body{
   overflow-x: hidden !important;
 	height: 100%;
+	color: rgba(41,41,41,0.9);
 }
 .wrapper{
 	min-height: 100%;
@@ -2627,8 +2630,8 @@ ul#foo4 {
   margin-bottom: 16px;
 }
 .catalog-product-view .amconf-images-container img,.quickview-index-index .amconf-images-container img  {
-  width: 25px;
-  height: 25px;
+  width: 27px;
+  height: 27px;
 	margin-right: 19px;
 	padding: 3px;
 }
@@ -2664,7 +2667,7 @@ button#addtocart {
 }
 ul.tabs {
 	margin-bottom: 0;
-	margin-top: 30px;
+	margin-top: 41px;
 }
 .padder table.data-table, .padder .data-table tr {
   display: grid;
@@ -2674,7 +2677,7 @@ ul.tabs {
   margin-bottom: 10px;
 }
 .add-to-cart .availability {
-  margin: 40px 0 21px;
+  margin: 40px 0 44px;
 }
 /*.thumb.thumb1 img*/
 
@@ -2974,7 +2977,7 @@ ul.tabs li{
 	letter-spacing: 1.08px;
 }
 .quick_link {
-  margin-bottom: 21px;
+  margin-bottom: 30px;
 }
 .celeb-info {
   margin-top: 9px;
@@ -3170,6 +3173,7 @@ table thead {
 }
 .quickview-index-index .containerImage img{
 	margin: auto;
+	margin-top: 42px;
 }
 .quickview-index-index .thumb.thumb1 img {
 	margin-top: 78px;
@@ -3192,6 +3196,8 @@ table thead {
 	width: 25px;
 	height: 26px;
 	background-size: 100%;
+	top: 24px;
+  right: 24px;
 }
 .checkout-multishipping-addresses .data-table td{
 	vertical-align: top;
@@ -4073,11 +4079,13 @@ div#uniform-shipping-address-select>span{
 	justify-content: flex-end;
 }
 #ajax-price {
-  margin-top: 16px;
+  margin-top: 7px;
 	padding-bottom: 11px;
 }
 #ajax-price span{
 	font-size: 22px;
+	font-family: urw-din-xlight;
+  letter-spacing: 0;
 }
 .swatch-section .input-box > .row {
   align-items: center;
@@ -4538,9 +4546,12 @@ dt.post-lengthds-lbl {
 #footer8 .nav-item span {
   letter-spacing: 0;
 }
-.product-collateral .para-lighter{
+/* .product-collateral .para-lighter{
 	color: #000 !important;
-}
+} */
 .contact-us-wrapper h1 {
   font-size: 30px !important;
+}
+.catalog-category-view .celebPopup .product-name {
+  margin-bottom: 13px;
 }
