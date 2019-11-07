@@ -92,7 +92,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
             }
             
             $_helper = Mage::helper('amazon_payments/data');
-            if($_helper->isCheckoutAmazonSession()){
+            if(!$_helper->isCheckoutAmazonSession()){
                 $result['error'] = true;
                 $result['message'] = $this->__('Amazon session expired. Please login once again by using amazon account.');
             }
@@ -138,7 +138,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
             }
             
             $_helper = Mage::helper('amazon_payments/data');
-            if($_helper->isCheckoutAmazonSession()){
+            if(!$_helper->isCheckoutAmazonSession()){
                 $result['error'] = true;
                 $result['message'] = $this->__('Amazon session expired. Please login once again by using amazon account.');
             }
