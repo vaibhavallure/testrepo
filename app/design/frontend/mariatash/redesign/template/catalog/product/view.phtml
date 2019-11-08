@@ -342,6 +342,32 @@ if ($_product->getSizeSample() == 1) {
         var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
     </script>
     <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+    <!--Zoom Popup-->
+    <div id="openModal" class="zoomPopup"> <!--do not remove celebPopup class-->
+        <div class="pop-up-cover big-popup-cover col-12">
+            <div class="row">
+                <div class="pop-title modal-header">
+                    <a href="#close" title="Close" class="close exit-large" id="zoomClose">
+                        <div></div>
+                    </a>
+                </div>
+                <div class="body modal-body big-popup-body col-12">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <!--DO not remove product-img class-->
+                            <div class="zoom-img big-popup-image row"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="celeb-loader" style="display: none">
+                    <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="product-view">
     <div class="page-title category-title">
         <?php

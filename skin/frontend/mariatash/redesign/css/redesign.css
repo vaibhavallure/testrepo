@@ -2206,7 +2206,7 @@ span#popup_loader_register {
 
 
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -2465,7 +2465,7 @@ ul#foo4 {
 	padding: 0
 }
 
-.filterPopup .close div,.celebPopup .close div,.pressPopup .close div{
+.filterPopup .close div,.celebPopup .close div,.pressPopup .close div,.zoomPopup .close div{
   background-image: url("../images/redesign/login-cross.png");
   width: 25px;
   height: 26px;
@@ -2965,7 +2965,8 @@ ul.tabs li{
 	padding: 0 30px 0 26px;
 }
 
-.celebPopup .close{
+.celebPopup .close,
+.zoomPopup .close{
   z-index: 2;
 }
 .celebPopup .product-info {
