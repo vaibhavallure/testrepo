@@ -22,7 +22,7 @@
     <?php else: ?>
         <?php if (count($this->getSuggests())): ?>
             <?php foreach ($this->getSuggests() as $suggest) : ?>
-                <li class=""><a href='<?php echo $url . $suggest; ?>'/><?php echo $suggest; ?></a></li>
+                <li class="search-suggestions"><a href='<?php echo $url . $suggest; ?>'/><?php echo $suggest; ?></a></li>
             <?php endforeach; ?>
         <?php endif; ?>
 
