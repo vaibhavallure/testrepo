@@ -95,4 +95,18 @@ class Allure_CustomerLoginMonitor_Helper_Data extends Mage_Core_Helper_Abstract
       extract(Mage::app()->getRequest()->getParam('login'));
       return $username;
     }
+
+    public function isWholesaler()
+    {
+        if(Mage::getSingleton('customer/session')->isLoggedIn()){
+            $groupId    = Mage::getSingleton('customer/session')->getCustomerGroupId();
+            $group      = Mage::getModel('customer/group')->load($groupId);
+
+            if(strtolower($group->getCode())=="wholesale")
+                return true;
+        }
+
+        return false;
+    }
+
 }

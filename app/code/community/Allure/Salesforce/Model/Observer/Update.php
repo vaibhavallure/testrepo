@@ -118,43 +118,81 @@ class Allure_Salesforce_Model_Observer_Update
 
         foreach ($requestData as $modelName => $reqArr) {
             if (!empty($reqArr)) {
-                $chunkedReqArray = array_chunk($reqArr, 200);
-                foreach ($chunkedReqArray as $reqArray) {
-                    $helper->salesforceLog("------------------BULK Update:(" . $modelName . ") START send in chunk size =".sizeof($reqArray),true);
-                    $request["records"] = $reqArray;
+                $chunkedReqArray = array();
+                if($modelName === "orders") {
+                    $count = 0;
+                    foreach ($reqArr as $order) {
+                        $count += 1;
+                        $count += sizeof($order['OrderItems']);
 
-                    if (empty($lastRunTime)) {
-                        $urlPath = "/services/data/v42.0/composite/tree/" . $objectMappings[$modelName];
-                        $requestMethod = "POST";
-                    } else {
-                        $urlPath = $helper::UPDATE_COMPOSITE_OBJECT_URL;
-                        $request["allOrNone"] = false;
-                        $requestMethod = "PATCH";
-                    }
-                    //print_r(json_encode($request,true));die;
-                    $response = $helper->sendRequest($urlPath, $requestMethod, $request);
-                    $responseArr = json_decode($response, true);
-
-                    if (!$responseArr["hasErrors"]) {
-                        $helper->salesforceLog("bulk operation was succesfull");
-                        $helper->addSalesforcelogRecord("BULK operation ", $requestMethod, "BULKOP-" . $lastRunTime, $response);
-                        if (empty($lastRunTime))
-                            $helper->bulkProcessResponse($responseArr, $modelName);
-                    } else {
-                        if ($responseArr == "") {
-                            $helper->salesforceLog("bulk updation failed");
-                            $helper->addSalesforcelogRecord("BULK operation ", $requestMethod, "BULKOP-" . $lastRunTime, $response);
-                        } else {
-                            $helper->addSalesforcelogRecord("BULK operation ", $requestMethod, "BULKOP-" . $lastRunTime, $response);
+                        if($count >= 50) {
+                            $count = 0;
+                            $this->processChunkedArray($chunkedReqArray, $modelName, $objectMappings,$lastRunTime,true);
+                            $chunkedReqArray = array();
+                        }else {
+                            array_push($chunkedReqArray,$order);
                         }
                     }
+                    $this->processChunkedArray($chunkedReqArray, $modelName, $objectMappings,$lastRunTime,true);
+                }else {
+                    $chunkedReqArray = array_chunk($reqArr, 100);
+                    $this->processChunkedArray($chunkedReqArray, $modelName, $objectMappings,$lastRunTime);
                 }
+
+
                 $helper->salesforceLog("------------------BULK Update: END send in chunk size",true);
             }
         }
         $helper->salesforceLog("BULK Update: sendCompositeRequest END ",true);
     }
-    
+
+
+    public function processChunkedArray($chunkedReqArray, $modelName, $objectMappings,$lastRunTime, $direct=false) {
+        $helper = $this->getHelper();
+
+
+        if (empty($lastRunTime)) {
+            $urlPath = "/services/data/v42.0/composite/tree/" . $objectMappings[$modelName];
+            $requestMethod = "POST";
+        } else {
+            $urlPath = $helper::UPDATE_COMPOSITE_OBJECT_URL;
+            $request["allOrNone"] = false;
+            $requestMethod = "PATCH";
+        }
+
+        if($direct){
+            $request["records"] = $chunkedReqArray;
+            $this->sendChunkedArray($urlPath,$requestMethod,$request,$lastRunTime,$modelName);
+        }else {
+            foreach ($chunkedReqArray as $reqArray) {
+                $helper->salesforceLog("------------------BULK Update:(" . $modelName . ") START send in chunk size =".sizeof($reqArray),true);
+                $request["records"] = $reqArray;
+
+                $this->sendChunkedArray($urlPath,$requestMethod,$request,$lastRunTime,$modelName);
+            }
+        }
+    }
+
+    public function sendChunkedArray($urlPath,$requestMethod,$request,$lastRunTime,$modelName) {
+        $helper = $this->getHelper();
+        //print_r(json_encode($request,true));die;
+        $response = $helper->sendRequest($urlPath, $requestMethod, $request);
+        $responseArr = json_decode($response, true);
+
+        if (!$responseArr["hasErrors"] || strlen($responseArr['errorCode']>2)) {
+            $helper->salesforceLog("bulk operation was succesfull");
+            $helper->addSalesforcelogRecord("BULK operation ", $requestMethod, "BULKOP-" . $lastRunTime, $response);
+            if (empty($lastRunTime))
+                $helper->bulkProcessResponse($responseArr, $modelName);
+        } else {
+            if ($responseArr == "") {
+                $helper->salesforceLog("bulk updation failed");
+                $helper->addSalesforcelogRecord("BULK operation ", $requestMethod, "BULKOP-" . $lastRunTime, $response);
+            } else {
+                $helper->addSalesforcelogRecord("BULK operation ", $requestMethod, "BULKOP-" . $lastRunTime, $response);
+            }
+        }
+    }
 
     /**
      * add order data into salesforce when order placed into magento
