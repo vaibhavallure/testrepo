@@ -9,34 +9,21 @@ em {
 p.p-white.d-none.d-sm-block {
 	padding: 0px 20px;
 }
-div#btnBookBottom {
+/* div#btnBookBottom {
     text-align: center;
-}
-button#btnBooking,
+} */
+/* button#btnBooking,
 button#btnConfirm
 {
 	min-width: 119px;
 	padding: 3px 10px!important;
 	margin-bottom: 35px;
 	text-transform: uppercase;
-}
+} */
 
 p.notify-label {
     margin-bottom: 0;
 		line-height: 18px;
-}
- .notify-label .label {
-	 width:98%;
-}
-
-.name-box .row,
-.datetime-box .row {
-    margin: 0 -5px;
-}
-.name-box .col-md-6,
-.datetime-box .col-md-6 {
-    padding: 0 5px;
-	position: relative;
 }
 
 .dialogBg.popupid21,
@@ -45,6 +32,7 @@ p.notify-label {
 }
 .intl-tel-input .selected-flag .iti-flag {
     left:12px !important;
+		top: 0px !important;
 }
 #people-box {
     margin-bottom: 40px;
@@ -67,18 +55,6 @@ span.apt-summary {
     display: block;
 }
 
-button.input-box.b {
-	border: 0.75px solid #d8d8d8;
-
-  border-radius: 0;
-  text-transform: uppercase;
-  text-align: center
-}
-
-#closeBtn:hover{
-    background-color: #000 ;
-
-}
 #allureAlertBox #closeBtn {
 	display: block;
 	 position: initial;
@@ -115,32 +91,6 @@ button.input-box.b {
 	opacity: 0.8;
 }
 
-
-
-
-
-
-
-
-
-input#selectDate {
-	margin-right: 15px;
-}
-
-select {
-    border-radius: 0 !important;
-    -webkit-appearance: none;
-		width: 71px !important;
-		height: 33px ;
-		padding: 0 13px !important;
-}
-
-.job-wrapper .input-box {
-    width: 71px;
-    height: 33px;
-    padding: 0 0 0 13px;
-}
-
 select:after {
     background-image: url('../../images/allure/popup/dropdown-arrow.png');
 		content: '';
@@ -151,15 +101,6 @@ button#btnBooking{
 	padding: 0;
 }
 
-button#btnConfirm{
-	height:42px;
-	padding: 0;
-	margin-top: 12px;
-}
-
-#name-box .form-group, #email-box {
-  margin-bottom: 13px !important;
-}
 
 
 
@@ -189,7 +130,7 @@ button#btnConfirm{
 	margin: 25px 0 10px;
 }
 
-.input-box {
+/* .input-box {
 	width: 100%;
 	border: 0.75px solid #d8d8d8;
 	border-radius: 0;
@@ -204,7 +145,7 @@ button#btnConfirm{
 	padding: .375rem .75rem;
     line-height: 30px;
 	outline-color: #fff;
-}
+} */
 
 .selected-flag {
     max-height: 43px;
@@ -217,23 +158,6 @@ input[type="checkbox"] {
 .notify-box label.label {
 
 }
-
-button.input-box.btn {
-	width: auto;
-	border: 0.75px solid #d8d8d8;
-	border-radius: 0;
-	background: none;
-	text-align: center;
-
-	margin-bottom: 0;
-	font-size: 16px;
-	font-family: urw-din-medium;
-	-webkit-box-align: center;
-	font-weight: 400;
-	padding: .375rem .75rem;
-}
-
-
 
 /*Paragrapph titles like question */
 
@@ -298,11 +222,11 @@ p.label + div.box {
     padding-top: 0;
 }
 
-.booking-box {
+/* .booking-box {
 	margin-top: 100px;
 	margin-bottom: 70px;
 	padding: 0px 30px;
-}
+} */
 
 .faq {
 	display: flex;
@@ -337,15 +261,15 @@ p.label + div.box {
 	padding-top: 1px;
 	text-align: left;
 }
-.job h6,.customer_section h6{
+/* .job h6,.customer_section h6{
 	text-align: left;
 	font-family: urw-din;
   font-weight: 700;
 	margin-bottom: 9px;
-}
+} */
 
 .job {
-    border-bottom: 2px solid #838483;
+    border-bottom: 1px solid #d8d8d8;
 }
 
 
@@ -439,24 +363,15 @@ label.p-white {
 	margin-top: 10px;
 }
 
-.btn-div {
+/* .btn-div {
 	display: flex;
 	justify-content: center;
-}
+} */
 
 
 
 
 /*USED IN PRICE LIST */
-
-.earlobe {
-	font-family: urw-din-medium;
-	font-size: 14px;
-	line-height: 30px;
-
-	margin-right: 10px;
-	text-align: left;
-}
 
 .jewelry {
 	font-family: urw-din-light;
@@ -491,16 +406,16 @@ td.td-price {
 	padding-top: 8px;
 }
 
-.label {
+/* .label {
 	font-size: 14px;
 	font-family: urw-din-medium;
 
 	line-height: 30px;
-}
+} */
 
-#piercing-wrapper1 label,#piercing-wrapper2 label,#piercing-wrapper3 label,#piercing-wrapper4 label {
+/* #piercing-wrapper1 label,#piercing-wrapper2 label,#piercing-wrapper3 label,#piercing-wrapper4 label {
     font-size: 16px;
-}
+} */
 
 .box .label {
 	padding-top: 0px;
@@ -547,55 +462,9 @@ td.td-price {
 	margin: 1em auto;
 }
 
-input[type="checkbox"] {
-	display: none;
-}
-
-label {
-	cursor: pointer;
-}
-.notify-box label.label {
-    margin-bottom: 0;
-    padding-bottom: 0px;
-}
-
-input[type="checkbox"]+label:before {
-    outline: 0.75px solid #d8d8d8;
-    content: "";
-    display: inline-block;
-    font: 12px/1em sans-serif;
-    height: 12px;
-	width: 12px;
-    margin: 0 .75em 0 0;
-    padding: 0;
-
-	transition: 0.5s ease all;
-	-moz-transition: 0.5s ease all;
-	-webkit-transition: 0.5s ease all;
-    /*margin-bottom: 2px;*/
-}
-
-input[type="checkbox"]:checked+label:before {
-	background: white;
-	border: 2px solid gray;
-
-	content: "";
-	text-align: center;
-}
-
-input[type="checkbox"]:checked+label:after {
-	font-weight: bold;
-
-}
-
-input[type="checkbox"]:focus+label::before {
-	outline: rgb(59, 153, 252) auto 5px;
-}
-
 .modal-confirm-appointment .modal-body{
-	padding: 20px;
+	padding: 60px;
 }
-
 
 .desk {
 	opacity: 0;
@@ -616,75 +485,70 @@ input#datepickerpopup {
 
 
 input#appointment_date {
-    display: block !important;
+  display: block !important;
 }
 input#appointment_date {
-    -webkit-appearance: none;
+  -webkit-appearance: none;
 	-moz-appearance: none;
-  	appearance: none;
-    background: url(../../images/redesign/arrow-down-bk.png) no-repeat;
-    background-position: 95% 17px;
+	appearance: none;
+  background: url(../../images/redesign/arrow-down-bk.png) no-repeat;
+  background-position: 95% 17px;
 }
 
 div#btnContinue {
-    /*width: 200px;*/
-   width: 100%;
-    overflow: hidden;
-    margin: 30px auto 0;
-}
-div#btnContinue button{
-	width: auto;
-	min-width: 200px;
-	margin: auto;
-}
-div#wrapperConfirmAppointment {
-    /*background-color: #2c2c2c;*/
-    padding: 20px 0;
-    border: 0.75px solid #d8d8d8;
-    margin-bottom: -15px;
-    margin-top: -15px;
+  /*width: 200px;*/
+  width: 100%;
+  overflow: hidden;
+  margin: 30px auto 0;
 }
 
+/* div#wrapperConfirmAppointment {
+  background-color: #2c2c2c;
+  padding: 20px 0;
+  border: 0.75px solid #d8d8d8;
+  margin-bottom: -15px;
+  margin-top: -15px;
+} */
+
 .datepicker td, .datepicker th {
-    font-size: 16px;
-    border-radius: 0;
-    padding: 7.5px 10px !important;
+  font-size: 16px;
+  border-radius: 0;
+  padding: 7.5px 10px !important;
 }
 
 .datepicker table tr td:not(.disabled),
 .datepicker table tr td:not(.disabled):hover {
-    font-weight: bold;
+  font-weight: bold;
 }
 .datepicker table tr td:not(.disabled):hover {
-    background-color: #E2E2E2;
+  background-color: #E2E2E2;
 }
 .datepicker .datepicker-switch, .datepicker .prev, .datepicker .next, .datepicker tfoot tr th {
-    cursor: pointer;
-    font-weight: bold;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .datepicker table tr td.active, .datepicker table tr td.active:hover, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover {
-    background-image: none !important;
-    background-color: #2c2c2c !important;
-    padding: 10px;
-    border-radius: 0;
+  background-image: none !important;
+  background-color: #2c2c2c !important;
+  padding: 10px;
+  border-radius: 0;
 }
 
 select#selectTime {
-    line-height: 30px;
-    padding: .375rem .75rem;
-    border: 0;
-    background: #2c2c2c;
-    border: 0.75px solid #d8d8d8;
-
-    box-shadow: none;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    height: auto;
-    font-size: 14px;
-    font-family: urw-din-medium;
-    text-align: center;
+  line-height: 30px;
+  padding: .375rem .75rem;
+  border: 0;
+  background: #2c2c2c;
+  border: 0.75px solid #d8d8d8;
+  box-shadow: none;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  height: auto;
+  font-size: 14px;
+  font-family: urw-din-medium;
+  text-align: center;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -693,38 +557,33 @@ select#selectTime {
 	background-position: 95% 17px;
 }
 
-#time-wrapper {
-}
-
 #time-wrapper input.input-box {
     margin-top: 0;
 }
 
-
 a#btnPriceList,
 a#icon-price-close {display: none;}
-
 
 #datetime-box {
     margin-bottom: 33px;
 }
 
-.invalid-feedback {
-    font-style: normal;
-    color: #e1b711;
-    font-family: urw-din-medium;
+/* .invalid-feedback {
+  font-style: normal;
+  color: #e1b711;
+  font-family: urw-din-medium;
 	text-transform: lowercase;
-}
+} */
 
 /*-------------------new alert box--------------------------*/
  #allureModalContainer {
-     background-color: rgba(0, 0, 0, 0.47);
-     position:absolute;
-     width:100%;
-     height:100%;
-     top:0px;
-     left:0px;
-     z-index:10000;
+   background-color: rgba(0, 0, 0, 0.47);
+   position:absolute;
+   width:100%;
+   height:100%;
+   top:0px;
+   left:0px;
+   z-index:10000;
 }
 
 #allureAlertBox {
@@ -743,102 +602,90 @@ a#icon-price-close {display: none;}
 }
 
 #allureModalContainer > #allureAlertBox {
-    position:fixed;
+  position:fixed;
 }
 
 #allureAlertBox h1 {
-    margin:0;
-    font:bold 0.9em verdana,arial;
-    background-color:#3073BB;
-
-    border-bottom: 1px solid #000;
-    padding:2px 0 2px 5px;
-}
-
-#allureAlertBox p {
-    text-align: center;
-    font:12px arial,verdana;
-    /*margin-top: 10px;*/
-    color: #3f4048;
+  margin:0;
+  font:bold 0.9em verdana,arial;
+  background-color:#3073BB;
+  border-bottom: 1px solid #000;
+  padding:2px 0 2px 5px;
 }
 
 #allureAlertBox #closeBtn{
-    display:block;
-    bottom: 44px;
-    left: 152px;
-    margin:5px auto;
-    padding:7px;
-    border:0 none;
-    width:80px;
-    font:12px dinmittelschriftregular,arial;
-    text-transform:uppercase;
-    text-align:center;
+  display:block;
+  bottom: 44px;
+  left: 152px;
+  margin:5px auto;
+  padding:7px;
+  border:0 none;
+  width:80px;
+  font:12px dinmittelschriftregular,arial;
+  text-transform:uppercase;
+  text-align:center;
 
-    background-color:#2c2c2c;
-    border-radius: 3px;
-    text-decoration:none;
+  background-color:#2c2c2c;
+  border-radius: 3px;
+  text-decoration:none;
 }
-button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
-    outline: none;
-}
+/* button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+  outline: none;
+} */
 /*-------------confirm popup----------------*/
 
- #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
-     display:block;
-     position:absolute;
-     bottom: 10px;
-     left: 125px;
-     margin:5px auto;
-     padding:7px;
-     border:0 none;
-     width:80px;
-     font:12px dinmittelschriftregular,arial;
-     text-transform:uppercase;
-     text-align:center;
-
+ /* #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+   display:block;
+   position:absolute;
+   bottom: 10px;
+   left: 125px;
+   margin:5px auto;
+   padding:7px;
+   border:0 none;
+   width:80px;
+   font:12px dinmittelschriftregular,arial;
+   text-transform:uppercase;
+   text-align:center;
 	 background-color: gray;
-     border-radius: 3px;
-     text-decoration:none;
- }
+   border-radius: 3px;
+   text-decoration:none;
+ } */
 
-#allureAlertBox #cancelConfirm
-{
-    position:absolute;
-    bottom: 20px;
-    left: 85px;
-}
-#allureAlertBox #okConfirm
-{
+/* #allureAlertBox #cancelConfirm{
+	  position:absolute;
+	  bottom: 20px;
+	  left: 85px;
+} */
+/* #allureAlertBox #okConfirm{
     position:absolute;
     bottom: 20px;
     left: 221px;
-}
+} */
 
-#allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
-    color: #3f4048;
-    text-decoration: none;
-}
+/* #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
+  color: #3f4048;
+  text-decoration: none;
+} */
 
 
 /*-------------------------alert end-------------------------*/
 .about-maria {
-    position: relative;
+  position: relative;
 }
 div#btnBookTop {
-    text-align: center;
+  text-align: center;
 	margin-bottom: 20px;
 }
 #about-maria-title {
-    line-height: 43px;
-
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 30px;
-    position: absolute;
-    top: 0;
-    z-index: 999;
-    left: 0;
-    right: 0;
+  line-height: 43px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 30px;
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  left: 0;
+  right: 0;
 }
 .pop-up-title {
     padding-top: 20px;
@@ -847,18 +694,15 @@ div#btnBookTop {
 	margin: auto;
 }
 
-
-
 @media (max-width: 767px) {
-
 	.pop-up-title{
 		max-width: 363px;
 	}
-	td.td-piercing-name,
+	/* td.td-piercing-name,
 	td.td-price {
 		padding-bottom: 5px;
 		padding-top: 5px;
-	}
+	} */
 
 	.faq-first {
 	    padding-top: 1em;
@@ -882,16 +726,11 @@ div#btnBookTop {
 		display: block;
 	}
 	/*MENU REMOVE MOBILE*/
-	.checkout-success
-	{
+	.checkout-success{
 		font-size: 0.7em;
 	}
-	/* .row.footer-links.hidden-xs
-	{
-		display: none;
-	} */
 
-    .box {border: none;}
+  .box {border: none;}
 
 	#top-subtitle {
 	    margin-top: 5em;
@@ -908,19 +747,8 @@ div#btnBookTop {
 		padding: 18px;
 		margin:10px;
 	}
-
-
-
-    .datepicker {width: 90%;}
-
-
-
-
-
-
-
-
-    .price-list-box {
+  .datepicker {width: 90%;}
+  .price-list-box {
         padding: 0;
     }
 
@@ -939,25 +767,25 @@ div#btnBookTop {
 		}
 
     .pop-up-div {
-        position: relative;
-        left: 0;
-        top: 350px;
-        max-width: 100%;
-				width: 100%;
-        clear: both;
-        margin-bottom: 0;
-        z-index: 999;
+      position: relative;
+      left: 0;
+      top: 350px;
+      max-width: 100%;
+			width: 100%;
+      clear: both;
+      margin-bottom: 0;
+      z-index: 999;
     }
     a#btnPriceList {
-        text-align: center;
-        display: block;
-        margin: 25px auto;
-        color: #C3C2C5;
-        font-size: 18px;
-        text-transform: uppercase;
-        text-decoration: underline;
-        line-height: 10px;
-        font-family: urw-din-medium;
+      text-align: center;
+      display: block;
+      margin: 25px auto;
+      color: #C3C2C5;
+      font-size: 18px;
+      text-transform: uppercase;
+      text-decoration: underline;
+      line-height: 10px;
+      font-family: urw-din-medium;
     }
 
     div#booking {
@@ -976,32 +804,29 @@ div#btnBookTop {
 		display: none;
     }
 
-
-
-
     #about-maria .half-div-right .container {
-        padding: 0;
+      padding: 0;
     }
 
     .footer-frm {
-        margin: 0;
+      margin: 0;
     }
 
     a#icon-price-close {
-        margin: 4px 0px;
-        display: block;
+      margin: 4px 0px;
+      display: block;
     }
 
 
     div#price-list {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 9999;
-        display: none;
-		overflow: auto;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      display: none;
+			overflow: auto;
     }
 
     div#booking-wrapper {
@@ -1049,7 +874,8 @@ div#btnBookTop {
         text-align: center;
     }
     .intl-tel-input .selected-flag .iti-flag {
-        left: 12px !important;
+      left: 12px !important;
+			top: 0 !important;
     }
 }
 
@@ -1137,16 +963,14 @@ input[type="search"]::-webkit-search-results-decoration {
 
 
 #slots_section div.active, #slots_section div:hover{
-	box-shadow: 2px 2px 8px gray;
-	background: gray;
+	background: #000;
 	color: white;
 	transition: .3s;
-	border: 1px solid white ! important;
 	cursor: pointer;
 }
 
-.people-wrapper, #pick_ur_slot{
-	border-bottom: 2px solid #838483;
+.people-wrapper, .store-info-wrapper{
+	border-bottom: 1px solid #d8d8d8;
 }
 @keyframes blink {
 	50% { border-color: white; }
@@ -1156,9 +980,14 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 #slots_section{
 	padding-bottom: 20px;
+	padding: 0 7px;
 }
 .slot-width{
-	width: 31%;
+	width: 98px;
+	height: 33px;
+	border: 1px solid #d8d8d8;
+  padding: 6px;
+	margin: 5px;
 }
 .datepicker{
 	z-index: 9999!important;
@@ -1178,12 +1007,6 @@ input[type="search"]::-webkit-search-results-decoration {
 	z-index:9999;width: 100%;
 	height: 100%;
 	display: block
-}
-
-select.input-box {
-	background-image: url(../../images/redesign/arrow-down-bk.png);
-	background-repeat: no-repeat;
-	background-position: 80% 50%;
 }
 
 .close {
@@ -1307,5 +1130,111 @@ div#page-wrapper{
 	}
 	.about-maria-txt-two{padding-bottom: 155px;}
 	.pop-up-div{left: 66%;}
+
+}
+
+
+/****************Shruti CSS******************/
+.appointment-container{
+	max-width: 1208px !important;
+  margin: 0 auto;
+	margin-top: 42px;
+}
+.appointments-book-store h1{
+	font-size: 30px;
+}
+.book-title p{
+	font-size: 15px;
+	letter-spacing: 1px;
+}
+.appointments-book-store .label.custom-checkbox{
+	font-family: urw-din-light;
+	color: rgba(41,41,41,0.9);
+}
+.guest-count{
+	color: rgba(41,41,41,0,6);
+}
+.job h6, .job h6 span, div#customer1 h6, div#customer1 h6 span {
+  color: rgba(41,41,41,0.6);
+  font-family: urw-din-bold;
+	text-transform: uppercase;
+	font-size: 13px;
+}
+#price-list td {
+	padding: 0;
+}
+#price-list {
+  border: 1px solid #f2f2f2;
+  background: #f2f2f2;
+	width: 323px;
+  margin: 0 auto;
+}
+#price-list td.td-price {
+  font-family: urw-din-xlight;
+}
+.earlobe {
+	font-family: urw-din-xlight;
+}
+select.input-box {
+	background-position: 80% 50%;
+	width: 100px;
+}
+#desktop-slot {
+  margin-top: 110px;
+}
+#desktop-slot .xpaces {
+  font-size: 13px;
+}
+.store-info-wrapper{
+	margin: 0 15px;
+}
+.appointments-book-store .error.invalid-feedback {
+  border: none;
+  background: no-repeat;
+  color: #830000;
+  font-size: 10px;
+  text-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  -moz-box-shadow: unset;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  position: absolute;
+  z-index: 1;
+	font-family: urw-din-medium;
+}
+#name-box .form-group, #email-box {
+  margin-bottom: 24px !important;
+}
+.btn.focus, .btn:focus{
+	outline: 0 !important;
+  box-shadow: none;
+}
+button{
+	height: 42px;
+}
+.translate-popup.appointment-popup-text {
+  margin-top: 20px !important;
+}
+#popupConfirmAppointment img {
+  position: absolute;
+  top: 0;
+}
+.btns-setDiv {
+  justify-content: space-evenly;
+  padding: 20px 30px 55px;
+}
+.apt-cancel-buttons-set, .apt-modify-buttons-set{
+	width: 20%;
+}
+.btns-setDiv button {
+  width: 100%;
+	text-transform: uppercase;
+}
+.apt-buttons-set {
+  margin-bottom: 70px;
+}
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
 
 }

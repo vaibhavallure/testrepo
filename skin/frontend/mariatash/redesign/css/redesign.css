@@ -66,7 +66,7 @@ h4{
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p, .please-wait{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -102,6 +102,10 @@ h4{
 	color: rgba(41,41,41,0.9);
 }
 
+.color-6{
+	color: rgba(41,41,41,0.6);
+}
+
 .options-text,
 #checkout-review-table .cart_col3 span, #checkout-review-table .cart_col4 span #checkout-review-table .cart_col5 div span, #checkout-review-table .messages-tr .cart-price-box .price{
 	font-size: 18px;
@@ -109,7 +113,8 @@ h4{
 	color: rgba(41,41,41,0.90);
 }
 
-.light-button{
+.light-button,
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
 	border: 0.5px solid rgba(41,41,41,0.90);
 	font-family: urw-din-bold;
 	font-size: 15px;
@@ -496,6 +501,7 @@ input, select, textarea{
 	height: 42px;
 	margin-bottom: 24px;
 	text-transform: uppercase;
+	border-radius: 0;
 }
 .product-description-section {
   border-bottom: 1px solid #d8d8d8;
@@ -971,7 +977,7 @@ ul.swatch .swatch-item a {
     transform: rotate(45deg) translate(-6px, -6px);
 }
 
-.label {
+/* .label {
     font-weight: 700;
     font-size: 13px;
     text-transform: uppercase;
@@ -979,7 +985,7 @@ ul.swatch .swatch-item a {
     line-height: normal;
     letter-spacing: 1px;
     color: var(--dark-gray);
-}
+} */
 
 /* .more-details .label {
     letter-spacing: 1.08px;
@@ -2057,6 +2063,7 @@ div#narrow-by-list {
   transform: translate(-50%,-50%);
   max-height: calc(100vh - 10px);
   /* overflow-y: auto; */
+	border-radius: 0;
 }
 .pop-title a {
   margin: 24px 24px 0 0;
@@ -2206,7 +2213,7 @@ span#popup_loader_register {
 
 
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -3016,7 +3023,7 @@ ul.tabs li{
   background-image: url(../images/popup-light-arrow.png);
   transform: rotate(0deg);
 }
-.celeb-loader{
+.celeb-loader, .zoom-loader{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4546,12 +4553,18 @@ dt.post-lengthds-lbl {
 #footer8 .nav-item span {
   letter-spacing: 0;
 }
-/* .product-collateral .para-lighter{
-	color: #000 !important;
-} */
 .contact-us-wrapper h1 {
   font-size: 30px !important;
 }
 .catalog-category-view .celebPopup .product-name {
   margin-bottom: 13px;
+}
+#price-list .xpaces.translate-popup {
+  letter-spacing: 1.5px;
+}
+.apt-buttons-set {
+  margin-bottom: 70px;
+}
+#allureAlertBox p {
+  font-family: urw-din-light;
 }

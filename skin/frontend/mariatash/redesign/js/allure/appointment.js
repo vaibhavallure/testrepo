@@ -89,34 +89,44 @@ var addCustomer = function (srno) {
         ` <div id="customer${srno}" style="display: none">
                <div id="name-box" class="col-md-12 name-box">
                     <div class="">
-                            <h6 class=" translate-popup">${__('CUSTOMER')} ${srno}:</h6>
+                            <h6 class=" translate-popup para-bold color-6">${__('Guest')} ${srno}:</h6>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <input class="input-box required-entry firstname translate-popup" type="text" name="customer[${srno}][firstname]" id="firstname${srno}" placeholder="${__('First Name*')}" value=""required>
+                                <input class="input-box required-entry firstname translate-popup select-type-one" type="text" name="customer[${srno}][firstname]" id="firstname${srno}" placeholder="${__('First Name*')}" value=""required>
                                </div>
                                 <div class="col-md-6 form-group">
-                                    <input class="input-box required-entry lastname translate-popup" type="text" name="customer[${srno}][lastname]" id="lastname${srno}" placeholder="${__('Last Name*')}" value="" required>
+                                    <input class="input-box required-entry lastname translate-popup select-type-one" type="text" name="customer[${srno}][lastname]" id="lastname${srno}" placeholder="${__('Last Name*')}" value="" required>
                                 </div>
                         </div>
                </div>
-               <div id="email-box" class="col-md-12 form-group">
-                    <input class="input-box required-entry email translate-popup"  type="email" name="customer[${srno}][email]" id="email${srno}" placeholder="${__('Email*')}" value="" required>
-               </div>
-               <div id="phone-box" class="col-md-12 form-group">
-                   <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup" type="search" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required autocomplete="off" Try ="disabled" autocorrect="off">
-               </div>
+               <div class="col-12">
+                 <div class="row">
+                   <div id="email-box" class="col-6 form-group">
+                        <input class="input-box required-entry email translate-popup select-type-one"  type="email" name="customer[${srno}][email]" id="email${srno}" placeholder="${__('Email*')}" value="" required>
+                   </div>
+                   <div id="phone-box" class="col-6 form-group">
+                       <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup select-type-one" type="search" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required autocomplete="off" Try ="disabled" autocorrect="off">
+                   </div>
+                 </div>
+                 </div>
                <div id="notify-box" class="col-md-12 form-group">
-                    <p class="label notify-label translate-popup">${__('I would like to be notified by:')}</p>
-                    <div class="col-md-12 notify-label p-0">
-                        <input type="checkbox" id="em${srno}" name="" checked>
-                            <label class="label m-0 mt-1 translate-popup" for="em${srno}">${__('Email')}</label>
-
+               <div class="row">
+                    <div class="col-12">
+                      <p class="label notify-label translate-popup para-normal">${__('I would like to be notified by:')}</p>
                     </div>
-                    <div class="col-md-12 notify-label p-0">
-                        <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" =name="customer[${srno}][noti_sms]">
-                        <label class="label translate-popup" for="c${srno}">${__('Text Message (Message and data rates may apply)')}</label>
-
+                    <div class="col-md-3 notify-label">
+                      <label class="label m-0 mt-1 translate-popup custom-checkbox para-normal" for="em${srno}">${__('Email')}
+                        <input type="checkbox" id="em${srno}" name="" checked>
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <div class="col-md-9 notify-label">
+                        <label class="label translate-popup custom-checkbox para-normal" for="c${srno}">${__('Text Message (Message and data rates may apply)')}
+                          <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" =name="customer[${srno}][noti_sms]">
+                          <span class="checkmark"></span>
+                        </label>
+                    </div>
                     </div>
                 </div>
         </div>`;
@@ -141,16 +151,20 @@ var addCustomer = function (srno) {
 var addCustomerJob = function (srno) {
     var newJob =
         `<div id="customer${srno}job" style="display: none" class="form-group">
-            <h6 class=" translate-popup">${__('CUSTOMER')} ${srno}:</h6>
-            <label class="label mb-1 translate-popup">${__('Type of Appointment:')}</label>
+            <h6 class=" translate-popup">${__('Guest')} ${srno}:</h6>
+            <label class="label mb-1 translate-popup para-normal">${__('Type of Appointment:')}</label>
             <div  class="row ">
                 <div class="col-md-3 col-4">
-                    <input type="checkbox" class="piercing_select" data-no="${srno}" id="piercing_select_${srno}" onchange="displayPiercing(\'${'#piercing-wrapper' + srno}\')" name="customer[${srno}][piercing_select]">
-                    <label class="label translate-popup" for="piercing_select_${srno}">${__('Piercing')}</label>
+                    <label class="label translate-popup custom-checkbox" for="piercing_select_${srno}">${__('Piercing')}
+                      <input type="checkbox" class="piercing_select" data-no="${srno}" id="piercing_select_${srno}" onchange="displayPiercing(\'${'#piercing-wrapper' + srno}\')" name="customer[${srno}][piercing_select]">
+                      <span class="checkmark"></span>
+                    </label>
                 </div>
                 <div class="col-md-6 col-8">
-                    <input type="checkbox" class="checkup_select" data-no="${srno}" id="checkup_select_${srno}" value="1" name="customer[${srno}][checkup]">
-                    <label class="label translate-popup" for="checkup_select_${srno}">${__('Checkup/downsize')}</label>
+                    <label class="label translate-popup custom-checkbox" for="checkup_select_${srno}">${__('Checkup/downsize')}
+                      <input type="checkbox" class="checkup_select" data-no="${srno}" id="checkup_select_${srno}" value="1" name="customer[${srno}][checkup]">
+                      <span class="checkmark"></span>
+                    </label>
                 </div>
                 <div class="col-12">
                 <input type="text" class="customer_select required-entry" value="" id="customer_select_${srno}"
@@ -158,13 +172,13 @@ var addCustomerJob = function (srno) {
                 </div>
             </div>
             <div id="piercing-wrapper${srno}" class="job-wrapper row" style="display:none">
-                <div class="col-12"> 
-                    <div class="row"> 
-                        <div class="col-md-6 col-8"> 
-                            <label class="label translate-popup">${__('Number of Piercings:')}</label>
-                        </div> 
-                    <div class="col-md-3 col-4 text-right"> 
-                        <select id="piercing_${srno}" class="input-box"  name="customer[${srno}][piercing]" onchange="changePiercingQty(this)" disabled>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-8">
+                            <label class="label translate-popup para-bold color-6">${__('Number of Piercings:')}</label>
+                        </div>
+                    <div class="col-4 text-right">
+                        <select id="piercing_${srno}" class="input-box quantity-count"  name="customer[${srno}][piercing]" onchange="changePiercingQty(this)" disabled>
                             <option selected value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -230,7 +244,7 @@ var calculateTime = function () {
 
 
     timeSpan.slideUp("slow",function () {
-        timeSpan.html('<span class="translate-popup">'+__('Total Time:')+'</span> '+hours +' <span class="translate-popup">'+ __('hour')+'</span> '+ minutes+' <span class="translate-popup">'+__('minutes')+'</span>');
+        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __('hour')+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__('minutes')+'</span>');
     });
     timeSpan.slideDown("slow");
 
@@ -257,7 +271,7 @@ var getAvailableSlots = function () {
 
     if(time_in_min<1)
     {
-        html=`<p class="col-12  p-1 m-1 text-center translate-popup">
+        html=`<p class="col-12 translate-popup para-normal">
             ${__('Choose type of Appointment to get available time slots')}
             </p>`;
         jQuery("#slots_section").slideUp("fast",function () {
@@ -313,7 +327,7 @@ var setAvailableSlots = function (response) {
    // jQuery('#slotloader').hide();
 
     html=`<p class="col-12 p-1 m-1 text-center">
-        <span class="translate-popup">${__('No Slot Available')}</span>
+        <span class="translate-popup para-normal">${__('No Slot Available')}</span>
         </p>`;
 
     if(response.success==true)
@@ -325,7 +339,7 @@ var setAvailableSlots = function (response) {
              var html="";
              for (var i = 0; i < slots.length; i++) {
 
-                 html+=' <div class="slot-width float-left m-1 border border-dark p-1  text-center'+isModifyActive(slots[i])+'" data-start="'+slots[i]["start"]+'" data-end="'+slots[i]["end"]+'" data-p_id="'+slots[i]["id"]+'" title="'+slots[i]["start"]+'-'+slots[i]["end"]+'">\n'
+                 html+=' <div class="slot-width float-left text-center info-text-two'+isModifyActive(slots[i])+'" data-start="'+slots[i]["start"]+'" data-end="'+slots[i]["end"]+'" data-p_id="'+slots[i]["id"]+'" title="'+slots[i]["start"]+'-'+slots[i]["end"]+'">\n'
                             +slots[i]["start"]+
                      '</div>';
              }
