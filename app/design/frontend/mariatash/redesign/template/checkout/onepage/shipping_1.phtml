@@ -297,7 +297,15 @@
 			if(billingAddressId == shippingAddressId){
 				jQuery('input[name="shipping[same_as_billing]"]').is(":checked")
 			}
-		} */
+		}  */
+
+		jQuery(document).on('keypress blur','#co-shipping-form input[type="text"],#co-shipping-form select',function(){
+			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
+			if(check){
+				shipping.setSameAsShipping(true);
+			}
+		});
+		
 
 		jQuery('.country-section select[name="billing[country_id]"]').on('change',function(){
 			if(jQuery(this).val() == ''){
