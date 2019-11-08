@@ -11,7 +11,7 @@ if($fetch_model){
 <div id="slots_section" class="row justify-content-around message">
     <p class="col-12 translate-popup para-normal">Choose type of Appointment to get available time slots</p>
 </div>
-<div class="col-12 text-center">
+<div class="col-12 text-center hidden-appointments-time p-0">
 <input type = "hidden"  value="<?= ($fetch_starttime)? $fetch_starttime : ""?>" name="appointment_start" id="starttime_hidden">
 <input type = "hidden"  value="<?= ($fetch_endtime)? $fetch_endtime : ""?>" name="appointment_end" id="endtime_hidden">
 <input type = "hidden"  value="<?= ($fetch_piercer_id)? $fetch_piercer_id : ""?>" name="piercer_id" id="piercer_id">

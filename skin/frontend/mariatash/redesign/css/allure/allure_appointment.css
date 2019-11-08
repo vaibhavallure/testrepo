@@ -1254,3 +1254,17 @@ button{
 button#btnConfirm {
   margin: 5px 15px 0;
 }
+#name-box h6 {
+  margin-bottom: 19px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.apt-buttons-set {
+  margin-bottom: 70px;
+}
+#allureAlertBox p {
+  font-family: urw-din-light;
+}
+#price-list .xpaces.translate-popup {
+  letter-spacing: 1.5px;
+}	

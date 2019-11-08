@@ -4560,17 +4560,6 @@ dt.post-lengthds-lbl {
 .catalog-category-view .celebPopup .product-name {
   margin-bottom: 13px;
 }
-#price-list .xpaces.translate-popup {
-  letter-spacing: 1.5px;
-}
-.apt-buttons-set {
-  margin-bottom: 70px;
-}
-#allureAlertBox p {
-  font-family: urw-din-light;
-}
-#name-box h6 {
-  margin-bottom: 19px;
-  text-transform: uppercase;
-  font-size: 13px;
+.hidden-appointments-time{
+	height: 12px;
 }

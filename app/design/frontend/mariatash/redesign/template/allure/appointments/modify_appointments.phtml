@@ -162,7 +162,7 @@ else:
 
         if (!conf)
         {
-            createCustomConfirm(__("Are you sure you want to cancel an scheduled appointment?"));
+            confirmBox(__("Are you sure you want to cancel an scheduled appointment?"));
             return false;
         }
 
@@ -182,51 +182,6 @@ else:
 
     }
 
-    function createCustomConfirm(txt) {
-        d = document;
-
-        if(d.getElementById("allureModalContainer")) return;
-
-        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
-        mObj.id = "allureModalContainer";
-        mObj.style.height = d.documentElement.scrollHeight + "px";
-
-        alertObj = mObj.appendChild(d.createElement("div"));
-        alertObj.id = "allureAlertBox";
-        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
-        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
-        alertObj.style.visiblity="visible";
-
-        msg = alertObj.appendChild(d.createElement("p"));
-        //msg.appendChild(d.createTextNode(txt));
-        msg.innerHTML = txt;
-
-        btnc = alertObj.appendChild(d.createElement("a"));
-        btnc.id = "cancelConfirm";
-        btnc.appendChild(d.createTextNode(__("CANCEL")));
-        btnc.href = "#";
-
-
-        btnc.onclick = function() {
-            removeCustomAlert();
-            return false;
-        }
-
-
-        btn = alertObj.appendChild(d.createElement("a"));
-        btn.id = "okConfirm";
-        btn.appendChild(d.createTextNode(__("OK")));
-        btn.href = "#";
-        btn.focus();
-        btn.onclick = function() {
-            removeCustomAlert();
-            conf=true;
-            confirmCancelApt();
-            return false;
-        }
-
-        alertObj.style.display = "block";
-    }
 </script>
 </div>
 </div>

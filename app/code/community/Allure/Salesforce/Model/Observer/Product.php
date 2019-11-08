@@ -51,7 +51,13 @@ class Allure_Salesforce_Model_Observer_Product{
                 }
 
                 $requestData = $helper->getProductData($product,true,true);
-                $request = array("records" => array());
+                if($requestData == null) {
+                    $helper->salesforceLog("Return from saveProductToSalesforce -".$product->getId());
+                    return;
+                }else {
+                    $request = array("records" => array());
+                }
+
                 array_push($request["records"],$requestData);
                 
                 //$helper->salesforceLog($request);
@@ -161,23 +167,47 @@ class Allure_Salesforce_Model_Observer_Product{
                     }
                 }else{
                     $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
-                    $product = Mage::getModel("catalog/product")->load($productId);
-                    $salesforceId = $product->getSalesforceProductId();
-                    if(!$salesforceId){
-                        $this->saveProductToSalesforce($product);
-                    }else {
-                        $standardPriceBkId  = $product->getSalesforceStandardPricebk();
-                        $wholesalePriceBkId = $product->getSalesforceWholesalePricebk();
-                        if(!$standardPriceBkId && !$wholesalePriceBkId){
+                    if($productId){
+                        $product = Mage::getModel("catalog/product")->load($productId);
+                        $salesforceId = $product->getSalesforceProductId();
+                        if(!$salesforceId){
                             $this->saveProductToSalesforce($product);
+                        }else {
+                            $standardPriceBkId  = $product->getSalesforceStandardPricebk();
+                            $wholesalePriceBkId = $product->getSalesforceWholesalePricebk();
+                            if(!$standardPriceBkId && !$wholesalePriceBkId){
+                                $this->saveProductToSalesforce($product);
+                            }
+                        }
+                        $product = null;
+                    }else {
+                        $helper->salesforceLog("tmwork product - ".$item->getSku());
+                        $product = Mage::getModel("allure_teamwork/tmproduct")
+                            ->load($item->getSku(),"sku");
+                        if($product){
+                            $salesforceId = $product->getSalesforceProductId();
+                            if(!$salesforceId){
+                                $this->saveTeamworkProductToSalesforce($product);
+                            }
+                        }else {
+                            try {
+                                $product = Mage::getModel("allure_teamwork/tmproduct");
+                                $product->setName($item->getName());
+                                $product->setSku($item->getSku());
+                                $product->setPrice($item>getBasePrice());
+                                $product->save();
+                                $this->saveTeamworkProductToSalesforce($product);
+                            }catch (Exception $e) {
+                                $helper->salesforceLog("Exception in saving TW-Product ".$item->getSku());
+                            }
+
                         }
                     }
-                    $product = null;
                 }
             }
         }catch (Exception $e){
             $helper->salesforceLog("Exception in add product into salesforce for sales order item");
-            $helper->salesforceLog("Message :".$ee->getMessage());
+            $helper->salesforceLog("Message :".$e->getMessage());
         }
         $helper->salesforceLog("call complete.");
     }
