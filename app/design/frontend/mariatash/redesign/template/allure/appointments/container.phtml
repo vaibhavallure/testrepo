@@ -2,7 +2,7 @@
 if($this->isAdmin())
     echo "<style>header{display: none} .footer{display: none}</style>";
 ?>
-
+<p class="category-image" style="display: none;"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog-blue.jpg'); ?>" alt="Jewelry" title="" class="ae-img"></p>
 <div id="appointments-popup-wrapper">
     <script>
         setLoader();
@@ -145,7 +145,7 @@ if($this->isAdmin())
                 selectTime: "Please select a booking time",
                 selectTimeSlot: "Please select a booking time"
             },*/
-            errorElement: "em",
+            errorElement: "div",
             errorPlacement: function ( error, element ) {
                 // Add the `invalid-feedback` class to the error element
                 error.addClass( "invalid-feedback translate-popup" );
@@ -175,5 +175,3 @@ if($this->isAdmin())
     Mage::getSingleton("core/session")->unsetData('appointment_submitted');
     ?>
 </script>
-
-

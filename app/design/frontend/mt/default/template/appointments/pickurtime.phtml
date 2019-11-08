@@ -147,8 +147,11 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments.log', true );
                     /* If piercer is not free logic start*/
                     if(empty($collection->getData())){
-
+                        $customerInfoFlag = Mage::helper('appointments/data')->getCustomersInfo($selectedStoreId);
+                        $isCurrentDate = (date('m/d/Y') == $date);
+                        if(!$customerInfoFlag && !$isCurrentDate ):
                         echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
+                        endif;
                         $notfreepeiercer_show=1;
                     }
                     /* If piercer is not free logic end*/

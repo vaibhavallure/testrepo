@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Payment
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -45,14 +45,14 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
          */
         foreach ($this->getMethods() as $method) {
             $this->setChild(
-                'payment.method.'.$method->getCode(),
-                $this->helper('payment')->getMethodFormBlock($method)
-                );
+               'payment.method.'.$method->getCode(),
+               $this->helper('payment')->getMethodFormBlock($method)
+            );
         }
-        
+
         return parent::_prepareLayout();
     }
-    
+
     /**
      * Check payment method model
      *
@@ -64,9 +64,9 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
         return $method->isApplicableToQuote($this->getQuote(), Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY
             | Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_CURRENCY
             | Mage_Payment_Model_Method_Abstract::CHECK_ORDER_TOTAL_MIN_MAX
-            );
+        );
     }
-    
+
     /**
      * Check and prepare payment method model
      *
@@ -80,7 +80,7 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
         $method->setInfoInstance($this->getQuote()->getPayment());
         return $this;
     }
-    
+
     /**
      * Declare template for payment method form block
      *
@@ -97,7 +97,7 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
         }
         return $this;
     }
-    
+
     /**
      * Retrieve available payment methods
      *
@@ -105,21 +105,19 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
      */
     public function getMethods()
     {
-        
         $methods = $this->getData('methods');
         if ($methods === null) {
             $quote = $this->getQuote();
             $store = $quote ? $quote->getStoreId() : null;
             $methods = array();
             foreach ($this->helper('payment')->getStoreMethods($store, $quote) as $method) {
-                
                 if ($this->_canUseMethod($method) && $method->isApplicableToQuote(
                     $quote,
                     Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL
-                    )) {
-                        $this->_assignMethod($method);
-                        $methods[] = $method;
-                    }
+                )) {
+                    $this->_assignMethod($method);
+                    $methods[] = $method;
+                }
                     if ($method->getCode()=="bakerloo_cash" &&  Mage::app()->getRequest()->getModuleName()=='MariaTashGOadmin'){
                         $this->_assignMethod($method);
                         $methods[] = $method;
@@ -130,7 +128,7 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
         }
         return $methods;
     }
-    
+
     /**
      * Retrieve code of current payment method
      *

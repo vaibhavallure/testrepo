@@ -22,7 +22,7 @@
     <?php else: ?>
         <?php if (count($this->getSuggests())): ?>
             <?php foreach ($this->getSuggests() as $suggest) : ?>
-                <li class=""><a href='<?php echo $url . $suggest; ?>'/><?php echo $suggest; ?></a></li>
+                <li class="search-suggestions"><a href='<?php echo $url . $suggest; ?>'/><?php echo $suggest; ?></a></li>
             <?php endforeach; ?>
         <?php endif; ?>
 
@@ -37,7 +37,7 @@
         <?php if (!$this->isNoResult()): ?>
             <li class="all-results">
                 <a href="<?php echo $this->escapeUrl($this->getResultUrl()) ?>">
-                    <?php echo $this->getAllResultsLabel() ?>
+                    <?php echo 'See more items'//$this->getAllResultsLabel() ?>
                 </a>
             </li>
         <?php endif; ?>
