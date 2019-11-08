@@ -1236,5 +1236,10 @@ button{
   margin-bottom: 70px;
 }
 #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
-
+	height: 42px;
+  padding: 10px;
+	margin-top: 30px;
+}
+.store-name {
+  margin-bottom: 7px;
 }
