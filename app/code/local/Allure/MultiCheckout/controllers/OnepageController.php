@@ -265,7 +265,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
             Mage::getSingleton('checkout/session')->setInStockOrderShippingMethod($data);
             $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
-
+            $no_signature_delivery = ($no_signature_delivery) ? 1 : 0;
+            
             $result = $this->getOnepage()->saveShippingMethod($this->getRequest()
                 ->getPost());
             $this->getOnepage()

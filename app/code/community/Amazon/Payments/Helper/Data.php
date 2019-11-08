@@ -344,7 +344,7 @@ class Amazon_Payments_Helper_Data extends Mage_Core_Helper_Abstract
     public function transformAmazonAddressToMagentoAddress($amazonAddress) {
         $name = $amazonAddress->getName();
         $firstName = substr($name, 0, strrpos($name, ' '));
-        $lastName  = substr($name, strlen($firstName) + 1);
+        $lastName  = substr($name, strlen($firstName));
 
         $data['firstname'] = $firstName;
         $data['lastname'] = $lastName;

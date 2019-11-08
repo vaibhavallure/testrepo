@@ -1332,7 +1332,7 @@ ul.swatch .swatch-item a {
   margin-top: 8px;
 	margin-bottom: 100px;
 }
-.category-piercing-gallery .category-products{
+.category-inspiration .category-products{
 	margin-bottom: 0;
 }
 
@@ -2472,7 +2472,7 @@ ul#foo4 {
 	padding: 0
 }
 
-.filterPopup .close div,.celebPopup .close div,.pressPopup .close div{
+.filterPopup .close div,.celebPopup .close div,.pressPopup .close div,.zoomPopup .close div{
   background-image: url("../images/redesign/login-cross.png");
   width: 25px;
   height: 26px;
@@ -2972,7 +2972,8 @@ ul.tabs li{
 	padding: 0 30px 0 26px;
 }
 
-.celebPopup .close{
+.celebPopup .close,
+.zoomPopup .close{
   z-index: 2;
 }
 .celebPopup .product-info {
@@ -3036,7 +3037,7 @@ ul.tabs li{
   margin-bottom: 18px;
 	padding: 0;
 }
-/* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+/* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-inspiration .for-space-to-bottom{
 	height: 242px !important;
 } */
 /*press page--------------------------------------------*/
@@ -3731,7 +3732,7 @@ table thead {
 .shop_by_look .product-info .product_details{
 	padding: 10px;
 }
-.category-piercing-gallery .top-bar {
+.category-inspiration .top-bar {
   display: none;
 }
 
@@ -3923,7 +3924,7 @@ table thead {
 	width: 100%;
 }
 .category-celebrity-clientele .homepage-menu.mariatash-header,
-.category-piercing-gallery .homepage-menu.mariatash-header,
+.category-inspiration .homepage-menu.mariatash-header,
 .category-shop-our-instagram .homepage-menu.mariatash-header
 {
 	z-index: 1;

@@ -31,6 +31,7 @@
  */
 ?>
 <?php header('X-Frame-Options: GOFORIT'); ?>
+
 <!--<script type="text/javascript">// <![CDATA[
 (function (w, d, load) {
  var script,
@@ -197,6 +198,10 @@ function loadImage(numImage,obj){
        jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
     });
 
+    var zoom_img = jQuery('#zoom-img');
+    zoom_img.attr('data-src','');
+    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('src'));
+
     setFacebook();
 
     shareLikeTwitter();
@@ -218,7 +223,9 @@ function loadBaseImage(){
         jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
         jQuery('.thumb.thumb1').addClass("active");
     });
-
+    var zoom_img = jQuery('#zoom-img');
+    zoom_img.attr('data-src','');
+    zoom_img.attr('data-src',"<?php echo $_helper->productAttribute($_product, $_img, 'image');?>");
     setFacebook();
 
     shareLikeTwitter();
@@ -475,6 +482,9 @@ function shareLikeTwitter(){
         <div class="thumb thumb3"></div>
         <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
         <div class="thumb thumb5"></div>
+        <div class="zoom-link">
+            <a class="link-button" data-src="" id="zoom-img">Click to Zoom</a>
+        </div>
     </div>
     <div class="containerImage col-lg-10"></div>
 
@@ -517,7 +527,10 @@ function shareLikeTwitter(){
         </div>-->
     </div>
 </div>
-<div id="zoomView"></div>
+
+
+
+
 <?php
 $matches ='';
 preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $_product->getVideo(), $matches);
@@ -605,5 +618,56 @@ if ($isAjaxCall) {
         } else {
             jQuery('.delayed-product').addClass('display_none');
         }
+
+        /*Zoom Image*/
+     
+        // jQuery('#zoom-img').on('click',function () {
+        //     console.log('Zoom clicked');
+        //     var zoom_loader = jQuery('.zoom-loader');
+        //     zoom_loader.show();
+        //     var img_src = jQuery(this).attr('data-src');
+        //     console.log(img_src);
+        //     var img_div = jQuery('.product-img');
+        //     img_div.css('background-image','');
+        //     img_div.css('background-image','url('+img_src+')');
+        //     zoom_loader.hide();
+        // })
+        jQuery('#zoom-img').on('click',function () {
+            var img_src = jQuery(this).attr('data-src');
+
+            clearImg();
+            jQuery(".zoomPopup").css({"opacity": "1", "pointer-events": "auto"});
+
+            unScrollBody();
+            jQuery(".catalog-category-view .footer").css("display","none");
+
+            jQuery(".zoom-loader").show();
+            setImg(img_src);
+            jQuery(".zoom-loader").hide();
+
+        });
+
+        jQuery("#zoomClose").on('click',function(){
+            jQuery(".zoom-loader").hide();
+
+            scrollBody();
+            jQuery(".catalog-category-view .footer").css("display","block");
+
+            jQuery(".zoomPopup").css({"opacity":"0","pointer-events":"none"});
+
+        });
+        function setImg(img) {
+            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"cover"});
+        }
+
+        function clearImg() {
+            jQuery(".zoom-img").css({"background-image":"","background-size":""});
+        }
     });
+
+
+
+
+
+
 </script>

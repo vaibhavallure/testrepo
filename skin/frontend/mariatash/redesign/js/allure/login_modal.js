@@ -255,6 +255,11 @@ jQuery(document).ready(function(){
     $j(".popupDelMyAccModel .close").on('click',function(){
     	$j(".popupDelMyAccModel").css({"opacity":"0","pointer-events":"none"});
     });
+    
+    //close login popup when click on amazon button for login
+    $j(document).on('click','#amazon-login-button img',function(){
+    	$j(".popupLoginModel .close").click();
+    });
 });
 
 function openRegisterModal(){
