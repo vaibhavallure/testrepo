@@ -4569,3 +4569,6 @@ dt.post-lengthds-lbl {
 #allureAlertBox p {
   font-family: urw-din-light;
 }
+.hidden-appointments-time{
+	height: 12px;
+}
