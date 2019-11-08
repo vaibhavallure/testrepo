@@ -171,7 +171,7 @@ RewriteRule ^(.git) - [R=404,L]
 ## TRACE and TRACK HTTP methods disabled to prevent XSS attacks
 
     RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
-    RewriteRule .* - [L,R=405]
+    RewriteRule .* - [F]
 
 <IfModule mod_setenvif.c>
     <IfModule mod_headers.c>
