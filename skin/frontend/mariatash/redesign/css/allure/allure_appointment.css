@@ -22,42 +22,43 @@ button#btnConfirm
 } */
 
 p.notify-label {
-    margin-bottom: 0;
-		line-height: 18px;
+  margin-bottom: 0;
+	line-height: 18px;
+	margin-bottom: 18px;
 }
 
 .dialogBg.popupid21,
 .mbdialog{
-    display: none !important;
+  display: none !important;
 }
 .intl-tel-input .selected-flag .iti-flag {
-    left:12px !important;
-		top: 0px !important;
+  left:12px !important;
+	top: 0px !important;
 }
 #people-box {
-    margin-bottom: 40px;
-		margin-top: 10px;
+  margin-bottom: 24px;
+	margin-top: 10px;
 }
 
 #name-box {
-    margin-top: 19px;
+  margin-top: 19px;
 }
 
 span.apt-summary {
-    line-height: 2em;
+  line-height: 2em;
 }
 .detailofapt {
-    font-family: urw-din-medium;
-    font-size: 30px;
-    text-transform: uppercase;
-    text-align: left;
-    width: 100%;
-    display: block;
+	font-family: urw-din-medium;
+	font-size: 30px;
+	text-transform: uppercase;
+	text-align: left;
+	width: 100%;
+	display: block;
 }
 
 #allureAlertBox #closeBtn {
 	display: block;
-	 position: initial;
+	position: initial;
 	bottom: 44px;
 	left: 152px;
 	margin: 5px auto;
@@ -67,7 +68,6 @@ span.apt-summary {
 	font: 12px dinmittelschriftregular,arial;
 	text-transform: uppercase;
 	text-align: center;
-
 	background: none;
 	/* background: transparent url(../images/bkg_brown_btn.png); */
 	background-color: #000;
@@ -77,9 +77,9 @@ span.apt-summary {
 
 .overlay {
 	position: absolute;
-    overflow-x: auto;
-    overflow-y: scroll;
-    cursor: pointer;
+  overflow-x: auto;
+  overflow-y: scroll;
+  cursor: pointer;
 	z-index: 1000;
 	background: #000000;
 	display: none;
@@ -92,8 +92,8 @@ span.apt-summary {
 }
 
 select:after {
-    background-image: url('../../images/allure/popup/dropdown-arrow.png');
-		content: '';
+  background-image: url('../../images/allure/popup/dropdown-arrow.png');
+	content: '';
 }
 
 button#btnBooking{
@@ -105,7 +105,6 @@ button#btnBooking{
 
 
 @media (max-width:1023px){
-
 	.links-section{
 		display: none;
 	}
@@ -251,6 +250,7 @@ p.label + div.box {
     display: inline-block;
     float: none;
     /*padding-top: 2em;*/
+		margin-bottom: 25px;
 }
 /* .job-wrapper
 {
@@ -1159,6 +1159,7 @@ div#page-wrapper{
   font-family: urw-din-bold;
 	text-transform: uppercase;
 	font-size: 13px;
+	margin-bottom: 13px;
 }
 #price-list td {
 	padding: 0;
@@ -1168,6 +1169,7 @@ div#page-wrapper{
   background: #f2f2f2;
 	width: 323px;
   margin: 0 auto;
+	padding: 29px 23px 0;
 }
 #price-list td.td-price {
   font-family: urw-din-xlight;
@@ -1180,7 +1182,7 @@ select.input-box {
 	width: 100px;
 }
 #desktop-slot {
-  margin-top: 110px;
+  margin-top: 128px;
 }
 #desktop-slot .xpaces {
   font-size: 13px;
@@ -1242,4 +1244,13 @@ button{
 }
 .store-name {
   margin-bottom: 7px;
+}
+.store-details{
+	margin-bottom: 3px;
+}
+.book-title {
+  margin: 22px 0 26px;
+}
+button#btnConfirm {
+  margin: 5px 15px 0;
 }
