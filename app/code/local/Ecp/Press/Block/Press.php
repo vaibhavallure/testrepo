@@ -34,6 +34,8 @@
  */
 class Ecp_Press_Block_Press extends Mage_Core_Block_Template
 {
+    protected $lastPage=1;
+
 	public function _prepareLayout()
     {
 		return parent::_prepareLayout();
@@ -45,6 +47,34 @@ class Ecp_Press_Block_Press extends Mage_Core_Block_Template
             $this->setData('press', Mage::registry('press'));
         }
         return $this->getData('press');
-        
+
+    }
+    public function getPressCol()
+    {
+    $collection = Mage::getModel('ecp_press/press')->getCollection()
+        ->addFilter('status', 1)
+        ->setOrder('publish_date');
+        $collection->setCurPage(1);
+      $collection->setPageSize(9);
+
+        $this->lastPage=$collection->getLastPageNumber();
+
+    return $collection;
+    }
+    public function getPressActionUrl()
+    {
+        return $this->getUrl('ecppress/index/getPress', array('_secure' => true));
+    }
+    public function getPopUpActionUrl()
+    {
+        return $this->getUrl('ecppress/index/getPopup', array('_secure' => true));
+    }
+    public function getImagePath()
+    {
+        return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'press/';
+    }
+    public function getLastPage()
+    {
+        return $this->lastPage;
     }
 }

@@ -1,0 +1,35 @@
+<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
+
+<div class="discount">
+    <div class="discount-form">
+        <form method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
+            <div class="input-box">
+                <input value="" name="giftcard_code" id="giftcard_code" class="input-text" placeholder="Gift Card">
+            </div>
+        </form>
+        <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
+        <?php if($oGiftCardSession->getActive()):?>
+            <?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
+            <p class="para-normal text-left p-1 giftcard-output-content">
+            	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
+            	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
+            	<a href="javascript:void(0);" onclick="processCartItem(this);" data-url="<?= $this->getUrl("giftcards/cart/deActivateGiftCard/id/$k")?>" class="button_coupon link-button">
+            		<span><span><?= $this->__('Remove')?></span></span>
+            	</a>
+            </p>
+            <?php endforeach;?>
+        <?php endif;?>
+    </div>
+    <script type="text/javascript">
+        //&lt;![CDATA[
+        var deActivateGiftCardForm = new VarienForm('deActivateGiftCard');
+        var giftCardForm = new VarienForm('activateGiftCard');
+        //]]&gt;
+        jQuery("#giftcard_code").blur(function() {
+        	if(jQuery("#giftcard_code").val() != ''){
+        		blockCheckoutUi();
+        		giftCardForm.submit(true);
+        	}
+        });
+    </script>
+</div>

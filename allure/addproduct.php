@@ -6,6 +6,22 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$orderIds = array(454175, 454176);
+$orderObjArray = array();
+foreach ($orderIds as $orderId){
+    $orderObjArray[$orderId] = Mage::getModel("sales/order")->load($orderId);
+}
+
+try{
+    $order = $orderObjArray[$orderId];
+    $order->queueMultiAddressNewOrderEmail($orderObjArray);
+}catch(Exception $e){
+    var_dump($e->getMessage());
+}
+die("Finish...");
+
+
+
 die;
 $TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
 $TM_URL = "/services/orders";

@@ -137,7 +137,7 @@ jQuery(window).resize(function() {
         if($_category->getCategoryBleed()) {
             echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
-                        .caroufredsel_wrapper {margin-top: 240px !important}                        
+                        .caroufredsel_wrapper {margin-top: 240px !important}
                         #productsContainer-wrapper { margin-top: 75px !important; }
                         .mb-mana-catalog-leftnav .block-layered-nav-bg {top: -65px !important;}
 						            .mb-category-products .toolbar-top .toolbar {top: -65px !important;}
@@ -165,7 +165,7 @@ jQuery(window).resize(function() {
 				jQuery('.col-main').addClass('isBleed');
 			});
 			</script>
-			<?php 
+			<?php
         echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 50px !important; }
@@ -178,7 +178,7 @@ jQuery(window).resize(function() {
                   </style>';
     }
     ?>
-	
+
     <h1 style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
 </div>
 <?php $_collection = $this->getCategories() ?>
@@ -200,4 +200,3 @@ jQuery(window).resize(function() {
 	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
 </div>
 <?php } ?>
-

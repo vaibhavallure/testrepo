@@ -1,0 +1,216 @@
+.content-cart .padder {
+	/*float:left;*/
+}
+#tooltip-id-currency-selector {
+	background:url(../images/top-currency-bottom-links.png) no-repeat right top;
+	padding:15px;
+	margin-top:-15px;
+}
+.content-cart {
+	overflow:hidden;
+
+
+}
+.content-cart  .summary{
+	font-size:13px;
+	color:#c9cdd7;
+	font-family:Arial;
+
+}
+.content-cart h1 {
+	/*background:url(../images/line-top-cart.png) no-repeat right bottom;*/
+	border-bottom:1px solid #3f4048;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+.content-cart h1 a,visited { font-size:14px;
+	font-weight:bold;
+}
+.content-cart .subtotal {
+	background:#dedede;
+	border-top:1px solid #FFFFFF;
+	height:42px;
+}
+h1, p {
+	margin:0;
+	padding:0;
+}
+.content-cart .subtotal .padder{
+}
+.content-cart .top {
+/*	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	padding:0;
+	width:100%;*/
+	background:/*url(../images/topcart-line-bottom.gif) no-repeat center bottom*/#dedede;
+	border-bottom:1px solid #d1d1d1;
+	display:block;
+	margin-top:6px;
+	height:37px;
+}
+.content-cart .top .padder a{
+	display: block;
+	left: 12px;
+	position: relative;
+	top: 8px;
+	width: 140px;
+}
+.content-cart .bottom {
+	border-top: 1px solid #fff;
+	border-bottom:1px solid #d1d1d1;
+	clear:both;
+	/*float:left;*/
+	width:100%;
+}
+.content-cart canvas {
+	display:none;
+}
+.content-cart .top .close {
+	background-image:url("../images/close-icon2.png");
+	background-position:0 0;
+	background-repeat:no-repeat;
+	cursor:pointer;
+	height:18px;
+	position:absolute;
+	right:2px;
+	top:17px;
+	width:22px;
+}
+/*.content-cart .top .close:hover {
+	background-position:0 -18px;
+}*/
+.t_Tooltip_customcart .t_Skin{
+/*	opacity:.9;
+	filter:alpha(opacity=90);*/
+}
+.product-cart-image{
+	float:left;
+	margin-right:0px;
+	/* aqui movi de 10 a 0 */
+/*	width:30%*/
+}
+#body-content-cart {
+	/*background:url(../images/line-topcart-bg-2.png) no-repeat 0 0;*/
+	max-height:425px;
+	overflow:hidden;
+	border:none;
+	padding:0 12px;
+}
+#body-content-cart .product-cart-image img {
+	float:left;
+}
+#body-content-cart .cart-empty{
+	padding:15px 0;
+}
+/* .cart-product {
+	/*border:none;
+	display:block;
+	background: url(../images/topcart-line-bottom.gif) no-repeat center bottom;
+	height:130px;
+	margin-bottom:10px;
+	border-bottom: 1px solid #dedede;
+	border-top: 1px solid #fff;
+	clear: both;
+	display: block;
+	float: left;
+	padding: 15px 0;
+}
+.cart-product:first-child {
+	border-top: none;
+	/*border:none;
+	display:block;
+	background:none;
+	height:115px;
+	margin-bottom:30px;
+}
+.cart-product:last-child {
+	border-bottom: none;
+	/*border:none;
+	display:block;
+	background:none;
+	height:115px;
+	margin-bottom:10px;
+} */
+.product-cart-information {
+	/*float:right;
+	width:64%;
+	 font-weight:normal;
+	font-size:13px;
+	text-transform:capitalize;
+	padding-right:15px;*/
+	/*aqui movi el width de 60 a 64 y el padding roght a 15px*/
+    float: left;
+    font-size: 13px;
+    font-weight: normal;
+	margin-left: 12px;
+    text-transform: capitalize;
+    width: 150px;
+}
+.product-cart-information h4 {
+    color: #3F4048;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 7px;
+}
+.product-cart-information p{
+	line-height:14px;
+}
+.recently-added {
+	/*padding:12px;
+	margin:0;
+	height:125px;*/
+
+	max-height:396px;
+	overflow:hidden;
+	border:none;
+	padding:0 12px;
+}
+/*.recently-added  .cart-product {
+	height:150px;
+	background:none;
+}*/
+.recently-added img {
+	/*padding:0;
+	margin:0 10px 0 0;
+	float:left;*/
+}
+.product-cancel{
+	margin-top:7px;
+}
+.product-cancel a {
+	text-decoration:underline;
+}
+.total-content-cart {
+	float:left;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+	color:#3f4048;
+	font-weight:bold;
+	line-height: 42px;
+	margin-left:12px;
+}
+.top-total {
+	/*margin-top:10px;
+	padding:10px;
+	width: 100%;*/
+}
+.button-top-cart {
+    margin-top: 7px;
+    position: absolute;
+    right: 13px;
+}
+.button-top-cart button.button.btn-cart{
+	/*padding:6px 10px;*/
+}
+.just-added-to-cart {
+	display:block;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:10px;
+	margin:6px 12px;
+}
+.t_Content { left: 0 !important; width: 100%; top: 11px; }

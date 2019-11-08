@@ -10,11 +10,11 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 
     protected $_escape_stock_msg_array = array("STORECARD", "GIFT");
 
-    protected $_in_stock = "In Stock: Ships Within 24 hours (Mon-Fri)";
-    protected $_out_stock = "The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.";
-    protected $_backorder_with_time = "The metal color or length combination you selected is backordered. Order now and It will ship %s";
-    protected $_backorder_without_time = "The metal color or length combination you selected is backordered";
-    protected $_backorder_with_qty = "This product is not available in the requested quantity.%s of the items will be backordered.";
+    protected $_in_stock = "<span class='info-text-two'>In stock ships within 24 hours (Mon-Fri)</span>";
+    protected $_out_stock = "<span class='info-text-three'>The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.</span>";
+    protected $_backorder_with_time = "<span class='info-text-two'>Order now and It will ship <span class='text-lowercase'>%s</span>.</span><br><span class='info-text-three'>The metal color or length combination you selected is backordered.</span> ";
+    protected $_backorder_without_time = "<span class='info-text-three'>The metal color or length combination you selected is backordered.</span>";
+    protected $_backorder_with_qty = "<span class='info-text-three'>This product is not available in the requested quantity.%s of the items will be backordered.</span>";
 
     public function show($product)
     {
@@ -205,7 +205,7 @@ INLINECSS;
             $stockItem->getUuseConfigBackorders() == 0){
             $status = $this->_out_stock;
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() >= 1){
-            $status = "({$this->_in_stock})";
+            $status = "{$this->_in_stock}";
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() <= 0){
             if($product->getBackorderTime()){
                 $status = sprintf($this->_backorder_with_time , $product->getBackorderTime());
@@ -213,7 +213,7 @@ INLINECSS;
                 $status = $this->_backorder_without_time;
             }
         }else if($product->getStockItem()->getManageStock() == 0){
-            $status = "({$this->_in_stock})";
+            $status = "{$this->_in_stock}";
         }
 
         return $status;
@@ -462,7 +462,7 @@ INLINECSS;
         $manageStock = $stock->getManageStock();
         $isInStock = $stock->getIsInStock();
         $isBackordered = false;
-        $backorderedQty = $_item->getQty();
+        $backorderedQty = round($_item->getQty());
 
 
 

@@ -1,0 +1,201 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+?>
+<?php
+$_product = $this->getProduct();
+$_helper = $this->helper('catalog/output');
+/*
+echo $this->getWidthwindow();
+echo "<br />";
+echo $this->getHeightwindow();
+*/
+?>
+<?php $count = count($this->getGalleryImages()); ?>
+<?php if ( $count >= 1 ): ?>
+        <?php $counter = 1; ?>
+        <div id="imageRepoFull">
+            <?php foreach ($this->getGalleryImages() as $_image): ?>
+                <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize( $this->getWidthfullimage(),$this->getHeightfullimage() ); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
+            <?php $counter++; ?>
+            <?php endforeach; ?>
+        </div>
+        <div id="thumbRepoFull">
+            <?php foreach ($this->getGalleryImages() as $_image): ?>
+                <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize( (($this->getHeightfullimage() - 24)*7/40),(96*(($this->getHeightfullimage() - 24)/4))*7/740 ); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
+            <?php $counter++; ?>
+            <?php endforeach; ?>
+        </div>
+<?php endif   ?>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery('.containerThumbFull .thumbFull').first().addClass('selected-thumbFull');
+    jQuery('.containerThumbFull .thumbFull').each(function(){
+        jQuery(this).click(function(){
+            jQuery('.containerThumbFull .thumbFull').removeClass('selected-thumbFull');
+            jQuery(this).addClass('selected-thumbFull');
+            return false;
+        });
+    });
+});
+function loadImageFull(numImage){
+    var numImages = jQuery('#thumbRepoFull img').length;
+    jQuery('.containerImageFull').html('<img class="galleryImg'+numImage+'" src="'+jQuery('#imageRepoFull img').eq(numImage).attr('src')+'" />').fadeIn(5000,function(){
+        jQuery('#numOfViews').html((numImage+1)+' of '+numImages+' views');
+
+        if(numImage == 0){
+            jQuery('.prev').addClass('display-none');
+            if (numImages == 1)
+                jQuery('.next').addClass('display-none');
+            else
+                jQuery('.next').removeClass('display-none');
+        }
+        else{
+            jQuery('.prev').removeClass('display-none');
+            if(numImage == (numImages - 1)){
+                jQuery('.next').addClass('display-none');
+            }
+            else{
+                jQuery('.next').removeClass('display-none');
+            }
+        }
+    });
+}
+
+function closeFullGallery(){
+    jQuery.facybox.close();
+}
+
+function prevImage(){
+    var currentFullThumb = jQuery('.containerThumbFull .thumbFull.selected-thumbFull');
+    var className = jQuery('.containerImageFull img').attr('class');
+    var imgNumber = parseInt(className.substr(className.length - 1));
+    if( imgNumber > 0 ){
+        loadImageFull(imgNumber-1);
+        currentFullThumb.removeClass('selected-thumbFull');
+        currentFullThumb.prev().addClass('selected-thumbFull');
+
+    }
+}
+
+function nextImage(){
+    var currentFullThumb = jQuery('.containerThumbFull .thumbFull.selected-thumbFull');
+    var numImages = jQuery('#thumbRepoFull img').length;
+    var className = jQuery('.containerImageFull img').attr('class');
+    var imgNumber = parseInt(className.substr(className.length - 1));
+    if( imgNumber < ( parseInt(numImages) -1 ) ){
+        loadImageFull((imgNumber+1));
+        currentFullThumb.removeClass('selected-thumbFull');
+        currentFullThumb.next().addClass('selected-thumbFull');
+    }
+}
+
+jQuery(document).ready(function(){
+    /*********************************************************/
+    /*Zoom View*/
+    // alert(anchoVentana+' '+altoVentana);
+    jQuery('.galleryFull').css({
+        width:'<?php echo $this->getWidthwindow();?>px',
+        height:'<?php echo $this->getHeightwindow();?>px'
+//	position:'relative'
+    });
+    jQuery('.prev').addClass('display-none');
+	if(jQuery('#thumbRepoFull img').length <= 1) { jQuery('.prev').addClass('display-none');jQuery('.next').addClass('display-none'); }
+    <?php if ( $count == 1 ): ?>
+        jQuery('.controls').hide();
+    <?php endif; ?>
+
+    <?php if ( $count >= 1 ): ?>
+            var counterJs = 0;
+            var numImages = jQuery('#thumbRepoFull img').length;
+            loadImageFull(0);
+            //jQuery('#numOfViews').html('1 of '+numImages+' views');
+
+            jQuery('#thumbRepoFull img').each(function(numberFull){
+                if(numberFull <= 3){
+                    jQuery('.thumbFull').eq(counterJs).html('<a href="javascript:;" onclick="loadImageFull('+counterJs+');"><img class="galleryImg'+(numberFull+1)+'" src="'+jQuery(this).attr('src')+'" /></a>');
+                    counterJs++;
+                }
+            });
+    <?php endif; ?>
+
+    <?php if ( $count == 0 ): ?>
+            jQuery('.thumbFull').eq(0).html('<a href="javascript:;"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
+            jQuery('.containerImageFull').html('<img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/imageProduct.jpg');?>" />');
+            jQuery('.controls').hide();
+    <?php endif; ?>
+    /*
+    jQuery('.controls').hide();*/
+    jQuery("#coverContainerImage").hover(
+        function () {
+          if(jQuery('#thumbRepoFull img').length > 1) jQuery('.controls').show();
+        },
+        function () {
+          jQuery('.controls').hide();
+        }
+    );
+//    jQuery(".controls").hover(
+//        function () {
+//          jQuery('.controls').show();
+//        }
+//    );
+   jQuery('#facybox .price-box').show();
+});
+
+</script>
+
+<div class="galleryFull col-lg-2">
+    <div id="coverContainerImage" style="width: <?php echo ($this->getWidthwindow() * 0.86) ?>px; height: <?php echo $this->getHeightwindow() ?>px">
+        <div class="btnExitfull" onclick="closeFullGallery();">
+            <span><span>Exit Fullscreen</span></span>
+        </div>
+        <div class="productInfoFull">
+            <h1><?php /*echo $_helper->productAttribute($_product, $_product->getName(), 'name')*/ echo $this->getProductName() ?></h1>
+            <p>
+                <?php /*echo 'Price: '.Mage::helper('core')->currency($_product->getPrice());*/echo $this->__('').$this->getPriceHtml($_product, true) ?>
+            </p>
+            <p id="numOfViews"></p>
+        </div>
+		<div class="controls">
+			<div class="prev" onclick="prevImage();"><span>Previous</span></div>
+			<div class="next" onclick="nextImage();"><span>Next</span></div>
+		</div>
+        <div class="containerImageFull">
+        </div>
+    </div>
+    <div class="containerThumbFull" style="height:<?php echo $this->getHeightfullimage()?>px;width:<?php echo (($this->getHeightfullimage() - 24)*7/40)?>px">
+        <div class="thumbFull"></div>
+        <div class="thumbFull"></div>
+        <div class="thumbFull"></div>
+        <div class="thumbFull"></div>
+    </div>
+</div>

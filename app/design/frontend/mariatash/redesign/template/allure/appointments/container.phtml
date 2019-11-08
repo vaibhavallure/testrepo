@@ -1,0 +1,177 @@
+<?php
+if($this->isAdmin())
+    echo "<style>header{display: none} .footer{display: none}</style>";
+?>
+<p class="category-image" style="display: none;"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog-blue.jpg'); ?>" alt="Jewelry" title="" class="ae-img"></p>
+<div id="appointments-popup-wrapper">
+    <script>
+        setLoader();
+    </script>
+    <?php
+    if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
+        echo $this->getChildHtml('appointments_popup_success');
+    endif;
+    ?>
+    <?php if(Mage::app()->getRequest()->getParam('user')=="admin"):?>
+        <div id="adminside"></div>
+    <?php endif;?>
+    <?php echo $this->getChildHtml("appointments_popup_register");?>
+</div>
+
+<script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+    <?php
+    if($this->getRequest()->getParam('user')=="admin")
+         $appointment_id=$this->getRequest()->getParam('id');
+    else
+         $appointment_id=Mage::getModel('core/encryption')->decrypt($this->getRequest()->getParam('id'));
+    ?>
+
+    Allure.appointmentId = '<?php echo $appointment_id?>';
+
+    Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
+    Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
+    Allure.getSupportDetailsActionUrl = '<?php echo $this->getSupportDetailsActionUrl()?>';
+
+    Allure.getSlotAvailabilityUrl = '<?php echo $this->getSlotAvailabilityUrl()?>';
+    Allure.getDateAvailabilityUrl = '<?php echo $this->getDateAvailabilityUrl()?>';
+
+    Allure.isProcessing = false;
+
+
+</script>
+<script type="text/javascript">
+    <?php
+    if ((Mage::getSingleton('core/session')->getSlotInvalid() == "true") && (!Mage::getSingleton("core/session")->getData('appointment_submitted'))) {
+        echo "alert(__('This appointment time is no longer available. <br> Please select another time.'));";
+    }
+    if ((Mage::getSingleton('core/session')->getSomethingWrong() == "true") && (!Mage::getSingleton("core/session")->getData('appointment_submitted'))) {
+        echo "alert(__('Sorry Something Went Wrong. Please Try Again!'));";
+    }
+
+
+
+    ?>
+    var isSuccess=false;
+    //jQuery('#appointemnet_form').validate();
+    jQuery(document).ready(function() {
+
+        var $ = jQuery;
+
+        $('.form-disable-overlay').fadeOut();
+        unsetLoader();
+
+
+        $("#appointemnet_form").validate({
+            submitHandler: function(form) {
+
+                var number_of_people=$('select[name=piercing_qty]').val();
+                console.log("number people",number_of_people);
+                for(var i=1;i<=number_of_people;i++)
+                {
+                    for (var j=i+1;j<=number_of_people;j++)
+                    {
+                        if($.trim($('#firstname'+i).val())==$.trim($('#firstname'+j).val()) && $.trim($('#lastname'+i).val())==$.trim($('#lastname'+j).val()) && $.trim($('#email'+i).val())==$.trim($('#email'+j).val()))
+                        {
+                            //alert("same details filled for customer #"+i+" and customer #"+j);
+                           alert(__("Customer information cannot be the same.  Please provide unique information for each customer."));
+                            return;
+//                                console.log("same details "+i+" AND "+j);
+                        }
+                        else {
+//                                console.log("different name"+i+" AND "+j);
+                        }
+                    }
+                }
+
+
+
+
+                if (!Allure.isProcessing) {
+                    Allure.isProcessing = true
+
+                    var btnLbl="PROCESSING";
+
+                    if($('input[name=language_pref]').val()=="fr")
+                    {
+                        btnLbl="En traitement";
+                    }
+
+                    $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text(btnLbl+" ...");
+                    form.submit();
+                }
+            },
+            ignore: "",
+            /*rules: {
+                firstname:  {
+                    required: true,
+                    nospace: true
+                },
+                lastname:  {
+                    required: true,
+                    nospace: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    required: true,
+                    phone: true
+                },
+                piercing_qty: 'required',
+                app_date: {
+                    required: true,
+                    date: true
+                },
+                selectTimeSlot:  {
+                    required: true,
+                    notEqualTo: 'No Slots Available'
+                },
+                selectTime: {
+                    required:true,
+                    notEqualTo:'TIME'
+                },
+            },
+            messages: {
+                firstname: "Please enter your firstname",
+                lastname: "Please enter your lastname",
+                email: "Please enter a valid email address",
+                phone: "Please enter a valid phone number",
+                piercing_qty: "Please enter people in the group",
+                app_date: "Please select a booking date",
+                selectTime: "Please select a booking time",
+                selectTimeSlot: "Please select a booking time"
+            },*/
+            errorElement: "div",
+            errorPlacement: function ( error, element ) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass( "invalid-feedback translate-popup" );
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.next( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                isSuccess = false;
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                isSuccess = true;
+            }
+        });
+
+        validateForm();
+
+    });
+
+    <?php
+    Mage::getSingleton('core/session')->unsSlotInvalid();
+    Mage::getSingleton('core/session')->unsSomethingWrong();
+    Mage::getSingleton("core/session")->unsetData('appointment_submitted');
+    ?>
+</script>

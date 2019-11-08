@@ -14,7 +14,7 @@ class Allure_CurrencyManager_CurrencyController extends Mage_Directory_CurrencyC
     {
         if ($curency = (string) $this->getRequest()->getParam('to')) {
             $curency = strtoupper($curency);
-            
+
             $oldCurrency = Mage::app()->getStore()->getCurrentCurrencyCode();
             
             Mage::app()->getStore()->setCurrentCurrencyCode($curency);
@@ -38,6 +38,13 @@ class Allure_CurrencyManager_CurrencyController extends Mage_Directory_CurrencyC
 
     protected function _redirectReferer($defaultUrl = null)
     {
+        if($this->getRequest()->getParam('categoryid'))
+        {
+            $categoryId=$this->getRequest()->getParam('categoryid');
+            $categoryLink = Mage::getModel("catalog/category")->load($categoryId)->getUrl();
+            $this->getResponse()->setRedirect($categoryLink);
+            return $this;
+        }
 
         $refererUrl = $this->_getRefererUrl();
         if (empty($refererUrl)) {

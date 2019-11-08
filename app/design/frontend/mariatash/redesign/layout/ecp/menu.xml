@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <ecpmenu_index_index>
+        <reference name="content">
+            <block type="ecp_menu/menu" name="topmenu" template="menu/menu.phtml" />
+        </reference>
+    </ecpmenu_index_index>
+</layout> 

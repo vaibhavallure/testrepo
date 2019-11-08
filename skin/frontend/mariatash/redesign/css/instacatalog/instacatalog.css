@@ -1,0 +1,149 @@
+.instagram_posts{
+	column-width: 260px;
+	width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    z-index: inherit;
+}
+
+.individual-post{
+	/* width: 300px; */
+	float: none;
+	display: inline-block;
+    background: #FEFEFE;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+    
+    margin-bottom: 10px;
+    margin-left: 5px
+}
+
+#instagram_posts .instagram_post_wrapper {
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+   /* margin: 5px -10px;  */
+   
+    position: relative;
+    min-height: 1px;
+    
+}
+
+.instagram_post_overlay {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    bottom: 5px;
+    right: 5px;
+    background-color: #fff;
+    display: none;
+}
+
+.instagram_post_wrapper:hover .instagram_post_overlay {display:block}
+
+.instagram_caption {
+	height: 150px;
+	padding: 10px;
+	text-align: center;
+}
+
+.shop-instagram{
+	padding-top: 10px;
+}
+
+.instagram_shop {
+    position: absolute;
+    bottom: 20%; /*0*/
+    left: 0;
+    right: 0;
+    height: 50px;
+    text-align: center;
+}
+
+.instagram_shop .instagram_shop_icon {
+    width: 50px;
+    display: inline-block;
+}
+
+.instagram_shop .instagram_shop_button {
+	background: #fff;/* #000 */
+    padding: 7px 15px;
+    border:1px solid #000; /* 0 */;
+    color:#000; /* #FFFFFF; */
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+    display:none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.post_item_with_link .instagram_shop .instagram_shop_button {
+    display: inline-block;
+}
+
+.instagram_shop .fa-instagram{
+	font-size: 30px;
+	margin-bottom: 2%;
+	cursor: pointer;
+}
+
+.instagram-loader{
+	background-image: url(../../images/classic-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    margin: auto; 
+    min-width: 50%;
+    min-height: 50%;
+    background-size: 30px 30px;
+}
+
+/* #fs-instagram-view-container{
+	overflow: auto;
+	height: 600px;
+} */
+
+.instagram_shop .fs-icon.fs-fa-instagram{
+	font-size: 20px;
+}
+
+.fs-entry-container .instagram_shop_button {
+    padding: 7px 15px;
+    border:1px solid #fff; /* 0 */;
+    color:#fff; /* #FFFFFF; */
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+    display:block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.fs-entry-container .post_item_without_link{
+	display: none;
+}
+.share_link_icon img{
+	display: inline-block;
+    height: 13px;
+    width: 12px;
+    padding-top: 3px;
+    padding-left: 5px;
+}]

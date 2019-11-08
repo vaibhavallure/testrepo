@@ -15,6 +15,7 @@ readme.md
 .hg
 .htaccess
 .hgignore
+.buildpath
 sftp-config.json
 *.komodoproject
 .DS_Store

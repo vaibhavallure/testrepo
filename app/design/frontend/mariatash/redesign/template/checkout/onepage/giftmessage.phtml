@@ -1,0 +1,51 @@
+<?php
+/**
+ *
+ * Gift message for gift item.
+ *
+ * @var Allure_RedesignCheckout_Block_Giftmessage $this
+ */
+?>
+<?php $_item = $this->getItem()?>
+<?php $giftHelper = Mage::helper('giftmessage/message');?>
+<?php $_giftMessage = $giftHelper->getGiftMessageForEntity($_item);?>
+<?php $sender = ""; $receipt = "";?>
+<?php if($_giftMessage):?>
+<?php $sender = $_giftMessage->getSender();?>
+<?php $receipt = $_giftMessage->getRecipient();?>
+<?php endif;?>
+<div class="col-12">
+	<div class="row">
+	<div class="col-lg-5 col-md-5 col-12 to-from-section">
+		<div class="row">
+			<input type="hidden" name="giftmessage[<?php echo $_item->getId() ?>][type]" value="quote_item" />
+				<input type="text" placeholder="To"
+					name="giftmessage[<?php echo $_item->getId() ?>][to]"
+					id="gift-message-<?php echo $_item->getId() ?>-to"
+					title="<?php echo $this->__('To') ?>"
+					value="<?= $this->getEscaped($receipt)?>"
+					class="input-text validation-passed" />
+		</div>
+		<div class="row">
+				<input type="text" placeholder="From"
+					name="giftmessage[<?php echo $_item->getId() ?>][from]"
+					id="gift-message-<?php echo $_item->getId() ?>-from"
+					title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($sender, $this->getDefaultFrom()) ?>"
+					class="input-text validation-passed" />
+		</div>
+	</div>
+	<div class="col-lg-7 col-md-7 col-12 gift-message-section">
+		<div class="row">
+    			<textarea placeholder="Message" id="gift-message-<?php echo $_item->getId() ?>-message"
+    				class="input-text validation-passed  giftmessage-area"
+    				name="giftmessage[<?php echo $_item->getId() ?>][message]"
+    				title="<?php echo $this->__('Message') ?>" rows="5" cols="10"><?php echo $giftHelper->getEscapedGiftMessage($_item) ?></textarea>
+		</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+	 makeItCount('gift-message-<?php echo $_item->getId() ?>-message', 300, true);
+//]]>
+</script>

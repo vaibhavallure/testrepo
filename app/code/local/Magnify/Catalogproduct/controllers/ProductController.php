@@ -188,6 +188,14 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
 
 
             $product = Mage::getModel('catalog/product')->load($productId);
+            
+            //don't allow for wholesale customer
+            if ($product->getTypeId() == 'giftcards'){
+                if(Mage::getSingleton('customer/session')->getCustomerGroupId() == 2){
+                    $this->_redirectUrl(Mage::getBaseUrl());
+                }
+            }
+            
             if ($product->isConfigurable()) {
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
                 $simpleProducts = $product->getTypeInstance()->getUsedProductCollection()->addAttributeToSelect('sku');

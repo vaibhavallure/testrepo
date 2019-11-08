@@ -97,20 +97,18 @@ class Webtex_Giftcards_CartController extends Mage_Checkout_CartController
         $giftCardCode = trim((string)$this->getRequest()->getParam('giftcard_code'));
         $card = Mage::getModel('giftcards/giftcards')->load($giftCardCode, 'card_code');
 
+        $result = array();
         if ($card->getId() && ($card->getCardStatus() == 1)) {
 
             Mage::getSingleton('giftcards/session')->setActive('1');
             $this->_setSessionVars($card);
             $this->_getQuote()->collectTotals();
-
         } else {
             if($card->getId() && ($card->getCardStatus() == 2)) {
                 $result['error'] = $this->__('Gift Card "%s" was used.', Mage::helper('core')->escapeHtml($giftCardCode));
             } else {
                 $result['error'] = $this->__('Gift Card "%s" is not valid.', Mage::helper('core')->escapeHtml($giftCardCode));
             }
-
-
         }
 
         $result['goto_section'] = 'payment';
@@ -119,7 +117,8 @@ class Webtex_Giftcards_CartController extends Mage_Checkout_CartController
             'html' => $this->_getPaymentMethodsHtml()
         );
         $result['giftcard_section'] = array(
-            'html' => $this->_getUpdatedCoupon()
+            'html' => $this->_getUpdatedCoupon(),
+            'totals_html' => $this->_getRefreshTotalsHtml()
         );
 
 
@@ -134,23 +133,24 @@ class Webtex_Giftcards_CartController extends Mage_Checkout_CartController
         $sessionBalance = $oSession->getGiftCardBalance();
         $newSessionBalance = $sessionBalance - $cardIds[$cardId]['balance'];
         unset($cardIds[$cardId]);
+        $result = array();
         if(empty($cardIds))
         {
             Mage::getSingleton('giftcards/session')->clear();
         }
         $oSession->setGiftCardBalance($newSessionBalance);
         $oSession->setGiftCardsIds($cardIds);
-
+        $this->_getQuote()->collectTotals()->save();
         $result['goto_section'] = 'payment';
         $result['update_section'] = array(
             'name' => 'payment-method',
             'html' => $this->_getPaymentMethodsHtml()
         );
         $result['giftcard_section'] = array(
-            'html' => $this->_getUpdatedCoupon()
+            'html' => $this->_getUpdatedCoupon(),
+            'totals_html' => $this->_getRefreshTotalsHtml()
         );
 
-        $this->_getQuote()->collectTotals()->save();
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -221,6 +221,22 @@ class Webtex_Giftcards_CartController extends Mage_Checkout_CartController
         $this->_redirect('onestepcheckout/index/index');
         return;
     }
-
-
+    
+    /**
+     * Get refresh totals html
+     * @return string
+     */
+    protected function _getRefreshTotalsHtml ()
+    {
+        $block = $this->getLayout()
+            ->createBlock('checkout/cart_totals')
+            ->setTemplate('checkout/cart/totals.phtml');
+        $childBlock = $this->getLayout()
+            ->createBlock('checkout/cart_shipping')
+            ->setTemplate('checkout/cart/shipping.phtml');
+        $block->setChild("shipping", $childBlock);
+        $output = $block->toHtml();
+        return $output;
+    }
+    
 }

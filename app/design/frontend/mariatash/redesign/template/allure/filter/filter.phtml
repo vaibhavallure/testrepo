@@ -1,0 +1,33 @@
+
+<div class="mt-myaccount-filter">
+	<div class="mt-myaccount-store">
+		<span>Narrow By: </span>
+	  	<?php
+			$currentFilterStore = $_GET ['m_store'];
+			if (empty ( $currentFilterStore ))
+				$currentFilterStore = 'all';
+							
+				$currentSort = $_GET ['m_sort'];
+			?>
+	  		<select class="mt-filter-select">
+				<option value="all"><?php echo $this->__('STORE')?></option>
+	  			<?php
+					$stores = Mage::app ()->getStores ();
+					foreach ( $stores as $store ) :
+				?>
+	  				<option value="<?php echo $store->getId()?>"
+						<?php echo ($currentFilterStore==$store->getId())?"selected=\"selected\"":""?>><?php echo $store->getName()?></option>
+	  				<?php endforeach;?>
+	  		</select>
+	</div>
+
+	<div class="mt-myaccount-sort">
+		<select class="mt-filter-select">
+			<option value=""><?php echo $this->__('SORT BY')?></option>
+			<option value="<?php echo 'asc'?>"
+				<?php echo ($currentSort)?"selected='selected'":""?>><?php echo $this->__('ASC')?></option>
+			<option value="<?php echo 'desc'?>"
+				<?php echo ($currentSort)?"selected='selected'":""?>><?php echo $this->__('DESC')?></option>
+		</select>
+	</div>
+</div>

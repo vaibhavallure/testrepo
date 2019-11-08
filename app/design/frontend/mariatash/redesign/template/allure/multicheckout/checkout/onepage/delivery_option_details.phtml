@@ -1,0 +1,46 @@
+<?php 
+/**
+ * checkout delivery option details.
+ * 
+ * @var Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption $this
+ */
+?>
+<?php
+    $status = $this->getShipmentStatus();
+    $status_tt = $status['us_two_ship'];
+    $two_ship_status = $status['two_ship'];
+
+    $oneShipMsg = "In one shipment - Ship all the items together once all items are available.";
+    if($two_ship_status)
+        $oneShipMsg = "In one shipment - Ship all items together once all items are available. (This is your latest backordered item date)";
+    elseif ($status['in_order'])
+        $oneShipMsg = "Your order will ship within 24 hours (Monday-Friday)";
+    else
+    	$oneShipMsg = "In one shipment - Ship once all items are available. (This is your latest backordered item date)";
+
+    ?>
+<div id="checkout-delivery-method">
+	<div id="checkout-delivery-option-load">
+        <div class="shipment-delivery-method">
+        	<ul class="form-list p-0">
+        		<li class="control shipment-one">
+        			<label class="para-normal custom-radio">
+                        <input id="delivery-shipment-one" value="one_ship" type="radio" name="delivery[method]"
+                        <?php echo (!$status_tt)?"checked='checked'":"";?>  class="radio shipment-one" onclick="switchMethod(this);" />
+                        <span class="radiomark"></span>
+                        <?php echo $oneShipMsg;?>
+                    </label>
+        		</li>
+        		<?php if($two_ship_status): ?>
+        		<li class="control">
+        			<label class="para-normal custom-radio">
+                		<input id="delivery-shipment-two" value="two_ship" type="radio" name="delivery[method]" <?php echo ( $status_tt)?"checked='checked'":"";?>  class="radio" onclick="switchMethod(this);" />
+                		<span class="radiomark"></span>
+                		In two Shipments - Ship what is available today,then ship remaining item(s) once all are available.(Two shipping charges will be applied.)
+                	</label>
+        		</li>
+        		<?php  endif;?>
+        	</ul>
+        </div>
+	</div>
+</div>

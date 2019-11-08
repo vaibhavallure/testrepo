@@ -1,0 +1,65 @@
+<?php $_orders = $this->getOrders();
+	if($_orders) :
+?>
+<?php if($_orders->getSize()>0) :?>
+<?php $_odd = ''; ?>
+<?php $i = 0 ?>
+
+<?php 
+    $orderStatusArr1 = Mage::getSingleton('sales/order_config')
+                      ->getStatuses();
+    $orderStatusArr = Mage::helper("myaccount")->getOrderMessages();
+?>
+
+<?php foreach ($_orders as $_order): ?>
+<tr>
+	<td>
+		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+			<?php echo $_order->getRealOrderId() ?>
+		</a>
+	</td>
+    
+	<td class="a-left">
+		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+    		<span class="nobr">
+    			 <?php echo Mage::app()->getLocale()->date(strtotime($_order->getCreatedAtStoreDate()), null, null, false)->toString('MM/dd/yyyy') ?>
+    			 <?php //echo $this->formatDate($_order->getCreatedAtStoreDate()) ?>
+    	    </span>
+	    </a>
+	</td>
+
+	<td class="a-left">
+		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+			<?php echo $_order->getShippingAddress() ? $this->htmlEscape($_order->getShippingAddress()->getName()) : '&nbsp;' ?>
+		</a>
+	</td>
+
+	<td class="a-left">
+		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+			<?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
+		</a>
+	</td>
+
+	<td class="a-left">
+		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+			<?php //echo $_order->getStatusLabel() ?>
+			 <?php $status = $orderStatusArr[$_order->getState()]?$orderStatusArr[$_order->getState()]:$orderStatusArr1[$_order->getState()]?>
+             <?php echo $status?>
+		</a>
+	</td>
+
+	<td class="a-left">
+     	<span class="nobr">
+     		<a class="link-button" onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+     			<?php echo $this->__('View Order') ?>
+     		</a>
+            <?php /*<span class="separator">|</span><a href="<?php echo $this->getTrackUrl($_order) ?>"><?php echo $this->__('Track Order') ?></a>&nbsp;*/ ?>
+            <?php if (0 && $this->helper('sales/reorder')->canReorder($_order)) : ?>
+             	<span>|</span> <a href="<?php echo $this->getReorderUrl($_order) ?>" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
+            <?php endif ?>
+        </span>
+     </td>
+</tr>
+<?php endforeach; ?>
+<?php endif; ?>
+<?php endif; ?>

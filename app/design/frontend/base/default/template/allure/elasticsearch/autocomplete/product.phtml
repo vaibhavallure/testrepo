@@ -1,0 +1,34 @@
+<?php
+/**
+ * @category    Allure
+ * @package     Allure_ElasticSearch
+ * @version     1.0.0
+ * @copyright   Copyright (c) 2019 Allure Software, Inc. (https://www.allureinc.co)
+ */
+/**
+ * @var $this Allure_ElasticSearch_Block_Catalogsearch_Autocomplete_Product
+ */
+$_product = $this->getEntity();
+$_displayImage = $this->getDisplayImage();
+if ($_displayImage == null) $_displayImage = 1;
+$_imgSize = $this->getImageSize();
+?>
+<?php if ($_product): ?>
+<li class="search-product">
+    <a href="<?php echo $this->escapeUrl($this->getProductUrl($_product)) ?>"
+       title="<?php echo $this->escapeHtml($_product->getName()) ?>">
+        <?php if ($_displayImage && $_src = $this->getImageSrc()): ?>
+            <div class="image" style="min-height: <?php echo $_imgSize ?>px;">
+                <img src="<?php echo $_src; ?>" width="<?php echo $_imgSize ?>" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+            </div>
+        <?php endif ?>
+        <div class="info">
+            <span class="name"><?php echo $this->escapeHtml($_product->getName()) ?></span>
+            <span class="sku">SKU: <?php echo $this->escapeHtml($_product->getSku()) ?></span>
+            <span class="description"><?php echo $this->escapeHtml($_product->getShortDescription()) ?></span>
+            <span class="price"><?php echo $this->getPriceHtml($_product) ?></span>
+        </div>
+        <div class="clearer"><!-- --></div>
+    </a>
+</li>
+<?php endif ?>

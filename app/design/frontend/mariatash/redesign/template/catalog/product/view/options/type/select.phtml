@@ -1,0 +1,92 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php /* @var $this Mage_Catalog_Block_Product_View_Options_Type_Select */ ?>
+<?php $_option = $this->getOption() ?>
+<div class="row">
+<div class="custom-options col-12 p-0">
+<dt class="post-lengthds-lbl row"><label<?php if ($_option->getIsRequire()) echo ' class="required product-attribute-name col-12"' ?>><?php echo  $this->escapeHtml($_option->getTitle()) ?></label></dt>
+<dd<?php if ($_option->decoratedIsLast){?> class=" post-lengthds-lbl-options last row"<?php }?>>
+  <div class="col-12 p-0">
+    <div class="input-box row">
+        <?php echo $this->getValuesHtml() ?>
+        <?php if ($_option->getIsRequire()): ?>
+            <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX): ?>
+                <span id="options-<?php echo $_option->getId() ?>-container"></span>
+            <?php endif; ?>
+        <?php endif;?>
+    </div>
+  </div>
+</dd>
+</div>
+</div>
+<!--<hr>-->
+
+<script>
+    jQuery(function () {
+        var i=1;
+        jQuery('.product-custom-option').each(function (index, element) {
+
+            var select_id=jQuery(this).attr("id");
+            jQuery(this).parent()
+                .after()
+                .append("<div class='chooseList col-12' id='chooseList"+select_id+"' style='display: none'><ul class='row p-0'></ul></div>");
+
+            var optioncount=jQuery(this).find('option').length;
+
+            var select_id=jQuery(this).attr("id");
+            jQuery(element).each(function (idx, elm) {
+                var liCounter=1;
+                jQuery('option', elm).each(function (id, el) {
+                    if(el.value!="") {
+
+                        if(liCounter<=4) {
+                            var liRow = "firstRow";
+                            if(optioncount>5)
+                                liRow+=" list-margin";
+                        }else if (liCounter>4 && liCounter<=8) {
+                            var liRow = "secondRow";
+                        }
+
+                        jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class=" ' + liRow + '"><span>' + el.text + '</span></li>');
+                        liCounter++;
+                    }
+                });
+            });
+            i++;
+        });
+        jQuery('.chooseList ul li').on('click', function () {
+            var selected_id = jQuery(this).data("select_id");
+            var option_value = jQuery(this).data("option_value");
+            jQuery(this).parent().find("li").removeClass("active");
+            jQuery(this).addClass("active");
+            jQuery('#'+selected_id+'').val(option_value).trigger('change');
+        });
+        jQuery('.product-custom-option').hide();
+        jQuery('.chooseList').slideDown(1000);
+    });
+</script>

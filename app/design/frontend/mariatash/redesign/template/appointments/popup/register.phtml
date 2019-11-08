@@ -1,0 +1,54 @@
+<!--BOOKING SECTION-->
+
+<div id="booking" class="container-fluid booking nopad">
+
+    <div class="container nopad">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="booking-box">
+                    <p class="xpaces">BOOK YOUR APPOINTMENT</p>
+
+
+
+                    <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post">
+
+                        <input type="hidden" name="store-id" id="store-id" value="2">
+                        <div class="name-box">
+                            <input class="input-box required-entry" type="text" name="firstname" id="firstname" placeholder="FIRST NAME" required>
+
+                            <input class="input-box required-entry" type="text" name="lastname" id="lastname" placeholder="LAST NAME" required>
+                        </div>
+
+                        <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" required>
+
+
+                        <input class="input-box required-entry" type="text" name="phone" id="phone" placeholder="PHONE NUMBER" required>
+
+                        <p class="label">I would like to be notified by:</p>
+                        <div >
+                            <div class="box">
+                                <p class="label">
+                                    <input type="checkbox" id="c1" name="cb">
+                                    <label class="label" for="c1">Email</label>
+                                </p >
+                                <p class="label">
+                                    <input type="checkbox" id="c2" name="cb">
+                                    <label class="label" for="c2">Text Message</label>
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                        <div class="select-box people"><label class="label">Number of people in your party:</label>
+                            <br class="mob">
+                            <div class="peoplediv">
+                                <input type="button" value="-" class="minus-btn" onclick="decrease();" >
+                                <input size="5" class="input-box"  value="0" type="text" name="piercing_qty" id="count" >
+                                <input type="button" value="+" class="plus-btn" onclick="increase();" >
+                            </div>
+
+                        </div>
+
+                        <div class="select-box">
+

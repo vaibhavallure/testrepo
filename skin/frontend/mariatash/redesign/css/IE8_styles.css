@@ -1,0 +1,12 @@
+.wrapper {
+    min-width:1024px !important;
+}
+.shippingtextheader {
+    width:24% !important;
+    max-height:73px !important;
+    margin:18px 7% 0 0 !important;
+}
+.shippingtextheader p, .shippingtextheader span {
+    font-size:16px !important;
+    line-height:18px !important;
+}

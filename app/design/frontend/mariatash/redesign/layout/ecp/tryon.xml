@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <ecp_tryon_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="ecp_tryon/tryon" name="tryon" template="ecp/tryon/tryon.phtml" >
+           		<block type='core/template' name="minicart" template='ecp/tryon/tryon/minicart.phtml' />
+            </block>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/tryon.css</stylesheet></action>
+            <action method="addJs"><script>tryon/jquery-ui-1.9.2.custom.js</script></action>
+            <action method="addJs"><script>tryon/jquery.imagemapster.js</script></action>            
+        </reference>
+    </ecp_tryon_index_index>
+</layout> 

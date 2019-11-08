@@ -1,0 +1,125 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.'); ?></p>
+<?php else: ?>
+<div class="category-products">
+    <?php //echo $this->getToolbarBlock()->setTemplate('catalog/product/list/toolbar_top.phtml')->toHtml(); ?> 
+    <?php // List mode ?>
+    <div class="toolbar-top">
+        <?php echo $this->getToolbarBlock()->setTemplate('catalog/product/list/toolbar_bottom.phtml')->toHtml(); ?>
+    </div>
+    <?php if($this->getMode()!='grid'): ?>
+    <?php // List Mode ?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+		<?php $_iterator = 0; ?>
+        <ul class="products-grid2"  style="text-align:left;">    
+		<?php $i=0; foreach ($_productCollection as $_product): ?>
+            <li class="item">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(400,500); ?>" width="400" height="500" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" /></a>
+                <div class="grid-mt-w">  <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                <?php if($_product->getRatingSummary()): ?>
+                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                <?php endif; ?>
+               <!-- <div class="priceCat">Price:</div>-->
+                 <div class="actions">
+                <div class="priceCategory updated"><?php echo $_product->getPriceHtml() ?></div>                   
+                    <?php echo Mage::helper('ecp_color')->getColorOptionsBlock($_product, 'metal_color') ?>                    
+                        <a class="fancybox fancybox.iframe button btn-quickview" id='product-quickview-<?php echo $_product->getId() ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => $_product->getId())) ?>" title="<?php echo $this->__('quick view') ?>" ><span><?php echo $this->__('quick view') ?></span></a>                    
+                    </div>
+                </div>
+            </li>  
+		<?php endforeach ?>
+		</ul>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+
+<!--/div-->
+
+    <?php else: ?>
+
+    <?php // Grid Mode ?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+		<?php $_iterator = 0; ?>
+        <ul class="products-grid" style="text-align:left;">    
+	    <?php $i=0; foreach ($_productCollection as $_product): ?>
+            <?php Mage::log($_product->getData());?>
+            <li class="item">
+                <a href="<?php echo $_product->getProductUrl(); ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(234,305); ?>" width="234" height="305" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" /></a>
+                <div class="list-mt-w">  <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                <?php if($_product->getRatingSummary()): ?>
+                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                <?php endif; ?>
+                
+                 <!-- <div class="priceCat">Price:</div>-->
+                  <div class="actions">
+                <div class="priceCategory updated"><?php echo $this->getPriceHtml($_product) ?><div>                   
+                        <?php echo Mage::helper('ecp_color')->getColorOptionsBlock($_product, 'metal_color') ?>                       
+                        <a class="fancybox fancybox.iframe button btn-quickview" id='product-quickview-<?php echo $_product->getId() ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => $_product->getId())) ?>" title="<?php echo $this->__('quick view') ?>" ><span><?php echo $this->__('quick view') ?></span></a>                  
+                </div></div>
+            </li>  
+		<?php endforeach ?>
+		</ul>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarBlock()->setTemplate('catalog/product/list/toolbar_bottom.phtml')->toHtml(); ?>
+    </div>
+</div>
+<?php endif; ?>
+<script>
+    jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        console.log('aici');
+        openEffect  : 'none',
+        closeEffect : 'none',
+        nextEffect  : 'none',
+        prevEffect  : 'none',
+        mouseWheel : false,
+        padding     : 0,
+        loop            : true,
+        helpers : {
+            title : null            
+        },
+        margin      : [20, 60, 20, 60] // Increase left/right margin
+    });
+</script>

@@ -1,0 +1,147 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart totals template
+ *
+ * @see Mage_Checkout_Block_Cart_Totals
+ * @var $this Mage_Checkout_Block_Cart_Totals
+ */
+?>
+<?php $customer = Mage::getSingleton('customer/session');?>
+<?php if ($this->canApplyMsrp()): ?>
+<div class="cart-msrp-totals"><?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?></div>
+<?php else: ?>
+<table id="shopping-cart-totals-table" class="totals-table">
+	<col />
+   	<col width="1" />
+   	<?php $_checkoutHelper = Mage::helper('allure_multicheckout');?>
+   	<?php $mainQuote = Mage::getSingleton('checkout/session')->getQuote();?>
+    <?php if((strtolower($mainQuote->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP))):?>
+    	<?php $totals1 = $this->getOrderedQuote()->getTotals();?>
+        <?php $totals2 = $this->getBackorderedQuote()->getTotals(); ?>
+       	<?php $grandtotal = 0; $subtotal = 0; $shipping  = 0; $discount = 0; $tax = 0;?>
+       	<?php if(isset($totals1['grand_total']) && $totals1['grand_total']->getValue()):?>
+       		<?php $grandtotal += $totals1['grand_total']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['grand_total']) && $totals2['grand_total']->getValue()):?>
+       		<?php $grandtotal += $totals2['grand_total']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['subtotal']) && $totals1['subtotal']->getValue()):?>
+       		<?php $subtotal += $totals1['subtotal']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['subtotal']) && $totals2['subtotal']->getValue()):?>
+       		<?php $subtotal += $totals2['subtotal']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['shipping']) && $totals1['shipping']->getValue()):?>
+       		<?php $shipping += $totals1['shipping']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['shipping']) && $totals2['shipping']->getValue()):?>
+       		<?php $shipping += $totals2['shipping']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['discount']) && $totals1['discount']->getValue()):?>
+       		<?php $discount += $totals1['discount']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['discount']) && $totals2['discount']->getValue()):?>
+       		<?php $discount += $totals2['discount']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals1['tax']) && $totals1['tax']->getValue()):?>
+       		<?php $tax += $totals1['tax']->getValue();?>
+       	<?php endif;?>
+       	<?php if(isset($totals2['tax']) && $totals2['tax']->getValue()):?>
+       		<?php $tax += $totals2['tax']->getValue();?>
+       	<?php endif;?>
+       	<tfoot class="grand_total_section">
+        	<tr>
+				<td class="cart-subtotals-left" colspan="1">
+					<strong><span class="total-title"><?= $this->__('Total')?></span></strong>
+				</td>
+				<td class="cart-subtotals-right">
+					<strong><span class="price"><?php echo $this->helper('checkout')->formatPrice($grandtotal) ?></span></strong>
+				</td>
+			</tr>
+        </tfoot>
+        <tbody>
+			<tr>
+				<td class="cart-subtotals-left" colspan="1">
+					<span class="merchandise">Merchandise</span>
+				</td>
+				<td class="cart-subtotals-right">
+					<span class="price"><?php echo $this->helper('checkout')->formatPrice($subtotal) ?></span>
+				</td>
+			</tr>
+			<?php if($tax != 0): ?>
+			<tr class="summary-total">
+		<td>
+			<div class="info-text-three">
+				<span><?= $this->__('Tax') ?></span> <?php echo ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+			</div>
+		</td>
+		<td class="text-right">
+			<span class="reg-price price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+		</td>
+	</tr>
+	<?php endif; ?>
+			<tr id="mt-shipping">
+				<td colspan="1">
+					<span class="shipping-label para-normal"><?= $this->__('Shipping')?></span>
+				</td>
+				<td class="text-right">
+					<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($shipping) ?></span>
+				</td>
+			</tr>
+			<?php if($discount != 0): ?>
+			<tr>
+				<td colspan="1" class="cart-subtotals-left">
+					<span class="para-normal"><?= $this->__('Discount')?></span>
+				</td>
+				<td class="cart-subtotals-right">
+					<span class="price para-normal"><?php echo $this->helper('checkout')->formatPrice($discount) ?></span>
+				</td>
+			</tr>
+			<?php endif;?>
+        </tbody>
+        <?php else:?>
+       	<tfoot class="grand_total_section">
+        	<?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
+            <?php echo $this->renderTotals('footer'); ?>
+        </tfoot>
+        <tbody>
+        	<?php echo $this->renderTotals();?>
+        </tbody>
+        <?php endif;?>
+    </table>
+  	<?php $moduleName = Mage::app()->getRequest()->getModuleName();?>
+    <?php if(strtolower($moduleName) == strtolower("checkout")):?>
+   		<?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
+   		<?php if(!empty($baseGrandTotal)):?>
+            <p class="para-normal text-center">
+            <?php echo $this->__("All orders are charged in USD. You will be charged( ".$baseGrandTotal." )");?>
+            </p>
+        <?php endif;?>
+ 	<?php endif;?>
+<?php endif; ?>

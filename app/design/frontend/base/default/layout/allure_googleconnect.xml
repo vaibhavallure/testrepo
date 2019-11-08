@@ -12,7 +12,7 @@
     </default>
 
     <customer_account_login>
-        <reference name="head">
+       <!-- <reference name="head">
             <action method="addItem"
                     ifconfig="customer/allure_googleconnect/enabled">
                 <type>skin_css</type>
@@ -23,7 +23,7 @@
             <block type="allure_googleconnect/login" name="allure_googleconnect_login">
                 <block type="allure_googleconnect/button" name="allure_googleconnect_login_button" />
             </block>
-        </reference>
+        </reference>-->
     </customer_account_login>
 
     <customer_account>

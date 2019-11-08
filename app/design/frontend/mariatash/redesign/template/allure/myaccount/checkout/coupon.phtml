@@ -1,0 +1,87 @@
+
+<form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
+    <div class="discount">        
+        <div class="discount-form">
+            <label for="coupon_code2"><?php echo $this->__('Promo Code') ?></label>
+            <input type="hidden" name="remove" id="remove-coupone" value="0" />
+            <div class="input-cart">
+                <input class="input-text" id="coupon_code2" name="coupon_code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" <?php echo (strlen($this->getCouponCode())) ? 'disabled' : '';?>/>
+            </div>
+            <div class="buttons-set">                
+                <?php if(strlen($this->getCouponCode())): ?>
+                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon cancel_coupan" onclick="applyCoupan(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
+                    <p class="youhave validation-advice">Promo Code Applied</p>
+                <?php else: ?>
+                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="applyCoupan()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
+                <?php endif;?>
+            </div>
+            
+            <div class="myaccount-promo-code-msg">
+            	<p></p>
+            </div>
+            
+        </div>                
+    </div>
+</form>
+<script type="text/javascript">
+
+//<![CDATA[
+var discountForm = new VarienForm('discount-coupon-form');
+Validation.add('emptycustomvalidation','<?php echo $this->__('This is a required field');?>',function(myInput){
+    if( myInput != '' )
+    {
+        return true;
+    }
+    return false;
+});
+
+discountForm.submit = function (remove) {
+    $('coupon_code2').addClassName('required-entry');
+    $('coupon_code2').addClassName('emptycustomvalidation');        
+    $('remove-coupone').value = "0";
+    if (this.validator.validate()) {
+        if (remove) {
+            $('coupon_code2').removeClassName('required-entry');
+            $('remove-coupone').value = "1";            
+        } else {
+            $('coupon_code2').addClassName('required-entry');
+            $('coupon_code2').addClassName('emptycustomvalidation');        
+            $('remove-coupone').value = "0";
+        }
+        return VarienForm.prototype.submit.bind(discountForm)();
+    }
+        return false;
+}
+//]]>
+
+function applyCoupan(remove){
+	 var coupon_code = jQuery('#coupon_code2').val();
+
+	 if(coupon_code==null || coupon_code==""){
+    		jQuery('.myaccount-promo-code-msg p').text("Enter promo code code.");
+	        jQuery('.myaccount-promo-code-msg').show();
+	        return false;
+     }
+	 
+	 if(remove)
+    	 remove = 1;
+
+	 showLoadingFancybox();
+	 jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/couponPostAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: {coupon_code:coupon_code,remove:remove},
+	        success: function(data) {
+	        	if(data.success){
+	        		jQuery('.mt-my-cart').html("");
+		        	jQuery('.mt-my-cart').html(data.html);
+	        	}else{
+  	        		jQuery('.myaccount-promo-code-msg p').text(data.message);
+      	        	jQuery('.myaccount-promo-code-msg').show();
+  	        	}
+	        	hideLoadingFancybox();
+	        }
+	    });
+}
+</script>

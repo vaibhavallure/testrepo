@@ -1,0 +1,241 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Edit customer address template
+ *
+ * @see Mage_Customer_Block_Address_Edit
+ * @var Mage_Customer_Block_Address_Edit $this
+ */
+?>
+<?php $controllerName = Mage::app()->getRequest()->getControllerName();?>
+<?php
+$flag = false;
+if(strtolower($controllerName) == strtolower("multishipping")){
+    $flag = true;
+}
+?>
+<div class="new_address">
+    <div class="container">
+        <div class="">
+            <div class="col-lg-12 checkout-new-address">
+                <?php if($this->getTitle()): ?>
+                	<?php if(!$flag):?>
+                		<h1><?php echo $this->getTitle() ?></h1>
+                	<?php endif;?>
+                    <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
+                    <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
+                    <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
+                <?php endif; ?>
+                    <form action="<?php echo $this->getUrl("customer/address/saveCustomerAddressForm",array('_secure'=>true)) ?>" method="post" id="customer-address-form-validate">
+                        <div class="fieldset">
+                            <?php echo $this->getBlockHtml('formkey')?>
+                            <input type="hidden" name="id" value="<?= $this->getAddress()->getId()?>" />
+                            <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+                            <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+                            <?php if(!$flag):?>
+                            <h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
+                            <?php endif;?>
+                            <ul class="form-list">
+                                <li class="fields">
+                                    <?php //echo $this->getNameBlockHtml() ?>
+                                    <div class="field name-firstname">
+                                        <div class="input-box">
+                                            <input type="text" placeholder="First Name*" onkeypress="return isText(event)" 
+                                            	id="firstname" name="firstname" 
+                                            	value="<?=$this->getAddress()->getFirstname()?>" title="firstname" maxlength="255" 
+                                            	class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('firstname') ?>"/>
+                                        </div>
+                                    </div>
+                                    <div class="field name-lastname">
+                                        <div class="input-box">
+                                            <input type="text" placeholder="Last Name*" 
+                                            	onkeypress="return isText(event)" id="lastname" 
+                                            	name="lastname" value="<?=$this->getAddress()->getLastname()?>" title="Last Name" 
+                                            	class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('lastname') ?>" />
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="wide">
+                                    <div class="input-box">
+                                        <input placeholder="Company" type="text" name="company" id="company" title="<?php echo $this->__('Company') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
+                                    </div>
+                                </li>
+                                <li>
+                                  <div class="field">
+                                      <div class="input-box">
+                                          <div class="select-styled"><?php echo $this->getCountryHtmlSelect() ?></div>
+                                      </div>
+                                  </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="fieldset">
+                            <ul class="form-list">
+                                <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+                                <li class="wide">
+                                    <div class="input-box">
+                                        <input placeholder="Street 1*" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-patern <?php echo $_streetValidationClass ?>" />
+                                    </div>
+                                </li>
+                                <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                                <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+                                <li class="wide">
+                                    <div class="input-box">
+                                        <input placeholder="Street 2" type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i ?>" class="input-patern <?php echo $_streetValidationClass ?>" />
+                                    </div>
+                                </li>
+                            	<?php endfor; ?>
+                                <li class="fields">
+                                    <div class="field">
+                                        <div class="input-box">
+                                            <input placeholder="City*" type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="input-box region_edit">
+                                            <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select required-entry main-dropdown-box" style="display:none;">
+                                                <option value=""><?php echo $this->__('State/Province*') ?></option>
+                                            </select>
+                                            <script type="text/javascript">
+                                                //<![CDATA[
+                                                $('region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
+                                                //]]>
+                                            </script>
+                                			<input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
+                            			</div>
+                        			</div>
+                    			</li>
+                                <li class="fields">
+                                    <div class="field">
+                                        <div class="input-box">
+                                            <input placeholder="zip Code*" type="text" name="postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="required-entry-dtn input-patern validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fields">
+                                    <div class="field">
+                                        <div class="input-box">
+                                            <input placeholder="Phone Number*" id="phone" name="telephone" type="text" class="validate-mobileno address-edit-itel-cstm ele_width main-dropdown-box pl-5" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li <?php if($this->canSetAsDefaultBilling()) echo ' class="control"' ?>>
+                               		<?php if($this->isDefaultBilling()): ?>
+                                		<?php echo $this->__('Default Billing Address') ?>
+                                	<?php elseif($this->canSetAsDefaultBilling()): ?>
+                                	<label for="primary_billing" class="custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('Use as my default billing address') ?>
+                                     	<input type="checkbox" id="primary_billing" name="default_billing" value="1" title="<?php echo $this->__('Use as My Default Billing Address') ?>" class="checkbox" />
+                                        <span class="checkmark"></span>
+                                  	</label>
+                                    <?php else: ?>
+                                    	<input type="hidden" name="default_billing" value="1" />
+                                    <?php endif; ?>
+                             	</li>
+                                <li <?php if($this->canSetAsDefaultShipping()) echo ' class="control"' ?>>
+                                    <?php if($this->isDefaultShipping()): ?>
+                                     	<?php echo $this->__('Default Shipping Address') ?>
+                                    <?php elseif($this->canSetAsDefaultShipping()): ?>
+                                    <label class="custom-checkbox custom-checkbox-two para-normal" for="primary_shipping"><?php echo $this->__('Use as my default shipping address') ?>
+                                     	<input type="checkbox" id="primary_shipping" name="default_shipping" value="1" title="<?php echo $this->__('Use as My Default Shipping Address') ?>" class="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                 	<?php else: ?>
+                                    	<input type="hidden" name="default_shipping" value="1" />
+                                    <?php endif; ?>
+                               	</li>
+                    		</ul>
+                		</div>
+                    	<div class="buttons-set text-right">
+                        	<button type="submit" title="<?php echo $this->__('Save Address') ?>" class="dark-button save_button next-button"><span><span><?php echo $this->__('Save Address') ?></span></span></button>
+                          	<?php if($flag):?>
+                          	<p class="back-link link-button"><a><?php echo $this->__('Back') ?></a></p>
+                          	<?php endif;?>
+                    	</div>
+            		</form>
+                	<script type="text/javascript">
+        				//<![CDATA[
+        					var dataForm = new VarienForm('customer-address-form-validate', true);
+        					var regionUpdater = new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+        				//]]>
+                        jQuery(document).ready(function(){
+                            var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+                            //initialize itel tel input
+                            var input = document.querySelector("#phone")
+                            var iti = window.intlTelInput(input, {
+                            	autoFormat: false,
+                                autoHideDialCode: false,
+                                autoPlaceholder: false,
+                                nationalMode: false,
+                                utilsScript: utilPath
+                          	});
+
+                           	// take phone number and check if it exist
+                            // if it does not exist then
+                            // first check if we can get Geo Location based Country Code if its there then set it
+                           	// otherwise set default as country as 'us'
+                           	// Magento module - Allure/GeoLocation
+                            var phone = "<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>";
+                            if(phone.length <=0){
+                           		var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+                               	if(country_code == undefined || country_code == null || country_code == "")
+                                	country_code = "us"
+                               	iti.setCountry(country_code.toLowerCase());
+                            }
+                            //custom validator for itel tel input
+                            //FileName - intel-tel-validation.js
+                            allureIntlTelValidate(jQuery("#phone"),iti);
+
+                            jQuery.noConflict();
+
+                            if(jQuery('#country').val() !='US') {
+                            	jQuery('#zip').removeClass( "validate-zip-international");
+                            } else {
+                               	jQuery('#zip').addClass( "validate-zip-international");
+                            }
+                            jQuery('#country').change(function(){
+                            	jQuery('#advice-validate-zip-international-zip').addClass('display_none');
+                               	if(jQuery(this).val() !='US') {
+                                	jQuery('#zip').removeClass( "validate-zip-international");
+                                } else {
+                                  	jQuery('#zip').addClass( "validate-zip-international");
+                                }
+                                regionUpdater.update();
+                          	});
+                            jQuery('.checkout-multishipping-address-newbilling').addClass('checkout-multishipping-address-newshipping');
+                            jQuery('form').submit(function(e) {
+                            	if (regionUpdater._checkRegionRequired()) {
+                                	jQuery('#region_id').parent().find('.ajax-error-messages').remove();
+                                }
+                            });
+                      	});
+        		</script>
+			</div>
+		</div>
+	</div>
+</div>

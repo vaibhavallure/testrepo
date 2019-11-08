@@ -1,0 +1,377 @@
+<script type="text/javascript">
+    var wishlistForm = new VarienForm('product_addtocart_form');
+    wishlistForm.submitAjaxWishlist = function (button, url, id) {
+        url = url.replace('wishlist/index', 'ajaxwishlist/index')
+                 .replace('https://', '//');
+        var data = jQuery('#product_addtocart_form').serialize();
+        data += '&isAjax=1';      
+        jQuery.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            data: data,
+            success: function (data) {               
+                if (data.status == 'ERROR') {
+                    if(data.message == 'login'){
+                        parent.location.href = '<?php echo Mage::helper('customer')->getLoginUrl(); ?>';
+                    } else {
+                        alert(data.message);
+                    }
+                } else {
+                    jQuery('.faveSuccess').html(data.message).show();
+                    setTimeout(function(){
+                        jQuery('.faveSuccess').fadeOut(3000);
+                    }, 3000);
+                }
+            }
+        });
+
+    }.bind(wishlistForm);
+</script>
+<?php 
+$_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct();
+
+$prHelper        = Mage::helper("allure_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_product->getId());
+$parentVal = ($isCustomOptions)?1:0;
+
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
+
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="product-view sample-size">
+<div class="product-essential">
+ <?php if(!$isCustomOptions):?>
+ 
+<form action="<?php echo $this->getSubmitUrl($_product). 'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
+      id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      <?php else:?>
+      <form action="<?php echo $this->getSubmitUrl($_product). /* 'cpid/'.$_product->getId(). */'/' ?>" target="_top" method="post"
+      id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      
+        <?php endif;?>
+    <div class="no-display">
+        <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
+        <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        <input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
+        <input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
+    </div>
+
+    <div class="product-shop-quickview">
+        <div class="product-img-box" id="product_media_content">
+            <div id="galleria-<?php echo $_product->getId() ?>" class="mediaGallery">
+                <?php
+                $this->getChild('media')->setData("prodID", $_product->getId());
+                echo $this->getChildHtml('media', false);
+                ?>
+            </div>           
+        </div>
+        <div class="product-info-right-quickview">
+            <div class="product-name">
+                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+            </div>
+             <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="puchsed-from-cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
+            <?php echo $this->getPriceHtml($_product) ?>
+            <?php echo $this->getChildHtml('product_type_data') ?>
+            <div id="quickview_des" class="product-collateral">
+                <?php // echo $this->getChildHtml('description') ?>
+                <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_product->getShortDescription(), 'short description') ?>
+            </div>
+             <?php if ($_product->getShowSpecialInstruction()):?>
+           	 <div class="product-special-instructions">
+					<div class="special-instruction-label">
+						<label>Special Instructions:</label>
+					</div>
+					<div class="special-instruction-textarea">
+						<textarea name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" rows="3" cols="40" placeholder="Post Length & Gauge Request"></textarea>
+						<br/>
+						(Special requests might delay your order due to production time)
+					</div>
+			</div>
+			<?php endif;?>
+
+                <?php if (!$this->hasOptions()): ?>
+                    <div class="add-to-box">
+                        <?php if ($_product->isSaleable()): ?>
+                            <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php elseif (!$_product->isAvailable()): ?>
+                            <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
+                                <span>
+                                   <span><?php echo $this->__('Out of stock') ?></span>
+                                </span>
+                            </button>
+                            <?php echo $this->getChildHtml('alert_urls') ?>
+                        <?php endif; ?>
+                        <?php // echo $this->getChildHtml('addto') ?>
+                    </div>
+                <?php elseif (!$_product->isSaleable()): ?>
+                    <div class="add-to-box">
+                        <?php // echo $this->getChildHtml('addto') ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="product-select-options">
+                    <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                        <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                    <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
+                        <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
+                            <span>
+                               <span><?php echo $this->__('Out of stock') ?></span>
+                            </span>
+                        </button>
+                        <?php echo $this->getChildHtml('alert_urls') ?>
+                    <?php endif;?>
+                    <!-- <div>Availability for this model:<br><span style="color:#830000"><?= Mage::helper('amstockstatus')->showStockStatus($_product, false, false) ?></span></div> -->
+
+                    <?php $_product = $this->getProduct() ?>
+                    <?php if ( $_product->getTypeId() != 'giftcards'):?>
+                    <?php if ($_product->isAvailable()): ?>
+                        <div><p class="availability in-stock"><?php echo $this->__('Availability for this model:') ?><br/><span style="color:#830000;font-weight: normal !important;"><?php echo $this->__('In stock') ?></span></p></div>
+                    <?php else: ?>
+                        <div><p class="availability out-of-stock"><?php echo $this->__('Availability for this model:') ?> <span style="color:#830000;font-weight: normal !important;"><?php echo $this->__('Out of stock') ?></span></p></div>
+                    <?php endif; ?>
+                    <?php endif; ?>
+                    <?php echo $this->getChildHtml('product_type_data_extra') ?>
+                </div>
+
+            <div class="quickview-buttons">
+                <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                    <div class="ad-to-fav">
+                        <a onclick="validateFave();" class="link-wishlist" style="font-size: 12px !important">Save to Wishlist</a>
+                        <span id="ajax_loading" style="display:none"><img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"/></span>
+                        <div class="faveSuccess"></div>
+                    </div>
+
+                    <script type="text/javascript">
+                        function validateFave() {
+                            var hasErrors = false;
+                            if (jQuery('.ajax-error-messages')) {
+                                jQuery('.ajax-error-messages').remove();
+                            }
+
+                            jQuery('.required-entry:not(.selectboxit)').each(function () {
+                                if (!jQuery(this).val()) {
+                                    hasErrors = true;
+                                    jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(this).parent());
+                                }
+                            });
+
+                            if (hasErrors) {
+                                return false;
+                            }
+                            var pid = jQuery('#pid-hidden').val();
+                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>product/<?php echo $_product->getId()?>/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
+                            
+                        }
+                    </script>
+                <?php endif; ?>
+                <button class="button viewProductDetailsBtn" title="Product details" type="button">
+                    <span><?php echo $this->__('View product details');?></span>
+                </button>
+                    <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                       var default_url = '<?php echo $_product->getProductUrl(); ?>'; 
+                       jQuery('.viewProductDetailsBtn').click(function(){                          
+                           var imgId = jQuery('.amconf-images-container').attr('id'); 
+                           var count_attribute   = jQuery('#count_attriute').val();
+                           if(!imgId){   
+                                if(count_attribute == '1'){
+                                    var select_default_Id = jQuery('.attribute_select_default').attr('id');
+                                    var defaultId = 'attribute'+select_default_Id; 
+                                    var selected = jQuery('#'+defaultId).val();
+                                    var real_url = default_url+'?optionId='+selected;                                   
+                                    parent.window.location.href = real_url;
+                                    return false;
+                                }else{
+                                    parent.window.location.href = default_url;
+                                    return false;
+                                }
+                                
+                           }
+                           imgId = imgId.replace('amconf-images-',"");
+                           var optionId = jQuery('#attribute'+imgId).val();                           
+                           var real_url = default_url + '?optionId='+optionId;    
+                           var select_default_Id = jQuery('.attribute_select_default').attr('id');
+                          
+                           if(count_attribute == '1'){
+                               var defaultId = 'attribute'+select_default_Id; 
+                               var selected = jQuery('#'+defaultId).val();
+                               if(real_url.search("optionId") == -1){
+                                  real_url = real_url+'?optionId='+selected;
+                               }                                                             
+                           }
+                           else{    
+                               if(select_default_Id){
+                                       var defaultId = 'attribute'+select_default_Id;                                  
+                                       var selected = jQuery('#'+defaultId).val();
+                                       if(selected && (real_url)){
+                                           real_url = real_url+'&df='+selected;
+                                       }                                  
+                                 }  
+                           }                            
+                           parent.window.location.href = real_url;
+                           return false;
+                       });                    
+                       jQuery(".price-box").show();                         
+                    });
+                    </script>      
+            </div>
+        </div>
+    </div>
+</form>
+<form id="hiddenForm"></form>
+<script type="text/javascript">
+(function($){
+    $(window).load(function(){
+        $("#quickview_des").mCustomScrollbar({
+            scrollButtons:{
+                enable:true
+            }
+        });
+    });
+})(jQuery);
+    //<![CDATA[
+    function sendToMain() {
+        jQuery('#hiddenForm')
+            .attr("action", "<?php echo $_product->getProductUrl();?>").attr("method", "post") //set the form attributes
+            //add in all the needed input elements
+            .append('<input type="hidden" name="colorOptionId" id="colorOptionId" value="' + jQuery('select.color-attribute').val() + '">').submit();
+    }
+    var stockAmt;
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    Validation.add('greatherzerocustom', '<?php echo $this->__('Please enter a valid quantity');?>', function (myInput) {
+        if (/^\d+$/.test(myInput)) {
+            return true;
+        }
+
+        return false;
+    });
+    Validation.add('emptycustomvalidation', '<?php echo $this->__('This is a required field');?>', function (myInput) {
+        if (myInput != '') {
+            return true;
+        }
+        return false;
+    });
+    productAddToCartForm.submit = function (button, form) {
+       
+        // Validate required attributes
+        var hasErrors = false;
+        if (jQuery('.ajax-error-messages')) {
+            jQuery('.ajax-error-messages').remove();
+        }
+
+        jQuery('.required-entry:not(.selectboxit)').each(function () {
+            if (!jQuery(this).val()) {
+                hasErrors = true;
+                jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(this).parent());
+            }
+        });
+
+        if (hasErrors) {
+            return false;
+        }
+        // end validate required attributes
+
+        var stockFlowControl;
+        if (jQuery('select.color-attribute').val() != '') {
+            if (this.validator.validate()) {
+                var msgValidation;
+                stockFlowControl = 1;
+                if (jQuery('#qty').val() > 0 && jQuery('#qty').val() != '' && (stockFlowControl == 1)) {
+                    msgValidation = "";                    
+                    
+                    jQuery('.blockUI').append('<div class="fancybox-loading"></div>');
+                    jQuery('.blockUI .fancybox-loading').append('<div></div>');
+                    jQuery('.blockUI .fancybox-loading div').append('<p class="loader" id="loading_mask_loader"></p>');
+                    jQuery('.blockUI').show();
+                    addToShoppingCartFromQuickView(button, form);
+                } else {
+                    jQuery('.stockerr').html('Maximum amount available is ' + stockAmt);
+                    jQuery('.stockerr').show("inline");
+                }
+            }
+        } else {
+            jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(jQuery('select.color-attribute')).parent());
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function (button, url) {
+        var count = $$('.attributeSelectIds').length;
+        if (count > 0) {
+            var countToCompare = 0;
+            $$('.attributeSelectIds').each(function (element) {
+                var nombreAttributo = 'attribute' + $F(element);
+                if ($F(nombreAttributo) == 'SIZE') {
+                    countToCompare = countToCompare - 1;
+                } else {
+                    countToCompare = countToCompare + 1;
+                }
+            });
+
+            if (countToCompare == count) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                    form.action = url;
+                }
+                var e = null;
+                try {
+                    if (this.validator.validate()) {
+                        this.form.submit();
+                    }
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            } else {
+                jQuery('.ajax-error-messages').show();
+                jQuery('.ajax-error-messages').html('This is a required field.');       //alert("tuvo errores");
+            }
+
+        } else {
+            var form = this.form;
+            var oldUrl = form.action;
+
+            if (url) {
+                form.action = url;
+            }
+            var e = null;
+            try {
+                if (this.validator.validate()) {
+                    this.form.submit();
+                }
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    //]]>
+
+</script>
+</div>
+</div>

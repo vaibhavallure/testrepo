@@ -313,6 +313,11 @@ class Mage_CatalogInventory_Model_Observer
         }
         //end
         
+        //gift wrap check
+        if($quoteItem->getSku() == "GIFT_WRAP"){
+            return $this;
+        }
+        
         /* @var $quoteItem Mage_Sales_Model_Quote_Item */
         if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote() /* || $quoteItem->getQuote()->getIsSuperMode()*/
            ) {

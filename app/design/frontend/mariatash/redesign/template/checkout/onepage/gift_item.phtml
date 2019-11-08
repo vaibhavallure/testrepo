@@ -1,0 +1,96 @@
+<?php 
+/**
+ * @var Allure_MultiCheckout_Block_Checkout_Onepage_GiftItem $this
+ */
+?>
+<?php $quote = $this->getQuote();?>
+<?php $items = $quote->getAllVisibleItems();?>
+<div class="data-table col-12" id="multiship-addresses-table">
+	<div class="row">
+	<?php $_index = 0;?>
+	<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
+	<?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
+	<?php $_coreHelper = $this->helper('core');?>
+	
+	<?php foreach ($items as $_item):?>
+		<?php if($_item->getSku() == $redesignHelper::GIFT_WRAP_SKU) continue;?>
+		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+		<?php 
+		  $qty = $_item->getQty(); 
+		  $itmHtml = $this->getItemHtml($_item);
+		?>
+		
+		<?php $_product = $_item->getProduct() ?>
+        <?php
+            if ($option = $_item->getOptionByCode('simple_product')) {
+                $_product = $option->getProduct();
+            }
+            $productImg = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96);
+        ?>
+        
+		<?php for($i = 0; $i < $qty; $i++):?>
+		<div class="col-12 product-description-section">
+			<div class="row">
+        		<div class="col-lg-2 col-md-2 col-4 multi-column-1">
+            		
+                	<p class="product-image">
+                		<img src="<?= $productImg ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                	</p>
+             	</div>	
+             	<div class="col-lg-6 col-md-6 col-12 multi-column-2">
+             		<?php echo $itmHtml?>
+        			<?php if(!empty($message)): ?>
+                     <div class="box">
+                     	<div class="box-content">
+                        	<div class="item-msg">
+                            	<p><span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?></p>
+                         	</div>
+                      	</div>
+                    </div>
+            		<?php endif;?>
+            		
+            		<?php if(!$_product->getIsVirtual()):?>
+                    <div class="col2-set">
+                    	<div class="gift-messages">
+                        	<p class="control">
+                            	<label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getId()?>">
+                                	<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getId()?>"
+                                    	value="1" class="checkbox gift-item-checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>
+                                   		data-gift_wrap_id="<?= $_index."-".$_item->getId()?>">
+                                   	<span class="checkmark"></span>
+                                   	<span class="para-normal"><?= $this->__('This item is a gift (price will be hidden in the receipt).')?></span>
+                            	</label>
+                          	</p>
+                     	</div>
+                       	<div id="gift-wrap-<?= $_index."-".$_item->getId()?>" class="gift-messages <?= (!$_item->getIsGiftItem()) ? "d-none":"" ?>">
+                        	<p class="control">
+                            	<label class="custom-checkbox custom-checkbox-two" for="gift_wrap_item_<?= $_index."_".$_item->getId()?>">
+                                	<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                    <span class="checkmark"></span>
+                                    <span class="para-normal"><?= $this->__('Add gift wrap to this item')?> (<?= ($_productGiftWrap) ? $_coreHelper->currency($_productGiftWrap->getPrice()) : '' ?>).</span>
+                              	</label>
+                            </p>
+                       	</div>
+                 	</div>
+                   	<?php endif;?>
+            		
+             	</div>
+             </div>
+    	</div>
+    	<?php $_index++;?>
+    	<?php endfor;?>
+	<?php endforeach;?>
+	</div>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery('.gift-item-checkbox').on('change',function(){
+		var giftWrapId = jQuery(this).data("gift_wrap_id");
+		if(jQuery(this).is(":checked")){
+			jQuery('#gift-wrap-'+giftWrapId).removeClass('d-none');
+		}else{
+			jQuery('#gift-wrap-'+giftWrapId).addClass('d-none');
+		}
+	});
+});
+</script>

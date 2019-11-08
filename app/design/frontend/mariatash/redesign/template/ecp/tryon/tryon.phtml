@@ -1,0 +1,162 @@
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    
+    //jQuery('.col-left').remove();    
+    var img = jQuery('#stage');		
+    //$('#arete1').css({ top: 118, left: -326 });    
+
+    martian = jQuery('.arete1');
+    img.mapster({
+        mapKey: 'alt',
+        fillOpacity: 0.1,
+        fillColor: 'FFFFFF',
+        stroke: false, 
+        strokeWeight: 1,
+        strokeColor: 'CCCCCC',
+        selected:false,
+        onConfigured: function() {
+            //img.siblings().css('z-index', 0);
+            img.css('z-index', 20);
+        }
+    });    
+    
+    martian.css('z-index', 5).draggable({
+        helper:"clone",
+        revert: "invalid",
+        drag: function() {
+            
+            jQuery(this).css('z-index', 5);
+        }
+    });
+
+    img.droppable({
+        drop: function(e, ui) {
+            jQuery('#xpos').text( ui.position.left);
+            jQuery('#ypos').text( ui.position.top);
+            var landing = img.mapster('highlight');
+            jQuery(ui.draggable).css('z-index', 20);
+            
+          // jQuery(this).append($(ui.helper).clone());
+         //ui.draggable.clone().appendTo(img);
+            //
+            console.log(landing);
+            if (landing == 'Mars') {
+                console.log('if');
+               
+               // jQuery(this).append(jQuery(ui.draggable).clone());
+                 //jQuery(this).append( jQuery(ui.draggable).clone(true).draggable());
+                martian.draggable({
+                    helper:"clone",                
+                    containment: 'html',
+                    stop: function(event, ui) {
+                        $(ui.helper).clone().removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone').appendTo('body');
+                    },
+                    revert: function(event, ui) {
+                        /*
+                        //overwrite original position
+                        jQuery(this).data("draggable").originalPosition = {
+                            top: 0,
+                            left: 0
+                        };
+        */
+                        return !event;
+                    }
+                });
+                
+                
+                //img.css('z-index', 20);
+            } else if (landing == null) {
+                console.log('elseif');
+                martian.css('z-index', 10).draggable({
+                    helper:"clone",
+                    revert: "valid",
+                    drag: function() {
+            
+                        jQuery(this).css('z-index', 5);
+                        
+                        martian.draggable({
+                            helper:"clone",
+                            revert: function(event, ui) {
+                                //overwrite original position
+                                /*jQuery(this).data("draggable").originalPosition = {
+                                        top: 0,
+                                        left: 0
+                                };*/
+                                return !event;
+                            }
+                        });
+                    }
+                });
+            }
+            else{
+                console.log('else');
+                martian.css('z-index', 10).draggable({
+                helper:"clone",
+                    revert: "valid",
+                    drag: function() {
+                   
+                        jQuery(this).css('z-index', 5)
+                    }
+                });
+            }
+        }
+    });    
+});
+</script>      
+
+<?php
+//$metodos = get_class_methods($this->getProducts());
+// echo $this->getProducts()->getSelect();                
+//print_r( Mage::getStoreConfig('ecp_tryon/regions/lobule') );
+
+//echo $this->getMaterials()->getSelect();          
+//echo "<pre>";
+    //print_r($this->getMaterials());
+    //die();
+// echo "</pre>";                
+?>
+                
+<?php //echo $this->getLayout()->createBlock('ecp_priceslider/layer_filter_price')->setTemplate('catalog/layer/filter.phtml')->toHtml(); ?>
+<p>Position X: <span id="xpos"></span></p>
+<p>Position y: <span id="ypos"></span></p>
+<div id="containerTryon">
+    <div class="leftContainer">
+        <img src="<?php echo $this->getSkinUrl('images/tryon/red_ear.jpg');?>"  id="stage" usemap="#tryon"/>
+    </div>
+    <div class="rightContainer">
+        <div class="filters">
+            <select name="region" id="region">
+                <option value="">Seleccione</option>
+                <?php
+                    foreach( $this->getRegions() as $regions ){
+                ?>
+                        <option value="<?php echo $regions->getTryonregion();?>"><?php echo $regions->getTryonregion();?></option>
+                 <?php
+                    }
+                 ?>
+            </select>
+            
+            <select name="material" id="material">
+                <option value="">Seleccione</option>
+                <?php
+                    foreach( $this->getMaterials() as $materials ){
+                ?>
+                        <option value="<?php echo $materials?>"><?php echo $materials?></option>
+                 <?php
+                    }
+                 ?>
+            </select>           
+        </div>
+        <div class="products">
+            <img class="arete1" src="<?php echo $this->getSkinUrl('images/tryon/earings.png');?>" border="0" name="internal_area"/>
+            <img class="arete1" src="<?php echo $this->getSkinUrl('images/tryon/earing2.png');?>" border="0" name="internal_area"/>
+            <map name="tryon" id="tryon">
+		<area id="internal_area" alt="Mars" shape="poly" name="internal_area" coords="188,53,197,50,208,51,217,53,226,56,234,62,241,69,247,78,254,85,258,92,263,101,265,110,267,118,269,125,269,131,269,137,270,142,270,148,270,153,271,160,271,167,270,173,268,181,267,189,265,196,263,204,260,211,256,215,252,221,249,226,245,231,241,236,236,241,232,246,226,251,216,258,212,263,207,267,201,268,192,266,188,261,182,255,189,247,199,240,206,234,213,228,219,222,226,216,231,209,235,201,238,192,240,184,240,174,239,163,238,152,235,143,231,133,227,123,224,113,220,105,214,93,205,83,191,73,185,63" href="#" />
+		<area id="lobule_area" shape="poly"  name="lobule_area" coords="109,292,102,294,101,302,101,312,102,320,104,327,109,335,114,341,121,345,131,349,141,349,149,350,155,348,162,346,171,342,180,338,186,334,192,330,199,327,204,322,210,317,214,313,217,306,212,300,204,294,195,289,184,285,169,284,154,286,138,289,127,290,115,291" href="#" />
+            </map>
+        </div>
+    </div>
+    <div class="bottomCart"> 
+    	<?php echo $this->getChildHtml('minicart',true); ?>
+    </div>
+</div>

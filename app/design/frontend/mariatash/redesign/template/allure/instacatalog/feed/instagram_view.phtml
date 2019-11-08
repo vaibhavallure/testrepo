@@ -1,0 +1,177 @@
+<div class="second-header-image">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+</div>
+
+
+<div class="insta-details">
+	<div class="container">
+		<?php $feedModel = $this->getFeed();?>
+<?php if(!is_null($feedModel->getId())):?>
+<?php
+	$mediaId = $feedModel->getMediaId();
+	$shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
+	$instagramObj = @unserialize($feedModel->getInstagramData());
+	$createDate = $feedModel->getCreatedTimestamp();
+	if($createDate!=null){
+		$createDate = date('d M Y', $createDate);
+	}
+
+	$_options = json_decode($feedModel->getHotspots());
+	$points = "";
+	$productsLinks = "";
+	$numberOfProducts = 0;
+	foreach ($_options as $option){
+		$sku = $option->text;
+		$numberOfProducts += 1;
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+
+		if (!$product || !$product->getId()) continue;
+
+		$productName = $product->getName();
+		$productId = $product->getId();
+
+		$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+		$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+		$productUrl = $product->getProductUrl();
+		if(!is_null($parentId)){
+			$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+		}
+
+		$points .= '<a data-original-url="'.$productUrl.'"';
+		$points .= ' href="'.$productUrl.'" target="_blank">';
+		$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
+		$points .= ' data-link-id="'.$productId.'" ';
+		$points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/$option->imgH).'%; left:'.(($option->left*100)/$option->imgW).'%;">';
+		$points .= '<div>'.$numberOfProducts.'</div>';
+		$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
+		$points .= '<div class="fs-arrow-up"></div>';
+		$points .= 'Shop it // " '.$productName.'</div></div></a>';
+
+		$productsLinks .= '<div class="fs-text-link-container ">';
+		$productsLinks .= '<a class="fs-text-product fs-link-list" ';
+		$productsLinks .= 'data-original-url="'.$productUrl.'"';
+		$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
+		$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
+		$productsLinks .= '<span class="fs-link-text-number">'.$numberOfProducts.' </span><span class="fs-slashes"></span>';
+		$productsLinks .= '<span class="fs-link-text">'.$productName.' </span></span>';
+		$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
+	}
+?>
+
+			<div id="fs-detail-response" class="fs-detail-container "
+				data-resource-url="<?php echo $feedModel->getUsername()?>">
+				<div class="fs-detail-content">
+					<div class="fs-detail-left">
+						<div class="fs-image-container">
+							<img class="fs-detail-image" id="fs_main_image"
+								src="<?php echo $feedModel->getStandardResolution()
+//$feedModel->getImage()?>">
+							<?php echo $points?>
+							<p><?php //echo json_encode($instagramObj) ?></p>
+						</div>
+					</div>
+					<div class="fs-detail-right">
+						<div class="box">
+							<div class="fs-products-title fs-plural-products"></div>
+
+						<?php echo $productsLinks?>
+
+						<div class="fs-divider"></div>
+						<div style="clear: both;"></div>
+						<div class="fs-detail-title"><?php echo json_decode(($feedModel->getText()))?></div>
+
+						<div class="fs-post-info">
+							<a href="<?php echo $feedModel->getUsername()?>"
+								target="_blank">
+								<span class="fs-service-username para-normal"> #mariatash</span>
+								<!-- <span class="fs-slashes">//</span> INSTAGRAM <span
+								class="fs-slashes">//</span> -->
+								<span class="fs-detail-date para-normal"><?php echo $createDate?></span>
+							</a>
+						</div>
+
+						<div class="fs-detail-shares d-none">
+							<a class="fs-share fs-facebook-share"
+								href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php echo $shareUrl ?>/&amp;p[image]=<?php echo $feedModel->getStandardResolution()?>"
+								target="_blank"><i class="fa fa-facebook"></i>
+							</a>
+							<a class="fs-share fs-link-share"
+								href="mailto:?subject=Thought you might be into this @maria_tash Instagram!&amp;body=<?php echo $shareUrl ?>/"
+								target="_blank"><i class="fa fa-envelope"></i>
+							</a>
+							<a class="fs-share fs-link-share fs-twitter-share" target="_blank"
+								href="http://www.twitter.com/share?url=<?php echo $shareUrl ?>/&amp;related=maria_tash&amp;text=Shop this Instagram from @maria_tash">
+								<i class="fa fa-twitter"></i>
+							</a>
+							<a class="fs-share fs-link-share"
+								href="http://www.pinterest.com/pin/create/button/?url=<?php echo $shareUrl ?>/&amp;media=<?php echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
+								target="_blank" data-pin-do="buttonPin" data-pin-config="above">
+								<i class="fa fa-pinterest"></i>
+							</a>
+							<a class="fs-share fs-link-share"
+								href="<?php echo $shareUrl ?>/"
+								target="_blank"><i class="fa fa-link"></i>
+							</a>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="fs-buy-container fs-unslid"></div>
+<style>
+.fs-detail-left {
+	position: relative;
+	display: table-cell;
+	text-align: left;
+}
+.fs-detail-right{
+    position: relative;
+    display: table-cell;
+    text-align: left;
+    width: 600px;
+}
+</style>
+<script>
+	jQuery(document).ready(function(){
+		jQuery('.fs-text-product').hover(function(){
+			var id = jQuery(this).attr('data-link-id');
+			var selector = jQuery('#fs_overlink_'+id);
+			selector.css("opacity", "1");
+			selector.find('.fs-overlink-text').css(
+					{"opacity":"1","display":"block"});
+	    }, function(){
+	    	var id = jQuery(this).attr('data-link-id');
+	    	var selector = jQuery('#fs_overlink_'+id);
+	    	selector.css("opacity", "");
+	    	selector.find('.fs-overlink-text').css(
+					{"opacity":"","display":""});
+		});
+
+		jQuery('.fs-overlink').hover(function(){
+			var id = jQuery(this).attr('data-link-id');
+			var selector = jQuery('#fs_link_'+id);
+			//selector.css("opacity", "1");
+			selector.css(
+					{"background-color":"#222","color":"#fff"});
+	    }, function(){
+	    	var id = jQuery(this).attr('data-link-id');
+	    	var selector = jQuery('#fs_link_'+id);
+	    	//selector.css("opacity", "");
+	    	selector.css(
+					{"background-color":"","color":""});
+		});
+
+	});
+	function showView(e){
+		jQuery('#showcase').show();
+	}
+	function closeView(e){
+		jQuery('#showcase').hide();
+		jQuery('#fs-detail-response').remove();
+		jQuery('#fs-instagram-view-container').html('<div class="instagram-loader"></div>');
+	}
+</script>
+<?php endif;?>
+
+	</div>
+</div>

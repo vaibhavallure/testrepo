@@ -1,0 +1,309 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div id="reload_payment">
+<dl class="sp-methods" id="checkout-payment-method-load">
+<?php
+    $methods = $this->getMethods();
+    $oneMethod = count($methods) <= 1;
+
+    $methodsList = array();
+?>
+<?php
+    foreach ($methods as $_method):
+        if(!$_method->canUseForMultishipping())
+            continue;
+        
+        $_code = $_method->getCode();
+        $methodsList[] = $_code;
+?>
+    <dt>
+        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked custom-radio para-normal"<?php else: ?> class="radio custom-radio para-normal"<?php endif;?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?>
+
+            <?php if(!$oneMethod): ?>
+                <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
+            <?php else: ?>
+                <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" />
+                <?php $oneMethod = $_code; ?>
+            <?php endif; ?>
+            <span class="radiomark"></span>
+        </label>
+    </dt>
+    <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
+    <dd>
+        <?php echo $html; ?>
+    </dd>
+    <?php endif; ?>
+<?php endforeach; ?>
+</dl>
+</div>
+<?php echo $this->getChildChildHtml('additional'); ?>
+<script type="text/javascript">
+//<![CDATA[
+<?php echo $this->getChildChildHtml('scripts'); ?>
+//payment.init();
+//payment.singleMethod = true;
+
+<?php if (in_array('authnetapplepay',$methodsList)) :?>
+	<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
+	if ( typeof AllureApplePay == 'undefined' ) {
+		var AllureApplePay = {};
+
+		AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
+		AllureApplePay.MerchantId = '<?php $_method->getConfigData('merchant_id') ?>';
+		AllureApplePay.MerchantName = '<?php $_method->getConfigData('merchant_name') ?>';
+
+		var s = document.createElement('script');
+		s.type = "text/javascript";
+		s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
+		var fs = document.getElementsByTagName('script')[1];
+		fs.parentNode.insertBefore(s, fs);
+
+		AllureApplePay.Initialised = true;
+	}
+<?php endif;?>
+
+<?php if (is_string($oneMethod)): ?>
+    //payment.switchMethod('<?php echo $oneMethod ?>');
+    //payment.singleMethod = '<?php echo $oneMethod ?>';
+<?php endif; ?>
+    if($('promoCode')){
+        $('promoCode').removeAttribute('disabled');
+    }
+    jQuery('dl.sp-methods > div.promoDiv').remove();
+   <?php if($codeExists): ?>
+       $('promoCode').disable();
+   <?php endif; ?>
+    function couponApply(remove){
+        if($F('promoCode') == '') {
+            $('advice-required-entry-promoCode_code').innerHTML = 'This is a required field';
+            $('advice-required-entry-promoCode_code').show();
+            return false;
+        }
+        else $('advice-required-entry-promoCode_code').hide();
+        var params = {
+                coupon_code: $F('promoCode'),
+                ajax: 1,
+                remove: remove
+         };
+        
+        blockCheckoutUi();
+        $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        
+        new Ajax.Request('<?php echo $this->getUrl('checkout/multishipping/couponPost', array('_secure'=>true)) ?>', {
+            method:'post',
+            parameters: params,
+            onSuccess: function(transport) {
+              var data = transport.responseText.evalJSON();
+
+              unblockCheckoutUi();
+              $('totalsDivRightNav').innerHTML = data.totals_html;
+              
+              if(data.error){
+                  $('advice-required-entry-promoCode_code').innerHTML = data.message;
+                  $('advice-required-entry-promoCode_code').removeClassName('applied');
+                  $('advice-required-entry-promoCode_code').addClassName('false');
+                  $('advice-required-entry-promoCode_code').show();
+                    return false;
+              } else if(data.disable) {
+                  $('promoCode').disable();
+                  $('promoCodeLinkAdd').hide();
+                  $('promoCodeLinkRemove').show();
+                  $('advice-required-entry-promoCode_code').innerHTML = 'Promo Code was applied';
+                  $('advice-required-entry-promoCode_code').addClassName('applied');
+                  $('advice-required-entry-promoCode_code').removeClassName('false');
+                  $('advice-required-entry-promoCode_code').show();
+              } else{
+                 $('promoCode').enable();
+                 $('promoCodeLinkAdd').show();
+                 $('promoCode').value = '';
+                 $('promoCodeLinkRemove').hide();
+              }
+              //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+              //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+            },
+            onFailure: function() {
+            	unblockCheckoutUi();
+            	$('totalsDivRightNav').innerHTML = data.totals_html;
+            	
+                alert('Error applying coupon code!');
+            }
+          });
+    };
+
+    function giftCardApply(url,applied){
+        if($F('giftcard_code') == '' && applied) {
+            $('advice-required-entry-giftcard_code').innerHTML = 'This is a required field';
+            $('advice-required-entry-giftcard_code').show();
+            return false;
+        }
+        else $('advice-required-entry-giftcard_code').hide();
+        var params = {
+                giftcard_use: $('giftcard_use').checked ? '1':'0',
+                giftcard_code: $F('giftcard_code'),
+                ajax: 1
+         };
+        new Ajax.Request(url, {
+            method:'post',
+            parameters: params,
+            onSuccess: function(transport) {
+                var data = transport.responseText.evalJSON();
+                if(data.error){
+                    if(data.message) {
+                        $('advice-required-entry-giftcard_code').innerHTML = data.message;
+                        $('advice-required-entry-giftcard_code').removeClassName('applied');
+                        $('advice-required-entry-giftcard_code').addClassName('false');
+                        $('advice-required-entry-giftcard_code').show();
+                    }
+                    return false;
+                } else if (data.active) {
+                    //$('current_balance').innerHTML = 'You Have ' + data.current_balance + ' on This Card';
+                    //$('current_balance').show();
+                    if(data.message) {
+                        $('advice-required-entry-giftcard_code').innerHTML = data.message;
+                        $('advice-required-entry-giftcard_code').removeClassName('false');
+                        $('advice-required-entry-giftcard_code').addClassName('applied');
+                        $('advice-required-entry-giftcard_code').show();
+                    }
+                    $('giftcard_code').addClassName('required-entry');
+                    $('giftcard_use').checked = 1;
+                    $('giftcard_use').value = "1";
+                    $('giftcard_code').value = '';
+                } else {
+                    if(data.message) {
+                        $('advice-required-entry-giftcard_code').innerHTML = data.message;
+                        $('advice-required-entry-giftcard_code').removeClassName('false');
+                        $('advice-required-entry-giftcard_code').addClassName('applied');
+                        $('advice-required-entry-giftcard_code').show();
+                    }
+                    $('advice-required-entry-giftcard_code').hide();
+                    $('giftcard_code').removeClassName('required-entry');
+                    $('giftcard_use').checked = 0;
+                    $('giftcard_use').value = "0";
+                }
+            },
+            onFailure: function() {
+                alert('Error applying gift card code!');
+            }
+          });
+    };
+    function uncheckPayment(){
+     jQuery('input[name="payment[method]"]').each(function () {
+              var payment = jQuery(this).val();
+              if(payment){
+                jQuery('#label-'+payment).attr('class','');
+              }
+        });
+    }
+//]]>
+</script>
+
+<script type="text/javascript">
+function switchPayOptions(that){
+	jQuery('#wholeseller-payment-methods ul li').each(function(i){jQuery(this).find('input').removeAttr('checked')});
+	jQuery(that).find('input').attr('checked',true);
+	var payNowSelector = jQuery('#checkout-payment-method-load dt.mt-pay-now');
+	var payAsShipSelector = jQuery('#checkout-payment-method-load dt.mt-pay-as-ship');
+	if(jQuery(that).hasClass('pay_now_li')){
+		payAsShipSelector.hide();
+		payNowSelector.show();
+	}else{
+		payNowSelector.hide();
+		payAsShipSelector.show();
+	}
+}
+
+function toggleCreditInfo(method){
+	/* var diffCardSelector = jQuery('.'+method+'_new');
+	diffCardSelector.toggle();
+	var cardSelector = jQuery('#'+method+'_card_id');
+	cardSelector.val(0);
+	if(diffCardSelector.is(':visible')){
+		cardSelector.removeClass('required-entry');
+
+		removeCardClass(method);
+
+		diffCardSelector.find('select').addClass('required-entry');
+		diffCardSelector.find('input').addClass('required-entry');
+	}else{
+		cardSelector.addClass('required-entry');
+
+		addCardClass(method);
+
+		diffCardSelector.find('select').removeClass('required-entry');
+		diffCardSelector.find('input').removeClass('required-entry');
+	} */
+}
+
+function changeCard(method){
+	var cardSelector = jQuery('#'+method+'_card_id');
+	cardSelector.addClass('required-entry');
+	if(cardSelector.val() != ''){
+		jQuery('#'+method+'_saved_cc_cid').show();
+	}else{
+		jQuery('#'+method+'_saved_cc_cid').hide();
+	}
+	jQuery('#'+method+'_saved_cc_cid').val('');
+	jQuery('#'+method+'_cc_cid').val('');
+	if(jQuery('#advice-required-entry-'+method+'_saved_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_saved_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_cc_cid'))
+		jQuery('#advice-required-entry-'+method+'_cc_cid').hide();
+	if(jQuery('#advice-required-entry-'+method+'_card_id'))
+		jQuery('#advice-required-entry-'+method+'_card_id').hide();
+	
+	addCardClass(method);
+
+	var diffCardSelector = jQuery('.'+method+'_new');
+	diffCardSelector.find('select').removeClass('required-entry');
+	diffCardSelector.find('input').removeClass('required-entry');
+	diffCardSelector.hide();
+}
+
+function addCardClass(method){
+	if(jQuery('#'+method+'_saved_cc_cid').length)
+		jQuery('#'+method+'_saved_cc_cid').addClass('required-entry');
+}
+
+function removeCardClass(method){
+	if(jQuery('#'+method+'_saved_cc_cid').length)
+		jQuery('#'+method+'_saved_cc_cid').removeClass('required-entry');
+}
+
+<?php //aws02 -start?>
+function showPaymentForm(){
+	jQuery('input[name="payment[method]"]').each(function () {
+		var paymentM = jQuery(this).val();
+		if(paymentM){
+		   if(jQuery(this).is(':checked')){
+		       jQuery('#payment_form_'+paymentM).show();
+		       payment.switchMethod(paymentM);
+		   }
+		}
+	});
+}
+<?php //aws02 -end?>
+</script>

@@ -1,0 +1,655 @@
+iframe {
+    max-width: 100%;
+}
+
+#two-shipping-method-layout{
+	margin-bottom:20px;
+	margin-left:15px;
+}
+#select-delivery-shipment{
+	/*width:50%;*/
+}
+
+#select-delivery-shipment,#shipping-method-two{
+	margin-left:15px;
+}
+
+#delivery-shiping-option #checkout-shipping-method-load{
+	margin-left:15px ! important;
+}
+
+#two-shipping-method-layout h2{
+	text-transform: none;
+}
+
+/* #backordered-two-ship{
+	clear: both;
+    overflow: hidden;
+    display: block;
+    position: relative;
+} */
+
+/* #ordered-two-ship{
+	clear: both;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    margin-bottom: 25px;
+} */
+
+/* #checkout-review-table tbody tr{
+	background:none;
+} */
+
+/*Wholeseller payment methods layout*/
+
+#wholeseller-payment-methods{
+	width: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+#wholeseller-payment-methods ul{
+	border-bottom: 1px solid #ccc;margin-bottom:10px;
+}
+
+#wholeseller-payment-methods ul li,
+#co-delivery-method-form .sp-methods li{
+	padding: 10px 0px 10px 10px;
+	background-color: #d1d1d1;
+}
+
+.mt-shipping-methods.mt-gift-card-present{
+	width: 100% ! important;
+	padding: 0px;
+}
+/*My account payment info*/
+
+.my-account .manage-payment-method .addresses-list .col-1 ,
+ .my-account .manage-payment-method .addresses-list .col-2{
+    width: 100% ! important;
+}
+
+.manage-payment-method .addresses-list li.item {
+    padding: 0 10px;
+    margin: 0 7px 15px;
+    width: 45%;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+.my-account .manage-payment-method .addresses-list .col-1 ol {
+    border-right: none;
+}
+
+.manage-payment-method .addresses-list li.item .box-title{
+	background: none;
+	text-align: left;
+	margin-bottom: 15px;
+}
+
+.manage-payment-method .addresses-list li.item .mt-paymentifo-card{
+	margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.manage-payment-method .addresses-list li.item .mt-paymentifo-card .mt-payment-card{
+	border-left: 1px dashed #ccc;
+	padding-left: 10px;
+	margin-left: 30px;
+}
+
+.manage-payment-method .addresses-list li.item .mt-paymentifo-card .btn-link .delete-link{
+	float: right;
+}
+
+.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form{
+	border-right:none;
+	width: 100%;
+	min-height: 230px;
+}
+
+.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form li{
+	width: 49%;
+	display: inline-block;
+}
+
+.my-account .manage-payment-method .addresses-list .col-2 #mt-credit-card-info li{
+	width: 100%;
+}
+
+/* .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
+#shipping-new-address-form .input-box input.input-text,
+.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form select{
+    width: 99% !important;
+    border-top: 1px solid #b2b2b2;
+    border-bottom: none;
+    border-left: 1px solid #e2e2e2;
+    border-right: 1px solid #d8d8d8;
+    height: 19px;
+    padding: 0px;
+    margin-bottom: 10px;
+} */
+
+ #mt-credit-card-info li #authnetcim_cc_type,#mt-credit-card-info li #authnetcim_cc_number
+{
+	width: 100% !important;
+	padding: 2px;
+	margin-bottom: 10px;
+}
+
+#mt-credit-card-info #authnetcim_cc_type_exp_div label,
+#mt-credit-card-info #authnetcim_cc_type_exp_div .input-box,
+#mt-credit-card-info #authnetcim_cc_type_cvv_div label,
+#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
+	float: right;
+}
+
+#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box .v-fix{
+	width: 30%;
+}
+
+.mt-paycard-title{
+	font-size: 18px;
+}
+
+.manage-payment-method .addresses-list .col-2 .box-title h3 > a{
+	text-decoration: none;
+}
+
+.manage-payment-method .card-line{
+	border-left: 1px solid #ccc;
+    padding-left: 10px;
+}
+
+.manage-payment-method small.mt-pages{
+	text-transform: none;
+}
+
+.manage-payment-method .card-label-name{
+	float: left;padding-right: 10px;
+}
+
+.manage-payment-method .card-type{
+	text-transform: none;
+}
+
+.mt-paymentifo-card .edit-link .mt-edit-icon,
+.mt-paymentifo-card .delete-link .mt-delete-icon,
+.mt-paymentifo-card .icon-wait-clock{
+	width:15px;
+    height:15px;
+    position:absolute;
+}
+
+ .mt-paymentifo-card .edit-link .mt-edit-icon{
+	content: '';
+    background:url('../images/pencil.svg');
+    background-size:cover;
+}
+
+.mt-paymentifo-card .delete-link .mt-delete-icon{
+	content: '';
+    background:url('../images/trash_bin.svg');
+    background-size:cover;
+    margin-left: -15px;
+}
+
+.mt-paymentifo-card .icon-wait-clock{
+	content: '';
+    background:url('../images/wait-clock.svg');
+    background-size:cover;
+}
+
+.manage-payment-method .mt-add-icon{
+	content: '';
+    background:url('../images/pencil.svg');
+    background-size:cover;
+    width:15px;
+    height:15px;
+    position:absolute;
+}
+
+.manage-payment-method .title-add-credit{
+	margin-left: 25px;
+}
+
+input.special-inst-product {
+    width: 250px;
+}
+
+.opc .step .buttons-set button.btn-amazon_continue {float:left; margin-top: 10px;}
+.opc .step .buttons-set button.button.btn-amazon_change_payment_method {
+	margin-top: 10px;;
+}
+
+#AmazonPayButtonMethod img {
+	height: 41.5px;
+}
+
+label[for=is_subscribed] {
+    background: url(../images/checkbox-login.png) no-repeat 0 0;
+    padding: 2px 0 2px 30px;
+}
+
+.customer-account-create .page-title {
+    margin: 16px auto;
+    float: none;
+    text-align: center;
+}
+
+.customer-account-create .account-create {
+    font-size: 13px;
+    color: #3f3f47;
+    background: #cfcfd1;
+    padding: 25px;
+    min-height: 386px;
+    position: relative;
+    margin: 0 auto;
+    float: none;
+    width: 500px;
+    max-width: 95%;
+}
+
+.customer-account-create input {
+    background: #F7F7F7;
+    border: none;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 9px;
+    line-height: 20px;
+    margin-bottom: 3px;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.customer-account-create select {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 9px;
+    margin: 3px 0;
+    width: 100%;
+    line-height: 20px;
+    height: auto;
+    border-radius: 0px;
+    font-size: 13px;
+    display: block;
+    border: none;
+    -webkit-appearance: none;
+}
+
+.customer-account-create input:after {
+	content:"";
+	display: none
+}
+
+ul#account-create {
+    margin: -5px;
+    display: block;
+    overflow: hidden;
+}
+
+#account-create li {
+    width: 50%;
+    float: left;
+    line-height: 3em;
+    padding: 0 3px;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+    position: relative;
+    box-sizing: border-box;
+}
+#account-create li.one_column {
+    width: 100%;
+}
+
+.customer-account-create .input-row {
+	margin: 0 -3px;
+}
+
+.customer-account-create input:checked + label {
+  background-position: 0px -22px;
+}
+
+img.snize-item-image[src^=data]::before {
+    background-color: red;
+    background-image: url(/media/catalog/product/placeholder/default/placeholder-base_1.png);
+    content: "";
+    display: block;
+}
+
+img.snize-item-image[src^=data]::after {
+    background-color: red;
+    background-image: url(/media/catalog/product/placeholder/default/placeholder-base_1.png);
+    content: "";
+    display: block;
+}
+
+.customer-account-login .account-create, .account-login{
+	margin: 17px 17px 10px 0 !important;
+}
+
+.customer-account-login #amazon-buttons-wrapper {
+    /*padding: 60px 0 !important;*/
+}
+
+
+/*Loader Css start*/
+.loader {
+  height: 20px;
+  width: 250px;
+  position: absolute;
+  /* top: 0;
+  bottom: 0; */
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.loader--dot {
+  animation-name: loader;
+  animation-timing-function: ease-in-out;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  background-color: black;
+  position: absolute;
+  border: 2px solid white;
+}
+.loader--dot:first-child {
+  background-color: #8cc759;
+  animation-delay: 0.5s;
+}
+.loader--dot:nth-child(2) {
+  background-color: #8c6daf;
+  animation-delay: 0.4s;
+}
+.loader--dot:nth-child(3) {
+  background-color: #ef5d74;
+  animation-delay: 0.3s;
+}
+.loader--dot:nth-child(4) {
+  background-color: #f9a74b;
+  animation-delay: 0.2s;
+}
+.loader--dot:nth-child(5) {
+  background-color: #60beeb;
+  animation-delay: 0.1s;
+}
+.loader--dot:nth-child(6) {
+  background-color: #fbef5a;
+  animation-delay: 0s;
+}
+.loader--text {
+  position: absolute;
+  top: 200%;
+  left: 0;
+  right: 0;
+  width: 4rem;
+  margin: auto;
+}
+.loader--text:after {
+  content: "Loading";
+  font-weight: bold;
+  animation-name: loading-text;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+@keyframes loader {
+  15% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(230px);
+  }
+  65% {
+    transform: translateX(230px);
+  }
+  95% {
+    transform: translateX(0);
+  }
+}
+@keyframes loading-text {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}
+
+.custom_recaptcha .recaptcha{
+	float:right;
+}
+.gift-confirm .gift-confirm-msg{
+	margin-top: 20px;
+    color: #3F4048;
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.gift-confirm  .redirect{
+	margin: 5 px !important;
+}
+.deletemyaccount-login-security {
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    float: left;
+}
+.del-my-acc-note{
+	color: #3f4048;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px !important;
+}
+/* .popupDelMyAccModel {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: -20px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+    background: rgba(0,0,0,0.45);
+}
+.popupDelMyAccModel > div {
+    width: 460px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px;
+    padding: 20px;
+    /* border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px;
+} */
+.popupDelMyAccModel .submit-delete{
+	    margin-bottom: 45px;
+}
+.popupDelMyAccModel .submit-delete button {
+	margin-top: 20px;
+    float: right;
+    color: #6f6b5a;
+}
+.popupDelMyAccModel .popupcheckbox_lbl_delacc{
+	display: inline-grid;
+    text-align: justify;
+}
+.popupDelMyAccModel .del_my_acc_confirm_p{
+	padding-bottom: 5px;
+    text-align: justify;
+}
+#popupcheckbox_delmyacc_confirm {
+    left: 0;
+    margin: 3px 20px;
+    width: 20px;
+    height: 20px;
+}
+label.popup-reg-privacy-lbl {
+    width: 95%;
+    float: left;
+    font-size: 12px;
+}
+#popup_is_privacy_agree {
+    width: 20px;
+    height: 20px;
+    left: 0;
+    margin: 3px 20px;
+}
+.please-wait-popup-del{
+	float: left;
+    margin-left: 301px;
+    margin-top: 16px;
+    margin-right: 12px;
+    padding-top: 6px;
+}
+.gdpr_confirmation{
+	margin-left: 10px;
+    margin-bottom: 20px;
+}
+.gdpr_confirmation #checkout_privacry_confirm{
+	    position: initial;
+	    height: 18px;
+	    width:18px;
+}
+
+.popupRegisterModel .news-letter {
+	margin-top: 10px;
+}
+
+.main-container.col1-layout .messages{
+	margin-left: 20px ! important;
+    margin-top: 15px ! important;
+}
+
+.mt-myaccount-new .messages{
+	margin-right: 40px! important;
+}
+/* .product-options-bottom {
+    margin-top: 20px;
+} */
+.product-custom-option{
+	width: 130px;
+    height: 27px !important;
+}
+/* #myaccount-shopping-cart-table a:hover {
+    color: #906E39;
+} */
+
+.post-lengthds-lbl-options .product-custom-option{
+	padding-left: 1px;
+    padding-right: 36px;
+    background: #f8f8f8;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.quickview-index-index .product-view .product-options dd option {
+    font-weight: normal !important;
+} */
+.custom-options-univaersal{
+	    margin-left: 25px !important;
+}
+
+.hideaddToCart{
+    display: none !important;
+}
+
+/* for paypal review */
+.paypal-express-review .checkout-two-shipment-shipping-method-mt,
+.paypal-express-review .checkout-two-shipment-payment-method-mt,
+.paypal-express-review .checkout-two-shipment-shipping-address-mt,
+.paypal-express-review .checkout-two-shipment-billing-address-mt{
+	padding: 17px;
+}
+
+.paypal-express-review .mt-paypal-total{
+	margin-top: 10px;
+}
+
+.paypal-express-review #shopping-cart-totals-table{
+	width: 100%;
+	background: #ccc;
+}
+.paypal-express-review #shopping-cart-totals-table tr td{
+	padding: 5px;
+}
+
+.paypal-express-review #shipping_method_2,
+.paypal-express-review #shipping_method_1{
+	background: white url(../images/formelements-select.png);
+}
+
+.customer-account-index .main .col-main .messages {.
+width: 94%;
+    float: right;
+}
+
+.product-options-bottom .add-to-cart-left .ajax-error-messages {
+    left: 150px;
+}
+/* .cart-mt ul.messages{
+    position: static;
+} */
+
+/* #popup-login-form .pop-title h2{
+    font-weight: normal;
+    color: #303136;
+    text-transform: uppercase;
+    font-size: 17px;
+    line-height: 1.285714286;
+    font-family: dinmittelschriftregular;
+    background: transparent;
+    float: none;
+    width: auto;
+    height: auto;
+    padding-left: initial;
+} */
+
+.pop-link .mt-amazon{
+    float: right;
+}
+.pop-link .mt-googleconnect-btn
+{
+    float: right;
+}
+.pop-link .mt-googleconnect-btn a
+{
+    margin: 0;
+}
+.pop-link .soc-login-btn{
+    clear: left !important;
+    float: left !important;
+}
+.facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
+    width: 200px;
+    float: right;
+}
+.mt-facebookconnect-btn a{
+ margin: 0px;
+}
+
+.allure-amazon-connect-login .account-login .content{
+    min-height: 0;
+}

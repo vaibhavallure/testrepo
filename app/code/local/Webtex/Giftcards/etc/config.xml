@@ -24,6 +24,16 @@
         </routers>
     </admin>
     <frontend>
+    	<events>
+    		<customer_logout>
+                <observers>
+                    <unsetAll>
+                        <class>giftcards/observer</class>
+                        <method>unsetAll</method>
+                    </unsetAll>
+                </observers>
+            </customer_logout>
+    	</events>
         <routers>
             <checkout>
                 <args>

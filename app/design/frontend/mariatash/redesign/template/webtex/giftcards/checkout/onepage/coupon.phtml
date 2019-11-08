@@ -1,0 +1,70 @@
+<?php
+/**
+ * One page checkout payment methods
+ *
+ * @see Mage_Checkout_Block_Onepage_Payment_Methods
+ */
+
+$quote = Mage::getModel('checkout/cart')->getQuote();
+$codeExists = ($quote->getCouponCode()) ? true : false;
+?>
+<div class='promoDiv row'>
+    <div class="coupons col-12">
+		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
+		<div class="discount row">
+    		<div class="sp-methods">
+        		<form method="post" action="<?php echo $this->getUrl('giftcards/cart/giftcardActive'); ?>" id="giftcardAgree">
+            		<div class="input-box">
+                		<input type="checkbox" value="1" name="giftcard_use" id="giftcard_use" class="checkbox"  <?php echo $oGiftCardSession->getActive() ? 'checked="checked"' : '' ?>>
+            		</div>
+        		</form>
+    		</div>
+
+    		<div class="discount-form giftcard-payment-method col-12">
+        		<form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
+                    <div class="input-box col-lg-4 col-md-4 col-12">
+                        <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-two">
+                    </div>
+                    <div class="buttons-set col">
+                        <a value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon link-button"
+                                title="Apply" type="button" ><span><span><?php echo $this->__('Apply') ?></span></span>
+                        </a>
+                        <span class="please-wait" id="gift-card-please-wait" style="display:none;">
+        					<img src="<?php echo $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading" title="Loading" class="v-middle">
+        				</span>
+                    </div>
+                </form>
+
+        		<?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
+            	<?php if($oGiftCardSession->getActive()):?>
+                	<?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
+                    <p class="para-normal text-left p-1 giftcard-output-content">
+                    	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
+                    	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
+                    	<a href="javascript:void(0);" onclick="deActivateGiftCard.deactivate(<?=$k ?>);" class="button_coupon link-button">
+                    		<span><span><?= $this->__('Remove')?></span></span>
+                    	</a>
+                    </p>
+           		 	<?php endforeach;?>
+       		 	<?php endif;?>
+    		</div>
+		</div>
+		<div class="discount row">
+        	<div class="discount-form col-12">
+             	<div class="row">
+                 	<div class="col-lg-4 col-md-4 col-12">
+                   		<input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
+                   	</div>
+                    <div class="buttons-set col">
+                        <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
+                        <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
+                        <span class="please-wait" id="coupan-code-please-wait" style="display:none;">
+        					<img src="<?php echo $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading" title="Loading" class="v-middle">
+        				</span>
+                    </div>
+    				<span style="display:none;" id="advice-required-entry-promoCode_code" ></span>
+              	</div>
+           	</div>
+  		</div>
+	</div>
+</div>

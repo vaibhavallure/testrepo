@@ -1,0 +1,397 @@
+<?php
+$model = Mage::registry('apt_modify_data');
+$customers = Mage::getSingleton("core/session")->getData('apt_customer_data');
+
+if ($model) {
+    $fetch_aptId = $model->getId();
+    $fetch_storeId = $model->getStoreId();
+    $f_firstName = $model->getFirstname();
+    $f_lastName = $model->getLastname();
+    $f_email = $model->getEmail();
+    $f_telephone = $model->getPhone();
+    $f_notification_pref = $model->getNotificationPref();
+    $fetch_piercing_qty = $model->getPiercingQty();
+    $fetch_piercing_loc = $model->getPiercingLoc();
+}
+
+?>
+<!--BOOKING SECTION-->
+
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
+
+<form class="" autocomplete="off" action="<?php echo $this->getActionUrl() ?>" method="post" id="appointemnet_form">
+    <input autocomplete="off" type="hidden" name="language_pref" value="">
+    <?php if($this->isAdmin()):?>
+        <input type="hidden" name="user" value="admin">
+    <?php endif; ?>
+    <div id="booking" class="container-fluid booking nopad appointment-container">
+        <div class="container nopad">
+            <div class="row">
+                <div class="col-12 col-lg-8" id="booking-wrapper">
+                    <div id="booking-box" class="col-12 booking-box">
+                            <?php echo $this->getChildHtml("appointments_popup_store");?>
+                        <div class="col-md-12 book-title">
+                            <p class="xpaces translate-popup para-bold text-uppercase"><?php echo $this->__('Book Your Appointment') ?></p>
+                        </div>
+                            <a href="#" id="btnPriceList" class="text-capitalize translate-popup">View Price List</a>
+                        <div id="people-box" class="people form-group col-12">
+                            <div id="people-wrapper" class="people-wrapper form-group col-12 p-0">
+                                <div class="col-12 p-0">
+                                    <div class="row">
+                                        <div class="col-md-8 col-8">
+                                            <label class="label translate-popup para-bold color-6"><?php echo $this->__('Number of people in your party:') ?></label>
+                                        </div>
+                                        <div class="peoplediv col-md-4 col-4 text-right">
+                                            <select class='input-box' id="count" name='piercing_qty'
+                                                    onchange="changeQty(this)">
+                                                <option <?= (empty($fetch_piercing_qty)) ? "selected" : "" ?> <?= ($fetch_piercing_qty == 1) ? "selected" : "" ?>
+                                                        value="1">1
+                                                </option>
+                                                <option <?= ($fetch_piercing_qty == 2) ? "selected" : "" ?> value="2">
+                                                    2
+                                                </option>
+                                                <option <?= ($fetch_piercing_qty == 3) ? "selected" : "" ?> value="3">
+                                                    3
+                                                </option>
+                                                <option <?= ($fetch_piercing_qty == 4) ? "selected" : "" ?> value="4">
+                                                    4
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 message p-0">
+                                    <p class="translate-popup para-normal"><?php echo $this->__('For parties of 5 or more, contact customer service') ?></p>
+                                </div>
+                            </div>
+
+                            <div class="job col-md-12 p-0">
+                                <?php if ($fetch_aptId):
+                                    $customer_count = 1;
+                                    foreach ($customers as $customer):?>
+                                        <div id="customer<?= $customer_count ?>job" class="form-group">
+                                            <h6 class="para-bold"><span class="translate-popup para-bold guest-count"><?php echo $this->__('Guest') ?></span> <?= $customer_count ?>:</h6>
+                                            <label class="label mb-1 translate-popup para-normal"><?php echo $this->__('Type of Appointment:') ?></label>
+                                            <div class="row ">
+                                                <div class="col-md-3 col-4">
+                                                    <input type="checkbox" data-no="<?= $customer_count ?>" class="piercing_select" id="piercing_select_<?= $customer_count ?>"
+                                                           onchange="displayPiercing('#piercing-wrapper<?= $customer_count ?>')"
+                                                           name="customer[<?= $customer_count ?>][piercing_select]"
+                                                        <?= ($customer->getPiercing() > 0) ? 'checked' : ''; ?>
+                                                    >
+                                                    <label class="label translate-popup" for="piercing_select_<?= $customer_count ?>"><?php echo $this->__('Piercing') ?></label>
+                                                </div>
+                                                <div class="col-md-6 col-8">
+                                                    <input type="checkbox" data-no="<?= $customer_count ?>" class="checkup_select" id="checkup_select_<?= $customer_count ?>"
+                                                           value="1" name="customer[<?= $customer_count ?>][checkup]"
+                                                        <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
+                                                    >
+                                                    <label class="label translate-popup" for="checkup_select_<?= $customer_count ?>"><?php echo $this->__('Checkup/downsize') ?></label>
+                                                </div>
+                                                <div class="col-12">
+                                                    <input type="text" class="customer_select" value="<?= (($customer->getPiercing() > 0) || $customer->getCheckup()>0)? '1':'';?>" id="customer_select_<?= $customer_count ?>"
+                                                           name="chekbox[<?= $customer_count?>]" style="display:none">
+                                                </div>
+                                            </div>
+                                            <div id="piercing-wrapper<?= $customer_count ?>"
+                                                 class="job-wrapper row" <?= ($customer->getPiercing() > 0) ? '' : 'style="display:none"'; ?>
+                                            >
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-8"><label class="label translate-popup"><?php echo $this->__('Number of Piercings:') ?></label></div>
+                                                        <div class="col-md-3 col-4 text-right">
+                                                            <select id="piercing_<?= $customer_count ?>"
+                                                                    class="input-box"
+                                                                    name="customer[<?= $customer_count ?>][piercing]"
+                                                                    onchange="changePiercingQty(this)" <?= ($customer->getPiercing() == 0) ? 'disabled' : ''; ?>>
+                                                                <option <?= ($customer->getPiercing() == 1 || $customer->getPiercing() == 0) ? 'selected' : ''; ?>
+                                                                        value="1">1
+                                                                </option>
+                                                                <option <?= ($customer->getPiercing() == 2) ? 'selected' : ''; ?>
+                                                                        value="2">2
+                                                                </option>
+                                                                <option <?= ($customer->getPiercing() == 3) ? 'selected' : ''; ?>
+                                                                        value="3">3
+                                                                </option>
+                                                                <option <?= ($customer->getPiercing() == 4) ? 'selected' : ''; ?>
+                                                                        value="4">4
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $customer_count++;
+                                    endforeach; ?>
+                                <?php else: ?>
+                                    <div id="customer1job" class="form-group">
+                                        <h6 class="para-bold"> <span class="translate-popup para-bold"><?php echo $this->__('Guest') ?></span> 1:</h6>
+                                        <label class="label mb-1 translate-popup para-normal"><?php echo $this->__('Type of Appointment:') ?></label>
+                                        <div class="row ">
+                                            <div class="col-xs-12 col-sm-3 col-md-3 ipad-lands">
+
+                                                <label class="label translate-popup translate-popup custom-checkbox" for="piercing_select_1">
+                                                  <input type="checkbox" class="piercing_select clschk" id="piercing_select_1" data-no="1"
+                                                         onchange="displayPiercing('#piercing-wrapper1')"
+                                                         name="customer[1][piercing_select]">
+                                                         <span class="checkmark"></span><?php echo $this->__('Piercing') ?>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-9 col-md-9">
+
+                                                <label class="label translate-popup custom-checkbox" for="checkup_select_1">
+                                                  <input type="checkbox" class="checkup_select clschk" value="1" data-no="1" id="checkup_select_1"
+                                                         name="customer[1][checkup]">
+                                                         <span class="checkmark"></span>
+                                                  <?php echo $this->__('Checkup/downsize') ?></label>
+                                            </div>
+                                            <div class="col-12">
+                                            <input type="text" class="customer_select" value="" id="customer_select_1"
+                                                   name="" style="display:none">
+                                            </div>
+                                        </div>
+                                        <div id="piercing-wrapper1" class="job-wrapper row" style="display:none">
+
+                                            <div class="col-12">
+                                                <div class="row">
+
+                                                    <div class="col-8">
+                                                        <label class="label translate-popup para-bold color-6"><?php echo $this->__('Number of Piercings:') ?></label></div>
+                                                    <div class="col-4 text-right quantity-count">
+                                                        <select id="piercing_1" class="input-box"
+                                                                name="customer[1][piercing]"
+                                                                onchange="changePiercingQty(this)" disabled>
+                                                            <option selected value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div id="mobile-slot" class="mobile-slot-section w-100">
+                            <?php //echo $this->getChildHtml("appointments_popup_pickdatetime"); ?>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <div class="row">
+                                <div class="col-md-12 hide">
+                                    <?php if ($fetch_aptId): ?>
+                                        <input type="hidden" name="id" value="<?php echo $fetch_aptId; ?>">
+                                    <?php endif; ?>
+                                    <input type="hidden" name="store_id" id="store_id"
+                                           value="<?php echo($fetch_storeId)? $fetch_storeId : $this->getStoreId() ?>">
+                                </div>
+
+                                <div class="customer_section col-md-12">
+                                    <?php if ($fetch_aptId):
+                                        $customer_count = 1;
+                                        foreach ($customers as $customer):?>
+
+                                            <div id="customer<?= $customer_count ?>">
+                                                <div class="col">
+                                                    <h6 class="para-bold color-6"> <span class="translate-popup text-uppercase para-bold color-6"><?php echo $this->__('Guest') ?> </span> <?= $customer_count ?>:</h6>
+                                                </div>
+                                                <div id="name-box" class="col-md-12 name-box">
+                                                    <div class="row">
+                                                        <div class="col-md-6 form-group">
+                                                            <input type="hidden"
+                                                                   name="customer[<?= $customer_count ?>][id]"
+                                                                   value="<?= $customer->getId() ?>" >
+                                                            <input class="input-box required-entry firstname translate-popup" type="text"
+                                                                   name="customer[<?= $customer_count ?>][firstname]"
+                                                                   id="firstname<?= $customer_count ?>"
+                                                                   placeholder="<?php echo $this->__('First Name*') ?>"
+                                                                   value="<?= $customer->getFirstname() ?>" required <?=$this->isReleaseSubmitted($customer->getInfoUpdate())?>>
+                                                        </div>
+                                                        <div class="col-md-6 form-group">
+                                                            <input class="input-box required-entry lastname translate-popup" type="text"
+                                                                   name="customer[<?= $customer_count ?>][lastname]"
+                                                                   id="lastname<?= $customer_count ?>"
+                                                                   placeholder="<?php echo $this->__('Last Name*') ?>"
+                                                                   value="<?= $customer->getLastname() ?>" required <?=$this->isReleaseSubmitted($customer->getInfoUpdate())?>>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                <div class="row">
+                                                <div id="email-box" class="col-md-6 form-group">
+                                                    <input class="input-box required-entry email translate-popup" type="email"
+                                                           name="customer[<?= $customer_count ?>][email]"
+                                                           id="email<?= $customer_count ?>" placeholder="<?php echo $this->__('EMAIL*') ?>"
+                                                           value="<?= $customer->getEmail() ?>" required <?=$this->isReleaseSubmitted($customer->getInfoUpdate())?>>
+                                                </div>
+                                                <div id="phone-box" class="col-md-6 form-group">
+                                                    <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup"
+                                                           type="search" name="customer[<?= $customer_count ?>][phone]"
+                                                           id="phonenumber<?= $customer_count ?>"
+                                                           placeholder="<?php echo $this->__('Phone Number') ?>"
+                                                           value="<?= $customer->getPhone() ?>" required autocomplete="off" Try ="disabled" autocorrect="off">
+                                                </div>
+                                              </div>
+                                            </div>
+                                                <div id="notify-box" class="col-md-12 form-group">
+                                                  <div class="row">
+                                                    <div class="col-12">
+                                                    <p class="label notify-label translate-popup para-normal"><?php echo $this->__('I would like to be notified by:') ?></p>
+                                                  </div>
+                                                    <div class="col-3 notify-label">
+                                                        <label class="label translate-popup m-0 mt-1 custom-checkbox" for="em<?= $customer_count ?>">
+                                                          <input type="checkbox" id="em<?= $customer_count ?>" name="" checked>
+                                                          <span class="checkmark"></span>
+                                                          Email</label>
+                                                    </div>
+                                                    <div class="col-9 notify-label p-0">
+
+                                                        <label class="label translate-popup custom-checkbox" for="c<?= $customer_count ?>">
+                                                          <input type="checkbox" class="noti_sms" id="c<?= $customer_count ?>"   data-section_id="<?= $customer_count ?>"
+                                                                 name="customer[<?= $customer_count ?>][noti_sms]" <?= ($customer->getSmsNotification()) ? 'checked' : '' ?>>
+                                                            <span class="checkmark"></span>
+                                                          Text (Message and data rates may apply)</label>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        <script type="text/javascript">
+                                            jQuery(document).ready(function () {
+                                                var iti=window.intlTelInput(document.querySelector("#phonenumber<?=$customer_count?>"), {
+//                                                    initialCountry: 'fr',
+                                                    autoFormat: false,
+                                                    autoHideDialCode: false,
+                                                    autoPlaceholder: false,
+                                                    nationalMode: false,
+                                                    utilsScript:  Allure.UtilPath
+                                                });
+                                                allureIntlTelValidate(jQuery("#phonenumber<?=$customer_count?>"), iti);
+                                            });
+                                        </script>
+                                            <?php
+                                            $customer_count++;
+                                        endforeach; ?>
+                                    <?php else: ?>
+                                        <div id="customer1">
+                                            <div class="col">
+                                                <h6 class="para-bold color-6"> <span class="translate-popup text-uppercase para-bold color-6"><?php echo $this->__('Guest') ?> </span> 1:</h6>
+                                            </div>
+                                            <div id="name-box" class="col-md-12 name-box">
+                                                <div class="row">
+                                                    <div class="col-md-6 form-group">
+                                                        <input class="input-box required-entry firstname translate-popup select-type-one" type="text"
+                                                               name="customer[1][firstname]" id="firstname1"
+                                                               placeholder="<?php echo $this->__('First Name*') ?>"
+                                                               value=""
+                                                               required>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <input class="input-box required-entry lastname translate-popup select-type-one" type="text"
+                                                               name="customer[1][lastname]" id="lastname1"
+                                                               placeholder="<?php echo $this->__('Last Name*') ?>"
+                                                               value=""
+                                                               required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                            <div class="row">
+                                            <div id="email-box" class="col-md-6 form-group">
+                                                <input class="input-box required-entry email translate-popup select-type-one" type="email"
+                                                       name="customer[1][email]" id="email1" placeholder="<?php echo $this->__('Email*') ?>"
+                                                       value=""
+                                                       required>
+                                            </div>
+                                            <div id="phone-box" class="col-md-6 form-group">
+                                                <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup select-type-one"
+                                                       type="search" name="customer[1][phone]" id="phonenumber1"
+                                                       placeholder="<?php echo $this->__('Phone Number') ?>"
+                                                       value=""
+                                                       required autocomplete="off" Try ="disabled" autocorrect="off">
+                                            </div>
+                                          </div>
+                                        </div>
+                                            <div id="notify-box" class="col-md-12 form-group">
+                                              <div class="row">
+                                                <div class="col-12">
+                                                  <p class="label notify-label translate-popup para-normal"><?php echo $this->__('I would like to be notified by:') ?></p>
+                                                </div>
+                                                <div class="col-md-3 notify-label">
+                                                    <label class="label translate-popup m-0 mt-1 custom-checkbox" for="em1">
+                                                      <input type="checkbox" id="em1" name="" checked>
+                                                      <span class="checkmark"></span>
+                                                      <?php echo $this->__('Email') ?></label>
+                                                </div>
+                                                <div class="col-md-9 notify-label custom-checkbox">
+                                                    <label class="label translate-popup para-normal" for="c1">
+                                                      <input class="noti_sms" type="checkbox" id="c1" data-section_id="1" name="customer[1][noti_sms]">
+                                                      <span class="checkmark"></span>
+                                                      <?php echo $this->__('Text Message (Message and data rates may apply)') ?></label>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            jQuery(document).ready(function () {
+                                            var iti=window.intlTelInput(document.querySelector("#phonenumber1"), {
+//                                                initialCountry: 'fr',
+                                                autoFormat: false,
+                                                autoHideDialCode: false,
+                                                autoPlaceholder: false,
+                                                nationalMode: false,
+                                                utilsScript:  Allure.UtilPath
+                                            });
+                                                allureIntlTelValidate(jQuery("#phonenumber1"), iti);
+                                            });
+                                        </script>
+                                    <?php endif; ?>
+                                </div>
+
+
+                                <div class="form-group col-md-12 btn-div text-right">
+                                    <button class="input-box btn translate-popup next-button light-button" id="btnConfirm" type="submit"><?php echo $this->__('CONFIRM') ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 booking-box " id="desktop-slot">
+                    <div class="col-md-12">
+                        <p class="xpaces translate-popup para-bold color-6 text-uppercase"><?php echo $this->__('Date and Time') ?></p>
+                    </div>
+                    <?php echo $this->getChildHtml("appointments_popup_pickdatetime"); ?>
+                    <?php if(empty(Mage::app()->getRequest()->getParam('user'))):?>
+                    <?php echo $this->getChildHtml("appointments_popup_price_list");?>
+                    <?php endif;?>
+
+                </div>
+            </div>
+        </div>
+
+</form>
+
+<?php if(empty(Mage::app()->getRequest()->getParam('user'))):?>
+    <a id="about-maria-arrow" href="#about-maria" class="link-down down-arrowfrm">
+        <img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png") ?>" class="down-arrow-size ">
+    </a>
+<?php endif; ?>
+
+</div>
+
+<!--cODE ADDED FOR MOBILE NO ISSUE WHILE MODIFY-->
+<script type="text/javascript">
+    Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+
+    jQuery(document).ready(function () {
+
+        if (jQuery('.modal-confirm-appointment').length) {
+            jQuery('.modal-confirm-appointment').modal('show');
+        }
+    });
+</script>

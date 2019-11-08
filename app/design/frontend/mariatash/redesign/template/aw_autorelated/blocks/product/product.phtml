@@ -1,0 +1,164 @@
+<div id="recent-view-ajax" class="w-100"></div>
+<?php echo $this->getChildHtml("instagram_product_post");?>
+
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Autorelated
+ * @version    2.3.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?>
+<?php
+$_size = ($this->getRelatedProducts()->getProductQty()) ? $this->getRelatedProducts()->getProductQty() : Mage::getStoreConfig('awautorelated/general/pcount');
+$abstractBlock = $this->helper('awautorelated')->getAbstractProductBlock();
+$_product = Mage::registry('current_product');
+$tmpColl = $this->getCollection();
+if ($tmpColl != NULL) {
+    $collection = $this->getCollection();
+    $collection->setPage(1, $_size)->load();
+    $collection->getselect()->order(new Zend_Db_Expr('RAND()'));
+} else {
+    $this->markAsShowed();
+    $relatedCollection = $_product->getRelatedProductCollection();
+    $crossCollection = $_product->getCrossSellProductCollection();
+    $merged_ids = array_merge($_product->getRelatedProductIds(),
+        $relatedCollection->getAllIds());
+
+    $collection = Mage::getModel('awautorelated/product_collection')
+        ->setPage(1, $_size)
+        ->addFieldToFilter('entity_id', shuffle($merged_ids))
+        ->addAttributeToSelect('*')
+        ->load();
+    $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
+}
+if (empty($collection))
+    return;
+
+if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE_RELATED_BLOCK) {
+    $this->iterateBlock();
+
+    if ($collection && $collection->getSize()) {
+        $this->markAsShowed();
+    } elseif ($this->showNativeBlock()) {
+        echo $this->getParent()->getChildHtml('catalog-product-related');
+
+    }
+} elseif ($_product && $this->getPosition() == AW_Autorelated_Model_Source_Position::INSIDE_PRODUCT_PAGE) {
+    $this->iterateBlock();
+    $tmpIds = $_product->getRelatedProductIds();
+    if (empty($tmpIds)) {
+        if ($collection && $collection->getSize()) {
+            $this->markAsShowed();
+        } elseif ($this->showNativeBlock()) {
+            echo $this->getParent()->getChildHtml('catalog-product-related');
+        }
+    } else {
+        $this->markAsShowed();
+        $collection = Mage::getModel('catalog/product')->getCollection()->addFieldToFilter('entity_id', -1);
+        $collection = $_product->getRelatedProductCollection()->setPage(1, $_size)
+            ->load();
+        $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
+    }
+
+
+}
+
+
+?>
+<?php if (($collection && $collection->getSize())) : ?>
+    <div class="you_may_like">
+    <div class="image_carousel">
+        <div class="block-title text-uppercase mb-3">
+            <span class="para-bold"><?php echo $this->__('You may also like') ?></span>
+        </div>
+        <ul id="foo4" style="overflow: hidden;">
+            <?php foreach ($collection as $product): ?>
+                <?php
+                    $product = Mage::getModel('catalog/product')->load($product->getId());
+                ?>
+                <li class="item" style="width: 280px; height: 362px">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $product->getId() ?>' href="<?php echo $product->getProductUrl() ?>">
+                        <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(280,362); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" />
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+        <div class="clearfix"></div>
+        <a class="prev" id="foo4_prev" href="#"><span>prev</span></a>
+        <a class="next" id="foo4_next" href="#"><span>next</span></a>
+        <div class="pagination" id="foo4_pag"></div>
+    </div>
+    <script type="text/javascript">
+        jQuery.noConflict();
+
+        jQuery(document).ready(function () {
+
+            jQuery('#foo4').jcarousel({
+                initCallback: mycarousel_initCallbackProd,
+                buttonNextCallback: mycarousel_buttonPrevCallbackProd,
+                buttonPrevCallback: mycarousel_buttonNextCallbackProd,
+                // This tells jCarousel NOT to autobuild prev/next buttons
+                buttonNextHTML: null,
+                buttonPrevHTML: null,
+                itemFallbackDimension: 90,
+                scroll:1
+            });
+
+        });
+
+        function mycarousel_initCallbackProd(carousel) {
+            jQuery('#foo4_prev').bind('click', function () {
+                carousel.prev();
+                return false;
+            });
+
+            jQuery('#foo4_next').bind('click', function () {
+                carousel.next();
+                return false;
+            });
+        }
+
+        function mycarousel_buttonNextCallbackProd(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo4_prev").css('opacity', 1);
+            } else {
+                jQuery("#foo4_prev").css('opacity', 0.13);
+            }
+        }
+
+        function mycarousel_buttonPrevCallbackProd(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo4_next").css('opacity', 1);
+            } else {
+                jQuery("#foo4_next").css('opacity', 0.13);
+            }
+        }
+
+        if (jQuery('ul#foo4 li.item').length <= 5){
+            jQuery("#foo4_next , #foo4_prev").hide();
+        }
+    </script>
+<?php endif; ?>
+<div class="for-bottom-space p-5"></div>

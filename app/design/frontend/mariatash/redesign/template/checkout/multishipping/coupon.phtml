@@ -1,0 +1,163 @@
+<?php
+/**
+ * One page checkout payment methods
+ *
+ * @see Mage_Checkout_Block_Onepage_Payment_Methods
+ */
+
+$quote = Mage::getSingleton('checkout/session')->getQuote();
+$codeExists = ($quote->getCouponCode()) ? true : false;
+?>
+<div class='promoDiv row'>
+    <div class="coupons col-12">
+		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
+		<div class="discount row">
+    		<div class="sp-methods">
+        		<form method="post" action="<?php echo $this->getUrl('giftcards/cart/giftcardActive'); ?>" id="giftcardAgree">
+            		<div class="input-box">
+                		<input type="checkbox" value="1" name="giftcard_use" id="giftcard_use" class="checkbox"  <?php echo $oGiftCardSession->getActive() ? 'checked="checked"' : '' ?>>
+            		</div>
+        		</form>
+    		</div>
+
+    		<div class="discount-form giftcard-payment-method col-12">
+        		<form class="row" method="post" action="<?php echo $this->getUrl('giftcards/cart/activateGiftCard'); ?>" id="activateGiftCard">
+                    <div class="input-box col-lg-4 col-md-4 col-12">
+                        <input placeholder="Gift Card" value="" name="giftcard_code" id="giftcard_code" class="input-text input-patern select-type-two">
+                    </div>
+                    <div class="buttons-set col">
+                        <a value="<?php echo $this->__('Apply') ?>" onclick="activateGiftCard.save()" class="button_coupon link-button"
+                                title="Apply" type="button" ><span><span><?php echo $this->__('Apply') ?></span></span>
+                        </a>
+                    </div>
+                </form>
+
+        		<?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>
+            	<?php if($oGiftCardSession->getActive()):?>
+                	<?php foreach($oGiftCardSession->getFrontOptions() as $k => $v):?>
+                    <p class="para-normal text-left p-1 giftcard-output-content">
+                    	<?= $this->__('The amount of -'.$currencySymbol.$v['applied'].' has been applied to your total.'); ?>
+                    	<?= $this->__('Your remaining balance is '.$currencySymbol.$v['remaining']); ?>.
+                    	<a href="javascript:void();" onclick="deActivateGiftCard.deactivate(<?=$k ?>);" class="button_coupon link-button">
+                    		<span><span><?= $this->__('Remove')?></span></span>
+                    	</a>
+                    </p>
+           		 	<?php endforeach;?>
+       		 	<?php endif;?>
+    		</div>
+		</div>
+		<div class="discount row">
+        	<div class="discount-form col-12">
+             	<div class="row">
+                 	<div class="col-lg-4 col-md-4 col-12">
+                   		<input placeholder="Promo Code" class="input-text input-patern select-type-two" id='promoCode' value="<?php echo $quote->getCouponCode() ?>" />
+                   	</div>
+                    <div class="buttons-set col">
+                        <a style="display:<?php echo ($codeExists) ? 'none' : '' ?>" id="promoCodeLinkAdd" class="button_coupon link-button" onclick="javascript:couponApply(0)"><span><span>Apply</span></span></a>
+                        <a style="display:<?php echo (!$codeExists) ? 'none' : '' ?>" id="promoCodeLinkRemove" class="button_coupon link-button" onclick="javascript:couponApply(1)"><span><span>Remove</span></span></a>
+                    </div>
+    				<span style="display:none;" id="advice-required-entry-promoCode_code" ></span>
+              	</div>
+           	</div>
+  		</div>
+	</div>
+</div>
+
+<!--gift card section-->
+<?php if(Mage::getStoreConfig('giftcards/default/show_as_payment_method')): ?>
+<script type="text/javascript">
+    var OnepageGiftcard = Class.create();
+    OnepageGiftcard.prototype = {
+        initialize: function(form, saveUrl){
+            this.form = form;
+            if ($(this.form)) {
+                $(this.form).observe('submit', function(event){this.save();Event.stop(event);}.bind(this));
+            }
+            this.saveUrl = saveUrl;
+            this.validator = new Validation(this.form);
+            this.onSave = this.nextStep.bindAsEventListener(this);
+            this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+        },
+
+        validate: function() {
+
+        },
+
+        save: function(){
+
+            //if (checkout.loadWaiting!=false) return;
+            //    checkout.setLoadWaiting('payment');
+            	blockCheckoutUi();
+            	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+
+                var request = new Ajax.Request(
+                    this.saveUrl,
+                    {
+                        method:'post',
+                        onComplete: this.onComplete,
+                        onSuccess: this.onSave,
+                        //onFailure: checkout.ajaxFailure.bind(checkout),
+                        parameters: Form.serialize(this.form)
+                    }
+                );
+        },
+
+        deactivate: function(id) {
+            //if (checkout.loadWaiting!=false) return;
+            //checkout.setLoadWaiting('payment');
+            blockCheckoutUi();
+            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+
+            var request = new Ajax.Request(
+                this.saveUrl,
+                {
+                    method:'post',
+                    onComplete: this.onComplete,
+                    onSuccess: this.onSave,
+                    //onFailure: checkout.ajaxFailure.bind(checkout),
+                    parameters: 'id=' + id
+                }
+            );
+        },
+
+        resetLoadWaiting: function(transport){
+            //checkout.setLoadWaiting(false);
+        },
+
+        nextStep: function(transport){
+        	unblockCheckoutUi();
+            if (transport && transport.responseText){
+                try{
+                    response = eval('(' + transport.responseText + ')');
+                }
+                catch (e) {
+                    response = {};
+                }
+            }
+
+            $('totalsDivRightNav').innerHTML = response.giftcard_section.totals_html;
+
+            if (response.error) {
+                alert(response.error);
+                return false;
+            }
+
+            //update gift card section
+            if(response.giftcard_section) {
+                $('giftcard-section').update(response.giftcard_section.html);
+            }
+
+            //$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+            //new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/multishipping/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+
+        }
+    }
+
+    //&lt;![CDATA[
+        var activateGiftCard = new OnepageGiftcard('activateGiftCard',"<?php echo $this->getUrl('checkout/multishipping/ajaxActivateGiftCard', array('_secure'=>true)) ?>");
+        var agreeMethod = new OnepageGiftcard('giftcardAgree', "<?php echo $this->getUrl('checkout/multishipping/agreeToUse', array('_secure'=>true)) ?>");
+        var deActivateGiftCard = new OnepageGiftcard( null, "<?php echo $this->getUrl('checkout/multishipping/ajaxDeActivateGiftCard', array('_secure'=>true)) ?>");
+    //]]&gt;
+</script>
+<?php endif; ?>
+<!-- end gift card section-->

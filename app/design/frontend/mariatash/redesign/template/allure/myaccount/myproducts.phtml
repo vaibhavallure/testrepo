@@ -1,0 +1,370 @@
+<div class="second-header-image">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+</div>
+
+<div class="acc-products-wrapper">
+	<div class="container">
+		<div class="page-title">
+			<h1>My Products</h1>
+		</div>
+		<div class="mt-myaccount-page">
+			<div class="tab">
+				<button data-link="purchase" id="mt-myproduct-purchase" data-tab="tab1" class="tablinks active" onclick="changeTab(this);">Purchased</button>
+
+				<button data-link="wishlist" id="mt-myproduct-wishlist" data-tab="tab2" class="tablinks"
+				onclick="changeTab(this);">Wishlist
+				<!-- <span id="myaccount-wishlist-total-item" class="total-wishlist-count total-count-box"></span> -->
+			</button>
+
+	 <!--  <button data-link="cart" id="mt-myproduct-cart" data-tab="tab3" class="tablinks"
+	  	onclick="changeTab(this);">Cart
+	  	<span id="myaccount-cart-total-item" class="total-cart-count total-count-box"></span>
+	  </button> -->
+
+
+	  <button data-link="openorders" id="mt-myproduct-openorders" data-tab="tab5" class="tablinks"
+	  onclick="changeTab(this);">Open Orders
+	 <!--  <span id="total-openorders-count" class="total-orders-count total-count-box"></span> -->
+	</button>
+
+	<button data-link="receipt" id="mt-myproduct-receipts" data-tab="tab4" class="tablinks"
+	onclick="changeTab(this);">All Orders
+	<!-- <span data-count="0" id="total-orders-count" class="total-orders-count total-count-box"></span> -->
+</button>
+
+</div>
+
+<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
+	<div class="mt-new-purchase">
+		<?php echo $this->getChildHtml("myaccount_filter");?>
+		<?php echo $this->getChildHtml('purchased_items')?>
+	</div>
+</div>
+
+<div id="new-mt-myproduct-wishlist" class="tabcontent tab2">
+	<div class="mt-my-wishlist">
+		<?php echo $this->getChildHtml('customer.wishlist')?>
+	</div>
+</div>
+
+<div id="new-mt-myproduct-cart" class="tabcontent tab3">
+	<div class="mt-my-cart">
+		<?php echo $this->getChildHtml('checkout.cart')?>
+	</div>
+</div>
+
+<div id="new-mt-myproduct-receipts" class="tabcontent tab4">
+	<div class="mt-my-orders" style="min-height: 70px">
+		<?php echo $this->getChildHtml("myaccount_filter_allorder");?>
+		<?php echo $this->getChildHtml('sales.order.history_list')?>
+	</div>
+</div>
+
+<div id="new-mt-myproduct-openorders" class="tabcontent tab5" style="overflow: inherit;">
+	<div class="mt-my-openorders" style="min-height: 70px">
+		<?php echo $this->getChildHtml("myaccount_filter_openorder");?>
+		<?php echo $this->getChildHtml('sales.order.openorder_list')?>
+	</div>
+</div>
+
+<div class="myaccount-loader-div">
+	<span id="myaccount-mt-loader" class="please-wait-popup" style="display: none;">
+		<img src="<?php echo $this->getSkinUrl('aw_ajaxcatalog/images/ajax-loader.gif')?>" alt="Loading next step..." title="Loading next step..." class="v-middle">
+		Loading...
+	</span>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+
+	if (typeof Allure == "undefined") var Allure = {};
+
+	Allure.showLoading = true;
+	Allure.loader = '<div class="allure-fancybox-overlay allure-fancybox-overlay-fixed"><div id="allure-fancybox-loading"><div></div></div></div>';
+
+	var Filter_Store = '<?php echo $_GET['m_store']?>';
+	jQuery(document).ready(function(){
+
+	    setTab();
+
+		jQuery('.mt-myaccount-store .mt-filter-select').on('change',function(){
+			//var storeParam = '?m_store='+jQuery(this).val();
+			var mval = jQuery(this).val();
+			var uri = window.location;
+			var host = uri.origin;
+			var params = getParams('m_store',mval);
+			var path = uri.pathname + params;
+			var hash = uri.hash;
+			var url = host + path + hash;
+			window.location.href = url;
+		});
+
+		jQuery('.mt-myaccount-sort .mt-filter-select').on('change',function(){
+			//var storeParam = '?m_sort='+jQuery(this).val();
+			var mval = jQuery(this).val();
+			var uri = window.location;
+			var params = getParams('m_sort',mval);
+			var host = uri.origin;
+			var path = uri.pathname + params;
+			var hash = uri.hash;
+			var url = host + path + hash;
+			window.location.href = url;
+		});
+
+	});
+
+	function setTab() {
+        var type = window.location.hash.substr(1);
+        var typeArr = type.split("#");
+        type = typeArr[0];
+        if(type!="" && type!="undefined" && type!=null){
+            var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
+            changeTab(element);
+            if(typeArr.length >=2 ){
+                var info_typ = typeArr[1];
+                var order_no = typeArr[2];
+                autoLoadOrderData(type,info_typ,order_no);
+            }
+
+        }else{
+            var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
+            changeTab(element);
+        }
+    }
+
+	function autoLoadOrderData(type,info_typ,ord_no){
+		var order_typ = "open";
+		if(type == "receipt"){
+			order_typ = "complete";
+		}
+
+		showLoadingFancybox();
+		jQuery.ajax({
+			url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+			dataType : 'json',
+			type : 'POST',
+			data: {'order_id':ord_no,'order_type':order_typ},
+			success: function(data) {
+				if(type == "receipt"){
+					jQuery('#load-complete-order-data').html(data.data.html);
+					jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').hide();
+					jQuery('.complete-order-view').hide();
+					jQuery('#load-complete-order-data').show();
+					jQuery('#load-complete-order-data #custom-order-info-tabs li[data-key="'+info_typ+'"]').trigger('click');
+				}else{
+					jQuery('#load-open-order-data').html(data.data.html);
+					jQuery('#new-mt-myproduct-openorders .block-layered-nav-bg').hide();
+					jQuery('.open-order-view').hide();
+					jQuery('#load-open-order-data').show();
+					jQuery('#load-open-order-data #custom-order-info-tabs li[data-key="'+info_typ+'"]').trigger('click');
+				}
+				window.location.hash = type+"#"+info_typ+"#"+ord_no;
+				hideLoadingFancybox();
+			}
+		});
+	}
+
+	function getParams(mkey,mval){
+		var uri = window.location;
+		var key = mkey;
+		var queryString = ""+(uri.search.indexOf("?") !== -1) ? uri.search.split("?")[1] : "";
+		var params = "";
+		if (queryString !== "" && queryString != undefined) {
+			params = params + "?";
+			var params_arr = queryString.split("&");
+			params = params + key + "=" + mval+"&";
+			for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+				var param = params_arr[i].split("=")[0];
+				if(param!==key){
+					params = params + params_arr[i]+"&";
+				}
+			}
+			params = params.replace(/\&$/, '');
+		}else{
+			params = "?" + mkey + "=" + mval;
+		}
+		return params;
+	}
+
+	function changeTab(event){
+		var element = jQuery(event);
+		var currentTab = element.attr('data-tab');
+		var dataLink = element.attr('data-link');
+		window.location.hash = dataLink;
+		//document.cookie = 'tab=' + dataLink;    //temp disable
+		jQuery('.tablinks').removeClass('active');
+		element.addClass('active');
+		jQuery('.tabcontent').removeClass('active');
+		jQuery('.tabcontent.'+currentTab).addClass('active');
+	}
+
+	function showLoadingFancybox1(element){
+		if (Allure.showLoading) {
+			Allure.showLoading = false;
+			jQuery('#'+element+' .box-content').append(Allure.loader);
+			//jQuery('#box-history .allure-fancybox-overlay').height(jQuery('#box-history table').height() + jQuery('#box-history table')[0].scrollHeight);
+			jQuery('#'+element+' .allure-fancybox-overlay').show();
+		}
+	}
+
+	function showLoadingFancybox(){
+		jQuery.fancybox.showLoading();
+		jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+	}
+
+	function hideLoadingFancybox(){
+		jQuery.fancybox.hideLoading();
+		jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+	}
+
+	function hideLoadingFancybox1(element){
+		if (!Allure.showLoading) {
+			Allure.showLoading = true;
+			//jQuery.fancybox.hideLoading();
+	    	//jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+
+	    	jQuery('#'+element+' .allure-fancybox-overlay').remove();
+	    }
+	}
+
+	function getFilterUrl(filter_name , filter_value){
+		var uri = window.location;
+		var host = uri.origin;
+		var params = getParams(filter_name , filter_value);
+		var path = uri.pathname + params;
+		var hash = uri.hash;
+		var url = host + path + hash;
+		window.location.href = url;
+	}
+
+	function configSelectorOfFilter(class_selector1,class_selectore2){
+		var configSelector = {
+			over: function(){
+		    	//jQuery('.myaccount-filter-store').slideDown(300);
+		    },
+		    timeout: 200,
+		    out: function(){
+		    	jQuery("."+class_selectore2).removeClass('show');
+		    	jQuery("."+class_selectore2).slideUp(300);
+		    }
+		};
+
+		jQuery("."+class_selector1).hoverIntent(configSelector );
+		jQuery("."+class_selector1).click(function(){
+			var showOrHide = jQuery("."+class_selector1.slice(0, -5)).hasClass('show');
+			if(!showOrHide){
+				jQuery("."+class_selectore2).addClass('show');
+				jQuery("."+class_selectore2).slideDown(300);
+			}
+			else {
+                jQuery("."+class_selectore2).removeClass('show');
+                jQuery("."+class_selectore2).slideUp(300);
+            }
+		});
+	}
+
+    jQuery(window).on('popstate', function(event) {
+        setTab();
+    });
+
+</script>
+
+
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		var $jj = jQuery;
+		configSelectorOfFilter("myaccount-filter-store-list","myaccount-filter-store");
+		configSelectorOfFilter("myaccount-filter-sort-order-list","myaccount-filter-sort-order");
+		configSelectorOfFilter("myaccount-filter-order-status-list","myaccount-filter-order-status");
+
+		jQuery('.myaccount-filter-store-list .myaccount-filter-item li dd').click(function(){
+			var mval = jQuery(this).attr('value');
+			getFilterUrl('m_store', mval);
+		});
+
+		jQuery('.myaccount-filter-sort-order-list .myaccount-filter-item li dd').click(function(){
+			var mval = jQuery(this).attr('value');
+			getFilterUrl('m_sort', mval);
+		});
+
+		jQuery('.myaccount-filter-order-status-list.open-order-filter .myaccount-filter-item li dd').click(function(){
+			var mval = jQuery(this).attr('value');
+			getFilterUrl('m_order', mval);
+		});
+
+		jQuery('.myaccount-filter-order-status-list.all-order-filter .myaccount-filter-item li dd').click(function(){
+			var mval = jQuery(this).attr('value');
+			getFilterUrl('m_aorder', mval);
+		});
+	});
+</script>
+
+
+<?php if(1):?>
+	<script type="text/javascript">
+		var xhrMain = null;
+		jQuery(window).scroll(function(){
+			if(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()){
+				var type = window.location.hash.substr(1);
+				var selector = jQuery("#"+type+"-type");
+				var totalPages = parseInt(selector.attr('page-size'));
+				var page 	   = parseInt(selector.attr('current-page'));
+				var url 	   = selector.attr('data-url');
+				var limit 	   = selector.attr('data-limit');
+				var ord_cnt    = selector.attr('data-count');
+				console.log(page+"-"+totalPages);
+				if(page <= totalPages){
+					jQuery('#myaccount-mt-loader').show();
+					if( xhrMain == null ) {
+						xhrMain =	jQuery.ajax({
+							url: url,
+							dataType : 'json',
+							type : 'POST',
+							data: {'page':page,'limit':limit,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>','count':ord_cnt},
+							success: function(data) {
+								if(type=="purchase"){
+									jQuery('#myaccount-shopping-cart-table tbody').append(data.data.html);
+								}else if(type=="receipt"){
+									jQuery('#my-orders-table tbody').append(data.data.html);
+									jQuery("#total-orders-count").text(data.data.order_count);
+									selector.attr('data-count',data.data.order_count);
+				        	//jQuery("#sales-order-count").val(data.data.order_count)
+				        }else if(type=="openorders"){
+				        	jQuery('#my-openorders-table tbody').append(data.data.html);
+				        	jQuery("#total-openorders-count").text(data.data.order_count);
+				        	selector.attr('data-count',data.data.order_count);
+				        }
+				        jQuery('#myaccount-mt-loader').hide();
+				    }
+				});
+
+						xhrMain = null;
+						page ++;
+						selector.attr('current-page',page);
+					}
+				}else{
+					jQuery('#myaccount-mt-loader').hide();
+				}
+			}
+		});
+
+		jQuery(document).ready(function(){
+
+		if (jQuery(window).width() >= 992){
+			//var nav_height=jQuery('header').outerHeight();
+			//jQuery('.acc-products-wrapper').css("margin-top",nav_height/2);
+		}
+	});
+
+	jQuery(window).bind("load resize scroll",function(e){
+		if (jQuery(window).width() >= 992){
+			//var nav_height=jQuery('header').outerHeight();
+		//	jQuery('.acc-products-wrapper').css("margin-top",nav_height/2);
+		}
+	});
+	</script>
+<?php endif;?>

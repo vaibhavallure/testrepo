@@ -1,0 +1,110 @@
+<?php
+$this->getVideos();
+$path = Mage::getBaseUrl() . 'ecpvideo/index/videoview/keyvideo/';
+$videourl = $this->videosArray['video'][0]['url'];
+?>
+<script type="text/javascript">
+    jQuery.noConflict()
+    jQuery(document).ready(function () {
+        var iframe = document.getElementById('videoView');
+        iframe.src = iframe.src; //evita chache en algunos navegadores.
+        jQuery("ul.list-tumb li:first div.over-tumb-video").attr('class', 'over-tumb-video video-current');
+    })
+</script>
+<!--<div class="wrapper">-->
+<div class="tashtv">
+    <h1><b> </b></h1>
+
+    <div class="main-container col1-layout">
+        <div class="main">
+            <div class="col-main">
+                <!--div id="category-title" class="page-title category-title">
+                    <h1>TASH.TV</h1>
+                </div-->
+                <div class="ie8-mt">
+                    <div class="video-tash" id="video-tash">
+                        <div class="video-tv-mt">
+                            <iframe id="videoView" src="<?php echo $videourl ?>" width="980" height="570" border="none"
+                                    frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 id="current-title"><?php echo $this->videosArray['video'][0]['title']; ?></h4>
+
+                <p class="text-tv" id="current-description">
+                    <?php echo $this->videosArray['video'][0]['description']; ?>
+                </p>
+
+                <ul class="list-tumb">
+                    <?php
+                    $i = 0;
+                    foreach ($this->videosArray['video'] as $key => $value) {
+                        $class = ($key == 0) ? 'video-current' : '';
+                        $i++;
+                        ?>
+
+                        <li id="li_video_<?php echo $value['id']; ?>" class="li-video"
+                            onclick="viewVideo(<?php echo $key; ?>)">
+                            <div class="over-tumb-video" id="video_<?php echo $value['id']; ?>"></div>
+                            <div class="tumb-video">
+                                <img
+                                    src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . substr($value['thumbnail'],1); ?>"/>
+                            </div>
+                            <h5><span><?php echo $value['title']; ?></span><?php echo $value['duration']; ?></h5>
+
+                            <p><?php echo $value['description']; ?></p>
+                        </li>
+                        <?php if ($i%6 == 0): ?>
+                            <li class="clearfix"></li>
+                        <?php endif ?>
+                    <?php } ?>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--</div>-->
+
+<script type="text/javascript">
+    var videos = <?php echo $this->videosJson; ?>;
+    var urlvideo = '<?php echo $path; ?>';
+
+    function viewVideo(idVideo) {
+        jQuery('.over-tumb-video').removeClass('video-current');
+        jQuery('.li-video').css('color', '#969595');
+        jQuery('#video_' + videos.video[idVideo].id).addClass('video-current')
+        jQuery('#li_video_' + videos.video[idVideo].id).css('color', '#3F4048');
+        jQuery('#current-title').text(videos.video[idVideo].title);
+        jQuery('#current-description').text(videos.video[idVideo].description);
+        jQuery(window).scrollTop(0);
+
+        jQuery('html, body').animate({
+            scrollTop: jQuery('#videoView').offset().top
+        }, 1000);
+        var iframesrc = urlvideo + videos.video[idVideo].id;
+        var iframe = document.getElementById('videoView');
+        var url = videos.video[idVideo].url;
+
+        //allure code ws02 start
+        if(url.indexOf(':/') !=- 1){
+        	var newUrl = url.slice( url.indexOf(':/') + 1 );
+        	url = newUrl;
+        }
+      	//allure code end
+        
+        var result = url.length;
+        var subs = result - 3;
+        var ext = url.substring(subs);
+        if (ext == 'wmv') {
+            iframe.src = urlvideo + url.replace(/^\//, '');
+            return true;
+//            alert('In order to see this video you must have installed a Windows Operating System and the Windows Media Player.');
+        }
+        iframe.src = url;
+    }
+    jQuery(document).ready(function () {
+        jQuery('.li-video:first').css('color', '#3F4048');
+    });
+</script>

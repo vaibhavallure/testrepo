@@ -1,0 +1,25 @@
+<?php $configsYelp = Mage::helper('ecp_yelp')->getYelp();?>
+<?php $configsCity = Mage::helper('ecp_citysearch')->getCitysearch();?>
+<?php for($i=0; $i<20;$i++):?>
+    <?php if(isset($configsYelp[$i])):?>
+    <div class="block-rating-tattoo-1">
+    <div class="yelp">
+        <?php $block = $this->getLayout()->createBlock('ecp_yelp/yelp')->setData('yelp_account', $configsYelp[$i]);
+        $block->setBlockId('piercing_services_yelp');
+        echo $block->toHtml();?>
+    </div>
+    </div>
+    <?php endif;?>
+    <!-------- yelp -------->         
+    <?php if(isset($configsCity[$i])):?>  
+        <div class="address-tattoo-1">
+            <div class="citysearch">
+                <?php
+                    $block = $this->getLayout()->createBlock('ecp_citysearch/citysearch')->setData('citysearch_account', $configsCity[$i]);
+                    $block->setBlockId('piercing_services_citysearch');
+                    echo $block->toHtml();
+                ?>
+            </div>
+        </div>
+    <?php endif;?>
+<?php endfor;?>

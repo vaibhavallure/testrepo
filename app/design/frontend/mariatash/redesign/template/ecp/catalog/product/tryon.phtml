@@ -1,0 +1,427 @@
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<script type="text/javascript">
+    jQuery(function() {
+        <?php
+        $regionArray = Mage::getStoreConfig('ecp_tryon/regions');
+        foreach ($regionArray as $ra) {
+            foreach ($ra['subregions'] as $subra) {
+                ?>
+                jQuery('<area id="<?php echo $subra['code'];?>" alt="<?php echo $subra['code'];?>,all" shape="<?php echo $subra['shape'];?>" region="<?php echo $ra['code'];?>" coords="<?php echo $subra['coordinates'];?>" href="#" />').appendTo('#tryon');
+                <?php
+            }
+        }
+        ?>
+                
+        jQuery('area').each(function(){
+            jQuery(this).attr('id');
+            
+        });        
+                
+                
+
+        var inArea,
+        map = jQuery('#target'),
+
+        single_opts = {
+            fillColor: 'ffffff',
+            fillOpacity: 0.6,
+            stroke: false,
+            strokeColor: 'f1f1f1',
+            strokeWidth: 0
+        },
+        all_opts = {
+            fillColor: '000000',
+            fillOpacity: 0,
+            stroke: true,
+            strokeWidth: 1,
+            strokeColor: 'f1f1f1'
+        },
+        initial_opts = {
+            mapKey: 'alt',
+            isSelectable: false,
+            onMouseover: function (data) {
+                inArea = true;
+                id = jQuery(this).attr('id');
+                ////alert(id);
+            },
+            onMouseout: function (data) {
+                inArea = false;
+            },
+            onConfigured: function() {
+                //img.siblings().css('z-index', 0);
+                map.css('z-index', 20);
+            }            
+        };
+        opts = jQuery.extend({}, all_opts, initial_opts, single_opts);
+
+        map.mapster('unbind')
+        .mapster(opts)
+        .bind('mouseover', function () {
+            if (!inArea) {
+                map.mapster('set_options', all_opts)
+                .mapster('set', true, 'all')
+                .mapster('set_options', single_opts);
+            }
+        }).bind('mouseout', function () {
+            if (!inArea) {
+                map.mapster('set', false, 'all');
+            }
+        });
+
+        jQuery('.item').draggable({
+            helper: 'clone', 
+            drag: function( event, ui ) {
+                var subregion = map.mapster('highlight');                       
+                var id  = jQuery(this).attr('id').toString();
+
+                if(subregion != null){
+                    var region = jQuery('#'+subregion).attr('region').toString();
+                    console.log( ' _______________________________________________________' );
+                    console.log( 'region '+region );
+                    console.log('subregion '+subregion);
+
+                    var jsonData = eval(data);
+                    try {
+                        var clonedImg = '<?php echo $this->getSkinUrl('images/tryon/earrings/'); ?>'+jsonData[id].regions[region].subregions[subregion].image
+                        console.log( clonedImg );
+                        jQuery('.ui-draggable-dragging').attr( 'src',clonedImg );
+                        console.log( 'entro al try' );                        
+                    }
+                    catch(exception) {
+                        console.log( 'entro al catch'+jQuery('#'+id).attr( 'src' ) );
+                        jQuery('.ui-draggable-dragging').attr( 'src',jQuery('#'+id).attr( 'src' ) );
+                    }                          
+                }
+                else{
+                    jQuery('.ui-draggable-dragging').attr( 'src',jQuery('#'+id).attr( 'src' ) );
+                }
+            },
+            start: function(event, ui ){
+                       ////alert(jQuery(this).attr('src'));
+                //alert(data[jQuery(this).attr('id')]['regions']['lobule']['subregions']['lobule-one'].image);
+
+            },
+            stop: function(event, ui) {
+               // jQuery(ui.helper).clone().removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone').appendTo('body');
+            }                              
+        });
+
+        jQuery('#target').droppable({
+
+            accept: '.item',
+            drop: function(e,ui) {
+                var landing = map.mapster('highlight');
+                console.log('if('+landing+' == internal_area || '+landing+' == lobule)');
+                
+                if(landing == 'internal_area-one' || landing == 'lobule-one' || landing == 'lobule-two' || landing == 'lobule-three' || landing == 'lobule-four' || landing == 'lobule-five'){
+                    x = jQuery(ui.helper).clone().removeClass('box ui-draggable ui-draggable-dragging').addClass('box-clone').appendTo('body').css({'width':'112px','z-index':'20'});
+                    jQuery('.item').draggable({                                
+                        revert: false                               
+                    });
+                    console.log('drop entro al if');
+                }else{
+                    console.log('drop entro al else');
+                    jQuery('.item').draggable({                                
+                        revert: true                               
+                    });
+                    
+                }
+            }
+        });
+
+        var data = {
+                    "product1":{
+                                "isOnTryon":"1",
+                                "regions": {
+                                            "lobule": {
+                                                        "subregions": {
+                                                                        "lobule-one":  {
+                                                                                       "image":"1.png"                                                        
+                                                                                       },
+                                                                        "lobule-two":  {
+                                                                                       "image":"3.png"                                                        
+                                                                                       },
+                                                                        "lobule-three":{
+                                                                                       "image":"7.png"                                                        
+                                                                                       }
+                                                                      }
+                                                      },
+                                             "internal_area": {
+                                                        "subregions": {    
+                                                                        "internal_area-one":{
+                                                                                        "image":"7.png"                                                        
+                                                                                        }
+                                                                      }
+                                                      }
+                                           }
+                                },
+                    "product2":{
+                                "isOnTryon":"1",
+                                "regions": {
+                                            "lobule": {                                      
+                                                        "subregions": {
+                                                                        "lobule-one":  {
+                                                                                       "image":"2.png"                                                        
+                                                                                       },
+                                                                        "lobule-two":  {
+                                                                                       "image":"6.png"                                                        
+                                                                                       }                                                                              
+                                                                      }
+                                                      }
+                                            }
+                                }
+
+                };
+
+                //alert(data['product2']['regions']['lobule']['subregions']['lobule-one'].image);                        
+                //console.log(data.product1);
+
+    });
+      
+</script>
+<?php
+$_productCollection = $this->getLoadedProductCollection();
+$_helper = $this->helper('catalog/output');
+?>
+
+<script>
+    var jsonTryOn = <?php echo Mage::helper('ecp_tryon')->createJSONTryOn($_productCollection) ?>;
+    console.log(jsonTryOn);
+</script>
+
+<div class="try-on-mt">
+    <div class="img-product-try-on">
+        <img src="<?php echo $this->getSkinUrl('images/tryon/red_ear.jpg'); ?>" id="target" usemap="#tryon" />
+        <map name="tryon" id="tryon"></map>
+    </div>
+    <div class="combos-try-on">
+        <?php echo $this->getToolbarBlock()->setTemplate('catalog/product/list/toolbar_top_tryon.phtml')->toHtml(); ?>
+        <?php echo $this->getToolbarBlock()->setTemplate('catalog/product/list/toolbar_bottom.phtml')->toHtml(); ?>    
+    </div>
+
+    <div class="detail-product-try-on" >
+        <div class="pages-products1"></div>
+        <div class="instructions-products1"></div>
+        <div classaccesskey=""></div>
+    </div>
+
+    <div class="design-look" style="display:none;">
+        <div class="try-balloon"> 
+            <img src="<?php echo $this->getSkinUrl('frontend/mt/default/images/balloons1.jpg'); ?>">
+        </div>
+        <div class="design-tips">
+            <h2>DESIGN THE LOOK OF YOUR EAR!</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing. </p>
+            <h5>TIPS</h5>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut enim ac urna imperdiet placerat non non ipsum. Donec est mauris, gravida ac imperdiet eu, posuere sit amet mauris.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut enim ac urna imperdiet placerat non non ipsum. Donec est mauris, gravida ac imperdiet eu, posuere sit amet mauris.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut enim acmet mauris.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
+            </ul>
+        </div>
+    </div>    
+    
+    <ul class="product-list-try-on1">
+                    <li>
+                <div class="img-product-list1">
+                    <img id="product1" src="<?php echo $this->getSkinUrl('images/tryon/earrings/7.png'); ?>" class="item ui-draggable">
+                </div>
+                <div class="details-img-product-list1">
+                    <p>
+                        Jewelry 8                    </p>
+
+                    <p>
+                        
+
+                
+    </p><div class="price-box">
+                                                            <span id="product-price-130" class="regular-price">
+                                            Price: <span class="price">$75.00</span>                                    </span>
+                        
+        </div>
+
+  
+                    <p></p>
+                </div>
+            </li>
+                 
+    </ul>
+    
+    
+    
+    
+
+    
+    <div class="social-media-try-on">
+        <a href="">Zoom</a>
+        <div class="buttons">
+            <div class="button facebook">
+                <div id="fb-root" class=" fb_reset">
+                    <div style="position: absolute; top: -10000px; height: 0px; width: 0px;">
+                        <div>
+                            <iframe id="fb_xdm_frame_http" name="fb_xdm_frame_http" src="http://static.ak.facebook.com/connect/xd_arbiter.php?version=18#channel=f307ee297db8c36&amp;origin=http%3A%2F%2Ftest.entrepids.com&amp;channel_path=%2Fmariatash_mc_1702%2Findex.php%2Fjewelry%2Fear-cartilage%2Fdiamond-scalloped-edge-985.html%3Ffb_xd_fragment%23xd_sig%3Df306524ff88058c%26" tabindex="-1"></iframe><iframe id="fb_xdm_frame_https" name="fb_xdm_frame_https" src="https://s-static.ak.facebook.com/connect/xd_arbiter.php?version=18#channel=f307ee297db8c36&amp;origin=http%3A%2F%2Ftest.entrepids.com&amp;channel_path=%2Fmariatash_mc_1702%2Findex.php%2Fjewelry%2Fear-cartilage%2Fdiamond-scalloped-edge-985.html%3Ffb_xd_fragment%23xd_sig%3Df306524ff88058c%26" tabindex="-1"></iframe>
+                        </div>
+                    </div>
+                    <div style="position: absolute; top: -10000px; height: 0px; width: 0px;">
+                        <div></div>
+                    </div>
+                </div>
+                <div data-via="undefined" data-font="" data-colorscheme="" data-action="like" data-show-faces="false" data-width="" data-layout="button_count" data-send="false" data-href="test.entrepids.com/mariatash_mc_1702/index.php/jewelry/ear-cartilage/diamond-scalloped-edge-985.html" class="fb-like fb_edge_widget_with_comment fb_iframe_widget" fb-xfbml-state="rendered">
+                    <span style="height: 20px; width: 71px;"><iframe scrolling="no" id="f3cf8d28ab12e4a" name="f3ad630d7dfed68" style="border: medium none; overflow: hidden; height: 20px; width: 71px;" title="Like this content on Facebook." class="fb_ltr" src="http://www.facebook.com/plugins/like.php?api_key=&amp;locale=en_US&amp;sdk=joey&amp;channel_url=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D18%23cb%3Df1e5d38a83968c2%26origin%3Dhttp%253A%252F%252Ftest.entrepids.com%252Ff307ee297db8c36%26domain%3Dtest.entrepids.com%26relation%3Dparent.parent&amp;href=test.entrepids.com%2Fmariatash_mc_1702%2Findex.php%2Fjewelry%2Fear-cartilage%2Fdiamond-scalloped-edge-985.html&amp;node_type=link&amp;width=90&amp;layout=button_count&amp;colorscheme=light&amp;action=like&amp;show_faces=false&amp;send=false&amp;extended_social_context=false"></iframe></span>
+                </div>
+            </div>
+            <div class="button twitter">
+                <iframe scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1357735024.html#_=1357756877509&amp;count=horizontal&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Ftest.entrepids.com%2Fmariatash_mc_1702%2Findex.php%2Fjewelry%2Fear-cartilage%2Fdiamond-scalloped-edge-985.html&amp;size=m&amp;text=Maria%20Tash&amp;url=test.entrepids.com%2Fmariatash_mc_1702%2Findex.php%2Fjewelry%2Fear-cartilage%2Fdiamond-scalloped-edge-985.html" class="twitter-share-button twitter-count-horizontal" style="width: 109px; height: 20px;" title="Twitter Tweet Button" data-twttr-rendered="true"></iframe>
+            </div>
+            <div class="button pinterest">
+                <a href="http://pinterest.com/pin/create/button/?url=test.entrepids.com/mariatash_mc_1702/index.php/jewelry/ear-cartilage/diamond-scalloped-edge-985.html&amp;media=&amp;description=" class="PIN_1357756877553_pin_it_button PIN_1357756877553_pin_it_beside" data-pin-aha="button_pinit" data-pin-config="beside"><span class="PIN_1357756877553_hidden" id="PIN_1357756877553_pin_count_0"><i></i></span></a>
+            </div>
+            <div class="button mail">
+                <a onclick="emailFriend();" href="javascript:;">
+                    <div class="emailBtn"><img src="http://test.entrepids.com/mariatash_mc_1702/skin/frontend/mt/default/images/social_networking_iconpack/email_32.png" id="imgMail"><span class="share">Email</span>
+                    </div></a>
+            </div>
+            <div class="button print">
+                <a onclick="javascript:print();" href="#">
+                    <div class="printBtn"><img src="http://test.entrepids.com/mariatash_mc_1702/skin/frontend/mt/default/images/social_networking_iconpack/print_icon.jpg" id="imgPrint"><span class="share">Print</span>
+                    </div></a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h3>PURCHASE THIS LOOK</h3>
+
+    <ul class="product-list-selection1">
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg" />
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty" />
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg" />
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty" />
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg" />
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty" />
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg" />
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty" />
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg" />
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty" />
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+    </ul>
+    <div>
+        <button class="button" title="Add to Cart" type="button">
+            <span> <span>Add to Cart</span> </span>
+        </button>
+    </div>
+</div>

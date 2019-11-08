@@ -1,0 +1,987 @@
+<?php
+/**
+ * Magento
+ *
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also
+ le through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+
+$imgArr = array();
+$backOrderArray = array();
+$matches1 = array();
+$videoArr = array();
+
+$_helper = $this->helper('catalog/output');
+$_product = $this->getProduct();
+$_productId = $_product->getId();
+
+//parent child check
+$prHelper        = Mage::helper("allure_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
+
+$parentVal = ($isCustomOptions)?1:0;
+
+$aprod = Mage::getModel("catalog/product")->load($_productId);
+$backOrderArray[$aprod->getId()] = Mage::getModel('cataloginventory/stock_item')->loadByProduct($aprod)->getBackorders();
+
+$aprodId = $_productId;
+$_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392, 512);
+
+if ($_product->getTypeId() != 'giftcards'):
+?>
+<script>
+    //call priceHtml via ajax, to avoid varnish caching
+    jQuery.ajax({
+        type: "POST",
+        dataType : "json",
+        url: '<?php echo Mage::getBaseUrl('web') ;//Mage::getUrl('', array('_secure' =>  true)); ?>index.php/ecpcolor/index/getPrice',
+        data: {productId: '<?php echo $_product->getId(); ?>', form_key: MariaTash.formKey}
+    })
+        .done(function(response) {
+
+            if (response.price != '') {
+                jQuery("#ajax-price").html(response.price);
+                jQuery("#ajax-price .price-box").show();
+            }
+            if(response.jsonconfigselect) {
+                var id = 'amconf-image-'+response.jsonconfigselect.color_id;
+                if ($(id)) $(id).simulate('click');
+            }
+
+        });
+</script>
+<?php
+endif;
+
+
+if ($_product->getVideo()) {
+    preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $aprod->getVideo(), $matches1);
+    $videoArr[$aprodId]['video'] = $matches1[0];
+    if ($_product->getVideoThumb() == 'thumbnail/video/') {
+        $videoArr[$aprodId]['videoThumb'] = 'thumbnail/video/galleryThumb-video.png';
+    } else {
+        $videoArr[$aprodId]['videoThumb'] = $_product->getVideoThumb();
+    }
+}
+
+$imgArr[$aprodId]['baseImage'] = "<img src=" . $_helper->productAttribute($_product, $_img, 'image') . "  data='0'/>";
+foreach ($aprod->getMediaGalleryImages() as $_image) {
+    $imgArr[$aprodId]['imageRepo'][$_image->getId()] = "<img src=" . $this->helper('catalog/image')->init($aprod, 'thumbnail', $_image->getFile())->resize(392, 512) . " alt=" . $this->htmlEscape($_image->getLabel()) . " title=" . $this->htmlEscape($_image->getLabel()) . " data=" . $_image->getId() . ">";
+    $imgArr[$aprodId]['thumbRepo'][$_image->getId()] = "<img src=" . $this->helper('catalog/image')->init($aprod, 'thumbnail', $_image->getFile())->resize(74, 96) . " alt=" . $this->htmlEscape($_image->getLabel()) . " title=" . $this->htmlEscape($_image->getLabel()) . " data=" . $_image->getId() . ">";
+    echo "<img style='display: none;' src=" . $this->helper('catalog/image')->init($aprod, 'thumbnail', $_image->getFile())->resize(55, 65) . " alt=" . $this->htmlEscape($_image->getLabel()) . " title=" . $this->htmlEscape($_image->getLabel()) . " data=" . $_image->getId() . ">";
+}
+
+if ($_product->isConfigurable()) {
+
+    // remove not used variable
+    // $productModel = Mage::getModel("catalog/product");
+    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+    $col = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+
+    $qtyArray = array();
+    $qtyStock = 0;
+    $submitArr = array();
+
+    foreach ($col as $sprod) {
+        $backOrderArray[$sprod->getId()] = Mage::getModel('cataloginventory/stock_item')->loadByProduct($sprod)->getBackorders();
+        if ($sprod->getVideo()) {
+            preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $sprod->getVideo(), $matches1);
+
+            if (count($matches1)) {
+	            $videoArr[$sprod->getId()]['video'] = $matches1[0];
+	            if ($_product->getVideoThumb() == 'thumbnail/video/') {
+	                $videoArr[$sprod->getId()]['videoThumb'] = 'thumbnail/video/galleryThumb-video.png';
+	            } else {
+	                $videoArr[$sprod->getId()]['videoThumb'] = $sprod->getVideoThumb();
+	            }
+            }
+        }
+
+        // remove not use variable
+        // $prod = Mage::helper('catalog/product')->getProduct($sprod->getId(), null, null);
+
+        // $attributes = $prod->getTypeInstance(true)->getSetAttributes($prod);
+
+        $qty = intval(Mage::getModel('cataloginventory/stock_item')->loadByProduct($sprod)->getQty());
+        $qtyArray[$sprod->getId()] = $qty;
+        $submitArr[$sprod->getId()] = Mage::helper('checkout/cart')->getAddUrl($sprod);
+        $aprod = Mage::getModel("catalog/product")->load($sprod->getId());
+        $_img = $this->helper('catalog/image')->init($sprod, 'image')->resize(392, 512);
+        $imgArr[$sprod->getId()]['baseImage'] = "<img src=" . $_helper->productAttribute($sprod, $_img, 'image') . "  data='0'/>";
+        foreach ($aprod->getMediaGalleryImages() as $_image) {
+            $imgArr[$sprod->getId()]['imageRepo'][$_image->getId()] = "<img src=" . $this->helper('catalog/image')->init($sprod, 'thumbnail', $_image->getFile())->resize(392, 512) . " alt=" . $this->htmlEscape($_image->getLabel()) . " title=" . $this->htmlEscape($_image->getLabel()) . " data=" . $_image->getId() . ">";
+            $imgArr[$sprod->getId()]['thumbRepo'][$_image->getId()] = "<img src=" . $this->helper('catalog/image')->init($sprod, 'thumbnail', $_image->getFile())->resize(74, 96) . " alt=" . $this->htmlEscape($_image->getLabel()) . " title=" . $this->htmlEscape($_image->getLabel()) . " data=" . $_image->getId() . ">";
+
+        }
+    }
+
+    $js_array = json_encode($qtyArray);
+    echo "<script>
+            var stockArray= new Array();
+            stockArray = " . $js_array . ";
+            </script>\n";
+
+    $js_array3 = json_encode($submitArr);
+    echo "<script>
+            var submitArray= new Array();
+            submitArray = " . $js_array3 . ";
+            </script>\n";
+
+    ?>
+
+<?php
+} else {
+    $qtyStock = intval(Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty());
+}
+$js_array1 = json_encode($imgArr, JSON_FORCE_OBJECT);
+echo "<script>
+            var imgArray= new Array();
+            imgArray = " . $js_array1 . ";
+            </script>\n";
+/*if(empty($videoArr)){
+    $videoArr['empty']=true;
+}*/
+$js_array1234 = json_encode($backOrderArray, JSON_FORCE_OBJECT);
+echo "<script>
+            var backOrderArray= new Array();
+            backOrderArray = " . $js_array1234 . ";
+            </script>\n";
+$js_arrayAA = json_encode($videoArr, JSON_FORCE_OBJECT);
+echo "<script>
+            var videoArray= new Array();
+            videoArray = " . $js_arrayAA . ";
+            </script>\n";
+
+
+$showSampleForm = false;
+if ($_product->getSizeSample() == 1) {
+    $showSampleForm = true;
+    $sampleProduct = Mage::getModel('catalog/product')->getCollection()
+        ->addAttributeToFilter('type_id', 'customproduct')
+        ->getFirstItem();
+    $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
+}
+?>
+
+<?php if ($_product->getTypeId() == 'giftcards'): ?>
+    <?php $this->unsetChild('breadcrumbs'); ?>
+
+    <form class="w-100" action="<?php echo $this->getSubmitUrl($_product) ?>" method="post"  id="product_addtocart_giftcard_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>"/>
+            <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
+            <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        </div>
+
+
+        <div class="col-12 product-detail-parent">
+            <div class="row">
+                <div class="product-view-left col-lg-7 fix-image"  id="product-detail-image">
+                    <div class="product-img-box">
+                        <div id="galleria" class="mediaGallery">
+                            <?php echo $this->getChildHtml('media') ?>
+                        </div>
+                    </div>
+                </div>
+                <div id="product-details-flow" class="col-lg-5 offset-66 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
+                    <div class="row">
+                        <div class="product-name col-12 pl-0">
+                            <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                        </div>
+                    <?php echo $this->getChildHtml('product_type_data') ?>
+        <div class="col-12 p-0">
+            <div class="add-to-box">
+                <?php if ($_product->isSaleable()): ?>
+                    <?php echo $this->getChildHtml('addtocart') ?>
+                <?php elseif (!$_product->isAvailable()): ?>
+                    <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
+                            <span>
+                               <span><?php echo $this->__('Out of stock') ?></span>
+                            </span>
+                    </button>
+                    <?php echo $this->getChildHtml('alert_urls') ?>
+                <?php endif; ?>
+            </div>
+            <div class="clear-both col-12">
+            <?php echo $this->getChildHtml('product_additional_data') ?>
+            </div>
+        </div>
+
+                    </div>
+        </div>
+        </div>
+        </div>
+    </form>
+    <div class="product-collateral col-12 hide-for-quickview">
+        <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
+            <div class="row box-collateral <?php echo "box-{$alias}" ?>">
+                <?php if ($title = $this->getChildData($alias, 'title')): ?>
+                    <h2><?php echo $this->escapeHtml($title); ?></h2>
+                <?php endif;?>
+                <?php echo $html; ?>
+            </div>
+        <?php endforeach;?>
+    </div>
+
+    <div class="clearer col-12"></div>
+
+
+
+    <script type="text/javascript">
+        jQuery(window).load(function(){
+            if(!jQuery('#recent-view-ajax').html()){
+                var id = '<?php echo (int) $this->getRequest()->getParam('id');?>';
+                var category = '<?php echo (int) $this->getRequest()->getParam("category", false);?>';
+                jQuery.ajax({
+                    type:"POST",
+                    dataType: "html",
+                    url: "<?php echo Mage::getBaseUrl('web').'catalog/product/recent/';?>",
+                    data: { id : id, category: category}
+                }).done(function(data) {
+                    jQuery('#recent-view-ajax').html(data);
+                });
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        //<![CDATA[
+        jQuery(document).ready(function(){
+            jQuery('.link-wishlist').remove();
+        });
+        var productAddToCartForm = new VarienForm('product_addtocart_giftcard_form');
+        productAddToCartForm.submit = function (button, form) {
+            if (this.validator.validate()) {
+                if (!compare_dates() && jQuery("#deliver_immediately").prop("checked")==false) {
+                    jQuery('div#advice-required-entry-date').html('Select a date greater than or equal to the day of today');
+                    jQuery('div#advice-required-entry-date').show();
+                } else {
+                    jQuery('div#advice-required-entry-date').hide();
+                    addToShoppingCart(button, form);
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        function compare_dates() {
+            var deliverydate = jQuery('input.date_input').val();
+//        alert('delivery: '+deliverydate+' - now: '+now);
+            var delivery = deliverydate.split("-");
+
+            var xMonth = delivery[1];
+            var xDay = delivery[2];
+            var xYear = delivery[0];
+            var yMonth = new Date().getMonth() + 1;
+            var yDay = new Date().getDate();
+            var yYear = new Date().getFullYear();
+
+//        alert('xMonth: '+xMonth+' - xDay: '+xDay+' - xYear: '+xYear);
+//        alert('yMonth: '+yMonth+' - yDay: '+yDay+' - yYear: '+yYear);
+
+            if (xYear > yYear) {
+                return(true)
+            } else {
+                if (xYear == yYear) {
+                    if (xMonth > yMonth) {
+                        return(true)
+                    } else {
+                        if (xMonth == yMonth) {
+                            if (xDay >= yDay)
+                                return(true);
+                            else
+                                return(false);
+                        } else
+                            return(false);
+                    }
+                } else
+                    return(false);
+            }
+        }
+        //]]>
+    </script>
+
+
+
+<?php else: ?>
+    <script type="text/javascript">
+        var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+    </script>
+    <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+    <!--Zoom Popup-->
+    <div id="openModal" class="zoomPopup"> <!--do not remove celebPopup class-->
+        <div class="pop-up-cover big-popup-cover col-12">
+            <div class="row">
+                <div class="pop-title modal-header">
+                    <a href="#close" title="Close" class="close exit-large" id="zoomClose">
+                        <div></div>
+                    </a>
+                </div>
+                <div class="body modal-body big-popup-body col-12">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <!--DO not remove product-img class-->
+                            <div class="zoom-img big-popup-image row"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="celeb-loader" style="display: none">
+                    <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-view">
+    <div class="page-title category-title">
+        <?php
+        $s_cat = $_product->getCategoryCollection()->getFirstItem();
+        $cid = $s_cat->getId();
+        //if ($cid == 2) $cid = $s_cat->getId();
+        $category = Mage::getModel('catalog/category')->load($cid);
+        ?>
+        <h1><?php //echo $category->getName(); ?></h1></div>
+    <div class="product-essential col-12 p-0">
+    <?php if ($showSampleForm): ?>
+        <div style="display: none;">
+            <form class="w-100" action="<?php echo $this->getSubmitUrl($sampleProduct) ?>" method="post"
+                  id="product_addtocart_form_sample"<?php if ($sampleProduct->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                <input type="hidden" name="product_sample" value="<?php echo $sampleProduct->getId() ?>"/>
+                <input type="hidden" name="related_product" id="related-products-field" value=""/>
+                <input type="hidden" value="1"/>
+                <input type="hidden" name="qty_sample" id="qty_sample" maxlength="12" value="1"/>
+                <button type="button" title="SIZE SAMPLE" class="button" id="sample-button" onclick="addToShoppingCart(this,this.form)"><span><span>SIZE SAMPLE</span></span></button>
+            </form>
+        </div>
+    <?php endif; ?>
+
+    <?php if(!$isCustomOptions):?>
+    <form class="w-100" action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <?php else:?>
+    <?php //for parent child?>
+    <form class="w-100" action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <?php endif;?>
+
+        <div class="no-display col-12">
+            <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
+            <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
+            <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        	<input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
+        	<input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
+        </div>
+        <div class="col-12 product-detail-parent">
+          <div class="row">
+            <div class="product-view-left col-lg-7 fix-image" id="product-detail-image">
+                <div class="product-img-box">
+                    <div id="galleria" class="mediaGallery">
+                        <?php echo $this->getChildHtml('media') ?>
+                    </div>
+                </div>
+
+                <!--//SOCIAL MEDIA////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <!-- <div class="social-mt" id="social-mt">
+                    <script>!function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = "//platform.twitter.com/widgets.js";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, "script", "twitter-wjs");</script>
+
+                    <script type="text/javascript">
+                        jQuery("a#iframe").fancybox({
+                            'transitionIn': 'elastic',
+                            'transitionOut': 'elastic',
+                            'type': 'iframe',
+                            'scrolling': 'no',
+                            'speedIn': 600,
+                            'speedOut': 200,
+                            'minHeight': 510,
+                            'maxHeight': 510,
+                            'height': 510,
+                            'width': 420,
+                            'overlayShow': false,
+                            'wrapCSS': 'send-email-popup',
+                            'overflow': 'hidden'
+                        });
+                    </script>
+
+                    <div class="fb-share-button" data-href="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>" data-width="450"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="<?=$_helper->productAttribute($_product, $_product->getName(), 'name');?>" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none">Tweet</a>
+                    <div class="pinterest_button" id="pinterest-button-load">
+                        <?php
+                        $_pinlink['url'] = $_product->getProductUrl();
+                        $_pinlink['media'] = $this->helper('catalog/image')->init($_product, 'image')->__toString();
+                        //$_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name') . " - " . strip_tags($_product->getDescription());
+                        $_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name');
+                        ?>
+                        <a href="http://pinterest.com/pin/create/button/?<?=http_build_query($_pinlink);?>" class="pin-it-button"></a>
+                    </div>
+                    <div id="mail" style="display: inline-block">
+                        <div class="button mail"><a id="iframe"
+                                                    href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>">
+                                <div class="emailBtn"><img id="imgMail"
+                                                           src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/><span
+                                        class="share">Email</span></div>
+                            </a></div>
+                    </div>
+                    <div id="print" style="display: block">
+                        <div class="button print"><a href="#" onclick="javascript:print();">
+                                <div class="printBtn"><img id="imgPrint"
+                                                           src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/><span
+                                        class="share">Print</span></div>
+                            </a></div>
+                    </div>
+                </div> -->
+                <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <script>
+
+                    function emailFriend() {
+                        var urlEmltoFriend = '<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>';
+                        window.location = urlEmltoFriend;
+
+                    }
+
+                </script>
+            </div>
+
+            <div id="product-details-flow" class="col-lg-5 offset-66 ml-0 product-shop <?php echo $_product->getTypeId() ?>">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="product-name col-12 pl-0">
+                        <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    </div>
+                        <?php $category='';?>
+            			          <?php if(Mage::registry('current_category')):?>
+            				              <?php $category=Mage::registry('current_category')->getName();?>
+            			                 <?php endif;?>
+        			                        <input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
+                                      <?php //echo $this->getPriceHtml($_product) ?>
+                    <?php if(!$isGiftCard): ?>
+                      <div id="ajax-price" class="col-12 pl-0"><?php echo $this->getPriceHtml($_product) ?></div>
+                   <?php endif; ?>
+                    <div class="product-collateral col-12">
+                        <?php if (!$this->hasOptions()): ?>
+                            <div id="product-options-wrapper" class="product-options row"></div>
+
+                              <div class="product-options-bottom row">
+                                  <?php if ($_product->isSaleable()): ?>
+                                      <?php echo $this->getChildHtml('addtocart') ?>
+                                  <?php elseif (!$_product->isAvailable()): ?>
+                                      <button class="button" title="<?php echo $this->__('Out of stock') ?>" type="button">
+                                      <span>
+                                         <span><?php echo $this->__('Out of stock') ?></span>
+                                      </span>
+                                      </button>
+                                      <?php echo $this->getChildHtml('alert_urls') ?>
+                                  <?php endif; ?>
+                                  <?php // echo $this->getChildHtml('addto') ?>
+                                  <?php echo $this->getChildHtml('product_type_data') ?>
+                              </div>
+                        <?php endif; ?>
+
+                        <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                            <?php echo $this->getChildHtml('product_type_data') ?>
+                        <?php elseif (!$_product->isAvailable() && $this->hasOptions()): ?>
+                            <div id="sign-up-out-of-stock" class="button sign-up-out-of-stock para-normal" title="<?php echo $this->__('Out of stock') ?>" type="button" onclick ="">
+                             <span>
+                                <span><?php echo $this->__('Out of stock') ?></span>
+                             </span>
+                           </div>
+                            <?php echo $this->getChildHtml('alert_urls') ?>
+                        <?php endif;?>
+
+        				<?php //echo $this->getChildHtml('special_instruction')?>
+
+        		       <?php if ($_product->getShowSpecialInstruction()):
+                           $customer = Mage::getSingleton('customer/session')->getCustomer();
+                           if($customer->getGroupId()==2):
+                           ?>
+        				<div class="product-special-instructions row">
+        					<div class="special-instruction-label col-12 p-0">
+        						<label class="product-attribute-name">Special Instructions</label>
+        					</div>
+        					<div class="special-instruction-textarea col-12 p-0">
+        						<input type="text" name="gift-special-instruction" class="special-inst-product input-patern w-100 mb-2" id="gift-special-instr-<?php echo $_product->getId(); ?>" placeholder="Post Length & Gauge Request" />
+                      <div class="info-text-three">(Special requests might delay your order due to production time)</div>
+        					</div>
+        				</div>
+        				<?php
+        				endif;
+        				endif;?>
+
+                        <?php echo $this->getChildHtml('product_additional_data') ?>
+                    </div>
+
+                <?php if ($_product->getShortDescription()): ?>
+                    <!-- <div class="short-description row">
+                      <div class="col-12">
+                        <h2><//?php echo $this->__('Quick Overview') ?></h2>
+
+                        <div
+                            class="std"><p class="para-normal"><//?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></p></div>
+                      </div>
+                    </div> -->
+                <?php endif;?>
+
+                <?php //echo $this->getChildHtml('other');?>
+                <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif;?>
+              </div>
+              </div>
+            </div>
+            </div>
+          </div>
+      </div>
+
+        <div class="product-collateral col-12 hide-for-quickview">
+            <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
+                <div class="row box-collateral <?php echo "box-{$alias}" ?>">
+                    <?php if ($title = $this->getChildData($alias, 'title')): ?>
+                        <h2><?php echo $this->escapeHtml($title); ?></h2>
+                    <?php endif;?>
+                    <?php echo $html; ?>
+                </div>
+            <?php endforeach;?>
+        </div>
+
+        <div class="clearer col-12"></div>
+
+    </form>
+    <script type="text/javascript">
+
+        var SKIN_URL = '<?php echo $this->getSkinUrl() ?>';
+        var sourceOfReq='<?php echo Mage::app()->getRequest()->getParam('sourceOfReq')?>';
+
+
+        if(jQuery('#sign-up-out-of-stock').length > 0){
+            document.getElementById("sign-up-out-of-stock").addEventListener("click", signUp);
+        }
+
+        function signUp() {
+            jQuery( ".sign-up-in-stock" ).trigger( "click" );
+        }
+        //<![CDATA[
+        var stockAmt;
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        Validation.add('greatherzerocustom', '<?php echo $this->__('Please enter a valid quantity');?>', function (myInput) {
+            if (/^\d+$/.test(myInput)) {
+                return true;
+            }
+
+            return false;
+        });
+        Validation.add('emptycustomvalidation', '<?php echo $this->__('This is a required field');?>', function (myInput) {
+            if (myInput != '') {
+                return true;
+            }
+            return false;
+        });
+        var stockFlowControl;
+        productAddToCartForm.submit = function (button, form) {
+        var instru = jQuery('.special-inst-product').val();
+        //console.log(instru);
+	    <?php
+	     //$_POST['"product-"'.'$_product->getId()']= document.write(instru);
+	    //Mage::getSingleton('core/session')->setData("product-".$_product->getId(),instru);
+	    //Mage::getSingleton('core/session')->setInstruction(instru); ?>
+	    //alert(''+<?php echo Mage::getSingleton('core/session')->getData("product-".$_product->getId());?>);
+            if (typeof spConfig<?php echo $aprodId; ?> != "undefined") {
+                stockAmt = stockArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()];
+            } else {
+                stockAmt = <?php echo intval($qtyStock);?>;
+            }
+
+            // Validate required attributes
+            var hasErrors = false;
+            if (jQuery('.ajax-error-messages')) {
+                jQuery('.ajax-error-messages').remove();
+            }
+
+			//old code
+            //jQuery('.required-entry:not(.selectboxit)').each(function () {
+
+            //new code -allure
+            jQuery('.main-container .required-entry:not(.selectboxit)').each(function () {
+                //console.log("Add to Cart")
+                if (!jQuery(this).val()) {
+                    hasErrors = true;
+                    jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(this).parent());
+                }
+            });
+
+            if (hasErrors) {
+                return false;
+            }
+            // end validate required attributes
+            if (jQuery('select.color-attribute').val() != '') {
+                if (this.validator.validate()) {
+
+                    stockFlowControl = 1;
+                    if (jQuery('#qty').val() > 0 && jQuery('#qty').val() != '' && (stockFlowControl == 1)) {
+
+
+                        if(sourceOfReq=="quickview")
+                        {
+                            jQuery('.blockUI').append('<div class="fancybox-loading"></div>');
+                            jQuery('.blockUI .fancybox-loading').append('<div></div>');
+                            jQuery('.blockUI .fancybox-loading div').append('<p class="loader" id="loading_mask_loader"></p>');
+                            jQuery('.blockUI').show();
+                            addToShoppingCartFromQuickView(button, form);
+                        }
+                        else {
+                            addToShoppingCart(button, form);
+                        }
+
+
+                    } else {
+                        jQuery('.stockerr').html('Maximum amount available is ' + stockAmt);
+                        jQuery('.stockerr').show("inline");
+                    }
+                }
+            } else {
+                jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(jQuery('select.color-attribute')).parent());
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function (button, url) {
+
+            jQuery('.ajax-error-messages').hide();
+            jQuery('.ajax-error-messages').html('');
+            var count = $$('.attributeSelectIds').length;
+            if (count > 0) {
+                var countToCompare = 0;
+                $$('.attributeSelectIds').each(function (element) {
+                    var nombreAttributo = 'attribute' + $F(element);
+                    if ($F(nombreAttributo) == 'SIZE') {
+                        countToCompare = countToCompare - 1;
+                    } else {
+                        countToCompare = countToCompare + 1;
+                    }
+                });
+
+                if (countToCompare == count) {
+                    var form = this.form;
+                    var oldUrl = form.action;
+
+                    if (url) {
+                        form.action = url;
+                    }
+                    var e = null;
+                    try {
+//                                    $$('.attributeSelectIds').each(function(element){
+//                                    var nombreAttributo = 'attribute' + $F(element);
+//                                        if(element.id=='sizeAttribute' && $F(nombreAttributo) == ''){
+//                                            vacio = true;
+//                                            jQuery('.ajax-error-messages').show();
+//                                            jQuery('.ajax-error-messages').html('This field is required');
+//                                        }
+//                                    });
+//                                    if(!vacio)
+                        if (this.validator.validate()) {
+                            this.form.submit();
+                        }
+                    } catch (e) {
+                    }
+                    this.form.action = oldUrl;
+                    if (e) {
+                        throw e;
+                    }
+
+                    if (button && button != 'undefined') {
+                        button.disabled = true;
+                    }
+                } else {
+                    jQuery('.ajax-error-messages').show();
+                    jQuery('.ajax-error-messages').html('This is a required field.');
+                }
+
+            } else {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                    form.action = url;
+                }
+                var e = null;
+                try {
+                    if (this.validator.validate()) {
+                        this.form.submit();
+                    }
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+        //]]>
+    </script>
+    </div>
+    <?php //echo $this->getChildHtml('upsell_products') ?>
+    <?php //echo $this->getChildHtml('product_recently_viewed') ?>
+        <script type="text/javascript">
+                jQuery(window).load(function(){
+                    if(!jQuery('#recent-view-ajax').html()){
+                        var id = '<?php echo (int) $this->getRequest()->getParam('id');?>';
+                        var category = '<?php echo (int) $this->getRequest()->getParam("category", false);?>';
+                        jQuery.ajax({
+                              type:"POST",
+                              dataType: "html",
+                              url: "<?php echo Mage::getBaseUrl('web').'catalog/product/recent/';?>",
+                              data: { id : id, category: category}
+                        }).done(function(data) {
+                              jQuery('#recent-view-ajax').html(data);
+                        });
+                    }
+                });
+        </script>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+    var prodID = <?php echo $aprodId; ?>;
+    var loadCounter = 0;
+
+    jQuery( document ).ready(function() {
+        jQuery(".price-box").show();
+        jQuery(".price-label").show();
+        //changeThumbs();
+    });
+
+    function changeThumbs() {
+        var mediaUrl = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>";
+        if ((!(jQuery.isEmptyObject(player))) && (loadTimes > 0)) {
+            jQuery(".containerVideo").hide();
+           // player.stopVideo();
+        }
+
+        if (spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct() == 'undefined') {
+            var prodID = <?php echo $aprodId; ?>;
+
+            if(spConfig<?php echo $aprodId; ?>.config.basePrice != spConfig<?php echo $aprodId; ?>.config.oldPrice){
+                jQuery("#old-price-<?php echo $aprodId; ?>").html('<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + parseFloat(spConfig<?php echo $aprodId; ?>.config.oldPrice).toFixed(2));
+            } else {
+                jQuery("#old-price-<?php echo $aprodId; ?>").html("");
+            }
+            jQuery("#product-price-<?php echo $aprodId; ?>").html('<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + parseFloat(spConfig<?php echo $aprodId; ?>.config.basePrice).toFixed(2));
+            jQuery(".price-box").show();
+            jQuery(".price-label").show();
+
+            //jQuery(".containerImage").hide();
+            //jQuery('.containerImage').html(imgArray[prodID]['baseImage']);
+            //jQuery(".containerImage").show();
+
+            var ex = 1;
+            if (!(jQuery.isEmptyObject(imgArray[prodID]['thumbRepo']))) {
+                for (var img in imgArray[prodID]['thumbRepo']) {
+                    //jQuery(".thumb").hide();
+                    //jQuery('.thumb' + ex).html("<a href='javascript:;' onclick='closeVideo();loadImageConf(" + img + ");'>" + imgArray[prodID]['thumbRepo'][img] + "</a>");
+                    //jQuery(".thumb").show()
+                    ex++;
+                }
+
+                var lenght = Object.keys(imgArray[prodID]['thumbRepo']).length;
+                var axn = lenght + 1;
+                var countR = axn;
+                while (axn < 6) {
+                    //jQuery('.thumb' + axn).hide();
+                    axn++;
+                }
+            }
+            if (videoArray[prodID] !== undefined) {
+                if (countR < 5) {
+                    jQuery('.thumb' + countR).html
+                        ("<div class='video-caption' onclick='loadVideo();'>VIDEO</div><a href='javascript:;' onclick='loadVideo();'><img src='" + mediaUrl +
+                            "catalog/product/" + videoArray[prodID]['videoThumb'] + "'></a>");
+                    /*
+                    if (jQuery.browser.webkit) {
+                        player.loadVideoById(videoArray[prodID]['video']);
+                        player.stopVideo();
+                    } else {
+                        player.addEventListener("onReady", function () {
+                            player.loadVideoById(videoArray[prodID]['video']);
+                            player.stopVideo();
+                        });
+                    }
+                    */
+                    jQuery('.thumb' + countR).show();
+                } else {
+                    jQuery('.thumb5').html
+                        ("<div class='video-caption' onclick='loadVideo();'>VIDEO</div><a href='javascript:;' onclick='loadVideo();'><img src='" + mediaUrl +
+                            "catalog/product/" + videoArray[prodID]['videoThumb'] + "'></a>");
+                    /*
+                    if (jQuery.browser.webkit) {
+                        player.loadVideoById(videoArray[prodID]['video']);
+                        player.stopVideo();
+                    } else {
+                        player.addEventListener("onReady", function () {
+                            player.loadVideoById(videoArray[prodID]['video']);
+                            player.stopVideo();
+                        });
+                    }*/
+                    jQuery('.thumb5').show();
+                }
+            }
+            loadCounter++;
+        } else if (spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct() > 0) {
+            var priceForSelectedProduct = 0;
+            if(typeof spConfig<?php echo $aprodId; ?>.config.childProducts[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()] != 'undefined'){
+                priceForSelectedProduct = spConfig<?php echo $aprodId; ?>.config.childProducts[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['finalPrice'];
+            }
+
+            if(priceForSelectedProduct != spConfig<?php echo $aprodId; ?>.config.childProducts[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['price']){
+                jQuery("#old-price-<?php echo $aprodId; ?>").html('<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + parseFloat(spConfig<?php echo $aprodId; ?>.config.childProducts[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['price']).toFixed(2));
+            } else {
+                jQuery("#old-price-<?php echo $aprodId; ?>").html("");
+            }
+
+            jQuery("#product-price-<?php echo $aprodId; ?>").html('<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + parseFloat(priceForSelectedProduct).toFixed(2));
+
+            jQuery(".price-box").show();
+            jQuery(".price-label").show();
+
+            //jQuery("div.product-options-bottom div.price-box").hide();
+            jQuery(".no-display").html("<input type='hidden' name='product' value='" + spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct() + "' /><input type='hidden' name='related_product' id='related-products-field' value='' />"
+            );
+            jQuery("#product_addtocart_form").get(0).setAttribute('action', submitArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]);
+            //jQuery(".containerImage").hide();
+            //jQuery('.containerImage').html(imgArray[spConfig<?php //echo $aprodId; ?>.getIdOfSelectedProduct()]['baseImage']);
+            //jQuery(".containerImage").show();
+            if (!(jQuery.isEmptyObject(imgArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['thumbRepo']))) {
+                var ex = 1;
+                for (var img in imgArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['thumbRepo']) {
+                    //jQuery(".thumb").hide();
+                    //jQuery('.thumb' + ex).html("<a href='javascript:;' onclick='closeVideo();loadImageConf(" + img + ");'>" + imgArray[spConfig<?php //echo $aprodId; ?>.getIdOfSelectedProduct()]['thumbRepo'][img] + "</a>");
+                    //jQuery(".thumb").show()
+                    ex++;
+                }
+
+                var lenght = Object.keys(imgArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['thumbRepo']).length;
+                var axn = lenght + 1;
+                var countR = axn;
+                while (axn < 6) {
+                    //jQuery('.thumb' + axn).hide();
+                    axn++;
+                }
+            }
+            if (videoArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()] !== undefined) {
+                if (countR < 5) {
+                    jQuery('.thumb' + countR).html
+                        ("<div class='video-caption' onclick='loadVideo();'>VIDEO</div><a href='javascript:;' onclick='loadVideo();'><img src='" + mediaUrl +
+                            "catalog/product/" + videoArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['videoThumb'] + "'></a>");
+                    /*
+                    if (jQuery.browser.webkit) {
+                        player.loadVideoById(videoArray[spConfig<?php //echo $aprodId; ?>.getIdOfSelectedProduct()]['video']);
+                        player.stopVideo();
+                    } else {
+                        player.addEventListener("onReady", function () {
+                            player.stopVideo();
+                            player.loadVideoById(videoArray[spConfig<?php //echo $aprodId; ?>.getIdOfSelectedProduct()]['video']);
+
+                        });
+                    }
+                    */
+                    jQuery('.thumb' + countR).show();
+                } else {
+                    jQuery('.thumb5').html
+                        ("<div class='video-caption' onclick='loadVideo();'>VIDEO</div><a href='javascript:;' onclick='loadVideo();'><img src='" + mediaUrl +
+                            "catalog/product/" + videoArray[spConfig<?php echo $aprodId; ?>.getIdOfSelectedProduct()]['videoThumb'] + "'></a>");
+                    /*
+                    if (jQuery.browser.webkit) {
+                        player.loadVideoById(videoArray[spConfig<?php //echo $aprodId; ?>.getIdOfSelectedProduct()]['video']);
+                        player.stopVideo();
+                    } else {
+                        player.addEventListener("onReady", function () {
+                            player.stopVideo();
+                            player.loadVideoById(videoArray[spConfig<?php //echo $aprodId; ?>.getIdOfSelectedProduct()]['video']);
+
+                        });
+                    }
+                    */
+                    jQuery('.thumb5').show();
+                }
+            }
+            loadCounter++;
+        }
+    }
+</script>
+<script type="text/javascript">
+jQuery(window).load(function(){
+    var df = '<?php echo $this->getRequest()->getParam('df','');?>';
+    if(df){
+       var default_id = jQuery('.attribute_select_default').attr('id');
+       if(default_id){
+           jQuery('#attribute'+default_id).val(df);
+       }
+    }
+
+});
+jQuery('#qty').keydown(function(event) {
+    if (event.keyCode == 13) {
+        jQuery('#addtocart').click();
+        return false;
+    }
+});
+</script>
+
+<script>
+jQuery(document).ready(function(){
+	/*jQuery(".product-view .product-custom-option").css({"height":"23px"});
+	jQuery(".product-view .product-custom-option").parent().addClass("styled");
+	jQuery(".product-view .product-custom-option").parent().css({"position":"absolute",
+		"float":"right","display":"inline-block","width":"132px"});*/
+});
+</script>
+<!--Hotjar Virtual Page View Code-->
+<script>
+    jQuery( document ).ready(function() {
+
+        // hj('vpv', '/product-detail/');
+    });
+</script>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_RedesignCheckout>
+      <active>true</active>
+      <codePool>local</codePool>
+      <depends>
+      	<N98_CheckoutFilters />
+      </depends>
+    </Allure_RedesignCheckout>
+  </modules>
+</config>

@@ -1,0 +1,286 @@
+
+<style>
+    #wishlist-table tfoot{
+        display:block;
+    }
+</style>
+<?php if ($this->helper('wishlist')->isAllow()) : ?>
+<?php 
+	$wishlistCount = 0;
+	if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+   <?php
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        $wishlist = Mage::getModel('wishlist/wishlist')->loadByCustomer($customer, true);
+        $wishListItemCollection = $wishlist->getItemCollection();
+        foreach ($wishListItemCollection as $item){
+        	$wishlistCount += $item->getQty();
+        }
+    ?>
+<?php endif; ?>
+
+	<input id="wishlist-count" type="hidden" value="<?php echo $wishlistCount;?>" />
+    <div class="my-wishlist">
+       <?php if ($this->helper('wishlist')->isRssAllow() && $this->hasWishlistItems()): ?>
+           <a href="<?php echo $this->helper('wishlist')->getRssUrl($this->getWishlistInstance()->getId()); ?>" class="link-rss"><?php echo $this->__('RSS Feed') ?></a>
+        <?php endif; ?>    
+           <input id="wishlist-form-key" type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+            <?php echo $this->getChildHtml('top'); ?>
+            <div id="wishlist-table-overlay">
+            	<div class="box-content">
+            		<div class="mt-wishlist-table">
+	                	<table class="data-table" id="wishlist-table" style="width: 100%">
+	                   		 <thead class="shop-titles d-none">
+	                        	<tr>
+			                         <th colspan="2">
+			                                PRODUCT
+			                          </th>
+			                            <th class="a-left-p">
+			                                PRICE
+			                            </th>
+			                            <th class="a-center">
+			                                QTY
+			                            </th>
+			                             <th class="a-center">
+			                                SUBTOTAl
+			                            </th>
+			                            <th  class="a-left">
+			                                COMMENT
+			                            </th>
+			                            <!-- <th  class="a-center">
+			                                ADDED ON
+			                            </th> -->
+			                            <th colspan="2"> </th>
+			                      </tr>
+	                    	</thead>
+	                    	<tbody>
+			                        <?php if ($this->hasWishlistItems()): ?>
+			                                <?php echo $this->getBlockHtml('formkey');?>
+			                                <?php $this->getChild('items')->setItems($this->getWishlistItems()); ?>
+			                                <?php echo $this->getChildHtml('items');?>
+			                                <script type="text/javascript">decorateTable('wishlist-table')</script>
+			                        <?php else: ?>
+			                            <tr style="width: 100%;"><td colspan="7"><p class="wishlist-empty"><?php echo $this->__('You have no items in your wishlist.') ?></p></td></tr>
+			                        <?php endif ?>
+	                    	</tbody>
+	                	</table>
+	                	
+	                	<?php if ($this->hasWishlistItems()): ?>
+	                		<div class="mt-wishlist-extra-cls">
+	        					<button onclick="openShareForm();" class="dark-button share_btn mt-3">Share Wishlist</button>
+	        				</div>
+	        			 <?php endif ?>
+	        			 
+        			</div>
+        			
+        			<div class="mt-wishlist-share-form" style="display: none;">
+        				<?php echo $this->getChildHtml('wishlist.sharing_form')?>
+        			</div>
+                	
+                </div>
+             </div>
+        <script type="text/javascript">
+        //<![CDATA[
+
+        jQuery(document).ready(function() {
+            var reloaded = decodeURI((RegExp('reload=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
+            if(reloaded == 1){
+                jQuery('#just_added').slideDown(1000);
+				jQuery('#topcart-popup').addClass('just_added');
+				setTimeout(function() {
+					jQuery('#just_added').slideUp(1000);  
+					jQuery('#topcart-popup').removeClass('just_added');
+				}, 5000);
+            }
+        });
+        var wishlistForm = new Validation($('wishlist-view-form'));
+        function addAllWItemsToCart() {
+
+            var docHeight = jQuery(document).height();
+            jQuery("body").append("<div id='overlay' class='fancybox-overlay fancybox-overlay-fixed'></div>");
+            jQuery("#overlay")
+                .height(docHeight)
+                .show();
+			jQuery.fancybox.showLoading();
+
+            var reloaded = decodeURI((RegExp('reload=' + '(.+?)(&|$)').exec(window.location.search)||[,null])[1]);
+            var url = '<?php echo $this->getUrl('*/*/allcart', array('wishlist_id' => $this->getWishlistInstance()->getId())) ?>';
+            var separator = (url.indexOf('?') >= 0) ? '&' : '?';
+            $$('#wishlist-view-form .item_id').each(
+                function (input, index) {
+					addWItemToCart2(input.value);
+                }
+            );
+        }
+        //]]>
+        </script>
+        
+    </div>
+    <?php echo $this->getChildHtml('bottom'); ?>
+    
+<?php endif ?>
+
+<div class="mt-custom-popup-main mt-custom-popup-overlay">
+	<div class="mt-custom-popup">
+		<h2></h2>
+		<a class="mt-popup-close" href="javascript:jQuery('.mt-custom-popup-main').removeClass('active');">&times;</a>
+		<div class="mt-custom-content">
+		</div>
+	</div>
+</div>
+
+
+<script>
+jQuery(document).ready(function(){
+	var wishlistCount =  jQuery("#wishlist-count").val();
+	jQuery("#myaccount-wishlist-total-item").text(wishlistCount);
+	jQuery("#myaccount-wishlist-total-item").show();
+});
+</script>
+
+
+<script>
+	function plusMinusToWishlist(elementId,plus){
+		var qty = parseInt(jQuery(elementId).val()) + plus ;
+		var form_key = jQuery('.my-wishlist #wishlist-form-key').val();
+	    if(qty > 0) {
+	    	jQuery(elementId).val(qty);
+            var item_id = jQuery(elementId).attr('data-item-id');
+            var qtyData = {qty:qty};
+            var cart={};
+            cart[item_id] = qtyData;
+            cart = JSON.stringify(cart);
+            showLoadingFancybox();
+			jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/updateItemAjax';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: {'cart':cart,'form_key':form_key},
+		        success: function(data) {
+		        	if(data.success){
+		        		jQuery('.mt-my-wishlist').html("");
+		        		jQuery('.mt-my-wishlist').html(data.html);
+		        	}
+		        	hideLoadingFancybox();
+		        }
+		    });
+	    }
+	}
+
+	function updateWishListItem(id){
+		var item_id = id;
+		var form_key 	= jQuery('.my-wishlist #wishlist-form-key').val();
+		var description = jQuery('#wishlist-table textarea[name="description['+id+']"]').val();
+		var qty 		= jQuery("#wishlist-table #qtyid_"+id).val();
+		var data = {qty:qty , description:description};
+        var cart={};
+        cart[item_id] = data;
+        cart = JSON.stringify(cart);
+        showLoadingFancybox();
+        jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/updateItemAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: {'cart':cart,'form_key':form_key},
+	        success: function(data) {
+	        	if(data.success){
+	        		jQuery('.mt-my-wishlist').html("");
+	        		jQuery('.mt-my-wishlist').html(data.html);
+	        	}
+	        	hideLoadingFancybox();
+	        }
+	    });
+	}
+
+	function addWishlistItemToCart(id){
+		var item_id = id;
+		var form_key 	= jQuery('.my-wishlist #wishlist-form-key').val();
+		var qty 		= jQuery("#wishlist-table #qtyid_"+id).val();
+		showLoadingFancybox();
+        jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/addCartAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: {'item':item_id,'qty':qty,'form_key':form_key},
+	        success: function(data) {
+	        	if(data.success){
+	        		jQuery('.mt-my-wishlist').html("");
+	        		jQuery('.mt-my-wishlist').html(data.html);
+
+	        		jQuery('.mt-my-cart').html("");
+		        	jQuery('.mt-my-cart').html(data.cart_html);
+	                
+	            	jQuery('html, body').animate({
+	                    scrollTop: 0
+	                }, 'fast');
+
+	            	jQuery('#ajax_cart_content').html(data.top_cart);
+	                jQuery('#just_added').slideDown(1000);
+	                jQuery('#topcart-popup').addClass('just_added');
+	                setTimeout(function() {
+	                    jQuery('#just_added').slideUp(1000);
+	                    jQuery('#topcart-popup').removeClass('just_added');
+	                }, 5000);
+	        	}else{
+		        	alert(data.message);
+	        	}
+	        	hideLoadingFancybox();
+	        }
+	    });
+	}
+
+	function wishlistRemoveItem(id){
+//		if(confirm("Are you sure you want to remove this product from your wish list?")){
+			var item_id = id;
+			var form_key 	= jQuery('.my-wishlist #wishlist-form-key').val();
+			showLoadingFancybox();
+			jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/removeAjax';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: {'item':item_id,'form_key':form_key},
+		        success: function(data) {
+		        	if(data.success){
+		        		jQuery('.mt-my-wishlist').html("");
+		        		jQuery('.mt-my-wishlist').html(data.html);
+		        	}
+		        	hideLoadingFancybox();
+		        }
+		    });
+		/*}else{
+			return false;
+		}*/
+	}
+
+	function openShareForm(){
+		jQuery('.my-wishlist .mt-wishlist-table').hide();
+		jQuery('.my-wishlist .mt-wishlist-share-form').show();
+	}
+
+	function cancelShareForm(){
+		jQuery('.my-wishlist .mt-wishlist-table').show();
+		jQuery('.my-wishlist .mt-wishlist-share-form').hide();
+	}
+
+	function sendShareData(){
+		var myform_share = new VarienForm('share-form-validate', false); 
+		if(myform_share.validator.validate()){ 
+			showLoadingFancybox();
+			jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/sendAjax';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: jQuery(".mt-wishlist-share-form #share-form-validate").serialize(),
+		        success: function(data) {
+		            if(data.success)
+		            	cancelShareForm();
+	            	jQuery('.mt-my-wishlist .mt-custom-popup-main').addClass('active');
+	            	jQuery('.mt-my-wishlist .mt-custom-popup-main .mt-custom-content').text(data.message);
+		        	//jQuery('#mt-wishlist-msg p').text(data.message);
+		        	//jQuery('#mt-wishlist-msg').show();
+		        	hideLoadingFancybox();
+		        }
+			});
+		}
+	}
+</script>
+
