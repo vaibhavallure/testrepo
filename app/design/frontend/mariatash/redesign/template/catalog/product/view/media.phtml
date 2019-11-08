@@ -197,6 +197,10 @@ function loadImage(numImage,obj){
        jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
     });
 
+    var zoom_img = jQuery('#zoom-img');
+    zoom_img.attr('data-src','');
+    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('src'));
+
     setFacebook();
 
     shareLikeTwitter();
@@ -218,7 +222,9 @@ function loadBaseImage(){
         jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
         jQuery('.thumb.thumb1').addClass("active");
     });
-
+    var zoom_img = jQuery('#zoom-img');
+    zoom_img.attr('data-src','');
+    zoom_img.attr('data-src',"<?php echo $_helper->productAttribute($_product, $_img, 'image');?>");
     setFacebook();
 
     shareLikeTwitter();
@@ -475,6 +481,9 @@ function shareLikeTwitter(){
         <div class="thumb thumb3"></div>
         <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
         <div class="thumb thumb5"></div>
+        <div class="zoom-link">
+            <a class="link-button" data-src="" id="zoom-img">Click to Zoom</a>
+        </div>
     </div>
     <div class="containerImage col-lg-10"></div>
 
@@ -517,7 +526,35 @@ function shareLikeTwitter(){
         </div>-->
     </div>
 </div>
-<div id="zoomView"></div>
+
+<!--Zoom Popup-->
+<div id="openModal" class="zoomPopup "> <!--do not remove celebPopup class-->
+    <div class="pop-up-cover big-popup-cover col-12">
+        <div class="row">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large" id="zoomClose">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body big-popup-body col-12">
+                <div class="row">
+
+                    <div class="col-12 popup-left-section">
+                        <!--DO not remove product-img class-->
+                        <div class="zoom-img big-popup-image row"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="celeb-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/gene/loader.gif') ?>" alt="Loading..." >
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <?php
 $matches ='';
 preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $_product->getVideo(), $matches);
@@ -605,5 +642,56 @@ if ($isAjaxCall) {
         } else {
             jQuery('.delayed-product').addClass('display_none');
         }
+
+        /*Zoom Image*/
+     
+        // jQuery('#zoom-img').on('click',function () {
+        //     console.log('Zoom clicked');
+        //     var zoom_loader = jQuery('.zoom-loader');
+        //     zoom_loader.show();
+        //     var img_src = jQuery(this).attr('data-src');
+        //     console.log(img_src);
+        //     var img_div = jQuery('.product-img');
+        //     img_div.css('background-image','');
+        //     img_div.css('background-image','url('+img_src+')');
+        //     zoom_loader.hide();
+        // })
+        jQuery('#zoom-img').on('click',function () {
+            var img_src = jQuery(this).attr('data-src');
+
+            clearImg();
+            jQuery(".zoomPopup").css({"opacity": "1", "pointer-events": "auto","z-index":"1"});
+
+            unScrollBody();
+            jQuery(".catalog-category-view .footer").css("display","none");
+
+            jQuery(".zoom-loader").show();
+            setImg(img_src);
+            jQuery(".zoom-loader").hide();
+
+        });
+
+        jQuery("#zoomClose").on('click',function(){
+            jQuery(".zoom-loader").hide();
+
+            scrollBody();
+            jQuery(".catalog-category-view .footer").css("display","block");
+
+            jQuery(".zoomPopup").css({"opacity":"0","pointer-events":"none"});
+
+        });
+        function setImg(img) {
+            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"cover"});
+        }
+
+        function clearImg() {
+            jQuery(".zoom-img").css({"background-image":"","background-size":""});
+        }
     });
+
+
+
+
+
+
 </script>
