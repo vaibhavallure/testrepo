@@ -109,7 +109,11 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
             }
             // Redirect to account page
             else if (isset($params['redirect'])) {
-                $this->_redirect('customer/account');
+                //handle redirct to previous page
+                $url = Mage::helper('core/http')->getHttpReferer() ? Mage::helper('core/http')->getHttpReferer()  : Mage::getUrl();
+                Mage::app()->getResponse()->setRedirect($url);
+                Mage::app()->getResponse()->setRedirect($url);
+                //$this->_redirect('customer/account');
             }
             // User signed-in via popup
             else if (!$this->getRequest()->getParam('ajax')) {

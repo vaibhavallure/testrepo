@@ -174,11 +174,11 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 //
 //            if($type=="new")
 //            {
-            if ($this->notify()->sendEmailNotification($model, 'release'))
-                $this->log()->addStoreWiseLog('Notified by email type=>release', $post_data['store_id']);
+          //  if ($this->notify()->sendEmailNotification($model, 'release'))
+            //    $this->log()->addStoreWiseLog('Notified by email type=>release', $post_data['store_id']);
 
-            if ($this->notify()->sendSmsNotification($model, 'release'))
-                $this->log()->addStoreWiseLog('Notified By SMS(if selected) type=>release', $post_data['store_id']);
+            //if ($this->notify()->sendSmsNotification($model, 'release'))
+              //  $this->log()->addStoreWiseLog('Notified By SMS(if selected) type=>release', $post_data['store_id']);
 
 //            }
 

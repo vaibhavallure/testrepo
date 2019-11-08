@@ -396,7 +396,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     public function getModifyLink($apt_customer,$isSpecialPopup = false){
 
         if(!$isSpecialPopup):
-        $apt_url = 'appointments/popup/modify';
+        $apt_url = 'appointments/book/modify';
         $id =  urlencode(Mage::getModel('core/encryption')->encrypt($apt_customer['appointment_id'].'-'.$apt_customer['id']));
         $apt_modify_link = Mage::getUrl($apt_url, array(
             '_secure'   => true,
