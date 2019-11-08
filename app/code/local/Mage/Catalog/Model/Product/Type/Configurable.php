@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -382,7 +382,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     public function getUsedProductCollection($product = null)
     {
         $collection = Mage::getResourceModel('catalog/product_type_configurable_product_collection')
-            ->setFlag('require_stock_items', FALSE)
+            ->setFlag('require_stock_items', false)
             ->setFlag('product_children', true)
             ->setProductFilter($this->getProduct($product))->addAttributeToSort('order');
         if (!is_null($this->getStoreFilter($product))) {
@@ -632,7 +632,6 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode)
     {
         $attributes = $buyRequest->getSuperAttribute();
-		
         if ($attributes || !$this->_isStrictProcessMode($processMode)) {
             if (!$this->_isStrictProcessMode($processMode)) {
                 if (is_array($attributes)) {
@@ -704,7 +703,6 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
                         ->addCustomOption('parent_product_id', $product->getId());
                     if ($this->_isStrictProcessMode($processMode)) {
                         $_result[0]->setCartQty(1);
-
                     }
                     else if($_result[0]->getTypeId()=="simple")
                     {

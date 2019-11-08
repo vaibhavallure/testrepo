@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -42,14 +42,14 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
             Mage::throwException(Mage::helper('adminhtml')->__('Invalid parent block for this block.'));
         }
         $this->setOrder($this->getParentBlock()->getOrder());
-        
+
         foreach ($this->getParentBlock()->getOrderInfoData() as $k => $v) {
             $this->setDataUsingMethod($k, $v);
         }
-        
+
         parent::_beforeToHtml();
     }
-    
+
     public function getOrderStoreName()
     {
         if ($this->getOrder()) {
@@ -64,11 +64,11 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
                 $store->getGroup()->getName(),
                 $store->getName()
             );
-            return implode('<br/>', $name);
+            return implode('<br/>', array_map(array($this, 'escapeHtml'), $name));
         }
         return null;
     }
-    
+
     public function getCustomerGroupName()
     {
         if ($this->getOrder()) {
@@ -76,7 +76,7 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
         }
         return null;
     }
-    
+
     public function getCustomerViewUrl()
     {
         if ($this->getOrder()->getCustomerIsGuest() || !$this->getOrder()->getCustomerId()) {
@@ -84,12 +84,12 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
         }
         return $this->getUrl('*/customer/edit', array('id' => $this->getOrder()->getCustomerId()));
     }
-    
+
     public function getViewUrl($orderId)
     {
         return $this->getUrl('*/sales_order/view', array('order_id'=>$orderId));
     }
-    
+
     /**
      * Find sort order for account data
      * Sort Order used as array key
@@ -105,7 +105,7 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
         }
         return $sortOrder;
     }
-    
+
     /**
      * Return array of additional account data
      * Value is option style array
@@ -115,7 +115,7 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
     public function getCustomerAccountData()
     {
         $accountData = array();
-        
+
         /* @var $config Mage_Eav_Model_Config */
         $config     = Mage::getSingleton('eav/config');
         $entityType = 'customer';
@@ -140,12 +140,12 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
                 );
             }
         }
-        
+
         ksort($accountData, SORT_NUMERIC);
-        
+
         return $accountData;
     }
-    
+
     /**
      * Get link to edit order address page
      *
@@ -161,7 +161,7 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
         $url = $this->getUrl('*/sales_order/address', array('address_id'=>$address->getId()));
         return '<a href="'.$url.'">' . $label . '</a>';
     }
-    
+
     /**
      * Whether Customer IP address should be displayed on sales documents
      * @return bool
