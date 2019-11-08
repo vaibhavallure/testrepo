@@ -64,7 +64,12 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     //msg.appendChild(d.createTextNode(txt));
     msg.innerHTML = txt;
 
-    btnc = alertObj.appendChild(d.createElement("a"));
+    buttons = alertObj.appendChild(d.createElement("div"));
+    buttons.className="buttons-group";
+
+
+
+    btnc = buttons.appendChild(d.createElement("a"));
     btnc.id = "cancelConfirm";
     btnc.className="btn btn-primary btn-sm light-button";
 
@@ -76,7 +81,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
         return false;
     }
 
-    btn = alertObj.appendChild(d.createElement("a"));
+    btn = buttons.appendChild(d.createElement("a"));
     btn.id = "okConfirm";
     btn.className="btn-sm light-button";
     btn.appendChild(d.createTextNode(okBtn));
