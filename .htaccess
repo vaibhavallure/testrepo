@@ -177,6 +177,7 @@
 <IfModule mod_setenvif.c>
     <IfModule mod_headers.c>
 	Header set X-Developed-By "Allure Software, Inc."
+	Header set X-Powered-By "Allure Software, Inc."
 
 	Header set Referrer-Policy: same-origin
 
