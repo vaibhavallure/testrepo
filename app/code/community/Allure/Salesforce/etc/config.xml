@@ -60,15 +60,15 @@
 				</observers>
 			</customer_save_after>
 			
-			<customer_address_save_after>
-				<observers>
-					<allure_salesforce>
-	                    <type>singleton</type>
-	                    <class>allure_salesforce/observer_customer</class>
-	                    <method>changeCustomerAddressToSalesforce</method>
-	                </allure_salesforce>
-				</observers>
-			</customer_address_save_after>
+			<!--<customer_address_save_after>-->
+				<!--<observers>-->
+					<!--<allure_salesforce>-->
+	                    <!--<type>singleton</type>-->
+	                    <!--<class>allure_salesforce/observer_customer</class>-->
+	                    <!--<method>changeCustomerAddressToSalesforce</method>-->
+	                <!--</allure_salesforce>-->
+				<!--</observers>-->
+			<!--</customer_address_save_after>-->
 			
 			
 			<sales_order_save_after>
@@ -184,7 +184,20 @@
 			</customer_address_save_after>
 		</events> -->
 	</global>
-	
+
+	<crontab>
+		<jobs>
+			<allure_salesforce_bulk_update>
+				<schedule>
+					<config_path>allure_salesforce/general/bulk_cron_time</config_path>
+				</schedule>
+				<run>
+					<model>allure_salesforce/observer_update::syncDataToSalesforce</model>
+				</run>
+			</allure_salesforce_bulk_update>
+		</jobs>
+	</crontab>
+
 	<adminhtml>
 		<events>
 			<catalog_product_save_after>

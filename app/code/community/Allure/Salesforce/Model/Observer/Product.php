@@ -39,283 +39,42 @@ class Allure_Salesforce_Model_Observer_Product{
         $helper         = $this->getHelper();
         try{
             if($product){
-                $objectType     = $helper::PRODUCT_OBJECT;
-                $sFieldName     = $helper::S_PRODUCTID;
-                
                 $salesforceId   = $product->getSalesforceProductId();
                 $requestMethod  = "GET";
-                $urlPath        = $helper::PRODUCT_URL;
-                if($salesforceId){ //update data operation
-                    $urlPath      .=  "/" .$salesforceId;
-                    $requestMethod = "PATCH";
-                }else{ //insert data operation
+                $urlPath        = $helper::PRODUCT_COMPOSITE_TREE_URL;
+
+                if(empty($salesforceId)){ //update data operation
                     $requestMethod = "POST";
+                }else if(!empty($salesforceId)){
+                    $helper->salesforceLog("Return from Product Event - Product -".$product->getId());
+                    return;
                 }
-                
-                $metalColor = $product->getMetal();
-                $taxClassId = $product->getTaxClassId();
-                $gemstone   = $product->getGemstone();
-                $amount = $product->getAmount();      //amount - select
-                $frSize = $product->getFrSize();      //fr_size - select
-                $sideEar = $product->getSideEar();     //side_ear - select
-                $direction = $product->getDirection(); //direction - select
-                $neckLength = $product->getNeckLengt(); //neck_lengt - select
-                $noseBend = $product->getNoseBend();    //nose_bend - select
-                $cLength = $product->getCLength();      //c_length - select
-                $size = $product->getSize();            //size - select
-                $gauge = $product->getGauge();           //gauge - select
-                $postOption = $product->getPostOptio(); //post_optio - select
-                $rise = $product->getRise();            //rise - select
-                $sLength = $product->getSLength();    //s_length - select
-                $placement = $product->getPlacement(); //placement - select
-                $material = $product->getMaterial(); //material - multiselect
-                
-                $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
-                $attributeSetModel->load($product->getAttributeSetId());
-                $attributeSetName = $attributeSetModel->getAttributeSetName();
-                
-                $request = array(
-                    "IsActive"                  => ($product->getStatus())?true:false,
-                    //"Diamond_Color__c"          => "",
-                    "DisplayUrl"                => $product->getUrlKey(),
-                    "ExternalId"                => $product->getId(),
-                    //"Gemstone__c"               => $product->getGemstone(),
-                    "Jewelry_Care__c"           => $product->getJewelryCare(),
-                    //"Metal_Color__c"            => $product->getMetal(),
-                    "ProductCode"               => $product->getId(),
-                    "Description"               => $product->getDescription(),
-                    "Family"                    => $product->getTypeId(),
-                    "Name"                      => $product->getName(),
-                    "StockKeepingUnit"          => $product->getSku(),
-                    "Return_Policy__c"          => $product->getReturnPolicy(),
-                    //"Tax_Class_Id__c"           => $product->getTaxClassId(),
-                    "Vendor_Item_No__c"         => $product->getVendorItemNo(),
-                    "Location__c"               => $attributeSetName,
-                );
-                
-                if($metalColor){
-                    $metalColor = $this->getOptionLabel("metal", $metalColor);
-                    $request["Metal_Color__c"] = $metalColor;
+
+                $requestData = $helper->getProductData($product,true,true);
+                if($requestData == null) {
+                    $helper->salesforceLog("Return from saveProductToSalesforce -".$product->getId());
+                    return;
+                }else {
+                    $request = array("records" => array());
                 }
+
+                array_push($request["records"],$requestData);
                 
-                if($taxClassId){
-                    $request["Tax_Class_Id__c"] = $taxClassId;
-                }
-                
-                if($gemstone){
-                    $gemstone = $this->getOptionLabel("gemstone", $gemstone);
-                    $request["Gemstone__c"] = $gemstone;
-                }
-                
-                if($amount){
-                    $amount = $this->getOptionLabel("amount", $amount);
-                    $request["Amount__c"] = $amount;
-                }
-                
-                if($frSize){
-                    $frSize = $this->getOptionLabel("fr_size", $frSize);
-                    $request["FR_SIZE__c"] = $frSize;
-                }
-                
-                if($sideEar){
-                    $sideEar = $this->getOptionLabel("side_ear", $sideEar);
-                    $request["SIDE_EAR__c"] = $sideEar;
-                }
-                
-                if($direction){
-                    $direction = $this->getOptionLabel("direction", $direction);
-                    $request["DIRECTION__c"] = $direction;
-                }
-                
-                if($neckLength){
-                    $neckLength = $this->getOptionLabel("neck_lengt", $neckLength);
-                    $request["NECK_LENGT__c"] = $neckLength;
-                }
-                
-                if($noseBend){
-                    $noseBend = $this->getOptionLabel("nose_bend", $noseBend);
-                    $request["NOSE_BEND__c"] = $noseBend;
-                }
-                
-                if($cLength){
-                    $cLength = $this->getOptionLabel("c_length", $cLength);
-                    $request["C_LENGTH__c"] = $cLength;
-                }
-                
-                if($size){
-                    $size = $this->getOptionLabel("size", $size);
-                    $request["SIZE__c"] = $size;
-                }
-                
-                if($gauge){
-                    $gauge = $this->getOptionLabel("gauge", $gauge);
-                    $request["GAUGE__c"] = $gauge;
-                }
-                
-                if($postOption){
-                    $postOption = $this->getOptionLabel("post_optio", $postOption);
-                    $request["POST_OPTIO__c"] = $$postOption;
-                }
-                
-                if($rise){
-                    $rise = $this->getOptionLabel("rise", $rise);
-                    $request["RISE__c"] = $rise;
-                }
-                
-                if($sLength){
-                    $sLength = $this->getOptionLabel("s_length", $sLength);
-                    $request["S_Length__c"] = $sLength;
-                }
-                
-                if($placement){
-                    $placement = $this->getOptionLabel("placement", $placement);
-                    $request["PLACEMENT__c"] = $placement;
-                }
-                
-                if($material){
-                    $tMaterial = array();
-                    $materialArr = $this->getOptionLabelArray("material");
-                    foreach (explode(",", $material) as $mat){
-                        $tMaterial[] = $materialArr[$mat];
-                    }
-                    $request["Material__c"] = implode(",", $tMaterial);
-                }
-                
-                $helper->salesforceLog($request);
+                //$helper->salesforceLog($request);
                 $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
+
+                $helper->salesforceLog(json_decode($response));
                 $responseArr = json_decode($response,true);
                 //$helper->processResponse($product,$objectType,$sFieldName,$requestMethod,$response);
-                
-                $productAttrArray = array();
-                $mainStoreId      = 1;
-                
-                if($responseArr["success"] || $responseArr == ""){
-                    $salesforceProductId = $product->getData("salesforce_product_id");
-                    $salesforceProductId = ($salesforceProductId)?$salesforceProductId:$responseArr["id"];
-                    
-                    $productAttrArray["salesforce_product_id"] = $salesforceProductId;
-                    
-                    try{
-                        Mage::getResourceSingleton('catalog/product_action')
-                        ->updateAttributes(array($product->getId()),$productAttrArray,$mainStoreId);
-                        $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $product->getId());
-                    }catch (Exception $ee){
-                        $helper->salesforceLog("Exception in add or update product into salesforce");
-                        $helper->salesforceLog("Message :".$ee->getMessage());
-                    }
-                    
-                    $helper->salesforceLog("product_id:".$product->getId()." salesforce_id = ".$salesforceProductId);
-                    $pricebkUrlPath = $helper::PRODUCT_PRICEBOOK_URL;
-                    $requestMethod = "GET";
-                    $standardPriceBkId  = $product->getSalesforceStandardPricebk();
-                    $wholesalePriceBkId = $product->getSalesforceWholesalePricebk();
-                    $retailerPrice  = $product->getPrice();
-                    $wholesalePrice = 0;
-                    foreach ($product->getData('group_price') as $gPrice){
-                        if($gPrice["cust_group"] == 2){ //wholesaler group : 2
-                            $wholesalePrice = $gPrice["price"];
-                        }
-                    }
-                    $sRequest = array();
-                    if($standardPriceBkId && $wholesalePriceBkId){
-                        $requestMethod = "PATCH";
-                        $pricebkUrlPath = $helper::PRODUCT_UPDATE_PRICEBK_URL;
-                        $sRequest["allOrNone"] = false;
-                        $sRequest["records"] = array(
-                            array(
-                                "attributes"    => array("type" => "PricebookEntry"),
-                                "id"            => $standardPriceBkId,
-                                "UnitPrice"     => $retailerPrice
-                            )
-                        );
-                        
-                        if($wholesalePrice){
-                            $sTemp = array(
-                                "attributes"    => array("type" => "PricebookEntry"),
-                                "id"            => $wholesalePriceBkId,
-                                "UnitPrice"     => $wholesalePrice
-                            );
-                            array_push($sRequest["records"],$sTemp);
-                        }
-                    }else{
-                        $requestMethod = "POST";
-                        $sRequest["records"] = array(
-                            array(
-                                "attributes"    => array(
-                                    "type"          => "PricebookEntry",
-                                    "referenceId"   => "general"
-                                ),
-                                "Pricebook2Id"  => Mage::helper('allure_salesforce')->getGeneralPricebook(),//$helper::RETAILER_PRICEBOOK_ID,
-                                "Product2Id"    => $salesforceProductId,
-                                "UnitPrice"     => $retailerPrice
-                            )
-                        );
-                        
-                        if($wholesalePrice){
-                            $sTemp = array(
-                                "attributes"    => array(
-                                    "type"          => "PricebookEntry",
-                                    "referenceId"   => "wholesale"
-                                ),
-                                "Pricebook2Id"  => Mage::helper('allure_salesforce')->getWholesalePricebook(),//$helper::WHOLESELLER_PRICEBOOK_ID,
-                                "Product2Id"    => $salesforceProductId,
-                                "UnitPrice"     => $wholesalePrice
-                            );
-                            array_push($sRequest["records"],$sTemp);
-                        }
-                    }
-                    $objectType1 = $helper::PRODUCT_PRICEBOOK_OBJECT;
-                    
-                    $response1    = $helper->sendRequest($pricebkUrlPath , $requestMethod , $sRequest);
-                    $responseArr1 = json_decode($response1,true);
-                    
-                    $generalPricebookId     = $product->getData("salesforce_standard_pricebk");
-                    $wholesalePricebookId   = $product->getData("salesforce_wholesale_pricebk");
-                    
-                    /* if($generalPricebookId){
-                     return ;
-                     } */
-                    
-                    
-                    
-                    if(!$responseArr1["hasErrors"] && array_key_exists("hasErrors", $responseArr1)){
-                        foreach ($responseArr1["results"] as $result){
-                            if($result["referenceId"] == "general"){
-                                //$product->setData("salesforce_standard_pricebk",$result["id"]);
-                                $productAttrArray["salesforce_standard_pricebk"] = $result["id"];
-                            }
-                            elseif ($result["referenceId"] == "wholesale"){
-                                //$product->setData("salesforce_wholesale_pricebk",$result["id"]);
-                                $productAttrArray["salesforce_wholesale_pricebk"] = $result["id"];
-                            }
-                        }
-                        try{
-                            Mage::getResourceSingleton('catalog/product_action')
-                            ->updateAttributes(array($product->getId()),$productAttrArray,$mainStoreId);
-                            //$product->save();
-                            $helper->deleteSalesforcelogRecord($objectType1, $requestMethod, $product->getId());
-                            $helper->salesforceLog("Pricebook Data added. Product Id :".$product->getId());
-                        }catch (Exception $e){
-                            $helper->salesforceLog("Exception in prodcut pricebook saving data.");
-                            $helper->salesforceLog("Message :".$e->getMessage());
-                        }
-                    }elseif($responseArr1[0]["success"]){
-                        $helper->deleteSalesforcelogRecord($objectType1, $requestMethod, $product->getId());
-                        $helper->salesforceLog("Price update data successfully.");
-                    }
-                    else{
-                        $helper->addSalesforcelogRecord($objectType1,$requestMethod,$product->getId(),$response1);
-                    }
-                    
+
+                if(!$responseArr["hasErrors"] || $responseArr["hasErrors"]=""){
+                    $helper->bulkProcessResponse($responseArr,"products");
                     //$helper->processResponse($product,$objectType,$sFieldName,$requestMethod,$response);
-                    
-                }else{
-                    $helper->addSalesforcelogRecord($objectType,$requestMethod,$product->getId(),$response);
                 }
             }
         }catch (Exception $e){
             $helper->salesforceLog("Exception in add product into salesforce.");
-            $helper->salesforceLog("Message :".$ee->getMessage());
+            $helper->salesforceLog("Message :".$e->getMessage());
         }
     }
     
@@ -408,23 +167,47 @@ class Allure_Salesforce_Model_Observer_Product{
                     }
                 }else{
                     $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
-                    $product = Mage::getModel("catalog/product")->load($productId);
-                    $salesforceId = $product->getSalesforceProductId();
-                    if(!$salesforceId){
-                        $this->saveProductToSalesforce($product);
-                    }else {
-                        $standardPriceBkId  = $product->getSalesforceStandardPricebk();
-                        $wholesalePriceBkId = $product->getSalesforceWholesalePricebk();
-                        if(!$standardPriceBkId && !$wholesalePriceBkId){
+                    if($productId){
+                        $product = Mage::getModel("catalog/product")->load($productId);
+                        $salesforceId = $product->getSalesforceProductId();
+                        if(!$salesforceId){
                             $this->saveProductToSalesforce($product);
+                        }else {
+                            $standardPriceBkId  = $product->getSalesforceStandardPricebk();
+                            $wholesalePriceBkId = $product->getSalesforceWholesalePricebk();
+                            if(!$standardPriceBkId && !$wholesalePriceBkId){
+                                $this->saveProductToSalesforce($product);
+                            }
+                        }
+                        $product = null;
+                    }else {
+                        $helper->salesforceLog("tmwork product - ".$item->getSku());
+                        $product = Mage::getModel("allure_teamwork/tmproduct")
+                            ->load($item->getSku(),"sku");
+                        if($product){
+                            $salesforceId = $product->getSalesforceProductId();
+                            if(!$salesforceId){
+                                $this->saveTeamworkProductToSalesforce($product);
+                            }
+                        }else {
+                            try {
+                                $product = Mage::getModel("allure_teamwork/tmproduct");
+                                $product->setName($item->getName());
+                                $product->setSku($item->getSku());
+                                $product->setPrice($item>getBasePrice());
+                                $product->save();
+                                $this->saveTeamworkProductToSalesforce($product);
+                            }catch (Exception $e) {
+                                $helper->salesforceLog("Exception in saving TW-Product ".$item->getSku());
+                            }
+
                         }
                     }
-                    $product = null;
                 }
             }
         }catch (Exception $e){
             $helper->salesforceLog("Exception in add product into salesforce for sales order item");
-            $helper->salesforceLog("Message :".$ee->getMessage());
+            $helper->salesforceLog("Message :".$e->getMessage());
         }
         $helper->salesforceLog("call complete.");
     }

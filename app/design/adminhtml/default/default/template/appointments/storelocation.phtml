@@ -1,7 +1,9 @@
 <?php
 	$model = Mage::registry('apt_modify_data');
 	//$fetch_storeId = $model->getStoreId();
-	if($model){
+$storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
+
+if($model){
 	$fetch_storeId = $model->getStoreId();
 	}
 ?>
@@ -28,10 +30,12 @@
 			}
 			
 		else:			
-			foreach ($activeStores as $key=>$store){	
-				$requestStoreName = $store;
-				$requestStoreId = $key;
-				$multi_stores[$key]= $store;
+			foreach ($activeStores as $key=>$store){
+                if($key!=$storeIdNone) {
+                    $requestStoreName = $store;
+                    $requestStoreId = $key;
+                    $multi_stores[$key] = $store;
+                }
 			}
 		endif;		
 	}
@@ -45,8 +49,13 @@
 		<select id="store-id" name="store_id" class="storeLocationSelect">
 		<?php
 		foreach ($multi_stores as $key=>$store):
-		?>
-		<option value="<?php echo $key;?>" <?php if($fetch_storeId==$key):echo "selected";endif;?>><?php echo $store;?></option>
+		?><!--FOR BROWNTHOMAS POPUPS-->
+            <?php if($getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfo($key)):?>
+            <option value="specialStore" data-url="<?=Mage::getBaseUrl()?>appointments/book/store/code/<?=Mage::helper('allure_virtualstore')->getStoreCode($key)?>" ><?=$store?></option>
+        <?php else:?>
+            <!--CODE END-->
+            <option value="<?php echo $key;?>" <?php if($fetch_storeId==$key):echo "selected";endif;?>><?php echo $store;?></option>
+        <?php endif;?>
 		<?php endforeach;?>
 		</select>
 		</div>

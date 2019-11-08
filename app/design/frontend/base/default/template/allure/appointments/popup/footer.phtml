@@ -2,55 +2,50 @@
 <div id="footer" class="container-fluid">
     <div class="footer">
         <div class="container">
-            <div class="footer-frm">
-<!--                <form action="--><?php //echo $this->getSubscribeUrl()?><!--" method="post" id="appointemnet_form">-->
-                <div class="row">
-                    <div class="col-md-4 form-group">
-                        <p class="footer-subtitle-medium">SIGN UP FOR OUR NEWSLETTER</p>
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <input class="input-box" type="email" name="subscribe_email" id="subscribe_email" placeholder="EMAIL">
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <div class="btnSub">
-                            <button id="btnSubscribe" class="input-box btn"  type="submit" onclick="subscribe()">sign up</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
             <div class="row footer-links hidden-xs">
-                <div class="col-md-6">
-                    <div class="row ">
-                        <a class="footer-subtitle-small" href="#top" id="footer-link-top">POP UP INFORMATION</a>
-                    </div>
-                    <div class="row">
-                        <a class="footer-subtitle-small" href="#booking" id="footer-link-booking">BOOKING & PRICING</a>
-                    </div>
+              <div class="col-12 links-section">
+                <div class="row justify-content-center">
+                  <div class="footer-redirections">
+                    <a class="footer-subtitle-small translate-popup" href="#top" id="footer-link-top"><?php echo $this->__('POP-UP INFORMATION')?></a>
+                  </div>
+                  <div class="footer-redirections">
+                    <a class="footer-subtitle-small translate-popup" href="#booking" id="footer-link-booking"><?php echo $this->__('BOOKING & PRICING')?></a>
+                  </div>
+                  <div class="footer-redirections">
+                    <a class="footer-subtitle-small translate-popup" href="#about-maria" id="footer-link-about"><?php echo $this->__('ABOUT MARIA TASH')?></a>
+                  </div>
+                  <div class="footer-redirections">
+                    <a class="footer-subtitle-small translate-popup" href="#faq" id="footer-link-profiles">Frequently Asked Questions</a>
+                  </div>
+                  <div class="footer-redirections mr-0">
+                    <a target="_blank" class="footer-subtitle-small" href="https://www.mariatash.com/" id="footer-link-main">MARIATASH.COM</a>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <a class="footer-subtitle-small" href="#about-maria" id="footer-link-about">ABOUT MARIA TASH</a>
+              </div>
+              <div class="footer-frm col-12">
+  <!--                <form action="--><?php //echo $this->getSubscribeUrl()?><!--" method="post" id="appointemnet_form">-->
+                  <div class="row justify-content-center">
+                      <div class="col-md-12 form-group m-0">
+                          <p class="footer-subtitle-medium text-center translate-popup"><?php echo $this->__('Sign Up for Our Newsletter')?></p>
+                      </div>
+                      <div class="col-12">
+                        <div class="row justify-content-center form-section ml-0">
+                          <div class="col-lg-8 col-md-8 form-group text-right">
+                              <input class="input-box translate-popup" type="email" name="subscribe_email" id="subscribe_email" placeholder="<?php echo $this->__('Email')?>">
+                          </div>
+                          <div class="col-lg-4 col-md-2 form-group px-0">
+                              <div class="btnSub">
+                                  <button id="btnSubscribe" class="input-box btn translate-popup"  type="submit" onclick="subscribe()"><?php echo $this->__('sign up')?></button>
+                              </div>
+                          </div>
+                      </div>
                     </div>
-                    <div class="row">
-                        <a class="footer-subtitle-small" href="#faq" id="footer-link-profiles">FAQ</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row footer-links">
-                <div class="col-md-12">
-                    <div class="row">
-                        <a target="_blank" href="https://www.instagram.com/maria_tash/" ><img src="<?php echo $this->getSkinUrl('images/allure/popup/instagram.png')?>"></a>
-                    </div>
-                    <div class="row">
-                        <a class="footer-subtitle-small" target="_blank" href="https://www.mariatash.com/" id="footer-link-main">MARIATASH.COM</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-12">
+                  </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row justify-content-center">
                     <a id="footer-top-link" href="#top"  class="link-top" >
-                        <img src="<?php echo $this->getSkinUrl("images/allure/popup/up-white.png")?>" class="down-arrow-size " >
+                        <img src="<?php echo $this->getSkinUrl("images/allure/popup/popup-down-arrow-wt.png")?>" class="down-arrow-size " >
                     </a>
                 </div>
             </div>
@@ -89,12 +84,7 @@
         }
     });
 
-    jQuery(document).ready(function() {
 
-        if (jQuery('.modal-confirm-appointment').length) {
-            jQuery('.modal-confirm-appointment').modal('show');
-        }
-    });
 </script>
 <!--Subscribe Mailing List Jquery-->
 <script>
@@ -104,7 +94,7 @@
         var  email= jQuery('#subscribe_email').val();
 
         if (!ValidateEmail(email)) {
-            alert('Please Enter Valid Email Id');
+            alert(__('Please Enter Valid Email Id'));
         }
         else {
             jQuery.ajax({

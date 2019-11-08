@@ -236,65 +236,77 @@ var count = 0;
          jQuery('#pick_ur_time_div').find('input:hidden').val('');
          jQuery("#time_blocks").empty();
 
+         var selectedStore = jQuery(this).children("option:selected");
+
+         if(typeof selectedStore.attr('data-url') !== "undefined"){
+             window.location.replace(selectedStore.attr('data-url'));
+		 }else {
+             //ajax start to pass the selected date to get the time
+             var qty = document.getElementById("count").value;
+             var storeid = document.getElementById("store-id").value;
+
+             setSupportDetails(storeid);
+
+             //ajax start to get the working days of piercers according to store
+             jQuery.ajax({
+                 url: Allure.ajaxGetWorkingDaysUrl,
+                 type: 'POST',
+                 dataType: 'json',
+                 data: {
+                     storeid: storeid, id: Allure.appointmentId
+                 },
+                 beforeSend: function () {
+                     jQuery('#appointment_loader').show();
+                 },
+                 complete: function () {
+                     jQuery('#appointment_loader').hide();
+                 },
+                 timeout: 30000,
+                 error: function (jqXHR) {
+                     if (jqXHR.status == 0) {
+                         alert(" fail to connect, please check your internet connection");
+                     }
+                 },
+                 success: function (response) {
+                     jQuery("#fetchpickurday").html(response.output);
+                     if (response.schedule)
+                         jQuery("#piercer_schedule").html(response.schedule);
+                     var todaysDate = document.getElementById("datepicker-13_hidden").value;
+                     var request = {
+                         "qty": qty,
+                         "store": storeid,
+                         "date": todaysDate,
+                         "id": Allure.appointmentId
+                     };
+                     jQuery.ajax({
+                         url: Allure.ajaxGetTimeUrl,
+                         dataType: 'json',
+                         type: 'POST',
+                         data: {request: request},
+                         beforeSend: function () {
+                             jQuery('#appointment_loader').show();
+                         },
+                         complete: function () {
+                             jQuery('#appointment_loader').hide();
+                         },
+
+                         success: function (response) {
+                             jQuery("#pick_ur_time_div").html(response.output);
+                             jQuery("#appointment-pricing").html(response.pricing_html);
+                             window.sample = 30;
+                             var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
+                             simple.sliderDemo();
+                         }
+                     });
+                     //ajax end
+
+                 }
+             });
 
 
-			//ajax start to pass the selected date to get the time
-			var qty = document.getElementById("count").value;
-			var storeid = document.getElementById("store-id").value;
+             //ajax start to get the working days of piercers according to store
 
-         setSupportDetails(storeid);
-
-		 	//ajax start to get the working days of piercers according to store
-			 	jQuery.ajax({
-			 		url : Allure.ajaxGetWorkingDaysUrl,
-					type : 'POST',
-					dataType:'json',
-					data: {storeid:storeid,id:Allure.appointmentId
-						},
-					beforeSend: function() { jQuery('#appointment_loader').show(); },
-			        complete: function() { jQuery('#appointment_loader').hide(); },
-                    timeout: 30000,
-                    error: function(jqXHR) {
-                        if(jqXHR.status==0) {
-                            alert(" fail to connect, please check your internet connection");
-                        }
-                    },
-					success : function(response){
-						jQuery("#fetchpickurday").html(response.output);
-						if(response.schedule)
-							jQuery("#piercer_schedule").html(response.schedule);
-						var todaysDate = document.getElementById("datepicker-13_hidden").value;
-						var request = {
-				 				"qty":qty,
-				 				"store":storeid,
-				 				"date":todaysDate,
-				 				"id":Allure.appointmentId
-				 	 		};
-				 	 jQuery.ajax({
-				        	url : Allure.ajaxGetTimeUrl,
-				        	dataType : 'json',
-				 			type : 'POST',
-				 			data: {request:request},
-				 			beforeSend: function() { jQuery('#appointment_loader').show(); },
-					        complete: function() { jQuery('#appointment_loader').hide(); },
-
-				 			success : function(response){
-				 				jQuery("#pick_ur_time_div").html(response.output);
-				 				jQuery("#appointment-pricing").html(response.pricing_html);
-				 				window.sample = 30;
-				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
-				 				simple.sliderDemo();
-				 			}
-				        });
-					//ajax end
-
-					}
-		     });
-
-
-			 //ajax start to get the working days of piercers according to store
-
-
+         }
 
 	 });
 

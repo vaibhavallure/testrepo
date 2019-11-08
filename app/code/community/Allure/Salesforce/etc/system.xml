@@ -107,6 +107,34 @@
                             <show_in_store>1</show_in_store>
                             <depends><enabled>1</enabled></depends>
                         </wholesale_pricebook>
+                        <bulk_update_initial_time>
+                            <label>Bulk API - Initial Time</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                        </bulk_update_initial_time>
+                        <bulk_update_time>
+                            <label>Bulk API Time</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                        </bulk_update_time>
+                        <bulk_cron_time>
+                            <label>Cron expression per day</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Query time in minutes</comment>
+                            <!--<depends><is_enable_cron_perday>1</is_enable_cron_perday></depends>-->
+                        </bulk_cron_time>
 					</fields>
 				</general>
 			</groups>

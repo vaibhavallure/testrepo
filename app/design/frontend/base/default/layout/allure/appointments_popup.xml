@@ -131,7 +131,14 @@
 				<block type="appointments/popup" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/popup/register.phtml">
 					<block type="appointments/popup" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/popup/pickdatetime.phtml">
 						<block type="appointments/popup" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/popup/pickdate.phtml"/>
-						<block type="appointments/popup" name="appointments_popup_picktime" as="appointments_popup_picktime" template="allure/appointments/popup/picktime.phtml"/>
+						<block type="appointments/popup" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/popup/pickslot.phtml"/>
+					</block>
+					<block type="appointments/popup" name="appointments_popup_price_list" as="appointments_popup_price_list" template="allure/appointments/popup/price_list.phtml"/>
+				</block>
+				<block type="appointments/popup" name="appointments_popup_register_admin" as="appointments_popup_register_admin" template="allure/appointments/popup/register_admin.phtml">
+					<block type="appointments/popup" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/popup/pickdatetime.phtml">
+						<block type="appointments/popup" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/popup/pickdate.phtml"/>
+						<block type="appointments/popup" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/popup/pickslot.phtml"/>
 					</block>
 					<block type="appointments/popup" name="appointments_popup_price_list" as="appointments_popup_price_list" template="allure/appointments/popup/price_list.phtml"/>
 				</block>

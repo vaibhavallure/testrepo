@@ -341,6 +341,12 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                         -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
                         ) total_profit_amount
                      ')
+
+                ->columns('sum(
+                         (IFNULL(base_subtotal,0)-IFNULL(base_subtotal_canceled,0)-IFNULL(base_subtotal_refunded,0))+
+                         (IFNULL(base_discount_amount,0)+IFNULL(base_discount_canceled,0)-IFNULL(base_discount_refunded,0)) ) 
+                         total_profit_amount_only_product
+                     ')
                      ->columns('sum((IFNULL(main_table.base_total_invoiced,0)* IF(main_table.base_to_global_rate != 0, main_table.base_to_global_rate, 1))-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_invoiced_amount')
                      ->columns('sum((IFNULL(main_table.base_total_invoiced,0) * IF(main_table.base_to_global_rate != 0, main_table.base_to_global_rate, 1))-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0))
                                 -sum(IFNULL(main_table.base_total_refunded,0))
@@ -370,7 +376,11 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                       )
                         -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
                         ) total_revenue_amount')
-
+                ->columns('sum(
+                         (IFNULL(base_subtotal,0)-IFNULL(base_subtotal_canceled,0)-IFNULL(base_subtotal_refunded,0))+
+                         (IFNULL(base_discount_amount,0)+IFNULL(base_discount_canceled,0)-IFNULL(base_discount_refunded,0)) ) 
+                         total_profit_amount_only_product
+                     ')
                 ->columns('sum(
                         (IFNULL(main_table.base_total_paid,0)-IFNULL(base_total_refunded,0))
                        -(IFNULL(main_table.base_tax_invoiced,0)-(IFNULL(base_tax_refunded,0))
@@ -643,6 +653,16 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             'rate'          => $rate,
             'total'         => 'sum',
             'sortable'      => false,
+        ));
+
+        $this->addColumn('total_profit_amount_only_product', array(
+            'header'        => Mage::helper('sales')->__('Net Revenue from Products'),
+            'index'         => 'total_profit_amount_only_product',
+            'total'         => 'sum',
+            'type'          => 'currency',
+            'currency_code' => $currencyCode,
+            'sortable'      => false,
+            'rate'          => $rate,
         ));
 
 

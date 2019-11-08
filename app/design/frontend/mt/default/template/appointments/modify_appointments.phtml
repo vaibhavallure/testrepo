@@ -1,4 +1,6 @@
 <?php
+$limerick = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_limerick');
+$cork = Mage::helper('allure_virtualstore')->getStoreId('brown_thomas_cork');
 /**
 *
 *	Allure checkout step success order.
@@ -9,11 +11,13 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 	$model = Mage::registry('appointment_modified');
 	$apt_id = $model->getId();
 	$apt_email = $model->getEmail();
+	$store=$model->getStoreId();
 	//$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
 	//$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();	
 
 ?>
 	<?php if($apt_id):?>
+
 
 
     <style>
@@ -187,7 +191,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				         <button type="button" class="button" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
 				    </div>
 				    <div class="apt-modify-buttons-set">
-				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*',array('id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*',array('id'=>$apt_id,'email'=>$apt_email,'store'=>$store)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
 				    </div>
 				    
 				   	<div class="apt-buttons-set">
@@ -195,6 +199,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 					</div>
 				</div>
 			</div>
+
 		<?php endif;?>
 <!--  If the id or email not correct  -->	
 		
@@ -222,7 +227,14 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         }
 
 		    //Logic to cancel the apt
-			var reloadurl = '<?php echo $this->getUrl('*/index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+        var store = '<?= $model->getStoreId()?>';
+        var limerick = '<?= $limerick?>';
+        var cork = '<?= $cork?>';
+        var reloadurl = '<?php echo $this->getUrl('*/index/cancelapt', array('id' => $apt_id, 'email' => $apt_email, '_secure' => true)); ?>';
+        if(store === limerick || store === cork) {
+            reloadurl = '<?php echo $this->getUrl('*/indexNew/cancelapt', array('id' => $apt_id, 'email' => $apt_email, '_secure' => true)); ?>';
+        }
+       
 		    jQuery.ajax({
 		        url: reloadurl, //Relative or absolute path to response.php file
 		        method: 'get',

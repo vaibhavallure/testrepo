@@ -53,20 +53,6 @@
             <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
 			<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button"><?php echo $this->__("Back to Login")?></button>
-			<?php if(0):?>
-			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
-            <?php endif;?>
-
-            <?php
-
-                echo $this->getLayout()->createBlock('amazon_payments/script')
-                    ->setTemplate('amazon_payments/script.phtml')->toHtml();
-
-                echo $this->getLayout()->createBlock('amazon_payments/button')
-                    ->setTemplate('amazon_payments/button.phtml')->toHtml();
-            ?>
-
-
             <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">
                 <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
 
@@ -75,11 +61,6 @@
 	</div>
 </div>
 
-
-<?php
-   //echo $this->getLayout()->createBlock('amazon_payments/script')
-     //    ->setTemplate('amazon_payments/script.phtml')->toHtml();
-?>
 
 <script type="text/javascript">
 if (typeof Allure == "undefined") {

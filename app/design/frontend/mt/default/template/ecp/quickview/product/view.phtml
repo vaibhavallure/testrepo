@@ -87,7 +87,9 @@ $isGiftCardValue=($isGiftCard)?1:0;
                 <?php // echo $this->getChildHtml('description') ?>
                 <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_product->getShortDescription(), 'short description') ?>
             </div>
-             <?php if ($_product->getShowSpecialInstruction()):?>
+             <?php if ($_product->getShowSpecialInstruction()):
+             if(Mage::helper("customerloginmonitor")->isWholesaler()):
+                 ?>
            	 <div class="product-special-instructions">
 					<div class="special-instruction-label">
 						<label>Special Instructions:</label>
@@ -98,6 +100,7 @@ $isGiftCardValue=($isGiftCard)?1:0;
 						(Special requests might delay your order due to production time)
 					</div>
 			</div>
+			<?php endif;?>
 			<?php endif;?>
 
                 <?php if (!$this->hasOptions()): ?>

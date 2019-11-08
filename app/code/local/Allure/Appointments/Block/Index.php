@@ -19,7 +19,12 @@ class Allure_Appointments_Block_Index extends Mage_Core_Block_Template{
 					$appendUrl="?";
 					$appendUrl.= "store=".$storep;
 		}
+        $getCustomersInfo = Mage::helper('appointments/data')->getCustomersInfoSetting();
+		if($getCustomersInfo == 1):
+            return $this->getUrl('*/indexNew/save',array('_secure' => true)).$appendUrl;
+            else:
 		return $this->getUrl('*/index/save',array('_secure' => true)).$appendUrl;
+		endif;
 	}
 
 	public function getTimeActionUrl()
@@ -84,4 +89,5 @@ class Allure_Appointments_Block_Index extends Mage_Core_Block_Template{
 	private function getAppointmentStoreMapping(){
 	    return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 	}
+
 }

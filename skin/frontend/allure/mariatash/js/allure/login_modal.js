@@ -222,3 +222,9 @@ function openDelMyAccountModal(){
 	jQuery(".popupResetPasswordModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupDelMyAccModel").css({"opacity":"1","pointer-events":"auto"});
 };
+
+function gotoLoginPage(){
+    jQuery(".close").trigger('click');
+    jQuery("#sign_in_label").trigger('click');
+}
+

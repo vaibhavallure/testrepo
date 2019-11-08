@@ -15,6 +15,8 @@ class Allure_Salesforce_Helper_Data extends Mage_Core_Helper_Abstract{
     const XML_PATH_GUEST_ACCOUNT                = "allure_salesforce/general/guest_account";
     const XML_PATH_GENERAL_PRICEBOOK            = "allure_salesforce/general/general_pricebook";
     const XML_PATH_WHOLESALE_PRICEBOOK          = "allure_salesforce/general/wholesale_pricebook";
+    const XML_PATH_BULK_UPDATE_TIME             = "allure_salesforce/general/bulk_update_time";
+    const XML_PATH_BULK_UPDATE_INITIAL_TIME     = "allure_salesforce/general/bulk_update_initial_time";
     
     public function isEnabled(){
         return Mage::getStoreConfig(self::XML_PATH_SALESFORCE_ENABLED);
@@ -54,5 +56,17 @@ class Allure_Salesforce_Helper_Data extends Mage_Core_Helper_Abstract{
     
     public function getWholesalePricebook(){
         return Mage::getStoreConfig(self::XML_PATH_WHOLESALE_PRICEBOOK);
+    }
+
+    public function getLastRunTime() {
+        return Mage::getStoreConfig(self::XML_PATH_BULK_UPDATE_TIME);
+    }
+
+    public function setLastRunTime($lastRunTime) {
+        Mage::getModel('core/config')->saveConfig(self::XML_PATH_BULK_UPDATE_TIME,$lastRunTime)->cleanCache();
+    }
+
+    public function  getBulkUpdateInitialTime() {
+        return Mage::getStoreConfig(self::XML_PATH_BULK_UPDATE_INITIAL_TIME);
     }
 }

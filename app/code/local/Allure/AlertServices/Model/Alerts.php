@@ -1,7 +1,6 @@
 <?php
 //require_once Mage::getBaseDir().'/allure/alrGoogleAnalytics.php';
 require_once Mage::getBaseDir().'/lib/ALRGoogleAnalytics/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/app/code/local/Allure/InstaCatalog/Model/Instagramclient.php';
 class Allure_AlertServices_Model_Alerts
 {	
 	private function getConfigHelper(){
@@ -11,6 +10,7 @@ class Allure_AlertServices_Model_Alerts
 	public function alertProductPrice(){
 			try{
 				$helper = Mage::helper('alertservices');
+                $helper->alr_alert_log("call to alertProductPrice",'allureAlerts.log');
 
 				$status =	$this->getConfigHelper()->getEmailStatus();
 				$productPrice_status =$this->getConfigHelper()->getProductPriceStatus();
@@ -37,6 +37,8 @@ class Allure_AlertServices_Model_Alerts
         /* Get the collection */
         try{
             $helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertSalesOfFour",'allureAlerts.log');
+
             $status =	$this->getConfigHelper()->getEmailStatus();
             $test_status =	$this->getConfigHelper()->getTestEmailStatus();
             if (!$test_status) {
@@ -89,6 +91,8 @@ class Allure_AlertServices_Model_Alerts
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertSalesOfSix",'allureAlerts.log');
+
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$sales_status =	$this->getConfigHelper()->getSalesStatus();
 			if (!$sales_status) {
@@ -139,6 +143,8 @@ class Allure_AlertServices_Model_Alerts
 	public function alertCheckoutIssue(){
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertCheckoutIssue",'allureAlerts.log');
+
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$checkout_status =	$this->getConfigHelper()->getCheckoutIssuesStatus();
 			if (!$checkout_status) {
@@ -168,6 +174,8 @@ class Allure_AlertServices_Model_Alerts
 	public function alertNullUsers(){
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertNullUsers",'allureAlerts.log');
+
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$alr_status =	$this->getConfigHelper()->getAlrStatus();
 
@@ -191,6 +199,7 @@ class Allure_AlertServices_Model_Alerts
 	public function alertPageNotFound(){
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertPageNotFound",'allureAlerts.log');
 
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$alr_status =	$this->getConfigHelper()->getAlrStatus();
@@ -212,6 +221,9 @@ class Allure_AlertServices_Model_Alerts
 	public function alertAvgPageLoad(){
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertAvgPageLoad",'allureAlerts.log');
+
+
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$avg_load_status =	$this->getConfigHelper()->getPageLoadStatus();
 			if (!$avg_load_status) {
@@ -255,6 +267,9 @@ class Allure_AlertServices_Model_Alerts
 	public function alertAvgPageLoadEmail(){
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertAvgPageLoadEmail",'allureAlerts.log');
+
+
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$avg_load_status =	$this->getConfigHelper()->getPageLoadStatus();
 			if (!$avg_load_status) {
@@ -413,6 +428,8 @@ class Allure_AlertServices_Model_Alerts
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
+            $helper->alr_alert_log("call to alertSalesOfTwo",'allureAlerts.log');
+
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			$test_status =	$this->getConfigHelper()->getTestEmailStatus();
 			if (!$test_status) {
@@ -479,7 +496,9 @@ class Allure_AlertServices_Model_Alerts
     public  function  instaTokenAlert($debug = false){
 
 		    try{
-		        $helper = Mage::helper('alertservices');;
+		        $helper = Mage::helper('alertservices');
+                $helper->alr_alert_log("call to instaTokenAlert",'allureAlerts.log');
+
 		        $status =	$this->getConfigHelper()->getInstagramTokenStatus();
 		        $email_status =	$this->getConfigHelper()->getInstagramTokenEmailStatus();
 		        if (!$email_status) {
@@ -501,26 +520,5 @@ class Allure_AlertServices_Model_Alerts
             }
 
     }
-		/*$lastOrderDate = Mage::getModel("sales/order")
-										->getCollection()
-										->setCurPage(1)
-										->setPageSize(1)
-										->setOrder('main_table.entity_id', 'desc');
-				$cdate = date_create($currdate);
-				$ldate = date_create($lastOrderDate->getLastItem()->getCreatedAt());
 
-				$diff=date_diff($cdate,$ldate);
-				if (condition) {
-					# code...
-				}
-				var_dump('last order date : ');
-				var_dump($ldate);
-				var_dump('hours date diff: ');
-				var_dump($diff);
-				die();*/
-
-
-
-
-	
 }

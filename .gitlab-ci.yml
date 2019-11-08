@@ -3,6 +3,7 @@ before_script:
 stages:
   - development
   - alpha
+  - popup
   - beta
   - deploy
 
@@ -20,45 +21,63 @@ development:
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/app/etc/local.xml app/etc/local.xml
     - echo 'Deployed on Development'
     
-cloud_alpha:
-  environment: staging
-  stage: alpha
-  tags:
-    - cloud-alpha
-  only:
-    - bugfixes
-  script:
-    - mage-deploy mt
-    - echo 'Deployed on Staging'
-
-beta_teamwork:
+alpha_teamwork:
   environment: teamwork
-  stage: beta
+  stage: alpha
   tags:
     - alpha
   only:
     - teamwork
   script:
-    - deploy-magento mariatash
-    - rm -f media && ln -s /var/www/shared/mariatash/media media
-    - rm -f var && ln -s /var/www/shared/mariatash/var var
-    - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/etc/local.xml app/etc/local.xml
-    - echo 'Deployed on Teamwork Staging'
+    - mage-deploy mariatash-teamwork
+    - echo 'Deployed on Teamwork Staging!'
     
+alpha_elasticsearch:
+  environment: elasticsearch
+  stage: alpha
+  tags:
+    - alpha
+  only:
+    - elasticsearch-development
+  script:
+    - mage-deploy mariatash-elasticsearch
+    - echo 'Deployed on ElasticSearch Staging'
     
-beta_staging:
-  environment: beta_staging
+alpha_parispopup:
+  environment: popup
+  stage: alpha
+  tags:
+    - alpha
+  only:
+    - paris_popup
+  script:
+    - mage-deploy mt-popup
+    - echo 'Deployed on Nascense Staging'
+
+alpha_bugfixes:
+  environment: bugfixes
+  stage: alpha
+  tags:
+    - alpha
+  only:
+    - bugfixes
+  script:
+    - mage-deploy mariatash-bugfixes
+    - echo 'Deployed on Bugfixes Staging'
+
+beta:
+  environment: beta
   stage: beta
   tags:
     - beta
   only:
     - master
   script:
-    - deploy-magento mt-staging
-    - rm -f media && ln -s /var/www/shared/mt-staging/media media
-    - rm -f var && ln -s /var/www/shared/mt-staging/var var
-    - rm -f app/etc/local.xml && ln -s /var/www/shared/mt-staging/etc/local.xml app/etc/local.xml
-    - echo 'Deployed on Beta Staging'
+    - deploy-magento mariatash
+    - rm -f media && ln -s /var/www/shared/mariatash/media media
+    - rm -f var && ln -s /var/www/shared/mariatash/var var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/app/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Alpha'
 
 deploy-cloud:
   environment: production

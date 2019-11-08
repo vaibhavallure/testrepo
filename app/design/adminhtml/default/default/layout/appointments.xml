@@ -141,35 +141,42 @@
 	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
       </block>
      </reference>
-  </appointments_adminhtml_appointments_new> 
-<!--     <appointments_adminhtml_appointments_print>
-	<reference name="head">
-	 	
-	 	<action method="addJs"><file>jquery/jquery-1.8.1.min.js</file></action>
-	 	<action method="addJs"><file>jquery/jquery-ui.js</file></action>
-	 	<action method="addJs"><file>jquery/jquery.jcarousel.min.js</file></action>
-	 	<action method="addItem"><type>skin_js</type><name>js/jQuery/noconflict.js</name></action>
-	 	<action method="addItem"><type>skin_js</type><name>js/appointmentjs/prettify.js</name></action>
-	 	<action method="addCss"><stylesheet>css/appointmentcss/mdp.css</stylesheet></action>
-	    <action method="addJs"><file>allure/appointments/appointment.js</file></action>
-	    <action method="addJs"><file>allure/appointments/sliderDemo.js</file></action>
-        <action method="addJs"><file>allure/appointments/jQAllRangeSliders-min.js</file></action>
-        <action method="addJs"><file>allure/appointments/dcalendar_picker.js</file></action>
-        <action method="addJs"><file>allure/appointments/intlTelInput.min.js</file></action>
-        <action method="addJs"><file>allure/appointments/intlTelInput.js</file></action>
-        <action method="addJs"><file>varien/form.js</file></action>
-        
-        
-        <action method="addCss"><stylesheet>css/appointmentcss/appointments.css</stylesheet></action>
-        <action method="addCss"><stylesheet>css/appointmentcss/sliderDemo.css</stylesheet></action>
-        <action method="addCss"><stylesheet>css/appointmentcss/dcalendar_picker.css</stylesheet></action>
-         <action method="addCss"><stylesheet>css/appointmentcss/intlTelInput.css</stylesheet></action>
-        
-	</reference>
-	<reference name="content">
-           <block type="core/template" name="print_appointment" template="appointments/print_appointments.phtml" >
-      </block>
-     </reference>
-  </appointments_adminhtml_appointments_print>  -->
+  </appointments_adminhtml_appointments_new>
+
+
+	<appointments_adminhtml_appointments_newspecial>
+		<reference name="content">
+			<block type="core/template" name="book_appointment_special" template="appointments/book_appointment_special.phtml" />
+		</reference>
+	</appointments_adminhtml_appointments_newspecial>
+	<!--     <appointments_adminhtml_appointments_print>
+        <reference name="head">
+
+             <action method="addJs"><file>jquery/jquery-1.8.1.min.js</file></action>
+             <action method="addJs"><file>jquery/jquery-ui.js</file></action>
+             <action method="addJs"><file>jquery/jquery.jcarousel.min.js</file></action>
+             <action method="addItem"><type>skin_js</type><name>js/jQuery/noconflict.js</name></action>
+             <action method="addItem"><type>skin_js</type><name>js/appointmentjs/prettify.js</name></action>
+             <action method="addCss"><stylesheet>css/appointmentcss/mdp.css</stylesheet></action>
+            <action method="addJs"><file>allure/appointments/appointment.js</file></action>
+            <action method="addJs"><file>allure/appointments/sliderDemo.js</file></action>
+            <action method="addJs"><file>allure/appointments/jQAllRangeSliders-min.js</file></action>
+            <action method="addJs"><file>allure/appointments/dcalendar_picker.js</file></action>
+            <action method="addJs"><file>allure/appointments/intlTelInput.min.js</file></action>
+            <action method="addJs"><file>allure/appointments/intlTelInput.js</file></action>
+            <action method="addJs"><file>varien/form.js</file></action>
+
+
+            <action method="addCss"><stylesheet>css/appointmentcss/appointments.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/appointmentcss/sliderDemo.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/appointmentcss/dcalendar_picker.css</stylesheet></action>
+             <action method="addCss"><stylesheet>css/appointmentcss/intlTelInput.css</stylesheet></action>
+
+        </reference>
+        <reference name="content">
+               <block type="core/template" name="print_appointment" template="appointments/print_appointments.phtml" >
+          </block>
+         </reference>
+      </appointments_adminhtml_appointments_print>  -->
   
 </layout>

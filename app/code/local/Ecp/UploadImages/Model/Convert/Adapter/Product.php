@@ -178,6 +178,13 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
 
                 self::log('Creating Images for Product "#'.$product->getSku().'"');
                 $imageRenamedFile = $media->create($product->getSku(), $newImage);
+
+                /*-----code added by allure to clear image cache----*/
+                $fileName=pathinfo($imageRenamedFile)['basename'];
+                $this->clearImageCache($fileName);
+                /*allure code ended -------------------------------*/
+
+
                 self::log('Done Creating Images for Product "#'.$_product->getSku().'" => '.$imageRenamedFile);
                 $used = true;
 
@@ -305,6 +312,24 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
             }
         }    
 
+    }
+
+/*code added by allure to clear image cache-------------------*/
+    function clearImageCache($file) {
+        self::log("-----------------------------------------------------");
+        self::log('checking existing cache for image =>"'.$file.'"');
+        $folder=Mage::getBaseDir('media')."/catalog/product/cache/";
+        $dir = new RecursiveDirectoryIterator($folder);
+        $ite = new RecursiveIteratorIterator($dir);
+        $pattern="/".$file."/";
+        $files = new RegexIterator($ite, $pattern, RegexIterator::GET_MATCH);
+        foreach($files as $key=>$file) {
+            self::log('cache found path =>"'.$key.'"');
+            unlink($key);
+            self::log('cache removed');
+        }
+        self::log("done");
+        self::log("------------------------------------------------------");
     }
 
 }

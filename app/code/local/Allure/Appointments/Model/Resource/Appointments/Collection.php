@@ -8,5 +8,4 @@ class Allure_Appointments_Model_Resource_Appointments_Collection extends Mage_Co
         $this->_init('appointments/appointments');
     }
 
-    
 }

@@ -122,7 +122,7 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
     Mage::app()->setCurrentStore(0);
     $websiteId = Mage::app()->getWebsite()->getId();
     $store=Mage::app()->getStore();
-    $email = "ebizmart@ebiz.com";
+    $email = "libertylondon@customers.mariatash.com   ";
 
 
     try {
@@ -135,8 +135,8 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
             $customer = Mage::getModel('customer/customer');
             $customer->setWebsiteId($websiteId)
                 ->setStore($store)
-                ->setFirstname('Ebiz')
-                ->setLastname('Mart')
+                ->setFirstname('Liberty of')
+                ->setLastname('London')
                 ->setEmail($email)
                 ->setPassword("password");
             $customer->save();
@@ -146,15 +146,15 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
             ->setFirstname($customer->getFirstname())
             ->setLastname($customer->getLastname());
 
-        $billingAddress->setCity("London");
+        $billingAddress->setCity("Liberty of");
         $billingAddress->setRegion("London");
-        $billingAddress->setPostcode("WC2N 5DU");
+        $billingAddress->setPostcode("W1B5AH");
         $billingAddress->setCountryId("UK");
         $billingAddress->setStreet(array(
-            '0' => '907 Palmer Avenue',
-            '1' => 'H3'
+            '0' => 'Liberty Plc, 210-220 Regent St,',
+            '1' => 'Soho'
         ));
-        $billingAddress->setTelephone("123456789");
+        $billingAddress->setTelephone("442039505227");
 
         $quoteObj = Mage::getModel('sales/quote')
             ->assignCustomer($customer);
@@ -216,10 +216,10 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
         if($transaction_id){
             $d = date_parse_from_format("m/d/Y", $order_date);
            if(!empty($d["month"])){
-            $transaction_id = "EB-".$transaction_id.'-'.$d["month"];
+            $transaction_id = "L-".$transaction_id.'-'.$d["month"];
            }
            else{
-            $transaction_id = "EB-".$transaction_id;
+            $transaction_id = "L-".$transaction_id;
            }
 //            echo "<br>Transaction ID".$transaction_id."<br>";
             $quoteObj->setReservedOrderId($transaction_id);

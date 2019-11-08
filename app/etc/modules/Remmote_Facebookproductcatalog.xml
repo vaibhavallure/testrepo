@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+ /**
+  * Copyright © 2016 Remmote.com
+  * Module Config for Facebook Product Catalog
+  * @autor remmote
+  */
+-->
+<config>
+    <modules>
+        <Remmote_Facebookproductcatalog>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Remmote_Facebookproductcatalog>
+    </modules>
+</config>

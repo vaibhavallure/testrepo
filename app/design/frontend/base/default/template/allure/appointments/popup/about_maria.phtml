@@ -1,3 +1,30 @@
 <div id="about-maria" class="container-fluid about-maria">
-    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-about-maria')->toHtml();?>
+    <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-about-maria')->toHtml();?>
+
+    <div class="info-block col-md-12">
+
+        <div class="row" style="display: flex">
+            <div class="col-lg-6 half-div-left fill p-0" >
+<!--                <img class="p-0" src="--><?php //echo $this->getSkinUrl("images/allure/popup/maria.jpg")?><!--">-->
+                <div class="d-md-block d-none"  id="maria-cover"></div>
+            </div>
+            <div class="col-lg-6 half-div-right">
+                <div class="container">
+                    <div class="div-about-maria">
+                        <p class="black-subtitle">maria tash</p>
+                        <div class="about-maria-content">
+                            <p class="p-black about-maria-txt-one translate-popup">For over two decades, Maria Tash has been revolutionizing the fine Jewellery and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and Jewellery, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.</p>
+                            <p class="p-black about-maria-txt-two translate-popup"><?php echo $this->__('A native New Yorker, Tash studied Astronomy at Columbia University before moving to study abroad in London. It was there that her love of fine Jewellery, which was instilled in her at a young age by her mother, was fused with her passion for piercings. Tash began her career creating custom navel Jewellery, and opened her first studio, Venus Modern Body Art, in 1993 in the East Village of New York.')?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
 </div>
+<a id="faq-arrow" href="#faq" class="link-down down-arrowfrm">
+    <img src="<?php echo $this->getSkinUrl("images/allure/popup/down-black.png") ?>" class="down-arrow-size ">
+</a>

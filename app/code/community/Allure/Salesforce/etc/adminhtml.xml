@@ -19,6 +19,11 @@
 		                    <action>adminhtml/gen/index</action>
 		                    <sort_order>11</sort_order>
 		                </csv_gen>
+						<salesforce_sync translate="title" module="allure_salesforce">
+							<title>Salesforce Sync</title>
+							<action>adminhtml/sync/index</action>
+							<sort_order>12</sort_order>
+						</salesforce_sync>
 		            </children>
                 </settings>
             </children>

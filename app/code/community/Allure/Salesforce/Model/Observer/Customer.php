@@ -17,12 +17,14 @@ class Allure_Salesforce_Model_Observer_Customer{
     private function processCustomer($object , $objectType , $fieldName , $requestMethod , $response){
         $responseArr = json_decode($response,true);
         $helper = $this->getHelper();
+        $helper->salesforceLog($responseArr);
         $isFailure = false;
         if($responseArr["success"]){
             try{
 //                $helper->salesforceLog('Set data on '.$fieldName. '  for objectType'.$objectType.' resMethod'.$requestMethod);
                 $object->setData($fieldName, $responseArr["id"]);
                 $object->getResource()->saveAttribute($object, $fieldName);
+                $helper->salesforceLog("Saved Salesforce ID succesfully for Object ".$objectType. " With ID -".$object->getId());
             }catch (Exception $e){
                 $isFailure = true;
                 $helper->salesforceLog("Exception in processCustomer of object ".$objectType);
@@ -43,17 +45,9 @@ class Allure_Salesforce_Model_Observer_Customer{
 
     public function addCustomerToSalesforce($customer){
         $helper  = $this->getHelper();
-        $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
-        $oldStoreArr = array();
-
-        foreach ($ostores as $storeO){
-            $oldStoreArr[$storeO->getId()] = $storeO->getName();
-        }
-
-        $oldStoreArr[0] = "Admin";
 
         if ($customer) {
-
+            $helper->salesforceLog("In Customer Observer -addCustomerToSalesforce ".$customer->getId());
             $objectType     = $helper::ACCOUNT_OBJECT;
             $objectTypeC    = $helper::CONTACT_OBJECT;   //created for Contact
             $sFieldName     = $helper::S_CUSTOMERID;
@@ -61,167 +55,39 @@ class Allure_Salesforce_Model_Observer_Customer{
 
             $salesforceId   = $customer->getSalesforceCustomerId();
             $salesforceContactId   = $customer->getSalesforceContactId();
-            $requestMethod  = "GET";
-            $requestMethodContact  = "GET";
+            $IsTeamworkCustomer = $customer->getIsTeamworkCustomer();
+
+            if($IsTeamworkCustomer){
+                $helper->salesforceLog("Return from Customer Event - Teamwork customer -".$customer->getId());
+                return;
+            }
+
+            $requestMethod  = "POST";
+            $requestMethodContact  = "POST";
             $urlPath        = $helper::ACCOUNT_URL;
             $contactUrlPath = $helper::CONTACT_URL;     //created for Contact
 
-            if ($salesforceId) {
-                $urlPath       .=  "/" .$salesforceId;
-                $requestMethod  = "PATCH";
-            } else{
-                $requestMethod  = "POST";
+            if(!empty($salesforceId ) && !empty($salesforceContactId)){
+                $helper->salesforceLog("Tried to create Customer and Contact but they are already present in SF :-".$customer->getId());
+                return;
             }
 
-            if ($salesforceContactId) {
-                $contactUrlPath.=  "/" .$salesforceContactId;
-                $requestMethodContact = "PATCH";
-            } else{
-                $requestMethodContact = "POST";
-            }
-
-            $prefix = $customer->getPrefix();
-            $fName = $customer->getFirstname();
-            $mName = $customer->getMiddlename();
-            $lName = $customer->getLastname();
-            $fullName = "";
-
-            if ($prefix){
-                $fullName .= $prefix." ";
-            }
-
-            $fullName .= $fName . " ";
-
-            if ($mName) {
-                $fullName .= $mName;
-            }
-
-            $fullName .= $lName;
-
-
-            $defaultBillingAddr     = $customer->getDefaultBillingAddress();
-            $state       = "";
-            $countryName = "";
-
-            if ($defaultBillingAddr) {
-                if (!empty($defaultBillingAddr['region_id'])) {
-                    $region = Mage::getModel('directory/region')
-                        ->load($defaultBillingAddr['region_id']);
-                    $state = $region->getName();
-                } else {
-                    $state = $defaultBillingAddr['region'];
-                }
-
-                $bcountryNm = $defaultBillingAddr['country_id'];
-
-                if (!empty($bcountryNm)) {
-                    if (strlen($bcountryNm) > 3) {
-                        $countryName = $bcountryNm;
-                    } else {
-                        $country = Mage::getModel('directory/country')
-                            ->loadByCode($defaultBillingAddr['country_id']);
-                        if($country->getId()){
-                            $countryName = $country->getName();
-                        }
-                    }
-                }
-            }
-
-            $stateShip       = "";
-            $countryNameShip = "";
-            $defaultShippingAddr    = $customer->getDefaultShippingAddress();
-
-            if ($defaultShippingAddr) {
-                if (!empty($defaultBillingAddr['region_id'])) {
-                    $region = Mage::getModel('directory/region')
-                        ->load($defaultShippingAddr['region_id']);
-                    $stateShip = $region->getName();
-                } else {
-                    $stateShip = $defaultShippingAddr['region'];
-                }
-
-                $scountryNm = $defaultShippingAddr['country_id'];
-
-                if (!empty($scountryNm)) {
-                    if(strlen($scountryNm) > 3){
-                        $countryNameShip = $scountryNm;
-                    }else{
-                        $country = Mage::getModel('directory/country')
-                            ->loadByCode($defaultShippingAddr['country_id']);
-                        if($country->getId()){
-                            $countryNameShip = $country->getName();
-                        }
-                    }
-                }
-            }
-
-            $request = array(
-                "Name"                => $fullName,
-                //"AccountNumber"       => "",
-                //"Site"                => "",
-                //"AccountSource"       => "",
-                //"Birth_Date_c"        => ($customer->getDob()) ? date("Y-m-d",strtotime($customer->getDob())) : null,//"YYYY-MM-DD",
-                "Company__c"          => $customer->getCompany(),
-                "Counterpoint_No__c"  => $customer->getCounterpointCustNo(),
-                "Created_In__c"       => $customer->getCreatedIn(),
-                "Customer_ID__c"      => $customer->getId(),
-                "Customer_Note__c"    => $customer->getCustomerNote(),
-                "Default_Billing__c"  => $customer->getDefaultBilling(),
-                "Default_Shipping__c" => $customer->getDefaultShipping(),
-                //"Description"         => "",
-                "Email__c"            => $customer->getEmail(),
-                //"Fax"                 => "",
-                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
-                "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
-                "Store__c"            => $oldStoreArr[$customer->getStoreId()],
-                "Old_Store__c"          => $oldStoreArr[$customer->getOldStoreId()],
-                "Teamwork_Customer_ID__c"   => $customer->getTeamworkCustomerId(),
-                "TW_UC_GUID__c"             => $customer->getTwUcGuid(),
-                "Group__c"            => $customer->getGroupId(),
-                "BillingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
-                "BillingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",
-                "BillingState"        => ($defaultBillingAddr) ? $state : "",
-                "BillingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
-                "BillingCountry"      => ($defaultBillingAddr) ? $countryName : "",
-                "ShippingStreet"      => ($defaultShippingAddr) ? implode(", ",$defaultShippingAddr->getStreet()) : "",
-                "ShippingCity"        => ($defaultShippingAddr) ? $defaultShippingAddr->getCity() : "",
-                "ShippingState"       => ($defaultShippingAddr) ? $stateShip : "",
-                "ShippingPostalCode"  => ($defaultShippingAddr) ? $defaultShippingAddr->getPostcode() : "",
-                "ShippingCountry"     => ($defaultShippingAddr) ? $countryNameShip : ""
-            );
-
-            if ($customer->getDob()) {
-                $request["Birth_Date__c"] =  date("Y-m-d",strtotime($customer->getDob()));
-            }
-
-            $contactRequest = array(
-                "FirstName"           => $fName,
-                "MiddleName"          => $mName,
-                "LastName"            => $lName,
-                "Email"               => $customer->getEmail(),
-                "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
-                "MailingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
-                "MailingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",
-                "MailingState"        => ($defaultBillingAddr) ? $state : "",
-                "MailingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
-                "MailingCountry"      => ($defaultBillingAddr) ? $countryName : "",
-                "Contact_Id__c"       => $customer->getId(),
-                "AccountID"           => ""
-            );
-
-            //tmwork fields accept marketing
-            if ($customer->getTwAcceptMarketing()) {
-                $request["Accept_Marketing__c"] = $customer->getTwAcceptMarketing();
-            }
-            //tmwork fields accept transactional
-            if ($customer->getTwAcceptTransactional()) {
-                $request["Accept_Transactional__c"] = $customer->getTwAcceptTransactional();
-            }
+            $requestData = $helper->getCustomerRequestData($customer,true,true);
+            $accountRequest = $requestData["customer"];
+            $contactRequest = $requestData["contact"];
 
             $helper->salesforceLog("----- customer data -----");
-            $helper->salesforceLog($request);
+            $helper->salesforceLog($accountRequest);
 
-            $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
+            if(empty($salesforceId)){
+                $requestMethod  = "POST";
+                $response    = $helper->sendRequest($urlPath , $requestMethod , $accountRequest);
+            }
+            else{
+                $helper->salesforceLog("Customer already present in SF :-".$customer->getId());
+                return;
+            }
+
             $this->processCustomer($customer,$objectType,$sFieldName,$requestMethod,$response);
             $responseArr = json_decode($response,true);
 
@@ -231,19 +97,15 @@ class Allure_Salesforce_Model_Observer_Customer{
 
                 $contactRequest['AccountID'] = $responseArr["id"];
 
-                $contactResponse    = $helper->sendRequest($contactUrlPath , $requestMethodContact , $contactRequest);
-                $this->processCustomer($customer,$objectTypeC,$sCFieldName,$requestMethodContact,$contactResponse);
-                return $responseArr["id"];
-            }
-
-            if(!empty($salesforceContactId)){
-                $helper->salesforceLog("----- contact data update -----");
-                $helper->salesforceLog($contactRequest);
-
-                $contactRequest['AccountID'] = $salesforceId;
-
-                $contactResponse    = $helper->sendRequest($contactUrlPath , $requestMethodContact , $contactRequest);
-                $this->processCustomer($customer,$objectTypeC,$sCFieldName,$requestMethodContact,$contactResponse);
+                if(empty($salesforceContactId)){
+                    $contactResponse    = $helper->sendRequest($contactUrlPath , $requestMethodContact , $contactRequest);
+                    $this->processCustomer($customer,$objectTypeC,$sCFieldName,$requestMethodContact,$contactResponse);
+                    return $responseArr["id"];
+                }
+                else{
+                    $helper->salesforceLog("Contact already present in SF :-".$customer->getId());
+                    return;
+                }
             }
             return "";
         }

@@ -2,68 +2,69 @@
     <i class="fa fa-bars"></i>
     <i class="fa fa-close"></i>
 </a>
-
 <!--TOP SECTION-->
-<div id="top" class="container-fluid hero-image" >
-    <div class="mt_logo">MARIA TASH</div>
+
+<div id="top" class="container-fluid hero-image">
+    <div class="mt_logo p-lg-4"><img src="<?php echo $this->getSkinUrl('images/allure/popup/mt-logo.png'); ?>"></div>
+    <!-- <div class="p-0 image-div"><img src="<//?php echo $this->getSkinUrl('images/allure/popup/front-30.jpg'); ?>"></div> -->
     <div class="pop-up-div">
         <div class="fluid-container">
             <div id="top-popup-wrapper" class="row">
+<!--                <form method="post" action="--><?php //echo $this->getUrl('allure_appointments/translate') ?><!--">-->
+                <div class="language col-12 text-center m-1 mt-2">
+                    <select id="translate" class="border-0 text-center">
+                        <option value="en" class="translate-popup" >Language: English</option>
+                        <option value="fr" class="translate-popup" selected>Language: French</option>
+                    </select>
+                </div>
+
+<!--                </form>-->
                 <div class="pop-up-title">
-                    <p class="xpaces">Maria Tash x SPACE <br> Los Angeles Pop-up</p>
+                    <p class="xpaces translate-popup"><?php echo $this->__('Maria Tash x Le Bon<br> Marché Pop-up')?></p>
                 </div>
                 <div class="col-md-12 pop-up-content">
-                    <p id="top-subheading" class="p-white d-block d-sm-none">Join the Maria Tash team of global experts in Los Angeles for four days only.</p>
+                    <p id="top-subheading" class="p-white d-block d-sm-none translate-popup"><?php echo $this->__('Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.')?></p>
 
                     <div id="btnBookTop" class="btn-div d-block d-sm-none">
                         <a href="#booking">
-                            <button id="btnBooking" class="input-box btn" type="submit">BOOK NOW</button>
+                            <button id="btnBooking" class="input-box btn translate-popup" type="submit">BOOK NOW</button>
                         </a>
                     </div>
 
-                    <p id="top-subtitle" class="subtitle">Exclusively at Nordstrom Local Melrose</p>
-                    <p class="p-white d-none d-sm-block">Renowned for her innovation in piercing, Tash has
-                        developed a technique through which each client’s
-                        personal style, complexion, and anatomy guide the
-                        curation of jewelry combined to best flatter the
-                        wearer. The brand’s unique approach to piercing
-                        and styling looks makes it one of the most coveted
-                        brands today. Shop the fine jewelry collections and
-                        experience Luxury Piercing and custom styling.</p>
-                    <p class="p-center">
-                        Wednesday April 3rd<br>
-                        10am - 2pm<br>
-                        Thursday April 4th - Saturday April 6th <br>
-                        9am - 8pm<br>
-                        Sunday April 7th<br>
-                        10am - 7pm
+                    <!-- <p id="top-subtitle" class="subtitle">Exclusively at Nordstrom Local Melrose</p> -->
+                    <p class="p-white d-none d-sm-block first-paragraph translate-popup"><?php echo $this->__('Renowned for her innovation in piercing, Tash has<br> developed a technique through which each client’s<br> personal style, complexion, and anatomy guide the<br> curation of Jewellery combined to best flatter the<br> wearer. The brand’s unique approach to piercing and<br> styling  makes it one of the most coveted<br> brands today. Shop the fine Jewellery collections and<br> experience Luxury Piercing and custom styling.')?></p>
+                    <p class="p-center second-paragraph">
+                        <span class="translate-popup">31st <?php echo $this->__('August') ?></span> - <span class="translate-popup">20th <?php echo $this->__('October') ?></span><br><br>
+                        <span class="translate-popup"><?php echo $this->__('Monday')?></span> - <span class="translate-popup"><?php echo $this->__('Wednesday')?></span>: 10:00 - 20:00<br>
+                        <span class="translate-popup"><?php echo $this->__('Thursday') ?></span>: 10:00 - 20:45<br>
+                        <span class="translate-popup"><?php echo $this->__('Friday') ?></span>-<span class="translate-popup"><?php echo $this->__('Saturday') ?></span>: 10:00 - 20:00<br>
+                        <span class="translate-popup"><?php echo $this->__('Sunday') ?></span class="translate-popup">: 11:00 - 19:45
                     </p>
-                
-                    <p class="p-center" >
-                        Nordstrom Local Melrose<br> 8401 Melrose Place<br>
-                        Los Angeles, CA 90069<br>
-                        323-602-2201<br>
+                    <p class="p-center third-paragraph">
+                        Le Bon Marché
+                        <br>
+                        24, Rue de Sèvres, 75007, Paris<br>
                     </p>
-
-                    <p class="p-center">For Piercing or Appointment questions,<br>please reach us at<br>
-                        833-775-TASH
+                    <p class="p-center third-paragraph">
+                        <span class="translate-popup" style="padding: 0px 15px">Contact us anytime:</span>
+                       <br><span>Email: ​ paris@mariatash.com</span><br>
+<!--                        <span>Tel: +44 203 950 5229</span>-->
                     </p>
-                    <p class="p-center">
-                        Appointments are not necessary for fittings and installs, however they are preferred for piercings.<br>
-                        Walk-ins are always welcome!
-                    </p>
+                    <p class="p-center forth-paragraph translate-popup " style="padding: 0px 11px;">Appointments are recommended for piercings but are not necessary for Jewellery installations. Walk-ins welcome, based on availability.</p>
                     <div id="btnBookBottom" class="btn-div d-none d-sm-block">
                         <a href="#booking">
-                            <button  id="btnBooking" class="input-box btn"  type="submit">BOOK NOW</button>
+                            <button  id="btnBooking" class="input-box btn translate-popup"  type="button"><?php echo $this->__('BOOK NOW')?></button>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="down-arrow">
-        <a href="#booking" id="booking-dwn" class="link-down"><img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size" ></a>
-    </div>
+    <div class="arrow-div">
+      <div class="down-arrow">
+          <a href="#booking" id="booking-dwn" class="link-down"><img src="<?php echo $this->getSkinUrl("images/allure/popup/popup-down-arrow-wt.png")?>" class="down-arrow-size" ></a>
+      </div>
+  </div>
 </div>
 
 <!--END OF TOP SECTION-->
