@@ -1250,9 +1250,9 @@ button#btnConfirm {
 #price-list .xpaces.translate-popup {
   letter-spacing: 1.5px;
 }
-/* .notify-label .translate-popup {
+.notify-label .translate-popup {
   margin-bottom: 0;
-} */
+}
 .datepicker th.next {
   width: auto;
   height: auto;
