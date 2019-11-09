@@ -231,7 +231,7 @@ function loadBaseImage(){
     });
     var zoom_img = jQuery('#zoom-img');
     zoom_img.attr('data-src','');
-    zoom_img.attr('data-src',"<?php echo $_helper->productAttribute($_product, $_img, 'image');?>");
+    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(0).attr('data-src'));
     setFacebook();
 
     shareLikeTwitter();
