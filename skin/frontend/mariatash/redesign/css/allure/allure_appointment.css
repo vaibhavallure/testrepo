@@ -534,6 +534,9 @@ div#btnContinue {
   padding: 10px;
   border-radius: 0;
 }
+.datepicker.datepicker-dropdown {
+  width: 322px;
+}
 
 select#selectTime {
   line-height: 30px;
@@ -772,21 +775,9 @@ div#btnBookTop {
       z-index: 999;
     }
     a#btnPriceList {
-			  margin: 20px auto;
-      /* text-align: center;
-      display: block;
-      margin: 20px auto;
-      color: #C3C2C5;
-      font-size: 18px;
-      text-transform: uppercase;
-      text-decoration: underline;
-      line-height: 10px;
-      font-family: urw-din-medium; */
+			margin: 20px 15px;
+			display: block;
     }
-
-    /* div#booking {
-        padding-top: 231px;
-    } */
 
     .down-arrow-maria,
     .link-down {
@@ -816,13 +807,15 @@ div#btnBookTop {
 
     div#price-list {
       position: fixed;
-      top: 0;
+      top: 50%;
       bottom: 0;
-      left: 0;
+      left: 50%;
       right: 0;
       z-index: 9999;
       display: none;
 			overflow: auto;
+			min-height: 460px;
+			transform: translate(-50%, -50%);
     }
 
     div#booking-wrapper {
@@ -847,14 +840,6 @@ div#btnBookTop {
     input[type="checkbox"]+label:before {
         margin-bottom: 1px;
     }
-
-	div#notify-box {
-	    margin-bottom: 3em;
-	}
-
-	/* .job-wrapper, .people-wrapper {
-		border-top: 0.75px solid #d8d8d8;
-	} */
 
 	.job-wrapper, .people-wrapper label.label {
 		margin-bottom: 25px;
@@ -1265,7 +1250,36 @@ button#btnConfirm {
 .notify-label .translate-popup {
   margin-bottom: 0;
 }
-
+.datepicker th.next {
+  width: auto;
+  height: auto;
+  right: 0;
+  top: 0;
+  background: none;
+}
+.datepicker th.prev {
+  width: auto;
+  height: auto;
+  left: 0;
+  top: 0;
+  background: none;
+  transform: rotate(0deg);
+}
+.table-condensed {
+  width: 100%;
+}
+.table-condensed span.month.focused.active {
+  background: #000 !important;
+}
+.modal-confirm-appointment .modal-header {
+  margin: 40px 0 30px;
+}
+#people-box .para-bold {
+  font-size: 13px;
+}
+.attr-count{
+	margin-top: 11px;
+}
 @media (min-width:992px){
 	#desktop-slot {
 	  margin-top: 128px;
@@ -1296,5 +1310,34 @@ button#btnConfirm {
 	}
 	.notify-label .translate-popup{
 		padding-left: 45px;
+	}
+	div#notify-box{
+		padding: 0 30px;
+	}
+	.btn-div {
+    padding: 0 30px;
+		margin-bottom: 40px;
+	}
+	#datetime-box {
+    margin-bottom: 0;
+	}
+	.notify-text-line{
+		padding: 0;
+	}
+	.peoplediv {
+    padding: 0 15px 0 0;
+	}
+	#icon-price-close{
+		width: 100%;
+	}
+	#icon-price-close img{
+		position: absolute;
+    right: 24px;
+	}
+}
+@media (min-width:991px){
+	.appointments-book-store .error.invalid-feedback{
+		text-align: left;
+    padding: 0 3px;
 	}
 }

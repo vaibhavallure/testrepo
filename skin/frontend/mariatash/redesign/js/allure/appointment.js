@@ -175,7 +175,7 @@ var addCustomerJob = function (srno) {
                 <div class="col-12">
                     <div class="row">
                         <div class="col-8">
-                            <label class="label translate-popup para-bold color-6">${__('Number of Piercings:')}</label>
+                            <label class="label translate-popup para-bold color-6 attr-count">${__('Number of Piercings:')}</label>
                         </div>
                     <div class="col-4 text-right">
                         <select id="piercing_${srno}" class="input-box quantity-count"  name="customer[${srno}][piercing]" onchange="changePiercingQty(this)" disabled>
