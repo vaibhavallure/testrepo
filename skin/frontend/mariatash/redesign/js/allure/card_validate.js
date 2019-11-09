@@ -1,5 +1,8 @@
 jQuery(document).ready(function(){
-	applyCard(jQuery('input[name="payment[cc_number]"]'));
+	var initCardNumber = jQuery('input[name="payment[cc_number]"]');
+	if(initCardNumber.val()){
+		applyCard(jQuery('input[name="payment[cc_number]"]'));
+	}
 	jQuery(document).on('keyup blur','input[name="payment[cc_number]"]',function() {
 		applyCard(jQuery(this));
 	});
