@@ -120,8 +120,10 @@ jQuery(document).ready(function () {
             jQuery('#product-details-flow').removeClass('offset-66');
             jQuery('#product-detail-image').removeClass('fix-image');
         }
-        if (jQuery(window).width() >= 1363) {
 
+
+
+        if (jQuery(window).width() >= 1363) {
             var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
                 jQuery(".mt-logo").addClass('d-none');
@@ -183,6 +185,10 @@ jQuery(document).ready(function () {
             jQuery('.mariatash-header').removeClass('scrolled-menu');
             jQuery("section.sub-menu").removeClass("scrolled");
         }
+
+
+
+
     });
 
 
