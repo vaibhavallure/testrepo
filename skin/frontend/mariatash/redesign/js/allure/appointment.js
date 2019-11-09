@@ -242,9 +242,10 @@ var calculateTime = function () {
 
     if(old_time_in_min!=time_in_min) {
 
+        var hoursLabel=(hours>1)?"hours":"hour";
 
     timeSpan.slideUp("slow",function () {
-        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __('hour')+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__('minutes')+'</span>');
+        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __(hoursLabel)+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__('minutes')+'</span>');
     });
     timeSpan.slideDown("slow");
 
