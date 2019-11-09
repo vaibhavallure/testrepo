@@ -119,9 +119,9 @@ button#btnBooking{
     height: 536px;
 		background-size: 100% !important;
 	}
-	#pick_ur_date_div {
+	/* #pick_ur_date_div {
     padding: 0;
-	}
+	} */
 }
 
 
@@ -757,10 +757,10 @@ div#btnBookTop {
     }
 
 
-    .booking-box {
+    /* .booking-box {
 		margin-top:60px;
         padding: 0;
-    }
+    } */
 
 		#desktop-slot{
 			margin-top: 0;
@@ -777,20 +777,21 @@ div#btnBookTop {
       z-index: 999;
     }
     a#btnPriceList {
-      text-align: center;
+			  margin: 20px auto;
+      /* text-align: center;
       display: block;
-      margin: 25px auto;
+      margin: 20px auto;
       color: #C3C2C5;
       font-size: 18px;
       text-transform: uppercase;
       text-decoration: underline;
       line-height: 10px;
-      font-family: urw-din-medium;
+      font-family: urw-din-medium; */
     }
 
-    div#booking {
+    /* div#booking {
         padding-top: 231px;
-    }
+    } */
 
     .down-arrow-maria,
     .link-down {
@@ -1029,9 +1030,9 @@ div#page-wrapper{
 		top:50%;
 		left:45%
 	}
-	.time-box{
+	/* .time-box{
 		padding: 0px !important;
-	}
+	} */
 	.pop-up-title{
 		margin: 16px auto;
 	}
@@ -1096,10 +1097,10 @@ div#page-wrapper{
 .hero-image{
 		height: 1668px;
 	}
-.ipad-lands {
+/* .ipad-lands {
   max-width: 30%;
   flex: 0 0 30%;
-	}
+	} */
 #faq{
 	padding: 0 !important;
 	}
@@ -1181,9 +1182,7 @@ select.input-box {
 	background-position: 80% 50%;
 	width: 100px;
 }
-#desktop-slot {
-  margin-top: 128px;
-}
+
 #desktop-slot .xpaces {
   font-size: 13px;
 }
@@ -1267,4 +1266,31 @@ button#btnConfirm {
 }
 #price-list .xpaces.translate-popup {
   letter-spacing: 1.5px;
-}	
+}
+.notify-label .translate-popup {
+  margin-bottom: 0;
+}
+
+@media (min-width:992px){
+	#desktop-slot {
+	  margin-top: 128px;
+	}
+}
+@media (min-width:767px) and (max-width:1024px){
+	#price-list{
+		margin: 0 17px 40px;
+	}
+	#datetime-box {
+    margin-bottom: 3px;
+	}
+}
+@media (min-width:767px) and (max-width:1024px){
+	.select-type-one, .country-section select{
+		width: 100%;
+	}
+}
+@medium(max-width:767px){
+	.appointments-book-store .label.custom-checkbox, .notify-label{
+		margin-bottom: 20px;
+	}
+}
