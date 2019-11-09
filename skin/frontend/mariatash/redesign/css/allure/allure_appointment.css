@@ -756,14 +756,9 @@ div#btnBookTop {
         right: 0;
     }
 
-
-    /* .booking-box {
-		margin-top:60px;
-        padding: 0;
-    } */
-
 		#desktop-slot{
 			margin-top: 0;
+			padding: 0;
 		}
 
     .pop-up-div {
@@ -1289,8 +1284,17 @@ button#btnConfirm {
 		width: 100%;
 	}
 }
-@medium(max-width:767px){
+@media (max-width:767px){
 	.appointments-book-store .label.custom-checkbox, .notify-label{
 		margin-bottom: 20px;
+	}
+	div#booking-box, .notify-label {
+    padding: 0;
+	}
+	button#btnConfirm{
+		margin: 0;
+	}
+	.notify-label .translate-popup{
+		padding-left: 45px;
 	}
 }
