@@ -211,3 +211,7 @@
 .allure_blinking {
 	animation: blink 2s linear infinite;
 }
+.piercing-service p, .piercing-service span {
+  font-size: 13px;
+  font-family: urw-din-light;
+}

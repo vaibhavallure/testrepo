@@ -24,7 +24,7 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
 if(Mage::getSingleton("core/session")->getData('appointment_expired'))
 { ?>
-            <div class="modal-header pop-title">
+            <div class="modal-header">
                 <h1 class="modal-title w-100 text-center translate-popup"
                     id="exampleModalLongTitle"><?php echo $this->__('Appointment No Longer Available For Modify') ?></h1>
             </div>
@@ -66,7 +66,7 @@ $apt_email = $model->getEmail();
 
 ?>
 
-            <div class="modal-header pop-title">
+            <div class="modal-header">
                 <h1 class="modal-title text-center w-100 translate-popup"
                     id="exampleModalLongTitle"><?php echo $this->__('Appointment Details') ?></h1>
             </div>
@@ -115,7 +115,7 @@ $apt_email = $model->getEmail();
                                         <?php echo $this->__('Modify') ?></button>
                                 </div>
 
-                                <div class="apt-buttons-set">
+                                <div class="apt-buttons-set mb-0">
                                     <button type="button" class="button input-box b translate-popup light-button"
                                             title="<?php echo $this->__('Book Another Piercing') ?>"
                                             onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
@@ -131,7 +131,7 @@ $apt_email = $model->getEmail();
                     }
 else:
     ?>
-                    <div class="modal-header pop-title">
+                    <div class="modal-header">
                         <h1 class="modal-title w-100 text-center translate-popup"
                             id="exampleModalLongTitle"><?php echo $this->__('Sorry, Record not found !') ?></h1>
                     </div>

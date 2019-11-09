@@ -175,7 +175,7 @@ var addCustomerJob = function (srno) {
                 <div class="col-12">
                     <div class="row">
                         <div class="col-8">
-                            <label class="label translate-popup para-bold color-6">${__('Number of Piercings:')}</label>
+                            <label class="label translate-popup para-bold color-6 attr-count">${__('Number of Piercings:')}</label>
                         </div>
                     <div class="col-4 text-right">
                         <select id="piercing_${srno}" class="input-box quantity-count"  name="customer[${srno}][piercing]" onchange="changePiercingQty(this)" disabled>
@@ -242,9 +242,10 @@ var calculateTime = function () {
 
     if(old_time_in_min!=time_in_min) {
 
+        var hoursLabel=(hours>1)?"Hours":"Hour";
 
     timeSpan.slideUp("slow",function () {
-        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __('hour')+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__('minutes')+'</span>');
+        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __(hoursLabel)+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__('Minutes')+'</span>');
     });
     timeSpan.slideDown("slow");
 

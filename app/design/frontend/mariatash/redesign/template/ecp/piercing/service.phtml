@@ -5,30 +5,33 @@
 	}
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" integrity="i0kP64uc/OPhGwhEiMtwfEHNpYOtbpliX3hfAEeTEr8FUgFanDQJK1Mvl84JEwkL" crossorigin="anonymous"></script>
-
-<div class="piercing-service">
-    <!--div class="page-title">
+<div class="container">
+	<div class="piercing-service col-12">
+    <div class="page-title">
         <h1>PIERCING SERVICES</h1>
-    </div-->
-    <div class="left-content">
-        <div class="banner">
-            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_banner')->toHtml()?>
-        </div>
-        <div class="locations">
-            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_locations')->toHtml()?>
-        </div>
-        
-         <?php //echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
+    </div
+		<div class="row">
+	    <div class="left-content col-4">
+	        <div class="banner">
+	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_banner')->toHtml()?>
+	        </div>
+	        <div class="locations">
+	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_locations')->toHtml()?>
+	        </div>
 
-    </div>
-    <div class="right-content">
-        <div class="pricing">
-            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_pricing')->toHtml()?>
-        </div>
-        <div class="piercing-at-mariatash">
-            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_mariatash')->toHtml()?>
-        </div>
-    </div>
+	         <?php //echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
+
+	    </div>
+	    <div class="right-content col-8">
+	        <div class="pricing">
+	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_pricing')->toHtml()?>
+	        </div>
+	        <div class="piercing-at-mariatash">
+	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_mariatash')->toHtml()?>
+	        </div>
+	    </div>
+		</div>
+</div>
 </div>
 <style>
     .mapLink{cursor:pointer}
@@ -54,7 +57,7 @@ function initialize() {
         //mapTypeId: google.maps.MapTypeId.SATELLITE
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"),
-            myOptions);    
+            myOptions);
 	var address = "653 Broadway New York, NY 10012";
 	var contentString1="<p>Venus by Maria Tash, Inc.<br> 653 Broadway<br> (between Bond and Bleeker St)<br> New York, NY 10012<br> 212-253-0921</p>";
     geocoder.geocode( { 'address': address}, function(results, status) {

@@ -1788,7 +1788,7 @@
 			overflow-x: auto;
 		}
 		.table{
-			width: 130%;
+			/* width: 130%; */
 			overflow-x: auto;
 		}
 		.dashboard .flex-row .flex-item{

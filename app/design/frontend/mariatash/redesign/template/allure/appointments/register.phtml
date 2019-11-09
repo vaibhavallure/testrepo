@@ -35,12 +35,12 @@ if ($model) {
                         <div class="col-md-12 book-title">
                             <p class="xpaces translate-popup para-bold text-uppercase"><?php echo $this->__('Book Your Appointment') ?></p>
                         </div>
-                        <a href="#" id="btnPriceList" class="text-capitalize translate-popup">View Price List</a>
+                        <a href="#" id="btnPriceList" class="text-capitalize translate-popup link-button">View Price List</a>
                         <div id="people-box" class="people form-group col-12">
                             <div id="people-wrapper" class="people-wrapper form-group col-12 p-0">
                                 <div class="col-12 p-0">
                                     <div class="row">
-                                        <div class="col-md-8 col-8">
+                                        <div class="col-md-8 col-8 attr-count">
                                             <label class="label translate-popup para-bold color-6"><?php echo $this->__('Number of people in your party:') ?></label>
                                         </div>
                                         <div class="peoplediv col-md-4 col-4 text-right">
@@ -107,7 +107,7 @@ if ($model) {
                                                 <div class="col-12">
                                                     <div class="row">
                                                         <div class="col-8">
-                                                            <label class="label translate-popup para-bold color-6"><?php echo $this->__('Number of Piercings:') ?></label></div>
+                                                            <label class="label translate-popup para-bold color-6 attr-count"><?php echo $this->__('Number of Piercings:') ?></label></div>
                                                         <div class="col-4 text-right quantity-count">
                                                             <select id="piercing_<?= $customer_count ?>"
                                                                     class="input-box"
@@ -167,7 +167,7 @@ if ($model) {
                                                 <div class="row">
 
                                                     <div class="col-8">
-                                                        <label class="label translate-popup para-bold color-6"><?php echo $this->__('Number of Piercings:') ?></label></div>
+                                                        <label class="label translate-popup para-bold color-6 attr-count"><?php echo $this->__('Number of Piercings:') ?></label></div>
                                                     <div class="col-4 text-right quantity-count">
                                                         <select id="piercing_1" class="input-box"
                                                                 name="customer[1][piercing]"
@@ -247,7 +247,7 @@ if ($model) {
                                             </div>
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12 notify-text-line">
                                                         <p class="label notify-label translate-popup para-normal"><?php echo $this->__('I would like to be notified by:') ?></p>
                                                     </div>
                                                     <div class="col-3 notify-label">
@@ -325,11 +325,11 @@ if ($model) {
                                             </div>
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12 notify-text-line">
                                                         <p class="label notify-label translate-popup para-normal"><?php echo $this->__('I would like to be notified by:') ?></p>
                                                     </div>
                                                     <div class="col-md-3 notify-label">
-                                                        <label class="label translate-popup m-0 mt-1 custom-checkbox" for="em1">
+                                                        <label class="label translate-popup custom-checkbox" for="em1">
                                                             <input type="checkbox" id="em1" name="" checked>
                                                             <span class="checkmark"></span>
                                                             <?php echo $this->__('Email') ?></label>
