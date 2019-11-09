@@ -113,7 +113,7 @@ jQuery(document).ready(function () {
                     jQuery(".zopim").addClass("bottom-change");
                 }else{
                     jQuery(".zopim").removeClass("bottom-change");
-                }debugger
+                }
             /*  zopim -code end-----------------*/
 
         }else {
