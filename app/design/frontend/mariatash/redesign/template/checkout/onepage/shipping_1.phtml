@@ -155,9 +155,10 @@
                                         //]]>
                                     </script>
                                     <input type="text" id="shipping:region" name="shipping[region]"
+                                    	placeholder="<?php echo $this->__('State/Province*') ?>"
                                     	value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"
                                         title="<?php echo $this->__('State/Province') ?>"
-                                        class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>"
+                                        class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?> required-entry"
                                         style="display:none;"/>
                                 </div>
                             </div>
@@ -299,13 +300,19 @@
 			}
 		}  */
 
-		jQuery(document).on('keypress blur','#co-shipping-form input[type="text"],#co-shipping-form select',function(){
+		jQuery(document).on('keypress blur','#co-shipping-form input[type="text"]',function(){
 			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
 			if(check){
 				shipping.setSameAsShipping(true);
 			}
 		});
-		
+
+		jQuery(document).on('change','#co-shipping-form select',function(){
+			var check = jQuery('input[name="shipping[same_as_billing]"]').is(":checked");
+			if(check){
+				shipping.setSameAsShipping(true);
+			}
+		});
 
 		jQuery('.country-section select[name="billing[country_id]"]').on('change',function(){
 			if(jQuery(this).val() == ''){
