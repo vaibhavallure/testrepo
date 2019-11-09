@@ -815,6 +815,11 @@ ShippingMethod.prototype = {
                 response = {};
             }
         }
+        
+        if(response.totals_html){
+        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        	$('totalsDivRightNav').innerHTML = response.totals_html;
+        }
 
         if (response.error) {
             alert(response.message);

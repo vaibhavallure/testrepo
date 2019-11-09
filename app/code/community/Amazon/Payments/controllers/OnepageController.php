@@ -104,7 +104,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
             $result['message'] = $e->getMessage();
         }
         
-        $result["totals_html"] = $this->_getRefreshTotalsHtml();
+        //$result["totals_html"] = $this->_getRefreshTotalsHtml();
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
