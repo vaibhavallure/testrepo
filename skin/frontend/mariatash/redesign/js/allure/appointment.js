@@ -245,7 +245,7 @@ var calculateTime = function () {
         var hoursLabel=(hours>1)?"hours":"hour";
 
     timeSpan.slideUp("slow",function () {
-        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __(hoursLabel)+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__('minutes')+'</span>');
+        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+Hours +' <span class="translate-popup info-text-two">'+ __(hoursLabel)+'</span> '+ Minutes+' <span class="translate-popup info-text-two">'+__('minutes')+'</span>');
     });
     timeSpan.slideDown("slow");
 
