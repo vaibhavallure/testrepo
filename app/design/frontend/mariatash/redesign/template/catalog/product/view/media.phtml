@@ -165,12 +165,18 @@ if (!$videoUrl && $secondVideoUrl)
     $secondThumb = null;
 }
 ?>
+<!--Array for Zoom image-->
+<script>
+    var zoomImgArray = new Array();
+</script>
 <?php $count = count($gallery); ?>
+<?php $zoomImgArr = array()?>
 <?php if ( $count >= 1 ): ?>
         <?php $counter = 1; ?>
         <div id="imageRepo" class="d-none">
             <?php foreach ($gallery as $_image): ?>
-                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+                <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+                <?php $zoomImgArr[] = $_image->getUrl();?>
                 <?php $counter++; ?>
             <?php endforeach; ?>
         </div>
@@ -200,7 +206,7 @@ function loadImage(numImage,obj){
 
     var zoom_img = jQuery('#zoom-img');
     zoom_img.attr('data-src','');
-    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('src'));
+    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('data-src'));
 
     setFacebook();
 
@@ -619,19 +625,9 @@ if ($isAjaxCall) {
             jQuery('.delayed-product').addClass('display_none');
         }
 
-        /*Zoom Image*/
-     
-        // jQuery('#zoom-img').on('click',function () {
-        //     console.log('Zoom clicked');
-        //     var zoom_loader = jQuery('.zoom-loader');
-        //     zoom_loader.show();
-        //     var img_src = jQuery(this).attr('data-src');
-        //     console.log(img_src);
-        //     var img_div = jQuery('.product-img');
-        //     img_div.css('background-image','');
-        //     img_div.css('background-image','url('+img_src+')');
-        //     zoom_loader.hide();
-        // })
+        /*Zoom Image - for next image*/
+        zoomImgArray = JSON.parse('<?= json_encode($zoomImgArr) ?>');
+
         jQuery('#zoom-img').on('click',function () {
             var img_src = jQuery(this).attr('data-src');
 
@@ -657,7 +653,7 @@ if ($isAjaxCall) {
 
         });
         function setImg(img) {
-            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"cover"});
+            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"cover","background-position":"center"});
         }
 
         function clearImg() {
