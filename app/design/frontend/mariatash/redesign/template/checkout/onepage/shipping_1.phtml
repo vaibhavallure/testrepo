@@ -302,6 +302,11 @@
 
 		jQuery(document).on('keypress blur','#co-shipping-form input[type="text"]',function(){
 			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
+			var attrName = jQuery(this).attr("name");
+			if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
+				check = false;
+			}
+			
 			if(check){
 				shipping.setSameAsShipping(true);
 			}

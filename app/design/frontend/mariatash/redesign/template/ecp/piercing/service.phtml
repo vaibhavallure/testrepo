@@ -7,11 +7,11 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" integrity="i0kP64uc/OPhGwhEiMtwfEHNpYOtbpliX3hfAEeTEr8FUgFanDQJK1Mvl84JEwkL" crossorigin="anonymous"></script>
 <div class="container">
 	<div class="piercing-service col-12">
-    <!--div class="page-title">
+    <div class="page-title">
         <h1>PIERCING SERVICES</h1>
-    </div-->
+    </div>
 		<div class="row">
-	    <div class="left-content col-4">
+	    <div class="left-content col-lg-6 col-12">
 	        <div class="banner">
 	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_banner')->toHtml()?>
 	        </div>
@@ -22,7 +22,7 @@
 	         <?php //echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
 
 	    </div>
-	    <div class="right-content col-8">
+	    <div class="right-content col-lg-6 col-12">
 	        <div class="pricing">
 	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_pricing')->toHtml()?>
 	        </div>
