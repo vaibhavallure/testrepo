@@ -732,9 +732,9 @@ div#btnBookTop {
 		display: block;
 	}
 	/*MENU REMOVE MOBILE*/
-	.checkout-success{
+	/* .checkout-success{
 		font-size: 0.7em;
-	}
+	} */
 
   .box {border: none;}
 
@@ -1223,6 +1223,7 @@ button{
 	height: 42px;
   padding: 10px;
 	margin-top: 30px;
+	border-radius: 0;
 }
 .store-name {
   margin-bottom: 7px;
@@ -1283,6 +1284,17 @@ button#btnConfirm {
 .attr-count{
 	margin-top: 11px;
 }
+.buttons-group {
+  display: flex;
+  justify-content: space-evenly;
+}
+.buttons-group a {
+  width: 40% !important;
+	margin-right: 0;
+}
+#allureAlertBox #cancelConfirm{
+	margin-right: 0;
+}
 @media (min-width:992px){
 	#desktop-slot {
 	  margin-top: 128px;
@@ -1303,7 +1315,7 @@ button#btnConfirm {
 }
 @media (max-width:767px){
 	.appointments-book-store .label.custom-checkbox, .notify-label{
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 	}
 	div#booking-box, .notify-label {
     padding: 0;
@@ -1313,6 +1325,13 @@ button#btnConfirm {
 	}
 	.notify-label .translate-popup{
 		padding-left: 45px;
+		margin-bottom: 10px;
+	}
+	.custom-checkbox, .custom-radio{
+		margin-bottom: 20px;
+	}
+	.quantity-count{
+		padding: 0 15px 0 0;
 	}
 	div#notify-box{
 		padding: 0 30px;
@@ -1336,6 +1355,18 @@ button#btnConfirm {
 	#icon-price-close img{
 		position: absolute;
     right: 24px;
+	}
+	.apt-cancel-buttons-set, .apt-modify-buttons-set{
+		width: 45%;
+	}
+	#popupConfirmAppointment .apt-buttons-set {
+    width: 93%;
+	}
+	.success-field {
+    padding: 0 6px;
+	}
+	.select-type-one, .country-section select{
+		width: 100%;
 	}
 }
 @media (min-width:991px){
