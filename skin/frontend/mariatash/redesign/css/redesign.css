@@ -66,7 +66,7 @@ h4{
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p, .piercing-service p, .piercing-service span{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
