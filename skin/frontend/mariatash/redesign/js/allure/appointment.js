@@ -102,17 +102,17 @@ var addCustomer = function (srno) {
                </div>
                <div class="col-12">
                  <div class="row">
-                   <div id="email-box" class="col-6 form-group">
+                   <div id="email-box" class="col-md-6 form-group">
                         <input class="input-box required-entry email translate-popup select-type-one"  type="email" name="customer[${srno}][email]" id="email${srno}" placeholder="${__('Email*')}" value="" required>
                    </div>
-                   <div id="phone-box" class="col-6 form-group">
+                   <div id="phone-box" class="col-md-6 form-group">
                        <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup select-type-one" type="search" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required autocomplete="off" Try ="disabled" autocorrect="off">
                    </div>
                  </div>
                  </div>
                <div id="notify-box" class="col-md-12 form-group">
                <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 notify-text-line">
                       <p class="label notify-label translate-popup para-normal">${__('I would like to be notified by:')}</p>
                     </div>
                     <div class="col-md-3 notify-label">
@@ -154,7 +154,7 @@ var addCustomerJob = function (srno) {
             <h6 class=" translate-popup">${__('Guest')} ${srno}:</h6>
             <label class="label mb-4 translate-popup para-normal">${__('Type of Appointment:')}</label>
             <div  class="row mb-4">
-                <div class="col-md-3 col-4">
+                <div class="col-xs-12 col-sm-3 col-md-3">
                     <label class="label translate-popup custom-checkbox" for="piercing_select_${srno}">${__('Piercing')}
                       <input type="checkbox" class="piercing_select" data-no="${srno}" id="piercing_select_${srno}" onchange="displayPiercing(\'${'#piercing-wrapper' + srno}\')" name="customer[${srno}][piercing_select]">
                       <span class="checkmark"></span>

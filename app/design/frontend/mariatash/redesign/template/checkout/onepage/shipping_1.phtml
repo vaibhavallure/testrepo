@@ -111,7 +111,7 @@
                             <li class="fields">
                                 <div class="field">
                                     <div class="input-box">
-                                        <input placeholder="Street Address 2*" type="text" title="<?php echo $this->__('Street Address %s', $_i) ?>"
+                                        <input placeholder="Street Address 2" type="text" title="<?php echo $this->__('Street Address %s', $_i) ?>"
                                         	name="shipping[street][]" id="shipping:street<?php echo $_i ?>"
                                            	value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>"
                                            	class="input-text <?php echo $_streetValidationClass ?>"
@@ -158,7 +158,7 @@
                                     	placeholder="<?php echo $this->__('State/Province*') ?>"
                                     	value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"
                                         title="<?php echo $this->__('State/Province') ?>"
-                                        class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?> required-entry"
+                                        class="input-text required-entry <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?> required-entry"
                                         style="display:none;"/>
                                 </div>
                             </div>
