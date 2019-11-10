@@ -73,7 +73,7 @@ if ($model) {
                                     foreach ($customers as $customer):?>
                                         <div id="customer<?= $customer_count ?>job" class="form-group">
                                             <h6 class="para-bold"><span class="translate-popup para-bold guest-count"><?php echo $this->__('Guest') ?></span> <?= $customer_count ?>:</h6>
-                                            <label class="label mb-1 translate-popup para-normal"><?php echo $this->__('Type of Appointment:') ?></label>
+                                            <label class="label mb-4 translate-popup para-normal"><?php echo $this->__('Type of Appointment:') ?></label>
                                             <div class="row ">
                                                 <div class="col-xs-12 col-sm-3 col-md-3 ipad-lands">
                                                     <label class="label translate-popup translate-popup custom-checkbox" for="piercing_select_<?= $customer_count ?>">
@@ -250,13 +250,13 @@ if ($model) {
                                                     <div class="col-12 notify-text-line">
                                                         <p class="label notify-label translate-popup para-normal"><?php echo $this->__('I would like to be notified by:') ?></p>
                                                     </div>
-                                                    <div class="col-3 notify-label">
-                                                        <label class="label translate-popup m-0 mt-1 custom-checkbox" for="em<?= $customer_count ?>">
+                                                    <div class="col-lg-3 col-12 notify-label">
+                                                        <label class="label translate-popup custom-checkbox" for="em<?= $customer_count ?>">
                                                             <input type="checkbox" id="em<?= $customer_count ?>" name="" checked>
                                                             <span class="checkmark"></span>
                                                             Email</label>
                                                     </div>
-                                                    <div class="col-9 notify-label p-0">
+                                                    <div class="col-md-9 col-12 notify-label p-0">
 
                                                         <label class="label translate-popup custom-checkbox" for="c<?= $customer_count ?>">
                                                             <input type="checkbox" class="noti_sms" id="c<?= $customer_count ?>"   data-section_id="<?= $customer_count ?>"
