@@ -160,9 +160,8 @@ else:
 
     function confirmCancelApt() {
 
-        if (!conf)
+        if (confirmBox(__("Are you sure you want to cancel an scheduled appointment?")))
         {
-            confirmBox(__("Are you sure you want to cancel an scheduled appointment?"));
             return false;
         }
 
