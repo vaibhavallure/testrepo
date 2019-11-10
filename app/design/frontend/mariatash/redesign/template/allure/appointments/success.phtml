@@ -3,23 +3,23 @@ $model = Mage::getSingleton("core/session")->getData('appointment_submitted');
 $isPiercingAppointment=Mage::getSingleton("core/session")->getData('isPiercingAppointment');
 if($this->getPara("redirect-from")!="modify-success"):
 ?>
-<div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg modal-confirm-appointment appointment-set" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content pop-up-cover">
             <div id="popupConfirmAppointment" class="modal-body">
                 <div id="wrapperConfirmAppointment" class="row">
                     <div class="checkout-success col-md-12 text-center">
+                      <div class="pop-title modal-header m-0">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true"><img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>"></span>
                         </button>
+                      </div>
                         </button>
-
-                        <span class="translate-popup">Your Appointment on</span> <span class="translate-popup app-confirm"><?= date("d M Y",strtotime($model->getAppointmentStart())); ?> </span><span class="translate-popup">at</span> <?= date("H:i",strtotime($model->getAppointmentStart())); ?> <span class="translate-popup">is <?= ($this->isModify())? 'updated' : 'confirmed'?>!</span> <br>
-                        <span class="translate-popup">You will receive a confirmation via email.</span><br>
-                        <span class="translate-popup">Thanks!</span>
-                        </span>
+                        <span class="translate-popup appointment-popup-text"><?= date("d M Y",strtotime($model->getAppointmentStart())); ?> </span><span class="translate-popup">at</span> <?= date("H:i",strtotime($model->getAppointmentStart())); ?> <span class="translate-popup">is <?= ($this->isModify())? 'updated' : 'confirmed'?>!<br>
+                            You will receive a confirmation via email.<br>
+                            Thanks!</span>
                         <div id="btnContinue" class="buttons-set apt-buttons-set row">
-                            <button type="button"  <?= ($this->isModify())? "onclick=window.location.href='". $this->getStoreShortUrl()."/redirect-from/modify-success'": 'data-dismiss="modal"'?> class="input-box b"  aria-label="Book Another Piercing">
+                            <button type="button"  <?= ($this->isModify())? "onclick=window.location.href='". $this->getStoreShortUrl()."/redirect-from/modify-success'": 'data-dismiss="modal"'?> class="input-box light-button mx-auto text-uppercase"  aria-label="Book Another Piercing">
                                 <span aria-hidden="true" class="translate-popup">Book Another Piercing</span>
                             </button>
                         </div>
@@ -29,5 +29,12 @@ if($this->getPara("redirect-from")!="modify-success"):
         </div>
     </div>
 </div>
+    <?php if($this->isModify()): ?>
+    <script>
+        jQuery(".modal").on("hidden.bs.modal", function () {
+            var url=window.location.href;
+            window.location = url.replace("index","modify");
+        });
+    </script>
+    <?php endif; ?>
 <?php endif; ?>
-

@@ -31,6 +31,7 @@
  */
 ?>
 <?php header('X-Frame-Options: GOFORIT'); ?>
+
 <!--<script type="text/javascript">// <![CDATA[
 (function (w, d, load) {
  var script,
@@ -164,12 +165,18 @@ if (!$videoUrl && $secondVideoUrl)
     $secondThumb = null;
 }
 ?>
+<!--Array for Zoom image-->
+<script>
+    var zoomImgArray = new Array();
+</script>
 <?php $count = count($gallery); ?>
+<?php $zoomImgArr = array()?>
 <?php if ( $count >= 1 ): ?>
         <?php $counter = 1; ?>
         <div id="imageRepo" class="d-none">
             <?php foreach ($gallery as $_image): ?>
-                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+                <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+                <?php $zoomImgArr[] = $_image->getUrl();?>
                 <?php $counter++; ?>
             <?php endforeach; ?>
         </div>
@@ -197,6 +204,10 @@ function loadImage(numImage,obj){
        jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
     });
 
+    var zoom_img = jQuery('#zoom-img');
+    zoom_img.attr('data-src','');
+    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('data-src'));
+
     setFacebook();
 
     shareLikeTwitter();
@@ -218,7 +229,9 @@ function loadBaseImage(){
         jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
         jQuery('.thumb.thumb1').addClass("active");
     });
-
+    var zoom_img = jQuery('#zoom-img');
+    zoom_img.attr('data-src','');
+    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(0).attr('data-src'));
     setFacebook();
 
     shareLikeTwitter();
@@ -475,6 +488,9 @@ function shareLikeTwitter(){
         <div class="thumb thumb3"></div>
         <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
         <div class="thumb thumb5"></div>
+        <div class="zoom-link">
+            <a class="link-button" data-src="" id="zoom-img">Click to Zoom</a>
+        </div>
     </div>
     <div class="containerImage col-lg-10"></div>
 
@@ -517,7 +533,10 @@ function shareLikeTwitter(){
         </div>-->
     </div>
 </div>
-<div id="zoomView"></div>
+
+
+
+
 <?php
 $matches ='';
 preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $_product->getVideo(), $matches);
@@ -605,5 +624,46 @@ if ($isAjaxCall) {
         } else {
             jQuery('.delayed-product').addClass('display_none');
         }
+
+        /*Zoom Image - for next image*/
+        zoomImgArray = JSON.parse('<?= json_encode($zoomImgArr) ?>');
+
+        jQuery('#zoom-img').on('click',function () {
+            var img_src = jQuery(this).attr('data-src');
+
+            clearImg();
+            jQuery(".zoomPopup").css({"opacity": "1", "pointer-events": "auto"});
+
+            unScrollBody();
+            jQuery(".catalog-category-view .footer").css("display","none");
+
+            jQuery(".zoom-loader").show();
+            setImg(img_src);
+            jQuery(".zoom-loader").hide();
+
+        });
+
+        jQuery("#zoomClose").on('click',function(){
+            jQuery(".zoom-loader").hide();
+
+            scrollBody();
+            jQuery(".catalog-category-view .footer").css("display","block");
+
+            jQuery(".zoomPopup").css({"opacity":"0","pointer-events":"none"});
+
+        });
+        function setImg(img) {
+            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"cover","background-position":"center"});
+        }
+
+        function clearImg() {
+            jQuery(".zoom-img").css({"background-image":"","background-size":""});
+        }
     });
+
+
+
+
+
+
 </script>

@@ -111,7 +111,7 @@
                             <li class="fields">
                                 <div class="field">
                                     <div class="input-box">
-                                        <input placeholder="Street Address 2*" type="text" title="<?php echo $this->__('Street Address %s', $_i) ?>"
+                                        <input placeholder="Street Address 2" type="text" title="<?php echo $this->__('Street Address %s', $_i) ?>"
                                         	name="shipping[street][]" id="shipping:street<?php echo $_i ?>"
                                            	value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>"
                                            	class="input-text <?php echo $_streetValidationClass ?>"
@@ -155,9 +155,10 @@
                                         //]]>
                                     </script>
                                     <input type="text" id="shipping:region" name="shipping[region]"
+                                    	placeholder="<?php echo $this->__('State/Province*') ?>"
                                     	value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"
                                         title="<?php echo $this->__('State/Province') ?>"
-                                        class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>"
+                                        class="input-text required-entry <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?> required-entry"
                                         style="display:none;"/>
                                 </div>
                             </div>
@@ -297,7 +298,26 @@
 			if(billingAddressId == shippingAddressId){
 				jQuery('input[name="shipping[same_as_billing]"]').is(":checked")
 			}
-		} */
+		}  */
+
+		jQuery(document).on('keypress blur','#co-shipping-form input[type="text"]',function(){
+			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
+			var attrName = jQuery(this).attr("name");
+			if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
+				check = false;
+			}
+			
+			if(check){
+				shipping.setSameAsShipping(true);
+			}
+		});
+
+		jQuery(document).on('change','#co-shipping-form select',function(){
+			var check = jQuery('input[name="shipping[same_as_billing]"]').is(":checked");
+			if(check){
+				shipping.setSameAsShipping(true);
+			}
+		});
 
 		jQuery('.country-section select[name="billing[country_id]"]').on('change',function(){
 			if(jQuery(this).val() == ''){

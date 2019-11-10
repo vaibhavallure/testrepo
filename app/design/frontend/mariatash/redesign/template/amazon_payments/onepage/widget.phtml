@@ -43,6 +43,12 @@
     	 </p>
      </div>
      
+     <div id="amz-pay-btn" class="d-none">
+     <?php
+        echo $this->getLayout()->createBlock('amazon_payments/login_button')->setTemplate('amazon_payments/login/popup_button.phtml')->toHtml();
+     ?>
+     </div>
+     
       <?php endif; ?>
 
       <?php echo $this->getAdditionalForm(); ?>
@@ -56,7 +62,10 @@
         <div id="amazon-widget-consent"></div>
     <?php endif; ?>
     
+    <?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
+    <?php if($customerGroupId != 2):?>
     <?php echo $this->getChildHtml("onepage.gift_item");?>
+    <?php endif;?>
 
     <div class="buttons-set text-right" id="widget-buttons-container">
         <button type="button" title="<?php echo $this->__('Next') ?>" class="button btn-widget-contd light-button next-button float-right" onclick="amazonWidgetStep.save()"><span><span><?php echo $this->__('Next') ?></span></span></button>
@@ -302,7 +311,9 @@ var addressBookOpts = {
     },
     onError: function(error) {
       if (error.getErrorCode() == "BuyerSessionExpired") {
-           document.location.href = '<?php echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
+    	  document.amazonLoginButton = jQuery('#amz-pay-btn img');
+          document.amazonLoginButton.click();
+          //document.location.href = '<?php //echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
       }
       console.log(error.getErrorMessage());
     }

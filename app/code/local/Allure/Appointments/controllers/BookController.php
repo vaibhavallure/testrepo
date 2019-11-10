@@ -47,6 +47,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
     public function indexAction()
     {
         if ($this->getAppId()) {
+            Mage::register('appointment_booking_id', $this->getModifyDecryptedApptId());
 
             $collection = $this->getValidAppointmentCollection();
 
@@ -174,11 +175,11 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 //
 //            if($type=="new")
 //            {
-            if ($this->notify()->sendEmailNotification($model, 'release'))
-                $this->log()->addStoreWiseLog('Notified by email type=>release', $post_data['store_id']);
+          //  if ($this->notify()->sendEmailNotification($model, 'release'))
+            //    $this->log()->addStoreWiseLog('Notified by email type=>release', $post_data['store_id']);
 
-            if ($this->notify()->sendSmsNotification($model, 'release'))
-                $this->log()->addStoreWiseLog('Notified By SMS(if selected) type=>release', $post_data['store_id']);
+            //if ($this->notify()->sendSmsNotification($model, 'release'))
+              //  $this->log()->addStoreWiseLog('Notified By SMS(if selected) type=>release', $post_data['store_id']);
 
 //            }
 
@@ -243,6 +244,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
         $post_data['ip'] = $this->get_client_ip();
 
+        $post_data['language_pref'] = ($post_data['language_pref']) ? $post_data['language_pref'] : 'en';
 
         return $post_data;
     }

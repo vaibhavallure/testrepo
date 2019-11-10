@@ -381,7 +381,7 @@ if ($_product->getSizeSample() == 1) {
                         <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
                     </div>
                 <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
-                    <div class="size_chart col pl-0"><a class="size_chart_link link-button" href="#inline_sample">Size Chart</a></div>
+                    <div class="size_chart col pl-0"><a class="size_chart_link para-lighter text-underline" href="#inline_sample">Size Chart</a></div>
                 <?php endif; ?>
                     <?php
                 endif;
@@ -398,9 +398,9 @@ if ($_product->getSizeSample() == 1) {
 
                         $productSampleRings =Mage::getModel('catalog/product')->loadByAttribute('sku','SAMPLERINGS');
                         ?>
-                        <a class="link-button" href="<?= $productSampleRings->getProductUrl()?>"><span>Get Size Samples</span></a>
+                        <a class="para-lighter text-underline" href="<?= $productSampleRings->getProductUrl()?>"><span>Get Size Samples</span></a>
                     <?php else: ?>
-                        <a class="link-button fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index/sourceOfReq/quickview/', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+                        <a class="para-lighter text-underline fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index/sourceOfReq/quickview/', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
                     <?php endif; ?>
                 </div>
 

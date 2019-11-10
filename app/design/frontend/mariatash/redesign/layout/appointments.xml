@@ -99,6 +99,7 @@
 			<block type="appointments/appointment" name="appointments_popup_container" as="appointments_popup_container" template="allure/appointments/container.phtml">
 				<block type="appointments/appointment" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/success.phtml"/>
 				<block type="appointments/appointment" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/register.phtml">
+					<block type="appointments/appointment" name="appointments_popup_store" as="appointments_popup_store" template="allure/appointments/store.phtml"/>
 					<block type="appointments/appointment" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/pickdatetime.phtml">
 						<block type="appointments/appointment" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/pickdate.phtml"/>
 						<block type="appointments/appointment" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/pickslot.phtml"/>

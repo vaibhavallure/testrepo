@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -47,7 +47,6 @@ class Mage_Adminhtml_Block_Sales_Order_View_Giftmessage extends Mage_Adminhtml_B
      */
     public function getOrder()
     {
-    	//print_r(Mage::registry('current_order')->getData());
         return Mage::registry('current_order');
     }
 
@@ -220,8 +219,6 @@ class Mage_Adminhtml_Block_Sales_Order_View_Giftmessage extends Mage_Adminhtml_B
         if(!$this->getMessage()->getRecipient()) {
             $this->getMessage()->setRecipient($this->getDefaultRecipient());
         }
-       
-        //$this->getMessage()->setMessage($this->getGiftCardMessage());
 
         return $this;
     }
@@ -272,9 +269,10 @@ class Mage_Adminhtml_Block_Sales_Order_View_Giftmessage extends Mage_Adminhtml_B
             'order', $this->getEntity(), $this->getEntity()->getStoreId()
         );
     }
+
     public function getGiftCardMessage(){
     	$card=Mage::helper('giftcards')->getGiftCardMessage($this->getEntity()->getId());
-      return $card;
+      	return $card;
     }
 
 }

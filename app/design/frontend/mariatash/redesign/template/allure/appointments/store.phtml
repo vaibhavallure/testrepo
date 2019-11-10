@@ -1,14 +1,18 @@
 <div class="store-info-wrapper">
-<div class="col-12">
+<div class="col-12 p-0 ">
     <div class="row">
-        <div class="col-12"><h1><?= $this->getStoreName() ?></h1></div>
-        <div class="col-8">
-            <p><?= $this->getStoreAddress() ?></p>
-            <p><?= $this->getStoreContact() ?></p>
+        <div class="col-12 store-name"><h1><?= $this->getStoreName() ?></h1></div>
+        <div class="col-12 store-details">
+          <div class="row">
+          <div class="col-lg-6 col-md-6 col-12">
+              <p class="para-lighter mb-0 store-left"><?= $this->getStoreAddress() ?></p>
+              <p class="para-lighter"><?= $this->getStoreContact() ?></p>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12 store-right text-lg-right">
+              <?= $this->getStoreHours() ?>
+          </div>
         </div>
-        <div class="col-4">
-            <p><?= strip_tags($this->getStoreHours()) ?></p>
-        </div>
+      </div>
     </div>
 </div>
 </div>

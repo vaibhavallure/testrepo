@@ -145,7 +145,12 @@ function addToShoppingCart(button, formId, relode=false) {
             if(jQuery(window).width() >= 768) {
                 jQuery('#just_added').slideDown(1000);
             }
-            jQuery('#topcart-popup').addClass('just_added');
+            if (formId.id == 'product_addtocart_giftcard_form') {
+                jQuery('input#mail-to').val("");
+                jQuery('input#mail-to-email').val("");
+                jQuery('textarea#mail-message').val("");
+            }
+                jQuery('#topcart-popup').addClass('just_added');
 
 
             if(relode)

@@ -456,6 +456,8 @@ Shipping.prototype = {
         //console.log('newaddress');
         if($('shipping-address-select') != undefined && $('shipping-address-select').value != '' && $('billing-address-select').value == $('shipping-address-select').value) {
                 $('shipping:same_as_billing').checked = true;
+                Element.hide('fieldset-billing');
+                this.syncWithShipping();
                 //$('shipping:same_as_billing').disabled = true;
                 //console.log('set same as billing = true  in js file');
         }
@@ -507,6 +509,8 @@ Shipping.prototype = {
     newBillingAddress: function(isNew){
         if($('billing-address-select') != undefined && $('billing-address-select').value != '' && $('shipping-address-select').value == $('billing-address-select').value) {
         	$('shipping:same_as_billing').checked = true;
+        	 Element.hide('fieldset-billing');
+             this.syncWithShipping();
         }
         if (isNew) {
             this.resetSelectedBillingAddress();   
@@ -810,6 +814,11 @@ ShippingMethod.prototype = {
             catch (e) {
                 response = {};
             }
+        }
+        
+        if(response.totals_html){
+        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        	$('totalsDivRightNav').innerHTML = response.totals_html;
         }
 
         if (response.error) {

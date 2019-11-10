@@ -283,7 +283,9 @@ class Wyomind_Elasticsearch_Block_Catalogsearch_Autocomplete extends Wyomind_Ela
      */
     public function getAllResultsLabel()
     {
-        $label = $this->getLabel('All Results') . ' (%d)';
+        /*Changed Label as per design*/
+        $label = $this->getLabel('See more items') . ' (%d)';
+//        $label = $this->getLabel('All Results') . ' (%d)';
 
         return sprintf($label, $this->getProductCollection()->getSize());
     }

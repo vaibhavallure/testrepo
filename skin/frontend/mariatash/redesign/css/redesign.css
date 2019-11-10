@@ -66,7 +66,7 @@ h4{
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p, .please-wait{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p, .piercing-service p, .piercing-service span{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -93,11 +93,17 @@ h4{
 .para-lighter{
 	font-family: urw-din-xlight;
 	font-size: 13px;
+	color: rgba(41,41,41,0.9) !important;
 }
 
 .para-bold{
 	font-family: urw-din-bold;
 	font-size: 15px;
+	color: rgba(41,41,41,0.9);
+}
+
+.color-6{
+	color: rgba(41,41,41,0.6);
 }
 
 .options-text,
@@ -107,7 +113,8 @@ h4{
 	color: rgba(41,41,41,0.90);
 }
 
-.light-button{
+.light-button,
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
 	border: 0.5px solid rgba(41,41,41,0.90);
 	font-family: urw-din-bold;
 	font-size: 15px;
@@ -203,9 +210,15 @@ h4{
 #shop_our_instagram{
 	margin-top: 23px;
 }
-/* .catalog-category-view.category-press .for-space-to-bottom {
-  height: 307px;
-} */
+
+.text-underline{
+	text-decoration: underline;
+	text-decoration-color: rgba(41,41,41,0.9);
+}
+
+.text-underline:hover {
+    text-decoration: underline;
+}
 
 /* BIG POPUP COMMON CSS */
 .big-popup-cover {
@@ -488,6 +501,7 @@ input, select, textarea{
 	height: 42px;
 	margin-bottom: 24px;
 	text-transform: uppercase;
+	border-radius: 0;
 }
 .product-description-section {
   border-bottom: 1px solid #d8d8d8;
@@ -595,6 +609,7 @@ input, select, textarea{
 body{
   overflow-x: hidden !important;
 	height: 100%;
+	color: rgba(41,41,41,0.9);
 }
 .wrapper{
 	min-height: 100%;
@@ -766,7 +781,7 @@ nav.mariatash-header {
   margin-right: 40px;
 }
 .container-footlinks {
-  background: rgba(41, 41, 41, 0.5);
+  background: rgba(41, 41, 41, 0.9);
 	width: 100%;
   margin: 0;
 	transition: all 1s;
@@ -962,7 +977,7 @@ ul.swatch .swatch-item a {
     transform: rotate(45deg) translate(-6px, -6px);
 }
 
-.label {
+/* .label {
     font-weight: 700;
     font-size: 13px;
     text-transform: uppercase;
@@ -970,7 +985,7 @@ ul.swatch .swatch-item a {
     line-height: normal;
     letter-spacing: 1px;
     color: var(--dark-gray);
-}
+} */
 
 /* .more-details .label {
     letter-spacing: 1.08px;
@@ -1317,7 +1332,7 @@ ul.swatch .swatch-item a {
   margin-top: 8px;
 	margin-bottom: 100px;
 }
-.category-piercing-gallery .category-products{
+.category-inspiration .category-products{
 	margin-bottom: 0;
 }
 
@@ -1519,7 +1534,7 @@ input[type="checkbox"]:checked+label:before {
 .last.nav-item, .main-nav-link li:last-child {
   margin-right: 0;
 }
-.mariatash-header:hover, .container-footlinks:hover{
+.mariatash-header:hover{
   background-color: rgba(41,41,41,0.90);
 }
 .maria-black{
@@ -2048,6 +2063,7 @@ div#narrow-by-list {
   transform: translate(-50%,-50%);
   max-height: calc(100vh - 10px);
   /* overflow-y: auto; */
+	border-radius: 0;
 }
 .pop-title a {
   margin: 24px 24px 0 0;
@@ -2197,7 +2213,7 @@ span#popup_loader_register {
 
 
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -2456,7 +2472,7 @@ ul#foo4 {
 	padding: 0
 }
 
-.filterPopup .close div,.celebPopup .close div,.pressPopup .close div{
+.filterPopup .close div,.celebPopup .close div,.pressPopup .close div,.zoomPopup .close div{
   background-image: url("../images/redesign/login-cross.png");
   width: 25px;
   height: 26px;
@@ -2621,8 +2637,8 @@ ul#foo4 {
   margin-bottom: 16px;
 }
 .catalog-product-view .amconf-images-container img,.quickview-index-index .amconf-images-container img  {
-  width: 25px;
-  height: 25px;
+  width: 27px;
+  height: 27px;
 	margin-right: 19px;
 	padding: 3px;
 }
@@ -2658,7 +2674,7 @@ button#addtocart {
 }
 ul.tabs {
 	margin-bottom: 0;
-	margin-top: 30px;
+	margin-top: 41px;
 }
 .padder table.data-table, .padder .data-table tr {
   display: grid;
@@ -2668,7 +2684,7 @@ ul.tabs {
   margin-bottom: 10px;
 }
 .add-to-cart .availability {
-  margin: 40px 0 21px;
+  margin: 40px 0 44px;
 }
 /*.thumb.thumb1 img*/
 
@@ -2956,7 +2972,8 @@ ul.tabs li{
 	padding: 0 30px 0 26px;
 }
 
-.celebPopup .close{
+.celebPopup .close,
+.zoomPopup .close{
   z-index: 2;
 }
 .celebPopup .product-info {
@@ -2968,7 +2985,7 @@ ul.tabs li{
 	letter-spacing: 1.08px;
 }
 .quick_link {
-  margin-bottom: 21px;
+  margin-bottom: 30px;
 }
 .celeb-info {
   margin-top: 9px;
@@ -3007,7 +3024,7 @@ ul.tabs li{
   background-image: url(../images/popup-light-arrow.png);
   transform: rotate(0deg);
 }
-.celeb-loader{
+.celeb-loader, .zoom-loader{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -3020,7 +3037,7 @@ ul.tabs li{
   margin-bottom: 18px;
 	padding: 0;
 }
-/* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom{
+/* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-inspiration .for-space-to-bottom{
 	height: 242px !important;
 } */
 /*press page--------------------------------------------*/
@@ -3164,6 +3181,7 @@ table thead {
 }
 .quickview-index-index .containerImage img{
 	margin: auto;
+	margin-top: 42px;
 }
 .quickview-index-index .thumb.thumb1 img {
 	margin-top: 78px;
@@ -3186,6 +3204,8 @@ table thead {
 	width: 25px;
 	height: 26px;
 	background-size: 100%;
+	top: 24px;
+  right: 24px;
 }
 .checkout-multishipping-addresses .data-table td{
 	vertical-align: top;
@@ -3712,7 +3732,7 @@ table thead {
 .shop_by_look .product-info .product_details{
 	padding: 10px;
 }
-.category-piercing-gallery .top-bar {
+.category-inspiration .top-bar {
   display: none;
 }
 
@@ -3904,7 +3924,7 @@ table thead {
 	width: 100%;
 }
 .category-celebrity-clientele .homepage-menu.mariatash-header,
-.category-piercing-gallery .homepage-menu.mariatash-header,
+.category-inspiration .homepage-menu.mariatash-header,
 .category-shop-our-instagram .homepage-menu.mariatash-header
 {
 	z-index: 1;
@@ -4067,11 +4087,13 @@ div#uniform-shipping-address-select>span{
 	justify-content: flex-end;
 }
 #ajax-price {
-  margin-top: 16px;
+  margin-top: 7px;
 	padding-bottom: 11px;
 }
 #ajax-price span{
 	font-size: 22px;
+	font-family: urw-din-xlight;
+  letter-spacing: 0;
 }
 .swatch-section .input-box > .row {
   align-items: center;
@@ -4502,7 +4524,7 @@ dt.post-lengthds-lbl {
 	margin-bottom: 0;
 }
 .contact-us-wrapper {
-  margin-top: 23px;
+  margin-top: 40px;
 }
 .cms-contact-us h1 {
   font-size: 22px !important;
@@ -4526,6 +4548,36 @@ dt.post-lengthds-lbl {
 .amazon-widget .amazon-change-pay{ /****By Sagar******/
 	width:auto;
 }
+/****By Sagar******/
+.payment-card{
+   opacity: 0.2;
+}
+.payment-card.active{
+   opacity: 1;
+}
+.has-card-error{
+   border-color: #a94442;
+   webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
+   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
+}
+.has-card-success{
+   border-color: #2b542c;
+   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #67b168;
+   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #67b168;
+}
+/*******************/
 .zopim.bottom-change{
 	bottom:60px!important;
+}
+#footer8 .nav-item span {
+  letter-spacing: 0;
+}
+.contact-us-wrapper h1 {
+  font-size: 30px !important;
+}
+.catalog-category-view .celebPopup .product-name {
+  margin-bottom: 13px;
+}
+.hidden-appointments-time{
+	height: 12px;
 }

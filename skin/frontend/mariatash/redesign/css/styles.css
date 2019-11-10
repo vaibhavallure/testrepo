@@ -10989,9 +10989,7 @@ li.item h2.product-name {text-align: center;}
 	display: block;
 }
 
-#pricing-table, #pricing-table tr, #pricing-table td {
-	padding-left: 0 !important;
-}
+
 
 .lt-ie9 .containerThumbFull {
 	margin-top: -27px !important;
@@ -12105,13 +12103,13 @@ li.item h2.product-name {text-align: center;}
 	margin: 4px 0 9px;
 } */
 
-.fancybox-lock .fancybox-sample-size .fancybox-close {
+/* .fancybox-lock .fancybox-sample-size .fancybox-close {
 	top: 12px;
 	right: 13px;
 	width: 14px;
 	height: 12px;
 	background: url('../images/close-icon-fancy-chart.png') 0 0 no-repeat;
-}
+} */
 
 .fancybox-lock .fancybox-sample-size .fancybox-skin {
 	padding: 0 !important;

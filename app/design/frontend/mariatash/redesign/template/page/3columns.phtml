@@ -45,13 +45,6 @@
     </div>
 </div>
 <?php echo $this->getAbsoluteFooter() ?>
-<!--allure code-->
-<?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
-$deviceClass=($isMobile)?"mobile-device":"desktop-device";
-?>
-<script>
-jQuery("body").addClass("<?= $deviceClass ?>");
-</script>
-<!--allure code end-->
+
 </body>
 </html>
