@@ -10989,9 +10989,7 @@ li.item h2.product-name {text-align: center;}
 	display: block;
 }
 
-#pricing-table, #pricing-table tr, #pricing-table td {
-	padding-left: 0 !important;
-}
+
 
 .lt-ie9 .containerThumbFull {
 	margin-top: -27px !important;

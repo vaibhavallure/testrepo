@@ -1,5 +1,5 @@
 /* ===================================== PIERCING ======================================== */
-.piercing-service {
+/* .piercing-service {
 	font-size:13px;
 	margin:0 auto;
 	padding:0;
@@ -8,22 +8,7 @@
 .piercing-service .piercing_block {
 	background:#d1d1d1;
 }
-.piercing-service h3  {
-	padding:3px 10px;
-	text-transform:uppercase;
-	color: #3F4048;
-	font-family: dinmittelschriftregular;
-	font-weight:normal;
-	font-size:17px;
-	text-align:left;
-	margin: 0 0 16px;
-}
-.piercing-service .left-content {
-	width:420px;
-	float:left;
-	margin-right:10px;
-        margin-bottom: -15px;
-}
+
 .piercing-service .right-content .content-block {
 	background: #d1d1d1;
 	padding: 5px;
@@ -41,9 +26,9 @@
 	margin-top: 10px;
 }
 .piercing-service .banner img {
-	width:420px;
+	width:420px; */
 /*	height:245px;*/
-}
+/* }
 .piercing-service .locations {
 	margin-top:10px;
 }
@@ -103,11 +88,11 @@
 }
 .piercing-service .yelp .reviews span {
 	margin:-2px 0 0;
-}
+} */
 
 
 
-.piercing-service .citysearch h4{
+/* .piercing-service .citysearch h4{
 	color:#0081c5;
 	font-size:13px;
 	margin:6px 0;
@@ -135,9 +120,9 @@
 	text-align:right;
 	font-size:12px;
 	padding-right:5px;
-}
+} */
 /*===============================PIERCING AT ======================*/
-.piercing-service .piercing-at-mariatash {
+/* .piercing-service .piercing-at-mariatash {
 	margin-top:0px;
 }
 .piercing-service .right-content {
@@ -152,9 +137,9 @@
 	margin-left:10px;
 	line-height:16px;
 	width:353px;
-}
+} */
 /*============= TABLE ==============*/
-.piercing-service #pricing-table {
+/* .piercing-service #pricing-table {
 	margin-bottom:18px;
 	width:100%;
 }
@@ -199,9 +184,9 @@
 }
 .piercing-service .legal p {
 	font-weight:bold;
-}
+} */
 
-@keyframes blink {
+/* @keyframes blink {
 	0% { color  : #906E39; text-decoration: underline}
 	49% { color : #906E39; }
 	50% { color : #ecc388;text-decoration: underline}
@@ -210,8 +195,77 @@
 
 .allure_blinking {
 	animation: blink 2s linear infinite;
+} */
+.piercing-service h3{
+  text-transform: uppercase;
+  font-family: urw-din-medium;
 }
-.piercing-service p, .piercing-service span {
-  font-size: 13px;
-  font-family: urw-din-light;
+iframe{
+  width: 100%;
+}
+.piercing-service td.lil_header span{
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  font-family: urw-din-bold !important;
+  color: rgba(41,41,41,0.6);
+}
+.piercing-service td{
+  border-bottom: 1px #d8d8d8 solid;
+  padding: 10px;
+}
+.piercing-service a, .piercing-service span {
+  font-family: urw-din-xlight !important;
+}
+.piercing-service .right-content p.strong{
+  margin-top: 15px;
+}
+.piercing-service .right-content p.strong span{
+  font-family: urw-din-medium !important;
+}
+.piercing-service .legal p{
+  font-family: urw-din-medium !important;
+}
+/* .piercing-service .piercing_block{
+  margin-top: 20px;
+} */
+.info-text-two{
+  font-family: urw-din-medium !important;
+}
+#pricing-table tbody tr td {
+  padding-left: 0 !important;
+}
+.piercing-dark-text{
+  margin-bottom: 0;
+}
+#pricing-table tbody tr td{
+  width: 68%;
+}
+#pricing-table tbody tr td.prize {
+  text-align: center;
+}
+.piercing-service h1 {
+  margin-top: 48px;
+}
+.piercing-service {
+  margin-bottom: 60px;
+}
+.category-piercing-services .breadcrumbs {
+  display: none;
+}
+.legal {
+  margin-top: 20px;
+}
+@media (max-width:767px){
+  .piercing-service h3{
+    margin-top: 30px;
+  }
+  #pricing-table tbody tr td {
+    width: 58%;
+  }
+  .piercing-service td.lil_header span, .piercing-service a, .piercing-service span{
+    font-size: 12px;
+  }
+  #pricing-table tbody tr td.prize {
+    text-align: right !important;
+  }
 }
