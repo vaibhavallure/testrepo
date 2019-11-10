@@ -47,6 +47,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
     public function indexAction()
     {
         if ($this->getAppId()) {
+            Mage::register('appointment_booking_id', $this->getModifyDecryptedApptId());
 
             $collection = $this->getValidAppointmentCollection();
 
