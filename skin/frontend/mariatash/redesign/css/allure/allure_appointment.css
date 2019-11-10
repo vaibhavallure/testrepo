@@ -1172,7 +1172,7 @@ select.input-box {
 .store-info-wrapper{
 	margin: 0 15px;
 }
-.appointments-book-store .error.invalid-feedback {
+.error.invalid-feedback {
   border: none;
   background: no-repeat;
   color: #830000;
@@ -1295,6 +1295,11 @@ button#btnConfirm {
 #allureAlertBox #cancelConfirm{
 	margin-right: 0;
 }
+#allureAlertBox #closeBtn {
+  background: #fff;
+  border: 1px solid #292929;
+  border-radius: 0;
+}
 @media (min-width:992px){
 	#desktop-slot {
 	  margin-top: 128px;
@@ -1314,8 +1319,15 @@ button#btnConfirm {
 	}
 }
 @media (max-width:767px){
-	.appointments-book-store .label.custom-checkbox, .notify-label{
+	.notify-label{
 		margin-bottom: 10px;
+	}
+	/* .appointments-book-store .label.custom-checkbox{
+		margin-bottom: 20px;
+	} */
+	#popupConfirmAppointment img{
+		top: 6px;
+    right: -6px;
 	}
 	div#booking-box, .notify-label {
     padding: 0;
@@ -1325,7 +1337,7 @@ button#btnConfirm {
 	}
 	.notify-label .translate-popup{
 		padding-left: 45px;
-		margin-bottom: 10px;
+		/* margin-bottom: 10px; */
 	}
 	.custom-checkbox, .custom-radio{
 		margin-bottom: 20px;
@@ -1368,10 +1380,18 @@ button#btnConfirm {
 	.select-type-one, .country-section select{
 		width: 100%;
 	}
+	.modal-confirm-appointment.appointment-set .modal-body {
+    padding: 38px;
+	}
 }
 @media (min-width:991px){
-	.appointments-book-store .error.invalid-feedback{
+	.error.invalid-feedback{
 		text-align: left;
     padding: 0 3px;
+	}
+}
+@media (min-width:767px) and (max-width:1024px) {
+	.store-right{
+		text-align: right !important;
 	}
 }

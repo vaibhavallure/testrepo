@@ -3,7 +3,7 @@ $model = Mage::getSingleton("core/session")->getData('appointment_submitted');
 $isPiercingAppointment=Mage::getSingleton("core/session")->getData('isPiercingAppointment');
 if($this->getPara("redirect-from")!="modify-success"):
 ?>
-<div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg modal-confirm-appointment appointment-set" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content pop-up-cover">
             <div id="popupConfirmAppointment" class="modal-body">
