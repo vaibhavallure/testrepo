@@ -13,7 +13,6 @@
 readme.md
 /nbproject
 .hg
-.htaccess
 .hgignore
 sftp-config.json
 *.komodoproject
