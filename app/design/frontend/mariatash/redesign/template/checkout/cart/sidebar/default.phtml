@@ -31,7 +31,7 @@ $_product = $_item->getProduct();
 $isVisibleProduct = $_product->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_product, Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 ?>
-<?php 
+<?php
 $productId = $this->getProduct()->getId();
 $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
 $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
@@ -50,7 +50,7 @@ if(!is_null($parentId)){
         <span class="product-image col-3"><img src="<?php echo $this->getProductThumbnail()->resize(56, 73)->setWatermarkSize('30x10'); ?>" width="56" height="73" style="width:56px; height:73px;"  alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></span>
     <?php endif; ?>
       <a href="#" title="<?php echo $this->__('Remove') ?>" onclick="confirmBox('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>', function(){window.location='<?php echo $this->getDeleteUrl() ?>'},'REMOVE');" class="btn-remove position-absolute minicart-remove">
-        <img src="<?php echo $this->getSkinUrl('images/redesign/exit-small-bk.png'); ?>" alt="">
+        <img src="<?php echo $this->getSkinUrl('images/redesign/thinner-cross.png'); ?>" alt="">
       </a>
     <div class="product-details col-9">
         <div class="product-name"><?php if ($isVisibleProduct && $this->hasProductUrl()): ?><a href="<?php echo $url?>"><?php endif; ?><h5><?php echo $this->htmlEscape($this->getProductName()) ?><?php if ($isVisibleProduct && $this->hasProductUrl()): ?></h5></a><?php endif; ?></div>
