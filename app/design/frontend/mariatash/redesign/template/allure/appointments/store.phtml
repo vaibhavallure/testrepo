@@ -4,12 +4,12 @@
         <div class="col-12 store-name"><h1><?= $this->getStoreName() ?></h1></div>
         <div class="col-12 store-details">
           <div class="row">
-          <div class="col-lg-8 col-md-8 col-12">
+          <div class="col-lg-6 col-md-6 col-12">
               <p class="para-lighter mb-0 store-left"><?= $this->getStoreAddress() ?></p>
               <p class="para-lighter"><?= $this->getStoreContact() ?></p>
           </div>
-          <div class="col-lg-4 col-md-4 col-12 store-right">
-              <p class="para-lighter"><?= strip_tags($this->getStoreHours()) ?></p>
+          <div class="col-lg-6 col-md-6 col-12 store-right text-lg-right">
+              <p class="para-lighter"><?= $this->getStoreHours() ?></p>
           </div>
         </div>
       </div>
