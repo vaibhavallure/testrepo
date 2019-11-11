@@ -5,16 +5,13 @@ $storeCode=Mage::getSingleton("adminhtml/session")->getStoreCode();
 if(!empty($appointmentId))
     $url="appointments/book/modify/user/admin/id/".$appointmentId;
 else
-    $url="appointments/book/store/code/".$storeCode."/user/admin";
+    $url="appointments/book/index/user/admin";
 ?>
 
 <div class="content-header">
 	<h3 class="icon-head"><?php echo 'Book New Appointment' ?></h3>
 	<button  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_appointments/')?>'" style="float:right" id="book_another" class="book_another" ><?php echo 'Back' ?></button>
 </div>
-
-
-
 <div>
     <iframe id="appointment_special" style="width: 100%;height: 990px" src="<?= Mage::getBaseUrl() ?><?= $url ?>" frameborder="0"></iframe>
 </div>
