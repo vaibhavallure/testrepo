@@ -653,7 +653,7 @@ if ($isAjaxCall) {
 
         });
         function setImg(img) {
-            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"cover","background-position":"center"});
+            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"contain","background-repeat":"no-repeat","background-position":"center"});
         }
 
         function clearImg() {
