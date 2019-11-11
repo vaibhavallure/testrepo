@@ -1334,8 +1334,6 @@ ul.swatch .swatch-item a {
 }
 .category-inspiration .category-products, .category-piercing-gallery .category-products {
     margin-bottom: 0;
-}{
-	margin-bottom: 0;
 }
 
 .dropdown-menu {
@@ -1638,10 +1636,29 @@ input[type="checkbox"]:checked+label:before {
 	flex:0 0 100%;
 }
 .image-text {
-  position: absolute;
-  bottom: 15px;
-  width:100%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: rgb(255,255,255,0);
+	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
+}
+.image-text h6 {
+	position: absolute;
+	bottom: 15px;
+	width: 100%;
 	text-align: center;
+}
+.piercing_options a {
+	position: relative;
+	overflow: hidden;
+	display: block;
+}
+.piercing_options {
+	text-align: center;
+	padding: 0 5px;
+	display: flex;
 }
 .special-menu {
   position: relative;
@@ -1825,7 +1842,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .catalog-category-view .category-title{
 	padding-left: 109px;
-	margin-top: 14px;
+	margin-top: 4px;
 }
 .catalog-category-view .mb-category-products .category-title h1 {
   font-size: 30px;
@@ -1865,7 +1882,7 @@ div#narrow-by-list {
 }
 #narrow-by-list{
   margin-left: 62px;
-	margin-top: 21px;
+	margin-top: 11px;
 	position: relative;
 }
 #narrow-by-list li div dd{
@@ -1900,9 +1917,9 @@ div#narrow-by-list {
 .overflow-hidden{
   overflow: hidden;
 }
-.piercing_options{
-  text-align: center;
-  padding: 0;
+.piercing_options img {
+  width: 100%;
+  height: auto;
 }
 .catalog-category-view .list-mt-w .light-button {
   width: 128px;
@@ -2488,7 +2505,6 @@ ul#foo4 {
 #narrow-by-list li{
   float: left;
 	padding: 0;
-	margin-bottom: 10px;
 	z-index: 2;
 	padding-left: 8px;
 }
@@ -2917,10 +2933,10 @@ ul.tabs li{
 }
 .breadcrumbs {
   padding-left: 71px;
-	margin-top: 22px;
+	margin-top: 13px;
 }
 .catalog-product-name-display {
-	margin-top: 14px;
+	/* margin-top: 14px; */
 	font-size: 30px;
 }
 .cartilage-section {
@@ -4582,9 +4598,4 @@ dt.post-lengthds-lbl {
 }
 .hidden-appointments-time{
 	height: 12px;
-}
-
-/*For catalogsearch only*/
-.catalogsearch-result-index #narrow-by-list{
-	margin-top : 0px !important;
 }
