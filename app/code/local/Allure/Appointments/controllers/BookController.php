@@ -244,6 +244,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
         $post_data['ip'] = $this->get_client_ip();
 
+        $post_data['language_pref'] = ($post_data['language_pref']) ? $post_data['language_pref'] : 'en';
 
         return $post_data;
     }

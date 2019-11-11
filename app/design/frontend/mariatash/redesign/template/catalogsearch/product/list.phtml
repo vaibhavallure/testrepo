@@ -1,0 +1,516 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+$isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
+$_productCollection = $this->getLoadedProductCollection();
+$_helper = $this->helper('catalog/output');
+$mediaUrl = Mage::getBaseUrl('media');
+$_test = $this->getRequest()->getParam('test');
+$mode  = $this->getMode();
+?>
+
+<?php if($isMobile): ?>
+<style>
+    .price-box{
+        display: block!important;
+    }
+</style>
+<?php endif; ?>
+<script type="text/javascript">
+    var BASE_URL = '<?php echo Mage::getBaseUrl('web'); ?>';
+    function productItemHoverBinding(listSelector) {
+        jQuery(listSelector + ' .item').mouseenter(function() {
+            jQuery(this).addClass('over');
+            var product_id = parseInt(jQuery(this).attr('id').replace('item-', ''));
+            var superAtt  = 'super-attribute-' + product_id;
+            var quickview = 'product-quickview-' + product_id;
+            jQuery('#' + quickview).show();
+            jQuery('.price-box').show();
+            var listIds   = jQuery('#list-'+product_id).text();
+            // Check configurable
+            //if(!listIds) return false;
+            if(!listIds) listIds = product_id;
+
+            if (jQuery('#list-img-'+product_id).text()=='1')
+                return false;
+
+
+            if(false) {
+                jQuery(this).addClass('ajax-request-sent');
+                jQuery.ajax({
+                    type: "POST",
+                    dataType : "json",
+                    url: BASE_URL + "ecpcolor/",
+                    data: {options: listIds,mode:'<?php echo $mode;?>', location: "Boston"}
+                    })
+                    .done(function(response) {
+                    if (response.colors != '') {
+                       jQuery("#color-icons-"+product_id).html(response.colors);
+
+
+                       jQuery('#list-img-'+product_id).text('1') ;
+
+                       var iCounter=1;
+                       jQuery('#color-icons-' + product_id + ' li').each(function(){
+                            var color_id  = jQuery(this).attr('id'),
+                                color_title = jQuery(this).attr('title');
+                                    /*Tipped.create(jQuery("#" + color_id), color_title, {
+                                            skin: 'customTiny',
+                                            showOn: ['click', 'mouseover'],
+                                            background: { color: '#fff', opacity: .7 }
+                                    });*/
+
+                            jQuery(this).click(function(){
+                                var option = jQuery(this).attr('value');
+                                removeActive(product_id);
+                                jQuery(this).addClass('active');
+                                var imgSrc = jQuery('#img-'+ jQuery(this).attr('id')).text();
+                                var price  = jQuery('#price-'+ jQuery(this).attr('id')).html();
+                                var pv = jQuery('#link-pv-'+product_id).text() + '?optionId=' +option;
+                                var qv = jQuery('#link-qv-'+product_id).text() + '?optionId=' +option;
+                                if(price){
+                                    jQuery("#default-price-"+product_id).html(price);
+                                }
+                                if(imgSrc) {
+                                    jQuery('#img-'+ product_id).attr('src',imgSrc);
+                                    jQuery('a#' + product_id).attr('href',pv);
+                                    jQuery('#product-quickview-'+ product_id).attr('href',qv)
+                                }
+                                jQuery('.price-box').show();
+                            });
+
+                            if(iCounter==1)
+                            {
+                                jQuery(this).trigger("click");
+                            }
+                            iCounter++;
+                        });
+                    }
+
+                    if (response.price != '') {
+                        jQuery("#default-price-"+product_id).html(response.price);
+                        jQuery("#default-price-"+product_id+" .price-box").show();
+                    }
+
+                });
+            }
+        }).mouseleave(function() {
+            jQuery(this).removeClass('over');
+        });
+        function removeActive(product_id){
+            jQuery('#color-icons-' + product_id + ' li').each(function(){
+               jQuery(this).removeClass('active') ;
+            });
+        }
+    }
+</script>
+<?php $price = $this->getRequest()->getParam('price');?>
+<?php if (!$_productCollection->count() || ($price == '0,0')): ?>
+    <div class="category-products">
+        <div id="productsContainer-wrapper">
+            <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="category-products">
+        <div class="toolbar-top text-right float-right col-1">
+          <?php echo $this->getToolbarHtml() ?>
+            <?php if(Mage::helper('aw_ajaxcatalog')->isEnabled()) : ?>
+                <?php $catId = $this->getLayer()->getCurrentCategory()->getId();
+                $products = Mage::getModel('catalog/category')->load($catId)->getProductCollection()
+                            ->addAttributeToSelect('entity_id')
+                            ->addAttributeToFilter('status', 1)
+                            ->addAttributeToFilter('visibility', 4);
+
+                //if($products->getSize() > 30) : ?>
+                    <div class="toolbar d-none">
+                        <span id="total_item_counts"><?php echo $_productCollection->getSize(); ?> <?= ($_productCollection->getSize()==1)? "Item":"Items" ?></span>
+                    </div>
+                <?php //endif; ?>
+            <?php endif; ?>
+
+        </div>
+        <div id="loaderProducts" class="hideLoader"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>"></div>
+        <div class="col-12">
+        <div id="productsContainer-wrapper" class="row w-100 m-0">
+            <div id="productsContainer " class="col-12 p-1">
+                <?php // List mode ?>
+                <?php if ($this->getMode() != 'grid'): ?>
+                    <?php // Grid Mode ?>
+
+                    <?php $_collectionSize = $_productCollection->count() ?>
+                    <?php $_columnCount = $this->getColumnCount(); ?>
+                    <?php $_iterator = 0; ?>
+                    <ul class="products-grid2 catalog-common-grid row">
+                        <?php $i = 1;
+                        foreach ($_productCollection as $_product): ?>
+                            <?php
+
+                            $productUrl = $_product->getProductUrl();
+                            $currentProductId = $_product->getId();
+                            if(empty($productUrl) || empty($currentProductId)){
+                                $temp_sku = $_product->getSku();
+                                if(!empty($temp_sku)) {
+                                    $temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku', $temp_sku);
+                                    $productUrl = $temp_product->getProductUrl();
+                                    $currentProductId = $temp_product->getId();
+                                    $_product = $temp_product;
+                                }
+                            }
+                            $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $_product->getId()));
+                            $simples = $this->getIcons($currentProductId);
+                            $firstOption = null;
+                            ?>
+                            <li class="item col-lg-4" id="item-<?php echo $_product->getId() ?>">
+                                <a id="<?php echo $_product->getId() ?>"
+                                   href="<?php echo $productUrl; ?>"
+                                   class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>" class="productimg"
+                                                           src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(450, 585); ?>"
+                                                           width="277" height="352"
+                                                           alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
+                                <div class="grid-mt-w col-12">
+                                  <div class="row">
+                                    <div class="col-8">
+                                      <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                          <a  id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
+                                              title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
+                                      </h6>
+                                    </div>
+                                    <div style="display:none;">
+                                        <span id="link-qv-<?php echo $_product->getId(); ?>"><?php echo $quickViewUrl; ?></span>
+                                        <span id="link-pv-<?php echo $_product->getId(); ?>"><?php echo $productUrl; ?></span>
+                                    </div>
+                                    <div class="col-4">
+                                      <div class="priceCategory default " id="default-price-<?php echo $_product->getEntityId(); ?>">
+                                          <p><?= $this->getPriceHtml($_product) ?></p>
+                                      </div>
+                                  </div>
+                                    <div class="actions col-12">
+                                      <div class="row justify-content-between">
+                                        <?php if ($_product->getIsSalable()): ?>
+                                            <?php if ($_product->getTypeId() == 'configurable'): ?>
+                                              <div class="col">
+                                                <a class="fancybox fancybox.iframe button btn-quickview  light-button"
+                                                   id='product-quickview-<?php echo $_product->getId() ?>'
+                                                   href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
+                                                   title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
+                                                 </a>
+                                               </div>
+                                               <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
+                                                <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                    <?php
+                                                    $productId = $_product->getId();
+                                                    $optionsValues = $this->getIcons($productId);
+                                                    if(!empty($optionsValues)):
+                                                        $attribute_code = $optionsValues['code'];
+                                                        $attribute_label = $optionsValues['label'];
+                                                        ?>
+                                                        <div id="list-<?php echo $productId;?>" style="display: none;"><?php echo json_encode($optionsValues);?></div>
+                                                        <div id="list-img-<?php echo $productId;?>" style="display:none">0</div>
+                                                        <div id="color-option" class="color-icon">
+                                                            <span>
+                                                                <?php echo $attribute_label; ?>:
+                                                            </span>
+                                                        </div>
+                                                        <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
+                                                            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
+                                                        </ul>
+                                                    <?php endif;?>
+                                                </div>
+                                            <?php else: ?>
+                                                <a class="fancybox fancybox.iframe button btn-quickview light-button"
+                                                id='product-quickview-<?php echo $_product->getId() ?>'
+                                                href="<?php echo $quickViewUrl; ?>"
+                                                title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <p class="availability out-of-stock">
+                                            <span><?php echo $this->__('Out of stock') ?></span></p>
+                                        <?php endif; ?>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </li>
+                            <?php if($i % 3 == 0 && $i!= 0) : ?>
+                            <?php endif; $i++; ?>
+                        <?php endforeach ?>
+                      <!--/three-in-row-->
+                    </ul>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            productItemHoverBinding('ul.products-grid2');
+                        });
+                        decorateGeneric($$('ul.products-grid2'), ['odd', 'even', 'first', 'last']);
+                    </script>
+                <?php else: ?>
+
+                    <?php // Grid Mode     ?>
+
+                    <?php $_collectionSize = $_productCollection->count() ?>
+                    <?php $_columnCount = $this->getColumnCount(); ?>
+                        <?php $_iterator = 0; ?>
+                    <ul class="products-grid row catalog-common-grid">
+
+                        <?php
+                        $i = 1;
+                        foreach ($_productCollection as $_product):
+                            ?>
+                            <?php
+
+                            $productUrl = $_product->getProductUrl();
+
+                            $currentProductId = $_product->getId();
+
+                            if(empty($productUrl) || empty($currentProductId)){
+                                $temp_sku = $_product->getSku();
+                                if(!empty($temp_sku)) {
+                                    $temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku', $temp_sku);
+                                    $productUrl = $temp_product->getProductUrl();
+                                    $currentProductId = $temp_product->getId();
+                                    $_product = $temp_product;
+                                }
+                            }
+                            $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $_product->getId()));
+
+                            $simples = $this->getIcons($currentProductId);
+                            ?>
+                            <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
+                                <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
+                                   class="product-image">
+                                    <img class="catalog-grid-image product-image-hover" data-pid="<?= $_product->getId() ?>" id="img-<?php echo $_product->getId() ?>"
+                                                           src="<?php echo $this->getFirstOptionImage($_product) ?>"
+                                                           width="376" height="490"
+                                                           alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/>
+                                    <img class="catalog-grid-image rollover-img" data-pid="<?= $_product->getId() ?>" id="rollover-img-<?php echo $_product->getId() ?>"
+                                         src="<?php echo ($this->getFirstOptionImage($_product,true))?$this->getFirstOptionImage($_product,true):"" ?>"
+                                         width="376" height="490"
+                                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" style="display:none;"/>
+                                </a>
+
+
+                                <div class="list-mt-w" <?=($isMobile)? 'style="display:block"':'' ?>>
+                                  <div class="row justify-content-between">
+                                        <div class="col-12">
+                                          <div class="row list-mt-upper">
+                                            <div class="col-7">
+                                              <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                                  <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
+                                                     title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
+                                              </h6>
+                                            </div>
+                                           <div style="display:none;">
+                                                <span id="link-qv-<?php echo $_product->getId(); ?>" ><?php echo $quickViewUrl; ?>sourceOfReq/quickview/</span>
+                                                <span id="link-pv-<?php echo $_product->getId(); ?>" ><?php echo $productUrl; ?></span>
+                                            </div>
+                                            <div class="col-5 pl-0">
+                                              <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>">
+                                                <p class="m-0"><?= $this->getPriceHtml($_product) ?></p>
+                                              </div>
+                                            </div>
+                                      </div>
+                                    </div>
+                                    <div class="actions col-12">
+                                      <div class="row justify-content-between">
+                                        <?php
+                                               $check = true;
+                                               if($_test == 1)
+                                                $check = $_product->getIsSalable();
+                                               else
+                                                $check = $_product->getIsSalable2();
+                                         ?>
+                                        <?php if ($check): ?>
+                                            <?php if ($_product->getTypeId() == 'configurable'): ?>
+                                                <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
+                                                <div class="col">
+                                                  <a class="fancybox fancybox.iframe button btn-quickview  light-button"
+                                                     id='product-quickview-<?php echo $_product->getId() ?>'
+                                                     href="<?php echo $quickViewUrl; ?>sourceOfReq/quickview/<?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
+                                                     title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
+                                                   </a>
+                                                   <!-- <a class="btn btn-primary btn-sm light-button product-buy-btn"
+                                                       href="<?php /*echo $productUrl; */?>"
+                                                       title="<?php /*echo $this->__('quick view') */?>" style="display: none;"><span><?php /*echo $this->__('buy') */?></span></a>-->
+
+                                                </div>
+                                                <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                    <?php
+                                                    $productId = $_product->getId();
+                                                    $optionsValues = $this->getIcons($productId);
+                                                    if(!empty($optionsValues)):
+                                                    $attribute_code = $optionsValues['code'];
+                                                    $attribute_label = $optionsValues['label'];
+                                                    ?>
+                                                    <div id="list-<?php echo $productId;?>" style="display: none;"><?php echo json_encode($optionsValues);?></div>
+                                                    <div id="list-img-<?php echo $productId;?>" style="display:none">0</div>
+                                                    <div id="color-option" class="color-icon">
+                                                        <span>
+                                                            <?php echo $attribute_label; ?>:
+                                                        </span>
+                                                    </div>
+                                                    <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
+                                                        <?php
+                                                        $j=0;
+                                                        $firstOption = '';
+                                                        foreach ($optionsValues['value'] as $option): ?>
+                                                            <?php
+                                                            $optionId = $option[$attribute_code];
+                                                            $optionLb = $option[$attribute_code . "_value"];
+                                                            $simple_id = $option['child_id'];
+                                                            if($j==0) $firstOption = $optionId;
+                                                            $j++;
+
+                                                            $simpleProduct = Mage::getModel('catalog/product')->load($simple_id);
+                                                            ?>
+                                                            <li id="<?php echo $simple_id ?>"
+                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');"
+                                                                class="colorSelector tipped-create <?=($j==1)?"active":"" ?>" value="<?php echo $optionId ?>"
+                                                                title="<?php echo $optionLb ?>"
+                                                                data-pid="<?php echo $_product->getId() ?>"
+                                                                data-image="<?=  Mage::helper('catalog/image')->init($simpleProduct, 'small_image')->resize(314, 409) ?>"
+                                                                data-rollover="<?=($simpleProduct->getRollOver() && $simpleProduct->getRollOver()!="no_selection")? Mage::helper('catalog/image')->init($simpleProduct, 'roll_over')->resize(314, 409) :"" ?>"
+                                                            >
+                                                                <div style="display: none">
+                                                                      <span id="img-<?php echo $simple_id; ?>"></span>
+                                                                      <span id="price-<?php echo $simple_id; ?>"></span>
+                                                                </div>
+                                                            </li>
+                                                    <?php endforeach; ?>
+<!--                                                        <img src="--><?php //echo $this->getSkinUrl('images/gene/loader.gif') ?><!--" alt="Loading..." style="width: 25px;height: 25px">-->
+                                                    </ul>
+                                                    <?php endif;?>
+                                                </div>
+
+                                            <?php else: ?>
+                                                <a class="fancybox fancybox.iframe button btn-quickview light-button"
+                                                   id='product-quickview-<?php echo $_product->getId() ?>'
+                                                   href="<?php echo $quickViewUrl; ?>"
+                                                   title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
+
+                                                   <?php endif; ?>
+                                        <?php else: ?>
+                                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                        <?php endif; ?>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </li>
+                            <?php if($i % 5 == 0 && $i!= 0) : ?>
+
+                            <?php endif; $i++; ?>
+                        <?php endforeach ?>
+                        <!--/five-in-row-->
+                    </ul>
+                <?php if(!$isMobile): ?>
+                    <script type="text/javascript">
+                        productItemHoverBinding('ul.products-grid');
+                        decorateGeneric($$('ul.products-grid'), ['odd', 'even', 'first', 'last']);
+                    </script>
+               <?php endif; ?>
+                    <?php endif; ?>
+
+                <div class="toolbar-bottom">
+    <?php echo $this->getToolbarHtml() ?>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+<?php endif; ?>
+<script>
+
+    jQuery(document).ready(function() {
+        jQuery(document).on("click","li.colorSelector",function () {
+            var product_id=jQuery(this).data("pid");
+            var imgSrc=jQuery(this).data("image");
+            var rolloverSrc=jQuery(this).data("rollover");
+            jQuery(this).parent().find("li.colorSelector").removeClass("active");
+            jQuery(this).addClass("active");
+            jQuery('#img-'+ product_id).attr('src',imgSrc);
+
+            jQuery('#rollover-img-'+ product_id).attr('src',rolloverSrc);
+
+
+        });
+        jQuery(document).on("hover",".product-image-hover",function () {
+           var roll_over_img=jQuery("#rollover-img-"+jQuery(this).data("pid"));
+           if(roll_over_img.attr("src")) {
+               jQuery(this).hide();
+               roll_over_img.show();
+           }
+        });
+        jQuery(document).on("mouseleave",".rollover-img",function () {
+            var img=jQuery("#img-"+jQuery(this).data("pid"));
+            if(img.length) {
+                jQuery(this).hide();
+                img.show();
+            }
+        });
+
+    });
+
+    jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'yes',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
+
+        afterLoad: function(current, previous) {
+
+//            jQuery('.fancybox-iframe').attr('scrolling', 'no');
+           /* if (current.href == jQuery("div.category-products ul li:first-child div.actions a.btn-quickview").attr('href')) {
+                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5" class="fancybox-nav fancybox-prev first_preview" title=""><span></span></a>');
+            } else if (current.href == jQuery("div.category-products ul li:last-child div.actions a.btn-quickview").attr('href')) {
+                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5 " class="fancybox-nav fancybox-next last_next" title=""><span></span></a>');
+            }*/
+        }
+    });
+</script>
