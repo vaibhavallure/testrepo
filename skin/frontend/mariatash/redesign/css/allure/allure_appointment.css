@@ -1309,6 +1309,9 @@ button#btnConfirm {
 .general-piercing-information p {
   text-align: justify;
 }
+tr.tr-piercing td span, tr.tr-piercing td {
+  font-family: urw-din-xlight;
+}
 @media (min-width:992px){
 	#desktop-slot {
 	  margin-top: 128px;
