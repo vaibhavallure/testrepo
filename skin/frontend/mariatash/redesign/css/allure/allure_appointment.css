@@ -1300,6 +1300,9 @@ button#btnConfirm {
   border: 1px solid #292929;
   border-radius: 0;
 }
+.custom-checkbox, .custom-radio{
+	font-family: urw-din-light;
+}
 @media (min-width:992px){
 	#desktop-slot {
 	  margin-top: 128px;
