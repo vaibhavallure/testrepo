@@ -107,13 +107,13 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 if (! array_key_exists('mt_shipping_method', $data)) {
                    return array(
                         "error" => - 1,
-                        "message" => Mage::helper("checkout")->__("Invalid shipping method.")
+                        "message" => Mage::helper("checkout")->__("Invalid shipping method 1.")
                     );
                 }
                 if (empty($shippingMethod2)) {
                     return array(
                         "error" => - 1,
-                        "message" => Mage::helper("checkout")->__("Invalid shipping method.")
+                        "message" => Mage::helper("checkout")->__("Invalid shipping method 2.")
                     );
                 }
 
@@ -123,7 +123,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 if (! $rate) {
                     return array(
                         "error" => - 1,
-                        "message" => Mage::helper("checkout")->__("Invalid shipping method.")
+                        "message" => Mage::helper("checkout")->__("Invalid shipping method 3.")
                     );
                 }
                 $this->getQuoteBackordered()
@@ -519,14 +519,63 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             $customer = Mage::getSingleton('customer/session')->getCustomer();
             $billingCustomerId = $quoteMain->getBillingAddress()->getCustomerAddressId();
             $shippingCustomerId = $quoteMain->getShippingAddress()->getCustomerAddressId();
+            $mainBillingAddress = $quoteMain->getBillingAddress();
+            $mainShippingAddress = $quoteMain->getShippingAddress();
             $billingAddress = $customer->getAddressById($billingCustomerId);
             $shippingAddress = $customer->getAddressById($shippingCustomerId);
-                
+            
+            //Mage::log($shippingAddress->getData(),Zend_Log::DEBUG,'abc.log',true);
+            
             /** unvailable quote items */
             $unavailableItems = $backorderQuote->getAllItems();
             if (count($unavailableItems) > 0) {
-                $backorderQuote->getBillingAddress()->importCustomerAddress($billingAddress);
-                $backorderQuote->getShippingAddress()->importCustomerAddress($shippingAddress);
+                $shippingAddressData = null;
+                if(!$shippingCustomerId){
+                    $shippingAddressData = array(
+                        "email" => $mainShippingAddress->getEmail(),
+                        "prefix" => $mainShippingAddress->getPrefix(),
+                        "firstname" => $mainShippingAddress->getFirstname(),
+                        "middlename" => $mainShippingAddress->getMiddlename(),
+                        "lastname" => $mainShippingAddress->getLastname(),
+                        "suffix" => $mainShippingAddress->getSuffix(),
+                        "company" => $mainShippingAddress->getCompany(),
+                        "city" => $mainShippingAddress->getCity(),
+                        "region" => $mainShippingAddress->getRegion(),
+                        "region_id" => $mainShippingAddress->getRegionId(),
+                        "postcode" => $mainShippingAddress->getPostcode(),
+                        "country_id" => $mainShippingAddress->getCountryId(),
+                        "telephone" => $mainShippingAddress->getTelephone(),
+                        "fax" => $mainShippingAddress->getFax()
+                    );
+                    $backorderQuote->getShippingAddress()->setStreet($mainShippingAddress->getStreet());
+                    $backorderQuote->getShippingAddress()->addData($shippingAddressData);
+                }else{
+                    $backorderQuote->getShippingAddress()->importCustomerAddress($shippingAddress);
+                }
+                
+                $billingAddressData = null;
+                if(!$billingCustomerId){
+                    $billingAddressData = array(
+                        "email" => $mainBillingAddress->getEmail(),
+                        "prefix" => $mainBillingAddress->getPrefix(),
+                        "firstname" => $mainBillingAddress->getFirstname(),
+                        "middlename" => $mainBillingAddress->getMiddlename(),
+                        "lastname" => $mainBillingAddress->getLastname(),
+                        "suffix" => $mainBillingAddress->getSuffix(),
+                        "company" => $mainBillingAddress->getCompany(),
+                        "city" => $mainBillingAddress->getCity(),
+                        "region" => $mainBillingAddress->getRegion(),
+                        "region_id" => $mainBillingAddress->getRegionId(),
+                        "postcode" => $mainBillingAddress->getPostcode(),
+                        "country_id" => $mainBillingAddress->getCountryId(),
+                        "telephone" => $mainBillingAddress->getTelephone(),
+                        "fax" => $mainBillingAddress->getFax()
+                    );
+                    $backorderQuote->getBillingAddress()->setStreet($mainBillingAddress->getStreet());
+                    $backorderQuote->getBillingAddress()->addData($billingAddressData);
+                }else{
+                    $backorderQuote->getBillingAddress()->importCustomerAddress($billingAddress);
+                }
 
                 $backorderQuote->setOrderType($_checkoutHelper::MULTI_BACK_ORDER);
                 $backorderQuote->setIsChildOrder(1);
@@ -547,8 +596,53 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             /** available quote items */
             $availableItems = $orderQuote->getAllItems();
             if (count($availableItems) > 0) {
-                $orderQuote->getBillingAddress()->importCustomerAddress($billingAddress);
-                $orderQuote->getShippingAddress()->importCustomerAddress($shippingAddress);
+                $shippingAddressData = null;
+                if(!$shippingCustomerId){
+                    $shippingAddressData = array(
+                        "email" => $mainShippingAddress->getEmail(),
+                        "prefix" => $mainShippingAddress->getPrefix(),
+                        "firstname" => $mainShippingAddress->getFirstname(),
+                        "middlename" => $mainShippingAddress->getMiddlename(),
+                        "lastname" => $mainShippingAddress->getLastname(),
+                        "suffix" => $mainShippingAddress->getSuffix(),
+                        "company" => $mainShippingAddress->getCompany(),
+                        "city" => $mainShippingAddress->getCity(),
+                        "region" => $mainShippingAddress->getRegion(),
+                        "region_id" => $mainShippingAddress->getRegionId(),
+                        "postcode" => $mainShippingAddress->getPostcode(),
+                        "country_id" => $mainShippingAddress->getCountryId(),
+                        "telephone" => $mainShippingAddress->getTelephone(),
+                        "fax" => $mainShippingAddress->getFax()
+                    );
+                    $orderQuote->getShippingAddress()->setStreet($mainShippingAddress->getStreet());
+                    $orderQuote->getShippingAddress()->addData($shippingAddressData);
+                }else{
+                    $orderQuote->getShippingAddress()->importCustomerAddress($shippingAddress);
+                }
+                
+                $billingAddressData = null;
+                if(!$billingCustomerId){
+                    $billingAddressData = array(
+                        "email" => $mainBillingAddress->getEmail(),
+                        "prefix" => $mainBillingAddress->getPrefix(),
+                        "firstname" => $mainBillingAddress->getFirstname(),
+                        "middlename" => $mainBillingAddress->getMiddlename(),
+                        "lastname" => $mainBillingAddress->getLastname(),
+                        "suffix" => $mainBillingAddress->getSuffix(),
+                        "company" => $mainBillingAddress->getCompany(),
+                        "city" => $mainBillingAddress->getCity(),
+                        "region" => $mainBillingAddress->getRegion(),
+                        "region_id" => $mainBillingAddress->getRegionId(),
+                        "postcode" => $mainBillingAddress->getPostcode(),
+                        "country_id" => $mainBillingAddress->getCountryId(),
+                        "telephone" => $mainBillingAddress->getTelephone(),
+                        "fax" => $mainBillingAddress->getFax()
+                    );
+                    $orderQuote->getBillingAddress()->setStreet($mainBillingAddress->getStreet());
+                    $orderQuote->getBillingAddress()->addData($billingAddressData);
+                }else{
+                    $orderQuote->getBillingAddress()->importCustomerAddress($billingAddress);
+                }
 
                 $orderQuote->setOrderType($_checkoutHelper::MULTI_MAIN_ORDER);
                 $orderQuote->setIsChildOrder(1);
