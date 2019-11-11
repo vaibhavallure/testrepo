@@ -7,11 +7,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
 		$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
 
-		if(!$storeId)
-        {
-            echo "<script>alert('booking store not found')</script>";
-            return;
-        }
+
         // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
