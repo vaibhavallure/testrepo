@@ -141,7 +141,7 @@
                                                 </div>
                                                 <?php if(!empty($message) && !$isSingleProduct): ?>
                                                 <?php $tmpMessage = $message;?>
-                                                <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
+                                                <?php if(!preg_match('/instock-product/', strtolower($tmpMessage) )):?>
                                                 <div class="gift-messages">
                                                 	<p class="control">
                                                   		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
