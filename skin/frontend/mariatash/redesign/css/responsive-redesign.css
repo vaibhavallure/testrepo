@@ -484,9 +484,10 @@
   .menu-common-section{
     margin-top: 13px;
   }
-  /* .wrapper{
-    height: auto !important;
-  } */
+  .general-piercing-information{
+    margin-top: 0 !important;
+    margin-bottom: 30px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
