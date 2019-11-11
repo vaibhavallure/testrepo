@@ -1300,6 +1300,15 @@ button#btnConfirm {
   border: 1px solid #292929;
   border-radius: 0;
 }
+.custom-checkbox, .custom-radio{
+	font-family: urw-din-light;
+}
+.general-piercing-information{
+	margin-top: 47px;
+}
+.general-piercing-information p {
+  text-align: justify;
+}
 @media (min-width:992px){
 	#desktop-slot {
 	  margin-top: 128px;

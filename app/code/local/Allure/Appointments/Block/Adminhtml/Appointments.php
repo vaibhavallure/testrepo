@@ -8,17 +8,11 @@ class Allure_Appointments_Block_Adminhtml_Appointments extends Mage_Adminhtml_Bl
 		$this->_controller = 'adminhtml_appointments';
 		$this->_headerText = Mage::helper('appointments')->__('Manage Appointments');
 		$this->_addButtonLabel = Mage::helper('appointments')->__('Book New Appointment');
-
-        $activeStores=Mage::helper("appointments/data")->getActiveStore();
-        foreach ($activeStores as $id=>$store) {
-            $this->_addButton('new_stores_'.$id, array(
-                'label'     => Mage::helper('catalogrule')->__('Book '.$store.' Appointment'),
-                'onclick'   => "location.href='".$this->getUrl('*/*/newsystem/store/'.$id)."'",
+            $this->_addButton('new_stores_book', array(
+                'label'     => Mage::helper('catalogrule')->__('Book New Appointment'),
+                'onclick'   => "location.href='".$this->getUrl('*/*/newsystem/store/')."'",
                 'class'     => '',
             ));
-
-		}
-
 
 		$store_name =Mage::helper("appointments")->storeAppearName(Mage::getStoreConfig('appointments/popup_setting/store'));
 
@@ -29,8 +23,10 @@ class Allure_Appointments_Block_Adminhtml_Appointments extends Mage_Adminhtml_Bl
         ));
 
 		parent::__construct();
-		
-	}
+
+        $this->_removeButton('add');
+
+    }
 	
 	protected function _prepareLayout()
 	{
