@@ -376,13 +376,13 @@ label.p-white {
 
 /*USED IN PRICE LIST */
 
-.jewelry {
+/* .jewelry {
 	font-family: urw-din-light;
 	font-size: 11px;
 	line-height: 30px;
 	color: #D8D8D8;
 	text-align: left;
-}
+} */
 
 tr.tr-piercing {
 	border: none;
@@ -1308,6 +1308,9 @@ button#btnConfirm {
 }
 .general-piercing-information p {
   text-align: justify;
+}
+tr.tr-piercing td span, tr.tr-piercing td {
+  font-family: urw-din-xlight;
 }
 @media (min-width:992px){
 	#desktop-slot {

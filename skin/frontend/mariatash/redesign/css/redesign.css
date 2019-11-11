@@ -1644,18 +1644,18 @@ input[type="checkbox"]:checked+label:before {
 	background: rgb(255,255,255,0);
 	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
 }
-.image-text h6 {
+.desktop-device .image-text h6 {
 	position: absolute;
 	bottom: 15px;
 	width: 100%;
 	text-align: center;
 }
-.piercing_options a {
+.desktop-device .piercing_options a {
 	position: relative;
 	overflow: hidden;
 	display: block;
 }
-.piercing_options {
+.desktop-device .piercing_options {
 	text-align: center;
 	padding: 0 5px;
 	display: flex;
@@ -1798,12 +1798,12 @@ input[type="checkbox"]:checked+label:before {
 .mobile-sub_menu .right-section img {
   display: none;
 }
-.mobile-sub_menu .image-text{
+/* .mobile-sub_menu .image-text{
   position: relative;
   bottom: 0;
   text-align: left;
 	top: 56px;
-}
+} */
 .mobile-sub_menu .right-section {
   padding-left: 44px;
 }
@@ -1813,7 +1813,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .mobile-sub_menu .special-menu {
   margin-top: 0;
-  margin-bottom: 35px;
+  margin-bottom: 45px;
 }
 .mobile-sub_menu .image-text h6{
   color: #666 !important;
@@ -3646,7 +3646,7 @@ table thead {
 }
 .minicart-remove {
   right: 7px;
-	margin-top: -9px;
+	margin-top: -13px;
 }
 .cart_checkout {
   width: 312px;
@@ -3682,7 +3682,7 @@ table thead {
 }
 #cart-sidebar {
   overflow: scroll;
-  max-height: 486px !important;
+  max-height: 447px !important;
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
