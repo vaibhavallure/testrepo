@@ -125,11 +125,16 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
         $quote = $this->getQuote();
         $collection = Mage::getModel("sales/quote_item")->getCollection();
         $collection->getSelect()->join(
+            array("catalog_product" => "catalog_product_entity"),
+            "(catalog_product.sku = main_table.sku)",
+            array()
+        );
+        $collection->getSelect()->join(
             array("stock_item" => "cataloginventory_stock_item"),
-            "(stock_item.product_id = main_table.product_id )",
+            "(stock_item.product_id = catalog_product.entity_id )",
             array("sum(if(stock_item.qty >= main_table.qty,1,0)) 'instock'", "sum(if(stock_item.qty >= main_table.qty,0,1)) 'backorder'", "sum(if(stock_item.qty >= main_table.qty, 0, if(stock_item.qty > 0,1,0) )) 'available'")
         );
-        $collection->getSelect()->where("main_table.quote_id = {$quote->getId()} AND product_type NOT IN('configurable')");
+        $collection->getSelect()->where("main_table.quote_id = {$quote->getId()} AND parent_item_id is null AND main_table.sku NOT LIKE '%STORECARD%' AND main_table.product_type NOT IN('giftcards')");
         $collection->getSelect()
             ->reset(Zend_Db_Select::COLUMNS)
             ->columns(array("sum(if(stock_item.qty >= main_table.qty,1,0)) 'instock'", "sum(if(stock_item.qty >= main_table.qty,0,1)) 'backorder'", "sum(if(stock_item.qty >= main_table.qty, 0, if(stock_item.qty > 0,1,0) )) 'available'"));
