@@ -4581,3 +4581,8 @@ dt.post-lengthds-lbl {
 .hidden-appointments-time{
 	height: 12px;
 }
+
+/*For catalogsearch only*/
+.catalogsearch-result-index #narrow-by-list{
+	margin-top : 0px !important;
+}
