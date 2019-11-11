@@ -22,20 +22,20 @@
     <?php else: ?>
         <?php if (count($this->getSuggests())): ?>
             <?php foreach ($this->getSuggests() as $suggest) : ?>
-                <li class="search-suggestions"><a href='<?php echo $url . $suggest; ?>'/><?php echo $suggest; ?></a></li>
+                <p class="search-suggestions  para-normal"><a href='<?php echo $url . $suggest; ?>'/><?php echo $suggest; ?></a></p>
             <?php endforeach; ?>
         <?php endif; ?>
 
         <?php foreach ($this->getAllResults() as $_entity => $_results): ?>
             <?php if (count($_results)): ?>
-                <li class="title"><?php echo $this->getEntityTitle($_entity) ?></li>
+                <li class="title para-bold"><?php echo $this->getEntityTitle($_entity) ?></li>
                 <?php foreach ($_results as $_result): /** @var Varien_Object $_entity */ ?>
                     <?php echo $this->getEntityHtml($_entity, $_result) ?>
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php endforeach; ?>
         <?php if (!$this->isNoResult()): ?>
-            <li class="all-results">
+            <li class="all-results para-normal">
                 <a href="<?php echo $this->escapeUrl($this->getResultUrl()) ?>">
                     <?php echo 'See more items'//$this->getAllResultsLabel() ?>
                 </a>
