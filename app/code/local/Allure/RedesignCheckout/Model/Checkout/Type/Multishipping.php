@@ -8,6 +8,10 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
 {
     const XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW = 'sales_email/allure_multiaddress_sales_email/multi_order_allow_email';
     
+    public function _init(){
+        parent::_init();
+    }
+    
     /**
      * prepare the the request data and add gift wrap 
      * related information into passed array data.
