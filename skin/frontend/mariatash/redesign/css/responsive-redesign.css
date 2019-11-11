@@ -340,6 +340,13 @@
     position: relative;
     top:0;
   }
+  #appointments .image-text{
+    position: relative;
+    background: none;
+  }
+  .image-text{
+    background: none;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
@@ -484,9 +491,10 @@
   .menu-common-section{
     margin-top: 13px;
   }
-  /* .wrapper{
-    height: auto !important;
-  } */
+  .general-piercing-information{
+    margin-top: 0 !important;
+    margin-bottom: 30px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -611,7 +619,7 @@
     margin: 0.5%;
   }
   .form-search input.input-text{
-    width: 160px;
+    width: 550px;
     height: 26px !important;
   }
   .footlinks {
@@ -1780,6 +1788,10 @@
 .responsive-direction {
   flex-direction: initial;
   }
+#appointments img{
+  display: block;
+  padding-top: 45px;
+  }
 }
 @media (max-width: 1200px){
   .about-jewelry{
@@ -1895,10 +1907,23 @@
   .catalog-product-view .for-space-to-bottom{
     height: 73px;
   }
+  .desktop-device .common-option-div{
+    padding:0;
+  }
 }
 @media (max-width:991px){
   .desktop-device .image-section{
     margin-bottom: 30px;
+  }
+  /* .desktop-device .piercing_options a{
+    overflow: inherit;
+  } */
+  .desktop-device .piercing_options{
+    display: block;
+    padding: 0 15px;
+  }
+  .piercing_options .image-text{
+    margin-bottom: 40px;
   }
 }
 @media (max-width:749px){
@@ -1940,6 +1965,11 @@
   /* .zopim {
     bottom: 59px!important;
   } */
+}
+@media (max-width:992px){
+  .desktop-device .image-text{
+    top: 70px;
+  }
 }
 @media (min-width:686px) and (max-width:850px){
   .post_optio .chooseList ul li.option{
