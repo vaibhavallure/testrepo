@@ -71,6 +71,7 @@
 		</reference>
 		<reference name="content">
 			<block type="appointments/appointment" name="appointments_popup_container" as="appointments_popup_container" template="allure/appointments/container.phtml">
+				<block type="appointments/appointment" name="appointments_popup_store_list" as="appointments_popup_store_list" template="allure/appointments/store_list.phtml"/>
 				<block type="appointments/appointment" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/success.phtml"/>
 				<block type="appointments/appointment" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/register.phtml">
 					<block type="appointments/appointment" name="appointments_popup_store" as="appointments_popup_store" template="allure/appointments/store.phtml"/>
