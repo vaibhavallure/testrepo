@@ -1332,7 +1332,9 @@ ul.swatch .swatch-item a {
   margin-top: 8px;
 	margin-bottom: 100px;
 }
-.category-inspiration .category-products{
+.category-inspiration .category-products, .category-piercing-gallery .category-products {
+    margin-bottom: 0;
+}{
 	margin-bottom: 0;
 }
 
@@ -4580,4 +4582,9 @@ dt.post-lengthds-lbl {
 }
 .hidden-appointments-time{
 	height: 12px;
+}
+
+/*For catalogsearch only*/
+.catalogsearch-result-index #narrow-by-list{
+	margin-top : 0px !important;
 }
