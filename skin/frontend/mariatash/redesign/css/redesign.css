@@ -4622,3 +4622,9 @@ dt.post-lengthds-lbl {
 .checkout-list-title h1 {
   font-size: 30px;
 }
+
+/****By Indrajet******/
+.search-autocomplete{
+	max-height: 500px !important;
+	overflow-x: scroll !important;
+}
