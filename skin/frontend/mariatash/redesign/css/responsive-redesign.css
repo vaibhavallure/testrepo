@@ -495,6 +495,9 @@
     margin-top: 0 !important;
     margin-bottom: 30px;
   }
+  .paypal-express-review .col-main{
+    padding: 0;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -540,6 +543,10 @@
   }
   .paypal-express-review .col-main{
     width: 100%;
+  }
+  .paypal-express-review .col-main {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
@@ -1316,13 +1323,13 @@
   }
 
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
-  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody{
+  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody{
     display: grid;
   }
-  #shopping-cart-form thead, .checkout-onepage-index #checkout-review-table thead{
+  #shopping-cart-form thead, .checkout-onepage-index #checkout-review-table thead, .paypal-express-review thead {
     display: none;
   }
-  #shopping-cart-table tbody td:before, .checkout-onepage-index #checkout-review-table tbody td:before {
+  #shopping-cart-table tbody td:before, .checkout-onepage-index #checkout-review-table tbody td:before, .paypal-express-review tbody td:before{
     content: attr(data-th);
     font-size: 12px;
     font-family: urw-din-bold;
@@ -1331,7 +1338,7 @@
     letter-spacing: 1.08px;
     line-height: 0px;
   }
-  #shopping-cart-table .price, .checkout-onepage-index #checkout-review-table .price{
+  #shopping-cart-table .price, .checkout-onepage-index #checkout-review-table .price, .paypal-express-review.price{
     font-size: 15px;
     display: block;
   }
@@ -1345,7 +1352,7 @@
   .data-table.cart-table .messages.wholesale-avail-row .item-msg {
     margin-bottom: 0px;
   }
-  #shopping-cart-table tr.messages-tr {
+  #shopping-cart-table tr.messages-tr, .paypal-express-review tr.messages-tr, .paypal-express-review .odd {
     margin-top: 20px;
   }
   .data-table.cart-table .gift-messages, .gift-row td:nth-child(2){
@@ -1354,19 +1361,19 @@
   .gift-row td:nth-child(2){
     padding-bottom: 30px;
   }
-  #shopping-cart-table td.cart_col1 {
+  #shopping-cart-table td.cart_col1, .paypal-express-review  td.cart_col1{
     width: 30%;
     display: block;
     float: left;
     margin-top: 0;
   }
-  #shopping-cart-table td.cart_col2, .checkout-onepage-index #checkout-review-table tbody td.cart_col1{
+  #shopping-cart-table td.cart_col2, .checkout-onepage-index #checkout-review-table tbody td.cart_col1, .paypal-express-review td.cart_col2{
     width: 100%;
     display: block;
     min-height: 120px;
   }
   #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5,
-  #checkout-review-table tbody td.cart_col3, #checkout-review-table tbody td.cart_col4, #checkout-review-table tbody td.cart_col5 {
+  #checkout-review-table tbody td.cart_col3, #checkout-review-table tbody td.cart_col4, #checkout-review-table tbody td.cart_col5, .paypal-express-review td.cart_col3, .paypal-express-review td.cart_col4, .paypal-express-review td.cart_col5 {
     width: 28%;
     display: block;
     float: left;
@@ -1379,10 +1386,10 @@
     float: left;
     flex: 0 0 33.33%;
   }
-  #shopping-cart-table .cart_col3, #checkout-review-table .cart_col3 {
+  #shopping-cart-table .cart_col3, #checkout-review-table .cart_col3, .paypal-express-review .cart_col3 {
     text-align: left !important;
   }
-  #shopping-cart-table .cart_col4{
+  #shopping-cart-table .cart_col4, .paypal-express-review td:nth-child(3){
     text-align: center;
   }
   .checkout-onepage-index #checkout-review-table{
@@ -1451,6 +1458,9 @@
   }
   .product-shop > .row{
     width: 100% !important;
+  }
+  .paypal-express-review .overview-common-prices, .paypal-express-review .overview-grand{
+    padding: 0;
   }
 }
 
