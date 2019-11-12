@@ -23,12 +23,22 @@ button#btnConfirm
 	margin-bottom: 35px;
 	text-transform: uppercase;
 } */
-
+.information-section-mobile{
+	display: none;
+}
+.information-section-desktop{
+	display: block;
+}
 p.notify-label {
   margin-bottom: 0;
 	line-height: 18px;
 	margin-bottom: 18px;
 }
+td.td-piercing-name {
+	width: 78%;
+}
+a#btnPriceList,
+a#icon-price-close {display: none;}
 
 .dialogBg.popupid21,
 .mbdialog{
@@ -125,6 +135,34 @@ button#btnBooking{
 	/* #pick_ur_date_div {
     padding: 0;
 	} */
+	.information-section-mobile{
+	display: block;
+	}
+	.information-section-desktop{
+		display: none;
+	}
+
+	div#price-list {
+		position: fixed;
+		top: 50%;
+		bottom: 0;
+		left: 50%;
+		right: 0;
+		z-index: 9999;
+		display: none;
+		overflow: auto;
+		min-height: 460px;
+		transform: translate(-50%, -50%);
+	}
+	a#btnPriceList {
+		margin: 20px 15px;
+		display: block;
+	}
+	a#icon-price-close {
+		margin: 4px 0px;
+		display: block;
+	}
+
 }
 
 
@@ -567,8 +605,7 @@ select#selectTime {
     margin-top: 0;
 }
 
-a#btnPriceList,
-a#icon-price-close {display: none;}
+
 
 #datetime-box {
     margin-bottom: 33px;
@@ -777,10 +814,6 @@ div#btnBookTop {
       margin-bottom: 0;
       z-index: 999;
     }
-    a#btnPriceList {
-			margin: 20px 15px;
-			display: block;
-    }
 
     .down-arrow-maria,
     .link-down {
@@ -802,24 +835,9 @@ div#btnBookTop {
       margin: 0;
     }
 
-    a#icon-price-close {
-      margin: 4px 0px;
-      display: block;
-    }
 
 
-    div#price-list {
-      position: fixed;
-      top: 50%;
-      bottom: 0;
-      left: 50%;
-      right: 0;
-      z-index: 9999;
-      display: none;
-			overflow: auto;
-			min-height: 460px;
-			transform: translate(-50%, -50%);
-    }
+
 
     div#booking-wrapper {
         padding: 0;

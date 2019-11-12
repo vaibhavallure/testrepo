@@ -374,8 +374,14 @@ if ($model) {
                     <?php echo $this->getChildHtml("appointments_popup_pickdatetime"); ?>
                     <?php if(empty(Mage::app()->getRequest()->getParam('user'))):?>
                         <?php echo $this->getChildHtml("appointments_popup_price_list");?>
-                    <?php endif;?>
+                    <div class="information-section-desktop">
+                        <?php echo $this->getInformationBlock();?>
+                    </div>
+                        <?php endif;?>
 
+                </div>
+                <div class="information-section-mobile">
+                    <?php echo $this->getInformationBlock();?>
                 </div>
             </div>
         </div>

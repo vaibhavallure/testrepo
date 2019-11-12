@@ -3,7 +3,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
     public function modifyAction ()
     {
-        if($this->appointment()->getSpecialStore()==0):
+        if($this->appointment()->getId() && $this->appointment()->getSpecialStore()==0):
         if(!$this->getAppCustomers()->getSize()):
            $this->setCustomer();
            $this->setAppointment();
@@ -94,7 +94,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     }
     private function isAdmin()
     {
-        if($this->getRequest()->getParam('user')=="admin");
+        if($this->getRequest()->getParam('user')=="admin")
             return true;
 
         return false;
