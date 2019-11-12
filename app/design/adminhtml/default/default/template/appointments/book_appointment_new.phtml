@@ -1,12 +1,17 @@
 <?php
 $appointmentId=Mage::getSingleton("adminhtml/session")->getAppointmentModifyId();
-$storeCode=Mage::getSingleton("adminhtml/session")->getStoreCode();
+$system=Mage::getSingleton("adminhtml/session")->getAppointmentSystem();
 
-if(!empty($appointmentId))
-    $url="appointments/book/modify/user/admin/id/".$appointmentId;
-else
-    $url="appointments/book/index/user/admin";
-?>
+if(!empty($appointmentId)) {
+    if($system==0)
+        $url = "admin_appointments/index/modify/user/admin/id/" . $appointmentId;
+    else
+        $url = "appointments/book/modify/user/admin/id/" . $appointmentId;
+}
+else {
+    $url = "appointments/book/index/user/admin";
+}
+    ?>
 
 <div class="content-header">
 	<h3 class="icon-head"><?php echo 'Book New Appointment' ?></h3>

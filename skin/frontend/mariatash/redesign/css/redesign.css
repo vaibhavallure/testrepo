@@ -3646,7 +3646,7 @@ table thead {
 }
 .minicart-remove {
   right: 7px;
-	margin-top: -9px;
+	margin-top: -13px;
 }
 .cart_checkout {
   width: 312px;
@@ -3682,7 +3682,7 @@ table thead {
 }
 #cart-sidebar {
   overflow: scroll;
-  max-height: 486px !important;
+  max-height: 447px !important;
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
