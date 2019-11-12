@@ -541,6 +541,10 @@
   .paypal-express-review .col-main{
     width: 100%;
   }
+  .paypal-express-review .col-main {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 
 /*All ipads*/

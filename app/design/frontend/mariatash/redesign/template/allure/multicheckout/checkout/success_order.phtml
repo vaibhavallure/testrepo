@@ -15,7 +15,7 @@
 
     <?php if ($this->getOrderId() && $this->getOrderIdSecond()):?>
         <?php if ($this->getCanViewOrder() && $this->getCanViewOrderSecond()) :?>
-            <p class="para-normal"><?php echo $this->__('Your order # is: %s , %s.', sprintf('<a class="link-button" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId())),sprintf('<a class="para-bold text-uppercase" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrlSecond()), $this->escapeHtml($this->getOrderIdSecond()))) ?></p>
+            <p class="para-normal"><?php echo $this->__('Your order # is: %s , %s.', sprintf('<a class="para-bold text-underline" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId())),sprintf('<a class="para-bold text-underline" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrlSecond()), $this->escapeHtml($this->getOrderIdSecond()))) ?></p>
         <?php  else :?>
             <p class="para-normal"><?php echo $this->__('Your order # is: %s , %s.', $this->escapeHtml($this->getOrderIdSecond()), $this->escapeHtml($this->getOrderId())) ?></p>
         <?php endif;?>
