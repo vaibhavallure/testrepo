@@ -67,19 +67,62 @@
 	                            <?php if ($groups = $this->getShippingRateGroups()):?>
 	                                <?php $currentRate = $this->getCurrentShippingRate(); ?>
 	                                <fieldset>
+	                                
+	                                <?php $_address = $this->getShippingAddress();?>
+									<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
+	
 	                                    <select name="shipping_method" id="shipping_method" class="required-entry select-type-one">
-	                                        <?php if (!$currentRate):?>
-	                                            <option value=""><?php echo $this->__('Please select a shipping method...') ?></option>
-	                                        <?php endif;?>
-	                                        <?php foreach ($groups as $code => $rates):?>
-	                                            <optgroup label="<?php echo $this->escapeHtml($this->getCarrierName($code)) ?>" style="font-style:normal;">
-	                                                <?php foreach ($rates as $rate):?>
-	                                                    <option value="<?php echo $this->renderShippingRateValue($rate)?>"<?php echo ($currentRate === $rate) ? ' selected="selected"' : '' ;?>>
-	                                                        <?php echo $this->renderShippingRateOption($rate)?>
-	                                                    </option>
-	                                                <?php endforeach;?>
-	                                            </optgroup>
-	                                        <?php endforeach;?>
+                                        	<option value=""><?php echo $this->__('Select Method') ?></option>
+                                            <?php $ship_sign_national = array();?>
+                                            <?php $ship_sign_without_national = array();?>
+                                            <?php $ship_withoutsign_national = array();?>
+                                            <?php $ship_withoutsign_without_national = array();?>
+                                            
+                                            <?php foreach ($groups as $code => $rates):?>
+                                                <?php foreach ($rates as $_rate):?>
+                                                
+                                                <?php $shipDataArr =  $_rate->getData();?>
+                                               	
+                                               	<?php if($code == "matrixrate"){
+                                                        $shipCodeArr = explode("#",$_rate->getCode());
+                                                        if(count($shipCodeArr) == 3){
+                                                            if($shipCodeArr[1] == 1){
+                                                                if($shipCodeArr[2] == 1){
+                                                                    $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                                                                } else {
+                                                                    $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                                                                }
+                                                            ?>
+                										<?php } else {
+                                                                    if($shipCodeArr[2] == 1){
+                                                                        $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                                                                    } else {
+                                                                        $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+                                                                    } ?>
+
+                   											<?php } ?>
+                   	
+                                                           	<?php if($isIternational == $shipCodeArr[2] && $shipCodeArr[1] == $quoteObj->getNoSignatureDelivery()):?>
+                                                            	<option value="<?php echo $this->renderShippingRateValue($_rate)?>"<?php echo ($currentRate === $_rate) ? ' selected="selected"' : '' ;?>>
+                                                            		<?php echo $this->renderShippingRateOption($_rate)?>
+                                                            	</option>
+                                                           	<?php endif;?>
+                                                           	
+                                                             <?php }
+                                                            } else {
+                                                                    $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                                                                    $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                                                                    $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                                                                    $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+                                                            ?>
+                                                            <option value="<?php echo $this->renderShippingRateValue($_rate)?>"<?php echo ($currentRate === $_rate) ? ' selected="selected"' : '' ;?>>
+                                                            	<?php echo $this->renderShippingRateOption($_rate)?>
+                                                            </option>
+                                                          <?php } ?>
+                                                
+                                                    
+                                                <?php endforeach;?>
+                                            <?php endforeach;?>
 	                                    </select>
 	                                </fieldset>
 	                                <p class="actions">
