@@ -304,11 +304,23 @@
 			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
 			var attrName = jQuery(this).attr("name");
 			if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
+				if(check){
+    				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
+    				if(countryCode){
+    					initializeItelTelInputBilling(countryCode);
+    					jQuery('input[name="billing[telephone]"]').val(jQuery('input[name="shipping[telephone]"]').val());
+    				}
+				} 
 				check = false;
 			}
 			
 			if(check){
 				shipping.setSameAsShipping(true);
+				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
+				if(countryCode){
+					initializeItelTelInputBilling(countryCode);
+					jQuery('input[name="billing[telephone]"]').val(jQuery('input[name="shipping[telephone]"]').val());
+				}
 			}
 		});
 
@@ -316,6 +328,11 @@
 			var check = jQuery('input[name="shipping[same_as_billing]"]').is(":checked");
 			if(check){
 				shipping.setSameAsShipping(true);
+				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
+				if(countryCode){
+					initializeItelTelInputBilling(countryCode);
+					jQuery('input[name="billing[telephone]"]').val(jQuery('input[name="shipping[telephone]"]').val());
+				}
 			}
 		});
 
@@ -354,4 +371,64 @@
     $('shipping-address-select') && shipping.newAddress(!$('shipping-address-select').value);
     var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
     //]]>
+</script>
+
+<script type="text/javascript">
+RegionUpdater.prototype._checkRegionRequired = function()
+{
+    var label, wildCard;
+    var elements = [this.regionTextEl, this.regionSelectEl];
+    var that = this;
+    if (typeof this.config == 'undefined') {
+        return;
+    }
+    var regionRequired = this.config.regions_required.indexOf(this.countryEl.value) >= 0;
+
+    elements.each(function(currentElement) {
+        Validation.reset(currentElement);
+        label = $$('label[for="' + currentElement.id + '"]')[0];
+        if (label) {
+            wildCard = label.down('em') || label.down('span.required');
+            if (!that.config.show_all_regions) {
+                if (regionRequired) {
+                    label.up().show();
+                } else {
+                    label.up().hide();
+                }
+            }
+        }
+
+        if (label && wildCard) {
+            if (!regionRequired) {
+                wildCard.hide();
+                if (label.hasClassName('required')) {
+                    label.removeClassName('required');
+                }
+            } else if (regionRequired) {
+                wildCard.show();
+                if (!label.hasClassName('required')) {
+                    label.addClassName('required');
+                }
+            }
+        }
+
+        if (!regionRequired) {
+            if (currentElement.hasClassName('required-entry')) {
+                //currentElement.removeClassName('required-entry');
+            }
+            if ('select' == currentElement.tagName.toLowerCase() &&
+                currentElement.hasClassName('validate-select')) {
+                //currentElement.removeClassName('validate-select');
+            }
+        } else {
+            if (!currentElement.hasClassName('required-entry')) {
+                currentElement.addClassName('required-entry');
+            }
+            if ('select' == currentElement.tagName.toLowerCase() &&
+                !currentElement.hasClassName('validate-select')) {
+                currentElement.addClassName('validate-select');
+            }
+        }
+    });
+}
 </script>
