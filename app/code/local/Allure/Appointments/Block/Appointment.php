@@ -150,7 +150,7 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
     {
         if(!$store_id)
             $store_id=$this->getStoreId();
-        return $this->helper()->getStoreData($$store_id,"store_hours_operation");
+        return $this->helper()->getStoreData($store_id,"store_hours_operation");
     }
     public function helper()
     {
