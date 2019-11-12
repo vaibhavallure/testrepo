@@ -66,7 +66,8 @@ h4{
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p, .piercing-service p, .piercing-service span{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p, .piercing-service p, .piercing-service span, .paypal-express-review .item-msg p,
+.checkout-block p,.paypal-express-review td.cart-subtotals-left, .paypal-express-review td.cart-subtotals-right.last span {
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -3145,7 +3146,7 @@ table th {
 	padding-bottom: 20px;
 }
 table thead {
-  border-bottom: 1px solid #d8d8d8;
+  border-bottom: 1px solid rgba(41,41,41,0.9);
 }
 .data-table.cart-table td {
   vertical-align: initial;
@@ -3161,7 +3162,7 @@ table thead {
 #shopping-cart-table .qty-wrap span.quantity-count {
   display: block;
 }
-#shopping-cart-table .price{
+#shopping-cart-table .price, .paypal-express-review .price{
 	text-align: right;
 	font-size: 18px;
   font-family: urw-din-xlight;
@@ -4364,7 +4365,7 @@ dt.post-lengthds-lbl {
   right: 3px;
   -webkit-appearance: none;
   border: none;
-  background: #fff;
+  background: transparent;
   margin-top: 0 !important;
 }
 .cart-mt ul.messages {
@@ -4518,6 +4519,19 @@ dt.post-lengthds-lbl {
 .info-set.paypal-product-section {
   margin-top: 44px;
 }
+.paypal-express-review td:nth-child(4) {
+  font-family: urw-din-regular;
+  font-size: 18px;
+  -webkit-appearance: none !important;
+}
+.paypal-express-review tr.last.odd, .paypal-express-review tr.messages.even{
+	border-bottom: 1px solid #d8d8d8;
+}
+.paypal-express-review .mt-shipping-price span.price {
+  font-size: 13px;
+	font-family: urw-din-light;
+}
+/**********************************/
 .cat-img-present {
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -4526,12 +4540,12 @@ dt.post-lengthds-lbl {
 	height: 137px;
 }
 .for-space-to-bottom.cat-img-space {
-		height: 304px;
-    width: 100%;
-    background-size: auto 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #010409;
+	height: 304px;
+  width: 100%;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #010409;
 }
 /************* New Changes: Catagory Pages *****************/
 .catalog-category-view .category-title h1 {
@@ -4604,4 +4618,7 @@ dt.post-lengthds-lbl {
 }
 .hidden-appointments-time{
 	height: 12px;
+}
+.checkout-list-title h1 {
+  font-size: 30px;
 }
