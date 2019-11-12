@@ -176,6 +176,10 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         $blockId= $this->helper()->getStoreData($this->getStoreId(),"piercing_pricing_block");
        return $this->getLayout()->createBlock('cms/block')->setBlockId($blockId)->toHtml();
     }
+    public function getInformationBlock()
+    {
+        return $this->getLayout()->createBlock('cms/block')->setBlockId("important-information")->toHtml();
+    }
     public function storeFound()
     {
           if($this->getStoreId())
