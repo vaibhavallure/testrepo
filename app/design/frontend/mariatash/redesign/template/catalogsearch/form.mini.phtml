@@ -45,16 +45,14 @@
                 jQuery(this).hide();
 
                   if (jQuery(window).width() <= 1366) {
-                      jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(2) span').css("color", "transparent");
-                      jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(1) span').css("color", "transparent");
-                  }
+                      jQuery("ul.allure-menu").addClass("search-active");
+                        }
                   jQuery("#search-input").show();
               });
 
             jQuery("#cross-icon").click(function(){
                 if (jQuery(window).width() <= 1366) {
-                    jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(2) a span').css("color", "#fff");
-                    jQuery('.scrolled-menu ul.allure-menu li:nth-last-child(1) a span').css("color", "#fff");
+                    jQuery("ul.allure-menu").removeClass("search-active");
                 }
 
                 jQuery("#search-input").hide();
