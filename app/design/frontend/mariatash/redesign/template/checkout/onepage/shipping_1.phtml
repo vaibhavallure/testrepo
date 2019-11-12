@@ -291,16 +291,7 @@
         	jQuery('.country-section select').addClass('select-country-placeholder');
 		}
 
-		//check billing & shipping address is same or not.
-		/* var billingAddressId = jQuery('#shipping-address-select').val();
-		var shippingAddressId = jQuery('#billing-address-select').val();
-		if(billingAddressId && shippingAddressId){
-			if(billingAddressId == shippingAddressId){
-				jQuery('input[name="shipping[same_as_billing]"]').is(":checked")
-			}
-		}  */
-
-		jQuery(document).on('keypress blur','#co-shipping-form input[type="text"]',function(){
+		jQuery(document).on('keypress blur','#shipping-new-address-form input[type="text"]',function(){
 			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
 			var attrName = jQuery(this).attr("name");
 			if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
@@ -324,8 +315,8 @@
 			}
 		});
 
-		jQuery(document).on('change','#co-shipping-form select',function(){
-			var check = jQuery('input[name="shipping[same_as_billing]"]').is(":checked");
+		jQuery(document).on('change','#shipping-new-address-form select',function(){
+			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
 			if(check){
 				shipping.setSameAsShipping(true);
 				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
@@ -428,6 +419,14 @@ RegionUpdater.prototype._checkRegionRequired = function()
                 !currentElement.hasClassName('validate-select')) {
                 currentElement.addClassName('validate-select');
             }
+        }
+
+        if (!currentElement.hasClassName('required-entry')) {
+            currentElement.addClassName('required-entry');
+        }
+        if ('select' == currentElement.tagName.toLowerCase() &&
+            !currentElement.hasClassName('validate-select')) {
+            currentElement.addClassName('validate-select');
         }
     });
 }
