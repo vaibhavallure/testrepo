@@ -38,8 +38,11 @@ return $collection;
     public function prepareProductCollection($collection)
     {
 
+        $attributeList = Mage::getSingleton('catalog/config')->getProductAttributes();
+        $attributeList[] = 'gemstone';
+
         $collection
-            ->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
+            ->addAttributeToSelect($attributeList)
             ->addSearchFilter(Mage::helper('catalogsearch')->getQuery()->getQueryText())
             ->setStore(Mage::app()->getStore())
             ->addMinimalPrice()
@@ -47,6 +50,9 @@ return $collection;
             ->addTaxPercents()
             ->addStoreFilter()
             ->addUrlRewrite();
+
+//        $collection = $this->applyFilters($collection);
+
 
         /*Filter By Group Code Starts Here*/
 
@@ -83,6 +89,7 @@ return $collection;
                 );
 
                 $collection->getSelect()->where("FIND_IN_SET('all',cp_allowed_group.value) OR FIND_IN_SET(".$allowed_group.",cp_allowed_group.value) OR cp_allowed_group.value IS NULL");
+
 
             }
 
@@ -145,6 +152,17 @@ return $collection;
         $attribute = parent::_prepareAttribute($attribute);
         $attribute->setIsFilterable(Mage_Catalog_Model_Layer_Filter_Attribute::OPTIONS_ONLY_WITH_RESULTS);
         return $attribute;
+    }
+
+    public function applyFilters($collection){
+        $filters = $this->getFilters();
+        if(isset($filters['category'])):
+        $collection->joinField('category_id','catalog/category_product','category_id','product_id=entity_id',null,'left');
+        $collection->addAttributeToFilter('category_id', array('in' => $filters['category']));
+        endif;
+
+        return $collection;
+
     }
 
 }

@@ -319,7 +319,7 @@
         }
     }
 
-    function initializeItelTelInputBilling() {
+    function initializeItelTelInputBilling(countryCode) {
         var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
         //initialize itel tel input
@@ -340,6 +340,10 @@
 
         var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
 
+    	if(countryCode){
+    		country_code = countryCode;
+    	}
+        
         if (country_code == undefined || country_code == null || country_code == "")
             country_code = "us"
 

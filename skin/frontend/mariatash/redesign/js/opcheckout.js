@@ -543,7 +543,7 @@ Shipping.prototype = {
             Mage.Cookies.set('click_same_as_billing',0);
         }
 
-        initializeItelTelInput()
+        //initializeItelTelInput()
     },
     
     resetSelectedBillingAddress: function(){
@@ -669,7 +669,7 @@ Shipping.prototype = {
                     }
                 }
             }
-            //$('shipping:country_id').value = $('billing:country_id').value;
+            $('billing:country_id').value = $('shipping:country_id').value;
             billingRegionUpdater.update();
             $('billing:email').value = $('shipping:email_shipping').value;
             $('billing:region_id').value = $('shipping:region_id').value;
