@@ -420,7 +420,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   letter-spacing: 1px;
   padding-top: 19px;
   opacity: 0.6;
-	padding-bottom: 14px;
+	padding-bottom: 8px;
 	cursor: pointer;
 }
 .checkout-step-name span {
@@ -3166,7 +3166,7 @@ table thead {
 #shopping-cart-table .qty-wrap span.quantity-count {
   display: block;
 }
-#shopping-cart-table .price, .paypal-express-review .price{
+#shopping-cart-table .price, .paypal-express-review  #details-table .price{
 	text-align: right;
 	font-size: 18px;
   font-family: urw-din-xlight;
@@ -4555,6 +4555,9 @@ td.cart_col2 {
 }
 .paypal-express-review .page-title h1 {
 	font-size: 30px;
+}
+.paypal-express-review .info-set.col2-set {
+  border-bottom: 1px solid #d8d8d8;
 }
 /**********************************/
 .cat-img-present {
