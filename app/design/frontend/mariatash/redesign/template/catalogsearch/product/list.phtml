@@ -192,7 +192,7 @@ $mode  = $this->getMode();
                             $simples = $this->getIcons($currentProductId);
                             $firstOption = null;
                             ?>
-                            <li class="item col-lg-4" id="item-<?php echo $_product->getId() ?>">
+                            <li class="item col-lg-4" id="item-<?php echo $_product->getId() ?>" >
                                 <a id="<?php echo $_product->getId() ?>"
                                    href="<?php echo $productUrl; ?>"
                                    class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>" class="productimg"
@@ -306,7 +306,7 @@ $mode  = $this->getMode();
 
                             $simples = $this->getIcons($currentProductId);
                             ?>
-                            <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
+                            <li class="item five-col" id="item-<?php echo $_product->getId() ?>" data-categories='<?=json_encode($_product->getCategoryIds())?>'>
                                 <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                    class="product-image">
                                     <img class="catalog-grid-image product-image-hover" data-pid="<?= $_product->getId() ?>" id="img-<?php echo $_product->getId() ?>"

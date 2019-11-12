@@ -4599,3 +4599,11 @@ dt.post-lengthds-lbl {
 .hidden-appointments-time{
 	height: 12px;
 }
+
+
+/*INDRAJIT -  SEARCH*/
+
+.search-autocomplete{
+	max-height: 500px !important;
+	overflow-x: scroll !important;
+}

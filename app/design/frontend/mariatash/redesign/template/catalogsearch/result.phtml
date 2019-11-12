@@ -45,7 +45,7 @@
             <?php endforeach;?>
         </p>
     <?php endif; ?>
-        <?php echo $this->getLayout()->createBlock('mana_filters/search')->setTemplate('manapro/filteradvanced/view.phtml')->toHtml(); ?>
+        <?php echo $this->getLayout()->createBlock('catalog/product_list')->setTemplate('catalogsearch/filter/view.phtml')->toHtml(); ?>
         <?php echo $this->getProductListHtml() ?>
     <?php else: ?>
         <div class="page-title">
