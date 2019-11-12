@@ -39,6 +39,10 @@
 	<?php $subtotal = $subtotal + $totals['subtotal']->getValue();?>
 <?php endif;?>
 
+<?php if(isset($totals['tax']) && $totals['tax']->getValue()):?>
+	<?php $tax = $tax + $totals['tax']->getValue();?>
+<?php endif;?>
+
 <?php if(isset($totals['shipping']) && $totals['shipping']->getValue()):?>
 	<?php $shipping = $shipping + $totals['shipping']->getValue();?>
 <?php endif;?>
