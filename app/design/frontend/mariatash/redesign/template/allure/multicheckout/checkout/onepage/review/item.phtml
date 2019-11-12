@@ -33,7 +33,7 @@ $typeId = $_item->getProduct()->getTypeId();
 
 ?>
 
-<?php 
+<?php
     $hasProductUrl = $this->hasProductUrl();
     $productName = $this->escapeHtml($this->getProductName());
     $customerGroupId = $_item->getQuote()->getCustomerGroupId();
@@ -81,7 +81,7 @@ $typeId = $_item->getProduct()->getTypeId();
             <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
         <?php endif;?>
     </td>
-    
+
     <td  class="cart_col3 text-right" data-th="Price">
         <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
     </td>
