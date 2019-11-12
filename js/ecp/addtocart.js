@@ -149,6 +149,8 @@ function addToShoppingCart(button, formId, relode=false) {
                 jQuery('input#mail-to').val("");
                 jQuery('input#mail-to-email').val("");
                 jQuery('textarea#mail-message').val("");
+                jQuery('input#mail-from').val("");
+                jQuery('input#mail-from-email').val("");
             }
                 jQuery('#topcart-popup').addClass('just_added');
 
