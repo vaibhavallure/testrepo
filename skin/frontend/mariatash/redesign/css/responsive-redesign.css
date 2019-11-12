@@ -535,7 +535,12 @@
     background: transparent;
     width: 100%;
   }
-
+  .paypal-express-review .main {
+    padding: 0 40px;
+  }
+  .paypal-express-review .col-main{
+    width: 100%;
+  }
 }
 
 /*All ipads*/
@@ -761,9 +766,6 @@
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
     height: 170px !important;
   }
-  /* .catalog-category-view .for-space-to-bottom{
-    height: 250px;
-  } */
   .about-jewelry{
     padding: 0 26px;
   }
@@ -824,9 +826,6 @@
   .block-layered-nav dd a, .block-layered-nav label{
     font-size: 10px !important;
   }
-  /* .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
-    margin-top: 106px;
-  } */
   .common-redesign-checkout .for-space-to-bottom{
     height: 252px !important;
   }
@@ -853,13 +852,6 @@
   .address-method-common .select-type-one{
     width: 100%;
   }
-  /* .product-view-left{
-    flex: 0 0 63.666667%;
-    max-width: 63.666667%;
-  } */
-  /* .product-shop{
-    flex: 0 0 33%;
-  } */
   .product-shop{
     padding: 0 14px;
   }
@@ -873,10 +865,6 @@
   .pdp-image-section .containerImage{
     margin-top: -70px;
   }
-  /* .quickview-index-index .pdp-image-section
-  {
-    margin-top: auto;
-  } */
   .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
   }
