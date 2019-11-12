@@ -62,67 +62,24 @@
 	                    <h4 class="info-text-two"><?php echo $this->__('Shipping Method') ?></h4>
 	                </div>
 	                <div class="box-content">
-	                    <form method="post" id="shipping_method_form" action="<?php echo $this->escapeHtml($this->getShippingMethodSubmitUrl()) ?>">
+	                    <form style="display: none" method="post" id="shipping_method_form" action="<?php echo $this->escapeHtml($this->getShippingMethodSubmitUrl()) ?>">
 	                        <?php if ($this->getCanEditShippingMethod() || !$this->getCurrentShippingRate()):?>
 	                            <?php if ($groups = $this->getShippingRateGroups()):?>
 	                                <?php $currentRate = $this->getCurrentShippingRate(); ?>
 	                                <fieldset>
-	                                
-	                                <?php $_address = $this->getShippingAddress();?>
-									<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
-	
 	                                    <select name="shipping_method" id="shipping_method" class="required-entry select-type-one">
-                                        	<option value=""><?php echo $this->__('Select Method') ?></option>
-                                            <?php $ship_sign_national = array();?>
-                                            <?php $ship_sign_without_national = array();?>
-                                            <?php $ship_withoutsign_national = array();?>
-                                            <?php $ship_withoutsign_without_national = array();?>
-                                            
-                                            <?php foreach ($groups as $code => $rates):?>
-                                                <?php foreach ($rates as $_rate):?>
-                                                
-                                                <?php $shipDataArr =  $_rate->getData();?>
-                                               	
-                                               	<?php if($code == "matrixrate"){
-                                                        $shipCodeArr = explode("#",$_rate->getCode());
-                                                        if(count($shipCodeArr) == 3){
-                                                            if($shipCodeArr[1] == 1){
-                                                                if($shipCodeArr[2] == 1){
-                                                                    $ship_sign_national[$_rate->getCode()] = $shipDataArr;
-                                                                } else {
-                                                                    $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
-                                                                }
-                                                            ?>
-                										<?php } else {
-                                                                    if($shipCodeArr[2] == 1){
-                                                                        $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
-                                                                    } else {
-                                                                        $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
-                                                                    } ?>
-
-                   											<?php } ?>
-                   	
-                                                           	<?php if($isIternational == $shipCodeArr[2] && $shipCodeArr[1] == $quoteObj->getNoSignatureDelivery()):?>
-                                                            	<option value="<?php echo $this->renderShippingRateValue($_rate)?>"<?php echo ($currentRate === $_rate) ? ' selected="selected"' : '' ;?>>
-                                                            		<?php echo $this->renderShippingRateOption($_rate)?>
-                                                            	</option>
-                                                           	<?php endif;?>
-                                                           	
-                                                             <?php }
-                                                            } else {
-                                                                    $ship_sign_national[$_rate->getCode()] = $shipDataArr;
-                                                                    $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
-                                                                    $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
-                                                                    $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
-                                                            ?>
-                                                            <option value="<?php echo $this->renderShippingRateValue($_rate)?>"<?php echo ($currentRate === $_rate) ? ' selected="selected"' : '' ;?>>
-                                                            	<?php echo $this->renderShippingRateOption($_rate)?>
-                                                            </option>
-                                                          <?php } ?>
-                                                
-                                                    
-                                                <?php endforeach;?>
-                                            <?php endforeach;?>
+	                                        <?php if (!$currentRate):?>
+	                                            <option value=""><?php echo $this->__('Please select a shipping method...') ?></option>
+	                                        <?php endif;?>
+	                                        <?php foreach ($groups as $code => $rates):?>
+	                                            <optgroup label="<?php echo $this->escapeHtml($this->getCarrierName($code)) ?>" style="font-style:normal;">
+	                                                <?php foreach ($rates as $rate):?>
+	                                                    <option value="<?php echo $this->renderShippingRateValue($rate)?>"<?php echo ($currentRate === $rate) ? ' selected="selected"' : '' ;?>>
+	                                                        <?php echo $this->renderShippingRateOption($rate)?>
+	                                                    </option>
+	                                                <?php endforeach;?>
+	                                            </optgroup>
+	                                        <?php endforeach;?>
 	                                    </select>
 	                                </fieldset>
 	                                <p class="actions">
@@ -135,6 +92,35 @@
 	                            <p><strong><?php echo $this->renderShippingRateOption($this->getCurrentShippingRate())?></strong></p>
 	                        <?php endif; ?>
 	                    </form>
+	                    
+	                    
+							                    
+	                    <?php if($_rate = $this->getCurrentShippingRate()): ?>
+                        	
+                        <div class="box">
+                        	<div class="box-title">
+                        		<?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                        	</div>
+                        	<div class="box-content">
+                        		<p>
+							<?php $_address = $this->getShippingAddress();?>
+                           	<?php $_excl = $quoteObj->getStore()->formatPrice($_address->getShippingAmount()); ?>
+                            
+                            <?php 
+                                $exclTax = $_address->getShippingAmount();
+                                $taxAmount = $_address->getShippingTaxAmount();
+                                $_incl = $quoteObj->getStore()->formatPrice($exclTax + $taxAmount);
+                            ?>
+                            
+                            <?php echo $_excl; ?>
+                            <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            	(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                            <?php endif; ?>
+                         	</p>
+                        	</div>
+						</div>
+                     	<?php endif; ?>
+	                    
 	                </div>
 	            </div>
 	        </div>
