@@ -82,7 +82,11 @@ h4{
 	letter-spacing: 1px;
 	line-height: 20px;
 }
-
+.scrolled-menu ul.allure-menu.search-active li:nth-last-child(2) span,
+.scrolled-menu ul.allure-menu.search-active li:nth-last-child(1) span
+{
+	color:transparent;
+}
 .para-three{
 	font-family: urw-din-xlight;
 	font-size: 15px;

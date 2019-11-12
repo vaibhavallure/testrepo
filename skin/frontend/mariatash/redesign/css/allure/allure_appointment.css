@@ -34,7 +34,9 @@ p.notify-label {
 	line-height: 18px;
 	margin-bottom: 18px;
 }
-
+td.td-piercing-name {
+	width: 78%;
+}
 a#btnPriceList,
 a#icon-price-close {display: none;}
 
