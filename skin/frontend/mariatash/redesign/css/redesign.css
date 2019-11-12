@@ -3152,7 +3152,7 @@ table th {
 table thead {
   border-bottom: 1px solid rgba(41,41,41,0.9);
 }
-.data-table.cart-table td {
+.data-table.cart-table td, .paypal-express-review .data-table td {
   vertical-align: initial;
 	margin-top: 40px;
 }
@@ -3273,7 +3273,7 @@ table thead {
 .checkout-multishipping-delivery .col-main,
 .checkout-multishipping-billing .col-main,
 .checkout-multishipping-overview .col-main,
-.checkout-onepage-index .col-main {
+.checkout-onepage-index .col-main, .paypal-express-review .col-main {
   flex: 0 0 66.666667%;
   max-width: 66.666667%;
 	padding-right: 15px;
@@ -3283,7 +3283,7 @@ table thead {
 .checkout-multishipping-delivery .col-right.sidebar,
 .checkout-multishipping-billing .col-right.sidebar,
 .checkout-multishipping-overview .col-right.sidebar,
- .checkout-onepage-index .col-right.sidebar{
+ .checkout-onepage-index .col-right.sidebar, .paypal-express-review .col-right.sidebar{
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding-right: 15px;
@@ -3703,7 +3703,7 @@ table thead {
   margin-top: 9px;
 	margin-bottom: 30px;
 }
-.data-table.cart-table .messages .item-msg {
+.data-table.cart-table .messages .item-msg, .paypal-express-review .item-msg {
   margin-top: 22px;
 }
 /* SHOPPING BAG CSS */
@@ -4534,6 +4534,27 @@ dt.post-lengthds-lbl {
 .paypal-express-review .mt-shipping-price span.price {
   font-size: 13px;
 	font-family: urw-din-light;
+}
+td.cart_col2 {
+  width: 36%;
+}
+.paypal-express-review .col-main{
+	padding: 0 60px;
+}
+.paypal-express-review .grand-total {
+  margin-top: 40px;
+}
+.paypal-express-review .data-table td{
+	vertical-align: initial;
+}
+.paypal-express-review #details-table {
+  margin-top: 20px;
+}
+.paypal-express-review #details-table th:nth-child(4) {
+  width: 10%;
+}
+.paypal-express-review .page-title h1 {
+	font-size: 30px;
 }
 /**********************************/
 .cat-img-present {

@@ -62,7 +62,7 @@
 	                    <h4 class="info-text-two"><?php echo $this->__('Shipping Method') ?></h4>
 	                </div>
 	                <div class="box-content">
-	                    <form method="post" id="shipping_method_form" action="<?php echo $this->escapeHtml($this->getShippingMethodSubmitUrl()) ?>">
+	                    <form style="display: none" method="post" id="shipping_method_form" action="<?php echo $this->escapeHtml($this->getShippingMethodSubmitUrl()) ?>">
 	                        <?php if ($this->getCanEditShippingMethod() || !$this->getCurrentShippingRate()):?>
 	                            <?php if ($groups = $this->getShippingRateGroups()):?>
 	                                <?php $currentRate = $this->getCurrentShippingRate(); ?>
@@ -92,6 +92,35 @@
 	                            <p><strong><?php echo $this->renderShippingRateOption($this->getCurrentShippingRate())?></strong></p>
 	                        <?php endif; ?>
 	                    </form>
+	                    
+	                    
+							                    
+	                    <?php if($_rate = $this->getCurrentShippingRate()): ?>
+                        	
+                        <div class="box">
+                        	<div class="box-title">
+                        		<?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                        	</div>
+                        	<div class="box-content">
+                        		<p>
+							<?php $_address = $this->getShippingAddress();?>
+                           	<?php $_excl = $quoteObj->getStore()->formatPrice($_address->getShippingAmount()); ?>
+                            
+                            <?php 
+                                $exclTax = $_address->getShippingAmount();
+                                $taxAmount = $_address->getShippingTaxAmount();
+                                $_incl = $quoteObj->getStore()->formatPrice($exclTax + $taxAmount);
+                            ?>
+                            
+                            <?php echo $_excl; ?>
+                            <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            	(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                            <?php endif; ?>
+                         	</p>
+                        	</div>
+						</div>
+                     	<?php endif; ?>
+	                    
 	                </div>
 	            </div>
 	        </div>
