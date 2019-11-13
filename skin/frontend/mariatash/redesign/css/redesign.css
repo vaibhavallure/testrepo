@@ -127,6 +127,7 @@ h4{
 	letter-spacing: 1.5px;
 	text-align: center;
 	background: #fff;
+	border-radius: 0 !important;
 }
 
 .dark-button, .checkout-types button{
@@ -3640,6 +3641,9 @@ table thead {
 	padding-bottom: 5px;
 	width: 100%;
 }
+#cart-sidebar li.item:last-child {
+  border-bottom: none;
+}
 #cart-sidebar-content .product-details .item-options {
   display: none;
 }
@@ -4627,6 +4631,23 @@ td.cart_col2 {
 }
 .checkout-list-title h1 {
   font-size: 30px;
+}
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+	margin: 0;
+  border-radius: 0;
+}
+#allureAlertBox .buttons-group {
+  display: flex;
+  justify-content: space-evenly;
+}
+.buttons-set.estimage {
+  margin-top: 25px;
+}
+.checkout-cart-index .fancybox-inner{
+	height: auto !important;
+}
+.checkout-cart-index .fancybox-skin .checkout-list-title h1 {
+  font-size: 22px;
 }
 
 /****By Indrajet******/
