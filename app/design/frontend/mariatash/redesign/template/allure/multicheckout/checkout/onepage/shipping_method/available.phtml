@@ -67,6 +67,8 @@
                                 $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
                             } ?>
 
+						<?php } ?>
+						
                   	<?php if($isIternational == $shipCodeArr[2]):?>
                         <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
                        	<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
@@ -91,8 +93,8 @@
                       	?>
 
                    	<?php endif;?>
-                   	<?php }
-                        }
+                   
+                    <?php    }
                     } else {
                             $ship_sign_national[$_rate->getCode()] = $shipDataArr;
                             $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
@@ -153,15 +155,15 @@
     if (typeof Allure == "undefined") {
         var Allure = {};
     }
-   	Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
+   	//Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
 </script>
 
 <script type="text/javascript">
-	jQuery(document).ready(function(){
+	/*jQuery(document).ready(function(){
 		if (typeof Allure == "undefined") {
 	        var Allure = {};
 	    }
-	   	Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
+	   	Allure.shippingConfig = <?php //echo json_encode($shippingConfig,true)?>;
 		jQuery('.shipping-signature').on('change',function(){
 			var selector = jQuery(this);
 			var isInternational = selector.data("is_international");
@@ -183,6 +185,6 @@
 				}
 			}
 		});
-	});
+	});*/
 </script>
 <?php endif;?>

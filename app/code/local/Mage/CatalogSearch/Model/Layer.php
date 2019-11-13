@@ -23,8 +23,8 @@ class Mage_CatalogSearch_Model_Layer extends Mage_Catalog_Model_Layer
             $this->_productCollections[$this->getCurrentCategory()->getId()] = $collection;
         }
 //        Mage::log("-----------------------------------------------------------------------------------------------",Zend_Log::DEBUG,'search.log',true);
-        
-return $collection;
+
+        return $collection;
 
 
     }
@@ -51,13 +51,12 @@ return $collection;
             ->addStoreFilter()
             ->addUrlRewrite();
 
-//        $collection = $this->applyFilters($collection);
 
 
         /*Filter By Group Code Starts Here*/
 
-            /*Find Group of Customer Start*/
-//                Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
+        /*Find Group of Customer Start*/
+        Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
 
 
         $groupCollection = Mage::getModel('customer/group')->getCollection()->addFieldToFilter('customer_group_code', array('eq'=>'NOT LOGGED IN'));
@@ -72,28 +71,27 @@ return $collection;
             }
         }
 
-                if(Mage::getSingleton('customer/session')->isLoggedIn()) {
-                    $customerData = Mage::getSingleton('customer/session')->getCustomer();
-                    $group_id = $customerData->getGroupId()+1;
-                    $allowed_group = $group_id;
-                }
-            /*Find Group of Customer End*/
+        if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $customerData = Mage::getSingleton('customer/session')->getCustomer();
+            $group_id = $customerData->getGroupId()+1;
+            $allowed_group = $group_id;
+        }
+        /*Find Group of Customer End*/
 
-            $attributeModel = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product','allowed_group');
+        $attributeModel = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product','allowed_group');
 
-            if($attributeModel->getId())
-            {
-                $collection->getSelect()->joinLeft(
-                    array("cp_allowed_group" => "catalog_product_entity_text"),
-                    'e.entity_id = cp_allowed_group.entity_id AND cp_allowed_group.attribute_id = '.$attributeModel->getId()
-                );
+        if($attributeModel->getId())
+        {
+            $collection->getSelect()->joinLeft(
+                array("cp_allowed_group" => "catalog_product_entity_text"),
+                'e.entity_id = cp_allowed_group.entity_id AND cp_allowed_group.attribute_id = '.$attributeModel->getId()
+            );
 
-                $collection->getSelect()->where("FIND_IN_SET('all',cp_allowed_group.value) OR FIND_IN_SET(".$allowed_group.",cp_allowed_group.value) OR cp_allowed_group.value IS NULL");
+            $collection->getSelect()->where("FIND_IN_SET('all',cp_allowed_group.value) OR FIND_IN_SET(".$allowed_group.",cp_allowed_group.value) OR cp_allowed_group.value IS NULL");
 
 
-            }
-
-        /*Filter By Group Code Starts Here*/
+        }
+        /*Filter By Group Code Ended Here*/
 
         Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
         Mage::getSingleton('catalog/product_visibility')->addVisibleInSearchFilterToCollection($collection);
@@ -157,8 +155,8 @@ return $collection;
     public function applyFilters($collection){
         $filters = $this->getFilters();
         if(isset($filters['category'])):
-        $collection->joinField('category_id','catalog/category_product','category_id','product_id=entity_id',null,'left');
-        $collection->addAttributeToFilter('category_id', array('in' => $filters['category']));
+            $collection->joinField('category_id','catalog/category_product','category_id','product_id=entity_id',null,'left');
+            $collection->addAttributeToFilter('category_id', array('in' => $filters['category']));
         endif;
 
         return $collection;

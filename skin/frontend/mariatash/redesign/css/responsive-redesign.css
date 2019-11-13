@@ -1605,7 +1605,7 @@
 
 @media (min-width:1025px){
   /*footer display on hover bottom  of the page*/
-  .catalog-category-view .footer {
+  .floating.footer {
     padding-top: 0px !important;
     height: auto;
     z-index: 1;
@@ -1613,9 +1613,11 @@
     bottom: 0px;
     opacity: 0;
   }
-  .catalog-category-view .footer:hover {
+  .floating.hover.footer {
     opacity: 1;
   }
+
+
   .pdp-image-section
   {
     margin-top: 80px;
