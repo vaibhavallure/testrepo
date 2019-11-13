@@ -48,9 +48,9 @@
 	        <h2 class="legend paypal-review-legend"><?php echo $this->__('Shipping Information') ?></h2>
 	        <div class="">
 	            <div class="box">
-	                <div class="box-title">
-	                    <h4 class="info-text-two"><?php echo $this->__('Shipping Address') ?><span class="separator"><?php if ($this->getCanEditShippingAddress()):?> | </span><a href="<?php echo $this->getEditUrl() ?>"><?php echo $this->__('Edit') ?></a><?php endif;?></h4>
-	                </div>
+	                <!-- <div class="box-title">
+	                    <h4 class="info-text-two"><?php //echo $this->__('Shipping Address') ?><span class="separator"><?php if ($this->getCanEditShippingAddress()):?> | </span><a href="<?php echo $this->getEditUrl() ?>"><?php echo $this->__('Edit') ?></a><?php endif;?></h4>
+	                </div> -->
 	                <div class="box-content">
 	                    <address><?php echo $this->renderAddress($this->getShippingAddress())?></address>
 	                </div>
@@ -92,26 +92,26 @@
 	                            <p><strong><?php echo $this->renderShippingRateOption($this->getCurrentShippingRate())?></strong></p>
 	                        <?php endif; ?>
 	                    </form>
-	                    
-	                    
-							                    
+
+
+
 	                    <?php if($_rate = $this->getCurrentShippingRate()): ?>
-                        	
+
                         <div class="box">
-                        	<div class="box-title">
+                        	<div class="box-title para-normal">
                         		<?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
                         	</div>
-                        	<div class="box-content">
+                        	<div class="box-content para-normal">
                         		<p>
 							<?php $_address = $this->getShippingAddress();?>
                            	<?php $_excl = $quoteObj->getStore()->formatPrice($_address->getShippingAmount()); ?>
-                            
-                            <?php 
+
+                            <?php
                                 $exclTax = $_address->getShippingAmount();
                                 $taxAmount = $_address->getShippingTaxAmount();
                                 $_incl = $quoteObj->getStore()->formatPrice($exclTax + $taxAmount);
                             ?>
-                            
+
                             <?php echo $_excl; ?>
                             <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
                             	(<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
@@ -120,7 +120,7 @@
                         	</div>
 						</div>
                      	<?php endif; ?>
-	                    
+
 	                </div>
 	            </div>
 	        </div>
@@ -134,7 +134,7 @@
     	    	<address><?php echo $this->renderAddress($this->getBillingAddress())?></address>
     	  	</div>
 	  	</div>
-	    
+
 	    <div class="">
 	        <div class="box">
 	            <div class="box-title">
@@ -142,7 +142,7 @@
 	                    <?php if($this->getEditUrl()):?><a class="link-button" href="<?php echo $this->getEditUrl() ?>"><?php echo $this->__('Edit Payment Information') ?></a> <?php endif ?>
 	                </h4>
 	            </div>
-	            <div class="box-content para-normal">
+	            <div class="box-content para-normal mb-4">
 	                <?php echo $this->escapeHtml($this->getPaymentMethodTitle()) ?>
 	            </div>
 	        </div>
@@ -161,8 +161,8 @@
 <form method="post" id="order_review_form" action="<?php echo $this->getPlaceOrderUrl() ?>">
     <?php echo $this->getChildHtml('agreements'); ?>
     <div class="buttons-set buttons-set-order" id="review-buttons-container">
-        <button type="button" id="review_button" value="<?php echo Mage::helper('core')->quoteEscape($this->__('Place Order')) ?>" class="button btn-checkout dark-button text-uppercase next-button mb-5 float-right"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
-        <button type="button" id="review_submit" value="<?php echo Mage::helper('core')->quoteEscape($this->__('Place Order')) ?>" class="button btn-checkout dark-button text-uppercase next-button mb-5 float-right"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
+        <button type="button" id="review_button" value="<?php echo Mage::helper('core')->quoteEscape($this->__('Checkout')) ?>" class="button btn-checkout dark-button text-uppercase next-button mb-5 float-right"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
+        <button type="button" id="review_submit" value="<?php echo Mage::helper('core')->quoteEscape($this->__('Checkout')) ?>" class="button btn-checkout dark-button text-uppercase next-button mb-5 float-right"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
         </span>

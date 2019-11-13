@@ -50,6 +50,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
 
 
     protected $_priceArray = array();
+    protected $_userType;
     /**
      * Retrieve loaded category collection
      *
@@ -400,7 +401,21 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
     /*for custom search filter*/
     public function getFilters(){
 
+
+//        $attributeModel = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product','style_of_jewelry');
+//        if($attributeModel->getId()){
+//            var_dump($attributeModel->getId());
+//        }
+
+//        $_filter_collection->getSelect()->joinLeft(
+//            array("cp_allowed_group" => "catalog_product_entity_text"),
+//            'e.entity_id = cp_allowed_group.entity_id AND cp_allowed_group.attribute_id = '.$attributeModel->getId()
+//        );
+
         $_filter_collection = clone $this->_productCollection;
+        $filter_helper =  Mage::helper('catalogsearch/filter');
+
+
         $_filter_collection->getSelect()->reset(Zend_Db_Select::LIMIT_COUNT);
         $_filter_collection->getSelect()->reset(Zend_Db_Select::LIMIT_OFFSET);
 
@@ -415,9 +430,11 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
         $colorArra = array();
         $gemstoneArra = array();
         $gemstoneMap = array();
+        $priceArray = array();
         $metalCnt = 0;
 
         foreach ($results as $product):
+
 
             $temp_sku = $product['sku'];
 
@@ -426,6 +443,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
                 $currentProductId = $temp_product->getId();
                 $product = $temp_product;
             }
+            $priceArray[] = $this->getPriceArray($product);
 
             $category_ids = array_merge($category_ids,$product->getCategoryIds());
 
@@ -442,22 +460,25 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
                     array_push($gemstoneArra,$gems);
                 endif;
             endif;
-            $optionsValues = $this->getIcons($currentProductId);
-            if(!empty($optionsValues)):
-                $attribute_code = $optionsValues['code'];
-                foreach ($optionsValues['value'] as $option):
-                    $optionLb = $option[$attribute_code . "_value"];
-                    $colorArra[$metalCnt]['label']=$optionLb;
-                    $colorArra[$metalCnt]['code']=$option[$attribute_code];
-                    $metalCnt++;
-                endforeach;
-            endif;
+/*DISABLE METAL*/
+
+//            $optionsValues = $this->getIcons($currentProductId);
+//            if(!empty($optionsValues)):
+//                $attribute_code = $optionsValues['code'];
+//                foreach ($optionsValues['value'] as $option):
+//                    $optionLb = $option[$attribute_code . "_value"];
+//                    $colorArra[$metalCnt]['label']=$optionLb;
+//                    $colorArra[$metalCnt]['code']=$option[$attribute_code];
+//                    $metalCnt++;
+//                endforeach;
+//            endif;
         endforeach;
 
 
         $category_ids = array_unique($category_ids);
         $colorArra = array_unique($colorArra ,SORT_REGULAR);
         $gemstoneArra = array_unique($gemstoneArra);
+        $priceArray = array_unique($priceArray);
 
         $categories = Mage::getResourceModel('catalog/category_collection');
         $categories->addAttributeToSelect('*');
@@ -483,15 +504,27 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             $cnt++;
         endforeach;
 
+         sort($priceArray);
+
+        $priceArray = $filter_helper->createGroups($priceArray);
+
         return array('category' => $categoryArra,
             'metal' => $colorArra,
-            'gemstone' => $gemstoneMap
+            'gemstone' => $gemstoneMap,
+            'price'=> $priceArray
         );
 
     }
 
     public function getPriceArray($_product){
         $_taxHelper  = $this->helper('allure_taxconfig');
+
+        $_simplePricesTax = ($_taxHelper->displayPriceIncludingTax() || $_taxHelper->displayBothPrices());
+
+        $_regularPrice = $_taxHelper->getPrice($_product, $_product->getPrice(), $_simplePricesTax);
+        $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice(), $_simplePricesTax);
+
+        return $_finalPrice;
     }
 
     public function getOptionLabel($attributeCode,$attributeValue){
@@ -503,5 +536,11 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             }
         }
         return null;
+    }
+    public function getFilterHelper(){
+        return Mage::helper('catalogsearch/filter');
+    }
+    public function getBaseSearchUrl(){
+        return $this->helper('catalogsearch')->getResultUrl().'?q='.$this->helper('catalogsearch')->getQueryText();
     }
 }
