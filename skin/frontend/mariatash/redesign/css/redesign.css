@@ -761,15 +761,6 @@ nav.mariatash-header {
   margin-top: 5px;
 }
 
-/* .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom, .ecp-celebrities-index-index .for-space-to-bottom,
-.checkout-cart-index .for-space-to-bottom, .checkout-multishipping-success .for-space-to-bottom{
-  height:320px;
-}
-
-.for-space-to-bottom{
-  height: 200px;
-} */
-
 .category-image {
   position: absolute;
   top: 0;
@@ -2904,14 +2895,21 @@ ul.tabs li{
 	margin-right: 9px;
 	position: relative;
 	text-align: center;
+	overflow: hidden;
 }
 #foo3 li img {
   width: 100%;
   height: 100%;
   display: block;
   margin: 0;
-	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
- 	filter: grayscale(100%);
+	/* -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0
+ 	filter: grayscale(100%); */
+	transition: transform .3s;
+}
+#foo3 li img:hover {
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1.1);
 }
 #foo3 li img:hover, #foo3 li.current img{
   -webkit-filter: grayscale(0%);
@@ -2922,7 +2920,7 @@ ul.tabs li{
 }
 #foo3 li h4{
 	position: absolute;
-	top: 19px;
+	bottom: 10px;
 	z-index: 1;
 	text-transform: uppercase;
 }
@@ -4224,26 +4222,6 @@ dt.post-lengthds-lbl {
 	height: 126px!important;
 	border: 1px solid #d8d8d8;
 }
-/* .catalog-product-view .t_Tooltip.t_Tooltip_customTiny{ /*override tipped.css
-	background: #f2f2f2;
-  height: 104px !important;
-  width: 323px !important;
-  left: 979px !important;
-	top: 375px !important;
-}
-.catalog-product-view .sign-up-email-panel button{
-	height: 42px;
-  text-transform: uppercase;
-  width: 108px;
-  font-family: urw-din-bold;
-  background: #292929;
-  color: #fff;
-}
-.catalog-product-view .sign-up-email-panel .form-inputs {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-} */
 .video-caption {
 	position: absolute;
 	width: 87px;
