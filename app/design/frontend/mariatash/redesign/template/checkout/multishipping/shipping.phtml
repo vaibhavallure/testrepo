@@ -121,22 +121,17 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                                         $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
                                                                     }
                                                    ?>
-                                                   	   <?php if(($isIternational == $shipCodeArr[2]) && ($isSignature == $shipCodeArr[1])):?>
-                                                       <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
-                                                       <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
-                                                       <?php echo $_excl; ?>
-                                                       <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                                                       (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-                                                       <?php endif; ?>
-                                                   		</option>
-                                                       <?php endif;?>
+                                                   	   
                                                    <?php }else{
                                                            if($shipCodeArr[2] == 1){
                                                                $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
                                                            }else{
                                                                $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
                                                            }?>
-                                                       <?php if(($isIternational == $shipCodeArr[2]) && ($isSignature == $shipCodeArr[1])):?>
+                                                       
+                                                  <?php } ?>
+                                                  
+                                                  <?php if(($isIternational == $shipCodeArr[2]) /* && ($isSignature == $shipCodeArr[1]) */):?>
                                                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
                                                        <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
                                                        <?php echo $_excl; ?>
@@ -144,9 +139,10 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                        (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                                                        <?php endif; ?>
                                                    		</option>
-                                                       <?php endif;?>
-                                                  <?php }
-                                                }
+                                                <?php endif;?>
+                                                  
+                                                  
+                                               <?php  } 
                                              }else{
                                                  $ship_sign_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
@@ -231,7 +227,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
         var Allure = {};
     }
     Allure.baseUrl = '<?= $this->getBaseUrl() ?>';
-   	Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
+   	//Allure.shippingConfig = <?php echo json_encode($shippingConfig,true)?>;
 </script>
 
 <script type="text/javascript">
@@ -245,7 +241,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 			}
 		});
 
-		jQuery('.shipping-signature').on('change',function(){
+		/*jQuery('.shipping-signature').on('change',function(){
 			var selector = jQuery(this);
 			var addressId = selector.data("address_id");
 			var isInternational = selector.data("is_international");
@@ -267,7 +263,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 					}
 				}
 			}
-		});
+		});*/
 
 		jQuery('.shipping-address-select select').on('change',function(){
 			var selector = jQuery(this);
