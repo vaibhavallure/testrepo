@@ -298,9 +298,9 @@
 		}
 
 		jQuery(document).on('keypress blur','#shipping-new-address-form input[type="text"]',function(){
-			var check = jQuery('input[name="shipping[same_as_billing]"]').is("checked");
+			var check = $('shipping:same_as_billing').checked;//jQuery('input[name="shipping[same_as_billing]"]').is("checked");
 			var attrName = jQuery(this).attr("name");
-			if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
+			/* if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
 				if(check){
     				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
     				if(countryCode){
@@ -309,7 +309,7 @@
     				}
 				} 
 				check = false;
-			}
+			} */
 			
 			if(check){
 				shipping.setSameAsShipping(true);
@@ -329,6 +329,7 @@
 				shipping.setSameAsShipping(true);
 				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
 				if(countryCode){
+					console.log("country code = "+countryCode);
 					initializeItelTelInputBilling(countryCode);
 					jQuery('input[name="billing[telephone]"]').val(jQuery('input[name="shipping[telephone]"]').val());
 				}

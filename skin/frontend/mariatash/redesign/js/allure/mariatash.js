@@ -99,21 +99,28 @@ jQuery(document).ready(function () {
 
 
             /*zopim -- to change margin from bottom */
-            jQuery('.catalog-category-view .footer').hover(
+            jQuery('.catalog-category-view .floating.footer').hover(
                 function () {
                     jQuery(".zopim").addClass("bottom-change");
+                    jQuery(".floating.footer").addClass("hover");
                 },
                 function () {
                     setTimeout(function() {
                         jQuery(".zopim").removeClass("bottom-change");
+                        jQuery(".floating.footer").removeClass("hover");
                     }, 1000);
                 }
             );
-                if(jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
-                    jQuery(".zopim").addClass("bottom-change");
-                }else{
-                    jQuery(".zopim").removeClass("bottom-change");
+                if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
+                    jQuery(".footer").removeClass("floating");
+                }else {
+                    jQuery(".footer").addClass("floating");
                 }
+            if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
+                jQuery(".zopim").addClass("bottom-change");
+            }else {
+                jQuery(".zopim").removeClass("bottom-change");
+            }
             /*  zopim -code end-----------------*/
 
         }else {
