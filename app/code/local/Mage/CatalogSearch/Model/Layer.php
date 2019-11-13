@@ -50,31 +50,13 @@ class Mage_CatalogSearch_Model_Layer extends Mage_Catalog_Model_Layer
             ->addTaxPercents()
             ->addStoreFilter()
             ->addUrlRewrite();
-        $collection->getSelect()->reset(Zend_Db_Select::WHERE);
 
-        $helper = Mage::helper('catalogsearch/filter');
-
-
-        if($helper->isFiltersInRequest()){
-            if($helper->getGemsParam()) {
-                $gems = $helper->getGemsParam();
-                $collection->getSelect()->where("e.gemstone IN (" . $gems . ")");
-            }
-            if($helper->getPriceParam()) {
-                $price = $helper->getPriceParam();
-                $price = explode('_', $price);
-                $cnt = count($price);
-                $collection->getSelect()->orWhere("e.price BETWEEN " . $price[0] . ' AND ' . $price[$cnt - 1] . "");
-            }
-
-
-        }
 
 
         /*Filter By Group Code Starts Here*/
 
         /*Find Group of Customer Start*/
-//                Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
+        Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
 
 
         $groupCollection = Mage::getModel('customer/group')->getCollection()->addFieldToFilter('customer_group_code', array('eq'=>'NOT LOGGED IN'));
@@ -109,8 +91,7 @@ class Mage_CatalogSearch_Model_Layer extends Mage_Catalog_Model_Layer
 
 
         }
-
-        /*Filter By Group Code Starts Here*/
+        /*Filter By Group Code Ended Here*/
 
         Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
         Mage::getSingleton('catalog/product_visibility')->addVisibleInSearchFilterToCollection($collection);
