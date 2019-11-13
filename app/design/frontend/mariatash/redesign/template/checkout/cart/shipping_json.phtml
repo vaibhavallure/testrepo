@@ -73,17 +73,10 @@
                 <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                 <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
 
-                <?php
-                    $shipDataArr =  $_rate->getData();
-                    $shipDataArr["excl"] = $_excl;
-                    $shipDataArr["incl"] = $_incl;
-                ?>
                 <?php if($code == "matrixrate"){
                     $shipCodeArr = explode("#",$_rate->getCode());
-                    if(count($shipCodeArr) == 3){
-                        if($shipCodeArr[1] == 1){
-                        ?>
-                	<?php } else {?>
+                    if(count($shipCodeArr) == 3){?>
+                       
 
                   	<?php if($isIternational == $shipCodeArr[2]):?>
                         <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
@@ -94,7 +87,7 @@
                        	<?php endif; ?>
                       	</option>
                    	<?php endif;?>
-                   	<?php }
+                   	<?php 
                         }
                     } else {
                     ?>
