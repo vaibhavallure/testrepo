@@ -123,6 +123,11 @@ class Wyomind_Elasticsearch_Autocomplete
                                 if($this->isallowed($data))
                                 {
                                      if ($pcount < $limit) {
+                                         if($data['image'] == ""){
+                                             $_product = Mage::getModel('catalog/product')->load($data['id']);
+                                             $image = Mage::helper('catalog/image')->init($_product, 'small_image')->resize(50,50);
+                                             $data['image'] = $image;
+                                         }
                                             $docs[] = new Varien_Object($data);
                                             $pcount++;
                                         }

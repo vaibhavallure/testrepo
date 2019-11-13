@@ -1620,9 +1620,9 @@ width: 245px;
 	}
 }
 
-#my-openorders-table thead th{
-	padding-bottom: 5px;
-    padding-top: 10px;
+#my-openorders-table thead th {
+    padding: 5px 0;
+    line-height: 18px;
 }
 
 #my-openorders-table{
@@ -1736,9 +1736,6 @@ width: 245px;
 #new-mt-myproduct-openorders{
 	overflow: hidden;
 }
-#my-openorders-table{
-	margin-top: -12px;
-}
 
 .myaccount-loader-div{
 	overflow: hidden;
@@ -1829,8 +1826,6 @@ width: 245px;
 .mt-myaccount-new.sales-order-shipment .block-account a {
     font-size: 12px ! important;
 }
-
-
 
 
 

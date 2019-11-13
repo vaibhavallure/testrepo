@@ -13,22 +13,20 @@
 
 <?php foreach ($_orders as $_order): ?>
 	<tr>
-        <td style="padding-left:10px;">
+        <td>
         	<a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>" >
         		<?php echo $_order->getRealOrderId() ?>
         	</a>
         </td>
         
-        <td class="a-left" style="padding-left:20px;">
+        <td class="a-left">
         	<a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
-        		<span class="nobr">
 					<?php echo Mage::app()->getLocale()->date(strtotime($_order->getCreatedAtStoreDate()), null, null, false)->toString('MM/dd/yyyy') ?>
 					<?php //echo $this->formatDate($_order->getCreatedAtStoreDate()) ?>
-				</span>
 			</a>
 		</td>
 		
-        <td class="a-left" style="padding-left:0;">
+        <td class="a-left">
             <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
             	<?php echo $_order->getShippingAddress() ? $this->htmlEscape($_order->getShippingAddress()->getName()) : '&nbsp;' ?>
             </a>
