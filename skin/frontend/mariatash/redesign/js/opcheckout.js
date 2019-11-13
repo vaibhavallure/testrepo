@@ -453,7 +453,7 @@ Shipping.prototype = {
 
     newAddress: function(isNew){
         //console.log($('billing-address-select').value);
-        //console.log('newaddress');
+        console.log('newaddress');
         if($('shipping-address-select') != undefined && $('shipping-address-select').value != '' && $('billing-address-select').value == $('shipping-address-select').value) {
                 $('shipping:same_as_billing').checked = true;
                 Element.hide('fieldset-billing');
@@ -462,7 +462,9 @@ Shipping.prototype = {
                 //console.log('set same as billing = true  in js file');
         }
         if (isNew) {
-            this.resetSelectedAddress();   
+        	console.log("TT");
+            this.resetSelectedAddress();  
+            //Element.show('fieldset-billing');
             Element.show('shipping-new-address-form');
             if($('li_save_in_address_book')){
             	Element.show('li_save_in_address_book');
@@ -483,13 +485,19 @@ Shipping.prototype = {
                     $('shipping:postcode').addClassName('validate-zip-international');
                 }
             }
+            if(!$('billing-address-select').value){
+            	this.setSameAsShipping(true);
+            }
+            
         } else {
+        	console.log("TTTT");
             Element.hide('shipping-new-address-form');
             Element.hide('li_save_in_address_book');
         }
         if($('shipping-address-select') != undefined && $('billing-address-select').value != $('shipping-address-select').value) {
-            //shipping.setSameAsBilling(false);
-        	shipping.setSameAsShipping(false);
+        	console.log("GGGG");
+        	//shipping.setSameAsBilling(false);
+        	this.setSameAsShipping(false);
             //$('shipping:same_as_billing').disabled = false;
             $('shipping:same_as_billing').checked = false;
             //console.log('set same as billing = false in js file');
@@ -669,7 +677,7 @@ Shipping.prototype = {
                 }
             }
             $('billing:country_id').value = $('shipping:country_id').value;
-            //billingRegionUpdater.update();
+            billingRegionUpdater.update();
             $('billing:email').value = $('shipping:email_shipping').value;
             $('billing:region_id').value = $('shipping:region_id').value;
             $('billing:region').value = $('shipping:region').value;
