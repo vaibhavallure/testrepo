@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Hey !!\\nBe Authentic. We would love your honesty!!"
+AuthUserFile /var/www/security/.htpasswd
+Require valid-user
