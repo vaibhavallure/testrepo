@@ -76,7 +76,7 @@
                                     	value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>"
                                        	title="<?php echo $this->__('Company') ?>"
                                       	class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>"
-                                        onchange="shipping.setSameAsBilling(false);"/>
+                                        />
                                 </div>
                             </div>
                             <div class="field">
@@ -85,7 +85,7 @@
                                     	name="shipping[email_shipping]" id="shipping:email_shipping"
                                         value="<?php echo $this->escapeHtml($this->getAddress()->getEmailShipping()) ?>"
                                         class="input-text required-entry validate-email"
-                                        onchange="shipping.setSameAsBilling(false);"/>
+                                        />
                                 </div>
                             </div>
                             <div class="field">
@@ -102,7 +102,7 @@
                                     	name="shipping[street][]" id="shipping:street1"
                                         value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>"
                                         class="input-text <?php echo $_streetValidationClass ?>"
-                                       	onchange="shipping.setSameAsBilling(false);"/>
+                                       	/>
                                 </div>
                             </div>
                         </li>
@@ -115,7 +115,7 @@
                                         	name="shipping[street][]" id="shipping:street<?php echo $_i ?>"
                                            	value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>"
                                            	class="input-text <?php echo $_streetValidationClass ?>"
-                                           	onchange="shipping.setSameAsBilling(false);"/>
+                                           	/>
                                     </div>
                                 </div>
                             </li>
@@ -139,7 +139,7 @@
                                     <input placeholder="City*" type="text" title="<?php echo $this->__('City') ?>" name="shipping[city]"
                                     	value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"
                                         class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>"
-                                        id="shipping:city" onchange="shipping.setSameAsBilling(false);"/>
+                                        id="shipping:city" />
                                 </div>
                             </div>
                             <div class="field">
@@ -170,7 +170,7 @@
                                     	name="shipping[postcode]" id="shipping:postcode"
                                         value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>"
                                         class="required-entry-dtn input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>"
-                                        onchange="shipping.setSameAsBilling(false);"/>
+                                        />
                                 </div>
                             </div>
                         </li>
@@ -183,7 +183,7 @@
                                         value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
                                         title="<?php echo $this->__('Telephone') ?>"
                                         class="validate-mobileno shipping-itel-tel-cstm required-entry shipping-address-select"
-                                      	id="shipping:telephone" onchange="shipping.setSameAsBilling(false);"/>
+                                      	id="shipping:telephone" />
                                 </div>
                             </div>
                             <div class="field">
@@ -192,7 +192,7 @@
                                     	value="<?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>"
                                         title="<?php echo $this->__('Fax') ?>"
                                         class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>"
-                                        id="shipping:fax" onchange="shipping.setSameAsBilling(false);"/>
+                                        id="shipping:fax" />
                                 </div>
                             </div>
                         </li>
@@ -250,6 +250,11 @@
 
 <script type="text/javascript">
     //<![CDATA[
+    
+    if($('shipping:country_id')){
+    	$('shipping:country_id').removeAttribute("onchange");
+    }
+    
     function initializeItelTelInput() {
         var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
@@ -285,6 +290,7 @@
         jQuery('.checkout-multishipping-address-newshipping').addClass('checkout-multishipping-address-newbilling');
         initializeItelTelInput();
 
+        
         //set first option of country as placeholder
         jQuery('.country-section select option[value=""]').text("Country*");
 		if(jQuery('.country-section select option[value=""]')){
@@ -292,7 +298,7 @@
 		}
 
 		jQuery(document).on('keypress blur','#shipping-new-address-form input[type="text"]',function(){
-			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
+			var check = jQuery('input[name="shipping[same_as_billing]"]').is("checked");
 			var attrName = jQuery(this).attr("name");
 			if(attrName == "shipping[telephone]" || attrName == "billing[telephone]"){
 				if(check){
@@ -316,8 +322,10 @@
 		});
 
 		jQuery(document).on('change','#shipping-new-address-form select',function(){
-			var check = jQuery('input[name="shipping[same_as_billing]"]').val();
+			var check = $('shipping:same_as_billing').checked;//jQuery('input[name="shipping[same_as_billing]"]').is("checked");
+			console.log("V = "+check);
 			if(check){
+				console.log("VV");
 				shipping.setSameAsShipping(true);
 				var countryCode = jQuery('#shipping-new-address-form .country.active').data('country-code');
 				if(countryCode){
@@ -427,7 +435,34 @@ RegionUpdater.prototype._checkRegionRequired = function()
         if ('select' == currentElement.tagName.toLowerCase() &&
             !currentElement.hasClassName('validate-select')) {
             currentElement.addClassName('validate-select');
+        } 
+
+        if($('shipping:country_id') || $('billing:country_id')){
+            if(!$('shipping:country_id').hasClassName('validate-select')){
+            	$('shipping:country_id').addClassName('validate-select');
+            }
+
+            if(!$('billing:country_id').hasClassName('validate-select')){
+            	$('billing:country_id').addClassName('validate-select');
+            }
+
+            if(!$('billing:region_id').hasClassName('validate-select')){
+            	$('billing:region_id').addClassName('validate-select');
+            }
+
+            if(!$('shipping:region_id').hasClassName('validate-select')){
+            	$('shipping:region_id').addClassName('validate-select');
+            }
+
+            if(!$('billing:region').hasClassName('required-entry')){
+            	$('billing:region').addClassName('required-entry');
+            }
+
+            if(!$('shipping:region').hasClassName('required-entry')){
+            	$('shipping:region').addClassName('required-entry');
+            }
         }
+        
     });
 }
 </script>
