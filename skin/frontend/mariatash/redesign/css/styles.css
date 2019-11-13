@@ -7782,7 +7782,8 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 #my-orders-table tbody a {
 	text-decoration: none;
-	color: #3f4048;
+	color: #3f4048 !important;
+	font-family: urw-din-light
 }
 
 /********** < Dashboard */
@@ -11480,7 +11481,7 @@ li.item h2.product-name {text-align: center;}
 }
 
 #my-orders-table th {
-	padding: 8px 0;
+	padding: 5px 0;
 }
 
 .page-print .print-padding-left {
@@ -11488,7 +11489,7 @@ li.item h2.product-name {text-align: center;}
 }
 
 .page-print #my-orders-table th {
-	padding: 8px 10px;
+	padding: 5px 0;
 }
 
 .page-print #my-orders-table td {

@@ -21,10 +21,8 @@
     
 	<td class="a-left">
 		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
-    		<span class="nobr">
     			 <?php echo Mage::app()->getLocale()->date(strtotime($_order->getCreatedAtStoreDate()), null, null, false)->toString('MM/dd/yyyy') ?>
     			 <?php //echo $this->formatDate($_order->getCreatedAtStoreDate()) ?>
-    	    </span>
 	    </a>
 	</td>
 

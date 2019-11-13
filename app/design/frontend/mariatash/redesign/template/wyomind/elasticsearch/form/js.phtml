@@ -26,7 +26,8 @@
                 document.observe('touchstart', function (evt) {
                     var target = evt.element();
                     if (typeof target.up('#header-search') === "undefined") {
-                        Effect.Fade($("search_autocomplete"), {duration: 0.5});
+                        /*Removed Fade effect*/
+                        // Effect.Fade($("search_autocomplete"), {duration: 0.5});
                     }
                 });
             }
