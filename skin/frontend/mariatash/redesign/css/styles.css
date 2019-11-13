@@ -7782,7 +7782,8 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 
 #my-orders-table tbody a {
 	text-decoration: none;
-	color: #3f4048;
+	color: #3f4048 !important;
+	font-family: urw-din-light
 }
 
 /********** < Dashboard */
