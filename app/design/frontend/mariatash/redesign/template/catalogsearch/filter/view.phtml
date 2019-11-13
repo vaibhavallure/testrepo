@@ -1,4 +1,6 @@
 <?php
+$currency_symbol = Mage::app()->getLocale()->currency( $currency_code )->getSymbol();
+$helper = Mage::helper('catalogsearch/filter');
 $filter = $this->getFilters();
 $categories = $metals = $gemstones = $prices = array();
 
@@ -37,7 +39,7 @@ $categories = $metals = $gemstones = $prices = array();
                     <li>
 
                         <label class="custom-checkbox metal" data-color="<?=$category['code']?>" >
-                            <input type="checkbox" data-name="category" class="category-checkbox categorySelect" id="<?=$category['code']?>" value="<?=$category['code']?>" >
+                            <input type="checkbox" data-name="category" class="category-checkbox categorySelect" id="cat-<?=$category['code']?>" value="<?=$category['code']?>" >
                             <span class="checkmark"></span>
                         </label>
                         <label for="<?=$category['code']?>"><span><?=$category['label']?></span></label>
@@ -66,7 +68,7 @@ $categories = $metals = $gemstones = $prices = array();
     <?php endif;?>
 
     <!--Metal-->
-    <?php if(count($metals) > 0):?>
+    <?php if(false && count($metals) > 0):?>
       <li class="common-filter filtru-metal-dtn sel" data-name="metal">
         <div class="optionfilter" style="">
             <dt class="odd">METAL</dt>
@@ -75,7 +77,7 @@ $categories = $metals = $gemstones = $prices = array();
                     <?php foreach ($metals as $metal):?>
                     <li>
                         <label class="custom-checkbox " data-color="<?= $metal['code']?>" >
-                            <input type="checkbox" data-name="metal" class="metalSelect" id="<?= $metal['code']?>" value="<?= $metal['code']?>" >
+                            <input type="checkbox" data-name="metal" class="metalSelect" id="metal-<?= $metal['code']?>" value="<?= $metal['code']?>" >
                             <span class="checkmark"></span>
                         </label>
                         <label for="<?= $metal['code']?>"><span><?= $metal['label']?></span></label>
@@ -112,8 +114,8 @@ $categories = $metals = $gemstones = $prices = array();
                     <?php foreach ($gemstones as $gemstone):?>
                     <li>
 
-                        <label class="custom-checkbox gemstone" data-gemestone="<?=$gemstone['code']?>" >
-                            <input type="checkbox" data-name="gemstone" class="gemstoneSelect" id="<?=$gemstone['code']?>" value="<?=$gemstone['code']?>" >
+                        <label class="custom-checkbox gemstone"  >
+                            <input type="checkbox" data-name="gemstone" class="gemstoneSelect" id="gems-<?=$gemstone['code']?>" value="<?=$gemstone['code']?>" >
                             <span class="checkmark"></span>
                         </label>
                         <label for="color1"><span><?=$gemstone['label']?></span></label>
@@ -151,11 +153,11 @@ $categories = $metals = $gemstones = $prices = array();
                     <?php foreach ($prices as $price):?>
                     <li>
 
-                        <label class="custom-checkbox metal" data-color="p1" >
-                            <input type="checkbox" data-name="price" id="p1" value="p1" >
+                        <label class="custom-checkbox metal" >
+                            <input type="checkbox" class="priceSelect" data-name="price" id="price-<?=$price['start'].'_'.$price['end']?>" value="<?=$price['start'].'_'.$price['end']?>" >
                             <span class="checkmark"></span>
                         </label>
-                        <label for="p1"><span>p1</span></label>
+                        <label for="price-<?=$price['start'].'_'.$price['end']?>"><span><?=$currency_symbol.$price['start'].' - '.$currency_symbol.$price['end']?></span></label>
                     </li>
                     <?php endforeach; ?>
                 </ol>
@@ -179,25 +181,13 @@ $categories = $metals = $gemstones = $prices = array();
             });
         </script>
     <?php endif; ?>
+    <?php if($helper->isFiltersInRequest()):?>
+    <li>
+        <div class="actions current"><a class="link-button" href="<?= $this->getBaseSearchUrl()?>">Clear All</a></div>
+    </li>
+    <?php endif;?>
 </ul>
-<script>
 
-        jQuery(document).ready(function(){
-
-            jQuery('.sel').click(function () {
-                var selected = jQuery(this).attr('data-name');
-                var showOrHide = jQuery('.filtru-'+selected+'-content-dtn').hasClass('show');
-                if(!showOrHide) {
-                    jQuery('.filtru-'+selected+'-content-dtn').addClass('show');
-                    jQuery('.filtru-'+selected+'-content-dtn').slideDown(300);
-                }
-                else {
-                    jQuery('.filtru-'+selected+'-content-dtn').removeClass('show');
-                    jQuery('.filtru-'+selected+'-content-dtn').slideUp(300);
-                }
-            });
-        });
-</script>
 
 <script>
     jQuery(window).bind("load resize", function (e) {
@@ -210,21 +200,37 @@ $categories = $metals = $gemstones = $prices = array();
     });
 </script>
 <script>
-    var categoryList = [];
-    var metalList = [];
-    var gemstoneList = [];
-    var priceList = [];
-    jQuery(document).ready(function(){
-       var categorySelect = jQuery('input:checkbox.categorySelect');
-       var metalSelect = jQuery('input:checkbox.metalSelect');
-       var gemstoneSelect = jQuery('input:checkbox.gemstoneSelect');
-       var priceSelect = jQuery('input:checkbox.priceSelect');
+    var categoryList = <?= $helper->getCategoryParam()?json_encode(explode(',',$helper->getCategoryParam())):json_encode(array())?>;
+    var metalList = <?= $helper->getMetalParam()?json_encode(explode(',',$helper->getMetalParam())):json_encode(array())?>;
+    var gemstoneList = <?= $helper->getGemsParam()?json_encode(explode(',',$helper->getGemsParam())):json_encode(array())?>;
+    var priceList = <?= $helper->getPriceParam()?json_encode(explode(',',$helper->getPriceParam())):json_encode(array())?>;
+    var baseSearchUrl = '<?= $this->getBaseSearchUrl()?>'
+    jQuery(document).ready(function() {
+        var categorySelect = jQuery('input:checkbox.categorySelect');
+        var metalSelect = jQuery('input:checkbox.metalSelect');
+        var gemstoneSelect = jQuery('input:checkbox.gemstoneSelect');
+        var priceSelect = jQuery('input:checkbox.priceSelect');
 
-        jQuery('.categorySelect,.metalSelect,.gemstoneSelect,.priceSelect').change(function() {
-            if(this.checked) {
-                callCatalogsearch();
+        selectFilters();
+        // addEventListener();
+
+
+        jQuery('.sel').click(function () {
+            var selected = jQuery(this).attr('data-name');
+            var showOrHide = jQuery('.filtru-'+selected+'-content-dtn').hasClass('show');
+            if(!showOrHide) {
+                jQuery('.filtru-'+selected+'-content-dtn').addClass('show');
+                jQuery('.filtru-'+selected+'-content-dtn').slideDown(300);
+            }
+            else {
+                jQuery('.filtru-'+selected+'-content-dtn').removeClass('show');
+                jQuery('.filtru-'+selected+'-content-dtn').slideUp(300);
             }
         });
+        jQuery('.categorySelect,.metalSelect,.gemstoneSelect,.priceSelect').change(function() {
+                callCatalogsearch();
+        });
+    });
 
     var callCatalogsearch = function() {
        categoryList = [];
@@ -250,11 +256,58 @@ $categories = $metals = $gemstones = $prices = array();
                 }
             }
         });
+        var catStr = categoryList.toString();
+        var gemsStr = gemstoneList.toString();
+        var prsStr = priceList.toString();
+        var urlEndStr = '';
+        if(catStr !== ''){
+            urlEndStr +='&cat='+catStr;
+        }
+        if(gemsStr !== ''){
+            urlEndStr +='&gems='+gemsStr;
+        }
+        if(prsStr !== ''){
+            urlEndStr +='&prs='+prsStr;
+        }
+        window.location.href = baseSearchUrl+urlEndStr;
     }
+
 
     var clearFilters = function(){
         jQuery('.categorySelect,.metalSelect,.gemstoneSelect,.priceSelect').removeAttr('checked');
     }
-    });
+
+    var selectFilters = function () {
+        if(categoryList.length > 0){
+            jQuery.each(categoryList, function(index, item) {
+                if(jQuery('#cat-'+item).length){
+                    jQuery('#cat-'+item).click();
+                }
+            });
+        }
+        if(priceList.length > 0){
+            jQuery.each(priceList, function(index, item) {
+                if(jQuery('#price-'+item).length){
+                    jQuery('#price-'+item).click();
+                }
+            });
+        }
+        if(metalList.length > 0){
+            jQuery.each(metalList, function(index, item) {
+                if(jQuery('#metal-'+item).length){
+                    jQuery('#metal-'+item).click();
+                }
+            });
+        }
+        if(gemstoneList.length > 0){
+            jQuery.each(gemstoneList, function(index, item) {
+                if(jQuery('#gems-'+item).length){
+                    jQuery('#gems-'+item).click();
+                }
+            });
+        }
+
+
+    }
 
 </script>
