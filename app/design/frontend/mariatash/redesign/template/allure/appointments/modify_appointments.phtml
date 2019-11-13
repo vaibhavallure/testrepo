@@ -20,7 +20,7 @@ if(Mage::app()->getRequest()->getParam('user')=="admin")
 else
     $user="";
 
-if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
+if (Mage::getSingleton("core/session")->getData('appointment_availablity') && Mage::getSingleton("core/session")->getData('valid_customer')):
 
 if(Mage::getSingleton("core/session")->getData('appointment_expired'))
 { ?>
