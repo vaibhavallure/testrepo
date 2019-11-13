@@ -1940,4 +1940,7 @@
 .catalogsearch-result-index li#total_item_counts_holder {
 	display: none;
 }
+.catalogsearch-result-index .searchKey{
+	font-size: 35px;
+}
 
