@@ -22,6 +22,11 @@
 			<allure_catalog>
 				<class>Allure_Catalog_Model</class>
 			</allure_catalog>
+			<catalog>
+				<rewrite>
+					<product_type_price>Allure_Catalog_Model_Product_Type_Price</product_type_price>
+				</rewrite>
+			</catalog>
 		</models>
 
 		<helpers>
