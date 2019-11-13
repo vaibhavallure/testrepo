@@ -106,7 +106,7 @@
                                     		<div class="item-options">
                                     			<input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
                                     		</div>
-                                			<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+                                			<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item->getQuoteItem());?>
     										<?php if(!empty($message)): ?>
                 							<div class="box">
                                             	<div class="box-content">
@@ -123,17 +123,17 @@
                                                  	<p class="control">
                                                         <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
                                                             <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"
-                                                            	value="1" class="checkbox gift-item-checkbox" <?php if($_item->getIsGiftItem()):?>checked="checked" <?php endif;?>
+                                                            	value="1" class="checkbox gift-item-checkbox" <?php if(false && $_item->getIsGiftItem()):?>checked="checked" <?php endif;?>
                                                             	data-gift_wrap_id="<?= $_index."-".$_item->getQuoteItemId()?>">
                                                             <span class="checkmark"></span>
                                                             <span class="para-normal"><?= $this->__('This item is a gift (price will be hidden in the receipt).')?></span>
                                                   		</label>
                                                    </p>
                                                 </div>
-                                                <div id="gift-wrap-<?= $_index."-".$_item->getQuoteItemId()?>" class="gift-messages <?= (!$_item->getIsGiftItem()) ? "d-none":"" ?>">
+                                                <div id="gift-wrap-<?= $_index."-".$_item->getQuoteItemId()?>" class="gift-messages <?= (true || !$_item->getIsGiftItem()) ? "d-none":"" ?>">
                                                  	<p class="control">
                                                         <label class="custom-checkbox custom-checkbox-two" for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if($_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if(false && $_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
                                                             <span class="checkmark"></span>
                                                             <span class="para-normal"><?= $this->__('Add gift wrap to this item')?> (<?= ($_productGiftWrap) ? $_coreHelper->currency($_productGiftWrap->getPrice()) : '' ?>).</span>
                                                    		</label>
@@ -141,11 +141,11 @@
                                                 </div>
                                                 <?php if(!empty($message) && !$isSingleProduct): ?>
                                                 <?php $tmpMessage = $message;?>
-                                                <?php if(!preg_match('/stock:/', strtolower($tmpMessage) )):?>
+                                                <?php if(!preg_match('/instock-product/', strtolower($tmpMessage) )):?>
                                                 <div class="gift-messages">
                                                 	<p class="control">
                                                   		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= ($_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
+                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= (false && $_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
                                                             <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
                                                        	</label>
                                                 	</p>

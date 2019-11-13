@@ -23,8 +23,8 @@ class Mage_CatalogSearch_Model_Layer extends Mage_Catalog_Model_Layer
             $this->_productCollections[$this->getCurrentCategory()->getId()] = $collection;
         }
 //        Mage::log("-----------------------------------------------------------------------------------------------",Zend_Log::DEBUG,'search.log',true);
-        
-return $collection;
+
+        return $collection;
 
 
     }
@@ -38,8 +38,11 @@ return $collection;
     public function prepareProductCollection($collection)
     {
 
+        $attributeList = Mage::getSingleton('catalog/config')->getProductAttributes();
+        $attributeList[] = 'gemstone';
+
         $collection
-            ->addAttributeToSelect(Mage::getSingleton('catalog/config')->getProductAttributes())
+            ->addAttributeToSelect($attributeList)
             ->addSearchFilter(Mage::helper('catalogsearch')->getQuery()->getQueryText())
             ->setStore(Mage::app()->getStore())
             ->addMinimalPrice()
@@ -47,10 +50,30 @@ return $collection;
             ->addTaxPercents()
             ->addStoreFilter()
             ->addUrlRewrite();
+        $collection->getSelect()->reset(Zend_Db_Select::WHERE);
+
+        $helper = Mage::helper('catalogsearch/filter');
+
+
+        if($helper->isFiltersInRequest()){
+            if($helper->getGemsParam()) {
+                $gems = $helper->getGemsParam();
+                $collection->getSelect()->where("e.gemstone IN (" . $gems . ")");
+            }
+            if($helper->getPriceParam()) {
+                $price = $helper->getPriceParam();
+                $price = explode('_', $price);
+                $cnt = count($price);
+                $collection->getSelect()->orWhere("e.price BETWEEN " . $price[0] . ' AND ' . $price[$cnt - 1] . "");
+            }
+
+
+        }
+
 
         /*Filter By Group Code Starts Here*/
 
-            /*Find Group of Customer Start*/
+        /*Find Group of Customer Start*/
 //                Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
 
 
@@ -66,25 +89,26 @@ return $collection;
             }
         }
 
-                if(Mage::getSingleton('customer/session')->isLoggedIn()) {
-                    $customerData = Mage::getSingleton('customer/session')->getCustomer();
-                    $group_id = $customerData->getGroupId()+1;
-                    $allowed_group = $group_id;
-                }
-            /*Find Group of Customer End*/
+        if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $customerData = Mage::getSingleton('customer/session')->getCustomer();
+            $group_id = $customerData->getGroupId()+1;
+            $allowed_group = $group_id;
+        }
+        /*Find Group of Customer End*/
 
-            $attributeModel = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product','allowed_group');
+        $attributeModel = Mage::getModel('eav/entity_attribute')->loadByCode('catalog_product','allowed_group');
 
-            if($attributeModel->getId())
-            {
-                $collection->getSelect()->joinLeft(
-                    array("cp_allowed_group" => "catalog_product_entity_text"),
-                    'e.entity_id = cp_allowed_group.entity_id AND cp_allowed_group.attribute_id = '.$attributeModel->getId()
-                );
+        if($attributeModel->getId())
+        {
+            $collection->getSelect()->joinLeft(
+                array("cp_allowed_group" => "catalog_product_entity_text"),
+                'e.entity_id = cp_allowed_group.entity_id AND cp_allowed_group.attribute_id = '.$attributeModel->getId()
+            );
 
-                $collection->getSelect()->where("FIND_IN_SET('all',cp_allowed_group.value) OR FIND_IN_SET(".$allowed_group.",cp_allowed_group.value) OR cp_allowed_group.value IS NULL");
+            $collection->getSelect()->where("FIND_IN_SET('all',cp_allowed_group.value) OR FIND_IN_SET(".$allowed_group.",cp_allowed_group.value) OR cp_allowed_group.value IS NULL");
 
-            }
+
+        }
 
         /*Filter By Group Code Starts Here*/
 
@@ -145,6 +169,17 @@ return $collection;
         $attribute = parent::_prepareAttribute($attribute);
         $attribute->setIsFilterable(Mage_Catalog_Model_Layer_Filter_Attribute::OPTIONS_ONLY_WITH_RESULTS);
         return $attribute;
+    }
+
+    public function applyFilters($collection){
+        $filters = $this->getFilters();
+        if(isset($filters['category'])):
+            $collection->joinField('category_id','catalog/category_product','category_id','product_id=entity_id',null,'left');
+            $collection->addAttributeToFilter('category_id', array('in' => $filters['category']));
+        endif;
+
+        return $collection;
+
     }
 
 }

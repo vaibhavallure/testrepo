@@ -7,11 +7,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
 		$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
 
-		if(!$storeId)
-        {
-            echo "<script>alert('booking store not found')</script>";
-            return;
-        }
+
         // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
@@ -59,6 +55,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
                 $this->session()->setData(
                     'appointmentData_availablity', true);
+
             } else {
                 $this->session()->setData(
                     'appointmentData_availablity', false);
@@ -271,6 +268,8 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
             Mage::register('appointment_modified', $model);
             Mage::getSingleton("core/session")->setData('appointment_availablity', true);
+            $this->session()->setData(
+                'valid_customer', $this->validateCustomer());
         } else {
             Mage::getSingleton("core/session")->setData('appointment_availablity', false);
         }
@@ -715,6 +714,17 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         else
             return explode("-", Mage::getModel('core/encryption')->decrypt($this->getAppId()))[1];
 
+    }
+    private function validateCustomer()
+    {
+        if($this->getModifyDecryptedCustId()=="admin")
+            return true;
+
+        $customer=Mage::getModel('appointments/customers')->load($this->getModifyDecryptedCustId());
+        if($customer->getId())
+            return true;
+        else
+            return false;
     }
 
     private function getUser()

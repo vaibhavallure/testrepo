@@ -35,7 +35,7 @@
                 <?php if ($this->helper('rss/catalog')->getTagFeedUrl()): ?>
                 <a href="<?php echo $this->helper('rss/catalog')->getTagFeedUrl() ?>" class="nobr link-rss"><?php echo $this->__('Subscribe to Feed') ?></a>
             <?php endif; ?>
-            <h1 class="para-normal"><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('Showing results for <span>"%s"</span>', $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+            <h1 class="para-normal"><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('Showing %d results for <span>"%s"</span>', $this->getResultCount(),$this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
         </div>
     </div>
     <?php if ($messages = $this->getNoteMessages()):?>
@@ -45,7 +45,8 @@
             <?php endforeach;?>
         </p>
     <?php endif; ?>
-    <?php echo $this->getProductListHtml() ?>
+        <?php echo $this->getLayout()->createBlock('catalog/product_list')->setTemplate('catalogsearch/filter/view.phtml')->toHtml(); ?>
+        <?php echo $this->getProductListHtml() ?>
     <?php else: ?>
         <div class="page-title">
             <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("No results found") ?></h1>

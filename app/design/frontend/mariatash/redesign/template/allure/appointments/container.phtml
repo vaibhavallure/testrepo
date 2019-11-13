@@ -11,11 +11,18 @@ if($this->isAdmin())
     if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
         echo $this->getChildHtml('appointments_popup_success');
     endif;
+
+    if(Mage::app()->getRequest()->getParam('user')=="admin"):
+        echo '<div id="adminside"></div>';
+    endif;
+
+    if($this->storeFound()) {
+        echo $this->getChildHtml("appointments_popup_register");
+    }else{
+        echo $this->getChildHtml("appointments_popup_store_list");
+    }
+
     ?>
-    <?php if(Mage::app()->getRequest()->getParam('user')=="admin"):?>
-        <div id="adminside"></div>
-    <?php endif;?>
-    <?php echo $this->getChildHtml("appointments_popup_register");?>
 </div>
 
 <script type="text/javascript">
@@ -24,9 +31,9 @@ if($this->isAdmin())
     }
     <?php
     if($this->getRequest()->getParam('user')=="admin")
-         $appointment_id=$this->getRequest()->getParam('id');
+        $appointment_id=$this->getRequest()->getParam('id');
     else
-         $appointment_id=Mage::getModel('core/encryption')->decrypt($this->getRequest()->getParam('id'));
+        $appointment_id=Mage::getModel('core/encryption')->decrypt($this->getRequest()->getParam('id'));
     ?>
 
     Allure.appointmentId = '<?php echo $appointment_id?>';
@@ -76,7 +83,7 @@ if($this->isAdmin())
                         if($.trim($('#firstname'+i).val())==$.trim($('#firstname'+j).val()) && $.trim($('#lastname'+i).val())==$.trim($('#lastname'+j).val()) && $.trim($('#email'+i).val())==$.trim($('#email'+j).val()))
                         {
                             //alert("same details filled for customer #"+i+" and customer #"+j);
-                           alert(__("Customer information cannot be the same.  Please provide unique information for each customer."));
+                            alert(__("Customer information cannot be the same.  Please provide unique information for each customer."));
                             return;
 //                                console.log("same details "+i+" AND "+j);
                         }

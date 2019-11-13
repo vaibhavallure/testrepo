@@ -1088,16 +1088,14 @@
 .catalogsearch-result-index #narrow-by-list{
 	max-width: 1140px;
 	margin: 0 auto;
-	margin-top: 235px;
+	margin-top: 0px;
 	padding-left: 20px;
 }
 
-.catalogsearch-result-index .catalog-common-grid{
-	margin-top: 50px;
-}
+
 
 .catalogsearch-result-index .mb-breadcrumbs{
-	margin-top: 120px!important;
+	margin-top: 10px!important;
 }
 /*=====================*/
 /*Search RESULTS*/
@@ -1455,7 +1453,7 @@
 			width: 930px!important;
 		}
 		.catalogsearch-result-index #narrow-by-list{
-			margin-top: 235px;
+			margin-top: 0px;
 		}
 
 		#shop_our_instagram .fs-entry-container{

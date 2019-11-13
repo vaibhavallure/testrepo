@@ -340,6 +340,13 @@
     position: relative;
     top:0;
   }
+  #appointments .image-text{
+    position: relative;
+    background: none;
+  }
+  .image-text{
+    background: none;
+  }
 /* Catalog Filter CSS */
   .m-filter-checkboxes{
     display: flex;
@@ -484,9 +491,13 @@
   .menu-common-section{
     margin-top: 13px;
   }
-  /* .wrapper{
-    height: auto !important;
-  } */
+  .general-piercing-information{
+    margin-top: 0 !important;
+    margin-bottom: 30px;
+  }
+  .paypal-express-review .col-main{
+    padding: 0;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -527,7 +538,16 @@
     background: transparent;
     width: 100%;
   }
-
+  .paypal-express-review .main {
+    padding: 0 40px;
+  }
+  .paypal-express-review .col-main{
+    width: 100%;
+  }
+  .paypal-express-review .col-main {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 
 /*All ipads*/
@@ -611,7 +631,7 @@
     margin: 0.5%;
   }
   .form-search input.input-text{
-    width: 160px;
+    width: 550px;
     height: 26px !important;
   }
   .footlinks {
@@ -753,9 +773,6 @@
   .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
     height: 170px !important;
   }
-  /* .catalog-category-view .for-space-to-bottom{
-    height: 250px;
-  } */
   .about-jewelry{
     padding: 0 26px;
   }
@@ -816,9 +833,6 @@
   .block-layered-nav dd a, .block-layered-nav label{
     font-size: 10px !important;
   }
-  /* .categorypath-jewelry-ear-cartilage-jewelry-html #narrow-by-list{
-    margin-top: 106px;
-  } */
   .common-redesign-checkout .for-space-to-bottom{
     height: 252px !important;
   }
@@ -845,13 +859,6 @@
   .address-method-common .select-type-one{
     width: 100%;
   }
-  /* .product-view-left{
-    flex: 0 0 63.666667%;
-    max-width: 63.666667%;
-  } */
-  /* .product-shop{
-    flex: 0 0 33%;
-  } */
   .product-shop{
     padding: 0 14px;
   }
@@ -865,10 +872,6 @@
   .pdp-image-section .containerImage{
     margin-top: -70px;
   }
-  /* .quickview-index-index .pdp-image-section
-  {
-    margin-top: auto;
-  } */
   .quickview-index-index .pdp-image-section .containerImage{
     margin-top: auto;
   }
@@ -1320,13 +1323,13 @@
   }
 
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
-  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody{
+  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody{
     display: grid;
   }
-  #shopping-cart-form thead, .checkout-onepage-index #checkout-review-table thead{
+  #shopping-cart-form thead, .checkout-onepage-index #checkout-review-table thead, .paypal-express-review thead {
     display: none;
   }
-  #shopping-cart-table tbody td:before, .checkout-onepage-index #checkout-review-table tbody td:before {
+  #shopping-cart-table tbody td:before, .checkout-onepage-index #checkout-review-table tbody td:before, .paypal-express-review tbody td:before{
     content: attr(data-th);
     font-size: 12px;
     font-family: urw-din-bold;
@@ -1335,7 +1338,7 @@
     letter-spacing: 1.08px;
     line-height: 0px;
   }
-  #shopping-cart-table .price, .checkout-onepage-index #checkout-review-table .price{
+  #shopping-cart-table .price, .checkout-onepage-index #checkout-review-table .price, .paypal-express-review.price{
     font-size: 15px;
     display: block;
   }
@@ -1349,7 +1352,7 @@
   .data-table.cart-table .messages.wholesale-avail-row .item-msg {
     margin-bottom: 0px;
   }
-  #shopping-cart-table tr.messages-tr {
+  #shopping-cart-table tr.messages-tr, .paypal-express-review tr.messages-tr, .paypal-express-review .odd {
     margin-top: 20px;
   }
   .data-table.cart-table .gift-messages, .gift-row td:nth-child(2){
@@ -1358,19 +1361,19 @@
   .gift-row td:nth-child(2){
     padding-bottom: 30px;
   }
-  #shopping-cart-table td.cart_col1 {
+  #shopping-cart-table td.cart_col1, .paypal-express-review  td.cart_col1{
     width: 30%;
     display: block;
     float: left;
     margin-top: 0;
   }
-  #shopping-cart-table td.cart_col2, .checkout-onepage-index #checkout-review-table tbody td.cart_col1{
+  #shopping-cart-table td.cart_col2, .checkout-onepage-index #checkout-review-table tbody td.cart_col1, .paypal-express-review td.cart_col2{
     width: 100%;
     display: block;
     min-height: 120px;
   }
   #shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col4, #shopping-cart-table td.cart_col5,
-  #checkout-review-table tbody td.cart_col3, #checkout-review-table tbody td.cart_col4, #checkout-review-table tbody td.cart_col5 {
+  #checkout-review-table tbody td.cart_col3, #checkout-review-table tbody td.cart_col4, #checkout-review-table tbody td.cart_col5, .paypal-express-review td.cart_col3, .paypal-express-review td.cart_col4, .paypal-express-review td.cart_col5 {
     width: 28%;
     display: block;
     float: left;
@@ -1383,10 +1386,10 @@
     float: left;
     flex: 0 0 33.33%;
   }
-  #shopping-cart-table .cart_col3, #checkout-review-table .cart_col3 {
+  #shopping-cart-table .cart_col3, #checkout-review-table .cart_col3, .paypal-express-review .cart_col3 {
     text-align: left !important;
   }
-  #shopping-cart-table .cart_col4{
+  #shopping-cart-table .cart_col4, .paypal-express-review td:nth-child(3){
     text-align: center;
   }
   .checkout-onepage-index #checkout-review-table{
@@ -1455,6 +1458,9 @@
   }
   .product-shop > .row{
     width: 100% !important;
+  }
+  .paypal-express-review .overview-common-prices, .paypal-express-review .overview-grand{
+    padding: 0;
   }
 }
 
@@ -1780,6 +1786,10 @@
 .responsive-direction {
   flex-direction: initial;
   }
+#appointments img{
+  display: block;
+  padding-top: 45px;
+  }
 }
 @media (max-width: 1200px){
   .about-jewelry{
@@ -1895,10 +1905,23 @@
   .catalog-product-view .for-space-to-bottom{
     height: 73px;
   }
+  .desktop-device .common-option-div{
+    padding:0;
+  }
 }
 @media (max-width:991px){
   .desktop-device .image-section{
     margin-bottom: 30px;
+  }
+  /* .desktop-device .piercing_options a{
+    overflow: inherit;
+  } */
+  .desktop-device .piercing_options{
+    display: block;
+    padding: 0 15px;
+  }
+  .piercing_options .image-text{
+    margin-bottom: 40px;
   }
 }
 @media (max-width:749px){
@@ -1940,6 +1963,11 @@
   /* .zopim {
     bottom: 59px!important;
   } */
+}
+@media (max-width:992px){
+  .desktop-device .image-text{
+    top: 70px;
+  }
 }
 @media (min-width:686px) and (max-width:850px){
   .post_optio .chooseList ul li.option{

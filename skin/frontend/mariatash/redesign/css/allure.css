@@ -538,10 +538,10 @@ label.popup-reg-privacy-lbl {
 	margin-top: 10px;
 }
 
-.main-container.col1-layout .messages{
+/* .main-container.col1-layout .messages{
 	margin-left: 20px ! important;
     margin-top: 15px ! important;
-}
+} */
 
 .mt-myaccount-new .messages{
 	margin-right: 40px! important;
@@ -577,7 +577,7 @@ label.popup-reg-privacy-lbl {
 }
 
 /* for paypal review */
-.paypal-express-review .checkout-two-shipment-shipping-method-mt,
+/* .paypal-express-review .checkout-two-shipment-shipping-method-mt,
 .paypal-express-review .checkout-two-shipment-payment-method-mt,
 .paypal-express-review .checkout-two-shipment-shipping-address-mt,
 .paypal-express-review .checkout-two-shipment-billing-address-mt{
@@ -588,10 +588,7 @@ label.popup-reg-privacy-lbl {
 	margin-top: 10px;
 }
 
-.paypal-express-review #shopping-cart-totals-table{
-	width: 100%;
-	background: #ccc;
-}
+
 .paypal-express-review #shopping-cart-totals-table tr td{
 	padding: 5px;
 }
@@ -608,7 +605,7 @@ width: 94%;
 
 .product-options-bottom .add-to-cart-left .ajax-error-messages {
     left: 150px;
-}
+} */
 /* .cart-mt ul.messages{
     position: static;
 } */

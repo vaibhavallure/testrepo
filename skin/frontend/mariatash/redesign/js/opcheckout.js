@@ -543,7 +543,7 @@ Shipping.prototype = {
             Mage.Cookies.set('click_same_as_billing',0);
         }
 
-        initializeItelTelInput()
+        //initializeItelTelInput()
     },
     
     resetSelectedBillingAddress: function(){
@@ -655,10 +655,9 @@ Shipping.prototype = {
     	if(!$('shipping-address-select').value){
     		$('billing-address-select').value = '';
     		shipping.newBillingAddress(true);
-    		Element.show('fieldset-billing');
+    		//Element.show('fieldset-billing');
     	}
     	
-    	$('shipping:same_as_billing').checked = true;
         if (!$('shipping-address-select') || !$('shipping-address-select').value) {
             arrElements = Form.getElements(this.form);
             for (var elemIndex in arrElements) {
@@ -669,13 +668,13 @@ Shipping.prototype = {
                     }
                 }
             }
-            //$('shipping:country_id').value = $('billing:country_id').value;
-            billingRegionUpdater.update();
+            $('billing:country_id').value = $('shipping:country_id').value;
+            //billingRegionUpdater.update();
             $('billing:email').value = $('shipping:email_shipping').value;
             $('billing:region_id').value = $('shipping:region_id').value;
             $('billing:region').value = $('shipping:region').value;
             //shippingForm.elementChildLoad($('shipping:country_id'), this.setRegionValue.bind(this));
-
+            $('shipping:same_as_billing').checked = true;
         } else {
         	$('billing-address-select').value = $('shipping-address-select').value;
         }

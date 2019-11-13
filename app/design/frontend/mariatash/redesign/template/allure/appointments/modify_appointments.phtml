@@ -20,7 +20,7 @@ if(Mage::app()->getRequest()->getParam('user')=="admin")
 else
     $user="";
 
-if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
+if (Mage::getSingleton("core/session")->getData('appointment_availablity') && Mage::getSingleton("core/session")->getData('valid_customer')):
 
 if(Mage::getSingleton("core/session")->getData('appointment_expired'))
 { ?>
@@ -118,7 +118,7 @@ $apt_email = $model->getEmail();
                                 <div class="apt-buttons-set mb-0">
                                     <button type="button" class="button input-box b translate-popup light-button"
                                             title="<?php echo $this->__('Book Another Piercing') ?>"
-                                            onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
+                                            onclick="window.location.href='<?= $this->getStoreShortUrl() ?>/redirect-from/modify-success'">
                                         <?php echo $this->__('Book Another Piercing') ?>
                                     </button>
                                 </div>
@@ -160,25 +160,23 @@ else:
 
     function confirmCancelApt() {
 
-        if (confirmBox(__("Are you sure you want to cancel an scheduled appointment?")))
-        {
-            return false;
-        }
+        confirmBox(__("Are you sure you want to cancel an scheduled appointment?"),function(){
+            //Logic to cancel the apt
+            var reloadurl = '<?php echo $this->getUrl('*/book/cancelapt',array('id'=>$cancel_apt_id,'_secure' => true)); ?>';
+            jQuery.ajax({
+                url: reloadurl, //Relative or absolute path to response.php file
+                method: 'get',
+                success: function (data) {
+                    jQuery('#exampleModalLongTitle').html(__(data));
+                    //jQuery('.checkout-success .success-field').empty();
+                    jQuery('.checkout-success .apt-cancel-buttons-set').empty();
+                    jQuery('.checkout-success .apt-modify-buttons-set').empty();
 
-        //Logic to cancel the apt
-        var reloadurl = '<?php echo $this->getUrl('*/book/cancelapt',array('id'=>$cancel_apt_id,'_secure' => true)); ?>';
-        jQuery.ajax({
-            url: reloadurl, //Relative or absolute path to response.php file
-            method: 'get',
-            success: function (data) {
-                jQuery('#exampleModalLongTitle').html(__(data));
-                //jQuery('.checkout-success .success-field').empty();
-                jQuery('.checkout-success .apt-cancel-buttons-set').empty();
-                jQuery('.checkout-success .apt-modify-buttons-set').empty();
-
-            }
+                }
+            });
         });
 
+        return false;
     }
 
 </script>

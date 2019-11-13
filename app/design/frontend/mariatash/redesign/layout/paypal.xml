@@ -47,21 +47,43 @@
     <paypal_express_review translate="label">
         <label>PayPal Express Order Review Form</label>
         
-        <remove name="right"/>
+        <!-- <remove name="right"/> -->
         <remove name="left"/>
 
-        <reference name="root">
+        <!-- <reference name="root">
             <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference> -->
+        
+        <reference name="root">
+            <action method="setTemplate"><template>page/checkout/2columns-right.phtml</template></action>
+        </reference>
+        
+        <reference name="right">
+            <action method="unsetChildren"></action>
+            <block type="checkout/cart" name="checkout.cart">
+                <action method="setCartTemplate"><value>ecp/checkout/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+			 	<action method="addItemRender"><type>giftcards</type><block>checkout/cart_item_renderer</block><template>ecp/checkout/cart/item/default.phtml</template></action>
+
+
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                    <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                </block>
+            </block>
         </reference>
         
         <reference name="content">
             <block type="paypal/express_review" name="paypal.express.review" template="paypal/express/review.phtml">
                 <block type="paypal/express_review" name="express.review.shipping.method" as="shipping_method" template="paypal/express/review/shipping/method.phtml"/>
                 <block type="paypal/express_review_details" name="paypal.express.review.details" as="details" template="paypal/express/review/details.phtml">
-                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
-                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
-                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
-                    <block type="checkout/cart_totals" name="paypal.express.review.details.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+                    <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>allure/multicheckout/checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>allure/multicheckout/checkout/onepage/review/item.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>allure/multicheckout/checkout/onepage/review/item.phtml</template></action>
+                    <block type="checkout/cart_totals" name="paypal.express.review.details.totals" as="totals" template="checkout/onepage/review/general_totals.phtml"/>
                 </block>
                 
                 <!-- Allure Inc code start -->

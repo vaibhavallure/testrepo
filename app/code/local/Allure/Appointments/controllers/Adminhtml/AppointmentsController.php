@@ -200,7 +200,8 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     {
 
         Mage::getSingleton("adminhtml/session")->setAppointmentModifyId($this->getRequest()->getParam('id'));
-        Mage::getSingleton("adminhtml/session")->setStoreCode(Mage::helper("appointments/data")->getStoreCode());
+        Mage::getSingleton("adminhtml/session")->setAppointmentSystem($this->getRequest()->getParam('system'));
+
 
         $this->loadLayout();
         $this->_title('Create Appointment');

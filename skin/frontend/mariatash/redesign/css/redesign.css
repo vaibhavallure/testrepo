@@ -66,7 +66,8 @@ h4{
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
 .banktransfer-instructions-content.agreement-content, #payment_form_paypal_express .form-alt, .overview-common-prices span,
-#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p, .piercing-service p, .piercing-service span{
+#product_tabs_rpolicy_tabbed_contents p, .please-wait, #allureAlertBox p, .piercing-service p, .piercing-service span, .paypal-express-review .item-msg p,
+.checkout-block p,.paypal-express-review td.cart-subtotals-left, .paypal-express-review td.cart-subtotals-right.last span {
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -81,7 +82,11 @@ h4{
 	letter-spacing: 1px;
 	line-height: 20px;
 }
-
+.scrolled-menu ul.allure-menu.search-active li:nth-last-child(2) span,
+.scrolled-menu ul.allure-menu.search-active li:nth-last-child(1) span
+{
+	color:transparent;
+}
 .para-three{
 	font-family: urw-din-xlight;
 	font-size: 15px;
@@ -415,7 +420,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   letter-spacing: 1px;
   padding-top: 19px;
   opacity: 0.6;
-	padding-bottom: 14px;
+	padding-bottom: 8px;
 	cursor: pointer;
 }
 .checkout-step-name span {
@@ -1332,8 +1337,8 @@ ul.swatch .swatch-item a {
   margin-top: 8px;
 	margin-bottom: 100px;
 }
-.category-inspiration .category-products{
-	margin-bottom: 0;
+.category-inspiration .category-products, .category-piercing-gallery .category-products {
+    margin-bottom: 0;
 }
 
 .dropdown-menu {
@@ -1488,7 +1493,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .form-search input.input-text{
   float: left;
-  width: 285px;
+  width: 360px;
   border: none;
   background: none;
   border-bottom: 1px solid #fff;
@@ -1636,10 +1641,29 @@ input[type="checkbox"]:checked+label:before {
 	flex:0 0 100%;
 }
 .image-text {
-  position: absolute;
-  bottom: 15px;
-  width:100%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: rgb(255,255,255,0);
+	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
+}
+.desktop-device .image-text h6 {
+	position: absolute;
+	bottom: 15px;
+	width: 100%;
 	text-align: center;
+}
+.desktop-device .piercing_options a {
+	position: relative;
+	overflow: hidden;
+	display: block;
+}
+.desktop-device .piercing_options {
+	text-align: center;
+	padding: 0 5px;
+	display: flex;
 }
 .special-menu {
   position: relative;
@@ -1779,11 +1803,12 @@ input[type="checkbox"]:checked+label:before {
 .mobile-sub_menu .right-section img {
   display: none;
 }
-.mobile-sub_menu .image-text{
+/* .mobile-sub_menu .image-text{
   position: relative;
   bottom: 0;
   text-align: left;
-}
+	top: 56px;
+} */
 .mobile-sub_menu .right-section {
   padding-left: 44px;
 }
@@ -1793,7 +1818,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .mobile-sub_menu .special-menu {
   margin-top: 0;
-  margin-bottom: 35px;
+  margin-bottom: 45px;
 }
 .mobile-sub_menu .image-text h6{
   color: #666 !important;
@@ -1823,7 +1848,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .catalog-category-view .category-title{
 	padding-left: 109px;
-	margin-top: 14px;
+	margin-top: 4px;
 }
 .catalog-category-view .mb-category-products .category-title h1 {
   font-size: 30px;
@@ -1863,7 +1888,7 @@ div#narrow-by-list {
 }
 #narrow-by-list{
   margin-left: 62px;
-	margin-top: 21px;
+	/* margin-top: 11px; */
 	position: relative;
 }
 #narrow-by-list li div dd{
@@ -1898,9 +1923,9 @@ div#narrow-by-list {
 .overflow-hidden{
   overflow: hidden;
 }
-.piercing_options{
-  text-align: center;
-  padding: 0;
+.piercing_options img {
+  width: 100%;
+  height: auto;
 }
 .catalog-category-view .list-mt-w .light-button {
   width: 128px;
@@ -2486,9 +2511,9 @@ ul#foo4 {
 #narrow-by-list li{
   float: left;
 	padding: 0;
-	margin-bottom: 10px;
 	z-index: 2;
 	padding-left: 8px;
+	margin-top: 4px;
 }
 .filterPopup .filtru-price .m-filter-slider {
   margin-left: 10px;
@@ -2915,10 +2940,10 @@ ul.tabs li{
 }
 .breadcrumbs {
   padding-left: 71px;
-	margin-top: 22px;
+	margin-top: 13px;
 }
 .catalog-product-name-display {
-	margin-top: 14px;
+	/* margin-top: 14px; */
 	font-size: 30px;
 }
 .cartilage-section {
@@ -3125,9 +3150,9 @@ table th {
 	padding-bottom: 20px;
 }
 table thead {
-  border-bottom: 1px solid #d8d8d8;
+  border-bottom: 1px solid rgba(41,41,41,0.9);
 }
-.data-table.cart-table td {
+.data-table.cart-table td, .paypal-express-review .data-table td {
   vertical-align: initial;
 	margin-top: 40px;
 }
@@ -3141,7 +3166,7 @@ table thead {
 #shopping-cart-table .qty-wrap span.quantity-count {
   display: block;
 }
-#shopping-cart-table .price{
+#shopping-cart-table .price, .paypal-express-review  #details-table .price{
 	text-align: right;
 	font-size: 18px;
   font-family: urw-din-xlight;
@@ -3248,7 +3273,7 @@ table thead {
 .checkout-multishipping-delivery .col-main,
 .checkout-multishipping-billing .col-main,
 .checkout-multishipping-overview .col-main,
-.checkout-onepage-index .col-main {
+.checkout-onepage-index .col-main, .paypal-express-review .col-main {
   flex: 0 0 66.666667%;
   max-width: 66.666667%;
 	padding-right: 15px;
@@ -3258,7 +3283,7 @@ table thead {
 .checkout-multishipping-delivery .col-right.sidebar,
 .checkout-multishipping-billing .col-right.sidebar,
 .checkout-multishipping-overview .col-right.sidebar,
- .checkout-onepage-index .col-right.sidebar{
+ .checkout-onepage-index .col-right.sidebar, .paypal-express-review .col-right.sidebar{
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding-right: 15px;
@@ -3612,18 +3637,21 @@ table thead {
 }
 #cart-sidebar li.item {
   margin-right: 0;
-	border-bottom: 2px solid #d8d8d8;
+	border-bottom: 1px solid #d8d8d8;
   margin-top: 13px;
 	padding-bottom: 5px;
 	width: 100%;
 }
+#cart-sidebar-content .product-details .item-options {
+  display: none;
+}
 .cart_sidebar .tite_cart {
-  border-bottom: 2px solid #D8D8D8;
-  padding: 13px 0 7px;
+  border-bottom: 1px solid #D8D8D8;
+  padding: 23px 0 17px;
 }
 .minicart-remove {
   right: 7px;
-	margin-top: -9px;
+	margin-top: -13px;
 }
 .cart_checkout {
   width: 312px;
@@ -3644,6 +3672,7 @@ table thead {
   font-family: urw-din-xlight;
 	padding-right: 16px;
 	text-transform: none;
+	letter-spacing: 0;
 }
 .minicart-subtotal span.price{
 	font-size: 20px;
@@ -3658,7 +3687,7 @@ table thead {
 }
 #cart-sidebar {
   overflow: scroll;
-  max-height: 330px !important;
+  max-height: 447px !important;
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
@@ -3674,7 +3703,7 @@ table thead {
   margin-top: 9px;
 	margin-bottom: 30px;
 }
-.data-table.cart-table .messages .item-msg {
+.data-table.cart-table .messages .item-msg, .paypal-express-review .item-msg {
   margin-top: 22px;
 }
 /* SHOPPING BAG CSS */
@@ -4340,7 +4369,7 @@ dt.post-lengthds-lbl {
   right: 3px;
   -webkit-appearance: none;
   border: none;
-  background: #fff;
+  background: transparent;
   margin-top: 0 !important;
 }
 .cart-mt ul.messages {
@@ -4494,6 +4523,43 @@ dt.post-lengthds-lbl {
 .info-set.paypal-product-section {
   margin-top: 44px;
 }
+.paypal-express-review td:nth-child(4) {
+  font-family: urw-din-regular;
+  font-size: 18px;
+  -webkit-appearance: none !important;
+}
+.paypal-express-review tr.last.odd, .paypal-express-review tr.messages.even{
+	border-bottom: 1px solid #d8d8d8;
+}
+.paypal-express-review .mt-shipping-price span.price {
+  font-size: 13px;
+	font-family: urw-din-light;
+}
+td.cart_col2 {
+  width: 36%;
+}
+.paypal-express-review .col-main{
+	padding: 0 60px;
+}
+.paypal-express-review .grand-total {
+  margin-top: 40px;
+}
+.paypal-express-review .data-table td{
+	vertical-align: initial;
+}
+.paypal-express-review #details-table {
+  margin-top: 20px;
+}
+.paypal-express-review #details-table th:nth-child(4) {
+  width: 10%;
+}
+.paypal-express-review .page-title h1 {
+	font-size: 30px;
+}
+.paypal-express-review .info-set.col2-set {
+  border-bottom: 1px solid #d8d8d8;
+}
+/**********************************/
 .cat-img-present {
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -4502,12 +4568,12 @@ dt.post-lengthds-lbl {
 	height: 137px;
 }
 .for-space-to-bottom.cat-img-space {
-		height: 222px;
-    width: 100%;
-    background-size: auto 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #010409;
+	height: 304px;
+  width: 100%;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #010409;
 }
 /************* New Changes: Catagory Pages *****************/
 .catalog-category-view .category-title h1 {
@@ -4581,8 +4647,12 @@ dt.post-lengthds-lbl {
 .hidden-appointments-time{
 	height: 12px;
 }
+.checkout-list-title h1 {
+  font-size: 30px;
+}
 
-/*For catalogsearch only*/
-.catalogsearch-result-index #narrow-by-list{
-	margin-top : 0px !important;
+/****By Indrajet******/
+.search-autocomplete{
+	max-height: 500px !important;
+	overflow-x: scroll !important;
 }
