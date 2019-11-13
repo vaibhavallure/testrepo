@@ -226,11 +226,20 @@ Checkout.prototype = {
                 }
             }
         }
+        console.log("O");
         if(different) $('shipping:same_as_billing').checked = false;
-        else $('shipping:same_as_billing').checked = true;
+        else { 
+        	$('shipping:same_as_billing').checked = true;
+        	//new line code here s10
+            Element.hide('fieldset-billing');
+        }
         if($('shipping-address-select') != undefined && $('shipping-address-select').value != '' && $('billing-address-select').value == $('shipping-address-select').value) {
             $('shipping:same_as_billing').checked = true;
             //$('shipping:same_as_billing').disabled = true;
+            
+            console.log("OO");
+            //new line code here s10
+            Element.hide('fieldset-billing');
         }
         if($('shipping-address-select') != undefined && $('billing-address-select').value != $('shipping-address-select').value) {
             //$('shipping:same_as_billing').disabled = false;
