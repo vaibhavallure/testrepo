@@ -15,7 +15,7 @@ if($this->isAdmin())
  *
  */
 
-if(Mage::app()->getRequest()->getParam('user')=="admin")
+if($this->isAdmin())
     $user="admin";
 else
     $user="";
@@ -45,10 +45,10 @@ if(Mage::getSingleton("core/session")->getData('appointment_expired'))
 else
 {
 $model = Mage::registry('appointment_modified');
-if(Mage::app()->getRequest()->getParam('user')=="admin")
+if($this->isAdmin())
     $apt_id =  $model->getId();
 else
-    $apt_id =  urlencode(Mage::getModel('core/encryption')->encrypt($model->getId()));
+    $apt_id =  Mage::app()->getRequest()->getParam('id');
 
     $customer = Mage::getModel('appointments/customers')->getCollection()
         ->addFieldToFilter(
@@ -185,3 +185,10 @@ else:
 </div>
 </div>
 </div>
+
+
+<?php
+Mage::getSingleton('core/session')->unsSlotInvalid();
+Mage::getSingleton('core/session')->unsSomethingWrong();
+Mage::getSingleton("core/session")->unsetData('appointment_submitted');
+?>

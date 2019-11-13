@@ -3221,9 +3221,7 @@ div.wrapper div.page div.main-container div.main div.col-main div.cart-mt div.ca
 	margin-bottom: 0px;
 }
 
-.catalogsearch-result-index .page-title h1 {
-	margin-bottom: 21px;
-}
+
 
 .category-about-our-jewelry .top-bar .breadcrumbs,
 .category-celebrity-clientele .top-bar .breadcrumbs,
@@ -3302,7 +3300,7 @@ textarea:focus, input:focus {
 }
 
 .form-search .search-autocomplete li.selected {
-	background-color: #ecf9ea;
+	/*background-color: #ecf9ea;*/
 }
 
 .header-container .top-container {
@@ -12194,7 +12192,7 @@ li.item h2.product-name {text-align: center;}
 
 .catalogsearch-result-index .block-layered-nav {
 	top: 232px;
-	padding: 8px 0 0 0;
+	/*padding: 8px 0 0 0;*/
 }
 
 
