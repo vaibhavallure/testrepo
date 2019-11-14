@@ -901,14 +901,14 @@ div.a-column.a-span-last {
 
 .mt-my-wishlist  #wishlist-table .w-remove a ,
 .mt-my-cart #shopping-cart-table .w-remove a:link {
-    background: url(../images/wish-x-remove.png) no-repeat 0px 7px;
+    /* background: url(../images/wish-x-remove.png) no-repeat 0px 7px;
     text-decoration: none;
     cursor: pointer;
     margin-top: 5px;
    	text-align: left;
     float: left;
     margin-top: 0px;
-    font-weight: normal;
+    font-weight: normal; */
 }
 .myaccount-wishlist-move-to-cart{
 	width: 100%;
@@ -932,7 +932,7 @@ div.a-column.a-span-last {
 }
 
 .mt-my-wishlist #wishlist-table td.last {
-    padding-top: 8px;
+    /* padding-top: 8px; */
     text-align: right;
 }
 

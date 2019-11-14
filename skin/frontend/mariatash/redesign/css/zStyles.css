@@ -293,8 +293,7 @@
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	margin-bottom: 0;
 }
-.acc-products-wrapper #myaccount-shopping-cart-table tr td img,
-.acc-products-wrapper .mt-my-wishlist table tr td img{
+.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
 	width: 102px;
 	height: 102px;
 	object-fit: cover;
@@ -337,11 +336,11 @@
 .acc-products-wrapper .mt-my-wishlist .line-w-mt{
 	width: 100%;
 }
-.acc-products-wrapper .mt-my-wishlist .product-w-mt{
+/* .acc-products-wrapper .mt-my-wishlist .product-w-mt{
 	padding-right: 20px;
 	vertical-align: top;
 	padding-top: 7px;
-}
+} */
 .acc-products-wrapper .mt-my-wishlist .product-w-mt .price{
 	display: inline-block;
 	margin-right: 30px;
@@ -1143,7 +1142,7 @@
 
 .popupDelMyAccModel {
 	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
+	/* font-family: Arial, Helvetica, sans-serif; */
 	top: -20px;
 	right: 0;
 	bottom: 0;
@@ -1952,4 +1951,3 @@
 	padding-left: 0px;
 	padding-right: 8px;
 }
-
