@@ -424,6 +424,9 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 	padding-bottom: 8px;
 	cursor: pointer;
 }
+.checkout-step-name h3{
+	padding-bottom: 14px;
+}
 .checkout-step-name span {
   float: left;
   padding-right: 11px;
@@ -3495,7 +3498,7 @@ table thead {
   background: none;
 }
 #checkout-review-table tbody td.cart_col1 {
-  width: 50%;
+  width: 14%;
 }
 .clear-both{
 	clear: both;
@@ -3689,7 +3692,7 @@ table thead {
 }
 #cart-sidebar {
   overflow: scroll;
-  max-height: 447px !important;
+  max-height: 367px !important;
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
