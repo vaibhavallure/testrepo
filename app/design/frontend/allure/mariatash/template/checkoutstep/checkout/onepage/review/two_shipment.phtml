@@ -1,5 +1,5 @@
 <div class="two-shipment-billing-payment-mt">
-<?php  
+<?php
  $mainQuote = Mage::getSingleton('checkout/session')->getQuote();
  ?>
 <div class="checkout-two-shipment-billing-address-mt">
@@ -35,17 +35,17 @@ switch ($payment->getMethod()) {
 </div>
 
 
-<?php 
+<?php
 	$count = 0;
 	$one_ship = Mage::getSingleton('checkoutstep/ordered_session')->getOrdered();
 	if(isset($one_ship) && !empty($one_ship)):
 ?>
 
 <?php
-		$count = $count+1; 
+		$count = $count+1;
         $quote = Mage::getSingleton("checkoutstep/ordered_session")->getQuote();
         $quote->collectTotals()->save();
-        
+
         ?>
 
 <div id="ordered-two-ship">
@@ -64,13 +64,13 @@ switch ($payment->getMethod()) {
         <?php //echo $this->getChildHtml('totals_ordered'); ?>
         <thead>
             <tr>
-                <th><?php echo $this->__('Product Name') ?></th>
-                <th class="a-right"><?php echo $this->__('Price') ?></th>
-                <th class="a-right"><?php echo $this->__('Qty') ?></th>
-                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+                <th colspan="2"><?php echo $this->__('Product') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-center"><?php echo $this->__('Quantity') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
-        
+
         <?php foreach($this->getOrderedItems() as $_item): ?>
             <?php echo $this->getItemHtml($_item)?>
         <?php endforeach ?>
@@ -79,9 +79,9 @@ switch ($payment->getMethod()) {
 
 
 <div class="checkout-two-shipment-shipping-address-mt">
-<?php 
+<?php
 echo "<h4>Shipping address</h4>";
- 
+
 $shipping = $quote->getShippingAddress();
 echo '<p>' . $shipping->getFormated('html') . '</p>';
 ?>
@@ -93,7 +93,7 @@ echo '<p>' . $shipping->getFormated('html') . '</p>';
 
 
 <div class="checkout-two-shipment-shipping-method-mt">
-<?php 
+<?php
 echo "<h4>Shipping method</h4>";
 $shippingAddress = $quote->getShippingAddress();
 
@@ -109,13 +109,13 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 
 
 
-<?php 
+<?php
 	$two_ship = Mage::getSingleton('checkoutstep/backordered_session')->getBackorder();
 	if(isset($two_ship) && !empty($two_ship)):
 ?>
 
- <?php 
- 		$count = $count+1; 
+ <?php
+ 		$count = $count+1;
         $quote1 = Mage::getSingleton("checkoutstep/backordered_session")->getQuote();
         $quote1->collectTotals()->save();
         ?>
@@ -135,13 +135,13 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
         <?php //echo $this->getChildHtml('totals_backordered'); ?>
         <thead>
             <tr>
-                <th><?php echo $this->__('Product Name') ?></th>
-                <th class="a-right"><?php echo $this->__('Price') ?></th>
-                <th class="a-right"><?php echo $this->__('Qty') ?></th>
-                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+                <th colspan="2"><?php echo $this->__('Product') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-center"><?php echo $this->__('Qty') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
-        
+
         <?php foreach($this->getBackorderedItems() as $_item): ?>
             <?php echo $this->getItemHtml($_item)?>
         <?php endforeach ?>
@@ -150,9 +150,9 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 
 
 <div class="checkout-two-shipment-shipping-address-mt">
-<?php 
+<?php
 echo "<h4>Shipping address</h4>";
- 
+
 $shipping = $quote1->getShippingAddress();
 echo '<p>' . $shipping->getFormated('html') . '</p>';
 ?>
@@ -164,7 +164,7 @@ echo '<p>' . $shipping->getFormated('html') . '</p>';
 
 
 <div class="checkout-two-shipment-shipping-method-mt">
-<?php 
+<?php
 echo "<h4>Shipping method</h4>";
 $shippingAddress = $quote1->getShippingAddress();
 
@@ -183,7 +183,7 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 		var billingHeight = jQuery('.checkout-two-shipment-billing-address-mt').height();
 		if(billingHeight)
 			jQuery('.checkout-two-shipment-payment-method-mt').css('height',billingHeight+'px');
-		
+
 		var shippindAddrHeight = jQuery('.checkout-two-shipment-shipping-address-mt').height();
 		if(shippindAddrHeight)
 			jQuery('.checkout-two-shipment-shipping-method-mt').css('height',shippindAddrHeight+'px');
@@ -210,7 +210,7 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
     	<?php echo $this->getChildHtml('button') ?>
     </div>
     <?php //echo $this->getChildHtml('button') ?>
-    <?php 
+    <?php
     ?>
     <script type="text/javascript">
     //<![CDATA[
