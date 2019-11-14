@@ -111,6 +111,7 @@ $apt_email = $model->getEmail();
                                 <div class="apt-modify-buttons-set form-group">
                                     <button type="button" class="button input-box b translate-popup light-button"
                                             title="<?php echo $this->__('Modify Appointment') ?>"
+                                        <?php $apt_id=urlencode($apt_id)?>
                                             onclick="window.location.href='<?php echo $this->getUrl('*/book/', array('_secure' => true,'_query'=>'id='.$apt_id ,'user' => $user)); ?>'">
                                         <?php echo $this->__('Modify') ?></button>
                                 </div>
