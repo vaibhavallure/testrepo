@@ -401,4 +401,23 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
     {
         return $this->_getHelper()->convertPrice($price, $round,null);
     }
+
+
+
+    /*allure code------------------------------*/
+    public function getInStockAttribute()
+    {
+           $attributes=$this->getRequest()->getParams();
+
+           unset($attributes['id']);
+           unset($attributes['category']);
+           unset($attributes['metal']);
+           unset($attributes['child']);
+
+
+           foreach ($attributes as $attribute=>$value)
+           {
+            echo 'spConfig.setInitialState("'.$attribute.'",'.$value.');';
+           }
+    }
 }

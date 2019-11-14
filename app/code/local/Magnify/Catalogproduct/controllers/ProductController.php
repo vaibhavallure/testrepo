@@ -173,17 +173,8 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
 
 
 
-        $core_ses=Mage::getSingleton('core/session');
 
-        if (!$selectedColor || $core_ses->getData("view_product_id")!=$productId) {
-
-
-            $core_ses->setData("view_product_id",$productId);
-            $core_ses->unsetData("selAtr1");
-            $core_ses->unsetData("selectValue1");
-            $core_ses->unsetData("selAtr2");
-            $core_ses->unsetData("selectValue2");
-            $core_ses->unsetData("child");
+        if (!$selectedColor) {
 
 
 
@@ -239,9 +230,6 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
 
 
 
-
-
-
                 if ($selectedColor) {
 
                     $selectedColorText = $optionHelper->getOptionText($selectedColor);
@@ -286,44 +274,21 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
                     }
 
 
-                    //Mage::log(" Selected val1 " . $selectValue1, Zend_Log::DEBUG, "abc.log", true);
-
-
 
                     if($selectValue1 && !$selectValue2)
                     {
 
-                        $core_ses->setData("selAtr1",$selAtr1);
-                        $core_ses->setData("selectValue1",$selectValue1);
-                        $core_ses->setData("child",$childid);
-
-
-
-                        $core_ses->unsetData("selAtr2");
-                        $core_ses->unsetData("selectValue2");
-
-
-//                        $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText.'&selectValue1='.$selectValue1.'&selAtr1='.$selAtr1.'&child='.$childid);
-                        $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText);
+                        $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText.'&attribute'.$selAtr1.'='.$selectValue1.'&child='.$childid);
 
                     }
                     else if($selectValue1 && $selectValue2)
                     {
 
-                        $core_ses->setData("selAtr1",$selAtr1);
-                        $core_ses->setData("selectValue1",$selectValue1);
-                        $core_ses->setData("selAtr2",$selAtr2);
-                        $core_ses->setData("selectValue2",$selectValue2);
-                        $core_ses->setData("child",$childid);
-
-//                        $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText.'&selectValue1='.$selectValue1.'&selAtr1='.$selAtr1.'&selectValue2='.$selectValue2.'&selAtr2='.$selAtr2.'&child='.$childid);
-                        $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText);
+                        $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText.'&attribute'.$selAtr1.'='.$selectValue1.'&attribute'.$selAtr2.'='.$selectValue2.'&child='.$childid);
 
                     }
                     else
                     {
-
-
                         $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText);
 
                     }
