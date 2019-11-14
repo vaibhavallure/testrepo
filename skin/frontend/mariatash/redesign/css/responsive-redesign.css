@@ -948,7 +948,7 @@
   .agreement{
     margin: 16px 0 0;
   }
-  .pop-title h1, .checkoutPopupLoginModel .pop-title h1{
+  .pop-title h1, .checkoutPopupLoginModel .pop-title h1, .checkout-cart-index .fancybox-skin .checkout-list-title h1{
     margin-top: 30px;
     margin-bottom: 25px;
   }
@@ -1130,6 +1130,14 @@
   }
   .jewelry-container{
     margin-top: 20px;
+  }
+  .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
+    background-image: url(../images/redesign/thinner-cross.png);
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 15px;
+    right: 15px !important;
+    top: 15px !important;
   }
 }
 
@@ -1455,7 +1463,7 @@
     width: 90% !important;
   }
   .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
-    padding: 45px 0;
+    padding: 0;
   }
   .login-dropdown{
     right: 23px;

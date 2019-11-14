@@ -1961,10 +1961,10 @@ a.various_sample.non-color {
 	clear: left;
 } */
 
-#estimate-result .buttons-set button {
+/* #estimate-result .buttons-set button {
 	padding-bottom: 4px;
 	padding-top: 5px;
-}
+} */
 
 /* .checkout-onepage-index .buttons-set button, .checkout-onepage-index .buttons-set p.required
 {
@@ -4260,22 +4260,22 @@ textarea:focus, input:focus {
 } */
 
 /*========================== FANCYBOX ARG ================================*/
-.checkout-cart-index .fancybox-inner {
+/* .checkout-cart-index .fancybox-inner {
 	overflow: hidden !important;
-}
+} */
 
-.fancybox-inner {
+/* .fancybox-inner {
 	overflow: auto;
 	width: 785px;
 	height: 266px;
-}
+} */
 
-.checkout-multishipping-shipping .fancybox-inner,
+/* .checkout-multishipping-shipping .fancybox-inner,
 .checkout-multishipping-overview .fancybox-inner,
 .checkout-multishipping-billing .fancybox-inner,
 .checkout-onepage-index .fancybox-inner {
 	overflow: hidden !important;
-}
+} */
 
 .fancybox-wrap .fancybox-desktop .fancybox-type-iframe .fancybox-opened
 {
@@ -11635,26 +11635,6 @@ li.item h2.product-name {text-align: center;}
 	font-weight: bold;
 	color: #3f3f47;
 	text-transform: none;
-}
-
-#wishlist-table a.product-image img {
-	/*background: url(../../../../../media/wysiwyg/background/img_product_add_bg.jpg) repeat-x top left;*/
-	background: #757881; /* Old browsers */
-	background: -moz-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(13%, #757881),
-	color-stop(49%, #b5bbc9), color-stop(99%, #b5bbc9));
-	/* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* IE10+ */
-	background: linear-gradient(to bottom, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881',
-	endColorstr='#b5bbc9', GradientType=0); /* IE6-9 */
 }
 
 .wishlist-shared-index .buttons-set button.button {
