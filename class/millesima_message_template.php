@@ -849,13 +849,17 @@ class Millesima_Message_Template extends Millesima_Abstract
         if($article->code_promo != ''){
             switch ($article->code_promo) {
                 case "1" /* 1+1=3 */ :
-                    $article->prix_promo = ($article->prix_ttc * 2)/3 ;
+                    $article->prix_promo = ((double)$article->prix_ttc * 2)/3 ;
+                    break;
+                case "2" /* 1+1=3 */ :
+                   $article->prix_promo = ( (double)$article->prix_ttc * 2)/3 ;
+                   // $article->prix_promo = $article->prix_ttc ;
                     break;
                 case "127" /* La 2e caisse à -50% */ :
-                    $article->prix_promo = ($article->prix_ttc + $article->prix_ttc/2)/2 ;
+                    $article->prix_promo = ((double)$article->prix_ttc + (double)$article->prix_ttc/2)/2 ;
                     break;
                 case "123" /* La 2e caisse à 40% */ :
-                    $article->prix_promo = ($article->prix_ttc + ($article->prix_ttc - $article->prix_ttc*40/100))/2 ;
+                    $article->prix_promo = ((double)$article->prix_ttc + ((double)$article->prix_ttc - (double)$article->prix_ttc*40/100))/2 ;
                     break;
                 case "702" /* Prix légers */:
                 case "703" /* Champagnes à prix légers */:

@@ -44,8 +44,12 @@ switch ($country) {
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
-										"nbcaisses" => $phrase_APartirDe . "2",
+										"nbcaisses" => $phrase_APartirDe . "3",
 										),
+							"2"  => array(
+										  "libelle" => "<strong>1+1=3 <br />panachage possible</strong>",
+										   "nbcaisses" => $phrase_APartirDe . "3",
+											),
 							"123" => array(
 										"libelle" => "La 2e caisse &agrave; <strong>-40%</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -147,6 +151,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+											"libelle" => "<strong>1+1=3 <br />panachage possible</strong>",
+											"nbcaisses" => $phrase_APartirDe . "3",
+							              ),
 							"123" => array(
 										"libelle" => "La 2e caisse &agrave; <strong>-40%</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -250,6 +258,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+							"libelle" => "<strong>1+1=3 <br />panachage possible</strong>",
+							"nbcaisses" => $phrase_APartirDe . "3",
+										),
 							"123" => array(
 										"libelle" => "La 2e caisse &agrave; <strong>-40%</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -351,6 +363,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+											"libelle" => "<strong>1+1=3</strong>",
+											"nbcaisses" => $phrase_APartirDe . "3",
+										),
 							"123" => array(
 										"libelle" => "<strong>40%</strong> Rabatt auf die 2. Kiste",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -451,6 +467,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+							"libelle" => "<strong>1+1=3</strong>",
+							"nbcaisses" => $phrase_APartirDe . "3",
+											),
 							"123" => array(
 										"libelle" => "<strong>40%</strong> Rabatt auf die 2. Kiste",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -550,6 +570,10 @@ switch ($country) {
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
+										),
+							"2"  => array(
+							"libelle" => "<strong>1+1=3</strong>",
+							"nbcaisses" => $phrase_APartirDe . "3",
 										),
 							"123" => array(
 										"libelle" => "<strong>20%</strong> Rabatt auf die 2. Kiste",
@@ -652,6 +676,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+							"libelle" => "<strong>1+1=3 <br />panachage possible</strong>",
+							"nbcaisses" => $phrase_APartirDe . "3",
+											),
 							"123" => array(
 										"libelle" => "La 2e caisse &agrave; <strong>-40%</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -745,12 +773,16 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="from";					
+		$phrase_APartirDe="from ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+										"libelle" => "<strong>1+1=3 <br /> -33% from 3 different cases</strong>",
+										"nbcaisses" => $phrase_APartirDe . "3",
+							),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> on the 2nd case",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -760,7 +792,7 @@ switch ($country) {
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
 							"702" => array(
-										"libelle" => "<strong>Light prices</strong>",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							"703" => array(
@@ -850,6 +882,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+											"libelle" => "<strong>1+1=3 <br /> -33% from 3 different cases</strong>",
+											"nbcaisses" => $phrase_APartirDe . "3",
+											),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> on the 2nd case",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -859,7 +895,7 @@ switch ($country) {
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
 							"702" => array(
-										"libelle" => "<strong>Light prices</strong>",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							"703" => array(
@@ -950,6 +986,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+										"libelle" => "<strong>1+1=3</strong>",
+										"nbcaisses" => $phrase_APartirDe . "3",
+							),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> per la 2a cassa",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -1050,6 +1090,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+										"libelle" => "<strong>1+1=3</strong>",
+										"nbcaisses" => $phrase_APartirDe . "3",
+							),
 							"123" => array(
 										"libelle" => "un <strong>-40%</strong> en la 2a caja",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -1149,6 +1193,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+										"libelle" => "<strong>1+1=3</strong>",
+										"nbcaisses" => $phrase_APartirDe . "3",
+							),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> sobre a 2a caixa",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -1255,6 +1303,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+											"libelle" => "<strong>1+1=3 <br /> -33% from 3 different cases</strong>",
+											"nbcaisses" => $phrase_APartirDe . "3",
+										),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> on the 2nd case",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -1264,7 +1316,7 @@ switch ($country) {
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
 							"702" => array(
-										"libelle" => "<strong>Light prices</strong>",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							"703" => array(
@@ -1355,6 +1407,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+											"libelle" => "<strong>1+1=3 <br /> -33% from 3 different cases</strong>",
+											"nbcaisses" => $phrase_APartirDe . "3",
+										),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> on the 2nd case",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -1364,7 +1420,7 @@ switch ($country) {
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
 							"702" => array(
-										"libelle" => "<strong>Light prices</strong>",
+										"libelle" => "<strong>Special Prices</strong>",
 										"nbcaisses" => "",
 										),
 							"703" => array(
@@ -1455,6 +1511,10 @@ switch ($country) {
 										"libelle" => "<strong>1+1=3</strong>",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"2"  => array(
+								"libelle" => "<strong>1+1=3</strong>",
+								"nbcaisses" => $phrase_APartirDe . "2",
+							),
 							"123" => array(
 										"libelle" => "<strong>-40%</strong> on the 2nd case",
 										"nbcaisses" => $phrase_APartirDe . "2",
@@ -1464,7 +1524,7 @@ switch ($country) {
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
 							"702" => array(
-										"libelle" => "<strong>Light prices</strong>",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							"703" => array(
