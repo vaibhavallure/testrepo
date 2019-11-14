@@ -1,7 +1,7 @@
 <?php
 /**
- * Données necessaires aux boutons par défauts
- * Faire attention à une création de l'objet $oSmarty préalablement dans le traitement général
+ * Donnï¿½es necessaires aux boutons par dï¿½fauts
+ * Faire attention ï¿½ une crï¿½ation de l'objet $oSmarty prï¿½alablement dans le traitement gï¿½nï¿½ral
  * 
  * @author  Aurelie Lopes pour Millesima
  */
@@ -100,7 +100,7 @@
 $oSmarty->assign('btns', $btns);
 
 /* 
- * Texte bouton Je découvre
+ * Texte bouton Je dï¿½couvre
  */
 
 $jdcv = array ("F" => "Je&nbsp;<strong>d&eacute;couvre</strong>",
@@ -180,7 +180,7 @@ $savr = array ("F" => "<strong>En&nbsp;savoir&nbsp;plus<strong>",
 						);
 
 /* 
- * Texte bouton Découvrez la vidéo
+ * Texte bouton Dï¿½couvrez la vidï¿½o
  */
 
 $dvid = array ("F" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
@@ -197,11 +197,11 @@ $dvid = array ("F" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
 						"Y" => "<strong>Vedere&nbsp;il&nbsp;PDF</strong>",
 						"E" => "<strong>Ver&nbsp;el&nbsp;PDF</strong>",
 						"P" => "<strong>Ver&nbsp;o&nbsp;PDF</strong>",
-						"U" => "<strong>View&nbsp;PDF</strong>"
+						"U" => "<strong>Get&nbsp;Inspired</strong>"
 						);
 
 /* 
- * Texte bouton Je réserve
+ * Texte bouton Je rï¿½serve
  */
 
 $jrsv = array ("F" => "<strong>Voir&nbsp;l&rsquo;offre<strong>",
@@ -222,7 +222,7 @@ $jrsv = array ("F" => "<strong>Voir&nbsp;l&rsquo;offre<strong>",
 						);
 
 /* 
- * Texte bouton Découvrir la selection
+ * Texte bouton Dï¿½couvrir la selection
  */
 
 $dcvslc = array ("F" => "<strong>D&eacute;couvrir</strong>&nbsp;la&nbsp;s&eacute;lection",
@@ -267,13 +267,13 @@ $chfav = array ("F" => "Je&nbsp;choisis&nbsp;<strong>mes&nbsp;favoris</strong>",
  * Texte bouton More special prices
  */
 
-$mrsp = array ("F" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spéciaux</strong>",
-						"B" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spéciaux</strong>",
-						"L" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spéciaux</strong>",
+$mrsp = array ("F" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spï¿½ciaux</strong>",
+						"B" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spï¿½ciaux</strong>",
+						"L" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spï¿½ciaux</strong>",
 						"D" => "<strong>Entdecken&nbsp;Sie</strong>&nbsp;unsere&nbsp;Auswahl",
 						"O" => "<strong>Entdecken&nbsp;Sie</strong>&nbsp;unsere&nbsp;Auswahl",
 						"SA" =>"<strong>Entdecken&nbsp;Sie</strong>&nbsp;unsere&nbsp;Auswahl",
-						"SF" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spéciaux</strong>",
+						"SF" => "Plus&nbsp;de&nbsp;<strong>prix&nbsp;spï¿½ciaux</strong>",
 						"G" => "More&nbsp;<strong>special&nbsp;prices</strong>",
 						"I" => "More&nbsp;<strong>special&nbsp;prices</strong>",
 						"H" => "More&nbsp;<strong>special&nbsp;prices</strong>",
