@@ -15,6 +15,7 @@ if ($_product->getSizeSample() == 1) {
         ->getFirstItem();
     $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
 }
+
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
 <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
@@ -137,21 +138,7 @@ if ($_product->getSizeSample() == 1) {
 
                     };
 
-                    <?php
-                    $optionHelper=Mage::helper('allure_catalog');
-                    $metal=$this->getRequest()->getParam("metal");
-                    if($metal){
-                        $selectedColor=$optionHelper->getOptionNumber($metal);
-                    }elseif($this->getRequest()->getParam("optionId")){
-                        $selectedColor=$this->getRequest()->getParam("optionId");
-                    }
 
-                    ?>
-                    var id = 'amconf-image-<?php echo $selectedColor; ?>';
-
-                    if($(id)){
-                        $(id).simulate('click');
-                    }
 
                      <?= $this->getInStockAttribute() ?>
 
