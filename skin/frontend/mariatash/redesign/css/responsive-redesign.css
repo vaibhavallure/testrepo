@@ -632,7 +632,7 @@
   }
   .form-search input.input-text{
     width: 550px;
-    height: 26px !important;
+    height: 30px !important;
   }
   .footlinks {
     margin: 20px 0 18px 0;
@@ -758,6 +758,10 @@
   .jewelry-container{
     margin-top: 0;
     padding: 0 30px;
+  }
+  /*Search CSS*/
+  #cross-icon{
+    right: 8px;
   }
 }
 
@@ -1174,8 +1178,8 @@
     width: 100%;
   }
   .form-search input.input-text{
-    width: 305px;
-    height: 25px !important;
+    width: 240px;
+    height: 30px !important;
   }
   .pop-up-button-set .col{
     padding: 0 9px;
@@ -1461,6 +1465,10 @@
   }
   .paypal-express-review .overview-common-prices, .paypal-express-review .overview-grand{
     padding: 0;
+  }
+  /*Search CSS*/
+  #cross-icon{
+    right: 8px;
   }
 }
 
