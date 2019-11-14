@@ -99,15 +99,13 @@ jQuery(document).ready(function () {
 
 
             /*zopim -- to change margin from bottom */
-            jQuery('.catalog-category-view .floating.footer').hover(
+            jQuery('.floating.footer').hover(
                 function () {
                     jQuery(".zopim").addClass("bottom-change");
-                    jQuery(".floating.footer").addClass("hover");
                 },
                 function () {
                     setTimeout(function() {
                         jQuery(".zopim").removeClass("bottom-change");
-                        jQuery(".floating.footer").removeClass("hover");
                     }, 1000);
                 }
             );
