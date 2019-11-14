@@ -2579,7 +2579,7 @@ ul#foo4 {
 	margin-left: -15px;
 }
 .filterPopup #narrow-by-list li div dd {
-	display: block!important;
+	/*display: block!important;*/
 	position: relative;
 	top:auto;
 	left: auto;
