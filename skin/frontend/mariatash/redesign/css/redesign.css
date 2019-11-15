@@ -2674,7 +2674,7 @@ ul#foo4 {
 .catalog-category-view .product-name{
   margin-bottom: 16px;
 	/* max-width: 180px; */;
-	max-width: 180px;
+	max-width: 160px;
 }
 .priceCategory {
   max-width: 94px;

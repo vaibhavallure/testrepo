@@ -1607,7 +1607,11 @@
     padding-left: 0;
   }
 }
-
+@media (max-width:1024px) and (orientation:portrairt){
+  .catalog-category-view .product-name{
+    max-width: 100%;
+  }
+}
 
 @media (min-width:1024px){
   .close-section{
