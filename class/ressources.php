@@ -357,7 +357,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 							
-		$phrase_APartirDe="Ab";					
+		$phrase_APartirDe="Ab ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -461,7 +461,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 							
-		$phrase_APartirDe="Ab";					
+		$phrase_APartirDe="Ab ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -565,7 +565,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="Ab";					
+		$phrase_APartirDe="Ab ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -876,7 +876,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="from";					
+		$phrase_APartirDe="from ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -980,7 +980,7 @@ switch ($country) {
 							"loire" => "Loira",
 							);
 		
-		$phrase_APartirDe="a partire da";					
+		$phrase_APartirDe="a partire da ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -1084,7 +1084,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="a partir de";					
+		$phrase_APartirDe="a partir de ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -1297,7 +1297,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="from";					
+		$phrase_APartirDe="from ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -1401,7 +1401,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="from";					
+		$phrase_APartirDe="from ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
@@ -1505,7 +1505,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="from";					
+		$phrase_APartirDe="from ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",
