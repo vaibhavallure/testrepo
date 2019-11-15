@@ -543,7 +543,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                         echo "\n if($(id)){
                             $(id).simulate('click');
                                 }";
-                        echo '\n spConfig.setInitialState("'.$selAtr1.'",'.$selectValue1.');';
+                        echo "\n spConfig.setInitialState('attribute".$selAtr1."','".$selectValue1."');";
 
                     }
                     else if($selectValue1 && $selectValue2)

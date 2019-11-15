@@ -1,4 +1,4 @@
-/*=====================*/
+	/*=====================*/
 /*CONTACT US*/
 /*=====================*/
 .cms-contact-us .page-title{
@@ -1563,6 +1563,7 @@
 	@media(max-width: 1024px){
 		.catalogsearch-result-index .products-grid li.item .list-mt-w{
 			display: block!important;
+			left: 0px;
 		}
 		.locations-wrapper .img-wrap{
 			max-width: 100%;

@@ -311,9 +311,9 @@ var addressBookOpts = {
     },
     onError: function(error) {
       if (error.getErrorCode() == "BuyerSessionExpired") {
-    	  document.amazonLoginButton = jQuery('#amz-pay-btn img');
-          document.amazonLoginButton.click();
-          //document.location.href = '<?php //echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
+    	  //document.amazonLoginButton = jQuery('#amz-pay-btn img');
+          //document.amazonLoginButton.click();
+          document.location.href = '<?php echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
       }
       console.log(error.getErrorMessage());
     }
