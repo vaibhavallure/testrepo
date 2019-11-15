@@ -2,17 +2,14 @@
 
 /**
  * Onepage controller for checkout
- *
- * @category    Mage
- * @package     Mage_Checkout
- * @author      Magento Core Team <core@magentocommerce.com>
+ * Override
  */
 require_once ('app/code/local/MT/Checkout/controllers/OnepageController.php');
 
 class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageController
 {
     const WHOLESALE_GROUP_ID = 2;
-    const ONEPAGE_LOG_FILE = "abc.log";
+    const ONEPAGE_LOG_FILE = "onepage.log";
     
     protected $logStatus;
     protected $actionArray = array(
@@ -156,7 +153,6 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             /** gift item */
             $this->getOnepage()->saveGiftItem();
             
-            Mage::log($this->getRequest()->getPost(),Zend_Log::DEBUG,'abc.log',true); 
             /** Save customer billing address. */
             $dataBilling = $this->getRequest()->getPost('billing', array());
             $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
@@ -203,10 +199,10 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $update = $layout->getUpdate();
 
         $_checkoutHelper = Mage::helper('allure_multicheckout');
-
-        if (strtolower($this->getOnepage()
-            ->getQuote()
-            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP))
+        $deliveryMethod = $this->getOnepage()->getQuote()
+            ->getDeliveryMethod();
+        
+       if (strtolower($deliveryMethod) == strtolower($_checkoutHelper::TWO_SHIP))
             $update->load('checkout_onepage_allureshippingmethod');
         else
             $update->load('checkout_onepage_shippingmethod');
@@ -259,18 +255,17 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 	            $quote = $this->getOnepage()->getQuote();
 				$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 				$customerDetails .= $quote->getCustomerEmail();
-
-	            Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.$data,Zend_log::DEBUG,'onepage.log',true);
+				$dataRequest = $this->getRequest()->getPost();
+				Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.$dataRequest,Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
 	        }
 
             Mage::getSingleton('checkout/session')->setInStockOrderShippingMethod($data);
             $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
             $no_signature_delivery = ($no_signature_delivery) ? 1 : 0;
             
-            $result = $this->getOnepage()->saveShippingMethod($this->getRequest()
-                ->getPost());
-            $this->getOnepage()
-                ->getQuote()
+            $result = $this->getOnepage()
+                ->saveShippingMethod($this->getRequest()->getPost());
+            $this->getOnepage()->getQuote()
                 ->setData('no_signature_delivery', $no_signature_delivery)
                 ->save();
             /*
@@ -282,23 +277,16 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                         'request' => $this->getRequest(),
                         'quote' => $this->getOnepage()->getQuote()
                     ));
-                $this->getOnepage()
-                    ->getQuote()
-                    ->collectTotals();
+                $this->getOnepage()->getQuote()->collectTotals();
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
                 $_checkoutHelper = Mage::helper('allure_multicheckout');
-                if (strtolower(
-                        $this->getOnepage()
-                            ->getQuote()
-                            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
-
+                $deliveryMethod = $this->getOnepage()->getQuote()->getDeliveryMethod();
+                if (strtolower($deliveryMethod) == strtolower($_checkoutHelper::TWO_SHIP)) {
                     $errorWhileDividingQuote=0;
-
-                        /*this condition check if normal order and backorder contain same quote id*/
+                    /*this condition check if normal order and backorder contain same quote id*/
                     if ($this->getOnepage()->getQuoteOrdered()->getId() != $this->getOnepage()->getQuoteBackordered()->getId())
                     {
-
                         $giftMessageId = $this->getOnepage()
                             ->getQuote()
                             ->getGiftMessageId();
@@ -489,7 +477,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
 
-            Mage::log("Checkout saveOrder::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,'onepage.log',true);
+            Mage::log("Checkout saveOrder::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
         }
 
         if ($this->_expireAjax()) {
@@ -705,7 +693,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $lastOrderId = $session->getLastOrderId();
 
         if ($this->getLogStatus()){
-            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.', Quote Id: '.$lastQuoteId, Zend_log::DEBUG,'onepage.log',true);
+            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.', Quote Id: '.$lastQuoteId, Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
         }
 
         $lastRecurringProfiles = $session->getLastRecurringProfileIds();
@@ -746,7 +734,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $secondLastRecurringProfiles = $sessionBackordered->getSecondLastRecurringProfileIds();
 
         if ($this->getLogStatus()){
-            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.','.$secondLastOrderId.', Quote Id: '.$lastQuoteId.','.$secondLastQuoteId,Zend_log::DEBUG,'onepage.log',true);
+            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.','.$secondLastOrderId.', Quote Id: '.$lastQuoteId.','.$secondLastQuoteId,Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
         }
 
         if ((! $lastQuoteId || (! $lastOrderId && empty($lastRecurringProfiles))) &&

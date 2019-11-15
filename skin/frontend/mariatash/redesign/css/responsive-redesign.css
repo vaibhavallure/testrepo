@@ -632,7 +632,7 @@
   }
   .form-search input.input-text{
     width: 550px;
-    height: 26px !important;
+    height: 30px !important;
   }
   .footlinks {
     margin: 20px 0 18px 0;
@@ -758,6 +758,10 @@
   .jewelry-container{
     margin-top: 0;
     padding: 0 30px;
+  }
+  /*Search CSS*/
+  #cross-icon{
+    right: 8px;
   }
 }
 
@@ -944,7 +948,7 @@
   .agreement{
     margin: 16px 0 0;
   }
-  .pop-title h1, .checkoutPopupLoginModel .pop-title h1{
+  .pop-title h1, .checkoutPopupLoginModel .pop-title h1, .checkout-cart-index .fancybox-skin .checkout-list-title h1{
     margin-top: 30px;
     margin-bottom: 25px;
   }
@@ -1127,6 +1131,14 @@
   .jewelry-container{
     margin-top: 20px;
   }
+  .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
+    background-image: url(../images/redesign/thinner-cross.png);
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 15px;
+    right: 15px !important;
+    top: 15px !important;
+  }
 }
 
 /* Mobile Portrait */
@@ -1174,8 +1186,8 @@
     width: 100%;
   }
   .form-search input.input-text{
-    width: 305px;
-    height: 25px !important;
+    width: 240px;
+    height: 30px !important;
   }
   .pop-up-button-set .col{
     padding: 0 9px;
@@ -1451,7 +1463,7 @@
     width: 90% !important;
   }
   .checkout-cart-index .fancybox-opened .fancybox-skin #inline{
-    padding: 45px 0;
+    padding: 0;
   }
   .login-dropdown{
     right: 23px;
@@ -1461,6 +1473,10 @@
   }
   .paypal-express-review .overview-common-prices, .paypal-express-review .overview-grand{
     padding: 0;
+  }
+  /*Search CSS*/
+  #cross-icon{
+    right: 8px;
   }
 }
 
@@ -1613,7 +1629,7 @@
     bottom: 0px;
     opacity: 0;
   }
-  .floating.hover.footer {
+  .floating.footer:hover {
     opacity: 1;
   }
 

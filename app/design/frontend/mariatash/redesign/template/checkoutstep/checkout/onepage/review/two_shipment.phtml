@@ -64,10 +64,10 @@ switch ($payment->getMethod()) {
         <?php //echo $this->getChildHtml('totals_ordered'); ?>
         <thead>
             <tr>
-                <th><?php echo $this->__('Product Name') ?></th>
-                <th class="a-right"><?php echo $this->__('Price') ?></th>
-                <th class="a-right"><?php echo $this->__('Qty') ?></th>
-                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+                <th colspan="2"><?php echo $this->__('Product') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-center"><?php echo $this->__('Quantity') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
 
@@ -135,10 +135,10 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
         <?php //echo $this->getChildHtml('totals_backordered'); ?>
         <thead>
             <tr>
-                <th><?php echo $this->__('Product Name') ?></th>
-                <th class="a-right"><?php echo $this->__('Price') ?></th>
-                <th class="a-right"><?php echo $this->__('Qty') ?></th>
-                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+                <th colspan="2"><?php echo $this->__('Product') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-center"><?php echo $this->__('Quantity') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
             </tr>
         </thead>
 

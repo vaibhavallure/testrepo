@@ -39,11 +39,11 @@ $typeId = $_item->getProduct()->getTypeId();
               if(!is_null($parentId)){
               	$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
               }
-              
+
               ?>
 
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
-    <td class="cart_col1"> 
+    <td class="cart_col1">
         <?php if (1 || $isVisibleProduct && $this->hasProductUrl()):?>
             <a href="<?php echo $isVisibleProduct && $this->hasProductUrl()?$url:"javascript:void(0);" ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
         <?php else: ?>
@@ -57,7 +57,7 @@ $typeId = $_item->getProduct()->getTypeId();
 
     <td class="cart_col2">
         <!--a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a>-->
-		
+
         <h2 class="product-name">
         <?php if ($isVisibleProduct && $this->hasProductUrl()):?>
             <a href="<?php echo $url ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
@@ -65,7 +65,7 @@ $typeId = $_item->getProduct()->getTypeId();
             <?php echo $this->escapeHtml($this->getProductName()) ?>
         <?php endif; ?>
          </h2>
-         
+
         <?php if ($_options = $this->getOptionList()):?>
         <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
         <div class="product-options" style="display:none;">-->
@@ -95,7 +95,7 @@ $typeId = $_item->getProduct()->getTypeId();
             <!--div class="qty-wrap">
                 <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
                 <span<?php if ($this->getQty() == 1) echo ' style="display:none;"' ?>>×</span>
-            </div-->                        
+            </div-->
 
         </div>
 
@@ -217,7 +217,7 @@ $typeId = $_item->getProduct()->getTypeId();
     </td>
     <td  class="cart_col6">
         <div class="w-remove">
-	        <a data-item-id="<?php echo $_item->getId()?>" id="remove_id_<?php echo $_item->getId()?>" href="javascript:void(0);<?php //echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov"
+	        <a class="link-button" data-item-id="<?php echo $_item->getId()?>" id="remove_id_<?php echo $_item->getId()?>" href="javascript:void(0);<?php //echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov"
             onclick="confirmBox('Are you sure you want to remove this product from your cart?',function() {
               removeProductFromCart(<?php echo $_item->getId()?>);
             },'REMOVE')"
@@ -225,23 +225,23 @@ $typeId = $_item->getProduct()->getTypeId();
 	        <span id="item-loader-<?php echo $_item->getId()?>" class="mt-loader" style="display: none;"></span>
 	        <span id="item-span-<?php echo $_item->getId()?>" style="display: none;">Removed</span>
         </div>
-        <?php if (Mage::helper('customer')->isLoggedIn()): ?>  
-        <?php 
+        <?php if (Mage::helper('customer')->isLoggedIn()): ?>
+        <?php
         	$product_id = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
         	$customerId = Mage::getSingleton('customer/session')->getCustomerId();
         	$wishlist = Mage::getModel('wishlist/wishlist')->loadByCustomer($customerId, true);
         	$collection = Mage::getModel('wishlist/item')->getCollection()
         		->addFieldToFilter('wishlist_id', $wishlist->getId())
         		->addFieldToFilter('product_id', $product_id);
-        		
+
         	$wishlistClass = "wishlist-empty-fav";
         	if($collection->getSize()>0){
   				$wishlistClass = "wishlist-fill-fav";
   			}
-  		?>          
+  		?>
          <div class="ad-to-fav">
               <a data-item-id="<?php echo $_item->getId()?>" class="wishlist-add-to-fav <?php echo $wishlistClass?>" id="saveToFave" href="javascript:void(0);">Move to Wishlist</a>
-         </div> 
+         </div>
             <script type="text/javascript">
             	jQuery("#saveToFave").click(function(){
             		if(jQuery('select.color-attribute').val() == ''){
@@ -254,7 +254,7 @@ $typeId = $_item->getProduct()->getTypeId();
 </tr>
 
 <?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
-<?php if(!empty($message)): ?>  
+<?php if(!empty($message)): ?>
 <tr class="messages">
         <td colspan="6">
             <div class="item-msg">
@@ -300,4 +300,3 @@ function removeProductFromCart(item_id) {
 
 }
 </script>
-

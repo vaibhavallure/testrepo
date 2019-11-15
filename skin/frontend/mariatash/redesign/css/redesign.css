@@ -127,6 +127,7 @@ h4{
 	letter-spacing: 1.5px;
 	text-align: center;
 	background: #fff;
+	border-radius: 0 !important;
 }
 
 .dark-button, .checkout-types button{
@@ -422,6 +423,9 @@ address span {  /*use this parent ".overview-address-item address span" if this 
   opacity: 0.6;
 	padding-bottom: 8px;
 	cursor: pointer;
+}
+.checkout-step-name h3{
+	padding-bottom: 14px;
 }
 .checkout-step-name span {
   float: left;
@@ -2578,7 +2582,7 @@ ul#foo4 {
 	margin-left: -15px;
 }
 .filterPopup #narrow-by-list li div dd {
-	display: block!important;
+	/*display: block!important;*/
 	position: relative;
 	top:auto;
 	left: auto;
@@ -3494,7 +3498,7 @@ table thead {
   background: none;
 }
 #checkout-review-table tbody td.cart_col1 {
-  width: 50%;
+  width: 14%;
 }
 .clear-both{
 	clear: both;
@@ -3640,6 +3644,9 @@ table thead {
 	padding-bottom: 5px;
 	width: 100%;
 }
+#cart-sidebar li.item:last-child {
+  border-bottom: none;
+}
 #cart-sidebar-content .product-details .item-options {
   display: none;
 }
@@ -3685,7 +3692,7 @@ table thead {
 }
 #cart-sidebar {
   overflow: scroll;
-  max-height: 447px !important;
+  max-height: 367px !important;
 }
 #cart-sidebar .product-name h5{
 	line-height: 20px;
@@ -4627,6 +4634,23 @@ td.cart_col2 {
 }
 .checkout-list-title h1 {
   font-size: 30px;
+}
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+	margin: 0;
+  border-radius: 0;
+}
+#allureAlertBox .buttons-group {
+  display: flex;
+  justify-content: space-evenly;
+}
+.buttons-set.estimage {
+  margin-top: 25px;
+}
+.checkout-cart-index .fancybox-inner{
+	height: auto !important;
+}
+.checkout-cart-index .fancybox-skin .checkout-list-title h1 {
+  font-size: 22px;
 }
 
 /****By Indrajet******/

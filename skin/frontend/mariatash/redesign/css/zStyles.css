@@ -1,4 +1,4 @@
-/*=====================*/
+	/*=====================*/
 /*CONTACT US*/
 /*=====================*/
 .cms-contact-us .page-title{
@@ -293,8 +293,7 @@
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	margin-bottom: 0;
 }
-.acc-products-wrapper #myaccount-shopping-cart-table tr td img,
-.acc-products-wrapper .mt-my-wishlist table tr td img{
+.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
 	width: 102px;
 	height: 102px;
 	object-fit: cover;
@@ -337,11 +336,11 @@
 .acc-products-wrapper .mt-my-wishlist .line-w-mt{
 	width: 100%;
 }
-.acc-products-wrapper .mt-my-wishlist .product-w-mt{
+/* .acc-products-wrapper .mt-my-wishlist .product-w-mt{
 	padding-right: 20px;
 	vertical-align: top;
 	padding-top: 7px;
-}
+} */
 .acc-products-wrapper .mt-my-wishlist .product-w-mt .price{
 	display: inline-block;
 	margin-right: 30px;
@@ -423,7 +422,7 @@
 }
 .acc-products-wrapper #new-mt-myproduct-openorders table thead tr,
 .acc-products-wrapper #new-mt-myproduct-receipts table thead tr{
-	padding-top: 8px!important;
+	padding-top: 0px!important;
 	padding-bottom: 0px!important;
 }
 .acc-products-wrapper #new-mt-myproduct-openorders table tbody tr,
@@ -1078,6 +1077,7 @@
 }
 .search_results h1{
 	/*font-size: 17px;*/
+	margin-bottom: 0;
 }
 .search_results h1 span{
 	display: block;
@@ -1089,7 +1089,7 @@
 	max-width: 1140px;
 	margin: 0 auto;
 	margin-top: 0px;
-	padding-left: 20px;
+	/*padding-left: 20px;*/
 }
 
 .catalogsearch-result-index .catalog-common-grid{
@@ -1142,7 +1142,7 @@
 
 .popupDelMyAccModel {
 	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
+	/* font-family: Arial, Helvetica, sans-serif; */
 	top: -20px;
 	right: 0;
 	bottom: 0;
@@ -1563,6 +1563,7 @@
 	@media(max-width: 1024px){
 		.catalogsearch-result-index .products-grid li.item .list-mt-w{
 			display: block!important;
+			left: 0px;
 		}
 		.locations-wrapper .img-wrap{
 			max-width: 100%;
@@ -1943,4 +1944,11 @@
 .catalogsearch-result-index .searchKey{
 	font-size: 35px;
 }
+.catalogsearch-result-index .m-block.mb-mana-catalogsearch-leftnav {
+	margin-top: 5px;
+}
 
+.catalogsearch-result-index  #narrow-by-list li{
+	padding-left: 0px;
+	padding-right: 8px;
+}
