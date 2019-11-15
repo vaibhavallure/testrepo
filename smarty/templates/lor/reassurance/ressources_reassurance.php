@@ -104,7 +104,7 @@ switch ($country) {
 
 	case "U" :
 		$reassurance = array (1 => array( "titre" => "Exceptional choice!", 
-											"description" => "12,000 references available in several formats and vintages, both ready for shipment and en-primeur."), 
+											"description" => "12,000 references available in several formats and vintages, both ready for shipment and futures."),
 							2 => array( "titre" => "Quality and provenance!", 
 											"description" => "2.5 million bottles in stock in our Bordeaux cellars, sourced directly from producer estates."),
 							3 => array( "titre" => "Advice and Services", 
