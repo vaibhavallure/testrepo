@@ -1187,7 +1187,7 @@ switch ($country) {
 							"loire" => "Loire",
 							);
 		
-		$phrase_APartirDe="a partir de";					
+		$phrase_APartirDe="a partir de ";
 		$promo_courtes=array(
 							"1"  => array(
 										"libelle" => "<strong>1+1=3</strong>",

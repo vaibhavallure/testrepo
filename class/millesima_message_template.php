@@ -771,7 +771,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             $article->conditionnement = $article->conditionnementpluriel;
         }
 
-        $article->Packaging=$data["Packaging"];
+        $article->Packaging=$this->encodeVar(utf8_encode($data["Packaging"]));
         $article->refcond=substr($data["Code_article"],10,2);
 
         $article->ordrecat=$data["Classement_cata"];

@@ -42,7 +42,7 @@ class Millesima_Tinyclues{
 
         if($dossier){
             while(false !== ($fichier = readdir($dossier))) {
-                if($fichier != '.' && $fichier != '..' && $fichier != 'index.php' && $fichier != "dedoublon") {
+                if($fichier != '.' && $fichier != '..' && $fichier != 'index.php' && $fichier != "dedoublon" && preg_match('/.csv$/', $fichier)) {
                     if($type == "non_us"){
                         $caract=substr($fichier,0,1);
                         if($caract != "u"){
