@@ -889,7 +889,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
 
     public function changeCustomQuoteStatus ()
     {
-        $_checkoutHelper = Mage::helper('allure_multicheckout');
         $orederdQuoteId = $this->getCheckoutOrdered()->getOrdered();
         $backOrderdQuoteId = $this->getCheckoutBackordered()->getBackorder();
         if (isset($orederdQuoteId) && ! empty($orederdQuoteId)) {
@@ -916,6 +915,24 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             }
             $this->getCheckoutBackordered()->setBackorder(null);
         }
+        
+        /** inactivate customer quote of loagged in customer */
+        if(Mage::getSingleton("customer/session")->isLoggedIn()){
+            $customerId = Mage::getSingleton('customer/session')->getCustomer()->getId();
+            if($customerId){
+                try{
+                    $coreResource = Mage::getSingleton('core/resource');
+                    $write = $coreResource->getConnection('core_write');
+                    $sql = "UPDATE sales_flat_quote SET is_active = 0 WHERE customer_id = {$customerId} AND is_child_order = 1 AND is_active = 1";
+                    Mage::log("update backorder quote. cust id = ".$customerId,Zend_Log::DEBUG,'abc.log',true);
+                    $write->query($sql);
+                }catch (Exception $e){
+                    Mage::log("Exc in changeCustomQuoteStatus: ".$e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+                }
+            }
+            
+        }
+        
     }
 
     /**
