@@ -392,7 +392,7 @@ function shareLikeTwitter(){
             if( videoCounter  == 0 ){
                 <?php //if ( $count == 0 ): ?>
                     if( urlCounter > 0 ){
-                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
+                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::getModel('catalog/product')->getThumbnailUrl();?>" /></a>');
                     }
                 <?php //endif; ?>
             }
@@ -421,7 +421,7 @@ function shareLikeTwitter(){
         loadBaseImage();
         if (videoCounter == 0) {
             if (urlCounter > 0) {
-                jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
+                jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::getModel('catalog/product')->getThumbnailUrl();?>" /></a>');
             }else{
             	        <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(87,87); ?>
             	        jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
@@ -453,12 +453,12 @@ function shareLikeTwitter(){
     <?php endif; ?>
 
     <?php if ( $count == 0 ): ?>
-        jQuery('.containerImage').html('<img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/imageProduct.jpg');?>" />');
+        jQuery('.containerImage').html('<img src="<?php echo Mage::getModel('catalog/product')->getImageUrl();?>" />');
 
         if( videoCounter  == 0 ){
         <?php //if ( $count == 0 ): ?>
             if( urlCounter > 0 ){
-                jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
+                jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php Mage::getModel('catalog/product')->getThumbnailUrl()?>" /></a>');
             }
         } else{
             <?php if( $_product->getVideoThumb() != 'thumbnail/video/' && $videoUrl){ ?>
