@@ -2042,3 +2042,8 @@
     margin-top: 0;
   }
 }
+@media (min-width:1359px) and (max-width:1424px){
+  .products-grid li.item .list-mt-w{
+    padding: 0 14px;
+  }
+}
