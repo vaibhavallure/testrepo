@@ -210,34 +210,33 @@ $mode  = $this->getMode();
                                       <div class="row justify-content-between">
                                         <?php if ($_product->getIsSalable()): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
-                                              <div class="col">
+                                              <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                  <?php
+                                                  $productId = $_product->getId();
+                                                  $optionsValues = $this->getIcons($productId);
+                                                  if(!empty($optionsValues)):
+                                                      $attribute_code = $optionsValues['code'];
+                                                      $attribute_label = $optionsValues['label'];
+                                                      ?>
+                                                      <div id="list-<?php echo $productId;?>" style="display: none;"><?php echo json_encode($optionsValues);?></div>
+                                                      <div id="list-img-<?php echo $productId;?>" style="display:none">0</div>
+                                                      <div id="color-option" class="color-icon">
+                                                          <span>
+                                                              <?php echo $attribute_label; ?>:
+                                                          </span>
+                                                      </div>
+                                                      <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
+                                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
+                                                      </ul>
+                                                  <?php endif;?>
+                                              </div>
+                                              <div class="list-button-cover">
                                                 <a class="fancybox fancybox.iframe button btn-quickview  light-button"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
                                                  </a>
                                                </div>
-                                               <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
-                                                <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
-                                                    <?php
-                                                    $productId = $_product->getId();
-                                                    $optionsValues = $this->getIcons($productId);
-                                                    if(!empty($optionsValues)):
-                                                        $attribute_code = $optionsValues['code'];
-                                                        $attribute_label = $optionsValues['label'];
-                                                        ?>
-                                                        <div id="list-<?php echo $productId;?>" style="display: none;"><?php echo json_encode($optionsValues);?></div>
-                                                        <div id="list-img-<?php echo $productId;?>" style="display:none">0</div>
-                                                        <div id="color-option" class="color-icon">
-                                                            <span>
-                                                                <?php echo $attribute_label; ?>:
-                                                            </span>
-                                                        </div>
-                                                        <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
-                                                            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
-                                                        </ul>
-                                                    <?php endif;?>
-                                                </div>
                                             <?php else: ?>
                                                 <a class="fancybox fancybox.iframe button btn-quickview light-button"
                                                 id='product-quickview-<?php echo $_product->getId() ?>'
@@ -300,8 +299,8 @@ $mode  = $this->getMode();
                                 <div class="list-mt-w" <?=($isMobile)? 'style="display:block"':'' ?>>
                                   <div class="row justify-content-between">
                                         <div class="col-12">
-                                          <div class="row list-mt-upper">
-                                            <div class="col-7">
+                                          <div class="row list-mt-upper justify-content-between">
+                                            <div class="">
                                               <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
                                                   <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                                      title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
@@ -311,7 +310,7 @@ $mode  = $this->getMode();
                                                 <span id="link-qv-<?php echo $_product->getId(); ?>" ><?php echo $quickViewUrl; ?>sourceOfReq/quickview/</span>
                                                 <span id="link-pv-<?php echo $_product->getId(); ?>" ><?php echo $productUrl; ?></span>
                                             </div>
-                                            <div class="col-5 pl-0">
+                                            <div class=" ">
                                               <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>">
                                                 <p class="m-0"><?= $this->getPriceHtml($_product) ?></p>
                                               </div>
@@ -329,19 +328,7 @@ $mode  = $this->getMode();
                                          ?>
                                         <?php if ($check): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
-                                                <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
-                                                <div class="col">
-                                                  <a class="fancybox fancybox.iframe button btn-quickview  light-button"
-                                                     id='product-quickview-<?php echo $_product->getId() ?>'
-                                                     href="<?php echo $quickViewUrl; ?>sourceOfReq/quickview/<?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
-                                                     title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
-                                                   </a>
-                                                   <!-- <a class="btn btn-primary btn-sm light-button product-buy-btn"
-                                                       href="<?php /*echo $productUrl; */?>"
-                                                       title="<?php /*echo $this->__('quick view') */?>" style="display: none;"><span><?php /*echo $this->__('buy') */?></span></a>-->
-
-                                                </div>
-                                                <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">
                                                     <?php
                                                     $productId = $_product->getId();
                                                     $optionsValues = $this->getIcons($productId);
@@ -388,6 +375,18 @@ $mode  = $this->getMode();
                                                     </ul>
                                                     <?php endif;?>
                                                 </div>
+                                                <div class="list-button-cover">
+                                                  <a class="fancybox fancybox.iframe button btn-quickview  light-button"
+                                                     id='product-quickview-<?php echo $_product->getId() ?>'
+                                                     href="<?php echo $quickViewUrl; ?>sourceOfReq/quickview/<?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
+                                                     title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span>
+                                                   </a>
+                                                   <!-- <a class="btn btn-primary btn-sm light-button product-buy-btn"
+                                                       href="<?php /*echo $productUrl; */?>"
+                                                       title="<?php /*echo $this->__('quick view') */?>" style="display: none;"><span><?php /*echo $this->__('buy') */?></span></a>-->
+
+                                                </div>
+
 
                                             <?php else: ?>
                                                 <a class="fancybox fancybox.iframe button btn-quickview light-button"

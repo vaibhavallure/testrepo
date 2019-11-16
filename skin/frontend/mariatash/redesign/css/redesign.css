@@ -300,9 +300,9 @@ h4{
 	display: block;
 }
 
-.product-name a{
+/* .product-name a{
 	color: #000;
-}
+} */
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -425,7 +425,7 @@ address span {  /*use this parent ".overview-address-item address span" if this 
 	cursor: pointer;
 }
 .checkout-step-name h3{
-	padding-bottom: 14px;
+	padding-bottom: 13px;
 }
 .checkout-step-name span {
   float: left;
@@ -867,13 +867,13 @@ nav.mariatash-header {
 }
 .catalog-common-grid .price-box {
   text-align: right;
-  margin-right: 3px;
+	margin-top: -2px;
 }
 
 .list-mt-w .actions {
-  margin-bottom: 3px;
+	bottom: 41px;
+  position: absolute;
 }
-
 .m-filter-checkboxes li {
   display: flex;
 }
@@ -1703,7 +1703,18 @@ input[type="checkbox"]:checked+label:before {
 /* Catalog Page CSS */
 .products-grid li.item .list-mt-w{
   position: absolute;
-  bottom: 1px;
+	height: 100%;
+  width: 100%;
+	top: 19px;
+  padding: 0 22px;
+	left: 50%;
+  transform: translatex(-50%);
+}
+.products-grid li.item .list-mt-w > .row{
+	position: relative;
+  height: 100%;
+	width: 100%;
+	margin: 0 auto;
 }
 .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover {
   background: transparent;
@@ -1830,7 +1841,7 @@ input[type="checkbox"]:checked+label:before {
 .swatches{
   padding: 9px 7px 0 0px;
 	display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
 }
 .swatches li{
   width: 20px !important;
@@ -1923,10 +1934,17 @@ div#narrow-by-list {
   height: auto;
 }
 .catalog-category-view .list-mt-w .light-button {
-  width: 128px;
-  height: 33px;
-	text-transform: uppercase;
-	padding: 5px;
+	width: 106px;
+  height: 25px;
+  text-transform: uppercase;
+  font-size: 12px;
+  border: 1px solid rgba(41,41,41,0.25);
+  letter-spacing: 1.29px;
+  font-family: urw-din-medium;
+  padding: 2px;
+}
+.list-button-cover{
+	margin-top: 6px;
 }
 .light-button:hover, .light-button:active {
   color: rgba(41,41,41,0.9);
@@ -2655,6 +2673,11 @@ ul#foo4 {
 }
 .catalog-category-view .product-name{
   margin-bottom: 16px;
+	/* max-width: 180px; */;
+	max-width: 160px;
+}
+.priceCategory {
+  max-width: 94px;
 }
 .catalog-product-view .amconf-images-container img,.quickview-index-index .amconf-images-container img  {
   width: 27px;
@@ -3699,7 +3722,7 @@ table thead {
 }
 .messages-tr .product-name {
   margin-top: 18px;
-	margin-bottom: 14px;
+	margin-bottom: 5px;
 }
 .messages-tr img {
   margin-top: 14px;
@@ -4651,6 +4674,12 @@ td.cart_col2 {
 }
 .checkout-cart-index .fancybox-skin .checkout-list-title h1 {
   font-size: 22px;
+}
+#checkout-review-table .item-msg {
+  margin-top: 2px;
+}
+.quickview-index-index .zoom-link {
+  display: none;
 }
 
 /****By Indrajet******/
