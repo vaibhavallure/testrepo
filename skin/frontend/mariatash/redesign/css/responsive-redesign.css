@@ -498,6 +498,9 @@
   .paypal-express-review .col-main{
     padding: 0;
   }
+  .vertical-middle {
+    padding: 0 30px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -904,6 +907,10 @@
   }
   .mobile-device .position-bottom{
     padding-right: 13px;
+  }
+  .over-img-right{
+    right: 26px !important;
+    width: 40% !important;
   }
 }
 
@@ -1633,6 +1640,31 @@
     border-bottom: 6px solid #fff;
     padding-bottom: 28px;
   }
+  .vertical-middle {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+.piercing-right-text {
+    padding: 0 30px 0 0;
+}
+
+.piercing-right-copy-section {
+    padding-left: 0px;
+}
+.text-lg-white{
+  color: #fff !important;
+}
+.over-img-right {
+  width: 36%;
+  z-index: 1;
+  right: 160px;
+  padding: 0 48px;
+  position: absolute;
+  bottom: 30px;
 }
 
 @media (min-width:1025px){
@@ -1841,6 +1873,7 @@
   .about-jewelry{
     padding: 0 26px;
   }
+  
 }
 @media (min-width:1024px) and (max-width:1199px){
   .fix-image, .product-view-left{

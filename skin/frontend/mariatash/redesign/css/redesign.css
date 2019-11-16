@@ -4697,3 +4697,13 @@ td.cart_col2 {
 	max-height: 500px !important;
 	overflow-x: scroll !important;
 }
+.piercing-h3{
+	margin-bottom: 15px;
+}
+.piercing-image-cover{
+	padding:0 30px;
+}
+.cover-img,
+.piercing-hero-img{
+  padding-left:0px;
+}
