@@ -282,7 +282,7 @@ $mode  = $this->getMode();
                             $currentProductId = $_product->getId();
                             $simples = $this->getIcons($currentProductId);
                             ?>
-                            <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
+                            <li class="item five-col" data-href="<?php echo $productUrl; ?>" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                    class="product-image">
                                     <img class="catalog-grid-image product-image-hover" data-pid="<?= $_product->getId() ?>" id="img-<?php echo $_product->getId() ?>"
@@ -453,6 +453,10 @@ $mode  = $this->getMode();
                 jQuery(this).hide();
                 img.show();
             }
+        });
+
+        jQuery(document).on("click","li.item",function () {
+          window.location.href=jQuery(this).data('href');
         });
 
     });

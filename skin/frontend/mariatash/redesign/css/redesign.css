@@ -27,6 +27,10 @@ h3{
 	font-size: 15px;
 }
 
+li.item{
+	cursor: pointer;
+}
+
 h4{
 	font-family: urw-din-regular;
 	font-size: 13px;
@@ -2916,7 +2920,7 @@ ul.tabs li{
 /*Cartilage CSS*/
 #foo3 li {
   width: 195px;
-  height: 217px;
+  height: 237px;
   float: left;
   list-style: none;
 	margin-right: 9px;
@@ -2944,12 +2948,22 @@ ul.tabs li{
 }
 #foo3{
 	width: 1225px;
+	border-bottom: 1px solid #d8d8d8;
+}
+#foo3 li.current {
+  border-bottom: 2px solid rgba(41,41,41,0.9);
 }
 #foo3 li h4{
 	position: absolute;
-	bottom: 10px;
+	bottom: 25px;
 	z-index: 1;
 	text-transform: uppercase;
+}
+#foo3 li a {
+  margin-bottom: 20px;
+  display: block;
+  overflow: hidden;
+  height: 218px;
 }
 .caroufredsel_wrapper{
 	width: 84.7%;
@@ -2973,7 +2987,7 @@ ul.tabs li{
 }
 .cartilage-section {
 	margin-top: 17px;
-  margin-bottom: 19px;
+  margin-bottom: 8px;
 }
 #total_item_counts_holder {
   margin-top: 5px;
