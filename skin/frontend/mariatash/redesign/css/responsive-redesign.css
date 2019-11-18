@@ -1647,26 +1647,24 @@
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
   }
-
-.piercing-right-text {
+  .piercing-right-text {
     padding: 0 30px 0 0;
-}
-
-.piercing-right-copy-section {
+  }
+  .piercing-right-copy-section {
     padding-left: 0px;
+  }
+  .text-lg-white{
+    color: #fff !important;
+  }
+  .over-img-right {
+    width: 36%;
+    z-index: 1;
+    right: 160px;
+    padding: 0 48px;
+    position: absolute;
+    bottom: 30px;
+  }
 }
-.text-lg-white{
-  color: #fff !important;
-}
-.over-img-right {
-  width: 36%;
-  z-index: 1;
-  right: 160px;
-  padding: 0 48px;
-  position: absolute;
-  bottom: 30px;
-}
-
 @media (min-width:1025px){
   /*footer display on hover bottom  of the page*/
   .floating.footer {
@@ -1680,22 +1678,12 @@
   .floating.footer:hover {
     opacity: 1;
   }
-
-
-  .pdp-image-section
-  {
+  .pdp-image-section{
     margin-top: 80px;
   }
-  .pdp-image-section .containerImage{
-    /*margin-top: -70px;*/
-  }
-  .quickview-index-index .pdp-image-section
-  {
+  .quickview-index-index .pdp-image-section{
     margin-top: auto;
   }
-  /* .quickview-index-index .pdp-image-section .containerImage{
-    margin-top: auto;
-  } */
   .containerVideo iframe{
     display: block;
     margin: auto;
@@ -1873,7 +1861,6 @@
   .about-jewelry{
     padding: 0 26px;
   }
-
 }
 @media (min-width:1024px) and (max-width:1199px){
   .fix-image, .product-view-left{
@@ -2018,9 +2005,6 @@
     background: no-repeat;
   }
 }
-@media (min-width:768px) and (max-width:1024px) {
-
-}
 @media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
     width: 200px !important;
@@ -2082,5 +2066,10 @@
 @media (min-width:1366px) and (max-width:1390px){
   .catalog-category-view .product-name{
     max-width: 150px;
+  }
+}
+@media (min-width:768px) and (max-width:910px){
+  .catalog-category-view .product-name{
+    max-width: 132px;
   }
 }
