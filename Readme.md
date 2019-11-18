@@ -1,4 +1,11 @@
 # Projet Millesima Emailing
+
+## Warning
+As of 18/11 the sendmail config does not apply to php-fpm containre on boot/restart
+- please edit container hosts as specified in phpdocker/php-fpm/php-ini-overrides.ini
+- execute sendmailconfig command in the php-fpm container
+- test with command 'echo "test" | sendmail -v youremail@yourdomain.com
+
 ## Requirements
 - Docker & docker-compose
 - Composer & php7.2+ with enabled extensions soap, gd, mysql, curl, zip, dom, mbstring
