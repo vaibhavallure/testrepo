@@ -124,6 +124,7 @@ var jscolor = {
 
 
 	addEvent : function(el, evnt, func) {
+		if(!el) return;
 		if(el.addEventListener) {
 			el.addEventListener(evnt, func, false);
 		} else if(el.attachEvent) {
