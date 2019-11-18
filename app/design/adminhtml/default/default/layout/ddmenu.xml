@@ -37,7 +37,8 @@
     </default>
     <adminhtml_catalog_category_edit>
         <reference name="head">
-            <action method="addJs"   ifconfig="ddmenu/settings/enabled"><js>belvg/jquery.v1.5.min.js</js></action>
+            <!-- <action method="addJs"   ifconfig="ddmenu/settings/enabled"><js>belvg/jquery.v1.5.min.js</js></action> -->
+            <action method="addJs"   ifconfig="ddmenu/settings/enabled"><js>jquery/jquery.js</js></action>
             <action method="addJs"   ifconfig="ddmenu/settings/enabled"><js>belvg/jqueryDd.noconflict.js</js></action>
             <action method="addItem" ifconfig="ddmenu/settings/enabled"><type>skin_css</type><name>belvg/css/ddmenu.css</name><params/><if/></action>
             <action method="addJs"   ifconfig="ddmenu/settings/enabled"><js>belvg/ui/jquery.ui.core.js</js></action>
@@ -55,7 +56,9 @@
     </adminhtml_catalog_category_edit>
     <adminhtml_system_config_edit>
         <reference name="head">
-            <action method="addJs"><js>belvg/jquery.v1.5.min.js</js></action>
+            <!-- <action method="addJs"><js>belvg/jquery.v1.5.min.js</js></action>
+             -->
+             <action method="addJs"   ifconfig="ddmenu/settings/enabled"><js>jquery/jquery.js</js></action>
             <action method="addJs"><js>belvg/jqueryDd.noconflict.js</js></action>
             <action method="addJs"><js>belvg/jquery.easing-1.3.pack.js</js></action>
             <action method="addJs"><js>belvg/jscolor/jscolor.js</js></action>
