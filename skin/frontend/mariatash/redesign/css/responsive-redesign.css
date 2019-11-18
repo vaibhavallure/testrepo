@@ -1873,7 +1873,7 @@
   .about-jewelry{
     padding: 0 26px;
   }
-  
+
 }
 @media (min-width:1024px) and (max-width:1199px){
   .fix-image, .product-view-left{
@@ -2077,5 +2077,10 @@
 @media (min-width:1025px){
   .products-grid li.item a{
     display: block !important;
+  }
+}
+@media (min-width:1366px) and (max-width:1390px){
+  .catalog-category-view .product-name{
+    max-width: 150px;
   }
 }
