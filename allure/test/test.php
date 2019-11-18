@@ -6,9 +6,9 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
-
-
-
+$product = Mage::getModel('catalog/product')->loadByAttribute('sku','ZXMARK');
+var_dump($product->getId());
+die();
 
 var_dump(Mage::helper("appointments/data")->isPopupStore(1));
 
