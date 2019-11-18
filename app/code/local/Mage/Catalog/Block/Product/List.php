@@ -387,16 +387,44 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
         $child_product_id=$options['value'][0]['child_id'];
         $childProduct = Mage::getModel('catalog/product')->load($child_product_id);
 
+
         if($roll_over) {
             if ($childProduct->getRollOver() && $childProduct->getRollOver()!="no_selection")
                 return Mage::helper('catalog/image')->init($childProduct, 'roll_over')->resize(376, 490);
             else
-                return false;
+                return $this->getProductSecondResizeImage($childProduct);
         }
 
         return Mage::helper('catalog/image')->init($childProduct, 'small_image')->resize(376, 490);
 
     }
+
+
+    public function getProductSecondResizeImage($product)
+    {
+
+        foreach ($product->getMediaGalleryImages() as $image)
+        {
+            if($product->getSmallImage() == $image->getFile())
+                continue;
+
+            return Mage::helper('catalog/image')->init($product, 'small_image',$image->getFile())->resize(376, 490);
+
+        }
+        return false;
+    }
+
+
+    public function getRolloverImage($product)
+    {
+        if ($product->getRollOver() && $product->getRollOver()!="no_selection")
+            return Mage::helper('catalog/image')->init($product, 'roll_over')->resize(376, 490);
+        else
+            return $this->getProductSecondResizeImage($product);
+    }
+
+
+
 
     /*for custom search filter*/
     public function getFilters(){
