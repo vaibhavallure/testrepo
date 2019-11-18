@@ -2072,4 +2072,12 @@
   .catalog-category-view .product-name{
     max-width: 132px;
   }
+  .category-earring-pairs.catalog-category-view .product-name{
+  	max-width: 120px;
+  }
+}
+@media (min-width:1025px) and (max-width:1130px){
+  .category-earring-pairs.catalog-category-view .product-name{
+  	max-width: 120px;
+  }
 }

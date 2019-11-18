@@ -4703,6 +4703,9 @@ td.cart_col2 {
 .quickview-index-index .zoom-link {
   display: none;
 }
+.category-earring-pairs.catalog-category-view .product-name{
+	max-width: 142px;
+}
 
 /****By Indrajet******/
 .search-autocomplete{
