@@ -242,7 +242,7 @@
     padding: 0 30px 0 6px;
   }
   .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main,
-  .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main{
+  .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main, .paypal-express-overview .col-main{
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -1026,10 +1026,6 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  /* #category-title{
-    margin: 16px 0 20px !important;
-    padding: 0 !important;
-  } */
   .filter-common-div{
     display: none;
   }
@@ -1145,6 +1141,9 @@
     width: 15px;
     right: 15px !important;
     top: 15px !important;
+  }
+  .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select{
+    width: 100%;
   }
 }
 
