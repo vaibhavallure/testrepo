@@ -16,11 +16,11 @@
 	// the following function is executed when DOM ir ready. If not use this wrapper, code inside could fail if
 	// executed when referenced DOM elements are still being loaded.
 	$(function() {
-		$('input,select,textarea').live('change', function() {
+		$('input,select,textarea').on('change', function() {
 			this.setHasChanges(this);
 		});
 		// UI logic for "use default value" checkboxes
-		$('input.m-default').live('click', function() {
+		$('input.m-default').on('click', function() {
 			var fieldId = this.id.substring(0, this.id.length - '_default'.length);
 			if ($('#'+fieldId).length) {
 				if (this.checked) {
@@ -36,10 +36,10 @@
 		});
 		
 		// UI logic for standard buttons
-		$('button.m-close-action').live('click', function() {
+		$('button.m-close-action').on('click', function() {
 			window.location.href = $.options('button.m-close-action').redirect_to;
 		});
-		$('button.m-save-action').live('click', function() {
+		$('button.m-save-action').on('click', function() {
 			var request = [];
 			if ($.options('edit-form') && $.options('edit-form').subforms) {
 				$.each($.options('edit-form').subforms, function(index, formId) {
@@ -55,7 +55,7 @@
                 }
             });
 		});
-		$('button.m-save-and-close-action').live('click', function() {
+		$('button.m-save-and-close-action').on('click', function() {
 			var request = [];
 			if ($.options('edit-form') && $.options('edit-form').subforms) {
 				$.each($.options('edit-form').subforms, function(index, formId) {
