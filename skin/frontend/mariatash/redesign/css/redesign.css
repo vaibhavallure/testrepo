@@ -3310,7 +3310,7 @@ table thead {
  .checkout-multishipping-delivery .main,
  .checkout-multishipping-billing .main,
  .checkout-multishipping-overview .main,
- .checkout-onepage-index .main, .paypal-express-review .main{
+ .checkout-onepage-index .main, .paypal-express-review .main, .paypal-express-overview .main{
   max-width: 1205px;
   display: flex;
   margin: 0 auto;
@@ -4702,6 +4702,9 @@ td.cart_col2 {
 }
 .quickview-index-index .zoom-link {
   display: none;
+}
+.category-earring-pairs.catalog-category-view .product-name{
+	max-width: 142px;
 }
 
 /****By Indrajet******/
