@@ -96,7 +96,7 @@ var $updatedCategories=array();
             try {
                 $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
 
-                if ($product->getId()) {
+                if ($product) {
 
                     foreach ($categoryIds as $categoryId) {
                         $categoryId = trim($categoryId);
