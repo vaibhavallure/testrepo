@@ -74,6 +74,10 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
     public function clearAction()
     {
         $this->clearSession();
+        //loagout customer if amazon session expired
+        Mage::getSingleton('customer/session')->logout();
+        Mage::getSingleton("core/session")->addError("Amazon login session expired. Please login once again.");
+        
         $this->_redirect('checkout/cart');
     }
 

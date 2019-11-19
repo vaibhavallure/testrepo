@@ -14,9 +14,11 @@
              </Allure_CatalogSearch>
         </controllers>
         <blocks>
-            <al_catalogsearch>
-                <class>Allure_CatalogSearch_Block</class>
-            </al_catalogsearch>
+            <catalogsearch>
+                <rewrite>
+                    <result>Allure_CatalogSearch_Block_Result</result>
+                </rewrite>
+            </catalogsearch>
         </blocks>
     </global>
     	<frontend>

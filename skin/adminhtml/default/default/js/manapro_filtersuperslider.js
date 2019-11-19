@@ -13,7 +13,7 @@
  *        b.    we use jQuery $ notation in not conflicting way (along with prototype, ext, etc.)
  */
 (function($) {
-    $('#mf_general_display').live('change', function() {
+    $('#mf_general_display').on('change', function() {
         if ($('#mfs_range').hasClass('m-decimal')) {
             if ($(this).val() != 'slider') {
                 $('#mfs_range').show();
