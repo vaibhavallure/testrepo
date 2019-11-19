@@ -2922,3 +2922,202 @@ Category assigned with Id 16 and Name Ear Head Jewelry to Product XXMARK
 UPDATE Category with Id 18 and Name Conch
 Category assigned with Id 18 and Name Conch to Product XXMARK
 ADD Category with Id  and Name 
+UPDATE Category with Id 4 and Name Lobe_old
+Category assigned with Id 4 and Name Lobe_old to Product XXMARK
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XWB15D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XWB15BKD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XWB10D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XWB10BKD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XURPAPRS5BKD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XURPAPRS4BKD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XURPA5DOP
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XURPA5D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XURPA4DOP
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XURPA4D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XTNCOBRBBKD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XTNCOBDRB
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XTNCOBDD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XTNCOBBKDRB
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XTNCOBBKDBKD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSTARD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSTAR7D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSTAR55D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSTAR45D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSTAR
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSQGPS
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSQGBS
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSQ4DTRD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSQ3BTRD
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSP3525
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSNPA10RB
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSNPA10D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSNEG5RB
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSNEG5D
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XSNEG5BKD
+UPDATE Category with Id 4 and Name Lobe
+UPDATE Category with Id 4 and Name Lobe
+Category assigned with Id 4 and Name Lobe to Product XXMARK
+Category Up to Date assigned with Id 4  to Product XWB15D
+Category Up to Date assigned with Id 4  to Product XWB15BKD
+Category Up to Date assigned with Id 4  to Product XWB10D
+Category Up to Date assigned with Id 4  to Product XWB10BKD
+Category Up to Date assigned with Id 4  to Product XURPAPRS5BKD
+Category Up to Date assigned with Id 4  to Product XURPAPRS4BKD
+Category Up to Date assigned with Id 4  to Product XURPA5DOP
+Category Up to Date assigned with Id 4  to Product XURPA5D
+Category Up to Date assigned with Id 4  to Product XURPA4DOP
+Category Up to Date assigned with Id 4  to Product XURPA4D
+Category Up to Date assigned with Id 4  to Product XTNCOBRBBKD
+Category Up to Date assigned with Id 4  to Product XTNCOBDRB
+Category Up to Date assigned with Id 4  to Product XTNCOBDD
+Category Up to Date assigned with Id 4  to Product XTNCOBBKDRB
+Category Up to Date assigned with Id 4  to Product XTNCOBBKDBKD
+Category Up to Date assigned with Id 4  to Product XSTARD
+Category Up to Date assigned with Id 4  to Product XSTAR7D
+Category Up to Date assigned with Id 4  to Product XSTAR55D
+Category Up to Date assigned with Id 4  to Product XSTAR45D
+Category Up to Date assigned with Id 4  to Product XSTAR
+Category Up to Date assigned with Id 4  to Product XSQGPS
+Category Up to Date assigned with Id 4  to Product XSQGBS
+Category Up to Date assigned with Id 4  to Product XSQ4DTRD
+Category Up to Date assigned with Id 4  to Product XSQ3BTRD
+Category Up to Date assigned with Id 4  to Product XSP3525
+Category Up to Date assigned with Id 4  to Product XSNPA10RB
+Category Up to Date assigned with Id 4  to Product XSNPA10D
+Category Up to Date assigned with Id 4  to Product XSNEG5RB
+Category Up to Date assigned with Id 4  to Product XSNEG5D
+Category Up to Date assigned with Id 4  to Product XSNEG5BKD
+Category Up to Date assigned with Id 4  to Product XSNEG10RB
+Category Up to Date assigned with Id 4  to Product XSNEG10D
+Category Up to Date assigned with Id 4  to Product XSNEG10BKD
+Category Up to Date assigned with Id 4  to Product XSN5RB
+Category Up to Date assigned with Id 4  to Product XSN5D
+Category Up to Date assigned with Id 4  to Product XSN5BKD
+Category Up to Date assigned with Id 4  to Product XSN10RB
+Category Up to Date assigned with Id 4  to Product XSN10D
+Category Up to Date assigned with Id 4  to Product XSN10BKD
+Category Up to Date assigned with Id 4  to Product XSK65OPM
+Category Up to Date assigned with Id 4  to Product XSK65DM
+Category Up to Date assigned with Id 4  to Product XSK65BKDM
+Category Up to Date assigned with Id 4  to Product XSK5RBM
+Category Up to Date assigned with Id 4  to Product XSK5RB
+Category Up to Date assigned with Id 4  to Product XSK5DM
+Category Up to Date assigned with Id 4  to Product XSK5BKDM
+Category Up to Date assigned with Id 4  to Product XSK4RB
+Category Up to Date assigned with Id 4  to Product XSK4BKDM
+Category Up to Date assigned with Id 4  to Product XSHSTAR
+Category Up to Date assigned with Id 4  to Product XSCMQ4D
+Category Up to Date assigned with Id 4  to Product XSCEG4CZ
+Category Up to Date assigned with Id 4  to Product XSCEG3CZ
+Category Up to Date assigned with Id 4  to Product XSCD32D
+Category Up to Date assigned with Id 4  to Product XSC3PKD
+Category Up to Date assigned with Id 4  to Product XSC3PD
+Category Up to Date assigned with Id 4  to Product XSC3D
+Category Up to Date assigned with Id 4  to Product XSC3BKD
+Category Up to Date assigned with Id 4  to Product XSC3BD
+Category Up to Date assigned with Id 4  to Product XSC2PKD
+Category Up to Date assigned with Id 4  to Product XSC2PD
+Category Up to Date assigned with Id 4  to Product XSC2D
+Category Up to Date assigned with Id 4  to Product XSC2BKD
+Category Up to Date assigned with Id 4  to Product XSC2BD
+Category Up to Date assigned with Id 4  to Product XSC25D
+Category Up to Date assigned with Id 4  to Product XSC25BKD
+Category Up to Date assigned with Id 4  to Product XSC15PKD
+Category Up to Date assigned with Id 4  to Product XSC15PD
+Category Up to Date assigned with Id 4  to Product XSC15D
+Category Up to Date assigned with Id 4  to Product XSC15BKD
+Category Up to Date assigned with Id 4  to Product XSC15BD
+Category Up to Date assigned with Id 4  to Product XSC12D
+Category Up to Date assigned with Id 4  to Product XRUR95OPBKD
+Category Up to Date assigned with Id 4  to Product XRUR95DRB
+Category Up to Date assigned with Id 4  to Product XRUR95DD
+Category Up to Date assigned with Id 4  to Product XRUR95DBKD
+Category Up to Date assigned with Id 4  to Product XRUR8OPBKD
+Category Up to Date assigned with Id 4  to Product XRUR8DRB
+Category Up to Date assigned with Id 4  to Product XRUR8DD
+Category Up to Date assigned with Id 4  to Product XRUR8DBKD
+Category Up to Date assigned with Id 4  to Product XRUR65OPD
+Category Up to Date assigned with Id 4  to Product XRUR65OPBKD
+Category Up to Date assigned with Id 4  to Product XRUR65DD
+Category Up to Date assigned with Id 4  to Product XRUR65DBKD
+Category Up to Date assigned with Id 4  to Product XRSPJ8
+Category Up to Date assigned with Id 4  to Product XRSC95OP
+Category Up to Date assigned with Id 4  to Product XRSC95D
+Category Up to Date assigned with Id 4  to Product XRSC8OP
+Category Up to Date assigned with Id 4  to Product XRSC8D
+Category Up to Date assigned with Id 4  to Product XRSC65OP
+Category Up to Date assigned with Id 4  to Product XRSC65D
+Category Up to Date assigned with Id 4  to Product XRSC5OP
+Category Up to Date assigned with Id 4  to Product XRSC5D
+Category Up to Date assigned with Id 4  to Product XRSC125D
+Category Up to Date assigned with Id 4  to Product XRSC11D
+Category Up to Date assigned with Id 4  to Product XRNB95PS
+Category Up to Date assigned with Id 4  to Product XRNB95D
+Category Up to Date assigned with Id 4  to Product XRNB95BS
+Category Up to Date assigned with Id 4  to Product XRNB8PS
+Category Up to Date assigned with Id 4  to Product XRNB8D
+Category Up to Date assigned with Id 4  to Product XRNB8BS
+Category Up to Date assigned with Id 4  to Product XRNB3D8DPS
+Category Up to Date assigned with Id 4  to Product XRNB3BD8PS
+Category Up to Date assigned with Id 4  to Product XRNB3BD8BS
+Category Up to Date assigned with Id 4  to Product XRCOBOP95DRB
+Category Up to Date assigned with Id 4  to Product XRCOBOP95BKD
+Category Up to Date assigned with Id 4  to Product XRCOBOP8DRB
+Category Up to Date assigned with Id 4  to Product XRCOBOP8DBKD
+Category Up to Date assigned with Id 4  to Product XRCOBD95RB
+Category Up to Date assigned with Id 4  to Product XRCOBD95BKD
+Category Up to Date assigned with Id 4  to Product XRCOBD8RB
+Category Up to Date assigned with Id 4  to Product XRCOBD8BKD
+Category Up to Date assigned with Id 4  to Product XRCOBD65D
+Category Up to Date assigned with Id 4  to Product XRCOBD65BKD
+Category Up to Date assigned with Id 4  to Product XR95
+Category Up to Date assigned with Id 4  to Product XR8
+Category Up to Date assigned with Id 4  to Product XR65
+Category Up to Date assigned with Id 4  to Product XR5
+Category Up to Date assigned with Id 4  to Product XR3SPL95TQ
+Category Up to Date assigned with Id 4  to Product XR3SPL95OP
+Category Up to Date assigned with Id 4  to Product XR3SPL95BROP
+Category Up to Date assigned with Id 4  to Product XR3SPL95BKOP
+Category Up to Date assigned with Id 4  to Product XR3SPL95
+Category Up to Date assigned with Id 4  to Product XR3SPL8TQ
+Category Up to Date assigned with Id 4  to Product XR3SPL8OP
+Category Up to Date assigned with Id 4  to Product XR3SPL8BROP
+Category Up to Date assigned with Id 4  to Product XR3SPL8BKOP
+Category Up to Date assigned with Id 4  to Product XR3SPL8
+Category Up to Date assigned with Id 4  to Product XR3SPL65TQ
+Category Up to Date assigned with Id 4  to Product XR3SPL65OP
+Category Up to Date assigned with Id 4  to Product XR3SPL65BROP
+Category Up to Date assigned with Id 4  to Product XR3SPL65BKOP
+Category Up to Date assigned with Id 4  to Product XR3SPL65
+Category Up to Date assigned with Id 4  to Product XR3SPGR8
+Category Up to Date assigned with Id 4  to Product XR3SPG95TQ
