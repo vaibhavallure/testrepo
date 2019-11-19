@@ -324,8 +324,8 @@ $mode  = $this->getMode();
                                   <div class="row justify-content-between">
                                         <div class="col-12">
                                           <div class="row list-mt-upper justify-content-between">
-                                            <div class="">
-                                              <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                            <div class="product-name">
+                                              <h6 id="<?php echo $_product->getId() ?>" class="text-left">
                                                   <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                                      title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
                                               </h6>
