@@ -201,8 +201,8 @@ $mode  = $this->getMode();
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
                                 <div class="grid-mt-w col-12">
                                   <div class="row">
-                                    <div class="col-8">
-                                      <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                    <div class="col-8 product-name">
+                                      <h6 id="<?php echo $_product->getId() ?>" class="text-left">
                                           <a  id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                               title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
                                       </h6>
@@ -310,8 +310,8 @@ $mode  = $this->getMode();
                                 <div class="list-mt-w list-top-section" <?=($isMobile)? 'style="display:block"':'' ?>>
                                     <div class="col-12">
                                         <div class="row list-mt-upper justify-content-between">
-                                            <div class="">
-                                                <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                            <div class="product-name">
+                                                <h6 id="<?php echo $_product->getId() ?>" class="text-left">
                                                     <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                                        title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
                                                 </h6>

@@ -1626,7 +1626,7 @@
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){
-  .catalog-category-view .product-name{
+  .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
     max-width: 100%;
   }
 }
@@ -2048,12 +2048,12 @@
   }
 }
 @media (min-width:1025px) and (max-width:1105px){
-  .catalog-category-view .product-name{
+  .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
     max-width: 130px;
   }
 }
 @media (min-width:768px) and (max-width:863px){
-  .catalog-category-view .product-name{
+  .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
     max-width: 140px;
   }
 }
@@ -2063,12 +2063,12 @@
   }
 }
 @media (min-width:1366px) and (max-width:1390px){
-  .catalog-category-view .product-name{
+  .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
     max-width: 150px;
   }
 }
 @media (min-width:768px) and (max-width:910px){
-  .catalog-category-view .product-name{
+  .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
     max-width: 132px;
   }
   .category-earring-pairs.catalog-category-view .product-name{

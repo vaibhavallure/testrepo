@@ -11738,9 +11738,9 @@ li.item h2.product-name {text-align: center;}
 	width: 70px;
 }
 
-.catalogsearch-result-index a.button.btn-quickview {
+/* .catalogsearch-result-index a.button.btn-quickview {
 	margin-top: 10px;
-}
+} */
 
 .categorypath-discover-maria-tash-celebrity-clientele-html.fancybox-lock  .fancybox-inner,
 .categorypath-discover-maria-tash-celebrity-clientele-html.fancybox-lock  .fancybox-wrap
@@ -11901,10 +11901,10 @@ li.item h2.product-name {text-align: center;}
 	min-width: 13px !important;
 }
 
-.catalogsearch-result-index .actions #color-option,
+/* .catalogsearch-result-index .actions #color-option,
 .catalogsearch-result-index .actions .super_attribute ul {
 	margin-bottom: 9px;
-}
+} */
 
 .catalogsearch-result-index .products-grid2 .actions .super_attribute ul
 {
