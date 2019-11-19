@@ -108,7 +108,7 @@ class Mana_Filters_Resource_Filter_Attribute
         $attribute = $model->getAttributeModel();
         $connection = $this->_getReadAdapter();
 
-        $tableAlias = $attribute->getAttributeCode() . '_idx_alias';
+        $tableAlias = $attribute->getAttributeCode() . '_idx';
         $conditions = array(
             "`{$tableAlias}`.entity_id = e.entity_id",
             $connection->quoteInto("`{$tableAlias}`.attribute_id = ?", $attribute->getAttributeId()),
