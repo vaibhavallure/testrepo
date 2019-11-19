@@ -17,7 +17,7 @@ $cu=new CategoryUpdate();
 
 // create mapped array of products with Category ID's
 $productArray = $cu->getMappedArrayOfProductWithCategories($product_list_with_category);
-$categories_data = $cu->getMappedArrayOfCategoriesData($categories_data);
+$categories_data = "";//$cu->getMappedArrayOfCategoriesData($categories_data);
 $cu->assignProductCategories($productArray,$categories_data);
 
 
@@ -85,62 +85,78 @@ var $updatedCategories=array();
 // assign product to categories and create and assign to categories if category doesn't exist
     function assignProductCategories($productArray, $redesignCategoryData)
     {
-        $fp = fopen('result.txt', 'a');
-        $result = "";
 
-        try {
-            foreach ($productArray as $sku => $categoryIds) {
+        $resource = Mage::getSingleton('core/resource');
+        $writeAdapter = $resource->getConnection('core_write');
+        $writeAdapter->beginTransaction();
+
+        $recordIndex=0;
+
+        foreach ($productArray as $sku => $categoryIds) {
+            try {
                 $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
 
                 if ($product->getId()) {
-                    $categories = array();
-                    $product->setCategoryIds($categories);
-                    $product->save();
 
                     foreach ($categoryIds as $categoryId) {
                         $categoryId = trim($categoryId);
 
-
-                        if (!in_array($categoryId,$this->updatedCategories)) {
                             $category = Mage::getModel('catalog/category')->load($categoryId);
                             if ($category->getId()) {
-                                // update and assign category
-                                $category = $this->saveCategory($redesignCategoryData[$categoryId], $fp, "UPDATE");
-                                fwrite($fp, "Category assigned with Id {$category->getId()} and Name {$category->getName()} to Product {$sku}" . PHP_EOL);
-                                $categoryId = $category->getId();
-                            } else {
-                                // add category
-                                $category = $this->saveCategory($redesignCategoryData[$categoryId], $fp, "ADD");
-                                $categoryId = $category->getId();
-                                fwrite($fp, "Category assigned with Id {$category->getId()} and Name {$category->getName()} to Product {$sku}" . PHP_EOL);
+
+                                if(!in_array($categoryId,$this->updatedCategories)) {
+                                    $query1 = "DELETE FROM `catalog_category_product` WHERE `category_id`=" . $categoryId;
+                                    $writeAdapter->query($query1);
+                                    $this->log("unset all products for category ".$categoryId);
+                                    array_push($this->updatedCategories, $category->getId());
+                                }
+
+                                $query2="INSERT INTO `catalog_category_product`(`category_id`, `product_id`) VALUES (".$categoryId.",".$product->getId().")";
+                                $writeAdapter->query($query2);
+                                $this->log("product assigned category:".$categoryId."  product:".$sku);
                             }
-                        }else{
-                            fwrite($fp, "Category Up to Date assigned with Id {$categoryId}  to Product {$sku}" . PHP_EOL);
-                        }
-
-                        Mage::getSingleton('catalog/category_api')->assignProduct($categoryId, $product->getId());
-
+                            else
+                            {
+                                $this->log("category not found ".$categoryId." for product ".$sku);
+                            }
                     }
-                } else {
-                    fwrite($fp, "Product not found for {$sku}" . PHP_EOL);
-                }
-            }
-            fclose($fp);
-            echo $result;
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
 
-    function saveCategory($data, $fp, $status)
+                } else {
+                    $this->log("product not found  ".$sku);
+
+                }
+                $this->log("row--------------------------------------------------- ------------#".$recordIndex);
+
+                $recordIndex++;
+                if (($recordIndex % 100) == 0) {
+                    $writeAdapter->commit();
+                    $writeAdapter->beginTransaction();
+
+                }
+
+            } catch (Exception $e) {
+                $writeAdapter->rollback();
+            }
+
+
+
+
+        }
+
+        $writeAdapter->commit();
+    }
+    function saveCategory($data)
     {
         try {
             $category = Mage::getModel('catalog/category')->addData($data)->save();
             array_push($this->updatedCategories, $category->getId());
-            fwrite($fp, "{$status} Category with Id {$category->getId()} and Name {$category->getName()}" . PHP_EOL);
             return $category;
         } catch (Exception $e) {
-            fwrite($fp, "{$e} Category with Id {$category->getId()} and Name {$category->getName()}" . PHP_EOL);
+            $this->log($e->getMessage());
         }
+    }
+    function log($message)
+    {
+        Mage::log($message,Zend_Log::DEBUG,'adi.log',true);
     }
 }
