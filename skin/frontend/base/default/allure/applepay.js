@@ -46,14 +46,8 @@ if (window.ApplePaySession) {
 	  	shippingMethods: [{
 		    "label": "International Flat Rate",
 		    "detail": "Arrives in 5 to 7 days",
-		    "amount": 49.95,
+		    "amount": 80,
 		    "identifier": "flatrate_flatrate"
-		},
-		{
-		    "identifier": "express_shipping",
-		    "label": "Fedex Express",
-		    "detail": "1-2 working days",
-		    "amount": 100.0
 		}],
 		shippingType: 'delivery',
 		requiredBillingContactFields: [
@@ -229,7 +223,7 @@ if (window.ApplePaySession) {
 				jQuery.each(Allure.ApplePay.data.response.saveBilling.shipping_methods, function(shippingCode, shippingData){
 						Allure.ApplePay.data.shippingMethods.push({
 							identifier: shippingCode,
-							label: shippingData.carrier_title+' / '+shippingData.method_title,
+							label: shippingData.method_title,
 							detail: shippingData.method_title+(shippingData.method_description ? ' - '+shippingData.method_description : ''),
 							amount: shippingData.price
 					});
@@ -656,7 +650,7 @@ if (window.ApplePaySession) {
 				jQuery.each(Allure.ApplePay.data.response.saveBilling.shipping_methods, function(shippingCode, shippingData){
 						Allure.ApplePay.data.shippingMethods.push({
 							identifier: shippingCode,
-							label: shippingData.carrier_title+' / '+shippingData.method_title,
+							label: shippingData.method_title,
 							detail: shippingData.method_title+(shippingData.method_description ? ' - '+shippingData.method_description : ''),
 							amount: shippingData.price
 					});
