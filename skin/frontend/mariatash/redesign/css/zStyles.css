@@ -923,7 +923,7 @@
 	display: flex!important;
 	flex-wrap: wrap;
 	flex-direction: column;
-	justify-content: flex-end;
+	/*justify-content: flex-end;*/
    /* max-width: 100%!important;
    width: auto!important;*/
 }
@@ -1102,10 +1102,10 @@
 /*=====================*/
 /*Search RESULTS*/
 /*=====================*/
-.catalogsearch-result-index .list-mt-upper{
+/* .catalogsearch-result-index .list-mt-upper{
 	width: 100%;
 	margin: 0;
-}
+} */
 .catalogsearch-result-index .list-mt-upper .col-7{
 	padding: 0;
 }
@@ -1115,19 +1115,19 @@
 .catalogsearch-result-index .col-5.pl-0{
 	padding-right: 0
 }
-.catalogsearch-result-index .products-grid li.item .list-mt-w{
+/* .catalogsearch-result-index .products-grid li.item .list-mt-w{
 	left: 4px;
 	right: 4px;
-}
+} */
 .catalogsearch-result-index .swatches{
 	padding-right: 0;
 }
 .catalogsearch-result-index .price{
 	letter-spacing: normal;
 }
-.catalogsearch-result-index .products-grid li.item .list-mt-w .col-12{
+/* .catalogsearch-result-index .products-grid li.item .list-mt-w .col-12{
 	margin: 0;
-}
+} */
 .catalogsearch-result-index .col .btn-quickview{
 	display: block;
 	position: absolute;

@@ -992,7 +992,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	margin: 5px;
 }
 .datepicker{
-	z-index: 9999!important;
+	z-index: 1!important;
 }
 
 .zopim{

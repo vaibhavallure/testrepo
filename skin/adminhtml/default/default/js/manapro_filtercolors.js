@@ -14,7 +14,7 @@
 	// the following function is executed when DOM ir ready. If not use this wrapper, code inside could fail if
 	// executed when referenced DOM elements are still being loaded.
 	$(function() {
-		$('#mf_general_display').live('change', function() {
+		$('#mf_general_display').on('change', function() {
 			if ($('#mf_general_display').val() == 'colors' || $('#mf_general_display').val() == 'colors_vertical' || $('#mf_general_display').val() == 'colors_label') {
 				$('#tabs_colors').parent().show();
 			}
@@ -22,19 +22,19 @@
 				$('#tabs_colors').parent().hide();
 			}
 		});
-        $('#mf_colors_header_image_width').live('change', function() {
+        $('#mf_colors_header_image_width').on('change', function() {
             $('td.c-color div, td.c-normal_image div, td.c-selected_image div, td.c-normal_hovered_image div, td.c-selected_hovered_image div, ' +
                 '#image_mf_colors_header_image_normal, #image_mf_colors_header_image_selected, ' +
                 '#image_mf_colors_header_image_normal_hovered, #image_mf_colors_header_image_selected_hovered')
                 .css({'width': $(this).val() + 'px'});
         });
-        $('#mf_colors_header_image_height').live('change', function() {
+        $('#mf_colors_header_image_height').on('change', function() {
             $('td.c-color div, td.c-normal_image div, td.c-selected_image div, td.c-normal_hovered_image div, td.c-selected_hovered_image div, ' +
                 '#image_mf_colors_header_image_normal, #image_mf_colors_header_image_selected, ' +
                 '#image_mf_colors_header_image_normal_hovered, #image_mf_colors_header_image_selected_hovered')
                 .css({'height': $(this).val() + 'px'});
         });
-        $('#mf_colors_header_image_border_radius').live('change', function() {
+        $('#mf_colors_header_image_border_radius').on('change', function() {
             $('td.c-color div, td.c-normal_image div, td.c-selected_image div, td.c-normal_hovered_image div, td.c-selected_hovered_image div, ' +
                 '#image_mf_colors_header_image_normal, #image_mf_colors_header_image_selected, ' +
                 '#image_mf_colors_header_image_normal_hovered, #image_mf_colors_header_image_selected_hovered')
@@ -44,15 +44,15 @@
                 'border-radius': $(this).val() + 'px'
             });
         });
-        $('#mf_colors_header_state_width').live('change', function() {
+        $('#mf_colors_header_state_width').on('change', function() {
             $('td.c-state_image div, #image_mf_colors_header_state_image')
                 .css({'width': $(this).val() + 'px'});
         });
-        $('#mf_colors_header_state_height').live('change', function() {
+        $('#mf_colors_header_state_height').on('change', function() {
             $('td.c-state_image div, #image_mf_colors_header_state_image')
                 .css({'height': $(this).val() + 'px'});
         });
-        $('#mf_colors_header_state_border_radius').live('change', function() {
+        $('#mf_colors_header_state_border_radius').on('change', function() {
             $('td.c-state_image div, #image_mf_colors_header_state_image')
             .css({
                 '-webkit-border-radius': $(this).val() + 'px',
