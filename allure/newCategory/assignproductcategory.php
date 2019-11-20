@@ -8,7 +8,7 @@ Mage::app()->setCurrentStore(0);
 
 
 
-$product_list_with_category = 'product_list_with_category.csv';//$_GET['product_list'];
+$product_list_with_category = 'product_list_with_category_2.csv';//$_GET['product_list'];
 $categories_data = 'categories.csv';//$_GET['category_data'];
 
 
@@ -95,6 +95,8 @@ var $updatedCategories=array();
         foreach ($productArray as $sku => $categoryIds) {
             try {
                 $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+                $this->log($sku.":");
+                $this->log($categoryIds);
 
                 if ($product) {
 
