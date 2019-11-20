@@ -11,7 +11,7 @@
             </depends>
         </Enterprise_Search>
         <Wyomind_Elasticsearch>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Wyomind_Elasticsearch>
     </modules>
