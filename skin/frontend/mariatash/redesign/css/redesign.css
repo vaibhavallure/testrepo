@@ -4706,6 +4706,9 @@ td.cart_col2 {
 .category-earring-pairs.catalog-category-view .product-name{
 	max-width: 142px;
 }
+.category-new-york-by-walk-in-only .breadcrumbs{
+	display: none;
+}
 
 /****By Indrajet******/
 .search-autocomplete{
