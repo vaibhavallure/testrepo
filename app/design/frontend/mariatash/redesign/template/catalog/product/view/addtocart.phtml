@@ -26,7 +26,6 @@
 ?>
 
 <?php $_product = $this->getProduct(); ?>
-<?php  echo $this->getChildHtml('ApplePayButtonProduct') ?>
 
 <?php $buttonTitle = $this->__('Add to Bag'); ?>
 <?php if ($_product->isSaleable()): ?>
@@ -167,6 +166,8 @@
             <div class="col-12 gift-card-faq-link link-button"><a target="_blank" href="maria-tash-gift-cards">Gift Card FAQ</a></div>
         <?php endif; ?>
 
+		<?php  echo $this->getChildHtml('ApplePayButtonProduct') ?>
+		
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
         <div class="col-6 float-left add-to-bag">
           <div class="row">
