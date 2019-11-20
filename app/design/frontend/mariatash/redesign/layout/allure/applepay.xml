@@ -59,7 +59,7 @@
             </action>
         </reference>
 
-        <reference name="product.info.addto">
+        <reference name="product.info.addtocart">
             <action method="append" ifconfig="payment/applepay/visible_on_product">
                 <block>ApplePayButtonProduct</block>
             </action>

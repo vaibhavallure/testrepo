@@ -26,8 +26,7 @@
 ?>
 
 <?php $_product = $this->getProduct(); ?>
-
-
+<?php  echo $this->getChildHtml('ApplePayButtonProduct') ?>
 
 <?php $buttonTitle = $this->__('Add to Bag'); ?>
 <?php if ($_product->isSaleable()): ?>
