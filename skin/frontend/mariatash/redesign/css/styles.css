@@ -11178,11 +11178,11 @@ li.item h2.product-name {text-align: center;}
 	margin-bottom: 1px;
 }
 
-.account-login .product-name a, .my-account .product-name a {
+/* .account-login .product-name a, .my-account .product-name a {
 	text-decoration: none;
 	font-weight: bold;
 	color: #3d3e43;
-}
+} */
 
 .ad-wish-mt .charsRemaining {
 	font-size: 11px;
@@ -11820,11 +11820,11 @@ li.item h2.product-name {text-align: center;}
 	.toolbar .sorter .view-mode label {
 		display: none;
 	}
-	.block-layered-nav dt {
+	/* .block-layered-nav dt {
 		font-size: 10px;
 		height: 18px;
 		padding-top: 3px;
-	}
+	} */
 	.block.block-layered-nav .block-title {
 		padding-left: 0;
 	}

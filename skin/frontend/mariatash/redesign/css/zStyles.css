@@ -189,6 +189,9 @@
 /*=====================*/
 /*MY ACCOUNT - PRODUCTS*/
 /*=====================*/
+#myaccount-shopping-cart-table .cart_col6{
+	vertical-align: middle;
+}
 .myaccount-index-index .main{
 	position: static;
 }
@@ -315,7 +318,7 @@
 .acc-products-wrapper table .para-normal{
 	font-size: 15px;
 }
-.acc-products-wrapper table .para-bold{
+.acc-products-wrapper table .para-two{
 	font-size: 18px;
 }
 .mt-new-purchase .mt-purchase-btn button{
@@ -923,7 +926,7 @@
 	display: flex!important;
 	flex-wrap: wrap;
 	flex-direction: column;
-	justify-content: flex-end;
+	/*justify-content: flex-end;*/
    /* max-width: 100%!important;
    width: auto!important;*/
 }
@@ -1690,17 +1693,17 @@
 		.receipts .page-title a{
 			margin-left: 0
 		}
-		.acc-products-wrapper #purchase-history,
+		/* .acc-products-wrapper #purchase-history,
 		.acc-products-wrapper .mt-wishlist-table{
 			overflow-x: auto;
-		}
-		.acc-products-wrapper #myaccount-shopping-cart-table,
+		} */
+		/* .acc-products-wrapper #myaccount-shopping-cart-table,
 		.acc-products-wrapper #wishlist-table,
 		#complete-order-info .order-details table{
 			display: block;
 			width: 150%!important;
 			overflow-x: auto;
-		}
+		} */
 		.acc-products-wrapper #new-mt-myproduct-openorders table th,
 		.acc-products-wrapper #new-mt-myproduct-openorders table td,
 		.acc-products-wrapper #new-mt-myproduct-receipts table th,
@@ -1799,26 +1802,26 @@
 		}
 	}
 	@media(max-width: 480px){
-		.customer-account-edit .popup-content{
+		/* .customer-account-edit .popup-content{
 			padding: 25px;
 		}
 		.cms-store-locations-html .fancybox-outer{
 			padding: 50px 30px;
-		}
-		.acc-products-wrapper .tabcontent .optionfilter dt{
+		} */
+		/* .acc-products-wrapper .tabcontent .optionfilter dt{
 			background-size: 9%!important;
-		}
-		.wishlist-empty, .no-order-msg, .no-purchase-item{
+		} */
+		/* .wishlist-empty, .no-order-msg, .no-purchase-item{
 			margin-top: 20px;
 			padding-left: 0!important;
 		}
 		.no-order-msg{
 			margin-top: 110px!important;
-		}
-		.acc-products-wrapper .optionfilter{
+		} */
+		/* .acc-products-wrapper .optionfilter{
 			position: relative;
-		}
-		.acc-products-wrapper #narrow-by-list-new{
+		} */
+		/* .acc-products-wrapper #narrow-by-list-new{
 			height: auto;
 			display: block;
 		}
@@ -1826,17 +1829,17 @@
 			top: 20px;
 			margin-bottom: 5px;
 			width: 100%;
-		}
-		.acc-products-wrapper .tabcontent .optionfilter dt{
+		} */
+		/* .acc-products-wrapper .tabcontent .optionfilter dt{
 			height: auto;
 			padding: 5px 10px;
-		}
+		} */
 		.new_address .input-box input, .new_address select{
 			width: 100%!important;
 		}
-		.acc-products-wrapper .optionfilter{
+		/* .acc-products-wrapper .optionfilter{
 			padding: 0px 0 0px 3px;
-		}
+		} */
 		.myaccount-index-index .tab button{
 			font-size: 10px;
 		}
@@ -1844,12 +1847,12 @@
 			flex-direction: column;
 			margin-bottom: 20px!important;
 		}
-		.acc-products-wrapper #myaccount-shopping-cart-table,
+		/* .acc-products-wrapper #myaccount-shopping-cart-table,
 		.acc-products-wrapper #wishlist-table{
 			display: block;
 			width: 250%!important;
 			overflow: auto;
-		}
+		} */
 		.acc-products-wrapper #new-mt-myproduct-openorders table th, .acc-products-wrapper #new-mt-myproduct-openorders table td{
 			width: 80px;
 		}
@@ -1951,4 +1954,33 @@
 .catalogsearch-result-index  #narrow-by-list li{
 	padding-left: 0px;
 	padding-right: 8px;
+}
+
+
+
+@media (max-width:767px) {
+	 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2{
+     width: 100%;
+   }
+   .acc-products-wrapper table.data-table, .acc-products-wrapper .data-table tr{
+     display: grid !important;
+   }
+   .desc-cell{
+     padding-left: 0 !important;
+   }
+   .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
+     position: relative;
+   }
+   .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name {
+     padding-right: 0 !important;
+   }
+   .mt-new-purchase .mt-purchase-btn button{
+     height: 40px !important;
+   }
+   #purchase-history .data-table.cart-table td{
+     margin-top: 10px !important;
+   }
+   .acc-products-wrapper table .para-normal{
+     font-size: 13px;
+   }
 }
