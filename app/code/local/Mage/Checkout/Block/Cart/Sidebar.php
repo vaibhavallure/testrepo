@@ -232,6 +232,7 @@ class Mage_Checkout_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Minicart
     {
         if (empty($this->_totals)) {
             $quote = $this->getCustomQuote() ? $this->getCustomQuote() : $this->getQuote();
+            $this->getQuote()->collectTotals();
             $this->_totals = $quote->getTotals();
         }
         return $this->_totals;
