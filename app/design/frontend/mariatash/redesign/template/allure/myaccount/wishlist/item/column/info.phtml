@@ -125,7 +125,7 @@ if($product->getTypeId() =='configurable'){
 
         <div class="flex-box">
 
-            <div class="item para-normal pr-3">
+            <div class="item para-normal pr-3 pt-3">
               <?php foreach ($_options as $_option) : ?>
                 <?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
                 <?php echo $_option['value'] ?>
@@ -207,4 +207,3 @@ if($product->getTypeId() =='configurable'){
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-

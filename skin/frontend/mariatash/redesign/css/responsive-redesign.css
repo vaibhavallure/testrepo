@@ -1350,7 +1350,7 @@
   }
 
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
-  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody{
+  #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody, .mt-myaccount-page .data-table#wishlist-table{
     display: grid;
   }
   #shopping-cart-form thead, .checkout-onepage-index #checkout-review-table thead, .paypal-express-review thead {
