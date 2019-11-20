@@ -650,7 +650,7 @@ if (window.ApplePaySession) {
 				jQuery.each(Allure.ApplePay.data.response.saveBilling.shipping_methods, function(shippingCode, shippingData){
 						Allure.ApplePay.data.shippingMethods.push({
 							identifier: shippingCode,
-							label: shippingData.carrier_title+' / '+shippingData.method_title,
+							label: shippingData.method_title,
 							detail: shippingData.method_title+(shippingData.method_description ? ' - '+shippingData.method_description : ''),
 							amount: shippingData.price
 					});
