@@ -127,7 +127,7 @@ if(strtolower($controllerName) == strtolower("multishipping")){
                                                 $('region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
                                                 //]]>
                                             </script>
-                                			<input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
+                                			<input placeholder="State/Province*" type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-patern <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
                             			</div>
                         			</div>
                     			</li>
@@ -235,6 +235,88 @@ if(strtolower($controllerName) == strtolower("multishipping")){
                             });
                       	});
         		</script>
+        		<script type="text/javascript">
+                    RegionUpdater.prototype._checkRegionRequired = function()
+                    {
+                        var label, wildCard;
+                        var elements = [this.regionTextEl, this.regionSelectEl];
+                        var that = this;
+                        if (typeof this.config == 'undefined') {
+                            return;
+                        }
+                        var regionRequired = this.config.regions_required.indexOf(this.countryEl.value) >= 0;
+                    
+                        elements.each(function(currentElement) {
+                            Validation.reset(currentElement);
+                            label = $$('label[for="' + currentElement.id + '"]')[0];
+                            if (label) {
+                                wildCard = label.down('em') || label.down('span.required');
+                                if (!that.config.show_all_regions) {
+                                    if (regionRequired) {
+                                        label.up().show();
+                                    } else {
+                                        label.up().hide();
+                                    }
+                                }
+                            }
+                    
+                            if (label && wildCard) {
+                                if (!regionRequired) {
+                                    wildCard.hide();
+                                    if (label.hasClassName('required')) {
+                                        label.removeClassName('required');
+                                    }
+                                } else if (regionRequired) {
+                                    wildCard.show();
+                                    if (!label.hasClassName('required')) {
+                                        label.addClassName('required');
+                                    }
+                                }
+                            }
+                    
+                            if (!regionRequired) {
+                                if (currentElement.hasClassName('required-entry')) {
+                                    //currentElement.removeClassName('required-entry');
+                                }
+                                if ('select' == currentElement.tagName.toLowerCase() &&
+                                    currentElement.hasClassName('validate-select')) {
+                                    //currentElement.removeClassName('validate-select');
+                                }
+                            } else {
+                                if (!currentElement.hasClassName('required-entry')) {
+                                    currentElement.addClassName('required-entry');
+                                }
+                                if ('select' == currentElement.tagName.toLowerCase() &&
+                                    !currentElement.hasClassName('validate-select')) {
+                                    currentElement.addClassName('validate-select');
+                                }
+                            }
+                    
+                            if (!currentElement.hasClassName('required-entry')) {
+                                currentElement.addClassName('required-entry');
+                            }
+                            if ('select' == currentElement.tagName.toLowerCase() &&
+                                !currentElement.hasClassName('validate-select')) {
+                                currentElement.addClassName('validate-select');
+                            } 
+                    
+                            if($('country_id')){
+                                if(!$('country_id').hasClassName('validate-select')){
+                                	$('country_id').addClassName('validate-select');
+                                }
+                    
+                                if(!$('region_id').hasClassName('validate-select')){
+                                	$('region_id').addClassName('validate-select');
+                                }
+                    
+                                if(!$('region').hasClassName('required-entry')){
+                                	$('region').addClassName('required-entry');
+                                }
+                            }
+                            
+                        });
+                    }
+                    </script>
 			</div>
 		</div>
 	</div>
