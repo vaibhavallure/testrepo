@@ -348,7 +348,7 @@
 	display: inline-block;
 	margin-right: 30px;
 	font-size: 15px;
-	font-weight: bold;
+	/* font-weight: bold; */
 	font-family: urw-din-regular;
 }
 .acc-products-wrapper .mt-my-wishlist .myaccount-update-wishlist-btn{
@@ -375,7 +375,7 @@
 }
 .acc-products-wrapper .mt-my-wishlist .product-w-mt .fprice .price{
 	font-size: 15px;
-	font-weight: bold;
+	/* font-weight: bold; */
 	font-family: urw-din-regular;
 	margin-right: 6px!important;
 	margin-left: 10px;
@@ -392,7 +392,7 @@
 	border:none;
 	font-family: urw-din-regular;
 	font-size: 18px;
-	font-weight: bold;
+	/* font-weight: bold; */
 	font-size: 18px!important;
 }
 .plus_icon,.minus_icon{
@@ -465,7 +465,6 @@
 	font-size: 13px;
 	font-family: urw-din-bold;
 	text-transform: uppercase;
-	color: #292929;
 	letter-spacing: 1px;
 	opacity: 0.6;
 	margin-bottom: 0;
@@ -1717,7 +1716,7 @@
 		.acc-products-wrapper #new-mt-myproduct-openorders table,
 		.acc-products-wrapper #new-mt-myproduct-receipts table{
 			display: block;
-			width: 200%;
+			width: 500px;
 			overflow: auto;
 		}
 		.dashboard .mt-new-myaccount-dashbord{
@@ -1962,7 +1961,7 @@
 	 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2{
      width: 100%;
    }
-   .acc-products-wrapper table.data-table, .acc-products-wrapper .data-table tr{
+   #myaccount-shopping-cart-table, #myaccount-shopping-cart-table tr{
      display: grid !important;
    }
    .desc-cell{
@@ -1983,4 +1982,11 @@
    .acc-products-wrapper table .para-normal{
      font-size: 13px;
    }
+	 .acc-products-wrapper .optionfilter{
+		 padding: 6px 0 8px 9px;
+	 }
+}
+
+@media (min-width:767px) and (max-width:1024px) {
+
 }
