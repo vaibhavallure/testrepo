@@ -95,6 +95,8 @@ var $updatedCategories=array();
         foreach ($productArray as $sku => $categoryIds) {
             try {
                 $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+                $this->log($sku.":");
+                $this->log($categoryIds);
 
                 if ($product) {
 

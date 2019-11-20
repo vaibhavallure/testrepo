@@ -149,7 +149,7 @@ if(!$product->getId()){
                         ?>
                         <span class="mt-purchase-added-at">Purchased: <?php echo Mage::getModel('core/date')->date('M d, Y h:i a',strtotime($_order->getCreatedAt()));?></span>
                     </div>
-                    <div class="item para-bold">
+                    <div class="item para-two">
                         <?php
                         $ord=Mage::getSingleton('sales/order')->load($_item->getOrderId());
                         echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?>
@@ -167,20 +167,20 @@ if(!$product->getId()){
               </div>
 
   </td>
-<!-- 
+<!--
   <td class="cart_col4">
     <div class="qty-wrap">
-     <!--   <span><?php echo number_format($_item->getQtyOrdered())?></span> 
+     <!--   <span><?php echo number_format($_item->getQtyOrdered())?></span>
  </div>
 </td>
 -->
-<!-- 
+<!--
 <td class="cart_col3">
     <span class="price_multi"></span>
     <span class="price">
            <?php
             $ord=Mage::getSingleton('sales/order')->load($_item->getOrderId());
-            echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?> 
+            echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?>
         </span>
     </td>  -->
 
