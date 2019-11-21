@@ -2,7 +2,7 @@ jQuery(document).ready(function () {
 
 
 
-    if(jQuery("body").hasClass("catalog-product-view") && !jQuery("body").hasClass("quickview-index-index")) {
+    /*if(jQuery("body").hasClass("catalog-product-view") && !jQuery("body").hasClass("quickview-index-index")) {
         jQuery(document)
             .ajaxStart(function () {
                 setLoader();
@@ -10,7 +10,14 @@ jQuery(document).ready(function () {
             .ajaxStop(function () {
                 unsetLoader();
             });
-    }
+    }*/
+
+
+    jQuery(window).bind('beforeunload', function() {
+        setLoader();
+    });
+
+    unsetLoader();
 
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)

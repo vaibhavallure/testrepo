@@ -1,37 +1,73 @@
 <style type="text/css">
-	#map_sucursal_1 {
-		width: 425px;
-		height: 350px;
-	}
+    #map_sucursal_1 {
+        width: 425px;
+        height: 350px;
+    }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" integrity="i0kP64uc/OPhGwhEiMtwfEHNpYOtbpliX3hfAEeTEr8FUgFanDQJK1Mvl84JEwkL" crossorigin="anonymous"></script>
-<div class="container">
-	<div class="piercing-service col-12">
-    <div class="page-title">
-        <h1>PIERCING SERVICES</h1>
+<div class="main-container col1-layout">
+    <div class="main">
+        <div class="col-main">
+            <div id="appointments-popup-wrapper">
+
+                <div id="booking" class="container-fluid booking nopad appointment-container">
+                    <div class="container nopad">
+
+                        <div class="row">
+                            <div class="col-12 col-lg-8" id="booking-wrapper">
+                                <div id="booking-box" class="col-12 booking-box">
+                                    <div class="store-info-wrapper">
+                                        <div class="col-12 p-0 ">
+                                            <div class="row">
+                                                <div class="col-12 store-name"><h1>New York</h1></div>
+                                                <div class="col-12 store-details">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-12">
+                                                            <p class="para-lighter mb-0 store-left">653 Broadway</br>
+                                                                between Bleecker and Bond</br>
+                                                                New York, NY 10012</p>
+                                                            <p class="para-lighter">+1 212 253 0921 Store</br>
+                                                                +1 833 775 TASH Customer Service</p>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-12 store-right text-lg-right">
+                                                            <p class="para-lighter">Monday — Saturday: 10AM - 8PM</br>
+                                                                Sunday: 12 - 7PM</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row walkin-top-text">
+                                        <div class="col-12 mt-3 mb-1">
+                                            <p class="store-walkin">Appointments are currently unavailble at our New York Location. <span class="store-walkin--hl"> Walk-ins are always welcome.</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="banner">
+                                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_banner')->toHtml()?>
+                                    </div>
+                                    <!-- <div class="locations">
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_locations')->toHtml()?>
+            </div> -->
+
+                                    <?php //echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 booking-box " id="desktop-slot">
+                                <div class="pricing">
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_pricing')->toHtml()?>
+                                </div>
+                                <!-- <div class="piercing-at-mariatash">
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_mariatash')->toHtml()?>
+            </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-		<div class="row">
-	    <div class="left-content col-lg-6 col-12">
-	        <div class="banner">
-	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_banner')->toHtml()?>
-	        </div>
-	        <div class="locations">
-	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_locations')->toHtml()?>
-	        </div>
-
-	         <?php //echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
-
-	    </div>
-	    <div class="right-content col-lg-6 col-12">
-	        <div class="pricing">
-	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_pricing')->toHtml()?>
-	        </div>
-	        <div class="piercing-at-mariatash">
-	            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_mariatash')->toHtml()?>
-	        </div>
-	    </div>
-		</div>
-</div>
 </div>
 <style>
     .mapLink{cursor:pointer}
@@ -48,59 +84,59 @@
     }
 </script>
 <script type="text/javascript">
-function initialize() {
-	var geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    var myOptions = {
-        zoom: 14,
-        center: latlng,
-        //mapTypeId: google.maps.MapTypeId.SATELLITE
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
+    function initialize() {
+        var geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var myOptions = {
+            zoom: 14,
+            center: latlng,
+            //mapTypeId: google.maps.MapTypeId.SATELLITE
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
             myOptions);
-	var address = "653 Broadway New York, NY 10012";
-	var contentString1="<p>Venus by Maria Tash, Inc.<br> 653 Broadway<br> (between Bond and Bleeker St)<br> New York, NY 10012<br> 212-253-0921</p>";
-    geocoder.geocode( { 'address': address}, function(results, status) {
-    	var infowindow1 = new google.maps.InfoWindow({
-    content: contentString1
-	});
+        var address = "653 Broadway New York, NY 10012";
+        var contentString1="<p>Venus by Maria Tash, Inc.<br> 653 Broadway<br> (between Bond and Bleeker St)<br> New York, NY 10012<br> 212-253-0921</p>";
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            var infowindow1 = new google.maps.InfoWindow({
+                content: contentString1
+            });
 
-      if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
-        var marker1 = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-       });
-     }
-     google.maps.event.addListener(marker1, 'click', function() {
-  infowindow1.open(map,marker1);
-});
-google.maps.event.addDomListener(document.getElementById("address1"), 'click', function(){
-	google.maps.event.trigger(marker1, 'click');
-});
-});
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker1 = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            }
+            google.maps.event.addListener(marker1, 'click', function() {
+                infowindow1.open(map,marker1);
+            });
+            google.maps.event.addDomListener(document.getElementById("address1"), 'click', function(){
+                google.maps.event.trigger(marker1, 'click');
+            });
+        });
 
-	var address = "31 Ave A New York, NY 10009";
-	var contentString2="<p>Venus Body Arts, Inc.<br> 31 Ave A<br> (between 2nd and 3rd St)<br> New York, NY 10009<br> 212-473-1954</p>";
-    geocoder.geocode( { 'address': address}, function(results, status) {
-    	    	var infowindow2 = new google.maps.InfoWindow({
-    content: contentString2
-	});
+        var address = "31 Ave A New York, NY 10009";
+        var contentString2="<p>Venus Body Arts, Inc.<br> 31 Ave A<br> (between 2nd and 3rd St)<br> New York, NY 10009<br> 212-473-1954</p>";
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            var infowindow2 = new google.maps.InfoWindow({
+                content: contentString2
+            });
 
-      if (status == google.maps.GeocoderStatus.OK) {
-        map.setCenter(results[0].geometry.location);
-        var marker2 = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-       });
-     }
-     google.maps.event.addListener(marker2, 'click', function() {
-  infowindow2.open(map,marker2);
-  });
-  google.maps.event.addDomListener(document.getElementById("address2"), 'click', function(){
-	google.maps.event.trigger(marker2, 'click');
-});
-});
-}
-google.maps.event.addDomListener(window, "load", initialize);
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker2 = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            }
+            google.maps.event.addListener(marker2, 'click', function() {
+                infowindow2.open(map,marker2);
+            });
+            google.maps.event.addDomListener(document.getElementById("address2"), 'click', function(){
+                google.maps.event.trigger(marker2, 'click');
+            });
+        });
+    }
+    google.maps.event.addDomListener(window, "load", initialize);
 </script>

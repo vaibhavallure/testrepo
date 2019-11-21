@@ -11,8 +11,13 @@
     <div class="row">
         <div class="col-12 ">
             <div class="row">
-                <?php $counter=1; foreach($looks as $look):
-                    ?><div class="col-12 col-md-6 col-lg-4 celeb-img-block" id="<?php echo $counter; $counter++ ?>"  >
+                <?php $counter=1;
+
+                $c=1;
+                foreach($looks as $look):
+
+
+                    ?><div class="col-12 col-md-6 col-lg-4 celeb-img-block <?= "slot-".$c?> <?= ($counter>6)? "d-none" : "";?>" id="<?php echo $counter; $counter++ ?>"  >
                             <div  class="shop_by_look-img" style="background: url(<?=$look['img'];?>);" data-img="<?=$look['img'];?>" data-product_count="<?= count($look['products'])?>">
                                 <div class="products d-none">
                                     <?php
@@ -37,7 +42,11 @@
                                 </div>
                             </div>
                     </div>
-                    <?php  endforeach; ?>
+                    <?php
+                    if($counter%7==0){
+                        $c++;
+                    }
+                endforeach; ?>
             </div>
         </div>
     </div>
@@ -80,6 +89,22 @@
 </div>
 <script>
     jQuery(document).ready(function() {
+         var slot=1;
+        jQuery(window).scroll(function() {
+            if (jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()) {
+              slot++;
+
+              if(jQuery(".slot-"+slot).length)
+              jQuery(".slot-"+slot).removeClass("d-none");
+
+            }
+        });
+
+
+
+
+
+
         jQuery(".shop_by_look-img").on('click', function () {
 
             unScrollBody();
@@ -88,7 +113,7 @@
             jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto","z-index":"1"});
             jQuery(".celeb-loader").show();
             setImg(jQuery(this).attr("data-img"));
-            if(parseInt(jQuery(this).attr('data-product_count'))>4)
+            if(parseInt(jQuery(this).attr('data-product_count'))>3)
                 jQuery(".shop_by_look .product-info").addClass("scroll");
             else
                 jQuery(".shop_by_look .product-info").removeClass("scroll");

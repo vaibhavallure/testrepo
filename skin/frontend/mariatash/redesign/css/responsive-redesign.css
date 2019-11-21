@@ -551,6 +551,13 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
+  #search {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 68px;
+  }
+  
 }
 
 /*All ipads*/
@@ -917,6 +924,10 @@
   .over-img-right{
     right: 26px !important;
     width: 40% !important;
+  }
+  #search {
+    background: #292929;
+    top: 135px;
   }
 }
 

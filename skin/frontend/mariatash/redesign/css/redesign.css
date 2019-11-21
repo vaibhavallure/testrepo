@@ -2096,6 +2096,7 @@ div#narrow-by-list {
 }
 .faq-image-section img {
   padding-right: 20px;
+	width:100%;
 }
 /*Gift Card FAQ*/
 .gift-card-main .faq-image-section img {
@@ -3060,6 +3061,10 @@ ul.tabs li{
 .celebPopup .product-info {
   position: absolute;
   bottom: 0;
+
+}
+.shop_by_look .celebPopup .product-info{
+	width: 100%;
 }
 .ecp-celebrities-index-index .product-name {
   margin-bottom: 7px;
@@ -3810,7 +3815,8 @@ table thead {
 	padding: 48px 46px 48px 49px!important;
 }
 .shop_by_look .product-info.scroll{
-	height: 433px;
+	/*height: 433px;*/
+	height: 100%;
 	overflow-x: hidden;
   overflow-y: auto;
 }
@@ -3955,8 +3961,8 @@ table thead {
 	width: 222px;
 	height: auto;
 	background: #fff;
-	height: 253px;
-  overflow: scroll;
+	/* height: 253px;
+  overflow: scroll; */
 	padding-top: 6px;
 	left: -24px;
 	border: 1px solid #000;
