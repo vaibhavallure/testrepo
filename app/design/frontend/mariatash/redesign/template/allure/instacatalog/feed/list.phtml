@@ -484,13 +484,15 @@ jQuery(document).ready(function(){
 </script>
 
 <script type="text/javascript">
-  var xhr = null;
+    jQuery('.loader').css({"display":"none"});
+
+    var xhr = null;
   var page = 2;
   var totalPages = <?php echo $totalPageSize?>;
   jQuery(window).scroll(function(){
    if(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()){
     if(page<=totalPages){
-     jQuery('.loader').css({"display":"block"});
+        setLoader();
      if( xhr == null ) {
 			    //xhr.abort();
 			    //xhr = null;
@@ -503,6 +505,7 @@ jQuery(document).ready(function(){
            success: function(data) {
 			        	//instagram_posts
 			        	jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
+			        	unsetLoader();
 			        }
            });
 
