@@ -18,18 +18,18 @@ class Ecp_Sizechart_Block_Adminhtml_Sizechart_Edit_Tab_Form extends Mage_Adminht
           'class'     => 'required-entry',
           'required'  => true,
           'name'      => 'title',
-      ));    
-      
-     $wysiwygConfig = Mage::getSingleton('cms/wysiwyg_config')->getConfig();
-     
-      $wysiwygConfig->setDirectivesUrl(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getDirectivesUrl()));
+      ));
+
+      $wysiwygConfig = Mage::getSingleton('cms/wysiwyg_config')->getConfig();
+      $adminKey= (Mage::getBaseUrl()=="https://www.mariatash.com/index.php/")? 'MariaTashGOadmin' : 'admin';
+      $wysiwygConfig->setDirectivesUrl(str_replace('ecpsizechart',$adminKey,$wysiwygConfig->getDirectivesUrl()));
       $plugins = $wysiwygConfig->getPlugins();
       $plugins[0]['options']['onclick']['subject'] = str_replace('ecpsizechart','admin',$plugins[0]['options']['onclick']['subject']);
-      $plugins[0]['options']['url'] = str_replace('ecpsizechart','MariaTashGOadmin',$plugins[0]['options']['url']);
+      $plugins[0]['options']['url'] = str_replace('ecpsizechart',$adminKey,$plugins[0]['options']['url']);
       $wysiwygConfig->setPlugins($plugins);
-      $wysiwygConfig->setDirectivesUrlQuoted(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getDirectivesUrlQuoted()));
-      $wysiwygConfig->setFilesBrowserWindowUrl(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getFilesBrowserWindowUrl()));
-      $wysiwygConfig->setWidgetWindowUrl(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getWidgetWindowUrl()));
+      $wysiwygConfig->setDirectivesUrlQuoted(str_replace('ecpsizechart',$adminKey,$wysiwygConfig->getDirectivesUrlQuoted()));
+      $wysiwygConfig->setFilesBrowserWindowUrl(str_replace('ecpsizechart',$adminKey,$wysiwygConfig->getFilesBrowserWindowUrl()));
+      $wysiwygConfig->setWidgetWindowUrl(str_replace('ecpsizechart',$adminKey,$wysiwygConfig->getWidgetWindowUrl()));
       
       $fieldset->addField('block_content', 'editor', array(
           'name'      => 'block_content',
