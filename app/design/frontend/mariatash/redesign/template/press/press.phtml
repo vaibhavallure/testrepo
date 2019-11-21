@@ -72,14 +72,14 @@
     });
 
     function load() {
-        jQuery(".scroll-loader").show();
+        setLoader();
         jQuery.post(pressActionUrl,
             {
                 page: current_page
             },
             function(data, status){
                 setList(JSON.parse(data));
-                jQuery(".scroll-loader").hide();
+                unsetLoader();
                 current_page++;
             });
     }
