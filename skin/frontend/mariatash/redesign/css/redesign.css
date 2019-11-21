@@ -2180,7 +2180,10 @@ button#signin-btn-popup, .sign-in-register {
   height: 40px;
 }
 .option-text p {
-	margin: 42px 0 18px;
+	margin: 0 0 18px;
+}
+.soc-login-btn {
+  margin-bottom: 28px;
 }
 .new_account a{
 	margin: 32px 0 45px;
@@ -4724,7 +4727,9 @@ td.cart_col2 {
 .category-new-york-by-walk-in-only .breadcrumbs{
 	display: none;
 }
-
+.social-media li img {
+  width: 20px;
+}
 /****By Indrajet******/
 .search-autocomplete{
 	max-height: 500px !important;
