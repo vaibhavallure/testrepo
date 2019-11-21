@@ -3063,7 +3063,6 @@ ul.tabs li{
 
 }
 .shop_by_look .celebPopup .product-info{
-	height: 100%;
 	width: 100%;
 }
 .ecp-celebrities-index-index .product-name {
@@ -3815,7 +3814,8 @@ table thead {
 	padding: 48px 46px 48px 49px!important;
 }
 .shop_by_look .product-info.scroll{
-	height: 433px;
+	/*height: 433px;*/
+	height: 100%;
 	overflow-x: hidden;
   overflow-y: auto;
 }
