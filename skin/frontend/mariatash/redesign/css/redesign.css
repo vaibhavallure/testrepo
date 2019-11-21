@@ -66,6 +66,15 @@ h4{
 	font-family: urw-din-regular;
 	color: rgba(41,41,41,0.90);
 }
+#fancybox-loading{
+	background: none!important;
+	margin-left: -125px!important;
+}
+#fancybox-loading div {
+	width: 300px!important;
+	height: 50px!important;
+	background: url("../images/vmt_loader.gif") center center no-repeat!important;
+}
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
@@ -3137,7 +3146,7 @@ ul.tabs li{
 .scroll-loader{
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 30%;
 }
 .pressPopup .pop-up-cover{
   width: 731px;
