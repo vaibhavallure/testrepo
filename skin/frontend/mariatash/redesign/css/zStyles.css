@@ -2030,3 +2030,130 @@
 		left: 44%;
 		position: absolute;
 	}
+
+
+	/*Appointment Page : Indrajeet Latthe*/
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .people-wrapper,
+	.store-info-wrapper {
+		border-bottom: 1px solid #d8d8d8;
+	}
+
+
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .store-name {
+		margin-bottom: 7px;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .store-details {
+		margin-bottom: 3px;
+	}
+
+	@media (min-width: 767px) and (max-width: 1024px) {
+		.store-right {
+			text-align: right !important;
+		}
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.appointments-book-store
+	h1 {
+		font-size: 30px;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .store-walkin {
+		font-family: urw-din-XLight;
+		font-size: 13px;
+		color: rgba(41, 41, 41, 0.9);
+		letter-spacing: 0.25px;
+		line-height: 17px;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html span.store-walkin--hl {
+		font-family: urw-din-Medium;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .tabla_piercing {
+		border: 1px solid #f2f2f2;
+		background: #f2f2f2;
+		width: auto;
+		margin: 0 auto;
+		padding: 29px 23px 0;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.information-section-desktop {
+		display: block;
+	}
+	@media (max-width: 1023px) {
+		.information-section-desktop {
+			display: none;
+		}
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.general-piercing-information {
+		margin-top: 47px;
+	}
+	.general-piercing-information p {
+		text-align: justify;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .piercing-service td {
+		border-bottom: none;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html tr.tr-piercing {
+		border: none;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html tr.tr-piercing td span,
+	tr.tr-piercing td {
+		font-family: urw-din-xlight;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-piercing-name {
+		width: 78%;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-piercing-name {
+		text-align: left;
+
+		border: none !important;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-piercing-name {
+		padding-bottom: 8px;
+	}
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-price {
+		text-align: end;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html div#booking-wrapper {
+		padding: 0;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .text-uppercase {
+		text-transform: uppercase !important;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.appointment-container {
+		max-width: 1208px !important;
+		margin: 0 auto;
+		margin-top: 42px;
+	}
+
+
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .walkin-top-text {
+		/*margin: 1rem 0rem 0rem 1rem;*/
+	}
+
+	@media only screen and (max-width: 375px) {
+
+		.categorypath-appointments-new-york-by-walk-in-only-html div#booking-wrapper {
+			padding: 0;
+			margin-bottom: 2rem;
+		}
+	}
