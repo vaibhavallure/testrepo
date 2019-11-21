@@ -40,22 +40,38 @@
         //]]>
         </script>
         <script>
-            jQuery(document).ready(function(){
+            jQuery(document).ready(function(){              
+              if(jQuery('body').hasClass('mobile-device')) {
+                jQuery("#cross-icon").hide();
+                let crossIconObj = jQuery('#cross-icon');
+                jQuery('#search-input').after(crossIconObj)
+                jQuery(crossIconObj).removeClass('position-absolute')
+                jQuery(crossIconObj).css('margin-top','6px')
+              }
+
               jQuery("#search-icon").click(function(){
+                if(jQuery('body').hasClass('mobile-device')) {
+                  jQuery("#cross-icon").show();
+                }
+                
                 jQuery(this).hide();
 
                   if (jQuery(window).width() <= 1366) {
                       jQuery("ul.allure-menu").addClass("search-active");
                         }
-                  jQuery("#search-input").show();
+                  jQuery("#search-input").show(500);
               });
 
             jQuery("#cross-icon").click(function(){
+              if(jQuery('body').hasClass('mobile-device')) {
+                jQuery("#cross-icon").hide();
+              }
+              
                 if (jQuery(window).width() <= 1366) {
                     jQuery("ul.allure-menu").removeClass("search-active");
                 }
                 jQuery('#search_autocomplete').hide();
-                jQuery("#search-input").hide();
+                jQuery("#search-input").hide(500);
               jQuery("#search-icon").show();
             });
 });

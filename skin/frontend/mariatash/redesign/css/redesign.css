@@ -3946,8 +3946,8 @@ table thead {
 	width: 222px;
 	height: auto;
 	background: #fff;
-	height: 253px;
-  overflow: scroll;
+	/* height: 253px;
+  overflow: scroll; */
 	padding-top: 6px;
 	left: -24px;
 	border: 1px solid #000;
