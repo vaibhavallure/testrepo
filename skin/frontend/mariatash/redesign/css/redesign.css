@@ -3060,6 +3060,11 @@ ul.tabs li{
 .celebPopup .product-info {
   position: absolute;
   bottom: 0;
+
+}
+.shop_by_look .celebPopup .product-info{
+	height: 100%;
+	width: 100%;
 }
 .ecp-celebrities-index-index .product-name {
   margin-bottom: 7px;
