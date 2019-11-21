@@ -13,11 +13,11 @@ echo "<pre>";
 
 /** @var array $columns matches atttribute code*/
 $columns = array(
-    'entity_id',
-    'path',
-    'name',
-    'description',
-    'is_anchor',
+    "entity_id",
+    "path",
+    "name",
+    "description",
+    "is_anchor",
     "all_children",
     "assigned_lengths",
     "available_sort_by",
@@ -74,7 +74,7 @@ $categories = Mage::getResourceModel('catalog/category_collection')
 foreach ($categories as $category) {
     $row = array();
     foreach ($columns as $column) {
-        $row[] = trim(stripslashes($category->getData($column)));
+        $row[$column] = trim(stripslashes($category->getData($column)));
     }
     $data[] = $row;
 }
