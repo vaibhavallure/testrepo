@@ -316,6 +316,7 @@ Additional block dependant on product type
         <label>Catalog Product View (Configurable)</label>
         <reference name="head">
             <action method="addJs"><script>prototype/simulate.js</script></action>
+            <action method="addJs"><script>amasty/amstockstatusxnotif/configurable.js</script></action>
         </reference>
         <reference name="product.info">
             <block type="catalog/product_view_type_configurable" name="product.info.configurable" as="product_type_data" template="catalog/product/view/type/default.phtml">

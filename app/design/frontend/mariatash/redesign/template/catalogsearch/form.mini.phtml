@@ -44,14 +44,14 @@
               jQuery("#search-icon").click(function(){
                 jQuery(this).hide();
 
-                  if (jQuery(window).width() <= 1366) {
+                  if (jQuery(window).width() <= 1440) {
                       jQuery("ul.allure-menu").addClass("search-active");
                         }
                   jQuery("#search-input").show();
               });
 
             jQuery("#cross-icon").click(function(){
-                if (jQuery(window).width() <= 1366) {
+                if (jQuery(window).width() <= 1440) {
                     jQuery("ul.allure-menu").removeClass("search-active");
                 }
                 jQuery('#search_autocomplete').hide();

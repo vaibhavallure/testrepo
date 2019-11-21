@@ -73,7 +73,7 @@
 	margin-top: 60px;
 }
 .locations-wrapper{
-	padding-bottom: 180px;
+	/*padding-bottom: 180px;*/
 }
 .locations-wrapper .section,
 .locations-wrapper .section-even{
@@ -1990,3 +1990,43 @@
 @media (min-width:767px) and (max-width:1024px) {
 
 }
+	/*For Store Location Page*/
+	.wrap-new-york,
+	.wrap-new-dubai,
+	.wrap-new-liberty,
+	.wrap-new-harrods,
+	.wrap-new-rome,
+	.wrap-new-dublin {
+		position:relative;
+	}
+	.wrap-new-york .after-wrap,
+	.wrap-new-dubai .after-wrap,
+	.wrap-new-liberty .after-wrap,
+	.wrap-new-harrods .after-wrap,
+	.wrap-new-rome .after-wrap,
+	.wrap-new-dublin .after-wrap{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display:none;
+		text-align: center;
+	}
+
+	.wrap-new-york:hover .after-wrap,
+	.wrap-new-dubai:hover .after-wrap,
+	.wrap-new-liberty:hover .after-wrap,
+	.wrap-new-harrods:hover .after-wrap,
+	.wrap-new-rome:hover .after-wrap,
+	.wrap-new-dublin:hover .after-wrap{
+		display:block;
+		background-color: rgba(41,41,41,0.6);
+
+	}
+
+	.img-container-360 {
+		top: 40%;
+		left: 44%;
+		position: absolute;
+	}
