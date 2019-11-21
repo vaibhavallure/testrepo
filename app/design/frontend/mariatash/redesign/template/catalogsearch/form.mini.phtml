@@ -56,18 +56,18 @@
                 
                 jQuery(this).hide();
 
-                  if (jQuery(window).width() <= 1366) {
+                  if (jQuery(window).width() <= 1440) {
                       jQuery("ul.allure-menu").addClass("search-active");
                         }
-                  jQuery("#search-input").show(500);
+                  jQuery("#search-input").show();
+                  jQuery("#search").focus();
               });
 
             jQuery("#cross-icon").click(function(){
               if(jQuery('body').hasClass('mobile-device')) {
                 jQuery("#cross-icon").hide();
               }
-              
-                if (jQuery(window).width() <= 1366) {
+                if (jQuery(window).width() <= 1440) {
                     jQuery("ul.allure-menu").removeClass("search-active");
                 }
                 jQuery('#search_autocomplete').hide();
