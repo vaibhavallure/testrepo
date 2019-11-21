@@ -37,14 +37,14 @@ examples on what kind of actions can be applied to referenced blocks.
 		<reference name="content"> <!-- find left column block -->
 			<remove name="catalogsearch.leftnav"/> <!-- remove standard layered navigation -->
             <remove name="enterprisesearch.leftnav"/> <!-- remove enterprise layered navigation -->
-            <block type="mana_filters/search" name="mana.catalogsearch.leftnav" before="-" template="catalog/layer/view.phtml"/>
+<!--            <block type="mana_filters/search" name="mana.catalogsearch.leftnav" before="-" template="catalog/layer/view.phtml"/>-->
 		</reference>
 		<reference name="head">
 			<action method="addCss"><stylesheet>css/mana_filters.css</stylesheet></action>
 		</reference>
-        <reference name="mana.catalogsearch.leftnav">
-            <action method="setTemplate" ifconfig="mana_filters/advanced/enabled"><template>manapro/filteradvanced/view.phtml</template></action>
-        </reference>
+<!--        <reference name="mana.catalogsearch.leftnav">-->
+<!--            <action method="setTemplate" ifconfig="mana_filters/advanced/enabled"><template>manapro/filteradvanced/view.phtml</template></action>-->
+<!--        </reference>-->
 	</catalogsearch_result_index>
 	<cms_page_layered>
 		<reference name="left_first"> <!-- find left column block -->
