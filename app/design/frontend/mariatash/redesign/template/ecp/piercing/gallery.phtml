@@ -99,10 +99,17 @@
                 var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
             }
             if (condition) {
-              slot++;
+                setLoader();
+                slot++;
 
               if(jQuery(".slot-"+slot).length)
               jQuery(".slot-"+slot).removeClass("d-none");
+
+                setTimeout(
+                    function()
+                    {
+                        unsetLoader();
+                    }, 3000);
 
             }
         });
