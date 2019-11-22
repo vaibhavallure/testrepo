@@ -283,6 +283,7 @@ jQuery(document).ready(function () {
             jQuery('#menu-btn').removeClass("change");
             jQuery('body').removeClass("fancybox-lock");
             jQuery(".menu_overlay").addClass("d-none");
+            jQuery('section.sub-menu').hide();
         }
         });
 
