@@ -236,8 +236,6 @@
 	top: 0!important;
 }
 .acc-products-wrapper .optionfilter{
-	position: absolute;
-	left: 0;
 	background: white;
 	border: 1px solid rgba(41, 41, 41, 0.9);
 	max-height: 200px;
@@ -254,7 +252,7 @@
 	background: url(../images/arrow_down.png) no-repeat right center transparent !important;
 	background-size: 15%!important;
 	background-position: right;
-	margin-right: 10px;
+	margin-right: 0px;
 	padding-top: 0;
 	font-family: urw-din-xlight;
 	font-size: 12px;
@@ -1976,9 +1974,9 @@
    .acc-products-wrapper table .para-normal{
      font-size: 13px;
    }
-	 .acc-products-wrapper .optionfilter{
-		 padding: 6px 0 8px 9px;
-	 }
+	.acc-products-wrapper .optionfilter{
+	 padding: 5px;
+	}
 }
 
 @media (min-width:767px) and (max-width:1024px) {
