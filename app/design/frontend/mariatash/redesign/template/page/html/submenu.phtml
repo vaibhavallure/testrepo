@@ -22,7 +22,7 @@ if($this->isthumbnailCat($pc->getName())){
                                     ?>
     <div class="col-lg col-12 piercing_options"> <a href="/<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
     <div class="image-text text-center">
-      <h6 class="text-uppercase text-white"><?= $child->getName()?></h6>
+      <h6 class="text-uppercase text-white"><?= $this->__($child->getName())?></h6>
     </div>
     </a></div>
              <?php } ?>
@@ -34,7 +34,7 @@ if($this->isthumbnailCat($pc->getName())){
         ?>
         <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-appointment-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
                                   <div class="text-right submenu-upper-section d-lg-none d-block">
-                                      <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
+                                      <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($this->__($pc->getName())) ?></a></span>
                                     <span class="close-section ">Back</span>
                                   </div>
             <div class="row piercing-inner">
@@ -46,14 +46,14 @@ if($this->isthumbnailCat($pc->getName())){
                                     if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
                                         continue;
 
-                                    if ($this->isJwRightSectionCat($child->getName())) {
+                                    if ($this->isJwRightSectionCat($this->__($child->getName()))) {
                                         $childRightSection[] = $child;
                                         continue;
                                     }
                                     ?>
                                     <div class="common-option-div" id="c-<?= $child->getId() ?>">
                                         <div class="menu-head jwl-head text-uppercase">
-                                            <span><a href="/<?= $child->getRequestPath() ?>"><?= $child->getName(); ?></a></span>
+                                            <span><a href="/<?= $child->getRequestPath() ?>"><?= $this->__($child->getName()); ?></a></span>
                                         </div>
                                         <div class="head-child">
                                             <ul class="p-0">
@@ -62,7 +62,7 @@ if($this->isthumbnailCat($pc->getName())){
                                                         continue;
                                                     ?>
                                                     <li class=""><a
-                                                                href="/<?= $child2->getRequestPath() ?>"><?= $child2->getName() ?></a>
+                                                                href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
                                                     </li>
                                                 <?php } ?>
                                             </ul>
@@ -77,7 +77,7 @@ if($this->isthumbnailCat($pc->getName())){
                             <a href="/<?= $childR->getRequestPath() ?>">
                                 <div class="col-md col-12 p-0 text-center special-menu">
                                     <img width="228px" src="<?= $this->getCatThumbnail($childR->getId()) ?>">
-                                    <div class="product-name image-text"><h6 class="text-uppercase text-white"><?= $childR->getName() ?></h6></div>
+                                    <div class="product-name image-text"><h6 class="text-uppercase text-white"><?= $this->__($childR->getName()); ?></h6></div>
                                 </div>
                             </a>
                         <?php } ?>

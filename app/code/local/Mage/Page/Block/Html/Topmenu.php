@@ -131,7 +131,7 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
 
             $html .= '<li  data-id="'.str_replace(" ","_",strtolower($child->getName())).'"' . $this->_getRenderedMenuItemAttributes($child) . '>';
             $html .= '<a href="' . $child->getUrl() . '" ' . $outermostClassCode . '><span>'
-                . $this->escapeHtml($child->getName()) . '</span></a>';
+                . $this->escapeHtml($this->__($child->getName())) . '</span></a>';
 
 
             $html .= '</li>';
