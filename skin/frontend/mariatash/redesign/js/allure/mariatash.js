@@ -277,6 +277,19 @@ jQuery(document).ready(function () {
     /*----------------mobile menu js-----------------------*/
 
 
+    jQuery('html').click(function() {
+        if(jQuery('.mobile-main_menu').hasClass('active')) {
+            jQuery('.mobile-main_menu').removeClass('active');
+            jQuery('#menu-btn').removeClass("change");
+            jQuery('body').removeClass("fancybox-lock");
+            jQuery(".menu_overlay").addClass("d-none");
+            jQuery('section.sub-menu').hide();
+        }
+        });
+
+    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section').click(function(event){
+        event.stopPropagation();
+    });
     jQuery("#menu-btn").on("click", function () {
         if (jQuery('.mobile-main_menu').hasClass('active')) {
             jQuery('section.sub-menu').hide();
