@@ -21,66 +21,66 @@
 ?>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <?php
-    $post_type = "account";//Mage::getStoreConfig('allure_instacatalog/feed/feed_type');
-    $user_id = Mage::getStoreConfig('allure_instacatalog/feed/user_id');
-    $access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
-    $filter_post = Mage::getStoreConfig('allure_instacatalog/feed/filter_feed');
-    $limit = Mage::getStoreConfig('allure_instacatalog/feed/limit');
-    $link_posts = 1;//Mage::getStoreConfig('allure_instacatalog/feed_features/link_feeds');
-    $caption = 1;//Mage::getStoreConfig('allure_instacatalog/feed_features/caption');
-    $likes_count = 0;// Mage::getStoreConfig('allure_instacatalog/feed_features/likes_count');
-    $comment_count = 0;// Mage::getStoreConfig('allure_instacatalog/feed_features/comment_count');
+$post_type = "account";//Mage::getStoreConfig('allure_instacatalog/feed/feed_type');
+$user_id = Mage::getStoreConfig('allure_instacatalog/feed/user_id');
+$access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
+$filter_post = Mage::getStoreConfig('allure_instacatalog/feed/filter_feed');
+$limit = Mage::getStoreConfig('allure_instacatalog/feed/limit');
+$link_posts = 1;//Mage::getStoreConfig('allure_instacatalog/feed_features/link_feeds');
+$caption = 1;//Mage::getStoreConfig('allure_instacatalog/feed_features/caption');
+$likes_count = 0;// Mage::getStoreConfig('allure_instacatalog/feed_features/likes_count');
+$comment_count = 0;// Mage::getStoreConfig('allure_instacatalog/feed_features/comment_count');
 
-    $tagname = 0;//Mage::getStoreConfig('allure_instacatalog/feed/tag_name');
-    $client_id = Mage::getStoreConfig('allure_instacatalog/feed/client_id');
-    $resolution = "low_resolution";//Mage::getStoreConfig('allure_instacatalog/feed_features/resolution');
-    $filter_feeds = 1;//Mage::getStoreConfig('allure_instacatalog/feed/filter_feeds');
+$tagname = 0;//Mage::getStoreConfig('allure_instacatalog/feed/tag_name');
+$client_id = Mage::getStoreConfig('allure_instacatalog/feed/client_id');
+$resolution = "low_resolution";//Mage::getStoreConfig('allure_instacatalog/feed_features/resolution');
+$filter_feeds = 1;//Mage::getStoreConfig('allure_instacatalog/feed/filter_feeds');
 
-    //Mage::getModel('allure_instacatalog/cron')->syncFeeds();
-    $totalPageSize = $this->getFeeds()->getLastPageNumber();
-    ?>
-    <?php
-	/* $date = Mage::getModel('allure_instacatalog/feed');
-	$collection = $date->getCollection();
-	$localData = array();
+//Mage::getModel('allure_instacatalog/cron')->syncFeeds();
+$totalPageSize = $this->getFeeds()->getLastPageNumber();
+?>
+<?php
+/* $date = Mage::getModel('allure_instacatalog/feed');
+$collection = $date->getCollection();
+$localData = array();
 
-	foreach($collection as $date_to) {
-		$localData[$date_to->getMediaId()] = $date_to->getData();
-	} */
-  ?>
+foreach($collection as $date_to) {
+    $localData[$date_to->getMediaId()] = $date_to->getData();
+} */
+?>
 
- <!--  ===START HERE=== -->
+<!--  ===START HERE=== -->
 
-  <div id="shop_our_instagram" class="container">
+<div id="shop_our_instagram" class="container">
     <h1>@mariatash</h1>
-   <script type="text/javascript">
-		//var localData = {};
-		<?php //if (isset($localData) && !empty($localData)):?>
-		//localData = <?php echo json_encode($localData);?>;
-		<?php //endif;?>
-	</script>
-	<script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'allure/instacatalog/instafeed.js';?>"></script>
+    <script type="text/javascript">
+        //var localData = {};
+        <?php //if (isset($localData) && !empty($localData)):?>
+        //localData = <?php echo json_encode($localData);?>;
+        <?php //endif;?>
+    </script>
+    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'allure/instacatalog/instafeed.js';?>"></script>
 
-  <?php if(0 && !$filter_feeds): ?>
-   <div class="shop-instagram page-title category-title">
-    <h1>SHOP OUR INSTAGRAM</h1>
-  </div>
-  <div id="instagram_posts" class="instacatalog_feeds instagram_posts"></div>
-  <div id="load-more">Load More...</div>
-  <script type="text/javascript">
+    <?php if(0 && !$filter_feeds): ?>
+        <div class="shop-instagram page-title category-title">
+            <h1>SHOP OUR INSTAGRAM</h1>
+        </div>
+        <div id="instagram_posts" class="instacatalog_feeds instagram_posts"></div>
+        <div id="load-more">Load More...</div>
+        <script type="text/javascript">
 
-   <?php $instagram_logo = $this->getSkinUrl('images/instacatalog/instagram-logo.png');?>
-   var instagram_post = instagram_post_image = instagram_caption = instagram_shop = instagram_shop_icon = instagram_shop_button = '';
-   instagram_post_image = '<div class="instagram_post_image"><img src="{{image}}" /></div>';
-    	instagram_shop_icon = '<div><i onclick="instagramView.show(this);" media-id="{{id}}" class="fa fa-instagram"></i></div>';//'<img class="instagram_shop_icon" src="<?php echo $instagram_logo;?>" alt="Instagram" />'
-      <?php if($link_posts){ ?>
-        instagram_shop_button = '<a id="shop-{{id}}" class="instagram_shop_button" href="{{link}}" target="_blank"><span class="shop-it-button">SHOP IT</span></a>';
-      <?php } ?>
-      <?php if($caption){?>
-       instagram_caption = '<div class="instagram_caption"><span class="instagram_caption_text">{{caption}}</span></div>';
-     <?php }?>
-     instagram_shop = '<div class="instagram_shop">'+instagram_shop_icon+instagram_shop_button+'</div>';
-     instagram_post = '\
+            <?php $instagram_logo = $this->getSkinUrl('images/instacatalog/instagram-logo.png');?>
+            var instagram_post = instagram_post_image = instagram_caption = instagram_shop = instagram_shop_icon = instagram_shop_button = '';
+            instagram_post_image = '<div class="instagram_post_image"><img src="{{image}}" /></div>';
+            instagram_shop_icon = '<div><i onclick="instagramView.show(this);" media-id="{{id}}" class="fa fa-instagram"></i></div>';//'<img class="instagram_shop_icon" src="<?php echo $instagram_logo;?>" alt="Instagram" />'
+            <?php if($link_posts){ ?>
+            instagram_shop_button = '<a id="shop-{{id}}" class="instagram_shop_button" href="{{link}}" target="_blank"><span class="shop-it-button">SHOP IT</span></a>';
+            <?php } ?>
+            <?php if($caption){?>
+            instagram_caption = '<div class="instagram_caption"><span class="instagram_caption_text">{{caption}}</span></div>';
+            <?php }?>
+            instagram_shop = '<div class="instagram_shop">'+instagram_shop_icon+instagram_shop_button+'</div>';
+            instagram_post = '\
      <div id="main_{{id}}" class="instagram-post individual-post col-sm-4 col-xs-6 col-xxs-12 post_item {{post_item_class}}">\
      <div class="instagram_post_wrapper">\
      '+ instagram_post_image +'\
@@ -90,50 +90,50 @@
      '+'\
      </div>\
      </div>';
-     var loadButton = document.getElementById('load-more');
+            var loadButton = document.getElementById('load-more');
 
-     <?php if ($post_type=='account') :?>
-      var feed = new Instafeed({
-        target:"instagram_posts",
-        get: 'user',
-        userId: "<?php echo $user_id; ?>",
-        accessToken: "<?php echo $access_token; ?>",
-        limit : "<?php echo $limit; ?>",
-        resolution : "<?php echo $resolution ?>",
-        template: instagram_post,
-        localData: localData,
-        after: function() {
-                // disable button if no more results to load
-                if (!this.hasNext()) {
-                  loadButton.setAttribute('disabled', 'disabled');
+            <?php if ($post_type=='account') :?>
+            var feed = new Instafeed({
+                target:"instagram_posts",
+                get: 'user',
+                userId: "<?php echo $user_id; ?>",
+                accessToken: "<?php echo $access_token; ?>",
+                limit : "<?php echo $limit; ?>",
+                resolution : "<?php echo $resolution ?>",
+                template: instagram_post,
+                localData: localData,
+                after: function() {
+                    // disable button if no more results to load
+                    if (!this.hasNext()) {
+                        loadButton.setAttribute('disabled', 'disabled');
+                    }
                 }
-              }
             });
-      <?php elseif ($post_type == 'hashtag') :?>
-        var feed = new Instafeed({
-          target:"instagram_posts",
-          get: 'tagged',
-          tagName: "<?php echo $tagname; ?>",
-          clientId: "<?php echo $client_id; ?>",
-          limit : "<?php echo $limit; ?>",
-          resolution : "<?php echo $resolution ?>",
-          template: instagram_post,
-          localData: localData
-        });
-      <?php endif;?>
+            <?php elseif ($post_type == 'hashtag') :?>
+            var feed = new Instafeed({
+                target:"instagram_posts",
+                get: 'tagged',
+                tagName: "<?php echo $tagname; ?>",
+                clientId: "<?php echo $client_id; ?>",
+                limit : "<?php echo $limit; ?>",
+                resolution : "<?php echo $resolution ?>",
+                template: instagram_post,
+                localData: localData
+            });
+            <?php endif;?>
 
-        // bind the load more button
-        loadButton.addEventListener('click', function() {
-        	feed.next();
-        });
-        <?php if($post_type=='account' || $post_type=='hashtag'){ ?>feed.run();<?php }?>
-      </script>
-      <?php else: ?>
+            // bind the load more button
+            loadButton.addEventListener('click', function() {
+                feed.next();
+            });
+            <?php if($post_type=='account' || $post_type=='hashtag'){ ?>feed.run();<?php }?>
+        </script>
+    <?php else: ?>
         <?php $_posts = $this->getFeeds(); ?> <!--/ Fetches only the selected posts from backend -->
         <?php if ($_posts->getSize() > 0) :?>
-          <?php if(0):?>
-            <div class="post-list-container">
-              <?php foreach ($_posts as $_post) : ?>
+        <?php if(0):?>
+        <div class="post-list-container">
+            <?php foreach ($_posts as $_post) : ?>
                 <?php
                 $mediaId = $_post->getMediaId();
                 /* Call Instagram API */
@@ -150,294 +150,294 @@
                 echo '<div class="instagram-post">';
                 if($link_posts){ echo '<a href="" target="_blank"><img class="quickview_overlay" src="'.$image.'"/></a>'; }else{ echo '<img class="quickview_overlay" src="'.$image.'"/>'; }
                 if($caption){
-                  echo '<span class="insta_caption">'.$insta_caption.'</span>';
+                    echo '<span class="insta_caption">'.$insta_caption.'</span>';
                 }if($likes_count){
-                                //echo '<span class="insta_likes"> '.$likes.' Likes </span>';
+                    //echo '<span class="insta_likes"> '.$likes.' Likes </span>';
                 }if($comment_count){
-                                //echo '<span class="insta_comment"> '.$comments.' Comments</span>';
+                    //echo '<span class="insta_comment"> '.$comments.' Comments</span>';
                 }
                 echo '</div>';
                 ?>
-              <?php endforeach;?>
-            </div>
-          <?php endif;?>
+            <?php endforeach;?>
+        </div>
+    <?php endif;?>
 
-          <div id="fs_640691" style="" class="fs-wide-timeline  fs-desktop fs-wrapper fs-showcase_v2">
+        <div id="fs_640691" style="" class="fs-wide-timeline  fs-desktop fs-wrapper fs-showcase_v2">
 
             <!-- START HERE -->
             <div id="fs-timeline-640691" class="fs-timeline">
-              <?php foreach ($_posts as $_post) :
-            		$mediaId = $_post->getId();//getMediaId();
-            		$username = $_post->getUsername();
-            		$class_css = "post_item_without_link";
-            		/* if (strpos($username,'instagram') !== false)  */
-            		if($_post->getProductCount()>0)
-            			$class_css = "post_item_with_link";
+                <?php foreach ($_posts as $_post) :
+                    $mediaId = $_post->getId();//getMediaId();
+                    $username = $_post->getUsername();
+                    $class_css = "post_item_without_link";
+                    /* if (strpos($username,'instagram') !== false)  */
+                    if($_post->getProductCount()>0)
+                        $class_css = "post_item_with_link";
 
-            		$instagramObj = @unserialize($_post->getInstagramData());
+                    $instagramObj = @unserialize($_post->getInstagramData());
 
-            		$shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
-            		$createDate = $_post->getCreatedTimestamp();
-            		if($createDate!=null){
-            			$createDate = date('F d, Y', $createDate);
-            		}
+                    $shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
+                    $createDate = $_post->getCreatedTimestamp();
+                    if($createDate!=null){
+                        $createDate = date('F d, Y', $createDate);
+                    }
 
-            		$_options = json_decode($_post->getHotspots());
-            		$points = "";
-            		$productsLinks = "";
-            		$numberOfProducts = 0;
-            		foreach ($_options as $option){
-            			$sku = $option->text;
-            			$numberOfProducts += 1;
-            			$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-            			if(empty($product))
-                   continue;
-                 $productName = $product->getName();
-                 $productId = $product->getId();
+                    $_options = json_decode($_post->getHotspots());
+                    $points = "";
+                    $productsLinks = "";
+                    $numberOfProducts = 0;
+                    foreach ($_options as $option){
+                        $sku = $option->text;
+                        $numberOfProducts += 1;
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        if(empty($product))
+                            continue;
+                        $productName = $product->getName();
+                        $productId = $product->getId();
 
-                 $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                 $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-                 $productUrl = $product->getProductUrl();
-                 if(!is_null($parentId)){
-                  $productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-                }
+                        $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+                        $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+                        $productUrl = $product->getProductUrl();
+                        if(!is_null($parentId)){
+                            $productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+                        }
 
-                $points .= '<a data-original-url="'.$productUrl.'"';
-                $points .= ' href="'.$productUrl.'" target="_blank">';
-                $points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
-                $points .= ' data-link-id="'.$productId.'" ';
-                $points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/$option->imgH).'%; left:'.(($option->left*100)/$option->imgW).'%;">';
-                $points .= '<div>'.$numberOfProducts.'</div>';
-                $points .= '<div class="fs-overlink-text fs-overlink-text-right">';
-                $points .= '<div class="fs-arrow-up"></div>';
-                $points .= '" '.$productName.'</div></div></a>';
+                        $points .= '<a data-original-url="'.$productUrl.'"';
+                        $points .= ' href="'.$productUrl.'" target="_blank">';
+                        $points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
+                        $points .= ' data-link-id="'.$productId.'" ';
+                        $points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/$option->imgH).'%; left:'.(($option->left*100)/$option->imgW).'%;">';
+                        $points .= '<div>'.$numberOfProducts.'</div>';
+                        $points .= '<div class="fs-overlink-text fs-overlink-text-right">';
+                        $points .= '<div class="fs-arrow-up"></div>';
+                        $points .= '" '.$productName.'</div></div></a>';
 
                         $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId()));
 
-                $productsLinks .= '<div class="fs-text-link-container ">';
-                $productsLinks .= '<a class="fs-text-product fs-link-list" ';
-                $productsLinks .= 'data-original-url="'.$productUrl.'"';
-                $productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
-                $productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
+                        $productsLinks .= '<div class="fs-text-link-container ">';
+                        $productsLinks .= '<a class="fs-text-product fs-link-list" ';
+                        $productsLinks .= 'data-original-url="'.$productUrl.'"';
+                        $productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
+                        $productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
 
-                $productsLinks .= '<span class="fs-link-text-number para-bold">'.$numberOfProducts.'</span> <span class="fs-slashes"></span> ';
-                $productsLinks .= '<span class="fs-link-text para-bold"> '.$productName.' </span></span>';
-                $productsLinks.='<div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="'.$quickViewUrl.'sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
+                        $productsLinks .= '<span class="fs-link-text-number para-bold">'.$numberOfProducts.'</span> <span class="fs-slashes"></span> ';
+                        $productsLinks .= '<span class="fs-link-text para-bold"> '.$productName.' </span></span>';
+                        $productsLinks.='<div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="'.$quickViewUrl.'sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
                                   <div class="quick_link link-button d-block d-xs-block d-md-block d-xl-none"><a href="'.$product->getProductUrl().'" >Quick View</a></div> ';
 
 
 
-                $productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
-              }
-              ?>
+                        $productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
+                    }
+                    ?>
 
-              <div class="fs-entry-container">
-               <div id="fs-post-<?php echo $mediaId?>" class="fs-timeline-entry" onclick="instagramView.show(this);" media-id="<?php echo $mediaId?>"
-                style="cursor: pointer; background-image: url(<?php echo $_post->getStandardResolution()?>);">
-                <div class="fs-text-container">
-                 <div class="fs-service-icon">
-                  <i media-id="<?php echo $mediaId?>" class="fs-icon fs-fa-instagram"></i>
-                </div>
-                <span id="shop-<?php echo $mediaId?>" class="instagram_shop_button <?php echo $class_css?>" target="_blank">
+                    <div class="fs-entry-container">
+                        <div id="fs-post-<?php echo $mediaId?>" class="fs-timeline-entry" onclick="instagramView.show(this);" media-id="<?php echo $mediaId?>"
+                             style="cursor: pointer; background-image: url(<?php echo $_post->getStandardResolution()?>);">
+                            <div class="fs-text-container">
+                                <div class="fs-service-icon">
+                                    <i media-id="<?php echo $mediaId?>" class="fs-icon fs-fa-instagram"></i>
+                                </div>
+                                <span id="shop-<?php echo $mediaId?>" class="instagram_shop_button <?php echo $class_css?>" target="_blank">
                  <span class="shop-it-button">SHOP IT</span>
                </span>
 
-               <div style="display: none;" id="details-insta-<?php echo $mediaId?>"
-                data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
-                data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
-                <div id="insta-caption-<?php echo $mediaId?>" style="display: none;"><?php echo (json_decode($_post->getCaption())!="")?json_decode($_post->getCaption()):$_post->getCaption()?></div>
-                <div id="insta-product-mark-<?php echo $mediaId?>" style="display: none;"><?php echo $points ?></div>
-                <div id="insta-product-details-<?php echo $mediaId?>" style="display: none;"><?php echo $productsLinks ?></div>
-              </div>
+                                <div style="display: none;" id="details-insta-<?php echo $mediaId?>"
+                                     data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
+                                     data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
+                                    <div id="insta-caption-<?php echo $mediaId?>" style="display: none;"><?php echo (json_decode($_post->getCaption())!="")?json_decode($_post->getCaption()):$_post->getCaption()?></div>
+                                    <div id="insta-product-mark-<?php echo $mediaId?>" style="display: none;"><?php echo $points ?></div>
+                                    <div id="insta-product-details-<?php echo $mediaId?>" style="display: none;"><?php echo $productsLinks ?></div>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+
+                <?php endforeach;?>
             </div>
-          </div>
         </div>
 
-      <?php endforeach;?>
-    </div>
-  </div>
 
+    <?php else : ?>
+        <?php echo Mage::helper('allure_instacatalog')->__('There are no posts at this moment');?>
+    <?php endif;?>
 
-  <?php else : ?>
-    <?php echo Mage::helper('allure_instacatalog')->__('There are no posts at this moment');?>
-  <?php endif;?>
-
-<?php endif; ?>
+    <?php endif; ?>
 </div>
 
 <style>
-  .loader {
-    height: 20px;
-    width: 250px;
-    position: absolute;
-  /* top: 0;
-  bottom: 0; */
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-.loader--dot {
-  animation-name: loader;
-  animation-timing-function: ease-in-out;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  height: 20px;
-  width: 20px;
-  border-radius: 100%;
-  background-color: black;
-  position: absolute;
-  border: 2px solid white;
-}
-.loader--dot:first-child {
-  background-color: #8cc759;
-  animation-delay: 0.5s;
-}
-.loader--dot:nth-child(2) {
-  background-color: #8c6daf;
-  animation-delay: 0.4s;
-}
-.loader--dot:nth-child(3) {
-  background-color: #ef5d74;
-  animation-delay: 0.3s;
-}
-.loader--dot:nth-child(4) {
-  background-color: #f9a74b;
-  animation-delay: 0.2s;
-}
-.loader--dot:nth-child(5) {
-  background-color: #60beeb;
-  animation-delay: 0.1s;
-}
-.loader--dot:nth-child(6) {
-  background-color: #fbef5a;
-  animation-delay: 0s;
-}
-.loader--text {
-  position: absolute;
-  top: 200%;
-  left: 0;
-  right: 0;
-  width: 4rem;
-  margin: auto;
-}
-.loader--text:after {
-  content: "Loading";
-  font-weight: bold;
-  animation-name: loading-text;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-}
-@keyframes loader {
-  15% {
-    transform: translateX(0);
-  }
-  45% {
-    transform: translateX(230px);
-  }
-  65% {
-    transform: translateX(230px);
-  }
-  95% {
-    transform: translateX(0);
-  }
-}
-@keyframes loading-text {
-  0% {
-    content: "Loading";
-  }
-  25% {
-    content: "Loading.";
-  }
-  50% {
-    content: "Loading..";
-  }
-  75% {
-    content: "Loading...";
-  }
-}
+    .loader {
+        height: 20px;
+        width: 250px;
+        position: absolute;
+        /* top: 0;
+        bottom: 0; */
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    .loader--dot {
+        animation-name: loader;
+        animation-timing-function: ease-in-out;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        height: 20px;
+        width: 20px;
+        border-radius: 100%;
+        background-color: black;
+        position: absolute;
+        border: 2px solid white;
+    }
+    .loader--dot:first-child {
+        background-color: #8cc759;
+        animation-delay: 0.5s;
+    }
+    .loader--dot:nth-child(2) {
+        background-color: #8c6daf;
+        animation-delay: 0.4s;
+    }
+    .loader--dot:nth-child(3) {
+        background-color: #ef5d74;
+        animation-delay: 0.3s;
+    }
+    .loader--dot:nth-child(4) {
+        background-color: #f9a74b;
+        animation-delay: 0.2s;
+    }
+    .loader--dot:nth-child(5) {
+        background-color: #60beeb;
+        animation-delay: 0.1s;
+    }
+    .loader--dot:nth-child(6) {
+        background-color: #fbef5a;
+        animation-delay: 0s;
+    }
+    .loader--text {
+        position: absolute;
+        top: 200%;
+        left: 0;
+        right: 0;
+        width: 4rem;
+        margin: auto;
+    }
+    .loader--text:after {
+        content: "Loading";
+        font-weight: bold;
+        animation-name: loading-text;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes loader {
+        15% {
+            transform: translateX(0);
+        }
+        45% {
+            transform: translateX(230px);
+        }
+        65% {
+            transform: translateX(230px);
+        }
+        95% {
+            transform: translateX(0);
+        }
+    }
+    @keyframes loading-text {
+        0% {
+            content: "Loading";
+        }
+        25% {
+            content: "Loading.";
+        }
+        50% {
+            content: "Loading..";
+        }
+        75% {
+            content: "Loading...";
+        }
+    }
 
 </style>
 
 <div class='loader'>
-  <div class='loader--dot'></div>
-  <div class='loader--dot'></div>
-  <div class='loader--dot'></div>
-  <div class='loader--dot'></div>
-  <div class='loader--dot'></div>
-  <div class='loader--dot'></div>
-  <div class='loader--text'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--dot'></div>
+    <div class='loader--text'></div>
 </div>
 
 
 <div id="instagram-view-container">
-	<div id="showcase" class="fs-wide-timeline  fs-desktop fs-prepended-detail" style="display: none;" >
-		<div id="fs-timeline-detail-592364" class="fs-timeline-detail">
-			<div id="fs-instagram-view-container" class="fs-detail-outer-container ">
-				<div class="instagram-loader"></div>
+    <div id="showcase" class="fs-wide-timeline  fs-desktop fs-prepended-detail" style="display: none;" >
+        <div id="fs-timeline-detail-592364" class="fs-timeline-detail">
+            <div id="fs-instagram-view-container" class="fs-detail-outer-container ">
+                <div class="instagram-loader"></div>
 
-				<div id="fs-detail-response" class="fs-detail-container "
-				data-resource-url="<?php //echo $feedModel->getUsername()?>">
-				<div class="fs-detail-content">
-					<div class="fs-detail-left">
-						<div class="fs-image-container" style="position: relative;">
-							<img class="fs-detail-image" id="fs_main_image"
-								src="<?php //echo $feedModel->getStandardResolution()
-//$feedModel->getImage()?>">
-<?php //echo $points?>
-<div id="point-mark"></div>
-<p><?php //echo json_encode($instagramObj) ?></p>
-</div>
-</div>
-<div class="fs-detail-right">
+                <div id="fs-detail-response" class="fs-detail-container "
+                     data-resource-url="<?php //echo $feedModel->getUsername()?>">
+                    <div class="fs-detail-content">
+                        <div class="fs-detail-left">
+                            <div class="fs-image-container" style="position: relative;">
+                                <img class="fs-detail-image" id="fs_main_image"
+                                     src="<?php //echo $feedModel->getStandardResolution()
+                                     //$feedModel->getImage()?>">
+                                <?php //echo $points?>
+                                <div id="point-mark"></div>
+                                <p><?php //echo json_encode($instagramObj) ?></p>
+                            </div>
+                        </div>
+                        <div class="fs-detail-right">
 
-  <div class="fs-detail-nav-bar-arrows">
-    <?php if(1):?>
-     <a class="fs-detail-nav-button" id="fs-prev-post">
-      <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-        <g><path class="fs-arrow" fill="none" stroke-width="1px" d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#222"></path>
-        </g>
-      </svg>
-    </a>
+                            <div class="fs-detail-nav-bar-arrows">
+                                <?php if(1):?>
+                                    <a class="fs-detail-nav-button" id="fs-prev-post">
+                                        <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                                            <g><path class="fs-arrow" fill="none" stroke-width="1px" d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#222"></path>
+                                            </g>
+                                        </svg>
+                                    </a>
 
-    <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
-      <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-      xmlns:svg="http://www.w3.org/2000/svg">
-      <g>
-       <path class="fs-arrow" stroke="#222" id="fs-left-path"
-       d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
-     </a>
-   <?php endif;?>
-   <div class="fs-detail-nav-bar-close">
-    <a class="fs-detail-nav-button" id="fs-detail-close" onclick="closeView(this);"><svg
-      width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-      xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
-      stroke="#222" class="fs-arrow" stroke-width="1px" fill="none">   <path
-      d="m0,0l30,30"></path>   <path d="m30,0l-30,30"></path></g></svg></a>
-    </div>
-    <div style="clear: both;"></div>
-  </div>
-  <div class="fs-products-title fs-plural-products"></div>
+                                    <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
+                                        <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:svg="http://www.w3.org/2000/svg">
+                                            <g>
+                                                <path class="fs-arrow" stroke="#222" id="fs-left-path"
+                                                      d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
+                                    </a>
+                                <?php endif;?>
+                                <div class="fs-detail-nav-bar-close">
+                                    <a class="fs-detail-nav-button" id="fs-detail-close" onclick="closeView(this);"><svg
+                                                width="30" height="30" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
+                                                                                           stroke="#222" class="fs-arrow" stroke-width="1px" fill="none">   <path
+                                                        d="m0,0l30,30"></path>   <path d="m30,0l-30,30"></path></g></svg></a>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="fs-products-title fs-plural-products"></div>
 
-  <?php //echo $productsLinks?>
-  <div id="product-info"></div>
+                            <?php //echo $productsLinks?>
+                            <div id="product-info"></div>
 
-  <div class="fs-divider"></div>
-  <div style="clear: both;"></div>
-   <div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
+                            <div class="fs-divider"></div>
+                            <div style="clear: both;"></div>
+                            <div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
 
-  <div class="fs-post-info para-normal">
-    <span class="fs-service-username para-normal float-left">#mariatash</span>
-   <!--  <span class="fs-slashes">//</span> INSTAGRAM <span
-    class="fs-slashes">//</span> -->
-   <div class="wrap text-right">
-      <span class="fs-detail-date para-normal"><?php //echo $createDate?></span>
+                            <div class="fs-post-info para-normal">
+                                <span class="fs-service-username para-normal float-left">#mariatash</span>
+                                <!--  <span class="fs-slashes">//</span> INSTAGRAM <span
+                                 class="fs-slashes">//</span> -->
+                                <div class="wrap text-right">
+                                    <span class="fs-detail-date para-normal"><?php //echo $createDate?></span>
 
-    <span class="share_link_icon"><img alt="" src="<?php echo Mage::getDesign()->getSkinUrl('images/icons8-link-26.png');?>"><?php //echo $createDate?></span>
-   </div>
-</div>
+                                    <span class="share_link_icon"><img alt="" src="<?php echo Mage::getDesign()->getSkinUrl('images/icons8-link-26.png');?>"><?php //echo $createDate?></span>
+                                </div>
+                            </div>
 
-<!-- <div class="fs-detail-shares">
+                            <!-- <div class="fs-detail-shares">
  <a id="insta-facebook" class="fs-share fs-facebook-share"
  href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php //echo $shareUrl ?>/&amp;p[image]=<?php //echo $feedModel->getStandardResolution()?>"
  target="_blank"><i class="fa fa-facebook"></i>
@@ -460,26 +460,26 @@ href="<?php //echo $shareUrl ?>/"
 target="_blank"><i class="fa fa-link"></i>
 </a>
 </div> -->
-</div>
-</div>
-</div>
-<div class="fs-buy-container fs-unslid"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fs-buy-container fs-unslid"></div>
 
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
-//<![CDATA[
-var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
-	//]]>
+    //<![CDATA[
+    var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
+    //]]>
 </script>
 
 <script>
-//temp
-jQuery(document).ready(function(){
-	jQuery('.category-products').hide();
-});
+    //temp
+    jQuery(document).ready(function(){
+        jQuery('.category-products').hide();
+    });
 
 </script>
 
@@ -487,96 +487,100 @@ jQuery(document).ready(function(){
     jQuery('.loader').css({"display":"none"});
 
     var xhr = null;
-  var page = 2;
-  var totalPages = <?php echo $totalPageSize?>;
-  jQuery(window).scroll(function(){
-   if(jQuery('body').hasClass('mobile-device'))
-   {
-       var condition=((jQuery(this).scrollTop()+150) > jQuery(document).height() - jQuery(window).height());
-   }else {
-       var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
-   }
-      if(condition){
-    if(page<=totalPages){
-        setLoader();
-     if( xhr == null ) {
-			    //xhr.abort();
-			    //xhr = null;
-         xhr =	jQuery.ajax({
-           async: false,
-           url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreAjax';?>',
-           dataType : 'json',
-           type : 'POST',
-           data: {'page':page},
-           success: function(data) {
-			        	//instagram_posts
-			        	jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
-			        	unsetLoader();
-			        }
-           });
+    var page = 2;
+    var totalPages = <?php echo $totalPageSize?>;
+    jQuery(window).scroll(function(){
+        if(jQuery('body').hasClass('mobile-device'))
+        {
+            var condition=((jQuery(this).scrollTop()+150) > jQuery(document).height() - jQuery(window).height());
+        }else {
+            var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+        }
+        if(condition){
+            if(page<=totalPages){
+                setLoader();
+                if( xhr == null ) {
+                    //xhr.abort();
+                    //xhr = null;
+                    xhr =	jQuery.ajax({
+                        async: false,
+                        url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreAjax';?>',
+                        dataType : 'json',
+                        type : 'POST',
+                        data: {'page':page},
+                        success: function(data) {
+                            //instagram_posts
+                            jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
+                            setTimeout(
+                                function()
+                                {
+                                    unsetLoader();
+                                }, 2000);
+                        }
+                    });
 
-         xhr = null;
-         page ++;
-       }
-     }else{
-      jQuery('.loader').css({"display":"none"});
-    }
-  }
-});
+                    xhr = null;
+                    page ++;
+                }
+            }else{
+                jQuery('.loader').css({"display":"none"});
+            }
+        }
+    });
 </script>
 
 
 <script>
-	jQuery(document).ready(function(){
-		jQuery('#showcase.fs-text-product').hover(function(){
-			var id = jQuery(this).attr('data-link-id');
-			var selector = jQuery('#fs_overlink_'+id);
-			selector.css("opacity", "1");
-			selector.find('.fs-overlink-text').css(
-       {"opacity":"1","display":"block"});
-   }, function(){
-    var id = jQuery(this).attr('data-link-id');
-    var selector = jQuery('#fs_overlink_'+id);
-    selector.css("opacity", "");
-    selector.find('.fs-overlink-text').css(
-     {"opacity":"","display":""});
-  });
+    jQuery(document).ready(function(){
+        jQuery('#showcase.fs-text-product').hover(function(){
+            var id = jQuery(this).attr('data-link-id');
+            var selector = jQuery('#fs_overlink_'+id);
+            selector.css("opacity", "1");
+            selector.find('.fs-overlink-text').css(
+                {"opacity":"1","display":"block"});
+        }, function(){
+            var id = jQuery(this).attr('data-link-id');
+            var selector = jQuery('#fs_overlink_'+id);
+            selector.css("opacity", "");
+            selector.find('.fs-overlink-text').css(
+                {"opacity":"","display":""});
+        });
 
-		jQuery('.fs-overlink').hover(function(){
-			var id = jQuery(this).attr('data-link-id');
-			console.log(id);
-			var selector = jQuery('#fs_link_'+id);
-			//selector.css("opacity", "1");
-			selector.css(
-       {"background-color":"#222","color":"#fff"});
-   }, function(){
-    var id = jQuery(this).attr('data-link-id');
-    var selector = jQuery('#fs_link_'+id);
-	    	//selector.css("opacity", "");
-	    	selector.css(
-         {"background-color":"","color":""});
-      });
+        jQuery('.fs-overlink').hover(function(){
+            var id = jQuery(this).attr('data-link-id');
+            console.log(id);
+            var selector = jQuery('#fs_link_'+id);
+            //selector.css("opacity", "1");
+            selector.css(
+                {"background-color":"#222","color":"#fff"});
+        }, function(){
+            var id = jQuery(this).attr('data-link-id');
+            var selector = jQuery('#fs_link_'+id);
+            //selector.css("opacity", "");
+            selector.css(
+                {"background-color":"","color":""});
+        });
 
-		jQuery("#fs-prev-post").click(function(){
-			var mediaId = jQuery(this).attr('media-id');
-			jQuery('#fs-post-'+mediaId).trigger('click');
-		});
+        jQuery("#fs-prev-post").click(function(){
+            var mediaId = jQuery(this).attr('media-id');
+            jQuery('#fs-post-'+mediaId).trigger('click');
+        });
 
-		jQuery("#fs-next-post").click(function(){
-			var mediaId = jQuery(this).attr('media-id');
-			jQuery('#fs-post-'+mediaId).trigger('click');
-		});
+        jQuery("#fs-next-post").click(function(){
+            var mediaId = jQuery(this).attr('media-id');
+            jQuery('#fs-post-'+mediaId).trigger('click');
+        });
 
-	});
-	function showView(e){
-		jQuery('#showcase').show();
-	}
-	function closeView(e){
-		jQuery('#showcase').hide();
-		scrollBody();
-		//jQuery('#fs-detail-response').remove();
-		//jQuery('#fs-instagram-view-container').html('<div class="instagram-loader"></div>');
-	}
+    });
+    function showView(e){
+        jQuery('#showcase').show();
+    }
+    function closeView(e){
+        jQuery('#showcase').hide();
+        scrollBody();
+        //jQuery('#fs-detail-response').remove();
+        //jQuery('#fs-instagram-view-container').html('<div class="instagram-loader"></div>');
+    }
 
 
     jQuery.noConflict();
@@ -590,7 +594,7 @@ jQuery(document).ready(function(){
         scrolling: 'yes',
         loop: false,
         wrapCSS: 'fancybox-sample-size',
-      helpers: {
+        helpers: {
             title: null
         },
         margin: [20, 60, 20, 60], // Increase left/right margin
