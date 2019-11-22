@@ -35,28 +35,8 @@
        if(empty($optionslist))
            $optionslist=$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
        else 
-           $optionslist=$optionslist.str_repeat("&nbsp;", 10).$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
+           $optionslist=$optionslist.'<br/>'.$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
         ?>
-            <?php if (0 && !$this->getPrintStatus()): //allure add 0?>
-                <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
-                    <?php echo $_formatedOptionValue['value'] ?>
-                    <?php if (isset($_formatedOptionValue['full_view'])): ?>
-                    <div class="truncated_full_value">
-                        <dl class="item-options">
-                            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-                            <dd><?php echo strtolower($_formatedOptionValue['full_view']) ?></dd>
-                        </dl>
-                    </div>
-                    <?php endif; ?>
-                </dd>
-            <?php else: ?>
-            	<?php if(0): //allure add?>
-                <dd>
-                    <?php echo nl2br($this->htmlEscape( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) )) ?>
-                </dd>
-                <?php endif;?>
-            <?php endif; ?>
         <?php endforeach; ?>
         <dt><?php echo $optionslist;?></dt>
         </dl>
@@ -95,7 +75,7 @@
         <?php endif;?>
     </td>
     <td class="a-center nobr-sku para-noromal"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
-    <td class="a-center print-price">
+    <td class="a-center print-price order-item-row-price">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -211,24 +191,13 @@
             </span>
         <?php endif; ?>
     </td>
-    <td class="a-center">
+    <td class="a-center order-item-row-qty">
         <span class="nobr">
+        	<strong class="d-md-none d-lg-none d-xl-none">x &nbsp;&nbsp;</strong>
             <strong><?php echo $this->getItem()->getQtyOrdered()*1 ?></strong><br />
-                <!--<?php // if ($this->getItem()->getQtyOrdered() > 0): ?>
-            <?php // echo $this->__('Ordered'); ?>: <strong><?php // echo $this->getItem()->getQtyOrdered()*1 ?></strong><br />
-        <?php // endif; ?>
-        <?php // if ($this->getItem()->getQtyShipped() > 0): ?>
-            <?php // echo $this->__('Shipped'); ?>: <strong><?php // echo $this->getItem()->getQtyShipped()*1 ?></strong><br />
-        <?php // endif; ?>
-        <?php // if ($this->getItem()->getQtyCanceled() > 0): ?>
-            <?php // echo $this->__('Canceled'); ?>: <strong><?php // echo $this->getItem()->getQtyCanceled()*1 ?></strong><br />
-        <?php // endif; ?>
-        <?php // if ($this->getItem()->getQtyRefunded() > 0): ?>
-            <?php // echo $this->__('Refunded'); ?>: <strong><?php // echo $this->getItem()->getQtyRefunded()*1 ?></strong><br />
-        <?php // endif; ?>-->
         </span>
     </td>
-    <td class="a-center print-price">
+    <td class="a-center print-price order-item-row-total">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -346,13 +315,5 @@
             </span>
         <?php endif; ?>
     </td>
-    <!--
-    <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
-    <th class="a-right"><?php echo $this->getOrder()->formatPrice($this->getItem()->getRowTotal()) ?></th>
-    <?php endif; ?>
-    <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceInclTax()): ?>
-    <th class="a-right"><?php echo $this->getOrder()->formatPrice($this->helper('checkout')->getSubtotalInclTax($this->getItem())); ?></th>
-    <?php endif; ?>
-    -->
 </tr>
 
