@@ -115,13 +115,13 @@ if($product->getTypeId() =='configurable'){
     <h2 class="product-name para-normal">
         <a href="<?php echo $productUrl; ?>" title="<?php echo $this->escapeHtml($defaultProduct->getName()) ?>"><?php echo $this->escapeHtml($defaultProduct->getName()) ?></a>
     </h2>
-    <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
     <?php
     $helper = Mage::helper('catalog/product_configuration');
-    if($item->getProduct()->getTypeId() == "configurable"):
+    
+    if ($item->getProduct()->getTypeId() == "configurable") {
         $_options = $helper->getConfigurableOptions($item);
-    ?>
-    <?php if ($_options):?>
+        ?>
+    	<?php if ($_options):?>
 
         <div class="flex-box">
 
@@ -131,74 +131,41 @@ if($product->getTypeId() =='configurable'){
                 <?php echo $_option['value'] ?>
                   <?= "<br>"?>
             <?php endforeach; ?>
-        </div>
+        	</div>
 
-        <div class="item">
-            <div class="flex-box">
-                <div class="item">
-                 <?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
-             </div>
-             <div class="flex-box qty-wrap">
-                 <?php if(0):?>
-                    <input type="text" class="input-text qty validate-not-negative-number" name="qty[<?php echo $item->getId() ?>]" value="<?php echo (int) $item->getData('qty'); ?>"/>
-                    <input type="hidden" class="item_id"value="<?php echo $item->getId() ?>"/>
-                <?php endif;?>
-
-                <div class="minus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-                    <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', -1 )" class="minus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">-</span></button>
-                </div>
-                <div class="qty-wrap">
-                    <input data-item-id="<?php echo $item->getId() ?>" id="qtyid_<?php echo $item->getId() ?>" name="cart[<?php echo $item->getId() ?>][qty]" value="<?php echo (int) $item->getData('qty')?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
-                    <input type="hidden" value="<?php echo (int) $item->getData('qty')?>"/>
-                </div>
-                <div class="plus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-                    <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', 1 )" class="plus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">+</span></button>
-                </div>
-
+			<div class="item pt-3 d-none d-md-block d-lg-block d-xl-block">
+            <?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
+         	</div>
+         	
+        	<div class="item pt-3">
+             	<div class="flex-box qty-wrap">
+                    <div class="minus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+                        <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', -1 )" class="minus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">-</span></button>
+                    </div>
+                    <div class="qty-wrap">
+                        <input data-item-id="<?php echo $item->getId() ?>" id="qtyid_<?php echo $item->getId() ?>" name="cart[<?php echo $item->getId() ?>][qty]" value="<?php echo (int) $item->getData('qty')?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+                        <input type="hidden" value="<?php echo (int) $item->getData('qty')?>"/>
+                    </div>
+                    <div class="plus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+                        <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', 1 )" class="plus-btn" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"><span class="quantity-count">+</span></button>
+                    </div>
+            	</div>
             </div>
+            <div class="item pt-3 fprice">
+               <?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
+           	</div>
         </div>
-    </div>
-    <div class="item fprice">
-       <?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
-   </div>
-</div>
-
-<?php endif;?>
-<?php endif;?>
+    
+    	<?php endif;?>
+    <?php }?>
 <div class="flex-box">
     <div class="item para-normal">
         <span class="mt-wishlist-added-at">
             <?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?>
         </span>
     </div>
-
 </div>
-
 </td>
-
-
-
-
-
-<!-- <td class="mt-myaccount-subtotal">
-    <?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
-</td> -->
-
-<!--****-->
-
-<!-- <td class="ad-wish-mt">
-    <textarea placeholder="Please, enter your comments..." class="ecp-wishlist-description" name="description[<?php echo $item->getWishlistItemId() ?>]" rows="3"
-              cols="5"  maxlength="45"
-              title="<?php echo $this->__('Comment') ?>"><?php echo($this->escapeHtml($item->getDescription())) ?></textarea>
-
-    <div class="charsRemaining">You have 45 characters left</div>
-</td> -->
-
-<?php if(0):?>
-    <td class="date-wish">
-        <span><?php echo date('m/d/y', strtotime($item->getAddedAt())); ?></span>
-    </td>
-<?php endif;?>
 
 <?php if ($this->getSortedChildren()): ?>
     <div class="item-manage">
