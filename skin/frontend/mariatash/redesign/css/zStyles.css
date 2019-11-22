@@ -154,9 +154,9 @@
 	width: 100%;
 	margin-right: 10px;
 }
-.dashboard .flex-row .flex-item .img-wrap{
+/* .dashboard .flex-row .flex-item .img-wrap{
 	height: 253px;
-}
+} */
 .dashboard h1{
 	padding-top: 50px;
 	margin-bottom: 20px;
@@ -180,9 +180,9 @@
 	letter-spacing: 1px;
 	font-family: urw-din-regular;
 }
-.dashboard .flex-row .flex-item img{
+/* .dashboard .flex-row .flex-item img{
 	height: 100%;
-}
+} */
 .dashboard .mt-new-myaccount-dashbord{
 	padding: 0 75px;
 }

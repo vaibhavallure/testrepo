@@ -12,6 +12,14 @@ jQuery(document).ready(function () {
             });
     }*/
 
+    jQuery('input[type=text]').on('keyup', function(event) {
+        var $this = jQuery(this),
+            val = $this.val();
+        if(!$this.hasClass("validate-email"))
+            val = val.charAt(0).toUpperCase() + val.slice(1);
+        
+        $this.val(val);
+    });
 
     jQuery(window).bind('beforeunload', function() {
         setLoader();
