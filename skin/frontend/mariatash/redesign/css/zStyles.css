@@ -296,12 +296,6 @@
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	margin-bottom: 0;
 }
-.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
-	width: 102px;
-	height: 102px;
-	object-fit: cover;
-	background: transparent;
-}
 .acc-products-wrapper table tr{
 	padding-top: 22px!important;
 	padding-bottom: 22px!important;
