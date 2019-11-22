@@ -490,7 +490,13 @@ jQuery(document).ready(function(){
   var page = 2;
   var totalPages = <?php echo $totalPageSize?>;
   jQuery(window).scroll(function(){
-   if(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()){
+   if(jQuery('body').hasClass('mobile-device'))
+   {
+       var condition=((jQuery(this).scrollTop()+150) > jQuery(document).height() - jQuery(window).height());
+   }else {
+       var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+   }
+      if(condition){
     if(page<=totalPages){
         setLoader();
      if( xhr == null ) {
