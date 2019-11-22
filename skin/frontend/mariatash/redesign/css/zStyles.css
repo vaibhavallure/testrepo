@@ -1675,7 +1675,7 @@
 			overflow-x: auto;
 		}
 		.receipts .col-wrap{
-			width: 100%;
+			width: 50%;
 		}
 		.receipts .page-title{
 			flex-direction: column;
@@ -1708,8 +1708,7 @@
 		.acc-products-wrapper #new-mt-myproduct-openorders table,
 		.acc-products-wrapper #new-mt-myproduct-receipts table{
 			display: block;
-			width: 500px;
-			overflow: auto;
+			overflow: hidden;
 		}
 		.dashboard .mt-new-myaccount-dashbord{
 			padding: 0;
@@ -1776,9 +1775,6 @@
 			margin-left: 0!important;
 			margin-right: 0!important;
 		}
-		.receipts .col-wrap{
-			width: 100%;
-		}
 		.mt-myaccount-new  .order-details .container{
 			overflow-x: auto;
 		}
@@ -1835,7 +1831,7 @@
 			font-size: 10px;
 		}
 		.receipts .order-info-box{
-			flex-direction: column;
+			/* flex-direction: column; */
 			margin-bottom: 20px!important;
 		}
 		/* .acc-products-wrapper #myaccount-shopping-cart-table,
