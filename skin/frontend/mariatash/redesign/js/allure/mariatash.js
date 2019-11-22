@@ -12,6 +12,14 @@ jQuery(document).ready(function () {
             });
     }*/
 
+    jQuery('input[type=text]').on('keyup', function(event) {
+        var $this = jQuery(this),
+            val = $this.val();
+        if(!$this.hasClass("validate-email"))
+            val = val.charAt(0).toUpperCase() + val.slice(1);
+        
+        $this.val(val);
+    });
 
     jQuery(window).bind('beforeunload', function() {
         setLoader();
@@ -269,6 +277,18 @@ jQuery(document).ready(function () {
     /*----------------mobile menu js-----------------------*/
 
 
+    jQuery('html').click(function() {
+        if(jQuery('.mobile-main_menu').hasClass('active')) {
+            jQuery('.mobile-main_menu').removeClass('active');
+            jQuery('#menu-btn').removeClass("change");
+            jQuery('body').removeClass("fancybox-lock");
+            jQuery(".menu_overlay").addClass("d-none");
+        }
+        });
+
+    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section').click(function(event){
+        event.stopPropagation();
+    });
     jQuery("#menu-btn").on("click", function () {
         if (jQuery('.mobile-main_menu').hasClass('active')) {
             jQuery('section.sub-menu').hide();

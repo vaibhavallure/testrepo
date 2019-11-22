@@ -2180,7 +2180,10 @@ button#signin-btn-popup, .sign-in-register {
   height: 40px;
 }
 .option-text p {
-	margin: 42px 0 18px;
+	margin: 0 0 18px;
+}
+.soc-login-btn {
+  margin-bottom: 28px;
 }
 .new_account a{
 	margin: 32px 0 45px;
