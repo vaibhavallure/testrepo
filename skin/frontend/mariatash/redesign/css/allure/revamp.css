@@ -1,0 +1,154 @@
+
+
+#myaccount-shopping-cart-table .cart_col2 .purchase-store-name {
+	position: relative;
+}
+#myaccount-shopping-cart-table .para-two {
+    text-align: right;
+    line-height: 2em;
+}
+#myaccount-shopping-cart-table .para-two span {
+	font-family: urw-din-light;
+	font-size: 15px;
+    white-space: nowrap;
+    display: block;
+}
+
+#myaccount-shopping-cart-table a.product-image {
+    display: block;
+    margin: 0 0 5px
+}
+
+#myaccount-shopping-cart-table a.product-image img {
+	
+}
+
+.acc-products-wrapper #narrow-by-list-new {
+    height: 78px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dedede;
+    margin-bottom: 0;
+    display: grid;
+    align-content: center;
+    grid-auto-flow: column;
+    grid-column-gap: 5px;
+}
+
+.acc-products-wrapper #narrow-by-list-new li {
+    position: relative;
+    margin-right: 9px;
+    padding: 0;
+    width: 100%;
+    top: 0;
+    display: block;
+    height: 100%;
+    float: left;
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+	
+	#wishlist-table, 
+	#wishlist-table tbody,
+	#wishlist-table tr,
+	#wishlist-table td,
+	
+	#myaccount-shopping-cart-table, 
+	#myaccount-shopping-cart-table tbody,
+	#myaccount-shopping-cart-table tr,
+	#myaccount-shopping-cart-table td {
+		display: block !important;
+		float: left;
+	}
+	
+	#wishlist-table, 
+	#wishlist-table thead, 
+	#wishlist-table tbody,
+	#wishlist-table tr {
+		width: 100% !important;
+	}
+	
+	#wishlist-table tr td:first-child,
+	#myaccount-shopping-cart-table tr td:first-child {
+		width: 30%;
+	}
+	
+	#wishlist-table tr td:not(:first-child),
+	#myaccount-shopping-cart-table tr td:not(:first-child) {
+		width: 70%;
+	}
+	
+	#wishlist-table tr td:last-child,
+	#myaccount-shopping-cart-table tr td:last-child {
+		width: 100%;
+		float: left;
+	}
+	
+	#wishlist-table .flex-box,
+	#myaccount-shopping-cart-table .flex-box {
+	    flex-wrap: wrap;
+	}
+	
+	#wishlist-table .para-normal,
+	#myaccount-shopping-cart-table .para-normal {
+		width: 100%;
+	}
+	
+	#wishlist-table h2 a,
+	#myaccount-shopping-cart-table h2 a {
+	    font-size: 14px !important;
+	}
+	
+	#myaccount-shopping-cart-table .para-two {
+		text-align: left;
+	}
+	
+	#myaccount-shopping-cart-table .mt-purchase-btn {
+	    float: left;
+	    width: 50%;
+	    margin-top: 8pt !important;
+	}
+	
+	#wishlist-table  .w-remove {
+	    float: left;
+	}
+	
+	.receipts h1{
+		font-size: 18px;
+	}
+	
+	#complete-order-info .order-details table,
+	#complete-order-info .order-details table thead,
+	#complete-order-info .order-details table tbody,
+	#complete-order-info .order-details table tbody tr {
+		display: block;
+		overflow: hidden;
+	}
+	
+	#complete-order-info .order-details table thead tr th:first-child {
+		width: 100%;
+	}
+	
+	#complete-order-info .order-details table thead tr th:not(:first-child) {
+		display: none;
+	} 
+	
+	#complete-order-info .order-details table tr td {
+		display: block;
+		width: 50% !important;
+		float: left;
+	}
+
+	#complete-order-info .order-details tr td:first-child {
+		width: 50% !important;
+	}
+
+	#complete-order-info .order-details tr td:not(:first-child) {
+		padding: 5px;
+	}
+
+	#complete-order-info .order-details tr td.order-item-row-price,
+	#complete-order-info .order-details tr td.order-item-row-qty {
+		width: 25% !important;
+	}
+}

@@ -787,16 +787,6 @@ div.a-column.a-span-last {
     text-align: right;
 }
 
-/*#myaccount-shopping-cart-table .cart_col6 .mt-purchase-btn{
-	padding-bottom: 10px;
-}*/
-
-#myaccount-shopping-cart-table tr td img {
-	width: 116px;
-	height: 150px;
-}
-
-
 #myaccount-shopping-cart-table .mt-purchase-added-at{
 	display: block;
 	font-weight: normal;
@@ -810,13 +800,6 @@ div.a-column.a-span-last {
 .mt-new-purchase .mt-purchase-btn button{
 	width: 130px;
 	text-align: center;
-}
-
-
-#purchase-history .box-content{
-	/* height: 400px;
-	display: block;
-	overflow-y:auto; */
 }
 
 .block-account .block-content ul {

@@ -154,9 +154,9 @@
 	width: 100%;
 	margin-right: 10px;
 }
-.dashboard .flex-row .flex-item .img-wrap{
+/* .dashboard .flex-row .flex-item .img-wrap{
 	height: 253px;
-}
+} */
 .dashboard h1{
 	padding-top: 50px;
 	margin-bottom: 20px;
@@ -180,9 +180,9 @@
 	letter-spacing: 1px;
 	font-family: urw-din-regular;
 }
-.dashboard .flex-row .flex-item img{
+/* .dashboard .flex-row .flex-item img{
 	height: 100%;
-}
+} */
 .dashboard .mt-new-myaccount-dashbord{
 	padding: 0 75px;
 }
@@ -236,8 +236,6 @@
 	top: 0!important;
 }
 .acc-products-wrapper .optionfilter{
-	position: absolute;
-	left: 0;
 	background: white;
 	border: 1px solid rgba(41, 41, 41, 0.9);
 	max-height: 200px;
@@ -254,7 +252,7 @@
 	background: url(../images/arrow_down.png) no-repeat right center transparent !important;
 	background-size: 15%!important;
 	background-position: right;
-	margin-right: 10px;
+	margin-right: 0px;
 	padding-top: 0;
 	font-family: urw-din-xlight;
 	font-size: 12px;
@@ -295,12 +293,6 @@
 }
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	margin-bottom: 0;
-}
-.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
-	width: 102px;
-	height: 102px;
-	object-fit: cover;
-	background: transparent;
 }
 .acc-products-wrapper table tr{
 	padding-top: 22px!important;
@@ -1683,7 +1675,7 @@
 			overflow-x: auto;
 		}
 		.receipts .col-wrap{
-			width: 100%;
+			width: 50%;
 		}
 		.receipts .page-title{
 			flex-direction: column;
@@ -1716,8 +1708,7 @@
 		.acc-products-wrapper #new-mt-myproduct-openorders table,
 		.acc-products-wrapper #new-mt-myproduct-receipts table{
 			display: block;
-			width: 500px;
-			overflow: auto;
+			overflow: hidden;
 		}
 		.dashboard .mt-new-myaccount-dashbord{
 			padding: 0;
@@ -1784,9 +1775,6 @@
 			margin-left: 0!important;
 			margin-right: 0!important;
 		}
-		.receipts .col-wrap{
-			width: 100%;
-		}
 		.mt-myaccount-new  .order-details .container{
 			overflow-x: auto;
 		}
@@ -1843,7 +1831,7 @@
 			font-size: 10px;
 		}
 		.receipts .order-info-box{
-			flex-direction: column;
+			/* flex-direction: column; */
 			margin-bottom: 20px!important;
 		}
 		/* .acc-products-wrapper #myaccount-shopping-cart-table,
@@ -1982,9 +1970,9 @@
    .acc-products-wrapper table .para-normal{
      font-size: 13px;
    }
-	 .acc-products-wrapper .optionfilter{
-		 padding: 6px 0 8px 9px;
-	 }
+	.acc-products-wrapper .optionfilter{
+	 padding: 5px;
+	}
 }
 
 @media (min-width:767px) and (max-width:1024px) {
@@ -2029,4 +2017,131 @@
 		top: 40%;
 		left: 44%;
 		position: absolute;
+	}
+
+
+	/*Appointment Page : Indrajeet Latthe*/
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .people-wrapper,
+	.store-info-wrapper {
+		border-bottom: 1px solid #d8d8d8;
+	}
+
+
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .store-name {
+		margin-bottom: 7px;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .store-details {
+		margin-bottom: 3px;
+	}
+
+	@media (min-width: 767px) and (max-width: 1024px) {
+		.store-right {
+			text-align: right !important;
+		}
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.appointments-book-store
+	h1 {
+		font-size: 30px;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .store-walkin {
+		font-family: urw-din-XLight;
+		font-size: 13px;
+		color: rgba(41, 41, 41, 0.9);
+		letter-spacing: 0.25px;
+		line-height: 17px;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html span.store-walkin--hl {
+		font-family: urw-din-Medium;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .tabla_piercing {
+		border: 1px solid #f2f2f2;
+		background: #f2f2f2;
+		width: auto;
+		margin: 0 auto;
+		padding: 29px 23px 0;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.information-section-desktop {
+		display: block;
+	}
+	@media (max-width: 1023px) {
+		.information-section-desktop {
+			display: none;
+		}
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.general-piercing-information {
+		margin-top: 47px;
+	}
+	.general-piercing-information p {
+		text-align: justify;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .piercing-service td {
+		border-bottom: none;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html tr.tr-piercing {
+		border: none;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html tr.tr-piercing td span,
+	tr.tr-piercing td {
+		font-family: urw-din-xlight;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-piercing-name {
+		width: 78%;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-piercing-name {
+		text-align: left;
+
+		border: none !important;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-piercing-name {
+		padding-bottom: 8px;
+	}
+	.categorypath-appointments-new-york-by-walk-in-only-html td.td-price {
+		text-align: end;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html div#booking-wrapper {
+		padding: 0;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .text-uppercase {
+		text-transform: uppercase !important;
+	}
+
+	.categorypath-appointments-new-york-by-walk-in-only-html
+	.appointment-container {
+		max-width: 1208px !important;
+		margin: 0 auto;
+		margin-top: 42px;
+	}
+
+
+
+	.categorypath-appointments-new-york-by-walk-in-only-html .walkin-top-text {
+		/*margin: 1rem 0rem 0rem 1rem;*/
+	}
+
+	@media only screen and (max-width: 375px) {
+
+		.categorypath-appointments-new-york-by-walk-in-only-html div#booking-wrapper {
+			padding: 0;
+			margin-bottom: 2rem;
+		}
 	}

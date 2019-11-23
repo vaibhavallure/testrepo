@@ -1,6 +1,29 @@
 <div id="booking" class="container-fluid booking nopad appointment-container pb-5">
     <div class="container nopad">
         <div class="row">
+            <!--Static Code for New York-->
+            <div class="col-12 p-0 ">
+                <div class="store-info-wrapper mt-3">
+
+                    <div class="row">
+                        <div class="col-12 store-name"><h1>New York</h1></div>
+                        <div class="col-12 store-details">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <p class="para-lighter mb-0 store-left">653 Broadway,
+                                        between Bleecker and Bond,
+                                        New York, NY 10012</p>
+                                    <p class="para-lighter">+1 212 253 0921 Store<br>
+                                        +1 833 775 TASH Customer Service</p>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12 store-right text-lg-right">
+                                    <a href="<?= Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'appointments/new-york-by-walk-in-only.html' ?>"><button class="input-box btn translate-popup next-button light-button" type="button">WALK-IN</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php
             foreach ($this->getActiveStore() as $id=>$store):
                 ?>

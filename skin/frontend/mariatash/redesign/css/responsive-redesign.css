@@ -551,6 +551,13 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
+  #search {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 68px;
+  }
+
 }
 
 /*All ipads*/
@@ -918,6 +925,10 @@
     right: 26px !important;
     width: 40% !important;
   }
+  #search {
+    background: #292929;
+    top: 135px;
+  }
 }
 
 /* ALl Mobiles */
@@ -1100,7 +1111,7 @@
     margin-top: 40px;
   }
   .checkoutPopupLoginModel .social-options{
-    padding-bottom: 40px;
+    padding-bottom: 0;
   }
   .checkout-cart-index .messages-tr .product-name{
     padding-right: 0;
@@ -1151,6 +1162,13 @@
   .checkout-onepage-index #billing-address-select, .checkout-onepage-index #shipping-address-select{
     width: 100%;
   }
+  .priceCategory{
+    display: none;
+  }
+  .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 /********************** Mobile Portrait *****************/
@@ -1195,7 +1213,7 @@
     padding: 0 18px;
   }
   .five-col{
-    width: 100%;
+    width: 48%;
   }
   .form-search input.input-text{
     width: 240px;
@@ -1501,6 +1519,17 @@
   /*Search CSS*/
   #cross-icon{
     right: 8px;
+  }
+  .products-grid li.item{
+    padding: 34px;
+    margin: 1%;
+    background: #eee;
+  }
+  .catalog-common-grid .product-image img{
+    margin-top: 20px;
+  }
+  .products-grid li.item{
+    height: 256px;
   }
 }
 
