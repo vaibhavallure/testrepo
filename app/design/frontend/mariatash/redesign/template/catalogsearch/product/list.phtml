@@ -471,17 +471,21 @@ $mode  = $this->getMode();
 
         });
         jQuery(document).on("hover",".product-image-hover",function () {
-           var roll_over_img=jQuery("#rollover-img-"+jQuery(this).data("pid"));
-           if(roll_over_img.attr("src")) {
-               jQuery(this).hide();
-               roll_over_img.show();
-           }
+            if(jQuery('body').hasClass('desktop-device')) {
+                var roll_over_img = jQuery("#rollover-img-" + jQuery(this).data("pid"));
+                if (roll_over_img.attr("src")) {
+                    jQuery(this).hide();
+                    roll_over_img.show();
+                }
+            }
         });
         jQuery(document).on("mouseleave",".rollover-img",function () {
-            var img=jQuery("#img-"+jQuery(this).data("pid"));
-            if(img.length) {
-                jQuery(this).hide();
-                img.show();
+            if(jQuery('body').hasClass('desktop-device')) {
+                var img = jQuery("#img-" + jQuery(this).data("pid"));
+                if (img.length) {
+                    jQuery(this).hide();
+                    img.show();
+                }
             }
         });
 
