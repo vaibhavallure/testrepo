@@ -287,7 +287,7 @@ jQuery(document).ready(function () {
         }
         });
 
-    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section').click(function(event){
+    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head').click(function(event){
         event.stopPropagation();
     });
     jQuery("#menu-btn").on("click", function () {

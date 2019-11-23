@@ -43,10 +43,10 @@
   .social-media ul {
     margin-bottom: 40px;
   }
-  .inner-box {
+  /* .inner-box {
     width: 100%;
     margin-left: 0;
-  }
+  } */
   .mobile-device .head-child, #appointments img {
     display: none;
     padding-left: 10px;
@@ -831,10 +831,10 @@
   .mobile-device #appointments {
     padding: 55px 32px 32px 32px;
   }
-  .inner-box {
+  /* .inner-box {
     width: 534px;
     margin-left: 15px;
-  }
+  } */
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
@@ -1744,17 +1744,14 @@
  .row.menu-inner{
    overflow: auto;
  }
- .inner-box{
-   margin-left: 0;
- }
 }
 
 /************** Big Screen Laptops ***************/
 @media (min-width:1920px){
-  .inner-box{
+  /* .inner-box{
     width: 742px;
     margin-left: 300px;
-  }
+  } */
   .custom-container{
     max-width: 1318px !important;
   }
@@ -1843,7 +1840,7 @@
 }
 @media (min-width:992px) and (max-width:1278px) {
   .main-nav-title li {
-    margin-right: 48px;
+    margin-right: 38px;
   }
 }
 
@@ -1863,9 +1860,9 @@
   }
 }
 @media (min-width:1200px) and (max-width:1430px) {
-  .inner-box{
+  /* .inner-box{
     margin-left: 57px;
-  }
+  } */
 }
 @media (min-width:1318px) and (max-width:1432px) {
   .div-row {

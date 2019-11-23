@@ -766,12 +766,12 @@ div.a-column.a-span-last {
     text-indent: 10px;
 }
 
-#myaccount-shopping-cart-table tr td img {
+/* #myaccount-shopping-cart-table tr td img {
     width: 74px;
     padding: 0;
     height: 96px;
     background: linear-gradient(to bottom, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-}
+} */
 
 /*#myaccount-shopping-cart-table tr td .product-image {
     padding: 8px;
