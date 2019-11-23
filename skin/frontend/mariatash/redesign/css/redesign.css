@@ -1542,7 +1542,7 @@ input[type="checkbox"]:checked+label:before {
   right: 15px;
 }
 .main-nav-title li {
-  margin-right: 48px;
+  margin-right: 40px;
 }
 .last.nav-item, .main-nav-link li:last-child {
   margin-right: 0;
