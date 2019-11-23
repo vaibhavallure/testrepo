@@ -65,6 +65,11 @@ if($this->isthumbnailCat($pc->getName())){
                                                                 href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
                                                     </li>
                                                 <?php } ?>
+                                                <?php  if(count($this->getChildCategories($child->getId()))):?>
+                                                <li class="view-all-products"><a class="link-button"
+                                                            href="/<?= $child->getRequestPath() ?>"><?= $this->__("view all")?></a>
+                                                </li>
+                                                <?php endif;?>
                                             </ul>
                                         </div>
                                     </div>
