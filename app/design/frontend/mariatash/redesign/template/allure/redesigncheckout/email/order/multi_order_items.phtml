@@ -144,8 +144,8 @@
         <?php endforeach; ?>
 
         <tbody>
-        	<?php $this->getChild('order_totals')->setOrder($_order);?>
-            <?php echo $this->getChildHtml('order_totals') ?>
+        	<?php echo $this->getChild('order_totals')->setOrder($_order)->toHtml();?>
+            <?php //echo $this->getChildHtml('order_totals') ?>
         </tbody>
     </table>
    <?php if ($this->helper('giftmessage/message')->isMessagesAvailable('order', $_order, $_order->getStore()) && $_order->getGiftMessageId()): ?>
