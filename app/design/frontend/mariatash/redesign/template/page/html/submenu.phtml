@@ -40,7 +40,7 @@ if($this->isthumbnailCat($pc->getName())){
             <div class="row piercing-inner">
                 <div class="col-lg-12 menu-common-section">
                     <div class="row">
-                        <div class="col-lg-7 col-12 left-section">
+                        <div class="col-12 left-section">
                             <div class="row inner-box">
                                 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
                                     if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
@@ -65,6 +65,11 @@ if($this->isthumbnailCat($pc->getName())){
                                                                 href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
                                                     </li>
                                                 <?php } ?>
+                                                <?php  if(count($this->getChildCategories($child->getId()))):?>
+                                                <li class="view-all-products"><a
+                                                            href="/<?= $child->getRequestPath() ?>"><?= $this->__("View All")?></a>
+                                                </li>
+                                                <?php endif;?>
                                             </ul>
                                         </div>
                                     </div>
@@ -74,9 +79,9 @@ if($this->isthumbnailCat($pc->getName())){
                     <div class="col-lg-5 col-12 text-uppercase right-section">
                         <div class="row">
                             <?php foreach ($childRightSection  as $childR){ ?>
-                            <a href="/<?= $childR->getRequestPath() ?>">
+                            <a href="/<//?= $childR->getRequestPath() ?>">
                                 <div class="col-md col-12 p-0 text-center special-menu">
-                                    <img width="228px" src="<?= $this->getCatThumbnail($childR->getId()) ?>">
+                                    <img width="228px" src="<//?= $this->getCatThumbnail($childR->getId()) ?>">
                                     <div class="product-name image-text"><h6 class="text-uppercase text-white"><?= $this->__($childR->getName()); ?></h6></div>
                                 </div>
                             </a>
