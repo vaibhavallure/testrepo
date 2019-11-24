@@ -21,7 +21,18 @@
 	height: 100%!important;
 	background: white;
 }
-
+.bk-slide{   
+width:305px; height:201px;
+padding:10px;
+line-height: 42px;
+width: 305px; 
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cccccc+0,cccccc+100&0.71+0,0.68+100 */
+background: -moz-linear-gradient(left,  rgba(204,204,204,0.71) 0%, rgba(204,204,204,0.68) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', endColorstr='#adcccccc',GradientType=1 ); /* IE6-9 */ 
+}
+.bk-slide h1, a, span, p{color:#ffffff;}
 .flex-col{
 	display: flex;
 	flex-direction: column;
