@@ -82,11 +82,12 @@ class Ecp_Slideshow_Adminhtml_SlideshowController extends Mage_Adminhtml_Control
         $this->_forward('edit');
     }
 
-    public function saveAction() {
+    public function saveAction() { 
         if ($data = $this->getRequest()->getPost()) {
             $path = Mage::getBaseDir('media') . DS . 'slideshow';
             $validExtensions = array('jpg', 'jpeg', 'gif', 'png');
             $uuid = uniqid();
+ 
             try {
 				$id111= $this->getRequest()->getParam('id');
                 if (isset($data['slide_thumb']['delete'])){
@@ -184,14 +185,16 @@ class Ecp_Slideshow_Adminhtml_SlideshowController extends Mage_Adminhtml_Control
 
                 $model->setData($data)
                         ->setId($this->getRequest()->getParam('id'));
-
+               
                 if ($model->getCreated_date() == NULL || $model->getUpdateTime() == NULL) {
                     $model->setCreated_Date(now())
                             ->setUpdateTime(now());
                 } else {
                     $model->setUpdateTime(now());
                 }
-
+                //Save content and Background in DB
+                $model->setSlideContent($data['slide_content']);   
+                $model->setBackground($data['background']);   
                 $model->save();
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('ecp_slideshow')->__('Item was successfully saved'));
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
