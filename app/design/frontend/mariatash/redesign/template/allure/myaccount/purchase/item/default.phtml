@@ -127,62 +127,33 @@ if(!$product->getId()){
                 </td>
 
                 <td class="cart_col2">
-              <div class="desc-cell">
+              		<div class="desc-cell">
                         <h2 class="product-name <?php echo $typeId?>">
-                       <a <?php echo ($product->getId())? "href='".$url."'":""?> ><?php echo ucwords(strtolower($productName))?></a>
-                   </h2>
-               <?php if(0 /* && !empty($productDescr) */):?>
-                   <h2 class="product-descr"><?php //echo $productDescr?></h2>
-               <?php endif;?>
+                        	<a <?php echo ($product->getId())? "href='".$url."'":""?> ><?php echo ucwords(strtolower($productName))?></a>
+                        </h2>
 
+                   		<div class="flex-box">
+                       		<div class="item para-normal pt-3">
+               					<label <?php echo $storeColor?>  class="purchase-store-name">
+                                    <?php if($_item->getPurchasedFrom()):?>
+                                        <span class="mt-purchase-added-at">Purchased From: <?php echo $_item->getPurchasedFrom();?></span>
+                                    <?php endif;?>
+                                    
+                                    <span class="mt-purchase-added-at">Purchased: <?php echo Mage::getModel('core/date')->date('M d, Y h:i a',strtotime($_order->getCreatedAt()));?></span>
+                                    
+                        			<span class="mt-purchase-location"><?php echo "Purchase Location:  ".$storeName?></span>
+                    			</label>
+                            </div>
+                            <div class="item para-two pt-3">
+                                <?php $ord = Mage::getSingleton('sales/order')->load($_item->getOrderId());?>
+                                <span class="mt-purchase-price"><strong><?php echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?></strong> </span>
+                                
+                    			<span class="mt-purchase-qty">Quantity: <?php echo number_format($_item->getQtyOrdered())?></span>
+                            </div>
+                		</div>
+              		</div>
 
-               <label <?php echo $storeColor?>  class="purchase-store-name">
-                   <div class="flex-box">
-                       <div class="item para-normal">
-                        <?php if($_item->getPurchasedFrom()):?>
-                            <span class="mt-purchase-added-at">Purchased From: <?php echo $_item->getPurchasedFrom();?></span>
-                        <?php endif;?>
-
-                        <?php
-
-                        $diffZone=Mage::getModel('backorderrecord/cron')->getDiffTimezone();
-                        ?>
-                        <span class="mt-purchase-added-at">Purchased: <?php echo Mage::getModel('core/date')->date('M d, Y h:i a',strtotime($_order->getCreatedAt()));?></span>
-                    </div>
-                    <div class="item para-two">
-                        <?php
-                        $ord=Mage::getSingleton('sales/order')->load($_item->getOrderId());
-                        echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?>
-                    </div>
-                </div>
-                <div class="flex-box">
-                  <div class="item para-normal">
-                    <?php echo "Purchase Location:  ".$storeName?>
-                </div>
-                <div class="item para-normal">
-                    <span>Quantity: <?php echo number_format($_item->getQtyOrdered())?></span>
-              </div>
-          </div>
-      </label>
-              </div>
-
-  </td>
-<!--
-  <td class="cart_col4">
-    <div class="qty-wrap">
-     <!--   <span><?php echo number_format($_item->getQtyOrdered())?></span>
- </div>
-</td>
--->
-<!--
-<td class="cart_col3">
-    <span class="price_multi"></span>
-    <span class="price">
-           <?php
-            $ord=Mage::getSingleton('sales/order')->load($_item->getOrderId());
-            echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?>
-        </span>
-    </td>  -->
+  				</td>
 
     <td class="cart_col6">
 
@@ -203,6 +174,5 @@ if(!$product->getId()){
   <?php endif;?>
 </td>
 </tr>
-
 
 <?php endforeach ?>

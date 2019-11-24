@@ -22,15 +22,27 @@ jQuery(document).ready(function() {
     jQuery('div.main div.col-main div.category-title').remove();
 
 });
+function trigger(carousel)
+{
+    var width = jQuery(window).width();
+    if ((width < 767)) {
+        setTimeout(function () {
+            var link = jQuery('.jcarousel-item-' + carousel.first + ' a').attr('href');
+            window.location = link;
+        }, 2000);
+    }
+}
 
 function mycarousel_initCallback(carousel) {
     jQuery('#prev3').bind('click', function() {
         carousel.prev();
+        trigger(carousel);
         return false;
     });
 
     jQuery('#next3').bind('click', function() {
         carousel.next();
+        trigger(carousel);
         return false;
     });
     carousel;

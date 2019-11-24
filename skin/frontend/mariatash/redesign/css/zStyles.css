@@ -165,9 +165,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	width: 100%;
 	margin-right: 10px;
 }
-.dashboard .flex-row .flex-item .img-wrap{
+/* .dashboard .flex-row .flex-item .img-wrap{
 	height: 253px;
-}
+} */
 .dashboard h1{
 	padding-top: 50px;
 	margin-bottom: 20px;
@@ -191,9 +191,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	letter-spacing: 1px;
 	font-family: urw-din-regular;
 }
-.dashboard .flex-row .flex-item img{
+/* .dashboard .flex-row .flex-item img{
 	height: 100%;
-}
+} */
 .dashboard .mt-new-myaccount-dashbord{
 	padding: 0 75px;
 }
@@ -247,8 +247,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	top: 0!important;
 }
 .acc-products-wrapper .optionfilter{
-	position: absolute;
-	left: 0;
 	background: white;
 	border: 1px solid rgba(41, 41, 41, 0.9);
 	max-height: 200px;
@@ -265,7 +263,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	background: url(../images/arrow_down.png) no-repeat right center transparent !important;
 	background-size: 15%!important;
 	background-position: right;
-	margin-right: 10px;
+	margin-right: 0px;
 	padding-top: 0;
 	font-family: urw-din-xlight;
 	font-size: 12px;
@@ -306,12 +304,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 }
 .acc-products-wrapper .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	margin-bottom: 0;
-}
-.acc-products-wrapper #myaccount-shopping-cart-table tr td img{
-	width: 102px;
-	height: 102px;
-	object-fit: cover;
-	background: transparent;
 }
 .acc-products-wrapper table tr{
 	padding-top: 22px!important;
@@ -1694,7 +1686,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 			overflow-x: auto;
 		}
 		.receipts .col-wrap{
-			width: 100%;
+			width: 50%;
 		}
 		.receipts .page-title{
 			flex-direction: column;
@@ -1727,8 +1719,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		.acc-products-wrapper #new-mt-myproduct-openorders table,
 		.acc-products-wrapper #new-mt-myproduct-receipts table{
 			display: block;
-			width: 500px;
-			overflow: auto;
+			overflow: hidden;
 		}
 		.dashboard .mt-new-myaccount-dashbord{
 			padding: 0;
@@ -1795,9 +1786,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 			margin-left: 0!important;
 			margin-right: 0!important;
 		}
-		.receipts .col-wrap{
-			width: 100%;
-		}
 		.mt-myaccount-new  .order-details .container{
 			overflow-x: auto;
 		}
@@ -1854,7 +1842,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 			font-size: 10px;
 		}
 		.receipts .order-info-box{
-			flex-direction: column;
+			/* flex-direction: column; */
 			margin-bottom: 20px!important;
 		}
 		/* .acc-products-wrapper #myaccount-shopping-cart-table,
@@ -1993,9 +1981,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
    .acc-products-wrapper table .para-normal{
      font-size: 13px;
    }
-	 .acc-products-wrapper .optionfilter{
-		 padding: 6px 0 8px 9px;
-	 }
+	.acc-products-wrapper .optionfilter{
+	 padding: 5px;
+	}
 }
 
 @media (min-width:767px) and (max-width:1024px) {

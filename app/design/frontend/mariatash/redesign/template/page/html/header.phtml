@@ -108,21 +108,27 @@
                                 <li class="icon-item">
                                 	<?php echo $this->getChildHtml('store_currency_selector') ?>
                                 </li>
-                                <?php if($giftcard):?>
-                                <li class="icon-item">
-                                    <a href="<?= $giftcard->getUrl() ?>">
-                                    	<span><?= $giftcard->getTitle() ?></span>
+                                <?php if($location):?>
+                                <li class="icon-item d-lg-block d-none">
+                                    <a class="icon-link" href="<?= $location->getUrl() ?>">
+                                    	<?= $this->__("Store Locations") ?>
                                     </a>
                                 </li>
-                                <?php endif;?>
-
-                                <?php if($location):?>
                                 <li class="icon-item d-lg-none d-block mt-1">
                                     <a class="icon-link" href="<?= $location->getUrl() ?>">
-                                    	<img width="14px" src="<?= $navBitmapImg; ?>">
+                                      <img width="14px" src="<?= $navBitmapImg; ?>">
                                     </a>
                                 </li>
+                                  <?php endif;?>
+                                <?php if($giftcard):?>
+                                <!-- <li class="icon-item">
+                                    <a href="<//?= $giftcard->getUrl() ?>">
+                                    	<span><//?= $giftcard->getTitle() ?></span>
+                                    </a>
+                                </li> -->
                                 <?php endif;?>
+
+
 
                                 <?php if($wishlist):?>
                                 <li class="icon-item d-lg-none d-block mt-1">
@@ -154,13 +160,8 @@
                             <li class="icon-item">
                                 <?php echo $this->getChildHtml('topSearch') ?>
                             </li>
-                            <?php if($location):?>
-                            <li class="icon-item d-lg-block d-none">
-                                <a class="icon-link" href="<?= $location->getUrl() ?>">
-                                	<img width="14px" src="<?= $navBitmapImg; ?>">
-                                </a>
-                            </li>
-                            <?php endif;?>
+
+
 
                             <?php if($wishlist):?>
                             <li class="icon-item d-lg-block d-none">

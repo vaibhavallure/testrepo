@@ -91,11 +91,25 @@
     jQuery(document).ready(function() {
          var slot=1;
         jQuery(window).scroll(function() {
-            if (jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()) {
-              slot++;
+
+            if(jQuery('body').hasClass('mobile-device'))
+            {
+                var condition=((jQuery(this).scrollTop()+150) > jQuery(document).height() - jQuery(window).height());
+            }else {
+                var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+            }
+            if (condition) {
+                setLoader();
+                slot++;
 
               if(jQuery(".slot-"+slot).length)
               jQuery(".slot-"+slot).removeClass("d-none");
+
+                setTimeout(
+                    function()
+                    {
+                        unsetLoader();
+                    }, 3000);
 
             }
         });
