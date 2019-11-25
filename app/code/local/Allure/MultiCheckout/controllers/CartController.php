@@ -87,6 +87,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             return;
         }
 
+        $this->_getSession()->setCartCouponCode();
         $couponCode = (string) $this->getRequest()->getParam('coupon_code');
         if ($this->getRequest()->getParam('remove') == 1) {
             $couponCode = '';
@@ -136,7 +137,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     ->save();
             }
 
-            $this->_getSession()->setCartCouponCode();
+            
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getQuote()->getCouponCode()) {
                     if (! $isAjax) {
