@@ -8,7 +8,7 @@ Mage::app()->setCurrentStore(0);
 
 
 
-$product_list_with_category = 'product_list_with_category.csv';//$_GET['product_list'];
+$product_list_with_category = 'product_list_with_category-for-production.csv';//$_GET['product_list'];
 $categories_data = 'categories.csv';//$_GET['category_data'];
 
 
