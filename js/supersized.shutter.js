@@ -227,16 +227,19 @@
 		  	
 		  	/* Update Fields
 		  	----------------------------*/
+                var cls = "";
+                if(api.getField('background') == "0"){ cls="bk-slide";}else{cls="";}
 		  	// Update slide caption
 		   	if ($(vars.slide_caption).length){
 				if ((api.getField('url')=="") || (api.getField('url')=="#")) {
-					(api.getField('title')) ? $(vars.slide_caption).html('<span><img src="'+api.getField('title')+'" border="0"/></span>') : $(vars.slide_caption).html('');
+					(api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
 				}
-				else {
-					(api.getField('title')) ? $(vars.slide_caption).html('<a href="'+api.getField('url')+'" target="_blank"><img src="'+api.getField('title')+'" border="0"/></a>') : $(vars.slide_caption).html('');
+				else { 
+                
+                (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
 				}
 		   	}
-		    // Update slide number
+		    // Update slide number      api.getField('slide_content')
 			if (vars.slide_current.length){
 			    $(vars.slide_current).html(vars.current_slide + 1);
 			}

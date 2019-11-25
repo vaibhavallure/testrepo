@@ -1542,7 +1542,7 @@ input[type="checkbox"]:checked+label:before {
   right: 15px;
 }
 .main-nav-title li {
-  margin-right: 48px;
+  margin-right: 40px;
 }
 .last.nav-item, .main-nav-link li:last-child {
   margin-right: 0;
@@ -1553,7 +1553,7 @@ input[type="checkbox"]:checked+label:before {
 .maria-black{
   background-color: rgba(41,41,41,0.90)!important;
 }
-.nav-links-left span {
+.nav-links-left span, .nav-links-left a {
   color: #fff;
   font-size: 11px;
   letter-spacing: 1px;
@@ -1606,9 +1606,8 @@ input[type="checkbox"]:checked+label:before {
   letter-spacing: 1px;
 }
 .inner-box {
-  /* width: 655px; */
-  margin-left: 27px;
 	justify-content: space-evenly;
+	padding: 0 162px;
 }
 .right-section a:last-child {
   margin-left: 9px;
@@ -4744,4 +4743,15 @@ td.cart_col2 {
 .cover-img,
 .piercing-hero-img{
   padding-left:0px;
+}
+.view-all-products{
+	margin-top: 5px;
+}
+.view-all-products a{
+	text-transform: uppercase;
+  font-size: 12px !important;
+  font-family: urw-din-medium !important;
+  color: rgba(41,41,41,0.9) !important;
+	text-decoration: underline;
+  letter-spacing: 1px;
 }

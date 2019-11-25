@@ -23,11 +23,20 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $checkoutSessionQuote = $this->_getCheckoutSession()->getQuote();
         
         if ($action == 'addresses') {
-            $checkoutSessionQuote->setIsMultiShipping(true);
-            $this->_getCheckoutSession()->setCheckoutState(
-                Mage_Checkout_Model_Session::CHECKOUT_STATE_BEGIN
-                );
-            $this->_getCheckout()->_init();
+            $quote = $this->_getCheckout()->getQuote();
+            $addresses  = $quote->getAllAddresses();
+            if(count($addresses) > 2){
+                $checkoutSessionQuote->setIsMultiShipping(true);
+                $this->_getCheckoutSession()->setCheckoutState(
+                    Mage_Checkout_Model_Session::CHECKOUT_STATE_BEGIN
+                    );
+                $this->_getCheckout()->_init();
+            }
+            $couponCode = $this->_getCheckout()->getCheckoutSession()->getCartCouponCode();
+            if ($couponCode) {
+                $this->_getCheckout()->getQuote()->setCouponCode($couponCode)
+                ->collectTotals()->save();
+            }
         }
         
         $isAmazonPaymentForGeneralCustomer = false;

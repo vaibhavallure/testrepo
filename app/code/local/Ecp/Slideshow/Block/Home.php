@@ -35,11 +35,11 @@ class Ecp_Slideshow_Block_Home
     public function getJsonImages(){
         $tmpImages = array();
         $collection = Mage::getModel('ecp_slideshow/slideshow')->getCollection()			
-			->addFilter('status',1)
+			->addFilter('status',1) 
 			->setOrder('position', 'asc')
 			;
         foreach ($collection as $item) {
-            $tmpImages[] = "{image : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideBackground()."', title : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideThumb()."', url : '".$item->getUrl()."'}";
+            $tmpImages[] = "{image : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideBackground()."', title : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideThumb()."', url : '".$item->getUrl()."', description : '".str_replace("\r\n","",$item->getSlideContent())."', background: '".$item->getBackground()."'}";
         }
         return '['.implode(',',$tmpImages).']';
     }
