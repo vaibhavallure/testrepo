@@ -12,5 +12,6 @@ var blockCheckoutUi = function(){
 
 var unblockCheckoutUi = function(){
 	jQuery.fancybox.hideLoading();
+	jQuery('.fancybox-overlay').hide();
 	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
 }

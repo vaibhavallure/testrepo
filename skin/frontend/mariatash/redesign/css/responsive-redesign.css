@@ -555,9 +555,16 @@
     position: fixed;
     width: 100%;
     left: 0;
+  }
+  .mobile-device #search {
     top: 68px;
   }
-
+  .desktop-device #search{
+    top: 72px;
+  }
+  #cross-icon{
+    right: 19px;
+  }
 }
 
 /*All ipads*/
@@ -642,7 +649,7 @@
   }
   .form-search input.input-text{
     width: 550px;
-    height: 30px !important;
+    height: 60px !important;
   }
   .footlinks {
     margin: 20px 0 18px 0;
@@ -819,7 +826,7 @@
   }
   .form-search input.input-text{
     width: 200px;
-    height: 26px !important;
+    height: 60px !important;
   }
   .menu-inner{
     overflow-x: auto;
@@ -927,7 +934,9 @@
   }
   #search {
     background: #292929;
-    top: 135px;
+  }
+  .mobile-device #search{
+  top: 135px !important;
   }
 }
 
@@ -1169,6 +1178,9 @@
     max-width: 100%;
     width: 100%;
   }
+  .form-search input.input-text{
+    height: 60px !important;
+  }
 }
 
 /********************** Mobile Portrait *****************/
@@ -1217,7 +1229,6 @@
   }
   .form-search input.input-text{
     width: 240px;
-    height: 30px !important;
   }
   .pop-up-button-set .col{
     padding: 0 9px;
@@ -1904,6 +1915,9 @@
   .position-bottom{
     padding-right: 24px;
   }
+  .form-search input.input-text{
+    width: 270px;
+  }
 }
 @media (min-width:992px) and (max-width:1023px){
   .fix-image{
@@ -2013,6 +2027,9 @@
   }
   .piercing_options .image-text{
     margin-bottom: 40px;
+  }
+  #search{
+    top: 80px;
   }
 }
 @media (max-width:749px){
