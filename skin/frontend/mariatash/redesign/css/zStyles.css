@@ -21,7 +21,18 @@
 	height: 100%!important;
 	background: white;
 }
-
+.bk-slide{
+width:305px; height:201px;
+padding:10px;
+line-height: 42px;
+width: 305px;
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cccccc+0,cccccc+100&0.71+0,0.68+100 */
+background: -moz-linear-gradient(left,  rgba(204,204,204,0.71) 0%, rgba(204,204,204,0.68) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', endColorstr='#adcccccc',GradientType=1 ); /* IE6-9 */
+}
+.bk-slide h1, .bk-slide a, .bk-slide span, .bk-slide p{color:#ffffff;}
 .flex-col{
 	display: flex;
 	flex-direction: column;
@@ -1725,6 +1736,19 @@
 			width: 100%;
 			margin-bottom: 30px;
 		}
+		.checkout-multishipping-address-newshipping .checkout-new-address, .checkout-multishipping-address-editshipping .checkout-new-address{
+			flex: 0 0 100%;
+	    max-width: 100%;
+		}
+		.checkout-multishipping-address-newshipping .new_address .container, .checkout-multishipping-address-editshipping .new_address .container{
+			padding-left: 15px;
+		}
+		.new_address .input-box input, .new_address select{
+			width: 100% !important;
+		}
+		.checkout-multishipping-address-newshipping .checkout-new-address .buttons-set, .checkout-multishipping-address-editshipping .checkout-new-address .buttons-set{
+			margin-bottom: 70px;
+		}
 	}
 	@media (min-width: 1800px){
 		#container-cu {
@@ -1821,9 +1845,9 @@
 			height: auto;
 			padding: 5px 10px;
 		} */
-		.new_address .input-box input, .new_address select{
+		/* .new_address .input-box input, .new_address select{
 			width: 100%!important;
-		}
+		} */
 		/* .acc-products-wrapper .optionfilter{
 			padding: 0px 0 0px 3px;
 		} */

@@ -971,9 +971,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     {
 
         /*code to test applepay (remove for live)*/
-        $test_response='{"messages":{"resultCode":"Ok","message":{"code":"I00001","text":"Successful."}},"transactionResponse":{"responseCode":"1","authCode":"57936T","avsResultCode":"P","cvvResultCode":{},"cavvResultCode":{},"transId":"41286396727","refTransID":{},"transHash":"3297A1254E01DD100DFFF5ED6D7C9123","testRequest":"0","accountNumber":"XXXX7510","accountType":"MasterCard","messages":{"message":{"code":"1","description":"This transaction has been approved."}},"transHashSha2":{}}}';
+       /* $test_response='{"messages":{"resultCode":"Ok","message":{"code":"I00001","text":"Successful."}},"transactionResponse":{"responseCode":"1","authCode":"57936T","avsResultCode":"P","cvvResultCode":{},"cavvResultCode":{},"transId":"41286396727","refTransID":{},"transHash":"3297A1254E01DD100DFFF5ED6D7C9123","testRequest":"0","accountNumber":"XXXX7510","accountType":"MasterCard","messages":{"message":{"code":"1","description":"This transaction has been approved."}},"transHashSha2":{}}}';
         return $test_response;
-        die();
+        die();*/
 
 
         $transRequestXmlStr=<<<XML

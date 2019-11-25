@@ -80,6 +80,11 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Grid extends Mage_Adminhtml_Block_
           'align'     =>'left',
           'index'     => 'url',
       ));
+ $this->addColumn('slide_content', array(
+          'header'    => Mage::helper('ecp_slideshow')->__('Slide Content'),
+          'align'     =>'left',
+          'index'     => 'slide_content',
+      ));
 	  
 	  $this->addColumn('position', array(
           'header'    => Mage::helper('ecp_slideshow')->__('Position'),
