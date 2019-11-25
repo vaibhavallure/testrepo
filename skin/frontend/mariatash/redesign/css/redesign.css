@@ -1605,7 +1605,7 @@ input[type="checkbox"]:checked+label:before {
   font-size: 13px;
   letter-spacing: 1px;
 }
-.inner-box {
+.desktop-device .inner-box {
 	justify-content: space-evenly;
 	padding: 0 162px;
 }
@@ -2096,6 +2096,7 @@ div#narrow-by-list {
 .faq-image-section img {
   padding-right: 20px;
 	width:100%;
+	height:100%;
 }
 /*Gift Card FAQ*/
 .gift-card-main .faq-image-section img {
