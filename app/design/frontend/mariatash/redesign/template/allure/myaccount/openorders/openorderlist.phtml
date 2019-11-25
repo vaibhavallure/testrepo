@@ -64,7 +64,7 @@ jQuery(function($){
 				        dataType : 'json',
 						type : 'POST',
 						data: {'page':page2,'limit':10,'count':count,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
-				        success: function(data) {
+				        success: function(data) {console.log('HEEEEEREEEE');
 				        	jQuery('#my-openorders-table tbody').append(data.data.html);
 				        	jQuery("#total-openorders-count").text(data.data.order_count);
 				        	jQuery("#sales-openorder-count").val(data.data.order_count);
@@ -75,7 +75,7 @@ jQuery(function($){
 				 	page2 ++;
 				}
 		    }else{
-		    	hideLoadingFancybox();
+		    	
 		    }
 		}
  	});
@@ -96,15 +96,15 @@ function loadOpenOrderView(evt){
         dataType : 'json',
 		type : 'POST',
 		data: {'order_id':orderId,'order_type':'open'},
-        success: function(data) {
+        success: function(data) {   
             jQuery('#load-open-order-data').html(data.data.html);
             jQuery('#new-mt-myproduct-openorders .block-layered-nav-bg').hide();
             jQuery('.open-order-view').hide();
             jQuery('#load-open-order-data').show();
             hideLoadingFancybox1('box-history');
             var type = window.location.hash.substr(1);
-            var order_id   = jQuery(evt).attr("data-order-id");
-            window.location.hash = type+"#info#"+order_id;
+            var order_id   = jQuery(evt).attr("data-order-id"); 
+           // window.location.hash = type+"#info#"+order_id; // Removed due to overlay issue by RAM.
         }
     });
 }
