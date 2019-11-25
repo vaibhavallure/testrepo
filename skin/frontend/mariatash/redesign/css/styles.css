@@ -5974,12 +5974,12 @@ ul.crosssell-products-list {
 	margin-top: 15px;
 }
 
-.checkout-multishipping-address-newshipping .form-list li.wide,
+/* .checkout-multishipping-address-newshipping .form-list li.wide,
 .checkout-multishipping-address-editshipping .form-list li.wide,
 .checkout-multishipping-address-editaddress .form-list li.wide {
 	width: 450px !important;
 	margin-bottom: 10px;
-}
+} */
 
 .checkout-multishipping-address-newshipping  #form-validate .validation-advice,
 .checkout-multishipping-address-editshipping #form-validate .validation-advice,
