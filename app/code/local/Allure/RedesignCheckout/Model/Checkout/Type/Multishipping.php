@@ -9,7 +9,11 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
     const XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW = 'sales_email/allure_multiaddress_sales_email/multi_order_allow_email';
     
     public function _init(){
+        //$couponCode = $this->getCheckoutSession()->getCartCouponCode();
         parent::_init();
+        /* if ($couponCode) {
+            $this->getQuote()->setCouponCode($couponCode)->collectTotals()->save();
+        } */
     }
     
     /**
