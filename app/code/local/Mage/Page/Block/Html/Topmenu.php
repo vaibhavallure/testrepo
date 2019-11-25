@@ -205,6 +205,14 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
             $classes[] = $item->getClass();
         }
 
+
+        if($this->isWholeSaleCustomer()) {
+            if (trim(strtolower($item->getName())) == "gift cards")
+            {
+                $classes[]='d-none';
+            }
+        }
+
         if ($item->hasChildren()) {
             $classes[] = 'parent';
             $classes[]='nav-item';
@@ -257,5 +265,18 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
                 ? Mage::registry('current_entity_key') : Mage::app()->getStore()->getRootCategoryId();
         }
         return $this->_currentEntityKey;
+    }
+
+    public function isWholeSaleCustomer ()
+    {
+        $roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
+        $role = strtolower($role);
+
+        if ('wholesale' == strtolower($role)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
