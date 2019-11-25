@@ -61,6 +61,22 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Edit_Tab_Form extends Mage_Adminht
           'required'  => false,
           'name'      => 'position',
       ));
+
+        $fieldset->addField('slide_content', 'textarea', array(
+        'label'     => Mage::helper('ecp_slideshow')->__('Content'),
+        'required'  => false,
+        'name'      => 'slide_content',
+        ));
+      $fieldset->addField(addslashes('background'), 'select', array(
+          'label'     => Mage::helper('ecp_slideshow')->__('Background'), 
+          'value'  => '1',
+          'values' => array('0'=>'Yes','1' => 'No'), 
+            'name' => 'background',
+          'after_element_html' => '<small>Background for HTML Content</small>', 
+        ));
+
+
+    
 		      
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('ecp_slideshow')->__('Status'),

@@ -23,11 +23,21 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         $checkoutSessionQuote = $this->_getCheckoutSession()->getQuote();
         
         if ($action == 'addresses') {
-            $checkoutSessionQuote->setIsMultiShipping(true);
-            $this->_getCheckoutSession()->setCheckoutState(
-                Mage_Checkout_Model_Session::CHECKOUT_STATE_BEGIN
-                );
-            $this->_getCheckout()->_init();
+            $quote = $this->_getCheckout()->getQuote();
+            $addresses  = $quote->getAllAddresses();
+            if(count($addresses) > 2){
+                $checkoutSessionQuote->setIsMultiShipping(true);
+                $this->_getCheckoutSession()->setCheckoutState(
+                    Mage_Checkout_Model_Session::CHECKOUT_STATE_BEGIN
+                    );
+                $this->_getCheckout()->_init();
+            }
+            $couponCode = $this->_getCheckout()->getCheckoutSession()->getCartCouponCode();
+            if ($couponCode) {
+                $this->_getCheckout()->getQuote()->setCouponCode($couponCode)
+                ->setTotalsCollectedFlag(false)
+                ->collectTotals()->save();
+            }
         }
         
         $isAmazonPaymentForGeneralCustomer = false;
@@ -398,6 +408,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             return;
         }
         
+        $this->_getCheckout()->getCheckoutSession()->setCartCouponCode();
         $couponCode = (string)$this->getRequest()->getParam('coupon_code');
         if ($this->getRequest()->getParam('remove') == 1) {
             $couponCode = '';
@@ -421,6 +432,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getCheckout()->getQuote()->getCouponCode()) {
+                    $this->_getCheckout()->getCheckoutSession()->setCartCouponCode($couponCode);
                     if (!$isAjax) {
                         $this->_getCheckoutSession()->addSuccess(
                             $this->__('Coupon code "%s" was applied.', Mage::helper('core')->htmlEscape($couponCode))
