@@ -53,80 +53,44 @@ if ($_product->getSizeSample() == 1) {
         })
             .done(function(response) {
                 var spConfig = new Product.Config(JSON.parse(response.jsonconfigtest));
-                <?php
-                $optionHelper=Mage::helper('allure_catalog');
-                $metal=$this->getRequest()->getParam("metal");
-                if($metal){
-                    $selectedColor=$optionHelper->getOptionNumber($metal);
-                }elseif($this->getRequest()->getParam("optionId")){
-                    $selectedColor=$this->getRequest()->getParam("optionId");
-                }
 
-                $core_ses=Mage::getSingleton('core/session');
+                //new function to auto selection options
 
-                $selVal1=$core_ses->getData("selAtr1");
-                $selectValue1="";
-                if($selVal1)
+                spConfig.setInitialState = function(dropdown_id,value)
                 {
-                    $selectValue1=$core_ses->getData("selectValue1");
-                }
-                $selVal2=$core_ses->getData("selAtr2");
-                $selectValue2="";
-                if($selVal2)
-                {
-                    $selectValue2=$core_ses->getData("selectValue2");
-                }
-                ?>
-                var id = 'amconf-image-<?php echo $selectedColor; ?>';
+                    var dropdown = $(dropdown_id);
+
+                    if(jQuery('#'+dropdown_id).length)
+                    {
+                        for(index = 0; index < dropdown.length; index++)
+                        {
+                            if(dropdown[index].value == value)
+                            {
+                                dropdown.selectedIndex = index;
+
+                                var element = dropdown;
+                                var event = 'change';
+
+                                if(document.createEventObject)
+                                {
+                                    var evt = document.createEventObject();
+                                    return element.fireEvent('on'+event,evt)
+                                }
+                                else
+                                {
+                                    var evt = document.createEvent("HTMLEvents");
+                                    evt.initEvent(event, true, true );
+                                    return !element.dispatchEvent(evt);
+                                }
+                            }
+                        }
+                    }
+
+                };
 
 
 
-                if($(id)){
-                    $(id).simulate('click');
-                    // document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
-                }
-
-                var ele1 = parseInt(<?php echo ($selectValue1)?$selectValue1:'' ?>);
-                if(ele1){
-                    jQuery("#attribute<?php echo $selVal1?>").val(ele1).trigger('change');
-
-                }
-
-
-                var ele2 = parseInt(<?php echo ($selectValue2)?$selectValue2:''?>);
-                if(ele2){
-
-                    jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('change');
-                }
-
-
-                <?php if(isset($selVal1) && $selVal1=="262"):?>
-                     $(id).simulate('click');
-                <?php endif; ?>
-
-                <?php
-                if($core_ses->getData("child")):
-                $childproduct=Mage::getSingleton('catalog/product')->load($core_ses->getData("child"));
-                $status=Mage::helper('amstockstatus')->getCustomStockStatusText($childproduct);
-
-                ?>
-
-                jQuery('.availability.in-stock span').html("<?= $status ?>");
-
-
-                <?php
-
-                /*$productdetail=json_decode($this->getJsonConfig());
-                $child=(array)$productdetail->childProducts;
-                $finalPrice=round($child[$this->getRequest()->getParam("child")]->finalPrice);
-                $cur=substr($productdetail->template,0,1);
-             */   ?>
-//                jQuery('#product-price-<?//= $_product->getId() ?>//').html("<?//= $productdetail->template."".$finalPrice?>//");
-                <?php
-
-                endif;
-                ?>
-
+                <?= $this->getInStockAttribute() ?>
 
             });
     </script>
