@@ -142,8 +142,17 @@ function addToShoppingCart(button, formId, relode=false) {
         } else {
             jQuery('#ajax_cart_content').html(data);
             //jQuery('#just_added').slideDown(500).delay( 5000 ).slideUp( 600 );
-            jQuery('#just_added').slideDown(1000);
-            jQuery('#topcart-popup').addClass('just_added');
+            if(jQuery(window).width() >= 768) {
+                jQuery('#just_added').slideDown(1000);
+            }
+            if (formId.id == 'product_addtocart_giftcard_form') {
+                jQuery('input#mail-to').val("");
+                jQuery('input#mail-to-email').val("");
+                jQuery('textarea#mail-message').val("");
+                jQuery('input#mail-from').val("");
+                jQuery('input#mail-from-email').val("");
+            }
+                jQuery('#topcart-popup').addClass('just_added');
 
 
             if(relode)
@@ -182,8 +191,8 @@ function addToShoppingCartFromQuickView(button, formId) {
                     mibandera = false;
                 datos += ',"' + this.name + '":"' + this.value + '"';
             });
-            
-            
+
+
             var super_attribute = {};
             var options= {};
             var optionStr = '';
@@ -207,8 +216,8 @@ function addToShoppingCartFromQuickView(button, formId) {
              if(Object.keys(options).length>0){
             	 optionStr = optionStr + '"options":'+JSON.stringify(options);
              }
-            
-            
+
+
 
             var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
             datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
@@ -225,7 +234,7 @@ function addToShoppingCartFromQuickView(button, formId) {
             var urlAdd2Cart = jQuery(clicked).attr('href');
         }
     }
-    
+
     parent.jQuery("div.top-cart").css("background", "url('" + parent.SKIN_URL + "frontend/mt/default/images/loading.gif') no-repeat scroll 0 0 transparent");
     var jqxhr = jQuery.get(urlAdd2Cart, dataSend, function (data) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
@@ -237,7 +246,9 @@ function addToShoppingCartFromQuickView(button, formId) {
             parent.jQuery('#ajax_cart_content').html(data);
             if(parent.jQuery('#ajax_cart_content').hasClass('checkout_cart'))
                 parent.window.location.reload();
-            parent.jQuery('#just_added').slideDown(1000);
+            if(jQuery(window).width() >= 768) {
+                parent.jQuery('#just_added').slideDown(1000);
+            }
             parent.jQuery('#topcart-popup').addClass('just_added');
             parent.setTimeoutDtn();
             parent.jQuery.fancybox.close();

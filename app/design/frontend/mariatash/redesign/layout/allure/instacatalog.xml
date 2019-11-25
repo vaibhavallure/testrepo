@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Allure_InstaCatalog
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category    Allure
+ * @package     Allure_InstaCatalog
+ * @copyright   Copyright© 2016, Allure Inc
+ * @license     http://opensource.org/licenses/mit-license.php MIT License
+ * @author      Team Allure <extensions@allureinc.co>
+-->
+<layout>
+    <default>
+        <reference name="root">
+            <action method="setTemplate">
+              <template>page/1column.phtml</template> 
+            </action>
+        </reference>
+    </default>
+    <allure_instacatalog_feed_index translate="label" module="allure_instacatalog">
+        <label>Feed list</label>
+        
+        <reference name="head">
+        	<action method="addItem"><type>skin_js</type><name>js/allure/instagramview.js</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog.css</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog_showcase.css</name><params/></action>
+        </reference>
+        
+        <reference name="content">
+            <block type="allure_instacatalog/feed_list" name="post_list" template="allure/instacatalog/feed/list.phtml" />
+        </reference>
+    </allure_instacatalog_feed_index>
+    
+    <allure_instacatalog_feed_view>
+    
+        <reference name="content">
+        	 <block type="allure_instacatalog/feed_view" name="post_view" template="allure/instacatalog/feed/instagram_view.phtml" />
+        </reference>
+    </allure_instacatalog_feed_view>
+    
+    <allure_instacatalog_feed_shareview>
+    	<reference name="head">
+    		<action method="addItem"><type>skin_js</type><name>js/allure/instacatalog_lookbook.js</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/single-post.css</name><params/></action>
+        </reference>
+    	<!-- <reference name="root">
+            <action method="setTemplate"><template>page/instagram.phtml</template></action>
+        </reference> -->
+        <reference name="content">
+        	 <block type="allure_instacatalog/feed_view" name="post_view" template="allure/instacatalog/feed/share_view.phtml" />
+        </reference>
+    </allure_instacatalog_feed_shareview>
+    
+    <allure_instacatalog_feed_post translate="label" module="allure_instacatalog">
+        <label>Feed list</label>
+        
+        <reference name="head">
+        	<action method="addItem"><type>skin_js</type><name>js/allure/instagramview.js</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog.css</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog_showcase.css</name><params/></action>
+        </reference>
+        
+        <reference name="content">
+            <block type="allure_instacatalog/feed_list" name="post_list" template="allure/instacatalog/feed/postview.phtml" />
+        </reference>
+    </allure_instacatalog_feed_post>
+    
+</layout>

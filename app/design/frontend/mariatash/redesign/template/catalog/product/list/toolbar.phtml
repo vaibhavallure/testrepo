@@ -1,0 +1,144 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @see Mage_Catalog_Block_Product_List_Toolbar
+ */
+?>
+<?php
+$img['grid']=$this->getSkinUrl('images/redesign/multi-grids.png');
+$img['list']=$this->getSkinUrl('images/redesign/four-grids.png');
+ ?>
+<?php if($this->getCollection()->getSize()): ?>
+<div class="toolbar text-right">
+    <?php if(false) : //if( $this->isExpanded() ): ?>
+        <div class="sorter text-right">
+            <?php if( $this->isEnabledViewSwitcher() ): ?>
+                <p class="view-mode">
+                    <?php $_modes = $this->getModes(); ?>
+                    <?php if($_modes && count($_modes)>1): ?>
+                        <!-- <label><//?php echo $this->__('Image Size') ?>:</label> -->
+                        <?php foreach ($this->getModes() as $_code=>$_label): ?>
+                            <?php if($this->isModeActive($_code)): ?>
+                                <strong title="Small Images" class="<?php echo strtolower($_code); ?> catalog-grid-option mr-2"><?php /*echo $_label*/ ?>
+                                  <img src="<?php echo $img[$_code] ?>">
+                                </strong>
+                            <?php else: ?>
+                                <?php
+                //                $url = Mage::helper('mana_filters')->getGridModeUrl($this->getModeUrl($_code), $_code);
+								$block = Mage::app()->getLayout()->getBlockSingleton('Mage_Catalog_Block_Product_List_Toolbar');
+								$url = $block->getModeUrl($_code);
+                                ?>
+                                <a href="<?php echo $url; ?>" title="<?php if($_code=="grid"): ?><?php echo" Small Images" ?><?php elseif($_code=="list"): echo "Large Images";  ?><?php endif;?>" class="<?php echo strtolower($_code); ?> catalog-grid-option"><?php /*echo $_label*/ ?>
+                                  <img src="<?php echo $img[$_code] ?>">
+                                </a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <div style="clear:both;"></div>
+    <div class="pager">
+        <p class="amount">
+            <?php if($this->getLastPageNum()>1): ?>
+                <?php echo $this->__('Items %s to %s of %s total', $this->getFirstNum(), $this->getLastNum(), $this->getTotalNum()) ?>
+            <?php else: ?>
+                <strong><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></strong>
+            <?php endif; ?>
+        </p>
+        <?php
+
+        $currentUrl = $this->helper('core/url')->getCurrentUrl();
+        $isCatalogsearch =  strpos($currentUrl, 'catalogsearch');
+
+        if(strpos($currentUrl, '/where/limit/20')) {
+            $urlLimitAll = str_replace('/where/limit/20','/where/limit/all',$currentUrl);
+            $urlLimit200 = str_replace('/where/limit/20','/where/limit/200',$currentUrl);
+            $urlLimit20 = str_replace('/where/limit/20','/where/limit/20',$currentUrl);
+        } elseif(strpos($currentUrl, '/where/limit/all')) {
+            $urlLimitAll = str_replace('/where/limit/all','/where/limit/all',$currentUrl);
+            $urlLimit200 = str_replace('/where/limit/all','/where/limit/200',$currentUrl);
+            $urlLimit20 = str_replace('/where/limit/all','/where/limit/20',$currentUrl);
+        }elseif(strpos($currentUrl, '/where')) {
+            $urlLimitAll = str_replace('/where','/where/limit/all',$currentUrl);
+            $urlLimit200 = str_replace('/where','/where/limit/200',$currentUrl);
+            $urlLimit20 = str_replace('/where','/where/limit/20',$currentUrl);
+        }else{
+            $urlLimitAll = $this->getLimitUrl('all');
+            $urlLimit200 = $this->getLimitUrl('200');
+            $urlLimit20 = $this->getLimitUrl('20');
+        }
+        $size = $this->getCollection()->getSize();
+        ?>
+        <div class="limiter">
+        <?php if($isCatalogsearch):?>
+            <?php $limit = $this->getRequest()->getParam('limit',null);?>
+            <?php if($size> 20):?>
+                  <?php if($size < 200 && ($limit == 'all') ): ?>
+                    <a href="<?php echo $urlLimit20; ?>">View Less</a>
+                  <?php elseif($size < 200 && ($limit != 'all')):?>
+                     <a href="<?php echo $urlLimitAll; ?>">View All <?php echo $this->__('%s Items', $this->getTotalNum()) ?> </a>
+                  <?php elseif($size >= 200 && (($limit == 'all') || ($limit < 200))):?>
+                     <a href="<?php echo $urlLimitAll; ?>">View All <?php echo $this->__('%s Items', $this->getTotalNum()) ?> </a>
+                  <?php elseif($size >= 200 && ($limit == 200)):?>
+                     <a href="<?php echo $urlLimit20; ?>">View Less</a>
+                  <?php endif; ?>
+
+            <?php endif;?><?php //End >20 ?>
+        <?php else:?>
+                <?php if($this->getCollection()->getSize() > 20):  ?>
+                <?php if($this->getCollection()->getSize() < 200 && !strpos($currentUrl, '/where/limit/all') ): ?>
+                    <a href="<?php echo $urlLimitAll; ?>">View All <?php echo $this->__('%s Items', $this->getTotalNum()) ?> </a>
+                <?php elseif($this->getCollection()->getSize() >= 200 && !strpos($currentUrl, '/where/limit/all') ): ?>
+                    <a href="<?php echo $urlLimitAll; ?>">View All <?php echo $this->__('%s Items', $this->getTotalNum()) ?> </a>
+                <?php endif; ?>
+                <?php if($this->getCollection()->getSize() < 200 && strpos($currentUrl, '/where/limit/all') ): ?>
+                    <a href="<?php echo $urlLimit20; ?>">View Less</a>
+                <?php endif; ?>
+                <?php if($this->getCollection()->getSize() >= 200 && strpos($currentUrl, '/where/limit/all') ): ?>
+                    <a href="<?php echo $urlLimit20; ?>">View Less</a>
+                <?php endif; ?>
+            <?php endif;?>
+        <?php endif;?>
+        </div>
+        <?php echo $this->getPagerHtml() ?>
+    </div>
+</div>
+<?php endif ?>
+<script>
+	jQuery(document).ready (function() {
+		/*jQuery(".toolbar-top")
+			.appendTo(".mb-mana-catalogsearch-leftnav");*/
+		/*jQuery(".toolbar-bottom")
+			.appendTo(".toolbar-bottom-container");*/
+	});
+</script>

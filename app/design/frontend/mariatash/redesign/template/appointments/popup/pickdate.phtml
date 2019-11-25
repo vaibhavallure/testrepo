@@ -1,0 +1,11 @@
+<input  class="input-box"  id="datepicker-13_hidden" />
+
+<script>
+    //Pick ur day updated with custom calendar code
+    jQuery('#datepicker-13_hidden').dcalendarpicker();
+</script>
+<script>
+    var date=new Date();
+var val=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
+document.getElementById("datepicker-13_hidden").value = val;
+</script>

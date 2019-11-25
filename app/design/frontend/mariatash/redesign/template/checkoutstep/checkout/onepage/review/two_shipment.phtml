@@ -1,0 +1,218 @@
+<div class="two-shipment-billing-payment-mt">
+<?php
+ $mainQuote = Mage::getSingleton('checkout/session')->getQuote();
+ ?>
+<div class="checkout-two-shipment-billing-address-mt">
+<h4>Billing Address</h4>
+<?php
+$billing = $mainQuote->getBillingAddress();
+echo '<p>' . $billing->getFormated('html') . '</p>';
+?>
+<?php if( $this->helper('customer')->isLoggedIn() ): ?>
+        <span><a href="javascript: accordion.openSection('opc-billing');">Edit</a></span>
+<?php endif; ?>
+</div>
+
+<div class="checkout-two-shipment-payment-method-mt">
+<?php
+$payment = $mainQuote->getPayment();
+echo "<h4>Payment method</h4>";
+switch ($payment->getMethod()) {
+    case 'authorizenet':
+        $cardTypes = Mage::getModel('payment/config')->getCcTypes();
+        $cardTypeName = $cardTypes[$payment->getCcType()];
+        $cardLast4 = $payment->getCcLast4();
+        echo '<p>' . $cardTypeName . ' XXX XXX XXX ' . $cardLast4 . '</p>';
+        break;
+    default:
+        echo '<p>' . $payment->getMethodInstance()->getTitle() . '</p>';
+        break;
+}
+?>
+<span><a href="javascript: accordion.openSection('opc-payment');">Edit</a></span>
+</div>
+
+</div>
+
+
+<?php
+	$count = 0;
+	$one_ship = Mage::getSingleton('checkoutstep/ordered_session')->getOrdered();
+	if(isset($one_ship) && !empty($one_ship)):
+?>
+
+<?php
+		$count = $count+1;
+        $quote = Mage::getSingleton("checkoutstep/ordered_session")->getQuote();
+        $quote->collectTotals()->save();
+
+        ?>
+
+<div id="ordered-two-ship">
+<h2 class="shipment-title">Shipment <?php echo $count;?></h2>
+<p class="shipment-message">
+<span class="shipment-ref-number info-text-two"><?php echo "Ref. #".$quote->getId();?></span>
+<span class="shipment-notice-sp info-text-two"><span class="shipment-color info-text-two">This</span><span class="shipment-notice"> order will ship within 24 hours (Mon-Fri).</span></span>
+</p>
+<?php //echo $this->getChildHtml('items_before'); ?>
+
+
+<?php echo $this->getChildHtml('items_after'); ?>
+
+<div id="checkout-review-table-wrapper">
+    <table class="data-table cart-table-items" id="checkout-review-table">
+        <?php //echo $this->getChildHtml('totals_ordered'); ?>
+        <thead>
+            <tr>
+                <th colspan="2"><?php echo $this->__('Product') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-center"><?php echo $this->__('Quantity') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
+            </tr>
+        </thead>
+
+        <?php foreach($this->getOrderedItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item)?>
+        <?php endforeach ?>
+    </table>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-address-mt">
+<?php
+echo "<h4>Shipping address</h4>";
+
+$shipping = $quote->getShippingAddress();
+echo '<p>' . $shipping->getFormated('html') . '</p>';
+?>
+
+<?php if( $this->helper('customer')->isLoggedIn() ): ?>
+    <span><a href="javascript: accordion.openSection('opc-shipping');">Edit</a></span>
+<?php endif; ?>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-method-mt">
+<?php
+echo "<h4>Shipping method</h4>";
+$shippingAddress = $quote->getShippingAddress();
+
+echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
+?>
+<span><a href="javascript: accordion.openSection('opc-shipping_method');">Edit</a></span>
+
+</div>
+
+</div>
+<?php endif;?>
+
+
+
+
+<?php
+	$two_ship = Mage::getSingleton('checkoutstep/backordered_session')->getBackorder();
+	if(isset($two_ship) && !empty($two_ship)):
+?>
+
+ <?php
+ 		$count = $count+1;
+        $quote1 = Mage::getSingleton("checkoutstep/backordered_session")->getQuote();
+        $quote1->collectTotals()->save();
+        ?>
+
+
+<div id="backordered-two-ship">
+<h2 class="shipment-title">Shipment <?php echo $count;?></h2>
+<p class="shipment-message"><span class="shipment-ref-number info-text-two"><?php echo "Ref. #".$quote1->getId();?></span>
+<span class="shipment-notice-sp info-text-two"><span class="shipment-color info-text-two">This</span><span class="shipment-notice"> order will ship once the remaining items are in stock.</span></span></p>
+<?php //echo $this->getChildHtml('items_before'); ?>
+
+
+<?php echo $this->getChildHtml('items_after'); ?>
+
+<div id="checkout-review-table-wrapper">
+    <table class="data-table cart-table-items" id="checkout-review-table">
+        <?php //echo $this->getChildHtml('totals_backordered'); ?>
+        <thead>
+            <tr>
+                <th colspan="2"><?php echo $this->__('Product') ?></th>
+                <th class="text-right"><?php echo $this->__('Price') ?></th>
+                <th class="text-center"><?php echo $this->__('Quantity') ?></th>
+                <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
+            </tr>
+        </thead>
+
+        <?php foreach($this->getBackorderedItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item)?>
+        <?php endforeach ?>
+    </table>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-address-mt">
+<?php
+echo "<h4>Shipping address</h4>";
+
+$shipping = $quote1->getShippingAddress();
+echo '<p>' . $shipping->getFormated('html') . '</p>';
+?>
+
+<?php if( $this->helper('customer')->isLoggedIn() ): ?>
+    <span><a href="javascript: accordion.openSection('opc-shipping');">Edit</a></span>
+<?php endif; ?>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-method-mt">
+<?php
+echo "<h4>Shipping method</h4>";
+$shippingAddress = $quote1->getShippingAddress();
+
+echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
+?>
+<span><a href="javascript: accordion.openSection('opc-shipping_method');">Edit</a></span>
+
+</div>
+
+</div>
+<?php endif;?>
+
+
+<script>
+	jQuery(document).ready(function(){
+		var billingHeight = jQuery('.checkout-two-shipment-billing-address-mt').height();
+		if(billingHeight)
+			jQuery('.checkout-two-shipment-payment-method-mt').css('height',billingHeight+'px');
+
+		var shippindAddrHeight = jQuery('.checkout-two-shipment-shipping-address-mt').height();
+		if(shippindAddrHeight)
+			jQuery('.checkout-two-shipment-shipping-method-mt').css('height',shippindAddrHeight+'px');
+	});
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+    decorateTable('checkout-review-table');
+    truncateOptions();
+//]]>
+</script>
+<div id="checkout-review-submit" class="two-shipment">
+    <?php echo $this->getChildHtml('agreements') ?>
+    <div class="buttons-set" id="review-buttons-container">
+        <?php echo $this->getChildHtml('button') ?>
+        <span class="please-wait" id="review-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+        </span>
+        <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" Below.') ?></p>
+         <?php if(0){?>
+        <p class="f-left"><?php echo $this->__('Forgot an Item?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>" onclick="return confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Are you sure you want to leave this page? You will need to go through the checkout steps again.')); ?>')"><?php echo $this->__('Edit Your Cart') ?></a></p>
+        <?php }?>
+    </div>
+    <?php //echo $this->getChildHtml('button') ?>
+    <p class="f-left back-link"><a href="#" onclick="checkout.back(); return false;"><?php echo $this->__('Back') ?></a></p>
+    <script type="text/javascript">
+    //<![CDATA[
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/successorder') ?>', $('checkout-agreements'));
+    //]]>
+    </script>
+</div>

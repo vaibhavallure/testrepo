@@ -1,0 +1,41 @@
+.giftcard-page {
+    text-align: center;
+    font-family: dinmittelschriftregular;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.giftcard-page h1 {
+    font-size: 32px;
+}
+.giftcard-page h3 {
+    font-size: 17px;
+    color: #caced7;
+}
+.giftcard-page p.select-card {
+    font-size: 17px;
+}
+.giftcard-page .banners-wrapper{
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    line-height: 245px;
+    margin-bottom: 20px;
+    margin-top: 35px;
+}
+.giftcard-page .banners-wrapper .banner-1{
+    display: inline-block;
+    float: left;
+}
+.giftcard-page .banners-wrapper .banner-or{
+    display: inline;
+}
+.giftcard-page .banners-wrapper .banner-2{
+    float: right;
+}
+.giftcard-page .faq-text{
+    min-height: 200px;
+    background: #d1d1d1;
+    padding: 5px;
+    text-align: left;
+    text-transform: initial;
+}

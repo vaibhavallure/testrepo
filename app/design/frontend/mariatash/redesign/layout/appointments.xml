@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default_app>
+        <reference name="head">
+			<action method="addJs"><script>jquery/jquery-1.12.4.min.js</script></action>
+			<action method="addJs"><script>jquery/jquery.noconflict.js</script></action>
+			<action method="addJs"><script>jquery/jquery-migrate-1.4.1.min.js</script></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/jquery.validate.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/jquery.validate.extra.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointment.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/dcalendar_picker.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/input_validate.js</name></action>
+
+			<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap-datepicker.js</name></action>
+			<action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/bootstrap/bootstrap-datepicker.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/allure/allure_appointment.css</stylesheet></action>
+        </reference>
+	</default_app>
+	<appointments_index_index>
+  		<update handle = "default_app" />
+	    <reference name="root">
+	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+	    </reference>
+	    <reference name="content">
+	      <block type="appointments/index" name="appointments_index" as="appointments_index" template="appointments/index.phtml">
+	      	  	<block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurday" as="appointments_pickurday" template="appointments/pickurday.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurtime" as="appointments_pickurtime" template="appointments/pickurtime.phtml"/>
+	      	  	<block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml">
+	      	  		<block type="appointments/pricing" name="appointments_piercing_pricing" as="appointments_piercing_pricing" template="appointments/pricing.phtml"/>
+	      	  	</block>
+	      	  	<block type="core/template" name="appointments_signin" as="appointments_signin" template="appointments/mini.login.phtml"/>
+	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
+	      </block>
+	    </reference>
+	</appointments_index_index>
+	<appointments_index_modify>
+  		<update handle = "default_app" />
+	    <reference name="root">
+	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+	    </reference>
+	    <reference name="content">
+	      <block type="appointments/modify" name="appointments_modify" as="appointments_modify" template="appointments/modify_appointments.phtml">
+	      </block>
+	    </reference>
+  	</appointments_index_modify>
+   	<appointments_index_facebook>
+  		<update handle = "default_app" />
+	    <reference name="root">
+	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+	    </reference>
+	    <reference name="content">
+	      <block type="appointments/index" name="appointments_index" as="appointments_index" template="appointments/index.phtml">
+	      	  	<block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurday" as="appointments_pickurday" template="appointments/pickurday.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurtime" as="appointments_pickurtime" template="appointments/pickurtime.phtml"/>
+	      	  	<block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml"/>
+	      	  	<block type="core/template" name="appointments_signin" as="appointments_signin" template="appointments/mini.login.phtml"/>
+	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
+	      </block>
+	    </reference>
+  	</appointments_index_facebook>
+	<appointments_book_store>
+		<update handle = "default_app" />
+		<reference name="root">
+			<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/appointment" name="appointments_popup_container" as="appointments_popup_container" template="allure/appointments/container.phtml">
+				<block type="appointments/appointment" name="appointments_popup_store_list" as="appointments_popup_store_list" template="allure/appointments/store_list.phtml"/>
+				<block type="appointments/appointment" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/success.phtml"/>
+				<block type="appointments/appointment" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/register.phtml">
+					<block type="appointments/appointment" name="appointments_popup_store" as="appointments_popup_store" template="allure/appointments/store.phtml"/>
+					<block type="appointments/appointment" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/pickdatetime.phtml">
+						<block type="appointments/appointment" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/pickdate.phtml"/>
+						<block type="appointments/appointment" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/pickslot.phtml"/>
+					</block>
+					<block type="appointments/appointment" name="appointments_popup_price_list" as="appointments_popup_price_list" template="allure/appointments/price_list.phtml"/>
+				</block>
+				<block type="appointments/appointment" name="appointments_popup_register_admin" as="appointments_popup_register_admin" template="allure/appointments/register_admin.phtml">
+					<block type="appointments/appointment" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/pickdatetime.phtml">
+						<block type="appointments/appointment" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/pickdate.phtml"/>
+						<block type="appointments/appointment" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/pickslot.phtml"/>
+					</block>
+					<block type="appointments/appointment" name="appointments_popup_price_list" as="appointments_popup_price_list" template="allure/appointments/price_list.phtml"/>
+				</block>
+			</block>
+		</reference>
+	</appointments_book_store>
+	<appointments_book_index>
+		<update handle = "default_app" />
+		<reference name="root">
+			<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/appointment" name="appointments_popup_container" as="appointments_popup_container" template="allure/appointments/container.phtml">
+				<block type="appointments/appointment" name="appointments_popup_store_list" as="appointments_popup_store_list" template="allure/appointments/store_list.phtml"/>
+				<block type="appointments/appointment" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/success.phtml"/>
+				<block type="appointments/appointment" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/register.phtml">
+					<block type="appointments/appointment" name="appointments_popup_store" as="appointments_popup_store" template="allure/appointments/store.phtml"/>
+					<block type="appointments/appointment" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/pickdatetime.phtml">
+						<block type="appointments/appointment" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/pickdate.phtml"/>
+						<block type="appointments/appointment" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/pickslot.phtml"/>
+					</block>
+					<block type="appointments/appointment" name="appointments_popup_price_list" as="appointments_popup_price_list" template="allure/appointments/price_list.phtml"/>
+				</block>
+				<block type="appointments/appointment" name="appointments_popup_register_admin" as="appointments_popup_register_admin" template="allure/appointments/register_admin.phtml">
+					<block type="appointments/appointment" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/pickdatetime.phtml">
+						<block type="appointments/appointment" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/pickdate.phtml"/>
+						<block type="appointments/appointment" name="appointments_popup_pickslot" as="appointments_popup_pickslot" template="allure/appointments/pickslot.phtml"/>
+					</block>
+					<block type="appointments/appointment" name="appointments_popup_price_list" as="appointments_popup_price_list" template="allure/appointments/price_list.phtml"/>
+				</block>
+			</block>
+		</reference>
+	</appointments_book_index>
+
+	<appointments_book_modify>
+		<update handle = "default_app" />
+		<reference name="root">
+			<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/appointment" name="appointments_popup_modify" as="appointments_popup_modify" template="allure/appointments/modify_appointments.phtml" />
+		</reference>
+	</appointments_book_modify>
+
+</layout>

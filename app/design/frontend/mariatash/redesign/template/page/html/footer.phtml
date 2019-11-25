@@ -1,0 +1,92 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<div id="footer8" class="footer col-12">
+ <?php echo $this->getChildHtml() ?>
+ </div>
+<?php
+$cateid = 0;
+$currenturl = '9999';
+$purl = '9999';
+if ($curCategory = Mage::registry('current_category')) {
+    $cateid = $curCategory->getId();
+    $urlArr = explode('?', $curCategory->getUrl());
+    $purlArr = explode('/', $curCategory->getUrl());
+    $purlArr = explode('/' . $purlArr[count($purlArr) - 1], $curCategory->getUrl());
+    $purl = $purlArr[0] . '.html';
+    $currenturl = $urlArr[0];
+}
+?>
+<script type="text/javascript">
+    var cateid = '<?php echo $cateid; ?>';
+    var currenturl = '<?php echo $currenturl; ?>';
+    var purl = '<?php echo $purl; ?>';
+    jQuery( document ).ready(function() {
+        jQuery( "#top-nav li" ).each(function() {
+            if(jQuery( this ).hasClass( "current" ))
+                jQuery( this ).removeClass( "current" );
+        });
+        if(cateid) {
+            jQuery("a[href='"+ currenturl +"']").parent().addClass(' current');
+            jQuery("a[href='"+ purl +"']").parent().addClass(' current');
+        }
+        <?php if(Mage::app()->getStore()->isCurrentlySecure()) : ?>
+            new Ajax.Updater('ajax_cart_content', "<?php echo $this->getUrl('checkout/cart/update/', array('_secure'=>true)) ?>", { method: 'get'});
+        <?php else: ?>
+            new Ajax.Updater('ajax_cart_content', "<?php echo $this->getUrl('checkout/cart/update/') ?>", { method: 'get'});
+        <?php endif; ?>
+    });
+    jQuery.each(jQuery('input.validate-email'), function() {
+        jQuery(this).change(function() {
+            jQuery(this).val(jQuery.trim(jQuery(this).val()));
+        });
+    });
+</script>
+<script type="text/javascript">
+(function(a,e,c,f,g,b,d){var h={ak:"1004306925",cl:"rSMGCKvfvmUQ7YPy3gM"};a[c]=a[c]||function(){(a[c].q=a[c].q||[]).push(arguments)};a[f]||(a[f]=h.ak);b=e.createElement(g);b.async=1;b.src="//www.gstatic.com/wcm/loader.js";d=e.getElementsByTagName(g)[0];d.parentNode.insertBefore(b,d);a._googWcmGet=function(b,d,e){a[c](2,b,h,d,null,new Date,e)}})(window,document,"_googWcmImpl","_googWcmAk","script");
+</script>
+<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1004306925;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js" integrity="pM6wzLg4M3tyFLt1P71YeO7DNYF4CMADt2FyOsRsJPZxPD4ZkLKyyGBjql36nCtE" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    !function(){var t=function(){var t=document.createElement("script");t.src="https://ws.audioeye.com/ae.js",t.type="text/javascript",t.setAttribute("async",""),document.getElementsByTagName("body")[0].appendChild(t)};"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",t):window.attachEvent&&window.attachEvent("onload",t):t()}()
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1004306925/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>

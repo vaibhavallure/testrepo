@@ -1,0 +1,286 @@
+<?php
+	$totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
+?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
+<div class="cart-mt">
+<input page-size="<?php echo $totalPageSizeItem?>" current-page="2" 
+	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>"
+	 data-limit="10" type="hidden" id="purchase-type" value="">
+        <fieldset>
+        	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
+        	<div id="purchase-history">
+	        	<div class="box-content">
+		            <table id="myaccount-shopping-cart-table" class="data-table cart-table" width="100%" border="0">
+		                <thead class="shop-titles">
+			                <tr>
+			                    <th colspan="2"><?php echo $this->__('Product'); ?></th>
+			                    <th><?php echo $this->__('Qty '); ?></th>
+			                    <th><?php echo $this->__('Price'); ?></th>
+			                    <th>&nbsp;</th>
+			                </tr>
+		                </thead>
+		                <tbody>
+		               		<?php echo $this->getChildHtml('purchased_items_list')?>
+		                </tbody>
+		            </table>
+	            </div>
+            </div>
+            <?php else:?>
+            	<p class="no-purchase-item"><?php echo $this->__("You have no purchased item.")?></p>
+            <?php endif;?>
+        </fieldset>
+
+</div>
+
+
+
+<div class="fancybox-overlay fancybox-overlay-fixed" style="width: auto; 
+		height: auto; display: none;">
+	<div class="fancybox-wrap fancybox-desktop fancybox-type-iframe fancybox-sample-size fancybox-opened" 
+			tabindex="-1" style="width: 350px; height: auto; position: absolute; 
+			top: 20px; left: 37%; overflow: visible;">
+		<div class="fancybox-skin" style="padding: 0px; width: auto; height: auto;">
+			<div class="fancybox-outer">
+				<div class="fancybox-inner" style="overflow: hidden; 
+					width: 350px; height: 350px;">
+					<img id="frame-img" alt="" src="" />
+				</div>
+				<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:void(0);">
+					<span></span>
+				</a>
+				<a title="Next" class="fancybox-nav fancybox-next" href="javascript:void(0);">
+					<span></span>
+				</a>
+			</div>
+			<a title="Close" class="fancybox-item fancybox-close" href="javascript:void(0);"></a>
+		</div>
+	</div>
+</div>
+
+
+<div style="width: 100%" class="mt-custom-popup-main mt-custom-popup-overlay">
+	<div class="mt-custom-popup">
+		<h2></h2>
+		<a class="mt-popup-close" href="javascript:jQuery('.mt-custom-popup-main').removeClass('active');">&times;</a>
+		<div class="mt-custom-content">
+			<span id="myaccount-mt-loader-popup" class="please-wait-popup" style="display: none;">
+	    		<img src="<?php echo $this->getSkinUrl('aw_ajaxcatalog/images/ajax-loader.gif')?>" alt="Loading next step..." title="Loading next step..." class="v-middle">
+	    	</span>
+	    	<div class="mt-data-load"> 
+	    	</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script>
+    jQuery('a.scl-popup').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none',
+        nextEffect  : 'none',
+        prevEffect  : 'none',
+        padding     : 0,
+        mouseWheel : false,
+        loop            : false,
+        helpers : {
+            title : null
+        },
+        width: 785,
+        minWidth: 785,
+        maxWidth: 785,
+        height: 572,
+        minHeight: 572,
+        maxHeight: 572
+    });
+
+</script>
+
+
+<script>
+var xhr = null;
+var pageItem = 2;
+var totalPageItem = <?php echo $totalPageSizeItem?>;
+jQuery(function($){
+	$('#purchase-history .box-content').bind('scroll', function(){
+		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
+			if(pageItem<=totalPageItem){
+				 if( xhr == null ) {
+				    //xhr.abort();
+				    //xhr = null;
+				    showLoadingFancybox1('purchase-history');
+				 	xhr =	jQuery.ajax({
+						//async: false,
+				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>',
+				        dataType : 'json',
+						type : 'POST',
+						data: {'page':pageItem,'limit':5,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
+				        success: function(data) {
+				        	jQuery('#myaccount-shopping-cart-table tbody').append(data.data.html);
+				        	jQuery('.loader').css({"display":"none"});
+				        	hideLoadingFancybox1('purchase-history');
+				        }
+				    });
+				 	xhr = null;
+				 	pageItem ++;
+				}
+		    }else{
+		    	hideLoadingFancybox('purchase-history');
+		    }
+		}
+ 	});
+});
+
+
+jQuery(document).ready(function(){
+	jQuery(document).on('click','.mt-piercing-photo',function(){
+		return false;
+		var imgSrc = jQuery(this).attr('data-img');
+		jQuery('.mt-piercing-photo').removeClass('active');
+		jQuery(this).addClass('active');
+		jQuery('#frame-img').attr('src',imgSrc);
+		jQuery('.mt-new-purchase .fancybox-overlay-fixed').show();
+
+		var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+		var next = selector.attr('data-id');
+		if(next!="undefined" && next!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
+		}
+
+		var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+		var prev = selector.attr('data-id');
+		if(prev!="undefined" && prev!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
+		}
+	});
+
+	jQuery('.fancybox-close').click(function(){
+		jQuery('.mt-new-purchase .fancybox-overlay-fixed').hide();
+	});
+
+	jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').click(function(){
+		toPrevious();
+	});
+
+
+	jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').click(function(){
+		toNext();
+	});
+	
+});
+
+function toNext(){
+	var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+	var next = selector.attr('data-id');
+	if(next!="undefined" && next!=null){
+		var imgSrc = selector.find('.mt-piercing-photo').attr('data-img');
+		jQuery('#frame-img').attr('src',imgSrc);
+		jQuery('.mt-piercing-photo').removeClass('active');
+		selector.find('.mt-piercing-photo').addClass('active');
+
+		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+		var prev = prevSelector.attr('data-id');
+		if(prev!="undefined" && prev!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
+		}
+
+		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+		var next = nextSelector.attr('data-id');
+		if(next!="undefined" && next!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
+		}
+		
+	}
+}
+
+function toPrevious(){
+	var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+	var prev = selector.attr('data-id');
+	if(prev!="undefined" && prev!=null){
+		var imgSrc = selector.find('.mt-piercing-photo').attr('data-img');
+		jQuery('#frame-img').attr('src',imgSrc);
+		jQuery('.mt-piercing-photo').removeClass('active');
+		selector.find('.mt-piercing-photo').addClass('active');
+
+		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+		var next = nextSelector.attr('data-id');
+		if(next!="undefined" && next!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
+		}
+
+		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+		var prev = prevSelector.attr('data-id');
+		if(prev!="undefined" && prev!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
+		}
+	}
+}
+
+
+function openPurchaseWindow(event){
+	var url = jQuery(event).attr('data-url');
+	window.open(url);
+}
+
+function reorderItem(event){
+	var item_id = jQuery(event).attr('data-item-id');
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'sales/order/reorderItemAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'item_id':item_id},
+        success: function(data) {
+            if(data.success){
+            	/* jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html("");
+				var content = jQuery(data.total).find('#shopping-cart-totals-table').html();
+				jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html(content); */
+
+				jQuery('.mt-my-cart').html("");
+	        	jQuery('.mt-my-cart').html(data.cart_html);
+                
+            	jQuery('html, body').animate({
+                    scrollTop: 0
+                }, 'fast');
+
+            	jQuery('#ajax_cart_content').html(data.top_cart);
+                jQuery('#just_added').slideDown(1000);
+                jQuery('#topcart-popup').addClass('just_added');
+                setTimeout(function() {
+                    jQuery('#just_added').slideUp(1000);
+                    jQuery('#topcart-popup').removeClass('just_added');
+                }, 5000);
+            }else{
+                alert(data.message);
+            }
+        	hideLoadingFancybox();
+        }
+    });
+}
+
+function openTrackOrder(url){
+	  var lastSlash = url.lastIndexOf(':');
+	  var head = url.substring(0, lastSlash)+':';
+	  var protocol = window.location.protocol;
+	  url = url.replace(head, protocol);
+	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content .mt-data-load').html("");
+	  jQuery('#myaccount-mt-loader-popup').show();
+	  jQuery('.mt-new-purchase .mt-custom-popup-main').addClass('active');
+	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content .mt-data-load').load(url, function(response, status, xhr) {
+    	  //jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content').html(response);
+		  jQuery('#myaccount-mt-loader-popup').hide();	
+		  jQuery('.tracking-table-popup').parent().find('.divider').remove();
+		  jQuery('.tracking-table-popup tr td a').attr('target','_blank');	
+	 }); 
+}
+
+</script>

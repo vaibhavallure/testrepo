@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+<!--        <remove name='footer'/>
+        <reference name="footer">
+            <block type="footlinks/footlinks" name="footlinks" template="footlinks/footlinks.phtml" />
+        </reference>-->
+    </default>
+<!--    <ecp_footlinks_index>        
+        <reference name="footer">
+        <block type="footlinks/footlinks" name="footlinks" template="footlinks/footlinks.phtml" />
+        </reference>
+    </ecp_footlinks_index>-->
+    <footlinks_index_content>
+	<reference name="root">
+            <action method="setTemplate">
+                <template>page/tipped.phtml</template>
+            </action>
+        </reference>
+        <remove name='footer'/>
+        <remove name='header'/>
+        <remove name='head'/>
+        <remove name='breadcrumbs'/>
+        <remove name='notices'/>
+        <remove name='global_notices'/>
+        <remove name='global_messages'/>
+        <remove name='footlinks'/>
+        <remove name='right'/>
+        <remove name='before_body_end'/>
+    </footlinks_index_content>
+</layout> 

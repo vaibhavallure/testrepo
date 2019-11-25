@@ -1,0 +1,438 @@
+.active{
+    display: block;        
+}
+
+.inactive{
+    display: none;
+}
+
+#wrapper {
+        /*border: 1px solid #ccc;
+        background-color: #fff;
+        width: 600px;
+        height: 400px;
+        padding: 20px;
+        margin: -220px 0 0 -320px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        box-shadow: 0 5px 10px #ccc;*/
+}
+#inner {
+        position: relative;
+        width: 600px;
+        height: 400px;
+        /*overflow: hidden;*/
+        background-color: none !important;
+}
+.piercing-gallery-mt1 #inner , .piercing-gallery-mt1  #inner #carousel img.carrousel-images {
+	float: left; height: 513px; width: 396px;}
+#carousel img {
+        display: block;
+        float: left;
+}
+
+#navi {
+        /*background-color: #333;
+        background-color: rgba(30, 30, 30, 0.8);
+        border-top: 1px solid #000;
+        width: 600px;
+        height: 30px;
+        position: absolute;
+        top: -10px;
+        left: 0;
+        z-index: 10;*/
+}
+/*#timer {
+        background-color: #222;
+        background-color: rgba(20, 20, 20, 0.8);
+        width: 0;
+        height: 70px;
+        position: absolute;
+        z-index: 20;
+        top: 0;
+        left: 0;
+}*/
+#prev, #next, #play, #slide-count {
+        display: block;
+        position: absolute;
+        z-index: 30;
+}
+#prev, #next {
+        width: 47px;
+        height: 47px;
+        top: 13px;
+}
+#play {
+        width: 53px;
+        height: 53px;
+        top: 10px;
+        background: url(img/ui/pause.png) 0 0 no-repeat transparent;
+        left: 50%;
+        margin-left: -27px;
+}
+#play.paused {
+        background: url(img/ui/play.png) 0 0 no-repeat transparent;
+}
+#prev {
+        background: url('../images/gray_prev.png') 0 0 no-repeat transparent;
+        left: 220px;
+}
+#next {
+        background: url('../images/gray_next.png') 0 0 no-repeat transparent;
+        right: 220px;
+}
+#slide-count {
+    font: 400 13px/23px Arial, sans-serif;
+    top: 2px;
+    left: 29px;
+    width: 63px;
+    height: 23px;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    border: 1px solid #ccc;
+    background: rgba(61, 63, 69, .8);
+}
+
+
+/*PERCING */
+.piercing-gallery-mt1 {
+    margin: 0 auto;
+    width: 960px;
+}
+
+.piercing-gallery-mt1 h3 {
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    height: 30px;
+    line-height: 32px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 15px;
+}
+.piercing-gallery-mt1 .navigation-menu {
+    float: left;
+    height: auto;
+    width: 149px;
+}
+.piercing-gallery-mt1 .ui-accordion {
+	float: left;
+    width: 149px;
+}
+.piercing-gallery-mt1 .ui-accordion h3 {
+    background: none repeat scroll 0 0 #CFCFD0;
+    float: left; width: 134px;height: 35px;
+    font:normal 17px/34px dinmittelschriftregular;
+    padding-left: 8px;
+    margin: 0 0 1px;
+    cursor: pointer;
+}
+.piercing-gallery-mt1 .ui-state-focus,
+.piercing-gallery-mt1 .ui-accordion-header-active {
+    border:none;
+    outline:none;
+}
+
+.piercing-gallery-mt1  .ui-accordion .ui-accordion-content-active {
+    float: left;
+    height: auto !important;
+    margin: 0;
+    padding: 0;
+    width: 140px;
+}
+.piercing-gallery-mt1  .ui-accordion-content div {
+    border-bottom: 1px solid #CFCFD0;
+    float: left;
+}
+.piercing-gallery-mt1 .product-shop .product-options { border:none; margin:o !important; padding:0 !important; }
+.piercing-gallery-mt1 .product-collateral { width:230px; float:left; }
+.piercing-gallery-mt1 .ui-accordion-content-active > div {
+    border-bottom:1px solid #CFCFD0;
+    float: left; height: 29px;width: 132px;
+    line-height: 28px;
+    padding-left: 10px; 
+    cursor: pointer;
+}
+.piercing-gallery-mt1 .banner-c-code {
+    background: none repeat scroll 0 0 #B2B2B5;
+    float: left;
+    font: 12px/12px arial;
+    min-height: 90px;
+    height: 100%;
+    width: 142px;
+    margin-top:3px;
+}
+.piercing-gallery-mt1  .banner-c > p {
+    color: #FFFFFF;
+    font: 17px/17px dinmittelschriftregular;
+    margin: 9px 0 6px 10px;
+}
+.piercing-gallery-mt1 .banner-c > span {
+    float: left;
+    font: 12px/12px arial;
+    height: 35px;
+    margin: 0 0 0 10px;
+    width: 110px;
+}
+.piercing-gallery-mt1 .banner-c > span a {
+	text-decoration:underline;
+}
+.piercing-gallery-mt1 .col-main .content .content {
+    float: left;
+    width: 810px;
+}
+.piercing-gallery-mt1 .col-main .content .content {
+    float: left;
+    height: 512px;
+    width: 810px;
+}
+.piercing-gallery-mt1 .title-products-looks > h3 {
+    background: none repeat scroll 0 0 #CFCFD0;
+    font: 17px/29px dinmittelschriftregular;
+    margin: 0;
+    padding:3px 0 2px 10px ;
+    width:370px;
+}
+.piercing-gallery-mt1 .gallery-looks {
+    float: right;
+    height: auto;
+    width: 414px;
+}
+.piercing-gallery-mt1 .title-products-looks {
+    float: right;
+    height: 34px;
+    width: 380px;
+}
+.piercing-gallery-mt1 .products-look , .piercing-gallery-mt1 .products-look inactive {
+     height: 126px; width: 380px; margin-left:35px;
+   /*float: right; border-bottom: 1px solid #CFCFD0;*/
+}
+.piercing-gallery-mt1 .product-shop {
+   float: right;
+    margin: 12px 0 0 10px;
+    width: 290px;
+}
+
+.piercing-gallery-mt1 .image_thumb_celeb {
+    float: left;
+    height: 98px;
+    margin-top: 12px;
+    width: 76px;
+    margin-bottom: 18px;
+    background: #757881; /* Old browsers */
+    background: -moz-linear-gradient(top,  #757881 13%, #b5bbc9 49%, #b5bbc9 99%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(13%,#757881), color-stop(49%,#b5bbc9), color-stop(99%,#b5bbc9)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* IE10+ */
+    background: linear-gradient(to bottom,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881', endColorstr='#b5bbc9',GradientType=0 ); /* IE6-9 */
+}
+.piercing-gallery-mt1 .image_thumb_celeb img {
+    height: 98px;
+    width: 76px;
+}
+.piercing-gallery-mt1 .product_addtocart_celebrities_form {
+    border-bottom: 1px solid #CCCCCC;
+    float: right;
+    min-height: 126px;
+    width: 380px;
+	margin-bottom:5px;
+}
+.piercing-gallery-mt1 .product_addtocart_celebrities_form {
+	position: relative;
+}
+.piercing-gallery-mt1 .product-options-bottom { 
+	border: 0;
+	right: 0;
+	bottom: 18px;
+	position: absolute;	
+}
+.piercing-gallery-mt1 h1 {
+    color: #3F4048;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 14px !important;
+    overflow: hidden;
+    text-transform: capitalize;
+}
+.piercing-gallery-mt1 h1:hover {
+	text-decoration: none;
+}
+.piercing-gallery-mt1 .product-name a:hover {
+	text-decoration: none;
+}
+.piercing-gallery-mt1 .product-options-bottom {
+    background: none repeat scroll 0 0 transparent;
+    float: right;
+    margin-top: 15px;
+    width: 50px;}
+    
+.piercing-gallery-mt1 #prev {
+    background: url("../images/gray_prev.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 35px;
+    left: 1px;
+    text-indent: -99999px;
+    top: 239px;
+}
+.piercing-gallery-mt1 #next {
+    background: url("../images/gray_next.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 35px;
+    right: -21px;
+    text-indent: -99999px;
+    top: 239px;
+}
+.piercing-gallery-mt1 #next:hover {
+	background-position: 0 -35px;
+}
+.piercing-gallery-mt1 #prev:hover {
+	background-position: 0 -35px;
+}
+.piercing-gallery-mt1 #next.disabled, .piercing-gallery-mt1 #prev.disabled {
+    display: none !important;
+}
+.piercing-gallery-mt1 .current_location {
+    background: url("../images/separe-bread.png") no-repeat scroll 2px 8px transparent;
+    display: block;
+}
+.piercing-gallery-mt1 .current_location a{
+	color: #8f6d39;
+    display: block;
+    float: left;
+    height: 100%;
+    text-decoration: none;
+    width: 100%;
+}
+.piercing-gallery-mt1 .ui-accordion-content-active > div:hover {
+	background: url("../images/separe-bread.png") no-repeat scroll 2px 8px transparent;
+    display: block;
+    color: #8f6d39;
+}
+.piercing-gallery-mt1 .ui-accordion-content-active a:hover {
+	color: #8f6d39;
+	text-decoration: none;
+	display: block;
+    float: left;
+    height: 15px;
+    line-height: 14px;
+    margin: 7px 7px 7px 0;
+    overflow: hidden;
+    width: 94%;
+}
+.piercing-gallery-mt1 .ui-accordion-content-active a {
+	display: block;
+    float: left;
+    height: 15px;
+    line-height: 14px;
+    margin: 7px 7px 7px 0;
+    overflow: hidden;
+    width: 94%;
+    font-family: dinmittelschriftregular;
+    text-transform: uppercase;
+}
+.piercing-gallery-mt1 #play.paused.mouseOver,
+.piercing-gallery-mt1 #play {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 23px;
+    margin: 0;
+    text-indent: -99999px;
+    border: 1px solid #ccc;
+    background: url('../images/pause.png') no-repeat scroll -1px 0 transparent;
+}
+
+.piercing-gallery-mt1 #play:hover {
+	background-position: -1px -23px;
+}
+.piercing-gallery-mt1 #play.paused {
+    background: url("../images/play.png") no-repeat scroll 0 0 transparent;
+}
+.piercing-gallery-mt1 #play.paused:hover {
+	background-position: 0 -23px;
+}
+.piercing-gallery-mt1 .add-to-cart {
+    clear: both;
+    float: none;
+    padding: 0;
+    text-align: left;
+}
+.piercing-gallery-mt1 .product-options-bottom {
+	padding: 0;
+}
+.piercing-gallery-mt1 .add-to-cart label {
+    float: left;
+    font-family: arial;
+    font-size: 13px;
+    line-height: 30px;
+    margin-right: 5px;
+    min-width: 75px;
+    padding: 0;
+}
+.piercing-gallery-mt1 .content {
+    display: block;
+    float: left;
+    height: auto;
+    width: 810px;
+}
+.piercing-gallery-mt1 .carousel-content {
+	float:left;
+	width: 396px; height: 600px;
+}
+.piercing-gallery-mt1 .social-media-try-on {
+    float: left; height: 29px; width: 396px; 
+}
+.piercing-gallery-mt1 button {
+   background: #5e5d62; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	/*background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVlNWQ2MiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzODM4M2EiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);*/
+	background: -moz-linear-gradient(top,  #5e5d62 0%, #38383a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5e5d62), color-stop(100%,#38383a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #5e5d62 0%,#38383a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #5e5d62 0%,#38383a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #5e5d62 0%,#38383a 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #5e5d62 0%,#38383a 100%); /* W3C */
+	/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5d62', endColorstr='#38383a',GradientType=0 );  IE6-8 */
+	color:#fff;
+}
+.piercing-gallery-mt1 button:hover {
+    background: #38383a;
+    color:#fff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	/*background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM4MzgzYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM1ZTVkNjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);*/
+	background: -moz-linear-gradient(top,  #38383a 0%, #5e5d62 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#38383a), color-stop(100%,#5e5d62)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #38383a 0%,#5e5d62 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #38383a 0%,#5e5d62 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #38383a 0%,#5e5d62 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #38383a 0%,#5e5d62 100%); /* W3C */
+	/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#38383a', endColorstr='#5e5d62',GradientType=0 );  IE6-8 */
+}
+.product-collateral {
+	border: none;
+}
+
+/*
+*	Allure Code
+*/
+.accordtion-sub-menu.menu-active{
+	background: url(../images/separe-bread.png) no-repeat scroll 2px 8px transparent;
+    display: block;
+    color: #8f6d39;
+}
+
+.shop-look-product-mark{
+	display: none
+}
+
+.shop-look-product-mark.active{
+	display: block;
+}

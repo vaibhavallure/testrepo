@@ -1,0 +1,76 @@
+<?php
+/**
+* aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Autorelated
+ * @version    2.3.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?>
+<?php
+?>
+<?php $abstractBlock = $this->helper('awautorelated')->getAbstractProductBlock() ?>
+<?php if ($this->getCollection() && $this->getCollection()->getSize()) : ?>
+<div class="block block-related aw-arp-block aw-arp-block-<?php echo $this->getData('id') ?>">
+<!--    <div class="block-title">
+        <strong>
+            <span><?php // echo $this->htmlEscape($this->getData('name')) ?></span>
+        </strong>
+    </div>-->
+    <div class="block-title col-12">
+	<strong><span><?php echo $this->__('You may also like') ?></span></strong>
+    </div>
+    <div class="block-content aw-arp-block-content">
+        <ul>
+            <?php $j = 0; foreach ($this->getCollection() as $product) :  $j++; if($j > 3) break;?>
+            <li class="item">
+                <a href="<?php echo $abstractBlock->getProductUrl($product) ?>">
+                   <img src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(74,96) ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" width="74" height="96" />
+                </a>
+                <a class="fancybox fancybox.iframe btn-quickview" id='product-quickview-<?php echo $product->getId() ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => $product->getId())) ?>" title="<?php echo $this->__('quick view') ?>" >
+                    <span><span><?php echo $this->__('quick view') ?></span></span>
+                </a>
+            </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+</div>
+<script>
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none',
+        nextEffect  : 'none',
+        prevEffect  : 'none',
+        padding     : 0,
+        mouseWheel : false,
+        loop            : false,
+        helpers : {
+            title : null
+        },
+        margin      : [20, 60, 20, 60] // Increase left/right margin
+    });
+	if (jQuery(".messages").is(':visible')){
+        jQuery(".block-related").css("margin-top", "125px");
+    } else {
+}
+</script>
+<?php endif ?>

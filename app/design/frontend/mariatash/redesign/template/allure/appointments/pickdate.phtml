@@ -1,0 +1,99 @@
+<?php
+//To modify the appointment get the data from registry start
+$fetch_model = Mage::registry('apt_modify_data');;
+
+if ($fetch_model) {
+
+    $f_pickurday = $fetch_model->getAppointmentStart();
+    $timestamp = strtotime($f_pickurday);
+    $fetch_date = date('d M Y', $timestamp);
+
+}
+
+?>
+
+<input name="app_date" id="appointment_date" type="text" class="input-box required-entry select-type-one"
+       value="<?php if ($fetch_date):echo $fetch_date;endif; ?>" readonly>
+
+<script type="text/javascript">
+    const initializeDatePicker = function () {
+        const monthMapping = {
+            "Aug": "Août",
+            "Sep": "Septembre",
+            "Oct": "Octobre"
+        };
+
+        //console.log('initializeDatePicker',jQuery('#appointment_date').datepicker);
+        slots = '<?=json_encode((Mage::getModel("appointments/slots"))::SLOTS)?>';
+        Allure.getAvlblSlotsUrl = '<?php echo $this->getUrl('*/book/getAvailableSlots', array('_secure' => true)) ?>';
+        var getWorkingDaysUrl = "<?php echo $this->getWorkingDaysActionUrl();?>";
+        var storeid ='<?= $this->getStoreId() ?>';
+        var workingDays = loadWorkingDays(getWorkingDaysUrl, storeid);
+        var datesAvailable = workingDays['dates'];
+        var currentDateString=workingDays['today'];
+
+        // const locale = sessionStorage.getItem('popupLocale');
+        // if(locale === 'fr'){
+        //     const months = Object.keys(monthMapping);
+        //     months.forEach(function (month) {
+        //         if(currentDateString.includes(month))
+        //             translatedCurrentDateString = currentDateString.replace(month,monthMapping[month])
+        //     })
+        // }else{
+        //     translatedCurrentDateString = currentDateString
+        // }
+
+        <?php if(empty($fetch_date)):?>
+
+        jQuery("#appointment_date").val(currentDateString);
+        <?php endif;?>
+
+        // jQuery.fn.datepicker.dates['fr'] = {
+        //     days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+        //     daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+        //     daysMin: ["D", "L", "Ma", "Me", "J", "V", "S", "D"],
+        //     months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+        //     monthsShort: ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+        //     titleFormat: 'MM'
+        // };
+
+        jQuery.fn.datepicker.dates['en'] = {
+            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            daysMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
+            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            titleFormat: 'MM'
+        };
+        // console.log(monthMapping,locale)
+        //console.log('currentDateString',translatedCurrentDateString);
+
+        jQuery('#appointment_date').datepicker({
+            format:'d  M  yyyy',
+            //language: locale==='en'?'en':'fr',
+            startDate: currentDateString,
+            endDate: '',
+            beforeShowDay: function (date) {
+                var enabled = false;
+                var currentDate = parseInt(1 + date.getMonth()).pad(2) + '/' + date.getDate().pad(2) + '/' + date.getFullYear();
+
+                if (datesAvailable.indexOf(currentDate) != -1) {
+                    enabled = true;
+                }
+                return {
+                    enabled: enabled
+                }
+            }
+        }).on('changeDate', function (e) {
+            getAvailableSlots();
+        });
+    };
+
+    initializeDatePicker();
+
+    jQuery(document).ready(function () {
+        calculateTime();
+    });
+
+
+</script>

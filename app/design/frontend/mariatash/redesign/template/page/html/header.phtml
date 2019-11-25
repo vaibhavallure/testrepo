@@ -1,0 +1,312 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div id="fb-root"></div>
+<script>
+    setLoader();
+</script>
+<script type="text/javascript">
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    jQuery(document).ajaxComplete(function(){
+        try{
+            FB.XFBML.parse();
+            twttr.widgets.load();
+        }catch(ex){}
+    });
+</script>
+
+<script type="text/javascript">
+    var MariaTash = {};
+    MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+</script>
+
+<?php
+    $baseUrl = Mage::getBaseUrl();
+    /** get customer login status */
+    $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
+
+    $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+    $isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
+
+    /** ecp menus id */
+    //$locationMenuId = 1;
+    //$giftCardMenuId = 2;
+    //$wishlistMenuId = 3;
+
+    $navBitmapImg = "";
+    $navWishlistImg = "";
+    $navUserImg = $this->getSkinUrl('images/redesign/nav-user.png');
+
+    /** load ecp menu by id */
+    $menuArray = array(1,2);
+    if($isCustomerLogIn){
+        $menuArray[] = 3;
+    }
+
+    $giftcard = $location = $wishlist = null;
+    $ecpMenuCollection = Mage::getModel('ecp_menu/menu')->getCollection();
+    $ecpMenuCollection->addFieldToFilter("menu_id",array("in" => $menuArray ));
+    if($ecpMenuCollection->getSize()){
+        foreach ($ecpMenuCollection as $menu){
+            if($menu->getId() == 1){
+                $location = $menu;
+                $navBitmapImg = $this->getSkinUrl('images/redesign/nav-bitmap.png');
+            }elseif ($menu->getId() == 2 && !$isWholesaleCustomer){
+                $giftcard = $menu;
+            }elseif ($menu->getId() == 3){
+                $wishlist = $menu;
+                $navWishlistImg = $this->getSkinUrl('images/redesign/nav-wishlist.png');
+            }
+        }
+    }
+?>
+
+<header>
+    <div class="menu_overlay d-none"></div>
+    <nav class="homepage-menu navbar fixed-top navbar-expand-lg mariatash-header d-lg-flex flex-lg-column justify-content-lg-center pb-0 pt-0">
+        <div class="container-fluid row p-lg-0">
+            <div class="col-12 p-lg-0">
+                <div class="row">
+                    <div class="position-absolute maria-left-menus">
+                        <div class="row">
+                            <h1 class="mt-logo-onscroll">
+                                <a class="navbar-brand d-none ml-3 logo p-0" id="scroll-logo" href="<?php echo $this->getUrl('') ?>"> <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
+                            </h1>
+                            <ul class="col-12 main-nav-link nav-links-left">
+                                <li class="icon-item">
+                                	<?php echo $this->getChildHtml('store_currency_selector') ?>
+                                </li>
+                                <?php if($location):?>
+                                <li class="icon-item d-lg-block d-none">
+                                    <a class="icon-link" href="<?= $location->getUrl() ?>">
+                                    	<?= $this->__("Store Locations") ?>
+                                    </a>
+                                </li>
+                                <li class="icon-item d-lg-none d-block mt-1">
+                                    <a class="icon-link" href="<?= $location->getUrl() ?>">
+                                      <img width="14px" src="<?= $navBitmapImg; ?>">
+                                    </a>
+                                </li>
+                                  <?php endif;?>
+                                <?php if($giftcard):?>
+                                <!-- <li class="icon-item">
+                                    <a href="<//?= $giftcard->getUrl() ?>">
+                                    	<span><//?= $giftcard->getTitle() ?></span>
+                                    </a>
+                                </li> -->
+                                <?php endif;?>
+
+
+
+                                <?php if($wishlist):?>
+                                <li class="icon-item d-lg-none d-block mt-1">
+                                	<a class="icon-link" href="<?= $wishlist->getUrl() ?>">
+                                    	<img width="20px" src="<?= $navWishlistImg; ?>">
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row align-items-center flex-column justify-content-center">
+                            <div class="text-center ml-0 ml-lg-0">
+                                <h1 class="mt-logo">
+                                    <a class="navbar-brand" id="main-logo" href="<?php echo $this->getUrl('') ?>" >
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="collapse navbar-collapse mt-1" id="navbarNavDropdown">
+                                <?php echo $this->getChildHtml('topMenu') ?>
+                                <?php echo $this->getChildHtml('submenu') ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-absolute maria-right-menus">
+                        <ul class="main-nav-link nav-links-right mt-lg-1 mt-2">
+                            <li class="icon-item">
+                                <?php echo $this->getChildHtml('topSearch') ?>
+                            </li>
+
+
+
+                            <?php if($wishlist):?>
+                            <li class="icon-item d-lg-block d-none">
+                                <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
+                                	<img width="20px" src="<?= $navWishlistImg; ?>">
+                                </a>
+                            </li>
+                          	<?php endif; ?>
+
+                            <li class="icon-item">
+                            	<div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div>
+                            </li>
+
+                            <?php if ($isCustomerLogIn) :?>
+                            <li class="icon-user position-relative">
+                            	<a>
+                            		<img width="18px" src="<?= $navUserImg; ?>">
+                            	</a>
+                              	<div class="login-dropdown-cover">
+                                	<ul class="login-dropdown">
+                                  		<li><a href="<?= $baseUrl;?>customer/account"><?= $this->__('My Account')?></a></li>
+                                  		<li><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></li>
+                                  		<li><a href="<?= $baseUrl;?>customer/account/edit/"><?= $this->__('Login & Security') ?></a></li>
+                                  		<li class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></li>
+                                  		<li class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></li>
+                                	</ul>
+                              	</div>
+                            </li>
+                            <?php else: ?>
+                            <li class="icon-item" id="sign_in_label">
+                            	<a href="javascript:void(0)">
+                              		<img width="18px" src="<?= $navUserImg; ?>">
+                              	</a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="navbar-toggler" type="button" id="menu-btn">
+            <div class="hamburger" >
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+            </div>
+        </button>
+    </nav>
+    <div class="for-space-to-bottom"></div>
+    <div class="mobile-main_menu" >
+        <?php echo $this->getChildHtml('topMenu') ?>
+    </div>
+    <div class="mobile-sub_menu">
+
+        <?php echo $this->getChildHtml('submenu') ?>
+
+    </div>
+    <?php echo $this->getChildHtml('topBar') ?>
+    <?php echo $this->getChildHtml('topContainer'); ?>
+
+</header>
+
+<?php $location = null;$wishlist = null; $giftcard = null;?>
+
+
+
+<script type="text/javascript">
+    var pathname = window.location.pathname;
+    if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
+    else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
+    var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
+    jQuery( document ).ready(function() {
+        jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+    });
+    jQuery( window ).resize(function() {
+        jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+    });
+</script>
+
+<?php echo $this->getChildHtml('account_popups'); ?>
+<?php echo $this->getChildHtml('account.popups'); ?>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<?php
+$alr_status = Mage::helper("alertservices/config")->getAlrStatus();
+if ($alr_status) { ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125115574-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-125115574-1');
+    </script>
+<?php } ?>
+
+
+<!-- added by AWS12 -->
+<?php
+$collection = Mage::getModel('catalog/product')->getCollection()
+    ->addAttributeToSelect('id')
+    ->addAttributeToFilter(array(array("attribute"=>"sku","in"=>array('gift','STORECARD'))))
+    ->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
+$prodIds = array();
+foreach ($collection as $key => $product) {
+    $prodIds[]=$product->getId();
+}
+if(count($prodIds)):
+    echo "<style type='text/css'>";
+    foreach ($prodIds as $key => $prodId) {
+        echo '#snize-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+        echo '#snize-ac-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+    }
+    echo "</style>";
+endif;
+?>
+
+
+ <!-- The Modal -->
+ <div class="modal" id="locationPopup">
+ 	<div class="modal-dialog">
+    	<div class="modal-content">
+        	<button type="button" class="close" data-dismiss="modal" class="close exit-large">
+            	<img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>">
+          	</button>
+
+            <!-- Modal body -->
+        	<div class="modal-body">
+         		<img src="<?php echo $this->getSkinUrl('images/ex-img.png'); ?>" class="img-responsive">
+        	</div>
+
+      	</div>
+    </div>
+</div>
+
+
+<!--allure code-->
+<?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
+$deviceClass=($isMobile)?"mobile-device":"desktop-device";
+?>
+<script>
+    jQuery("body").addClass("<?= $deviceClass ?>");
+</script>
+<!--allure code end-->

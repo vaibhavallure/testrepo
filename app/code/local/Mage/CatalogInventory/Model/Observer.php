@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_CatalogInventory
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -305,13 +305,18 @@ class Mage_CatalogInventory_Model_Observer
         $quoteItem = $observer->getEvent()->getItem();
         
         // allow gitcard product for purchase when its out of stock - start
-        if(Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
+        if (Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
             $amstockHelper = Mage::helper("amstockstatus");
             if ($amstockHelper->isGiftcardProduct($quoteItem->getSku())) {
                 return $this;
             }
         }
         //end
+        
+        //gift wrap check
+        if($quoteItem->getSku() == "GIFT_WRAP"){
+            return $this;
+        }
         
         /* @var $quoteItem Mage_Sales_Model_Quote_Item */
         if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote() /* || $quoteItem->getQuote()->getIsSuperMode()*/

@@ -1,0 +1,58 @@
+<?php
+/**
+ * Shopping cart totals template
+ *
+ * @see Mage_Checkout_Block_Cart_Totals
+ * @var $this Mage_Checkout_Block_Cart_Totals
+ */
+?>
+<?php $quote = $this->getQuote();?>
+<?php $addresses = $quote->getAllShippingAddresses();?>
+<?php $shipping = 0; $discount = 0; $tax = 0; $subtotal = 0; $grandTotal = 0;?>
+	<?php foreach ($addresses as $address):?>
+    	<?php $totals = $address->getTotals();?>
+    	<?php if(isset($totals['tax']) && $totals['tax']->getValue()):?>
+    		<?php $tax = $tax + $totals['tax']->getValue(); ?>
+    	<?php endif;?>
+    	<?php if(isset($totals['shipping']) && $totals['shipping']->getValue()):?>
+    		<?php $shipping = $shipping + $totals['shipping']->getValue();?>
+    	<?php endif;?>
+    <?php endforeach;?>
+
+<?php $totals = $quote->getTotals();?>
+<?php if(isset($totals['discount']) && $totals['discount']->getValue()):?>
+	<?php $discount = $discount + $totals['discount']->getValue();?>
+<?php endif;?>
+
+<?php if(isset($totals['subtotal']) && $totals['subtotal']->getValue()):?>
+	<?php $subtotal = $subtotal + $totals['subtotal']->getValue();?>
+<?php endif;?>
+
+<?php if(isset($totals['grand_total']) && $totals['grand_total']->getValue()):?>
+	<?php $grandTotal = $grandTotal + $totals['grand_total']->getValue();?>
+<?php endif;?>
+<?php $totalsArray = array(
+    "subtotal" => array("label" => "Subtotal", "value" => $subtotal),
+    "tax" => array("label" => "Tax", "value" => $tax),
+    "shipping" => array("label" => "Shipping", "value" => $shipping),
+    "discount" => array("label" => "Discount", "value" => $discount),
+    "grand_total" => array("label" => "Total", "value" => $grandTotal)
+
+);?>
+
+<div class="grand-total col-12">
+<?php foreach ($totalsArray as $code => $totals):?>
+	<?php if($totalsArray[$code]["value"] != 0):?>
+	<div class="inner row">
+		<div class="col-lg-6 col-md-6 col-12 offset-lg-6 offset-md-6 text-right">
+			<div class="row justify-content-around">
+				<span class="col <?php if($code=="grand_total") echo "overview-grand"; else echo "overview-common-prices";?>"><span><?php echo $this->__($totalsArray[$code]["label"]) ?></span></span>
+				<span class="<?php if($code=="grand_total") echo "overview-grand"; else echo "overview-common-prices";?>">
+					<?php echo $this->helper('checkout')->formatPrice($totalsArray[$code]["value"]) ?>
+				</span>
+      </div>
+		</div>
+	</div>
+	<?php endif;?>
+<?php endforeach;?>
+</div>

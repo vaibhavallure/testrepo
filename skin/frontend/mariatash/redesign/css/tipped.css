@@ -1,0 +1,297 @@
+/*
+ *  Part of Tipped - The jQuery Tooltip
+ *  http://projects.nickstakenburg.com/tipped
+ *
+ *  Documentation:
+ *  http://projects.nickstakenburg.com/tipped/documentation/skins
+ *
+ *  IMPORTANT!:
+ *  It's recommended to add CSS for custom skins in a separate file,
+ *  that way this file can be updated without losing your own skins.
+ */
+.t_Tooltip {
+  max-width:450px;
+  padding-right:2px !important;
+}
+.t_Tooltip .t_Content_customcart { padding: 0; }
+
+/* Font styling for all skins */
+.t_ContentContainer {
+  color: #38393c;
+  font-size: 11px;
+  line-height: 17px;
+  padding:7px 20px 3px;
+  /* text-transform:uppercase;
+   	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #a5a8b1;
+	border-right-color: #a5a8b1;
+	border-left-color: #a5a8b1;*/
+}
+/* Skins with a different font color */
+.t_Content_black,
+.t_Content_gray {
+  color: #38393c;
+    text-transform:uppercase;
+	line-height:24px;
+}
+
+/* Styling links so they are visible no matter is defined on the page behind */
+/* .t_ContentContainer a {   color: #38393c; cursor:pointer; }
+.t_ContentContainer a:hover {
+  color: #917440;
+  text-decoration: none;
+  background: none;
+  cursor:pointer;
+  border: 0;
+}
+.t_ContentContainer a:hover {
+  text-decoration:none;
+  cursor:pointer;
+} */
+
+/* Some skins need different link colors for visibility */
+.t_Content_black a, .t_Content_black a:hover {
+  color: #38393c;
+}
+.t_Content_gray a, .t_Content_gray a:hover { color: #232323; }
+
+
+
+/* RGB */
+.t_Content_red,
+.t_Content_green,
+.t_Content_blue {
+  color: #efefef;
+  font-size: 11px;
+  line-height: 17px;
+  padding: 10px;
+}
+
+.t_Content_red a,
+.t_Content_red a:hover,
+.t_Content_green a,
+.t_Content_green a:hover,
+.t_Content_blue a,
+.t_Content_blue a:hover {
+  text-decoration: none;
+  background: none;
+  border: 0;
+  color: #ccc;
+}
+.t_Content_red a:hover,
+.t_Content_green a:hover,
+.t_Content_blue a:hover {
+  text-decoration: underline;
+}
+/* tiny */
+.t_Content_tiny {
+  color: #efefef;
+  font-size: 11px;
+  line-height: 16px;
+  padding: 6px 9px;
+}
+.t_Content_tiny a,
+.t_Content_tiny a:hover {
+  color: #b3b3b3;
+  text-decoration: none;
+  background: none;
+  border: 0;
+}
+/*
+ * Layout (DON'T MODIFY BELOW!)
+ */.t_Tooltip {
+  margin-top:2px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+
+  /*background:#0066FF;
+  background-color: transparent;
+  background:url(../images/footer-bottom-links.png) no-repeat center bottom;*/
+/*  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;*/
+}
+.t_Tooltip_white {
+  margin:0;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+  /*background:#0066FF;
+  background-color: transparent;*/
+  background:url(../images/footer-bottom-links.png) no-repeat center bottom;
+/*  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;*/
+}
+.t_Tooltip_dark {
+  margin:0;
+  padding: 0;
+  position: fixed;
+  overflow: hidden;
+  background:url(../images/footer-bottom-links.png) no-repeat center bottom;
+  /*background:#0066FF;
+  background-color: transparent;*/
+/*  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;*/
+}
+.t_Tooltip.t_hidden {  }
+.t_Tooltip.t_Tooltip_dark { bottom: 30px; }
+
+.t_Tooltip_dark_subscribe {
+  position: fixed;
+  overflow: hidden;
+  margin:0 0 10px;
+  padding: 0;
+  background:url(../images/footer-bottom-links.png) no-repeat center bottom;
+}
+.t_Tooltip.t_Tooltip_dark_subscribe { bottom: 25px; top: auto !important }
+
+.t_Skin {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.t_Skin * { zoom: 1; } /* IE7 */
+.t_Bubble canvas {
+	display:none;
+}
+.t_Background,
+.t_Stem { position: absolute; }
+
+.t_Close {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+}
+
+.t_CloseButtonShift {
+  position: relative;
+  overflow: hidden;
+  float: left;
+}
+.t_CloseState {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  left: 0;
+}
+
+.t_Content {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.t_iframeShim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+/*  filter: alpha(opacity=0);
+  opacity: 0;*/
+}
+
+/*
+ * Shadow
+ */
+.t_Shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.t_Shadow .t_ShadowInnerWrapper{
+  position: relative;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.t_ShadowBubble {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+.t_ShadowBubble canvas {
+/*  background:url(../images/footer-bottom-links.png) no-repeat center bottom;*/
+}
+.t_ShadowBackground,
+.t_ShadowStem { position: absolute; }
+.t_ShadowBackground *, .t_ShadowStem * { float: left; }
+
+
+.t_CloseButtonShadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+
+.t_UpdateQueue {
+  position: absolute;
+  top: -15000px;
+  left: -15000px;
+  width: 5000px;
+  height: 5000px;
+  visibility: hidden;
+}
+.t_UpdateQueue .t_Tooltip,
+.t_UpdateQueue .t_Content {
+  position: relative;
+  overflow: visible;
+  float: left;
+  top: auto;
+  left: auto;
+  width: 100%;
+}
+.t_Tooltip_white {  }
+.t_Tooltip .t_ContentContainer {
+	float: left;
+	clear: both;
+	position: relative;
+	font-size:13px;
+	/* font-family:Arial, Helvetica, sans-serif; */
+}
+.t_Tooltip .t_ContentContainer ul{ margin-top:5px;}
+.t_Tooltip .t_ContentContainer li { line-height:26px; text-transform:uppercase; }
+/*.t_Tooltip .t_ContentContainer #tooltip-id-customer-care li{float:left;width:100%;}*/
+.t_UpdateQueue .t_ContentContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* custom tiny */
+.t_Content_customTiny {
+  /*color: #FFF;*/
+  font-size: 11px;
+  line-height: 16px;
+  padding: 6px 9px;
+}
+.t_Content_customTiny a,
+.t_Content_customTiny a:hover {
+  color: #b3b3b3;
+  text-decoration: none;
+  background: none;
+  border: 0;
+}
+.t_Tooltip_customTiny .t_Skin .t_Bubble canvas{
+    display: none;
+}

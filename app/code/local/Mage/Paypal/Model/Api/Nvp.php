@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Paypal
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -993,13 +993,9 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
         $http->close();
 
         if (!$this->_validateResponse($methodName, $response)) {
-
-
             Mage::logException(new Exception(
                 Mage::helper('paypal')->__("PayPal response hasn't required fields.")
             ));
-
-
 
            // Mage::throwException(Mage::helper('paypal')->__('There was an error processing your order. Please contact us or try again later.'));
             Mage::throwException(Mage::helper('paypal')->__('Error: '.$this->getErrorCodeInfo($response)));
@@ -1169,7 +1165,6 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
      */
     protected function _validateResponse($method, $response)
     {
-
         if (isset($this->_requiredResponseParams[$method])) {
             foreach ($this->_requiredResponseParams[$method] as $param) {
                 if (!isset($response[$param])) {
@@ -1575,8 +1570,6 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
         return $response;
     }
 
-
-
     /*-----------------allure code------------------*/
 
     public function getPaypalRedirectionUrl($token=null)
@@ -1590,6 +1583,7 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
             $params ? '?' . http_build_query($params) : ''
         );
     }
+
     public function getErrorCodeInfo($response)
     {
         switch ($response['L_ERRORCODE0'])
@@ -1606,5 +1600,4 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
         }
 
     }
-
 }

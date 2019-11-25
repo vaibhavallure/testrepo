@@ -1,0 +1,85 @@
+<?php
+/**
+ * Apple Pay
+ *
+ * @category    Allure
+ * @package     Allure_ApplePay
+ * @copyright   Copyright (c) 2017 Allure Inc
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+$current_product = Mage::registry('current_product');
+?>
+<?php if ($this->isEnabled()) : ?>
+<!-- Apple Pay Script -->
+<script type='text/javascript'>
+    if ( typeof Allure == 'undefined' ) var Allure = {};
+    if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
+    if ( typeof Allure.ApplePay.data == 'undefined' ) Allure.ApplePay.data = {};
+    if ( typeof Allure.ApplePay.flag == 'undefined' ) Allure.ApplePay.flag = {};
+
+    if ( typeof Allure.ApplePay.data.total == 'undefined' ) Allure.ApplePay.data.total = {type: 'final', label: '<?php echo Mage::helper('allure_applepay')->getMerchantName() ?>', amount: 0.00};
+
+    Allure.ApplePay.data.baseUrl = '<?php echo Mage::getUrl('applepay/checkout', array('_secure' => true)); ?>';
+    Allure.ApplePay.data.merchantId = '<?php echo Mage::helper('allure_applepay')->getMerchantId() ?>';
+    Allure.ApplePay.data.merchantName = '<?php echo Mage::helper('allure_applepay')->getMerchantName() ?>';
+
+    Allure.ApplePay.data.currencyCode = '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode();?>';
+    <?php
+    $onCatalog = false;
+    if(Mage::registry('current_product')) {
+        $onCatalog = true;
+    }
+    ?>
+
+    <?php
+    $quote = Mage::getSingleton('checkout/session')->getQuote();
+    if (!$onCatalog && $quote && $quote->hasItems()):
+    ?>
+	Allure.ApplePay.data.lineTotal = <?php echo round($quote->getBaseGrandTotal() / $quote->getBaseToQuoteRate(), 2);?>;
+
+	if (!Allure.ApplePay.flag.sandbox) {
+		Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+	} else {
+		Allure.ApplePay.data.total.amount = 1;
+	}
+
+	Allure.ApplePay.data.lineItems = [];
+
+	<?php if ($quote->getBillingAddress() && !empty($quote->getBillingAddress()->getEmail()) && is_null($quote->getBillingAddress()->getEmail())) {?>
+	Allure.ApplePay.data.billingAddress = <?php echo json_encode($quote->getBillingAddress()->getData());?>;
+	<?php }?>
+
+	<?php if ($quote->getShippingAddress() && !($quote->getShippingAddress()->getEmail() || $quote->getShippingAddress()->getEmail() == '' || $quote->getShippingAddress()->getPostcode() || $quote->getShippingAddress()->getPostcode() == '')) {?>
+	Allure.ApplePay.data.shippingAddress = <?php echo json_encode($quote->getShippingAddress()->getData());?>;
+	Allure.ApplePay.data.shippingMethods = [];
+	<?php if ($quote->getShippingAddress()->getShippingMethod() && $quote->getShippingAddress()->getShippingMethod() != '') {
+
+	    $selectedShippingRate = $quote->getShippingAddress()->getShippingRateById($quote->getShippingAddress()->getShippingMethod());
+
+	    ?>
+	    Allure.ApplePay.data.shippingMethods.push({"identifier": '<?php echo $selectedShippingRate->getCode();?>', "label": '<?php echo $selectedShippingRate->getMethodTitle();?>', "detail": '<?php echo $selectedShippingRate->getCarrierTitle();?> <?php echo $selectedShippingRate->getMethodDescription();?>', "amount": <?php echo $selectedShippingRate->getPrice();?>});
+	   <?php
+	}
+	?>
+	<?php $shippingRates = $quote->getShippingAddress()->getAllShippingRates();?>
+	<?php foreach ($shippingRates as $shippingRate):?>
+	<?php if (isset($selectedShippingRate) && $selectedShippingRate->getCode() == $shippingRate->getCode()) continue; ?>
+	Allure.ApplePay.data.shippingMethods.push({"identifier": '<?php echo $shippingRate->getCode();?>', "label": '<?php echo $shippingRate->getMethodTitle();?>', "detail": '<?php echo $shippingRate->getCarrierTitle();?> <?php echo $shippingRate->getMethodDescription();?>', "amount": <?php echo $shippingRate->getPrice();?>});
+	<?php endforeach;?>
+    <?php }?>
+	<?php $totals = $quote->getTotals();?>
+	<?php foreach ($totals as $_total_name => $_total) : if ($_total_name == 'grand_total') continue;?>
+	Allure.ApplePay.data.lineItems.push({type: 'final',label: '<?php echo $_total_name?>', amount: '<?php echo round($_total->getValue() / $quote->getBaseToQuoteRate(), 2)?>' });
+	<?php endforeach;?>
+    <?php endif;?>
+	<?php
+		$helper = Mage::helper('allure_smartanalytics');
+
+		if ($helper->isEnhancedEcommerceEnabled()) {
+			?>
+			ga('require', 'ec');
+			<?php
+		}
+	?>
+</script>
+<?php endif;?>

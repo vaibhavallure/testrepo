@@ -1,0 +1,95 @@
+<script type="text/javascript">
+    // jQuery.noConflict();
+    jQuery(document).ready(function () {
+        maxLength = jQuery("textarea#message").attr("maxlength");
+        jQuery("textarea#message").after(" <span class='mini' id='mini'>" + maxLength + " out of 2000 characters</span>");
+        jQuery("textarea#message").bind("keyup change", function () {
+            checkMaxLength(this.id, maxLength);
+        })
+    });
+    //< ![CDATA[    
+    var customFormx = new VarienForm('reviews-formm', true);
+    customFormx.submit = function (button, form) {
+        var valid = new Validation('reviews-formm', {onSubmit: false});
+        if (valid.validate()) {
+            SubmitRequest();
+        }
+    }.bind(customFormx);
+    //]]>
+
+    function checkMaxLength(textareaID, maxLength) {
+        currentLengthInTextarea = jQuery("#" + textareaID).val().length;
+        jQuery('.mini').text(parseInt(maxLength) - parseInt(currentLengthInTextarea) + " out of 2000 characters");
+
+        if (currentLengthInTextarea > (maxLength)) {
+            // Trim the field current length over the maxlength.
+            jQuery("textarea#message").val(jQuery("textarea#message").val().slice(0, maxLength));
+            jQuery('.mini').text(0 + " out of 2000 characters");
+
+        }
+    }
+
+    function SubmitRequest() {
+	    
+        new Ajax.Request('<?php echo Mage::getBaseUrl() ?>ecpreviews/index/save', {
+            method: 'post',
+            parameters: $('reviews-formm').serialize(true),
+            onSuccess: function (response) {
+                if (response.responseText == 1) {
+                    //jQuery(".fancybox").fancybox().trigger('click');
+					jQuery('.note-msg').first().text('The review has been accepted for moderation.').insertBefore('.reviews').show();
+					 
+                    jQuery("#reviews-formm").reset();
+                    checkMaxLength('message', 2000);
+                }
+            }
+        });
+		
+    }
+
+    jQuery.fn.reset = function () {
+        $(this).each(function () {
+            this.reset();
+        });
+    }
+</script>
+
+<div class="review-wrapper">
+    <!--h1>Reviews</h1-->
+    <div class="review-col-left">
+        <div class="reviews">
+            <?php //$collection = Mage::getModel('ecp_reviews/reviewdetail')->getCollection()->addFieldToFilter('main_table.review_id',8);
+            $collection = Mage::getModel('ecp_reviews/reviews')->getCollection()->addFieldToFilter('status', 1)->addOrder('sort_order', 'asc');
+            ?>
+            <?php foreach ($collection as $item) { ?>
+                <p>"<?php echo $item->getReview();?>"</p>
+                <span><strong><?php echo $item->getName();?></strong></span>
+            <?php }?>
+        </div>
+    </div>
+    <div class="review-col-right">
+        <div class="reviews-form-base">
+            <form method="post" name="reviews-form" id="reviews-formm" class="reviews-form">
+                <h6>Tell us what you think, send us a review!</h6>
+                <span>Name</span>
+                <?php $userName = Mage::getSingleton('customer/session')->isLoggedIn() ? Mage::getSingleton('customer/session')->getCustomer()->getName() : ''; ?>
+                <input name="reviews[name]" class="input-text required-entry" type="text" value="<?php echo $userName; ?>" />
+
+                <span>E-mail</span>
+                <?php $userEmail = Mage::getSingleton('customer/session')->isLoggedIn() ? Mage::getSingleton('customer/session')->getCustomer()->getEmail() : ''; ?>
+                <input name="reviews[email]" class="input-text required-entry validate-email" type="text" value="<?php echo $userEmail; ?>" />
+
+                <span>Review</span>
+                <textarea name="reviews[message]" id="message" maxlength="2000" class="multi required-entry charsRemaining"></textarea>
+                <input name="send" class="button" type="button" onclick="customFormx.submit(this,this.form);" value="SEND"/>
+            </form>
+
+        </div>
+		<?php  echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml(); ?>
+		 
+        <a class="fancybox" style="display:none;" href="#confirmation"></a>
+        <div id="confirmation" style="display:none;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('reviews-confirm')->toHtml();?>
+        </div>
+    </div>
+</div>

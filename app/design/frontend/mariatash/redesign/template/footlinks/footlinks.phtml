@@ -1,0 +1,339 @@
+<script type="text/javascript">
+    function toggleCountrySelect() {
+        jQuery('#tld_r_ul').toggle(200);
+    }
+    jQuery.noConflict();
+
+
+
+    jQuery(document).ready(function(){
+
+        jQuery(window).bind("scroll",function(){
+            Tipped.hide('.popbox_ajax');
+            Tipped.hide('.popbox');
+        });
+
+
+
+        jQuery(window).bind("resize",function(){
+            var width = jQuery(window).width();
+
+            if ((width > 1023)) {
+//                console.log(width);
+                if(!jQuery("#footer8").hasClass("deskFooter")) {
+                    jQuery("#footer8").addClass("deskFooter");
+                    jQuery("#footer8").removeClass("mobileFooter");
+//                    alert("Screen resolution changed page needs to be reload.");
+                    //location.reload();
+                }
+            }else{
+                console.log(width);
+                if(!jQuery("#footer8").hasClass("mobileFooter")) {
+                    jQuery("#footer8").addClass("mobileFooter");
+                    jQuery("#footer8").removeClass("deskFooter");
+//                    alert("Screen resolution changed page needs to be reload.");
+                  //  location.reload();
+                }
+            }
+        });
+
+        var width = jQuery(window).width();
+
+        if ((width > 1023)) {
+            jQuery("#footer8").addClass("deskFooter");
+            jQuery.extend(Tipped.Skins, {
+                'allure_footer' : {
+                    border: { size: 4, color: '#959fa9' },
+                    background: '#f7f7f7',
+                    radius: { size: 4, position: 'border' },
+                    shadow: false,
+                    closeButtonSkin: 'light'
+                }
+            });
+            jQuery('.popbox').each(function () {
+                var selector = '#' + jQuery(this).data('tooltip-id');
+                Tipped.create(this, jQuery(selector)[0], {skin: 'allure_footer', offset: {y: -6}});
+            });
+
+            Tipped.create('.popbox_ajax', {
+                skin: 'allure_footer',
+                fadeIn: 0,
+                fadeOut: 0,
+                offset:{y:-6},
+                ajax: true,//{type: 'post',cache: false},
+                hook: 'topmiddle',
+                onShow: function (content, element) {
+                    //<![CDATA[
+                    var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+                    new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('Email*') ?>');
+                    new Varien.searchForm('newsletter-validate-detail', 'first_name', '<?php echo $this->__('First Name*') ?>');
+                    new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('Last Name*') ?>');
+                    new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
+                    //]]>
+
+//                jQuery("#country").click(function(){
+//                    jQuery("#tld_r_ul").show(200);
+//                });
+                    // prevent bind event multiple times
+                    jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
+                    jQuery('#country_subscribe').bind('click', toggleCountrySelect);
+
+                    jQuery("#tld_r_ul li").click(function () {
+                        var tld = jQuery(this).text();
+                        jQuery("#tld_field").val(tld);
+                        jQuery("#country_subscribe").val(tld);
+                        jQuery("#tld_r_ul").hide(200);
+                    });
+                }
+            });
+        }else{
+            jQuery("#footer8").addClass("mobileFooter");
+
+            jQuery('#popup_ajax_contain').load(jQuery(".popbox_ajax").attr("data-tipped"));
+            jQuery(".popbox").on("click",function () {               
+               jQuery('#'+jQuery(this).attr("data-tooltip-id")).slideToggle();
+               jQuery(this).parent().parent().toggleClass("active");
+            });
+            jQuery('.footer-item-list.data-block').after().on("click",function (elem) {                
+                let currentTag = jQuery(elem.target).prop('tagName');
+                if(currentTag === 'LI') {
+                    let child = jQuery(this).find('#link_customer-care').children()[0]
+                    if(child != undefined){
+                        jQuery('#'+jQuery(child).attr("data-tooltip-id")).slideToggle();
+                        jQuery(this).toggleClass("active");
+                    }else {
+                        jQuery(this).toggleClass("active");                        
+                        jQuery('#popup_ajax_contain').slideToggle();                        
+                        //<![CDATA[
+                var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+                new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('EMAIL ADDRESS') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'first_name', '<?php echo $this->__('FIRST NAME') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('LAST NAME') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
+                //]]>
+                    }                    
+                }                
+            });
+            jQuery(".popbox_ajax").on("click",function () {
+                jQuery(this).parent().parent().toggleClass("active");
+                jQuery('#popup_ajax_contain').slideToggle();
+                //<![CDATA[
+                var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+                new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('EMAIL ADDRESS') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'first_name', '<?php echo $this->__('FIRST NAME') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('LAST NAME') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
+                //]]>
+            });
+        }
+    });
+</script>
+
+<?php $links = $this->getAllCustomLinks(); ?>
+
+<div class="container-footlinks row">
+    <ul class="footlinks col-lg-10 col-12 nav">
+        <?php
+        foreach ($links as $link):
+            if ($link->getStatus() == 1):
+
+                $footer_title=$this->__($link->getTitle());
+
+                ?>
+                <li class="footer-item-list nav-item <?= ($link->getType() == 1 || $link->getType() == 0 || ($link->getUrlValue() != "" && $link->getType() == 2))?" data-block" : "";?>">
+                <div class="w-100" id="link_<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
+                    <?php if ($link->getType() == 1 || $link->getType() == 0): ?>
+                        <div class='popbox w-100' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" >
+                                <?=  '<span>'.$footer_title.'</span>'; ?>
+                        </div>
+                        <?php if ($link->getUseForSeoText()): ?>
+                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style="display:none">
+                                <?php
+                                $current_category = Mage::registry('current_category');
+                                $homeUrl = str_replace("index.php/", "", Mage::helper('core/url')->getHomeUrl());
+                                $currentUrl = $this->helper('core/url')->getCurrentUrl();
+                                if (!empty($current_category)) {
+                                    if (!Mage::helper('ecp_seo')->getSeoCategory($current_category->getData('entity_id'))) {
+                                        $content = $this->getBlock($link->getBlockForSeoDefault());
+                                    } else {
+                                        $content = Mage::helper('ecp_seo')->getSeoCategory($current_category->getData('entity_id'));
+                                    }
+                                } elseif (!strcasecmp($homeUrl, $currentUrl)) {
+                                    $content = $this->getBlock($link->getBlockForHomeSeo());
+                                } else {
+                                    $content = $this->getBlock($link->getBlockForSeoDefault());
+                                }
+                                $contentInBlocks = Mage::helper('ecp_seo')->prepareContent($content);
+                                ?>
+
+                                <div id="container">
+                                    <div id="slider-wrapper">
+                                        <?php foreach ($contentInBlocks as $content): ?>
+                                            <div class="slide">
+                                                <?php echo $content; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" onclick="NextSlide()" class="next-content-block-seo" id="NextButton">Next</a>
+                                <a href="javascript:void(0)" onclick="PreviousSlide()" class="previous-content-block-seo" id="PreviousButton" style="margin-right: 10px;">Previous</a>
+
+                            </div>
+                            <script>
+
+                                /*Slider para SEO text configuration*/
+                                jQuery.noConflict();
+                                var SlideWidth = 300;
+                                var SlideSpeed = 500;
+
+                                jQuery(document).ready(function () {
+                                    var wrapperWidth = jQuery('div#container div#slider-wrapper div.slide').size()*SlideWidth;
+                                    // set the prev and next buttons display
+                                    jQuery("#slider-wrapper").css({width: wrapperWidth});
+                                    SetNavigationDisplay();
+                                });
+
+                                function CurrentMargin() {
+                                    // get current margin of slider
+                                    var currentMargin = jQuery("#slider-wrapper").css("margin-left");
+
+                                    // first page load, margin will be auto, we need to change this to 0
+                                    if (currentMargin == "auto") {
+                                        currentMargin = 0;
+                                    }
+
+                                    // return the current margin to the function as an integer
+                                    return parseInt(currentMargin);
+                                }
+
+                                function SetNavigationDisplay() {
+                                    // get current margin
+                                    var currentMargin = CurrentMargin();
+
+                                    // if current margin is at 0, then we are at the beginning, hide previous
+                                    if (currentMargin == 0) {
+                                        jQuery("#PreviousButton").hide();
+                                    }
+                                    else {
+                                        jQuery("#PreviousButton").show();
+                                    }
+
+                                    // get wrapper width
+                                    var wrapperWidth = jQuery('div.slide').size()*SlideWidth;
+                                    //var wrapperWidth = jQuery("#slider-wrapper").width();
+
+                                    // turn current margin into postive number and calculate if we are at last slide, if so, hide next button
+                                    if ((currentMargin * -1) == (wrapperWidth - SlideWidth)) {
+                                        jQuery("#NextButton").hide();
+                                    }
+                                    else {
+                                        jQuery("#NextButton").show();
+                                    }
+                                }
+
+                                function NextSlide() {
+                                    // get the current margin and subtract the slide width
+                                    var newMargin = CurrentMargin() - SlideWidth;
+
+                                    // slide the wrapper to the left to show the next panel at the set speed. Then set the nav display on completion of animation.
+                                    jQuery("#slider-wrapper").animate({ marginLeft: newMargin }, SlideSpeed, function () { SetNavigationDisplay() });
+                                }
+
+                                function PreviousSlide() {
+                                    // get the current margin and subtract the slide width
+                                    var newMargin = CurrentMargin() + SlideWidth;
+
+                                    // slide the wrapper to the right to show the previous panel at the set speed. Then set the nav display on completion of animation.
+                                    jQuery("#slider-wrapper").animate({ marginLeft: newMargin }, SlideSpeed, function () { SetNavigationDisplay() });
+                                }
+                            </script>
+                        <?php else: ?>
+                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style='<?php echo (strtolower(str_replace(" ", "-", $link->getTitle())) == 'customer-care') ? '' : ' '?> display:none;'><!--width:164px; height:187px; -->
+                                <?php echo $this->getBlock($link->getBlockValue(), false); ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                    elseif ($link->getType() == 2):
+                        foreach (Mage::getConfig()->getNode('global/footlinks/addvalueToUrl/footerLinkMenu') as $key => $value) {
+                            $appendToUrl = "?" . $key . "=" . $value;
+                        }
+                        if ($link->getUrlValue() != ""):
+                            ?>
+                            <div class='popbox_ajax' data-tipped="<?php echo $link->getUrlValue() . $appendToUrl; ?> ">
+                            <?php else: ?>
+                                <div>
+                                <?php endif; ?>
+                                <?php if ($link->getLink() != ""): ?>
+                                    <a href="<?php echo $link->getLink() ?>"><span><?php echo $footer_title ?></span></a>
+                                    <?php
+                                else:
+                                echo '<span>'.$footer_title.'</span>';
+                                endif;
+                                ?>
+                            </div>
+                        <?php endif; ?>
+
+                               <?php if ($link->getUrlValue() != ""): ?>
+                                   <div id="popup_ajax_contain" style="display: none">
+                                   </div>
+                               <?php endif;?>
+
+                </li>
+
+            <?php
+            endif;
+        endforeach;
+        ?>
+        </ul>
+        <div class="col-lg-2 col-12 social-media">
+          <div class="row justify-content-lg-end">
+        <ul>
+            <!-- <div class="sm-qr">
+                <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_yelp/yelp/yelpurl')); ?>" target="_blank"> Y </a>
+            </div> -->
+            <li class="sm-pr" style="text-align: left;">
+                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/instaurl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/redesign/social-media/instagram.png')?>"></a>
+            </li>
+            <!-- <div class="sm-tw">
+                <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/twitterurl')); ?>" target="_blank"> TW </a>
+            </div> -->
+            <li class="sm-fb">
+                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/facebookurl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/redesign/social-media/facebook.png')?>"></a>
+            </li>
+            <li class="sm-insta">
+                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/pinteresturl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/redesign/social-media/pinterest.png')?>"></a>
+            </li>
+        </ul>
+      </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    function goTop() {
+        var body = jQuery("html, body");
+        body.stop().animate({scrollTop:0}, 500, 'swing');
+    }
+</script>
+
+
+<style>
+    #container
+    {
+        width: 300px;
+        overflow: hidden;
+    }
+
+    /* THESE ARE THE INDIVIDUAL SLIDE PROPERTIES */
+    .slide
+    {
+        width: 300px;
+        height: auto;
+        overflow: hidden;
+        float: left;
+    }
+</style>

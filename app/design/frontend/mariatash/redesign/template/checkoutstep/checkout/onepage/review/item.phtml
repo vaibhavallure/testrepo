@@ -1,0 +1,279 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file s subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_iphone
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+$_item = $this->getItem();
+$isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
+$canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
+$messages = $this->getMessages();
+$typeId = $_item->getProduct()->getTypeId();
+
+?>
+
+<tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
+
+    <td class="cart_col1">
+
+        <div class="productname"><h1 class="product-name">
+            <?php if ($this->hasProductUrl()):?>
+                <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+            <?php else: ?>
+                <?php echo $this->escapeHtml($this->getProductName()) ?>
+            <?php endif; ?>
+        </h1>
+        <?php if ($_options = $this->getOptionList()):?>
+            <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
+            <div class="product-options" style="display:none;">-->
+            <div class="item-options">
+                <?php foreach ($_options as $_option) : ?>
+                    <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                    <div><span class="para-three"><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                        <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                            <?php echo $_formatedOptionValue['full_view'] ?>
+                        <?php else: ?>
+                            <?php echo $_formatedOptionValue['value'] ?>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?></span>
+            </div>
+            <!--</div>-->
+        <?php endif;?>
+        </div>
+
+        <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock): ?>
+            <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
+        <?php endif;?>
+
+        <div class="price-box">
+
+            <!--div class="qty-wrap">
+                <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+                <span<?php if ($this->getQty() == 1) echo ' style="display:none;"' ?>>×</span>
+            </div-->
+
+        </div>
+
+    </td>
+    <td  class="cart_col3 a-right">
+        <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
+    </td>
+    <td class="a-right"><?php echo $_item->getQty() ?></td>
+    <td  class="cart_col5 a-right">
+        <div class="cart-price-box">
+
+            <?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
+
+            <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+            <span class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+                    <?php else: ?>
+                <span class="cart-price">
+                    <?php endif; ?>
+
+                    <?php if ($canApplyMsrp): ?>
+                        <span class="cart-msrp-subtotal">--</span>
+                    <?php else: ?>
+                        <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(0, 1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                            <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()+$_item->getWeeeTaxAppliedRowAmount()+$_item->getWeeeTaxRowDisposition()); ?>
+                        <?php else: ?>
+                            <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()) ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    </span>
+                <?php if (Mage::helper('weee')->getApplied($_item)): ?>
+
+                    <div class="cart-tax-info" id="esubtotal-item-tax-details<?php echo $_item->getId(); ?>" style="display:none;">
+                        <?php if (Mage::helper('weee')->typeOfDisplay($_item, 1, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                            <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
+                                <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount'],true,true); ?></span>
+                            <?php endforeach; ?>
+                        <?php elseif (Mage::helper('weee')->typeOfDisplay($_item, 2, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                            <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
+                                <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount_incl_tax'],true,true); ?></span>
+                            <?php endforeach; ?>
+                        <?php elseif (Mage::helper('weee')->typeOfDisplay($_item, 4, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                            <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
+                                <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount_incl_tax'],true,true); ?></span>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+
+                        <?php if (Mage::helper('weee')->typeOfDisplay($_item, 2, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                        <div class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+                            <span class="weee"><?php echo Mage::helper('weee')->__('Total'); ?>: <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()+$_item->getWeeeTaxAppliedRowAmount()+$_item->getWeeeTaxRowDisposition()); ?></span>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <?php endif; ?>
+
+                <?php if (($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
+
+                <?php $_incl = $this->helper('checkout')->getSubtotalInclTax($_item); ?>
+                <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                <span class="cart-tax-total" onclick="taxToggle('subtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+                    <?php else: ?>
+                    <span class="cart-price">
+                    <?php endif; ?>
+
+                        <?php if ($canApplyMsrp): ?>
+                            <span class="cart-msrp-subtotal">--</span>
+                        <?php else: ?>
+                            <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(0, 1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                                <?php echo $this->helper('checkout')->formatPrice($_incl+$_item->getWeeeTaxAppliedRowAmount()); ?>
+                            <?php else: ?>
+                                <?php echo $this->helper('checkout')->formatPrice($_incl-$_item->getWeeeTaxRowDisposition()) ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                    </span>
+
+
+                    <?php if (Mage::helper('weee')->getApplied($_item)): ?>
+
+                        <div class="cart-tax-info" id="subtotal-item-tax-details<?php echo $_item->getId(); ?>" style="display:none;">
+                            <?php if (Mage::helper('weee')->typeOfDisplay($_item, 1, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                                <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
+                                    <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount'],true,true); ?></span>
+                                <?php endforeach; ?>
+                            <?php elseif (Mage::helper('weee')->typeOfDisplay($_item, 2, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                                <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
+                                    <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount_incl_tax'],true,true); ?></span>
+                                <?php endforeach; ?>
+                            <?php elseif (Mage::helper('weee')->typeOfDisplay($_item, 4, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                                <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
+                                    <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount_incl_tax'],true,true); ?></span>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if (Mage::helper('weee')->typeOfDisplay($_item, 2, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                            <div class="cart-tax-total" onclick="taxToggle('subtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+                                <span class="weee"><?php echo Mage::helper('weee')->__('Total incl. tax'); ?>: <?php echo $this->helper('checkout')->formatPrice($_incl+$_item->getWeeeTaxAppliedRowAmount()); ?></span>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php endif; ?>
+
+        </div>
+    </td>
+</tr>
+<?php //if (count($messages)): $html = "";?>
+    <tr class="messages">
+        <td colspan="6">
+            <div class="item-msg <?php echo $message['type'] ?>">
+
+            	<?php if(false): ?>
+	                <?php foreach ($messages as $message): ?>
+	                    <?php $html .= $message['text']; ?>
+	                <?php endforeach;?>
+	                <p>* <?php echo $html; ?></p>
+                <?php endif;?>
+
+                <?php if(0): //commenting existing code for parent child?>
+                <?php
+            	$stockQty = intval($_item->getProduct()->getStockItem()->getQty());
+
+            	$manageStock = $_item->getProduct()->getStockItem()->getManageStock();
+
+                $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
+
+                $isBackordered = false;
+
+                $backorderedQty = $_item->getQty();
+
+                if ($stockQty < $backorderedQty) {
+                	$isBackordered = true;
+
+                    if ($stockQty >= 0) {
+                    	$backorderedQty = $_item->getQty() - $stockQty;
+                    }
+                }
+
+                if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) : ?>
+                	<?php //allure code
+                		$message = "";
+                		$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
+                		if(!empty($stockMsg))
+                			$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
+                		else
+                			$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
+                	?>
+                	<p><?php echo $message ?></p>
+               	<?php else : ?>
+               		<p>In Stock: Ships Within 24 hours (Mon-Fri).</p><?php //add by allure?>
+        		 <?php endif; ?>
+        		 <?php endif; //End of existing code?>
+
+
+				<?php //Parent child code starts
+                $storeId=Mage::app()->getStore()->getStoreId();
+                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
+                $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
+                $stockQty = intval($stock->getQty());
+                $manageStock =$stock->getManageStock();
+                $isInStock = $stock->getIsInStock();
+
+                $isBackordered = false;
+                $backorderedQty = $_item->getQty();
+
+                if ($stockQty < $backorderedQty) {
+                	$isBackordered = true;
+
+                    if ($stockQty >= 0) {
+                    	$backorderedQty = $_item->getQty() - $stockQty;
+                    }
+                }
+				?>
+
+				<?php if ($isBackordered && $manageStock==1) :?>
+				<?php
+                	$message = "";
+                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_product);
+                	if(!empty($stockMsg))
+                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
+                	else
+                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
+                ?>
+                <p><?php echo $message ?></p>
+				<?php else : ?>
+					<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
+				<?php endif; ?>
+				<?php //allure Parent child code end?>
+
+            </div>
+        </td>
+    </tr>
+<?php //endif; ?>
+<script>
+    jQuery(document).ready(function(){
+        if (jQuery('.messages').length > 0) {
+            jQuery('tr.messages-tr').css('border','none');
+        }
+    });
+</script>

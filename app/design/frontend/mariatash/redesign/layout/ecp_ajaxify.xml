@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <block type="core/messages" name="messages" as="messages"/>
+    </default>
+    <customer_account_index>
+        <reference name="header">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="global_messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+    </customer_account_index>
+    <customer_account_login>
+        <reference name="header">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="global_messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+    </customer_account_login>
+    <customer_account_create>
+        <reference name="header">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="global_messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+    </customer_account_create>
+    <checkout_cart_index>
+        <reference name="header">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="global_messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+    </checkout_cart_index>
+    <checkout_onepage_index>
+        <reference name="header">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+        <reference name="global_messages">
+            <action method="setIsDynamic"><is_dynamic>1</is_dynamic></action>
+        </reference>
+    </checkout_onepage_index>
+    <catalog_product_view>
+        <reference name="header">
+            <action method="setShowProductViewed"><show_product_viewed>product_viewed</show_product_viewed></action>
+        </reference>
+    </catalog_product_view>
+    <ecp_ajaxify>
+        <reference name="root">
+            <block type="core/messages" name="messages" as="messages">
+                <action method="setIsDynamic">
+                    <is_dynamic>1</is_dynamic>
+                </action>
+            </block>
+            <block type="core/template" name="top_cart" as="top_cart" template="page/html/topcart.phtml"/>
+            <block type="ecp_ajaxify/block" name="product_viewed" as="product_viewed" template="ajaxify/viewed.phtml"/>
+            <block type="ecp_ajaxify/dynamicBlock" name="top_links" as="top_links"
+                   template="page/html/top_links_dynamic.phtml"/>
+            <block type="ecp_shippingtext/shippingtext" name="shippingtext" as="shippingtext"
+                   template="ecp/header/shippingtext.phtml"/>
+        </reference>
+    </ecp_ajaxify>
+</layout>

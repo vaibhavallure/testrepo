@@ -1,0 +1,6 @@
+<?php
+$cms_pages = $this->getCustomercarenavleft();
+foreach ($cms_pages as $page):
+    ?>
+    <li><a href="<?php echo Mage::getBaseUrl() . $page->getIdentifier() ?>"><?php echo $page->getTitle() ?></a></li>
+<?php endforeach; ?>

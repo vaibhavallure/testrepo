@@ -1,0 +1,82 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var $this Mage_Tax_Block_Checkout_Shipping
+ * @see Mage_Tax_Block_Checkout_Shipping
+ */
+?>
+<?php if ($this->displayBoth()):?>
+<tr id="mt-shipping">
+    <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
+         <?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->getExcludeTaxLabel()).'</span>' ?>
+    </td>
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
+        <?php echo $this->helper('checkout')->formatPrice($this->getShippingExcludeTax()) ?>
+    </td>
+</tr>
+<tr id="mt-shipping">
+    <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
+        <?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->getIncludeTaxLabel()).'</span>' ?>
+    </td>
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
+        <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
+    </td>
+</tr>
+<?php elseif($this->displayIncludeTax()) : ?>
+<tr id="mt-shipping">
+    <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
+        <?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'.'<span class="non-shipping-label">'.str_replace('United Parcel Service','UPS',$this->getTotal()->getTitle()).'</span>' ?>
+    </td>
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
+        <?php echo $this->helper('checkout')->formatPrice($this->getShippingIncludeTax()) ?>
+    </td>
+</tr>
+<?php else:?>
+<tr id="mt-shipping">
+    <?php
+    $multiShip = $this->getShippingExcludeTax();
+    if($this->getRequest()->getActionName() == 'refreshtotals') {
+    $totalShip = $this->getShippingExcludeTax();
+    $totalsObj = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+
+    if(isset($totalsObj['shipping'])&& $totalsObj['shipping']->getValue()) {
+            $ship = $totalsObj['shipping']->getValue();
+    }
+    if($ship >= $totalShip){
+        $multiShip = $ship;
+    }else{
+        $multiShip = $totalShip;
+    }
+    }
+    ?>
+    <td style="<?php echo $this->getStyle() ?>" class="" colspan="<?php echo $this->getColspan(); ?>">
+        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-method-fancybox"'; } else {  }?> class="mt-shipping-method"><?php echo '<span class="shipping-label">'.$this->__('Shipping').'</span>'?></a>
+    </td>
+    <td style="<?php echo $this->getStyle() ?>" class="text-right">
+        <a <?php if($this->getRequest()->getControllerName() == 'cart' && $this->getRequest()->getActionName() != 'refreshtotals') { echo ' href="#inline" id="mt-shipping-price-fancybox"'; } else { }?> class="mt-shipping-price reg-price"><?php echo $this->helper('checkout')->formatPrice($multiShip) ?></a>
+    </td>
+</tr>
+<?php endif;?>

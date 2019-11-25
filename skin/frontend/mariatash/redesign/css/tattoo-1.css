@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'dinmittelschriftregular';
+    /*src: url('../fonts/mt/din1451alt-webfont.eot');*/
+	src: url('../fonts/mt/din1451alt-webfont.eot');
+	
+    src: url('../fonts/mt/din1451alt-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/mt/din1451alt-webfont.woff') format('woff'),
+         url('../fonts/mt/din1451alt-webfont.ttf') format('truetype'),
+         url('../fonts/mt/din1451alt-webfont.svg#dinmittelschriftregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+	font-family: Arial,Helvetica,sans-serif; color:#3F4048;
+	 font-size: 100%; /* 1 */ -webkit-text-size-adjust: 100%; /* 2 */ -ms-text-size-adjust: 100%; /* 2 */
+}
+
+body {
+	 margin: 0;
+	 position:relative;
+	 padding:0;
+	 background:#dedede;
+}
+
+ul, ol, dl, dt, dd {
+    list-style: none outside none;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+	padding: 0;
+	margin: 0 0 10px;
+	clear: both;
+}
+
+
+
+
+h1 {
+    color: #3F4048;
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+h1, p {
+    margin: 0;
+    padding: 0;
+}
+.categorypath-celebrity-clientele-html .col-main > h1 {
+    margin: 21px 0 18px;
+}
+
+
+/*COMIENZAN ESTILOS - ARG */
+
+.tattoo-1 {}
+.tattoo-1 h1 { margin:18px auto 17px; width:1100px;}
+.tattoo-1 h3  {
+		padding:7px 10px;
+		text-transform:uppercase;
+		color: #3F4048;
+   		font-family: dinmittelschriftregular;
+		font-weight:normal;
+		font-size:17px;
+		text-align:left;
+		margin: 0 0 16px;
+	}
+.tattoo-1 p  { font-size:13px;padding: 0 0 10px; }	
+
+	
+	
+
+.ban_tattoo-1 { width:1100px; text-align:center; margin: 0 auto;}
+
+.col-tattoo-1 { width: 1100px; margin: 20px auto 0; overflow: hidden; color: #3f4048; }
+.col-tattoo-1 h3 { font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; text-transform: none; }
+.col-tattoo-1 p { padding: 0 0 15px 0; }
+.col-left-tattoo-1 { width: 530px; float: left; padding-right: 20px; }
+.celebrating-tattoo-1 { padding-bottom: 10px; line-height: 18px; }
+.services-tattoo-1 { padding: 0 0 20px 0; border-bottom: 1px solid #d5d5d5; line-height: 22px; }
+.services-tattoo-1 .services-divider { width: 450px; height: 1px; background: #d5d5d5; float: right; clear: both; }
+.services-tattoo-1 ul { list-style-image: url(../images/tattoo-bullet.png); padding-left: 20px; }
+.block-rating-tattoo-1 { padding: 20px 0; border-bottom: 1px solid #d5d5d5; }
+.block-rating-tattoo-1 h4 { font-family: Verdana; font-weight: normal; font-size: 16px; line-height: 40px; margin: 0; }
+.block-rating-tattoo-1 .rate { margin-bottom: 5px; }
+.block-rating-tattoo-1 .reviews { color: #9d8751; padding: 0 2px 0; }
+.block-rating-tattoo-1 .reviews img { margin-top: -2px; }
+.block-rating-tattoo-1 .location { font-family: Verdana, Geneva, sans-serif; font-size: 12px; line-height: 17px; }
+.address-tattoo-1 { padding-top: 20px; padding-bottom:20px; position: relative; border-bottom: 1px solid #D5D5D5;}
+.address-tattoo-1 h4 { font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 13px; line-height: 18px; margin: 0 0 5px 0; color: #3F99C4; }
+.address-tattoo-1 h4 + p { font-size: 11px; margin: 0; color: #999; }
+.address-tattoo-1 p { font-size: 12px; padding: 0 0 2px 0; margin-top: 0 }
+.address-tattoo-1 .city-search-rating p { float: right; color: #3F99C4; }
+.address-tattoo-1 .city-search-rating { position: absolute; top: 20px; right: 0; width: 100px; }
+.artists-tattoo-1 { border-bottom: 1px solid #d5d5d5; }
+.artists-tattoo-1 img { padding: 0; margin: 0 0 10px 0; }
+.artists-tattoo-1 a {  margin: 0; padding:0; }
+.artists-tattoo-1 .artist-tattoo {  width: 234px; float: left; margin: 10px 30px 10px 0; }
+.artists-tattoo-1 .artist-tattoo a:hover {text-decoration:none;}
+.artists-tattoo-1 .artist-tattoo span { width: 214px; display: block; background: #d1d1d1; padding: 0 10px; font-size: 13px; line-height: 35px; color:#38393c;}
+.artists-tattoo-1 .artist-tattoo span:hover {color:#906E39;}
+.hours-tattoo-1 { line-height: 18px; }
+.ban-gift-tatto-1 { width: 1100px; margin-top: 30px; float: left; background: #cfcfd0; }
+.ban-gift-tatto-1 p { width: 960px; margin: 0 auto; padding: 0; }
+
+
+
+
+
+.col-right-tattoo-1 { width: 529px; float: right; padding-left: 20px; border-left: 1px solid #d0d0d1;}
+.col-right-tattoo-1 h2 {
+		color: #3F4048;
+   		font-family: Arial, Helvetica, sans-serif;
+		font-weight:bold;
+		font-size:17px;
+		text-align:left;
+		margin: 0 0 10px;
+		text-transform:none;
+}
+.col-right-tattoo-1 h3 {padding:10px 0; margin:0; text-transform:none;}
+.col-right-tattoo-1 p { font-size:13px; margin:0; float:left; width: 100%; line-height:8px;}
+.col-right-tattoo-1 p.spacer-tattoo-1 {margin-top:10px;}
+
+.categorypath-celebrity-clientele-html .col-main > h1 {
+    margin: 19px 0 18px;
+}
+

@@ -1007,7 +1007,7 @@ abstract class Allure_Sales_Model_Pdf_Abstract extends Varien_Object
      * aws02
      * calculate height of address with new added extra field
      */
-    private function calHeightExtraData($y,$data){
+    protected  function calHeightExtraData($y,$data){
         foreach ($data as $value){
             if ($value !== '') {
                 $text = array();

@@ -1,0 +1,280 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Ship to multiple address template
+ *
+ * @see Mage_Checkout_Block_Multishipping_Addresses
+ * @var Mage_Checkout_Block_Multishipping_Addresses $this
+ */
+?>
+<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
+<?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
+<?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
+<?php $cnt = 1;?>
+<?php $isSingleProduct = $redesignHelper->isQuoteContainSingleProduct();?>
+<?php $shippingAddresses = $this->getCheckout()->getQuote()->getAllShippingAddresses();?>
+<?php $isMultiple = (count($shippingAddresses) > 1) ? true : false; ?>
+
+<div class="container">
+    <ol id="checkoutSteps" class="opc">
+    <?php foreach ($steps as $stepKey => $_step): ?>
+    	<?php if($stepKey == "multishipping_addresses"):?>
+    	<li id="opc-<?= $stepKey?>" class="section allow active">
+    		<div class="step-title checkout-step-name col-12">
+                <span class="number"><?php echo $cnt ?></span>
+                <h3><?php echo $this->__($_step->getLabel()) ?></h3>
+        	</div>
+    		<?php echo $this->getMessagesBlock()->toHtml() ?>
+            <form id="checkout_multishipping_form" action="<?php echo $this->getPostActionUrl() ?>" method="post">
+                <?php echo $this->getChildHtml("widget");?>
+                <div class="multiple-checkout">
+                    <div class="page-title title-buttons row">
+                    	<?php if( (!$redesignHelper->isQuoteContainSingleQty()) || $isMultiple):?>
+                    	<div class="col2-set col-12">
+                        	<div class="gift-messages">
+                            	<p class="control">
+                                   	<label class="para-normal custom-checkbox custom-checkbox-two" for="shipping-to-more-than-one">
+                                      <input type="checkbox" id="shipping-to-more-than-one" value="0" class="checkbox" <?php if($isMultiple):?>checked="checked"<?php endif;?>>
+                                      <span class="checkmark"></span><?= $this->__('Shipping to more than one address?')?>
+                                    </label>
+                               	</p>
+                           	</div>
+                        </div>
+                        <?php endif;?>
+                        <div class="col-12 shipping-billing-retail">
+                       		<div class="row">
+                            	<div class="billing-address billing-address-selection select col-lg-6 col-md-6 col-12">
+                          			<span class="info-text-two"><?= $this->__('Please select your billing address:')?></span>
+                            		<?= $this->getChildHtml("checkout_address_select");?>
+            					</div>
+            					<div id="single-shipping-address" class="select single-shipping-address col-lg-6 col-md-6 col-12 <?php if($isMultiple):?>d-none<?php endif;?>">
+                            		<span class="info-text-two"><?= $this->__('Please select your Shipping address:')?></span>
+                               		<?= $this->getChildHtml("checkout_shipping_single_address_select");?>
+                    			</div>
+                          	</div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="continue" value="0" id="can_continue_flag" />
+                    <input type="hidden" name="new_address" value="0" id="add_new_address_flag" />
+                    <div class="data-table col-12" id="multiship-addresses-table">
+                        <div class="row">
+    						<div class="">
+    						<?php $_coreHelper = $this->helper('core');?>
+                        	<?php foreach ($this->getItems() as $_index => $_item): ?>
+                            <?php if ($_item->getQuoteItem()) :?>
+                            <?php if($_item->getQuoteItem()->getSku() == $redesignHelper::GIFT_WRAP_SKU) continue;?>
+    							<div class="col-12 product-description-section">
+    								<div class="row">
+                            			<div class="col-lg-2 col-md-2 col-4 multi-column-1">
+                                    		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
+                                    		<?php
+                                        		if ($option = $_item->getOptionByCode('simple_product')) {
+                                        		    $_product = $option->getProduct();
+                                        		}
+                                		    ?>
+                                			<p class="product-image">
+                                     			<img src="<?= $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                                 			</p>
+                            			</div>
+                                		<div class="col-lg-6 col-md-6 col-12 multi-column-2">
+                                    		<?php echo $this->getItemHtml($_item->getQuoteItem())?>
+                                    		<div class="item-options">
+                                    			<input type="hidden" data-multiship-item-id="<?php echo $this->jsQuoteEscape($_item->getSku()) ?>" name="ship[<?php echo $_index ?>][<?php echo $_item->getQuoteItemId() ?>][qty]" value="<?php echo $this->escapeHtml($_item->getQty()) ?>" size="2" class="input-text qty" />
+                                    		</div>
+                                			<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item->getQuoteItem());?>
+    										<?php if(!empty($message)): ?>
+                							<div class="box">
+                                            	<div class="box-content">
+                                                	<div class="item-msg">
+                                                    	<p><span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?></p>
+                                                    </div>
+                                                </div>
+                                             </div>
+    										<?php endif;?>
+											
+											<?php if(!$_item->getProduct()->getIsVirtual()):?>
+                                            <div class="col2-set">
+                                                <div class="gift-messages">
+                                                 	<p class="control">
+                                                        <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_item]" id="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>"
+                                                            	value="1" class="checkbox gift-item-checkbox" <?php if(false && $_item->getIsGiftItem()):?>checked="checked" <?php endif;?>
+                                                            	data-gift_wrap_id="<?= $_index."-".$_item->getQuoteItemId()?>">
+                                                            <span class="checkmark"></span>
+                                                            <span class="para-normal"><?= $this->__('This item is a gift (price will be hidden in the receipt).')?></span>
+                                                  		</label>
+                                                   </p>
+                                                </div>
+                                                <div id="gift-wrap-<?= $_index."-".$_item->getQuoteItemId()?>" class="gift-messages <?= (true || !$_item->getIsGiftItem()) ? "d-none":"" ?>">
+                                                 	<p class="control">
+                                                        <label class="custom-checkbox custom-checkbox-two" for="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                            <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_gift_wrap]" id="gift_wrap_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php if(false && $_item->getIsGiftWrap()):?>checked="checked" <?php endif;?>>
+                                                            <span class="checkmark"></span>
+                                                            <span class="para-normal"><?= $this->__('Add gift wrap to this item')?> (<?= ($_productGiftWrap) ? $_coreHelper->currency($_productGiftWrap->getPrice()) : '' ?>).</span>
+                                                   		</label>
+                                                   </p>
+                                                </div>
+                                                <?php if(!empty($message) && !$isSingleProduct): ?>
+                                                <?php $tmpMessage = $message;?>
+                                                <?php if(!preg_match('/instock-product/', strtolower($tmpMessage) )):?>
+                                                <div class="gift-messages">
+                                                	<p class="control">
+                                                  		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
+                                                       		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= (false && $_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
+                                                            <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
+                                                       	</label>
+                                                	</p>
+                                                </div>
+                                            	<?php endif;?>
+                                                <?php endif;?>
+                                            </div>
+                                            <?php endif;?>
+                                            
+                                		</div>
+                                    	<div class="col-lg-4 col-md-4 col-8 multi-column-3 text-right multi-address-select-address-option multishipping-address-common <?php if(!$isMultiple):?>invisible<?php endif;?>" data-selected_address_id="<?= $_item->getCustomerAddressId()?>">
+                                    		<p class="para-normal"><?php if ($_item->getProduct()->getIsVirtual()): echo $this->__('Shipping selection is not applicable.');else:echo $this->getAddressesHtmlSelect($_item, $_index);endif;?></p>
+                                    	</div>
+    								</div>
+    							</div>
+                            <?php endif; ?>
+                        	<?php endforeach; ?>
+    						</div>
+    					</div>
+                    </div>
+
+                    <script type="text/javascript">decorateTable('multiship-addresses-table')</script>
+                    <div class="buttons-set text-right">
+                        <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shopping Cart') ?></a></p>
+                        <button type="submit" data-action="checkout-continue-shipping" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Next')) ?>" class="light-button button next-button<?php if ($this->isContinueDisabled()):?> disabled<?php endif; ?>" onclick="$('can_continue_flag').value=1"<?php if ($this->isContinueDisabled()):?> disabled="disabled"<?php endif; ?>><span><span><?php echo $this->__('Next'); ?></span></span></button>
+                        <span id="multiaddress-please-wait" class="please-wait" style="display: none;">
+            				<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...
+            			</span>
+                    </div>
+                </div>
+                <?php echo $this->getBlockHtml("formkey") ?>
+            </form>
+            <div id="multiaddress-new-address" style="display: none;">
+            	<?= $this->getChildHtml("customer_address_edit_form")?>
+            </div>
+    	</li>
+    	<?php else:?>
+    	<li id="opc-<?= $stepKey?>" class="section">
+    		<div class="step-title checkout-step-name col-12">
+                <span class="number"><?php echo $cnt ?></span>
+                <h3><?= $_step->getLabel()?></h3>
+            </div>
+    	</li>
+    	<?php endif;?>
+    	<?php $cnt++; ?>
+    <?php endforeach;?>
+    	<li>
+    		<div class="checkout-block">
+   				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
+			</div>
+    	</li>
+    </ol>
+</div>
+<script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+    Allure.baseUrl = '<?= $this->getBaseUrl() ?>';
+</script>
+<script type="text/javascript">
+	var addressesForm = new VarienForm('checkout_multishipping_form',true);
+
+	jQuery(document).ready(function(){
+
+		jQuery('#checkout_multishipping_form button[type="submit"]').on('click',function(){
+			if(addressesForm.validator.validate()) {
+				jQuery(this).hide();
+				blockCheckoutUi();
+				//jQuery('#multiaddress-please-wait').show();
+			}
+		});
+
+		jQuery('.multi-address-select-address-option select').append('<option value="">New Address</option>');
+		jQuery('.multi-address-select-address-option select').addClass('validate-select');
+		
+		jQuery('.multi-address-select-address-option select').on('change',function(){
+			newAddressForm(jQuery(this));
+		});
+
+		/* jQuery('#shipping-to-more-than-one').is(":checked"){
+			jQuery('#single-shipping-address').addClass('d-none');
+			jQuery('.multishipping-address-common').removeClass('invisible');
+		}); */
+
+		jQuery('#shipping-to-more-than-one').on('change',function(){
+			if(jQuery(this).is(":checked")){
+				jQuery('#single-shipping-address').addClass('d-none');
+				jQuery('.multishipping-address-common').removeClass('invisible');
+			}else{
+				jQuery('#single-shipping-address').removeClass('d-none');
+				jQuery('.multishipping-address-common').addClass('invisible');
+				var addressId = jQuery('#single-shipping-address select').val();
+				jQuery('.multishipping-address-common select').val(addressId);
+			}
+		});
+
+		jQuery('.gift-item-checkbox').on('change',function(){
+			var giftWrapId = jQuery(this).data("gift_wrap_id");
+			if(jQuery(this).is(":checked")){
+				jQuery('#gift-wrap-'+giftWrapId).removeClass('d-none');
+			}else{
+				jQuery('#gift-wrap-'+giftWrapId).addClass('d-none');
+			}
+		});
+
+		jQuery('#single-shipping-address select').on('change',function(){
+			var addressId = jQuery(this).val();
+			jQuery('.multishipping-address-common select').val(addressId);
+		});
+
+		jQuery('#customer-address-form-validate .back-link a').on('click',function(){
+			jQuery('#checkout_multishipping_form').show();
+			jQuery('#multiaddress-new-address').hide();
+		});
+	});
+
+	function newAddressForm(evt){
+		if(!(jQuery(evt).val())){
+			var addressId = jQuery(evt).closest( ".multi-address-select-address-option").data("selected_address_id");
+			if(jQuery(evt)){
+				jQuery(evt).val(addressId);
+			}
+			jQuery('#checkout_multishipping_form').hide();
+			jQuery('#multiaddress-new-address').show();
+		}else{
+			jQuery('#checkout_multishipping_form').show();
+			jQuery('#multiaddress-new-address').hide();
+			var addressId = jQuery(evt).val();
+			jQuery(evt).closest( ".multi-address-select-address-option").attr('data-selected_address_id', addressId);
+		}
+	}
+</script>

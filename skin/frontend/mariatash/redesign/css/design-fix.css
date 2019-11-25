@@ -1,0 +1,78 @@
+/*Issue fixed : Bugtracker*/
+.checkout-onepage-index label#label-authnetcim {
+    padding-left: 15px;
+}
+
+.checkout-onepage-index .v-fix div#advice-validate-cc-cvn-authnetcim_cc_cid {
+    padding-top: 20px;
+}
+.category-about-the-designer .botones-social-media .fb-like.fb_iframe_widget,
+.category-about-the-designer .botones-social-media div#pinitaboutdesigner {
+    padding-right: 5px;
+}
+
+.product-select-options .qv-qty div#advice-required-entry-qty {
+    float:left;
+}
+.customer-account-login .account-login,
+.customer-account-login .account-create{
+
+    min-height:420px;
+}
+.quickview-index-index .product-view select{
+    width:185px !important;
+}
+
+.mt-wishlist-table #wishlist-table td {
+    padding: 8px 5px 8px 8px !important;
+}
+
+.popupLoginModel #signin-btn-popup {
+    float: right;
+    margin: 10px 0 10px;
+    color: #fff;
+    background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
+}
+
+.pop-link .new_account{
+    text-align: center;
+    margin-top: 10px;
+}
+#reg_msg_div{
+}
+
+.pop-link .mt-amazon{
+    float: right;
+}
+.pop-link .mt-googleconnect-btn
+{
+    float: right;
+}
+.pop-link .mt-googleconnect-btn a
+{
+    margin: 0;
+}
+.pop-link .soc-login-btn{
+    clear: both;
+    float: right;
+}
+.facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
+    width: 200px;
+    float: right;
+}
+.mt-wishlist-table #wishlist-table td {
+    padding: 8px 5px 8px 8px !important;
+}
+.quickview-index-index  .product-options .validation-advice{
+    padding-top:30px;
+}
+.quickview-index-index .product-view select{
+    position:absolute;
+}
+
+#productsContainer {
+    margin-bottom: auto
+}
+.checkout-onepage-index .facebook-login-checkout img.fb-img {
+    float: left;
+}

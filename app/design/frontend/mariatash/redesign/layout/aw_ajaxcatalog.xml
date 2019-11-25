@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem" ifconfig="awajaxcatalog/general/enabled">
+                <type>skin_js</type><name>aw_ajaxcatalog/js/script.js</name>
+            </action>
+            <action method="addCss" ifconfig="awajaxcatalog/general/enabled">
+                <name>aw_ajaxcatalog/css/styles.css</name>
+            </action>
+        </reference>
+    </default>
+
+    <catalog_category_default>
+        <reference name="product_list_toolbar">
+            <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_layered>
+        <reference name="product_list_toolbar">
+            <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+        </reference>
+    </catalog_category_layered>
+
+    <catalogsearch_result_index>
+        <reference name="product_list_toolbar">
+            <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+        </reference>
+    </catalogsearch_result_index>
+
+    <catalogsearch_advanced_result>
+        <reference name="product_list_toolbar">
+            <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    <tag_product_list>
+        <reference name="search_result_list">
+            <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+            </block>
+            <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+        </reference>
+    </tag_product_list>
+
+    <awadvancedsearch_result_index>
+        <reference name="product_list_toolbar">
+            <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+        </reference>
+    </awadvancedsearch_result_index>
+
+    <awshopbybrand_index_brandpageview>
+        <reference name="product_list_toolbar">
+            <block type="aw_ajaxcatalog/init" name="product_list_toolbar_pager"/>
+        </reference>
+    </awshopbybrand_index_brandpageview>
+</layout>

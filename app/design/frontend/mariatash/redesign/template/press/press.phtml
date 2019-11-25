@@ -1,0 +1,219 @@
+<p class="category-image"><img src="https://mariatash-design.allureinc.dev/media/catalog/category/catalog.jpg" alt="Jewelry" title="Jewelry"></p>
+<div id="category-title" class="page-title category-title simple-page-title">
+    <h1>Press Features</h1>
+</div>
+<div class="container press press-custom-container">
+    <div class="row">
+        <div class="col-12">
+            <div class="row main-press-block">
+                <?php foreach($this->getPressCol() as $press):
+                    if($press->getStatus()==1):?>
+                        <div class="col-12 col-md-6 col-lg-4 press-img-block" data-press_id="<?= $press->getId() ?>" >
+                            <div id="pressId_<?= $press->getId() ?>" class="press-img" style="background: url(<?php echo $this->getImagePath()."".$press->getImageOne(); ?>);" data-id="<?= $press->getId() ?>"></div>
+                        </div>
+                    <?php endif; endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-loader" style="display: none">
+        <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
+    </div>
+
+    <div id="openModal" class="pressPopup"> <!--do not remove pressPopup class-->
+        <div class="pop-up-cover">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body big-popup-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="p-img press-popup-image"></div>
+                            </div>
+                            <div class="col-12 popup-below-content">
+                                <div class="row">
+                                    <div class="col-6 text-left press_title info-text-three">my title</div>
+                                    <div class="col-6 text-right press_publish_date info-text-three">jan 2, 2019</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prev" data-current="0"></div>
+            <div class="next" data-current="0"></div>
+            <div class="press-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /*press list loading-------------------------------------*/
+    var pressActionUrl="<?= $this->getPressActionUrl() ?>";
+    var current_page=2;
+    var mediaPath="<?= $this->getImagePath() ?>";
+    var lastPage=<?= $this->getLastPage() ?>;
+
+    jQuery(window).on("scroll", function() {
+
+        var scrollHeight = jQuery(document).height();
+        var scrollPosition = jQuery(window).height() + jQuery(window).scrollTop();
+        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+            console.log(current_page,lastPage);
+            if(current_page<=lastPage) {
+                  load();
+            }
+        }
+    });
+
+    function load() {
+        setLoader();
+        jQuery.post(pressActionUrl,
+            {
+                page: current_page
+            },
+            function(data, status){
+                setList(JSON.parse(data));
+                unsetLoader();
+                current_page++;
+            });
+    }
+    function setList(data) {
+        var list="";
+        data.forEach(function (item,key) {
+            var press_id=item['press_id'];
+            var image_one=item['image_one'];
+
+            list+='<div class="col-12 col-md-6 col-lg-4 mb-5 press-img-block" data-press_id="'+press_id+'" >\n' +
+                '<div id="pressId_'+press_id+'" class="press-img" style="background: url('+mediaPath+''+image_one+');" data-id="'+press_id+'"></div>\n' +
+                '</div>';
+        });
+        jQuery(".main-press-block").append(list);
+    }
+
+    /*press list loading end-------------------------------------*/
+
+    var popupActionUrl="<?= $this->getPopUpActionUrl() ?>";
+    var current_images="";
+    var current_images_length="";
+
+    jQuery('.main-press-block').on('click', '.press-img',function(){
+        clearPage();
+
+
+        unScrollBody();
+        jQuery(".catalog-category-view .footer").css("display","none");
+
+        jQuery(".pressPopup").css({"opacity": "1", "pointer-events": "auto"});
+        jQuery(".press-loader").show();
+        var pressId=jQuery(this).attr("data-id");
+        jQuery.post(popupActionUrl,
+            {
+                id: pressId
+            },
+            function(data, status){
+                var response=JSON.parse(data);
+                jQuery(".press_title").html(response.title);
+                jQuery(".press_publish_date").html(response.publish_date);
+
+                var images=response.img;
+                current_images=images;
+                current_images_length=current_images.length;
+                setImage(0);
+                jQuery(".pressPopup .next,.pressPopup .prev").attr("data-pressId",pressId);
+                jQuery(".pressPopup .next,.pressPopup .prev").attr("data-current",0);
+                jQuery(".press-loader").hide();
+                setButtons(pressId);
+            });
+    });
+
+    function clearPage() {
+        jQuery(".p-img").css({"background-image":"","background-size":""});
+        jQuery(".press_title").html("");
+        jQuery(".press_publish_date").html("");
+    }
+    function setImage(data_id) {
+        var img = mediaPath+""+current_images[data_id];
+        jQuery(".p-img").css({"background-image":"url("+img+")","background-size":"cover"});
+    }
+
+    jQuery(".pressPopup .next").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var next_id=current_id+1;
+        if(current_images_length>1 && current_images_length>(next_id))
+        {
+            setImage(next_id);
+
+            if(current_images_length!=next_id && next_id!=0)
+                jQuery(".pressPopup .next,.pressPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-pressId"));
+
+            jQuery(".pressPopup .next,.pressPopup .prev").attr("data-current",next_id);
+        }else {
+            nextPress(jQuery(this).attr("data-pressId"));
+        }
+    });
+    jQuery(".pressPopup .prev").on("click",function () {
+        var current_id=parseInt(jQuery(this).attr("data-current"));
+        var prev_id=current_id-1;
+
+        if(current_images_length>1 && 0<=prev_id)
+        {
+            setImage(prev_id);
+
+            if(current_images_length!=prev_id && prev_id!=0)
+                jQuery(".pressPopup .next,.pressPopup .prev").removeClass("disBtn");
+            else
+                setButtons(jQuery(this).attr("data-pressId"));
+
+            jQuery(".pressPopup .next,.pressPopup .prev").attr("data-current",prev_id);
+        }
+        else {
+            prevPress(jQuery(this).attr("data-pressId"));
+        }
+    });
+
+
+    function nextPress(id) {
+        var pressId="#pressId_"+id;
+        var nextPressId= jQuery(pressId).parent('.press-img-block').next().attr("data-press_id");
+        jQuery(".main-press-block #pressId_"+nextPressId).trigger("click");
+    }
+    function prevPress(id) {
+        var pressId="#pressId_"+id;
+        var nextPressId= jQuery(pressId).parent('.press-img-block').prev().attr("data-press_id");
+        jQuery("#pressId_"+nextPressId).trigger("click");
+    }
+    function setButtons(id) {
+        var pressId="#pressId_"+id;
+
+        if(jQuery(pressId).parent('.press-img-block').next().length) {
+            jQuery(".pressPopup .next").removeClass("disBtn");
+        }
+         else {
+            jQuery(".pressPopup .next").addClass("disBtn");
+        }
+
+        if(jQuery(pressId).parent('.press-img-block').prev().length)
+            jQuery(".pressPopup .prev").removeClass("disBtn");
+        else
+            jQuery(".pressPopup .prev").addClass("disBtn");
+
+    }
+
+    jQuery(".pressPopup .close").on('click',function(){
+
+        scrollBody();
+        jQuery(".catalog-category-view .footer").css("display","block");
+
+        jQuery(".pressPopup").css({"opacity":"0","pointer-events":"none"});
+    });
+    
+    jQuery("#category-title").html("");
+</script>

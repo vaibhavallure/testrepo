@@ -151,6 +151,14 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_B
             'url'  => $this->getUrl('*/sales_order_shipment/massPrintShippingLabel'),
         ));
         
+        /**
+         * Generate gift item receipt.
+         */
+        $this->getMassactionBlock()->addItem('pdforders_gift_receipt', array(
+            'label'=> Mage::helper('sales')->__('Print Orders Gift Receipt'),
+            'url'  => $this->getUrl('*/sales_order/pdfOrdersGiftReceipt'),
+        ));
+        
         return $this;
     }
     

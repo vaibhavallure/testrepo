@@ -43,6 +43,23 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
 
         $this->_getSession()->setCartWasUpdated(true);
     }
+    
+    /**
+     * Get refresh totals html
+     * @return string
+     */
+    protected function _getRefreshTotalsHtml ()
+    {
+        $block = $this->getLayout()
+            ->createBlock('checkout/cart_totals')
+            ->setTemplate('checkout/cart/totals.phtml');
+        $childBlock = $this->getLayout()
+            ->createBlock('checkout/cart_shipping')
+            ->setTemplate('checkout/cart/shipping.phtml');
+        $block->setChild("shipping", $childBlock);
+        $output = $block->toHtml();
+        return $output;
+    }
 
     /**
      * Initialize coupon
@@ -62,6 +79,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
         if (! $this->_getCart()
             ->getQuote()
             ->getItemsCount()) {
+            $response['totals_html'] = $this->_getRefreshTotalsHtml();
             if (! $isAjax)
                 $this->_goBack();
             else
@@ -76,6 +94,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
         $oldCouponCode = $this->_getQuote()->getCouponCode();
 
         if (! strlen($couponCode) && ! strlen($oldCouponCode)) {
+            $response['totals_html'] = $this->_getRefreshTotalsHtml();
             if (! $isAjax)
                 $this->_goBack();
             else
@@ -164,6 +183,8 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             }
             Mage::logException($e);
         }
+        
+        $response['totals_html'] = $this->_getRefreshTotalsHtml();
 
         if (! $isAjax)
             $this->_goBack();

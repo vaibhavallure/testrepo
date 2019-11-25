@@ -1,0 +1,242 @@
+<?php 
+	/*
+	 * Allure customized My Account
+	 * 
+	 */
+?>
+<?php
+$lastProductAddedToCartId = Mage::getSingleton('checkout/session')->getLastAddedProductId();
+if ($lastProductAddedToCartId) {
+    $productCategoryIdsArray = Mage::getModel('catalog/product')->load($lastProductAddedToCartId)->getCategoryIds();
+    $continueShoppingCategoryUrl = Mage::getModel('catalog/category')->load($productCategoryIdsArray[0])->getUrl();
+}
+$priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
+?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
+<?php if ($priceAlert): ?>
+        <div class="priceUpdate"><p><?php echo $this->__('The price of the items in your cart has been updated since you added them.'); ?></p></div>
+    <?php endif; ?>
+<div class="cart-mt">
+    <h1>Shopping Cart</h1>
+
+	<input id="myaccount-cart-count" type="hidden" value="<?php echo Mage::helper('checkout/cart')->getItemsQty();?>">
+
+    <?php echo $this->getChildHtml('form_before') ?>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <form id="shopping-cart-form" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
+       <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+        <fieldset>
+            <table id="shopping-cart-table" class="data-table cart-table" width="100%" border="0">
+                <thead class="shop-titles">
+                <tr>
+                    <th colspan="2"><?php echo $this->__('Product'); ?></th>
+                    <th><?php echo $this->__('Price'); ?></th>
+                    <th class="a-left-q"><?php echo $this->__('Qty '); ?></th>
+                    <th><?php echo $this->__('Subtotal'); ?></th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 0; $prices = array(); $skus = array(); ?>
+                    <?php foreach ($this->getItems() as $_item): ?>
+                        <?php echo $this->getItemHtml($_item) ?>
+                        <?php
+                            $prices[$i] = floatval($_item->getPrice());
+                            $skus[$i] = $_item->getSku();
+                            $i++
+                        ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </fieldset>
+    </form>
+
+    <div class="cart-collaterals">
+        <div class="collat-wrap">
+                        <div class="coupons-mt">
+                            <div class="coupons">
+                            	<div class="mt-myaccount-giftcard"><?php echo$this->getChildHtml('giftcards')?></div>
+                            	<div class="mt-myaccount-promo"><?php echo  $this->getChildHtml('coupon')  ?></div>
+                         	</div>
+                         	
+                            <div class="totals">
+                                <?php echo $this->getChildHtml('totals'); ?>
+                                <?php if (!$this->hasError()): ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+            <div class="cart_cms_block" style="display: none;">
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('shoppingcart_links')->toHtml(); ?>
+            </div> 
+            <div class="crosssell-wrap">
+                <?php echo $this->getChildHtml('crosssell') ?>
+            </div>
+            <div>
+                <div class="pay-caart">
+                    <button type="button" title="Continue Shopping" class="button cart-continue-mt"
+                            onclick="setLocation('<?php echo $this->getContinueShoppingUrl(); ?>')">
+                        <span><span>Continue Shopping</span></span>
+                    </button>
+                    <ul class="checkout-types">
+                        <?php foreach ($this->getMethods('methods') as $method): ?>
+                            <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                                <li><?php echo $methodHtml; ?></li>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+
+            <?php if ($this->getContinueShoppingUrl()): ?>
+            <?php endif; ?>
+        </div>
+
+    </div>
+</div>
+<script>
+    function plusMinus(elementId,plus){
+        var qty = parseInt(jQuery(elementId).val()) + plus ;
+        if(qty > 0) {
+            var parent = jQuery(elementId).parent().parent().parent();
+            jQuery(elementId).val(qty);
+            var item_id = jQuery(elementId).attr('data-item-id');
+            var price = jQuery(elementId).attr('data-price');
+            var qtyData = {qty:qty};
+            var cart={};
+            cart[item_id] = qtyData;
+            cart = JSON.stringify(cart);
+            var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+            showLoadingFancybox();
+            jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/updateQtyAjax';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: {'cart':cart,'price':price,'qty':qty,'form_key':form_key},
+		        success: function(data) {
+		        	if(data.success){
+		        		jQuery('#ajax_cart_content').html(data.top_cart);
+		        		jQuery('.mt-my-cart').html("");
+			        	jQuery('.mt-my-cart').html(data.html);
+		        	}
+		        	hideLoadingFancybox();
+		        }
+		    });
+        }
+    }
+    
+    jQuery( ".qty-wrap input" ).focusout(function() {
+        if(this.next().value != this.value) {
+           // jQuery.fancybox.showLoading();
+           // jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+           // jQuery( "#shopping-cart-form" ).submit();
+        }
+    })
+    
+    jQuery(document).bind("keydown", function(e) {
+        var code = e.keyCode || e.which;
+        if (code  == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+<script>
+    jQuery('a.scl-popup').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none',
+        nextEffect  : 'none',
+        prevEffect  : 'none',
+        padding     : 0,
+        mouseWheel : false,
+        loop            : false,
+        helpers : {
+            title : null
+        },
+        width: 785,
+        minWidth: 785,
+        maxWidth: 785,
+        height: 572,
+        minHeight: 572,
+        maxHeight: 572
+    });
+
+</script>
+
+<script>
+	var itemXhr = null;
+	jQuery(document).ready(function(){
+
+		var cartCount =  jQuery("#myaccount-cart-count").val();
+		jQuery("#myaccount-cart-total-item").text(cartCount);
+		jQuery("#myaccount-cart-total-item").show();
+
+		//remove product from cart
+		/*jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
+
+			if(confirm("Are you sure you want to remove this product from your cart?")){
+				var item_id = jQuery(this).attr('data-item-id');
+				var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+				var parent = jQuery(this).parent().parent().parent();
+
+				if( itemXhr == null ) {
+					showLoadingFancybox();
+					itemXhr =	jQuery.ajax({
+				        url: '<//?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
+				        dataType : 'json',
+						type : 'POST',
+						data: {'id':item_id,'form_key':form_key},
+				        success: function(data) {
+				        	if(data.success){
+				        		jQuery('#ajax_cart_content').html(data.top_cart);
+				        		jQuery('.mt-my-cart').html("");
+
+				        		if(!jQuery("#myaccount-cart-count").length){
+						        	  jQuery("#myaccount-cart-total-item").text(0);
+						      		  jQuery("#myaccount-cart-total-item").show();
+						        }
+					        	jQuery('.mt-my-cart').html(data.html);
+				        	}
+				        	itemXhr = null;
+				        	hideLoadingFancybox();
+				        }
+				    });
+				}
+			}else{
+				return false;
+			}
+		});*/
+
+
+		//move product to wishlist
+		jQuery('.mt-my-cart .ad-to-fav .wishlist-add-to-fav').on('click',function(){
+			var item_id = jQuery(this).attr('data-item-id');
+			showLoadingFancybox();
+			jQuery.ajax({
+			      url: '<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcartAjax' ?>',
+			      dataType : 'json',
+				  type : 'POST',
+				  data: {'item':item_id},
+			      success: function(data) {
+			          if(data.success){
+			        	  jQuery('.mt-my-wishlist').html("");
+			        	  jQuery('.mt-my-wishlist').html(data.html);
+
+			        	  jQuery('.mt-my-cart').html("");
+				          jQuery('.mt-my-cart').html(data.cart_html);
+
+				          if(!jQuery("#myaccount-cart-count").length){
+				        	  jQuery("#myaccount-cart-total-item").text(0);
+				      		  jQuery("#myaccount-cart-total-item").show();
+				          }
+			                
+						  jQuery('#ajax_cart_content').html(data.top_cart);
+			          }else{
+				          alert(data.message);
+			          }
+			          hideLoadingFancybox();
+			     }
+			 });
+		});
+		
+	});
+</script>

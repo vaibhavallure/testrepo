@@ -104,6 +104,12 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 
                     $result['url'] = $refererUrl;
 
+                    /*code to redirect checkout after login*/
+                    if(!empty($this->getRequest()->getParam('redirectUrl')))
+                    {
+                        $result['redirectUrl']=$this->getRequest()->getParam('redirectUrl');
+                    }
+
                 } catch (Mage_Core_Exception $e) {
                     switch ($e->getCode()) {
                         case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
@@ -179,7 +185,10 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
                     $customer->setConfirmation(null);
                     $customer->save();
                     $customer->sendNewAccountEmail();
-                    Mage::getSingleton('customer/session')->loginById($customer->getId());
+                    $customerId = $customer->getId();
+                    Mage::getSingleton('customer/session')->loginById($customerId);
+                    Mage::getSingleton('customer/session')->logout();
+                    Mage::getSingleton('customer/session')->loginById($customerId);
                     $result['success'] = true;
                     $result['msg'] = Mage::helper('core')->__('Account created Successfully');
                 } catch (Exception $e) {

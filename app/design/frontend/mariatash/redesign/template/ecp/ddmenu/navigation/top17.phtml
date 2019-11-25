@@ -1,0 +1,115 @@
+<?php
+
+    $settings = Mage::helper('ddmenu')->getSettings();
+?>
+<div class="nav-container">
+<ul id="top-nav">
+    <?php $first     = 'first' ?>
+    <?php if ($settings['home']): ?>
+        <li class="first"><a href='<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>'><span><?php echo $this->__('Home page')?></span></a></li>
+        <?php $first = ''?>
+    <?php else: ?>
+        <?php $first = 'first' ?>
+    <?php endif ?>
+    <?php
+        $this->_menu->setOutermostClass('level-top');
+        $this->_menu->setChildrenWrapClass('');
+
+        $children    = $this->_menu->getChildren();
+        $count       = $children->count();
+        $i           = 0;
+    ?>
+    <?php foreach ($children as $child): ?>
+        <?php
+            $i++;
+            $categoryId  = $this->getCategoryId($child);
+            $ddmenu      = $this->getDdmenuObject($categoryId);
+            $showProduct = $ddmenu->getLastProduct();
+            $this->categoryIds = array($categoryId);
+
+            // html - sub categories
+            $subHtml           = FALSE;
+            if ($this->maxRows = $ddmenu->getRows()) {
+                $subHtml       = $this->getSubCategoryHtml($child, TRUE);
+            } else if ($showProduct) {
+                $this->searchCategoriesForLastProduct($child);
+            }
+
+            // html - last product
+            $prodHtml          = FALSE;
+            if ($showProduct) {
+                $prodHtml      = $this->getChild('ddmenu_last_product')
+                                    ->setCategoryIds($this->categoryIds)
+                                    ->_toHtml();
+            }
+
+            // html - friend category
+            $friendHtml        = FALSE;
+            if ($ddmenu->getCategoriesList()) {
+                $friendHtml    = $this->getChild('ddmenu_category_friends')
+                                    ->setCategoryIds($ddmenu->getCategoriesList())
+                                    ->_toHtml();
+            }
+
+            // html - static block
+            $staticHtml        = FALSE;
+            if ($ddmenu->getStaticBlockId()) {
+                $staticHtml    = $this->getChild('ddmenu_static_block')
+                                    ->setId($ddmenu->getStaticBlockId())
+                                    ->_toHtml();
+            }
+
+            if ($subHtml || $prodHtml || $friendHtml || $staticHtml) {
+                $showMenu = TRUE;
+            } else {
+                $showMenu = FALSE;
+            }
+        ?>
+        <li class="<?php echo $first?><?php echo ($showMenu)?' sub-menu':'' ?><?php echo ($i==$count)?' last':'' ?><?php echo ($child->getIsActive())?' current':'' ?>">
+            <a <?php echo (strlen(strstr($child->getUrl(),"jewelry.html"))) ? 'style = "cursor:default;" onclick="return false;"' : '';?> href='<?php echo $child->getUrl() ?>'><span><?php echo $this->escapeHtml($child->getName()) ?></span></a>
+
+            <?php if ($showMenu): ?>
+                <div class="sub" style="display:none">
+                    <table><tr>
+
+                    <?php
+                        $blockIds = explode(',', $ddmenu->getBlocksLoc());
+                        foreach ($blockIds AS $blockId) {
+                            if ($blockId=='b1' && $subHtml)    echo '<td class="subhtml">' . $subHtml . '</td>';
+                            if ($blockId=='b2' && $friendHtml) echo '<td class="friendhtml">' . $friendHtml . '</td>';
+                            if ($blockId=='b3' && $prodHtml)   echo '<td class="prodhtml">' . $prodHtml . '</td>';
+                            if ($blockId=='b4' && $staticHtml) echo '<td class="stathtml">' . $staticHtml . '</td>';
+                        }
+                    ?>
+                    </tr>
+</table>
+
+                </div>
+            <?php endif ?>
+
+        </li>
+
+        <?php $first       = ''?>
+    <?php endforeach ?>
+    <li><?php echo $this->getLayout()->createBlock('ecp_menu/menu')->setBlockId('menu')->toHTML(); ?></li>
+
+</ul>
+</div>
+<script>
+    jQuery(document).ready(function() {
+        var thirdLevelMenus = jQuery('#top-nav div.sub ul ul');
+        thirdLevelMenus.hide();
+        thirdLevelMenus.each(function() {
+            var collapsible = jQuery(this).prev();
+            collapsible.addClass('collapsible');
+            collapsible.find('a').after('<span>+</span>');
+        });
+
+        jQuery('#top-nav .collapsible').on('click', function() {
+            jQuery(this).next().toggle();
+        });
+
+        //show 3rd level menu opened for currently selected 3rd menu categories
+        jQuery('#top-nav div.sub ul ul .current').parent().show();
+    });
+</script>

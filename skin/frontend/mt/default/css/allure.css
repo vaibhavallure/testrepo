@@ -1123,7 +1123,7 @@ dd.post-lengthds-lbl-options.last{
 }
 
 /* for paypal review */
-.paypal-express-review .checkout-two-shipment-shipping-method-mt, 
+.paypal-express-review .checkout-two-shipment-shipping-method-mt,
 .paypal-express-review .checkout-two-shipment-payment-method-mt,
 .paypal-express-review .checkout-two-shipment-shipping-address-mt,
 .paypal-express-review .checkout-two-shipment-billing-address-mt{
@@ -1326,4 +1326,3 @@ div#advice-required-entry-authnetcim_cc_cid {
 .allure-amazon-connect-login .account-login .content{
     min-height: 0;
 }
-

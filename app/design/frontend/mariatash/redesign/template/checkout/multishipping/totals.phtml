@@ -1,0 +1,121 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart totals template
+ *
+ * @see Mage_Checkout_Block_Cart_Totals
+ * @var $this Mage_Checkout_Block_Cart_Totals
+ */
+?>
+<?php $customer = Mage::getSingleton('customer/session');?>
+<?php if ($this->canApplyMsrp()): ?>
+<div class="cart-msrp-totals">
+	<?= $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
+</div>
+<?php else:?>
+<table id="shopping-cart-totals-table" class="totals-table">
+    <?php $quote = $this->getQuote();?>
+    <?php $addresses = $quote->getAllShippingAddresses();?>
+    <?php $shipping = 0; $discount = 0; $tax = 0; $subtotal = 0; $grandTotal = 0;?>
+    <?php foreach ($addresses as $address):?>
+    	<?php $totals = $address->getTotals();?>
+    	<?php if(isset($totals['tax']) && $totals['tax']->getValue()):?>
+    		<?php $tax = $tax + $totals['tax']->getValue(); ?>
+    	<?php endif;?>
+    	<?php if(isset($totals['shipping']) && $totals['shipping']->getValue()):?>
+    		<?php $shipping = $shipping + $totals['shipping']->getValue();?>
+    	<?php endif;?>
+    <?php endforeach;?>
+
+	<?php $totals = $quote->getTotals();?>
+	<?php if(isset($totals['discount']) && $totals['discount']->getValue()):?>
+    	<?php $discount = $discount + $totals['discount']->getValue();?>
+    <?php endif;?>
+    <?php if(isset($totals['subtotal']) && $totals['subtotal']->getValue()):?>
+    		<?php $subtotal = $subtotal + $totals['subtotal']->getValue();?>
+    <?php endif;?>
+    <?php if(isset($totals['grand_total']) && $totals['grand_total']->getValue()):?>
+    		<?php $grandTotal = $grandTotal + $totals['grand_total']->getValue();?>
+    <?php endif;?>
+
+
+	<col />
+   	<col width="1" />
+
+   	<tbody>
+		<tr>
+			<td class="cart-subtotals-left" colspan="1">
+				<span class="merchandise para-lighter"><?= $this->__('Subtotal')?></span>
+			</td>
+			<td class="cart-subtotals-right">
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($subtotal) ?></span>
+			</td>
+		</tr>
+		<?php if($tax > 0): ?>
+		<tr class="summary-total">
+		<td>
+			<div class="">
+				<span class="para-lighter"><?= $this->__('Tax') ?></span> <?= ($customer->getTaxCountry() && $customer->getTaxCountry() != 'US') ? sprintf('<br/><div style="font-size:90%"> (%s Sales or VAT)</div>',$customer->getTaxCountry()) : '';?>
+			</div>
+		</td>
+		<td class="text-right">
+			<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($tax) ?></span>
+		</td>
+	</tr>
+	<?php endif; ?>
+		<tr id="mt-shipping">
+			<td colspan="1">
+				<span class="shipping-label para-lighter"><?= $this->__('Shipping')?></span>
+			</td>
+			<td class="text-right">
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($shipping)?></span>
+			</td>
+		</tr>
+		<?php if($discount != 0): ?>
+		<tr>
+			<td colspan="1" class="cart-subtotals-left para-lighter"><?= $this->__('Discount')?></td>
+			<td class="cart-subtotals-right">
+				<span class="price reg-price"><?= $this->helper('checkout')->formatPrice($discount)?></span>
+			</td>
+		</tr>
+		<?php endif;?>
+	</tbody>
+
+	<tfoot>
+
+     	<tr>
+			<td class="cart-subtotals-left" colspan="1">
+					<span class="total-title text-uppercase para-lighter"><?= $this->__('Total')?></span>
+			</td>
+			<td class="cart-subtotals-right">
+				<span class="price"><?= $this->helper('checkout')->formatPrice($grandTotal) ?></span>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<?php endif;?>

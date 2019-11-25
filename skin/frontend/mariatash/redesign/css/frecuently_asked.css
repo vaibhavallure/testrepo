@@ -1,0 +1,152 @@
+/* .customer-care-page h1,
+.ecp-faq-index-index h1 {
+    color: #3F4048;
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+	margin:0;
+} */
+.selectedNavLink { color: #906E39 !important; font-weight: normal; }
+/* .customer-care-page h2,
+.ecp-faq-index-index h2 {
+    color: #303136;
+    font:normal 13px/36px dinmittelschriftregular;
+    text-transform: uppercase;
+    display:block;
+    background: #d1d1d1;
+    float:left; width:771px; height:34px;
+    padding-left: 12px;
+    margin-bottom: 12px;
+} */
+/* .customer-care-page .main,
+.ecp-faq-index-index .main {
+	margin: 0 auto;
+	height:auto;
+	width:980px;
+} */
+/* .customer-care-page .content-customer,
+.ecp-faq-index-index .content-customer {
+	float: left; width: 100%; height: auto;
+	margin:7px 0 25px -16px;
+} */
+/* .customer-care-page .content-customer span,
+.ecp-faq-index-index .content-customer span {
+	float: left; width:771px; height: auto;
+	margin:1px 0 0;
+	padding-left:12px;
+	padding-bottom: 9px;
+	font: normal 13px Arial, Helvetica, sans-serif;
+	border-bottom: 1px solid #D1D1D1;
+} */
+/* .customer-care-page .faq-question span,
+.ecp-faq-index-index .faq-question span {
+	background:url("../images/arrow-question.png") no-repeat scroll 0 0 transparent;
+    float: left;height: auto;width: 756px;
+    margin:14px 0 1px 12px;
+    padding:0 0 0 13px;
+    font: bold 13px/13px Arial, Helvetica, sans-serif;
+    color: #3f4048;
+    border: 0px;
+    cursor: pointer;
+} */
+/* .customer-care-page .faq-question.active span,
+.ecp-faq-index-index .faq-question.active span {
+	background:url("../images/arrow-questio-active.png") no-repeat scroll 0 0 transparent;
+    float: left;height: auto;width: 756px;
+    margin:14px 0 7px 12px;
+    padding:0 0 0 13px;
+    font: bold 13px/13px Arial, Helvetica, sans-serif;
+    color: #3f4048;
+    border: 0px;
+    cursor: pointer;
+} */
+.customer-care-page .back-to-top,
+.ecp-faq-index-index .back-to-top {
+	float: left; width: 100%; height: auto;
+	margin: 10px 0 -1px;
+	text-decoration:underline;
+	font-weight: normal;
+}
+.customer-care-page .back-to-top a,
+.ecp-faq-index-index .back-to-top a{
+	color:#3F4048;
+}
+.customer-care-page .back-to-top a:hover,
+.ecp-faq-index-index .back-to-top a:hover {
+	text-decoration:none;
+}
+.customer-care-page .sub-customer-care,
+.ecp-faq-index-index .sub-customer-care {
+	float:left; width: 169px; height:auto;
+	background: #ccc;
+	margin-right:8px;
+}
+/* .customer-care-page .faq-question,
+.ecp-faq-index-index .faq-question {
+	float:left; width: 771px; height:auto;
+	margin-top: 6px;
+} */
+.customer-care-page .faq-question .back-to-top,
+.ecp-faq-index-index .faq-question .back-to-top {
+
+}
+.customer-care-page .faq-question.active .back-to-top,
+.ecp-faq-index-index .faq-question.active .back-to-top {
+	display:block;
+}
+/* .customer-care-page .faq-answer,
+.ecp-faq-index-index .faq-answer {
+	float:left; width: 755px; height:auto;
+	padding-left:25px;
+	font: normal 13px Arial, Helvetica, sans-serif;
+	text-align: justify;
+} */
+/* .customer-care-page .table-customer-care,
+.ecp-faq-index-index .table-customer-care {
+	float:left; width:783px; height: auto;
+} */
+.customer-care-page  .col-left.sidebar,
+.ecp-faq-index-index .col-left.sidebar{
+}
+.customer-care-page .col-left.sidebar h4,
+.ecp-faq-index-index .col-left.sidebar h4{
+    background: none repeat scroll 0 0 #D1D1D1;
+	padding-left: 10px;
+	margin-bottom:10px;
+}
+.customer-care-page .col-left.sidebar a,
+.ecp-faq-index-index .col-left.sidebar a,
+.customer-care-navigation-left a {
+	border-bottom: 1px solid #D0D0D0;
+	color: #5F5D5C;
+	display: block;
+	font-size:13px;
+    padding: 5px 0 0 0;
+	text-transform: uppercase;
+    white-space: nowrap;
+}
+.customer-care-navigation-left a {
+	border-bottom: none;
+	color: #5F5D5C;
+	display: block;
+	font-size:13px;
+    padding: 0px 0 0 0;
+	text-transform: uppercase;
+    white-space: nowrap;
+	line-height:34px;
+}
+.customer-care-navigation-left li {
+	border-bottom: 1px solid #D0D0D0;
+	line-height:34px;
+
+}
+.customer-care-page .col-left.sidebar a{ padding:0 0 0 10px; height:34px; vertical-align:middle; line-height:34px;}
+.customer-care-page .col-left.sidebar a:last-child,.customer-care-navigation-left li:last-child{ border-bottom:none;}
+
+.customer-care-page .col-left.sidebar a:hover,
+.ecp-faq-index-index .col-left.sidebar a:hover,
+.customer-care-navigation-left a:hover {
+	color:#906E39;
+	text-decoration:none;
+}

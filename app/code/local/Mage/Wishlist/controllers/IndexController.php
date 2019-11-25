@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Wishlist
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -136,6 +136,13 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
             return $this->norouteAction();
         }
         $this->loadLayout();
+
+        if ($this->_isFormKeyEnabled() && strpos($this->_getRefererUrl(), 'login')) {
+            Mage::getSingleton('core/session')->addError(Mage::helper('wishlist')->__(
+                'Please add product to wishlist again.'
+            ));
+            return $this->_redirectUrl(Mage::getSingleton('customer/session')->getBeforeWishlistUrl());
+        }
 
         $session = Mage::getSingleton('customer/session');
         $block   = $this->getLayout()->getBlock('customer.wishlist');
@@ -582,7 +589,7 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
             $wishlist->addNewItem($productId, $buyRequest);
 
             $productIds[] = $productId;
-            //$cart->getQuote()->removeItem($itemId);
+            $cart->getQuote()->removeItem($itemId);
             $cart->save();
             Mage::helper('wishlist')->calculate();
             $productName = Mage::helper('core')->escapeHtml($item->getProduct()->getName());

@@ -12,7 +12,14 @@
                       <catalogsearch>Allure_CatalogSearch_ResultController</catalogsearch>
                   </rewrite>
              </Allure_CatalogSearch>
-        </controllers> 
+        </controllers>
+        <blocks>
+            <catalogsearch>
+                <rewrite>
+                    <result>Allure_CatalogSearch_Block_Result</result>
+                </rewrite>
+            </catalogsearch>
+        </blocks>
     </global>
     	<frontend>
 		<routers>

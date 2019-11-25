@@ -1,0 +1,47 @@
+<?php
+$price = $this->getRequest()->getParam('price');
+$subprice = explode("-",$this->getRequest()->getParam('price'));
+$items = $this->getItems();
+?>
+<script type="text/javascript">
+    jQuery.noConflict(); 
+    jQuery(document).ready(function() {
+        <?php if($cinfo = Mage::getsingleton('customer/session')->getCurrencyReloadInfo()): ?>
+            <?php Mage::getsingleton('customer/session')->setCurrencyReloadInfo(false) ?>
+            jQuery('#priceRange').val('<?php echo $cinfo['to'] ?>;<?php echo $cinfo['from'] ?>');
+            reloadFilters();
+        <?php else: ?>
+            jQuery('#priceRange').val('0;<?php echo isset( $price )?$this->getRequest()->getParam('price'):$items[0]->getFilter()->getMaxPriceInt()+1?>');
+        <?php endif; ?>
+        jQuery("#priceRange").slider({
+            from: <?php echo isset( $price )? $subprice[0]:0;?>, 
+            to: <?php echo isset( $price )? $subprice[1]:$items[0]->getFilter()->getMaxPriceInt()+1;?>,
+            skin: "plastic",
+            limits:true,
+            dimension: '',
+            callback :function(){
+                <?php echo $this->getReloadFunction().'()' ?>;
+            }
+        });
+        
+        /*Para poner el simbolo de moneda*/
+        jQuery('p.currency-symbol').html('<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol() ?>');
+    });
+</script>
+<?php
+/**
+ * Template for filter items block
+ *
+ * @see Mage_Catalog_Block_Layer_Filter
+ */
+?>
+
+<div class="layout">
+    <div class="layout-slider" style="width: 100%">
+        <span style="display: inline-block; width:140px; padding: 0 5px;">
+            <input id="priceRange" type="slider" name="price"/>
+        </span>
+    </div>
+</div>
+
+

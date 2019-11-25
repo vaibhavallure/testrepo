@@ -30,4 +30,26 @@ class Allure_GeoCurrency_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->getConfig('debug');
     }
+    public function getCountryCodeByCurrencyCode($currencyCode)
+    {
+        if($currencyCode=="USD")
+            return "US";
+
+        $mapping=$this->getMappingArray();
+        foreach ($mapping as $mp)
+        {
+            if($mp["currencyCode"]==$currencyCode)
+            {
+                return $mp["countryCode"];
+            }
+        }
+
+        return false;
+
+    }
+    public function getCountryNameByCurrencyCode($currencyCode)
+    {
+        $countryCode=$this->getCountryCodeByCurrencyCode($currencyCode);
+        return Mage::app()->getLocale()->getCountryTranslation($countryCode);
+    }
 }

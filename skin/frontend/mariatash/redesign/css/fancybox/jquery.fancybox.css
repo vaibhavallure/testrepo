@@ -1,0 +1,556 @@
+/*! fancyBox v2.1.3 fancyapps.com | fancyapps.com/fancybox/#license */
+.fancybox-wrap,
+.fancybox-skin,
+.fancybox-outer,
+.fancybox-inner,
+.fancybox-image,
+.fancybox-wrap iframe,
+.fancybox-wrap object,
+.fancybox-nav,
+.fancybox-nav span,
+.fancybox-tmp
+{
+	padding: 0;
+	margin: 0;
+	border: 0;
+	outline: none;
+	vertical-align: top;
+}
+.fancybox-wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10100;
+}
+.categorypath-discover-maria-tash-press-html .fancybox-skin {
+	width: 425px !important; height: 450px !important;
+	position: relative;
+	background: #f9f9f9;
+	color: #444;
+	text-shadow: none;
+	-webkit-border-radius: 0px;
+	   -moz-border-radius: 0px;
+	        border-radius: 0px;
+}
+.ecp-tattoo-index-index .fancybox-skin{
+	padding:26px !important;
+}
+.fancybox-skin {
+	position: relative;
+	background: #f9f9f9;
+	color: #444;
+	text-shadow: none;
+	-webkit-border-radius: 0px;
+	   -moz-border-radius: 0px;
+	        border-radius: 0px;
+}
+
+.fancybox-opened {
+	z-index: 10100;
+}
+
+.fancybox-opened .fancybox-skin {
+	/*-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	background: none repeat scroll 0 0 #D4D4D7;*/
+	/*FANCYBOX QUICKVIEW ARG*/
+
+}
+.catalog-category-view .fancybox-opened .fancybox-skin {
+	/*-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	background:url(../../images/bg-fancy-press.png) repeat 0 0;*/
+	/*FANCYBOX QUICKVIEW ARG*/
+	/*height: 510px !important;
+    width: 785px !important;*/
+}
+
+/* fancy box magazine*/
+
+.categorypath-discover-maria-tash-press-html.fancybox-lock .sharrre .buttons {
+    float: left;
+    height: 30px;
+    width: 96%;
+    margin-bottom: 10px;
+}
+.categorypath-discover-maria-tash-press-html.fancybox-lock .button.pinterest {
+    float: right;
+    height: auto;
+    padding-top: 3px;
+    width: 45px;
+}
+.categorypath-discover-maria-tash-press-html.fancybox-lock .button.facebook, .fancybox-lock .button.twitter {
+    float: right;
+    height: auto;
+    margin: 2px 5px;
+    width: 80px;
+}
+.categorypath-discover-maria-tash-press-html-w .button.mail, .categorypath-discover-maria-tash-press-html-w .button.print {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+
+
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+    color: #000000;
+    float: left;
+    height: 15px;
+    line-height: 12px;
+    margin: 2px 0 0 5px;
+    padding: 5px 0 0 5px;
+    vertical-align: middle;
+    width: 50px;
+}
+.categorypath-discover-maria-tash-press-html-w .button.mail a,.categorypath-discover-maria-tash-press-html-w .button.print a {
+	color:#000;}
+.button.mail a:hover, .button.print a:hover {
+	text-decoration:none;}
+.categorypath-discover-maria-tash-press-html-w .button.mail span, .categorypath-discover-maria-tash-press-html-w .button.print span {
+    margin: 0 3px;
+}
+.categorypath-discover-maria-tash-press-html-w .box {
+    display: none;
+}
+.categorypath-discover-maria-tash-press-html.fancybox-lock li.pressGallery img {
+    border: 0 none;
+    display: block;
+    height: 370px;
+    margin: 5px auto;
+    list-style: none;}
+
+.categorypath-discover-maria-tash-press-html.fancybox-lock li.active {
+    float: left;
+    height: auto;
+    width: 100%;
+}
+.categorypath-discover-maria-tash-press-html.fancybox-lock a.prev {background: url("../../images/miscellaneous_sprite.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    text-indent: -9999px;
+    height: 50px;
+    position: absolute;
+    top: 185px;
+    width: 45px;width: 26px;}
+.categorypath-discover-maria-tash-press-html.fancybox-lock a.prev:hover {
+ background-position: 0px -50px;}
+
+.categorypath-discover-maria-tash-press-html.fancybox-lock a.next {background: url("../../images/miscellaneous_sprite.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    background-position: -50px 0;
+    text-indent: -9999px;
+    height: 50px;
+    position: absolute;
+    top: 185px;
+    width: 45px; width: 26px;
+    right: 0;}
+.categorypath-discover-maria-tash-press-html.fancybox-lock a.next:hover {
+ background-position: -50px -50px;}
+.categorypath-discover-maria-tash-press-html.fancybox-lock #data0 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+.categorypath-discover-maria-tash-press-html.fancybox-lock ul.gallery li{
+    list-style: none outside none;
+}
+.categorypath-discover-maria-tash-press-html.fancybox-lock .fancybox-close {
+	position: absolute;
+	right: 2px;
+    top: -7px;
+	width:26px;
+	height: 36px;
+	cursor: pointer;
+	z-index: 8040;
+}
+/*end fancy box magazine*/
+
+
+.categorypath-discover-maria-tash-press-html .fancybox-inner {
+	position: relative;
+	width: 425px !important; height: 450px !important;
+	background: none repeat scroll 0 0 #FFFFFF;
+}
+
+/* .fancybox-inner {
+	overflow: hidden;
+} */
+
+.categorypath-discover-maria-tash-press-html.fancybox-lock .fancybox-inner {
+	overflow: hidden !important;
+}
+
+.fancybox-type-iframe .fancybox-inner {
+	-webkit-overflow-scrolling: touch;
+}
+
+.fancybox-error {
+	color: #444;
+	font: 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin: 0;
+	padding: 15px;
+	white-space: nowrap;
+}
+
+.fancybox-image, .fancybox-iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.fancybox-image {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {
+	background-image: url('fancybox_sprite.png');
+}
+
+#fancybox-loading {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -22px;
+	margin-left: -22px;
+	background-position: 0 -108px;
+	opacity: 0.8;
+	cursor: pointer;
+	z-index: 8060;
+}
+
+#fancybox-loading div {
+	width: 44px;
+	height: 44px;
+	background: url('fancybox_loading.gif') center center no-repeat;
+}
+.fancybox-close {
+	position: absolute;
+	top:3px;
+	right:12px;
+	width:26px;
+	height: 36px;
+	cursor: pointer;
+	z-index: 8040;
+}
+.fancybox-lock .fancybox-close {
+    right: 20px;
+    top: 7px;
+}
+
+.fancybox-nav {
+	position: absolute;
+	width:32px;
+	height: 36px;
+	top:49%;
+	cursor: pointer;
+	text-decoration: none;
+	background: transparent url('blank.gif'); /* helps IE */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	z-index: 8040;
+}
+
+.fancybox-prev {
+	left: 0;
+}
+.lt-ie9 a.fancybox-nav.fancybox-prev.first_preview span {
+	background: url('arrow-quickview_pre.png') !important; /* helps IE */
+	width:26px;
+	cursor:default !important;
+}
+a.fancybox-nav.fancybox-next.last_next span,a.fancybox-nav.fancybox-prev.first_preview span{
+	cursor:default;
+	}
+.lt-ie9 a.fancybox-nav.fancybox-next.last_next,.lt-ie9 a.fancybox-nav.fancybox-prev.first_preview{
+	cursor:default;
+	}
+.lt-ie9 a.fancybox-nav.fancybox-next.last_next span {
+	background: url('arrow-quickview_next.png') !important; /* helps IE */
+	width:26px;
+	cursor:default !important;
+}
+
+.fancybox-next {
+	right: 0;
+}
+
+.fancybox-nav span {
+	position: absolute;
+	top: 50%;
+	width: 32px;
+	height: 36px;
+	margin-top: -18px;
+	cursor: pointer;
+	z-index: 8040;
+	visibility: hidden;
+}
+.fancybox-nav-qw span {
+	position: absolute;
+	top:218px;
+	width: 32px;
+	height: 36px;
+	margin-top: -18px;
+	cursor: pointer;
+	z-index: 8040;
+}
+.fancybox-nav span {
+	position: absolute;
+	top:0;
+	width: 32px;
+	height: 36px;
+	/*margin-top: -18px;*/
+	cursor: pointer;
+	z-index: 8040;
+}
+
+.fancybox-prev span {
+	left:0;
+	background-position: -6px -38px;
+}
+
+.fancybox-next span {
+	right:0;
+	background-position: 0 -72px;
+}
+
+.fancybox-nav:hover span {
+	visibility: visible;
+}
+
+.fancybox-tmp {
+	position: absolute;
+	top: -99999px;
+	left: -99999px;
+	visibility: hidden;
+	max-width: 99999px;
+	max-height: 99999px;
+	overflow: visible !important;
+}
+
+/* Overlay helper */
+
+.fancybox-lock {
+	overflow: hidden;
+}
+
+.fancybox-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	display: none;
+	z-index: 10001;
+	background: url('fancybox_overlay.png');
+}
+
+.fancybox-overlay-fixed {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+.fancybox-lock .fancybox-overlay {
+	overflow: auto;
+	overflow-y: scroll;
+}
+
+/* Title helper */
+
+.fancybox-title {
+	visibility: hidden;
+	font: normal 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+	position: relative;
+	text-shadow: none;
+	z-index: 8050;
+}
+
+.fancybox-opened .fancybox-title {
+	visibility: visible;
+}
+
+.fancybox-title-float-wrap {
+	position: absolute;
+	bottom: 0;
+	right: 50%;
+	margin-bottom: -35px;
+	z-index: 8050;
+	text-align: center;
+}
+
+.fancybox-title-float-wrap .child {
+	display: inline-block;
+	margin-right: -100%;
+	padding: 2px 20px;
+	background: transparent; /* Fallback for web browsers that doesn't support RGBa */
+	background: rgba(0, 0, 0, 0.8);
+	-webkit-border-radius: 15px;
+	   -moz-border-radius: 15px;
+	        border-radius: 15px;
+	text-shadow: 0 1px 2px #222;
+	color: #FFF;
+	font-weight: bold;
+	line-height: 24px;
+	white-space: nowrap;
+}
+
+.fancybox-title-outside-wrap {
+	position: relative;
+	margin-top: 10px;
+	color: #fff;
+}
+
+.fancybox-title-inside-wrap {
+	padding-top: 10px;
+}
+
+.fancybox-title-over-wrap {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: #fff;
+	padding: 10px;
+	background: #000;
+	background: rgba(0, 0, 0, .8);
+}
+
+
+
+
+
+/* fancy box magazine*/
+
+
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock .sharrre .buttons {
+    float: right;
+    height: 20px;
+    padding-top: 2px;
+    width: 350px;
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock .button.pinterest {
+    float: left;
+    height: auto;
+    padding-top: 3px;
+    width: 45px;
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock .button.facebook, .fancybox-lock .button.twitter {
+    float: left;
+    height: auto;
+    margin: 2px 5px;
+    width: 80px;
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock li.pressGallery img {
+    border: 0 none;
+    display: block;
+    height: 370px;
+    margin: 5px auto;
+    list-style: none;}
+
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock li.active {
+    float: left;
+    height: auto;
+    width: 100%;
+}
+.categorypath-discover-maria-tash-press-html-w .fancybox-inner a.prev {background: url("../../images/miscellaneous_sprite.png") no-repeat scroll 0 0 transparent;
+    background: url("../../images/miscellaneous_sprite.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    text-indent: -9999px;
+    top: 50%;
+    width: 26px;}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock a.prev:hover {
+ background-position: 0px -50px;}
+
+.categorypath-discover-maria-tash-press-html-w .fancybox-inner a.next {background: url("../../images/miscellaneous_sprite.png") no-repeat scroll 0 0 transparent;
+    background: url("../../images/miscellaneous_sprite.png") no-repeat scroll -50px 0 transparent;
+    display: block;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    text-indent: -9999px;
+    top:50%;
+    width: 26px;}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock a.next:hover {
+ background-position: -50px -50px;}
+
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock ul.gallery li{
+    list-style: none outside none;
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock .fancybox-close {
+	position: absolute;
+	right: 2px;
+   right: 7px;
+    top: -3px;
+	height: 36px;
+	cursor: pointer;
+	z-index: 8040;
+}
+
+.categorypath-discover-maria-tash-press-html-w .fancybox-inner {
+    height: auto !important;
+    /*width: 666px !important;*/
+}
+
+
+
+.categorypath-discover-maria-tash-press-html-w .fancybox-skin {
+	background: url("../../images/back_press_magazine.png");
+    border-radius: 0 0 0 0;
+    color: #444444;
+    padding:10px 24px 0 25px !important;
+    height: auto !important;
+    margin: 0 auto 25px;
+    position: relative;
+    text-shadow: none;
+    /*width: 668px !important;*/
+	-webkit-border-radius: 0px;
+	   -moz-border-radius: 0px;
+	        border-radius: 0px;
+}
+.categorypath-discover-maria-tash-press-html-w ul.gallery img {
+    float: left;
+    height: auto;
+	padding: 0 20px;
+/*    width: 666px;*/
+}
+/*end fancy box magazine*/
+.catalog-category-view .fancybox-mobile {z-index: 200000}
+
+/* button.minus {
+
+    border: 1px solid #d1d1d1;
+    border-radius: 0.25rem;
+    color: #d1d1d1;
+    display: inline;
+    font-size: 20px;
+    height: 18px;
+    line-height: 0.25;
+    padding-top: 10px;
+    width: 18px;
+    background-image: url('icon_cart_subtract.gif');
+} */
+/* button.plus {
+    border: 1px solid #d1d1d1;
+    border-radius: 0.25rem;
+    color: #d1d1d1;
+    display: inline;
+    font-size: 20px;
+    height: 18px;
+    line-height: 0.25;
+    padding-top: 10px;
+    width: 18px;
+    background-image: url('icon_cart_add.gif');
+} */
+/* .minus_icon {
+    float: left;
+    margin-right: 2px;
+    margin-top: 9px;
+}
+.plus_icon {
+    float: left;
+    margin-top: 9px;
+    margin-left: -3px;
+} */

@@ -1,0 +1,37 @@
+
+div.allure-google-connect{
+    float: right;
+    height: 24px !important;
+    background: transparent url('../images/login-button-left.png') no-repeat top left !important;
+}
+
+div.allure-google-connect-inner{
+    height: 24px !important;
+    float: left !important;
+    margin-left: 36px !important;
+    background: transparent url('../images/login-button-inner.png') repeat-x top left !important;
+    padding: 0 5px !important;
+}
+
+div.allure-google-connect-right{
+    float: left !important;
+    height: 24px !important;
+    width: 2px !important;
+    background: transparent url('../images/login-button-right.png') no-repeat top left !important;
+}
+
+div.allure-google-connect-inner a{
+    color: #FFFFFF !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    line-height: 24px !important;
+}
+
+
+.allure-google-connect-link{
+	height: 40px !important;
+    background: transparent url(../images/google-sign-in-btn.png) repeat-x top left !important;
+    padding: 0 5px !important;
+    border: 1px solid #d1d1d1;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <ecp_press_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="ecp_press/press" name="press" template="press/press.phtml" />
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>../skin/frontend/mt/default/js/jquery.sharrre-1.3.4.min.js</script></action>
+            
+            
+        </reference>
+    </ecp_press_index_index>
+</layout> 

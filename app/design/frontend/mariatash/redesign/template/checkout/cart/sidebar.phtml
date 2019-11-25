@@ -1,0 +1,194 @@
+  <?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Shoping cart sidebar
+ *
+ * @see Mage_Checkout_Block_Cart_Sidebar
+ * @var Mage_Checkout_Block_Cart_Sidebar $this
+ */
+  $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' checkout_cart' : '';
+?>
+<?php if ($this->getIsNeedToDisplaySideBar()):?>
+
+<?php if(!($this->getRequest()->getParam('product'))):?>
+<div class="block block-cart <?=$checkout_cart?>" id ="ajax_cart_content">
+<?php endif;?>
+
+	<?php $_cartQty = $this->getSummaryCount();?>
+	<div class="block-content content_cart">
+	<?php if ($_cartQty > 0):?>
+       <div class="summary">
+        	<p class="amount">
+        		<a onclick="cartSymbolLink()">
+        			<span>
+        				<img width="13px" src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
+        				<div class="number-circle digit_<?=strlen($_cartQty)?>">
+        					<div class="white-circle"><span><?= $_cartQty ?></span></div>
+        				</div>
+        			</span>
+        		</a>
+        	</p>
+    	</div>
+    <?php endif; ?>
+
+	<?php $_items = $this->getRecentItems();?>
+    <?php if(count($_items)): ?>
+    	<div class="cart_sidebar display_none" id="cart-sidebar-content">
+			<div class="tite_cart">
+		   		<h1 class="text-center">
+		   			<a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('Your Shopping Bag') ?></a>
+		   		</h1>
+			</div>
+        	<ol id="cart-sidebar" class="mini-products-list col-12">
+				<?php foreach($_items as $_item): ?>
+					<?php echo $this->getItemHtml($_item) ?>
+				<?php endforeach; ?>
+        	</ol>
+        	<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
+
+			<div class="subtotal minicart-subtotal col-12 text-right">
+			<?php if ($this->canApplyMsrp()): ?>
+				<span class="map-cart-sidebar-total">
+					<?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
+				</span>
+			<?php else: ?>
+				<div class="total-cover">
+					<span class="label">
+						<?php echo $this->__('Subtotal:') ?>
+					</span>
+					<?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal());?>
+				</div>
+				<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+				<br/>(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+				<?php endif; ?>
+			<?php endif; ?>
+
+			<?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
+        		<?php echo $this->getChildHtml('extra_actions') ?>
+        		<div class="col-12 text-center">
+        			<button type="button" title="<?php echo $this->__('Checkout') ?>" class=" cart_checkout dark-button" onclick="setLocation('<?php echo $this->getUrl('checkout/cart')?>')"><?php echo $this->__('Checkout') ?></button>
+      			</div>
+			<?php endif ?>
+			</div>
+		</div>
+    <?php else: ?>
+	    <div class="summary">
+			<p class="amount">
+				<a href="<?php echo $this->getUrl('checkout/cart')?>">
+					<span>
+						<img width="13px" src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>">
+						<!--<div class="number-circle">
+							<span>0</span>
+						</div>-->
+					</span>
+				</a>
+			</p>
+		</div>
+    <?php endif ?>
+
+		<div class="cart_sidebar display_none" id="just_added">
+		<?php $_items = $this->getRecentItems() ?>
+		<?php if(count($_items)): ?>
+    		<div class="tite_cart">
+                <h1 class="text-center">
+                	<a href="<?php echo $this->getUrl('checkout/cart')?>"><?php echo $this->__('Your Shopping Bag') ?></a>
+                </h1>
+    		</div>
+        	<ol id="cart-sidebar" class="mini-products-list col-12">
+				<?php foreach($_items as $_item): ?>
+					<?php echo $this->getItemHtml($_item) ?>
+				<?php endforeach; ?>
+        	</ol>
+        	<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
+
+			<div class="subtotal minicart-subtotal col-12 text-right">
+				<?php if ($this->canApplyMsrp()): ?>
+					<span class="map-cart-sidebar-total">
+						<?php echo $this->__('ORDER TOTAL WILL BE DISPLAYED BEFORE YOU SUBMIT THE ORDER'); ?>
+					</span>
+				<?php else: ?>
+					<div class="total-cover">
+      					<span class="label">
+      						<?php echo $this->__('Subtotal:') ?>
+      					</span>
+      					<?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+      				</div>
+					<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
+					<br/>(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
+					<?php endif; ?>
+				<?php endif; ?>
+
+				<?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
+        			<?php echo $this->getChildHtml('extra_actions') ?>
+                   	<div class="col-12">
+                    	<button type="button" title="<?php echo $this->__('Checkout') ?>" class="button cart_checkout dark-button" onclick="setLocation('<?php echo $this->getUrl('checkout/cart') ?>')"><span><span><?php echo $this->__('Checkout') ?></span></span></button>
+                   	</div>
+				<?php endif ?>
+			</div>
+		<?php elseif(Mage::app()->getRequest()->getModuleName() != 'wishlist'): ?>
+			<div class="tite_cart">
+				<?php echo $this->__('Can not add to cart!') ?>
+				<a href="#"><div class="close-button close-tooltip" onclick="jQuery('#just_added').slideUp(300); "></div></a>
+			</div>
+		<?php endif; ?>
+		</div>
+
+	</div>
+<?php if(!($this->getRequest()->getParam('product'))):?>
+</div>
+<?php endif;?>
+
+<?php endif;?>
+
+<script type="text/javascript">
+    var cartLink = "<?php echo $this->getUrl('checkout/cart')?>";
+    jQuery(document).ready(function(){
+        var config = {
+            over: function(){
+                if(!jQuery('#topcart-popup').hasClass('just_added'))
+                    jQuery('#cart-sidebar-content').slideDown(300);
+                unScrollBody();
+            },
+            timeout: 200,
+            out: function(){
+                if(!jQuery('#topcart-popup').hasClass('just_added'))
+                    jQuery('#cart-sidebar-content').slideUp(300);
+                scrollBody();
+            }
+        };
+
+        if(jQuery(window).width() >= 768) {
+            jQuery("#topcart-popup").hoverIntent(config);
+        }
+    });
+
+    function cartSymbolLink() {
+    	if(jQuery(window).width() < 768 || jQuery("body").hasClass("desktop-device")){
+       		window.location = cartLink;
+    	}
+    }
+</script>

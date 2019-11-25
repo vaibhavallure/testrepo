@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_GoogleAnalytics
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -58,7 +58,11 @@ class Mage_GoogleAnalytics_Model_Observer
         }
         // #MT-680 Skip allure orders in Google Analytics
         if(!empty($orderIds)){
-            $order= Mage::getModel('sales/order')->load($orderIds);
+            $orderId = $orderIds;
+            if(is_array($orderIds)){
+                $orderId = $orderIds[0];
+            }
+            $order= Mage::getModel('sales/order')->load($orderId);
             if(!is_null($order->getId())){
                 if ((strpos($order->getCustomerEmail(), 'allure') !== false) ||( strtolower($order->getCouponCode())==strtolower('4uWruyuc')))
                 {

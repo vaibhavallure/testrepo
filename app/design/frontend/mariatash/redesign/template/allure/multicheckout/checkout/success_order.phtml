@@ -1,0 +1,197 @@
+<?php
+/**
+*
+*	Allure checkout step success order.
+*
+*/
+?>
+<div class="multiple-checkout">
+<div class="page-title">
+    <h1 class="order-success-title text-center"><?php echo $this->__('Your order has been received') ?></h1>
+</div>
+<div class="checkout-success">
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <h2 class="sub-title info-text-two mb-4"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+
+    <?php if ($this->getOrderId() && $this->getOrderIdSecond()):?>
+        <?php if ($this->getCanViewOrder() && $this->getCanViewOrderSecond()) :?>
+            <p class="para-normal"><?php echo $this->__('Your order # is: %s , %s.', sprintf('<a class="para-bold text-underline" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId())),sprintf('<a class="para-bold text-underline" href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrlSecond()), $this->escapeHtml($this->getOrderIdSecond()))) ?></p>
+        <?php  else :?>
+            <p class="para-normal"><?php echo $this->__('Your order # is: %s , %s.', $this->escapeHtml($this->getOrderIdSecond()), $this->escapeHtml($this->getOrderId())) ?></p>
+        <?php endif;?>
+            <p class="para-normal"><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track your progress.') ?></p>
+        <?php //if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+            <p class="para-normal">
+                <?php echo $this->__('<a class="click-here link-button" href="%s" onclick="this.target=\'_blank\'">Click here</a> to print a copy of your order confirmation.', $this->getPrintUrl()) ?>
+                <?php // echo $this->getChildHtml() ?>
+            </p>
+        <?php //endif;?>
+    <?php endif;?>
+    <?php if ($this->getAgreementRefId()): ?>
+        <p class="para-normal"><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+    <?php endif;?>
+
+    <?php if ($profiles = $this->getRecurringProfiles()):?>
+    <p class="para-normal"><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+    <ul class="disc">
+    <?php foreach($profiles as $profile):?>
+    <?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+        <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+    <?php endforeach;?>
+    </ul>
+    <?php endif;?>
+
+    <div class="buttons-set">
+        <!-- <button type="button" class="button light-button" title="<?php //echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php //echo $this->getUrl() ?>'"><span><span><?php //echo $this->__('Continue Shopping') ?></span></span></button>-->
+    </div>
+</div>
+</div>
+
+<!--codigo reutilizable-->
+
+
+<!--<div class="billing-address-mt">
+<h4 class="title-order">ORDER INFORMATION</h4>
+<?php
+//$order = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+//var_dump($order);
+//$shipping_address_data    = $order->getShippingAddress();
+//$billing_address_data   = $order->getBillingAddress();
+
+//$shippingmethod  = $order->getShippingMethod();
+//$paymentmethod   = $order->getPayment()->getMethodInstance()->getTitle();
+
+//$order_date      = $order->getCreatedAt();
+?>
+
+<div class="success-order-date">
+<h4>Order Date</h4>
+<p><?php
+//$datetime  = explode(" ",$order_date);
+//$time  = $datetime[1];
+//$date  = $datetime[0];
+//formate_date ...:::::. 0= year , 1 = mes , 2= day
+//$formate_date = explode("-",$date);
+
+//echo date("F") . " " . $formate_date[2]." , " . $formate_date[0];
+
+?></p>
+</div>
+
+<div class="success-shipping-address">
+<h4>Shipping Address</h4>
+<p><?php //echo $shipping_address_data['firstname'] . " " . $shipping_address_data['lastname']; ?></p>
+<p><?php //echo $shipping_address_data['street']; ?></p>
+<p><?php //echo  $shipping_address_data['city'];?></p>
+<p><?php //echo  $shipping_address_data['region'];?></p>
+<p><?php //echo  $shipping_address_data['region_id'];?></p>
+<p><?php //echo  $shipping_address_data['postcode']; ?></p>
+<p><?php //echo  $shipping_address_data['telephone']; ?></p>
+
+</div>
+
+
+<div class="success-billing-address">
+<h4>Billing Address</h4>
+<p><?php //echo  $billing_address_data['firstname'] . " " . $shipping_address_data['lastname']; ?></p>
+<p><?php //echo  $billing_address_data['street']; ?></p>
+<p><?php //echo  $billing_address_data['city'];?></p>
+<p><?php //echo  $billing_address_data['region'];?></p>
+<p><?php //echo  $billing_address_data['region_id'];?></p>
+<p><?php //echo  $billing_address_data['postcode']; ?></p>
+<p><?php //echo  $billing_address_data['telephone']; ?></p>
+
+</div>
+
+<div class="success-shipping-method">
+
+<h4>Shipping Method</h4>
+<p><?php //echo $shippingmethod;?></p>
+</div>
+
+
+<div class="success-billing-method">
+<h4>Payment Method</h4>
+<p><?php //echo $paymentmethod;?></p>
+</div>
+
+</div>
+
+
+<hr>
+<div class="succcess-">
+<?php
+
+?>
+<?php
+	//$order_items = $order->getAllVisibleItems();
+	//echo "<ul>";
+	//echo "<li class='title-name-product'>PRODUCT</li>";
+	//echo "<li>ITEM NUMBER</li>";
+	//echo "<li>PRICE</li>";
+	//echo "<li>QTY</li>";
+	//echo "<li>SUBTOTAL</li>";
+	//echo "</ul>";
+	//foreach($order_items as $item){
+
+		/*$productId = $item->getProductId();
+		$product = Mage::getModel('catalog/product')->load($productId);
+
+		if($product->getTypeId() === 'configurable'){
+		    $simpleProduct = Mage::helper('ecp_wishlist')->getWishlistSimpleProduct($item);
+			$superAttributes = Mage::helper('ecp_wishlist')->getSupperAttributes($item);
+         }
+
+		foreach ($superAttributes as $key => $value){
+			$attributeValue =  $simpleProduct->getResource()->getAttribute($key)->getFrontend()->getValue($simpleProduct);
+			$attributeLabel = $simpleProduct->getResource()->getAttribute($key)->getFrontend()->getLabel();
+		 }
+	    echo "<ul class='product-list-success1'>";
+	    echo "<li class='items-product-image'>";*/
+	    ?>
+	    <a href="<?php //echo $product->getProductUrl() ?>" title="" class="product-image">
+                        <img  src="<?php //echo $product->getImageUrl(); ?>" width="210" height="210"  />
+                    </a>
+	    <?php
+	    /*echo "</li>";
+		echo "<li class='items-products-description'>";
+		echo "<p>" .$item->getName() . "</p>";
+		echo "<p>" .$attributeLabel . "</p>";
+		echo "<p>".$item->getSize() . "</p>";
+		echo "</li>";
+
+		echo "<li class='items-products-sku'>";
+		echo $item->getSku();
+		echo "</li>";
+		echo "<li class='items-products-price'>";
+		echo  $item->getPrice();
+		echo "</li>";
+		echo "<li class='items-products-qty'>";
+		echo $item->getQtyOrdered();
+		echo "</li";
+		echo "<li class='items-products-subtotal'>";
+		echo $item->getBaseRowTotal();
+		echo "</li>";
+		echo "</ul>";
+	}
+	   echo "</ul>";
+	  */
+?>
+
+</div>
+
+<div class = "success-sumary">
+  <p><?php
+//  var_dump($order);
+
+  ?></p>
+  <p><?php // echo "Merchandise" . $order->getSubtotal()?></p>
+  <p><?php // echo "Shipping" . $order->getShippingAmount()?></p>
+  <p><?php  //echo "Discounts" . $order->getDiscountAmount()?></p>
+  <p><?php // echo "Estimated Tax" . $order->getTaxAmount()?></p>
+  <p><?php  //echo "Total ".$order->getBaseGrandTotal();?></p>
+</div>
+
+<div class="success-message">
+<h3>THANK YOU!</h3>
+</div>-->

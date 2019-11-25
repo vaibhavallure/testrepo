@@ -1,0 +1,183 @@
+<?php
+ $current_location ="497"; Mage::registry('current_piercing_location');
+ $looks = $this->getLooksByLocation($current_location);
+
+?>
+<div class="shop_by_look">
+<div id="shop_by_look-title" class="page-title category-title simple-page-title p-0">
+    <h1>Inspiration</h1>
+</div>
+<div class="container celebrities press-custom-container">
+    <div class="row">
+        <div class="col-12 ">
+            <div class="row">
+                <?php $counter=1;
+
+                $c=1;
+                foreach($looks as $look):
+
+
+                    ?><div class="col-12 col-md-6 col-lg-4 celeb-img-block <?= "slot-".$c?> <?= ($counter>6)? "d-none" : "";?>" id="<?php echo $counter; $counter++ ?>"  >
+                            <div  class="shop_by_look-img" style="background: url(<?=$look['img'];?>);" data-img="<?=$look['img'];?>" data-product_count="<?= count($look['products'])?>">
+                                <div class="products d-none">
+                                    <?php
+                                     $i=1;
+                                    foreach ($look['products'] as $product): ?>
+                                        <?php $product = Mage::getModel('catalog/product')->load($product->getId());
+                                        $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId()));
+                                        ?>
+                                        <li class="row">
+                                        <div class="product_img col-3">
+                                            <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(74, 96) ?>"/>
+                                        </div>
+                                        <div class="product_details col-9">
+                                        <div class="product-name info-text-two"><?= $product->getName()?></div>
+                                        <div class="quick_link link-button d-none d-xs-none d-md-none d-lg-block d-xl-block"><a href="<?= $quickViewUrl ?>sourceOfReq/quickview/" class="fancybox fancybox.iframe btn-quickview">Quick View</a></div>
+                                            <div class="quick_link link-button d-block d-xs-block d-md-block d-lg-none d-xl-none"><a href="<?= $product->getProductUrl() ?>" >Buy</a></div>
+                                        </div>
+                                    </li>
+                                    <?php
+                                    $i++;
+                                    endforeach; ?>
+                                </div>
+                            </div>
+                    </div>
+                    <?php
+                    if($counter%7==0){
+                        $c++;
+                    }
+                endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="openModal" class="celebPopup"> <!--do not remove celebPopup class-->
+    <div class="pop-up-cover big-popup-cover col-12">
+        <div class="row">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body big-popup-body col-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12 popup-left-section">
+                        <div class="celeb-img big-popup-image row"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 popup-right-section">
+                        <div class="row">
+                            <div class=" big-popup-title d-lg-block d-none">
+                                <h1 class="celeb-title text-uppercase"></h1><!--do not remove celeb-title class-->
+                            </div>
+                            <div class="para-normal celeb-info"> <!--do not remove celeb-info class-->
+                            </div>
+                            <div class="product-info"><!--do not remove product-info class-->
+                                <ul class="p-lg-0 p-1 col-12">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="celeb-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    jQuery(document).ready(function() {
+         var slot=1;
+        jQuery(window).scroll(function() {
+
+            if(jQuery('body').hasClass('mobile-device'))
+            {
+                var condition=((jQuery(this).scrollTop()+150) > jQuery(document).height() - jQuery(window).height());
+            }else {
+                var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+            }
+            if (condition) {
+                setLoader();
+                slot++;
+
+              if(jQuery(".slot-"+slot).length)
+              jQuery(".slot-"+slot).removeClass("d-none");
+
+                setTimeout(
+                    function()
+                    {
+                        unsetLoader();
+                    }, 3000);
+
+            }
+        });
+
+
+
+
+
+
+        jQuery(".shop_by_look-img").on('click', function () {
+
+            unScrollBody();
+            jQuery(".catalog-category-view .footer").css("display","none");
+
+            jQuery(".celebPopup").css({"opacity": "1", "pointer-events": "auto","z-index":"1"});
+            jQuery(".celeb-loader").show();
+            setImg(jQuery(this).attr("data-img"));
+            if(parseInt(jQuery(this).attr('data-product_count'))>3)
+                jQuery(".shop_by_look .product-info").addClass("scroll");
+            else
+                jQuery(".shop_by_look .product-info").removeClass("scroll");
+
+            jQuery(".shop_by_look .product-info ul").html(jQuery(this).find(".products").html());
+            jQuery(".celeb-loader").hide();
+
+        });
+
+        function setImg(img) {
+            jQuery(".celeb-img").css({"background-image": "url(" + img + ")", "background-size": "cover"});
+        }
+
+        jQuery(".celebPopup .close").on('click', function () {
+            jQuery(".celeb-loader").hide();
+
+            scrollBody();
+            jQuery(".catalog-category-view .footer").css("display","block");
+
+
+            jQuery(".celebPopup").css({"opacity": "0", "pointer-events": "none"});
+        });
+        jQuery("#category-title").html("");
+    });
+
+    jQuery.noConflict();
+    jQuery('a.btn-quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'yes',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 1200,
+        minWidth: 1200,
+        maxWidth: 1200,
+        height:610,
+        minHeight:610,
+        maxHeight:610,
+
+        afterLoad: function(current, previous) {
+
+        }
+    });
+    jQuery("#category-title").html("");
+</script>

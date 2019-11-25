@@ -2,82 +2,96 @@
 
 /**
  * Onepage controller for checkout
- *
- * @category    Mage
- * @package     Mage_Checkout
- * @author      Magento Core Team <core@magentocommerce.com>
+ * Override
  */
 require_once ('app/code/local/MT/Checkout/controllers/OnepageController.php');
 
 class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageController
 {
+    const WHOLESALE_GROUP_ID = 2;
+    const ONEPAGE_LOG_FILE = "onepage.log";
+    
+    protected $logStatus;
+    protected $actionArray = array(
+        "index"                 => "Checkout Init",
+        "savebilling"           => "Checkout saveBillingAddress",
+        "saveshipping"          => "Checkout saveShippingAddress",
+        "saveshippingmethod"    => "Shipping Method",
+        "savedeliveryoption"    => "Checkout saveDeliveryOption",
+        "savepayment"           => "Checkout savePayment",
+        "saveorder"             => "Save Order"
+    );
+    
     /**
-     * Checkout page
+     * Check log is enabled for file write.
+     * @return boolean
      */
-    public function indexAction() {
-
-        if (!Mage::getModel('core/cookie')->get('frontend_timeout')) {
-            Mage::getModel('core/cookie')->set('from_checkout_page', 1);
-        }
-
-        if (!Mage::helper('checkout')->canOnepageCheckout()) {
-            Mage::getSingleton('checkout/session')->addError($this->__('The onepage checkout is disabled.'));
-            $this->_redirect('checkout/cart');
-            return;
-        }
-
-        $quote = $this->getOnepage()->getQuote();
-
-        if ($this->getLogStatus()){
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
-			$customerDetails .= $quote->getCustomerEmail();
-
-            Mage::log("Checkout INIT::\t\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
-        }
-
-        if (!$quote->hasItems() || $quote->getHasError()) {
-            $this->_redirect('checkout/cart');
-            return;
-        }
-
-        if (!$quote->validateMinimumAmount()) {
-            $error = Mage::getStoreConfig('sales/minimum_order/error_message') ?
-            Mage::getStoreConfig('sales/minimum_order/error_message') :
-            Mage::helper('checkout')->__('Subtotal must exceed minimum order amount');
-
-            Mage::getSingleton('checkout/session')->addError($error);
-            $this->_redirect('checkout/cart');
-            return;
-        }
-
-        Mage::getSingleton('checkout/session')->setCartWasUpdated(false);
-        Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('*/*/*', array('_secure' => true)));
-        $this->getOnepage()->initCheckout();
-        $this->loadLayout();
-        $this->_initLayoutMessages('customer/session');
-        $this->getLayout()->getBlock('head')->setTitle($this->__('Checkout'));
-        $this->renderLayout();
+    private function getLogStatus()
+    {
+        if(!$this->logStatus)
+            $this->logStatus  = Mage::helper("allure_multicheckout")->getOnePagelogStatus();
+            return $this->logStatus;
     }
-
+    
+    /**
+     * write onepage checkout step by step log.
+     * @param string|array $info
+     */
+    private function writeOnepageLog($info = null)
+    {
+        if(!$info) return ;
+        Mage::log($info, Zend_Log::DEBUG, self::ONEPAGE_LOG_FILE, true);
+    }
+    
+    /**
+     * Check customer group id is not wholesale
+     * then redirect to multishipping checkout.
+     * @return Mage_Checkout_OnepageController
+     */
+    public function preDispatch()
+    {
+        parent::preDispatch();
+        $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        $action = $this->getRequest()->getActionName();
+        if($customerGroupId != self::WHOLESALE_GROUP_ID){
+            
+            $isAmazonPaymentForGeneralCustomer = false;
+            if(Mage::helper('core')->isModuleEnabled("Amazon_Payments")){
+                $_helper = Mage::helper('amazon_payments/data');
+                if($_helper->getConfig()->isEnabled() && $_helper->isCheckoutAmazonSession() && $_helper->isEnableProductPayments()){
+                    $isAmazonPaymentForGeneralCustomer = true;
+                }
+            }
+            
+            if(strtolower($action) == "success"){
+               return $this;                
+            }elseif($isAmazonPaymentForGeneralCustomer){
+                return $this;
+            }elseif(!$this->getOnepage()->getQuote()->isVirtual()){
+                $this->_redirect("*/multishipping");
+            }
+        }
+        
+        if(!empty($this->actionArray[$action])){
+            $quote = $this->getOnepage()->getQuote();
+            $actionName = $this->actionArray[$action];
+            $customerInfo = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
+            $customerInfo .= $quote->getCustomerEmail();
+            Mage::log("{$actionName}::\t\t\tQuote Id: ".$quote->getId().', Customer: '.$customerInfo,Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
+        }
+        return $this;
+    }
+    
     /**
      * save checkout billing address
      */
     public function saveBillingAction ()
     {
-        if ($this->getLogStatus()){
-            $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
-			$customerDetails .= $quote->getCustomerEmail();
-            Mage::log("Checkout saveBillingAddress::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
-        }
-
         if ($this->_expireAjax()) {
             return;
         }
 
         if ($this->getRequest()->isPost()) {
-            // $postData = $this->getRequest()->getPost('billing', array());
-            // $data = $this->_filterPostData($postData);
             $data = $this->getRequest()->getPost('billing', array());
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
@@ -100,7 +114,6 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                 } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
 
                     if (Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
-                        /* mt allure new code added here */
                         $result['goto_section'] = 'delivery_option';
                         $result['update_section'] = array(
                                 'name' => 'delivery-option',
@@ -132,26 +145,32 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveShippingAction ()
     {
-        if ($this->getLogStatus()){
-            $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
-			$customerDetails .= $quote->getCustomerEmail();
-
-            Mage::log("Checkout saveShippingAddress::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
-        }
-
         if ($this->_expireAjax()) {
             return;
         }
 
         if ($this->getRequest()->isPost()) {
+            /** gift item */
+            $this->getOnepage()->saveGiftItem();
+            
+            /** Save customer billing address. */
+            $dataBilling = $this->getRequest()->getPost('billing', array());
+            $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
+            $this->getOnepage()->saveBilling($dataBilling, $customerBillingAddressId);
+            
             $data = $this->getRequest()->getPost('shipping', array());
             $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
             $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
 
             if (! isset($result['error'])) {
-
-                if (Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
+                if ($this->getOnepage()->getQuote()->isVirtual()) 
+                {
+                    $result['goto_section'] = 'payment';
+                    $result['update_section'] = array(
+                        'name' => 'payment-method',
+                        'html' => $this->_getPaymentMethodsHtml()
+                    );
+                }elseif (Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
                     $result['goto_section'] = 'delivery_option';
                     $result['update_section'] = array(
                             'name' => 'delivery-option',
@@ -180,10 +199,10 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $update = $layout->getUpdate();
 
         $_checkoutHelper = Mage::helper('allure_multicheckout');
-
-        if (strtolower($this->getOnepage()
-            ->getQuote()
-            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP))
+        $deliveryMethod = $this->getOnepage()->getQuote()
+            ->getDeliveryMethod();
+        
+       if (strtolower($deliveryMethod) == strtolower($_checkoutHelper::TWO_SHIP))
             $update->load('checkout_onepage_allureshippingmethod');
         else
             $update->load('checkout_onepage_shippingmethod');
@@ -203,10 +222,9 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     {
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
-        $roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
+        $groupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
 
-        if ('wholesale' == strtolower($role))
+        if ($groupId == self::WHOLESALE_GROUP_ID)
             $update->load('checkout_onepage_allurepaymentmethod');
         else
             $update->load('checkout_onepage_paymentmethod');
@@ -237,17 +255,17 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 	            $quote = $this->getOnepage()->getQuote();
 				$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 				$customerDetails .= $quote->getCustomerEmail();
-
-	            Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.$data,Zend_log::DEBUG,'onepage.log',true);
+				$dataRequest = $this->getRequest()->getPost();
+				Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.$dataRequest,Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
 	        }
 
             Mage::getSingleton('checkout/session')->setInStockOrderShippingMethod($data);
             $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
-
-            $result = $this->getOnepage()->saveShippingMethod($this->getRequest()
-                ->getPost());
-            $this->getOnepage()
-                ->getQuote()
+            $no_signature_delivery = ($no_signature_delivery) ? 1 : 0;
+            
+            $result = $this->getOnepage()
+                ->saveShippingMethod($this->getRequest()->getPost());
+            $this->getOnepage()->getQuote()
                 ->setData('no_signature_delivery', $no_signature_delivery)
                 ->save();
             /*
@@ -259,23 +277,16 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                         'request' => $this->getRequest(),
                         'quote' => $this->getOnepage()->getQuote()
                     ));
-                $this->getOnepage()
-                    ->getQuote()
-                    ->collectTotals();
+                $this->getOnepage()->getQuote()->collectTotals();
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
                 $_checkoutHelper = Mage::helper('allure_multicheckout');
-                if (strtolower(
-                        $this->getOnepage()
-                            ->getQuote()
-                            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
-
+                $deliveryMethod = $this->getOnepage()->getQuote()->getDeliveryMethod();
+                if (strtolower($deliveryMethod) == strtolower($_checkoutHelper::TWO_SHIP)) {
                     $errorWhileDividingQuote=0;
-
-                        /*this condition check if normal order and backorder contain same quote id*/
+                    /*this condition check if normal order and backorder contain same quote id*/
                     if ($this->getOnepage()->getQuoteOrdered()->getId() != $this->getOnepage()->getQuoteBackordered()->getId())
                     {
-
                         $giftMessageId = $this->getOnepage()
                             ->getQuote()
                             ->getGiftMessageId();
@@ -350,7 +361,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                     $result["goto_section"] = "payment";
                     $result["update_section"] = array(
                         "name" => "payment-method",
-                        "html" => $this->_getPaymentMethodsHtml()
+                        "html" => $this->_getPaymentMethodsHtml(),
+                        "totals_html" => $this->_getRefreshTotalsHtml()
                     );
                 }
             }
@@ -363,33 +375,33 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
+    
+    /**
+     * Get refresh totals html
+     * @return string
+     */
+    protected function _getRefreshTotalsHtml ()
+    {
+        $block = $this->getLayout()
+            ->createBlock('checkout/cart_totals')
+            ->setTemplate('checkout/cart/totals.phtml');
+        $childBlock = $this->getLayout()
+            ->createBlock('checkout/cart_shipping')
+            ->setTemplate('checkout/cart/shipping.phtml');
+        $block->setChild("shipping", $childBlock);
+        $output = $block->toHtml();
+        return $output;
+    }
 
     public function saveDeliveryOptionAction ()
     {
-        if ($this->getLogStatus()){
-            $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
-			$customerDetails .= $quote->getCustomerEmail();
-
-            Mage::log("Checkout saveDeliveryOption::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,'onepage.log',true);
-        }
-
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-
             $result = $this->getOnepage()->saveDeliveryOptions($data);
-            /*
-             * $result will have error data if shipping method is empty
-             */
-
+            
             if (! $result) {
-                Mage::dispatchEvent("checkout_controller_onepage_save_deliveryoption",
-                        array(
-                                "request" => $this->getRequest(),
-                                "quote" => $this->getOnepage()->getQuote()
-                        ));
+                Mage::dispatchEvent("checkout_controller_onepage_save_deliveryoption",array("request" => $this->getRequest(),"quote" => $this->getOnepage()->getQuote()));
                 $this->getResponse()->setBody(Zend_Json::encode($result));
-
                 $result['goto_section'] = 'shipping_method';
                 $result['update_section'] = array(
                         'name' => 'shipping-method',
@@ -407,13 +419,6 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function savePaymentAction ()
     {
-        if ($this->getLogStatus()){
-            $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
-			$customerDetails .= $quote->getCustomerEmail();
-            Mage::log("Checkout savePayment::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
-        }
-
         if ($this->_expireAjax()) {
             return;
         }
@@ -424,10 +429,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             }
 
             $data = $this->getRequest()->getPost('payment', array());
-            // Mage::log($data,Zend_log::DEBUG,'abc',true);
             $result = $this->getOnepage()->savePayment($data);
 
-            // get section and redirect data
             $redirectUrl = $this->getOnepage()
                 ->getQuote()
                 ->getPayment()
@@ -474,7 +477,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
 
-            Mage::log("Checkout saveOrder::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,'onepage.log',true);
+            Mage::log("Checkout saveOrder::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
         }
 
         if ($this->_expireAjax()) {
@@ -485,6 +488,14 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $checkoutalert = 0;
         $isuuemessage ='';
         try {
+            
+            /** save gift item data */
+            Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method',
+                array(
+                    'request' => $this->getRequest(),
+                    'quote' => $this->getOnepage()->getQuote()
+                ));
+            
             $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
             if ($requiredAgreements) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
@@ -682,7 +693,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $lastOrderId = $session->getLastOrderId();
 
         if ($this->getLogStatus()){
-            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.', Quote Id: '.$lastQuoteId, Zend_log::DEBUG,'onepage.log',true);
+            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.', Quote Id: '.$lastQuoteId, Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
         }
 
         $lastRecurringProfiles = $session->getLastRecurringProfileIds();
@@ -723,7 +734,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $secondLastRecurringProfiles = $sessionBackordered->getSecondLastRecurringProfileIds();
 
         if ($this->getLogStatus()){
-            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.','.$secondLastOrderId.', Quote Id: '.$lastQuoteId.','.$secondLastQuoteId,Zend_log::DEBUG,'onepage.log',true);
+            Mage::log("Checkout SUCCESS::\t\t\t#".$lastRealOrderId.', Order Id: '.$lastOrderId.','.$secondLastOrderId.', Quote Id: '.$lastQuoteId.','.$secondLastQuoteId,Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
         }
 
         if ((! $lastQuoteId || (! $lastOrderId && empty($lastRecurringProfiles))) &&
@@ -745,9 +756,5 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                         )
                 ));
         $this->renderLayout();
-    }
-
-    private function getLogStatus(){
-        return Mage::helper("allure_multicheckout")->getOnePagelogStatus();
     }
 }

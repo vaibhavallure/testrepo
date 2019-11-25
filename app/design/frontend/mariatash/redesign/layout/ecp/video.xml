@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <ecp_video_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="ecp_video/video" name="video" template="video/video.phtml" />
+        </reference>
+    </ecp_video_index_index>
+    
+    <ecp_video_index_videoview>
+         <block type="ecp_video/video" name="root" output="toHtml"  template="video/videoview.phtml" />
+         <!--block type="helloworld/bloquesaludo" name="root" output="toHtml" template="magentotutorial/helloworld/saludo.phtml" /-->
+    </ecp_video_index_videoview>
+</layout> 

@@ -1,0 +1,100 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product description template
+ *
+ * @see Mage_Catalog_Block_Product_View_Description
+ */
+?>
+
+<?php if(!(Mage::helper("allure_catalog")->isGiftCard($this->getProduct()->getId()))  &&  $this->getProduct()->getTypeId() != 'giftcards'): ?>
+
+
+<?php $_description = $this->getProduct()->getDescription(); ?>
+<?php if ($_description): ?>
+    <div class="std">
+        <p class="para-normal"><?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?></p>
+    </div>
+    <hr>
+<?php endif; ?>
+<!-- ADDED: Table with attributes with parameter "Visible on Product View Page on Front-end" set to Yes -->
+<?php
+$attributes = $this->getProduct()->getAttributes();
+$showTable = false;
+foreach($attributes as $attribute){
+    if($attribute->getData('is_visible_on_front')){
+        $attrCode = $attribute->getData('attribute_id');
+        if($attrCode){
+            $product = $this->getProduct();
+            $attribute = $product->getResource()->getAttribute($attrCode);
+
+            if (isset($attribute)) {
+                $content = $attribute->getFrontend()->getValue($product);
+                if(!empty($content) && (strcasecmp($content, 'yes')!=0 && strcasecmp($content, 'no')!=0)){
+                    $showTable = true;
+                    break;
+                }
+            }
+        }
+    }
+}
+//reset($attributes);
+?>
+<?php if($showTable): ?>
+<table class="data-table">
+    <caption class="product-attribute-name">Specifications</caption>
+<?php
+
+foreach($attributes as $attribute){
+    $_helper = $this->helper('catalog/output');
+    if($attribute->getData('is_visible_on_front')){
+        $attrCode = $attribute->getData('attribute_id');
+        if($attrCode){
+            $product = $this->getProduct();
+            $attribute = $product->getResource()->getAttribute($attrCode);
+            if ($attribute) {
+                    $content = $attribute->getFrontend()->getValue($product);
+                    if(!empty($content) && (strcasecmp($content, 'yes')!=0 && strcasecmp($content, 'no')!=0)){
+                        //aws02 - start
+                        $attrLabel = strtolower($attribute->getData('store_label'));
+                        $visibility = ("width" != trim($attrLabel)) ? true : false;
+                        //aws02 - end
+                        if($visibility){
+                            echo '<tr style="display:'.$visibility.'">
+                                        <th class="info-text-two">' . $attribute->getData('store_label') . '</th>
+                                        <td class="para-normal">' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
+                                      </tr>';
+                        }
+                    }
+            }
+        }
+    }
+}
+?>
+</table>
+<?php endif; ?>
+<?php endif; ?>

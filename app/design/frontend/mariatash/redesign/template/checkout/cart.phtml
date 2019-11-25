@@ -1,0 +1,163 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This soure file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @see Mage_Checkout_Block_Cart
+ * @var Mage_Checkout_Block_Cart $this
+ */
+?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
+<?php $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();?>
+<?php 
+    $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+    $isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
+?>
+
+<?php if ($priceAlert): ?>
+<div class="priceUpdate">
+	<p><?php echo $this->__('The price of the items in your cart has been updated since you added them.'); ?></p>
+</div>
+<?php endif; ?>
+
+<div class="cart-mt container row mx-auto <?php if($isWholesaleCustomer):?>wholesale-cart-container<?php endif;?>">
+	<?php echo $this->getChildHtml('form_before') ?>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <form id="shopping-cart-form" class="col-lg-8 col-md-12 col-12" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
+    	<?php echo $this->getBlockHtml('formkey'); ?>
+   		<fieldset>
+        	<div class="checkout-list-title">
+            	<h1><?= $this->__('Your Shopping Bag')?></h1>
+          	</div>
+       		<table id="shopping-cart-table" class="data-table cart-table" width="100%" border="0">
+            	<thead class="shop-titles">
+                	<tr>
+                    	<th class="product-column" colspan="2" data-th="Product"><?= $this->__('Product'); ?></th>
+                    	<th class="price-column text-right" data-th="Price"><?= $this->__('Price'); ?></th>
+                    	<th class="quantity-column text-center" data-th="Quantity"><?= $this->__('Quantity '); ?></th>
+                    	<th class="subtotal-column text-right" data-th="Subtotal"><?= $this->__('Subtotal'); ?></th>
+                	</tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->getItems() as $_item): ?>
+                        <?php echo $this->getItemHtml($_item) ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </fieldset>
+    </form>
+
+    <div class="cart-collaterals col-lg-4 col-md-12 col-12 fix-section">
+    	<div class="collat-wrap">
+        	<table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table w-100">
+            	<tr>
+                	<td>
+                    	<div class="coupons-mt">
+                        	<div class="coupons text-center">
+                        		<?= $this->getChildHtml('coupon');?>
+                        		<br/>
+                        		<?= $this->getChildHtml('giftcards');?>
+                        	</div>
+                            <div class="totals">
+                            	<?= $this->getChildHtml('totals');?>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="crosssell-wrap">
+                <?= $this->getChildHtml('crosssell');?>
+            </div>
+        	<div>
+            	<div class="pay-caart text-center">
+                	<ul class="checkout-types p-0">
+                    	<?php foreach ($this->getMethods('methods') as $method): ?>
+                            <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                                    <li class="mb-2 side-cart-redirects"><?php echo $methodHtml; ?></li>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<script>
+	function processCartItem(evt){
+		var hrefUrl = jQuery(evt).data("url");
+		if(hrefUrl){
+			blockCheckoutUi();
+			window.location.href = hrefUrl;
+		}
+	}
+	
+    function plusMinus(elementId,plus){
+    	blockCheckoutUi();
+        var qty = parseInt(jQuery(elementId).val()) + plus ;
+        if(qty > 0) {
+            jQuery(elementId).val(qty);
+            jQuery(elementId+"_span").html(qty);
+        }
+        jQuery( "#shopping-cart-form" ).submit();
+    }
+    jQuery( ".qty-wrap input" ).focusout(function() {
+        if(this.next().value != this.value) {
+        	blockCheckoutUi();
+            jQuery( "#shopping-cart-form" ).submit();
+        }
+    })
+    jQuery(document).bind("keydown", function(e) {
+        var code = e.keyCode || e.which;
+        if (code  == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+<script>
+    jQuery('a.scl-popup').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none',
+        nextEffect  : 'none',
+        prevEffect  : 'none',
+        padding     : 0,
+        mouseWheel : false,
+        loop            : false,
+        helpers : {
+            title : null
+        },
+        width: 785,
+        minWidth: 785,
+        maxWidth: 785,
+        height: 572,
+        minHeight: 572,
+        maxHeight: 572
+    });
+
+</script>

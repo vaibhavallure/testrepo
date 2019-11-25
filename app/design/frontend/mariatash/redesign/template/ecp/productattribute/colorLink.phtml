@@ -1,0 +1,64 @@
+<?php
+$optionsValues = $this->getOptions();
+$attribute_code = $optionsValues['code'];
+$attribute_label = $optionsValues['label'];
+$productId  = $this->getConfigId();
+?>
+<div id="color-option" class="color-icon">
+    <span>
+        <?php echo $attribute_label; ?>: 
+    </span>
+</div>    
+<ul id="color-icons-<?php echo $productId;?>">
+    <?php foreach ($optionsValues['value'] as $option): ?>  
+        <?php $optionId = $option[$attribute_code];
+        $optionLb = $option[$attribute_code . "_value"];
+        $simple_id = $option['child_id'];     
+        ?>
+        <li id="<?php echo $simple_id ?>"
+            style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;"
+            class="colorSelector tipped-create" value="<?php echo $optionId ?>"
+            title="<?php echo $optionLb ?>" >
+            <div style="display: none">
+                <?php if($attribute_code == 'color_apparel'):?>
+                    <span id="img-<?php echo $simple_id; ?>"></span>
+                <?php else:?>
+                    <span id="img-<?php echo $simple_id; ?>"></span>
+                <?php endif;?>
+                <span id="price-<?php echo $simple_id; ?>"></span>
+            </div>
+        </li>
+<?php endforeach; ?>
+</ul>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var configId =  '<?php echo $productId; ?>';
+        //Chang color and reload image
+        jQuery('#color-icons-'+ configId +' li').each(function(){
+            var $this = jQuery('#color-icons-'+ configId +' li');           
+            jQuery(this).click(function(){   
+                jQuery('#color-icons-'+ configId +' li').each(function(){
+                    jQuery(this).removeClass('active');
+                }); 
+                jQuery(this).addClass('active') ;
+                var simpleId  =  jQuery(this).attr('id');  
+                // Reload image
+                jQuery('a#' + configId).find('img').attr('src',jQuery('#img-'+simpleId).text());
+                jQuery('#default-price-'+configId).html(jQuery('#price-'+simpleId).html());
+                jQuery('#default-price-'+configId).find('.price-box').show();
+                
+                // Change quick view and product detail url
+                var optionId = jQuery(this).attr('value') ;
+                var quickViewUrl = jQuery('#link-qv-'+configId).text();
+                var productUrl   = jQuery('#link-pv-'+configId).text();
+                // Quick view
+                jQuery('#product-quickview-'+ configId).attr('href',quickViewUrl + '?optionId='+optionId);
+                //Image and Name
+                jQuery('#'+configId).attr('href',productUrl + '?optionId='+optionId);
+                jQuery('#product-name-'+configId).attr('href',productUrl + '?optionId='+optionId);
+            });
+        });
+       Tipped.create('#color-icons-' + configId + ' .colorSelector', {skin: 'customTiny', showOn: ['click', 'mouseover']});
+    });    
+</script>

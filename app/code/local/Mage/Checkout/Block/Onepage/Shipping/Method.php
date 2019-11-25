@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Checkout
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -37,7 +37,7 @@ class Mage_Checkout_Block_Onepage_Shipping_Method extends Mage_Checkout_Block_On
     protected function _construct()
     {
         $this->getCheckout()->setStepData('shipping_method', array(
-            'label'     => Mage::helper('checkout')->__('Shipping Method And Gift Message'),
+            'label'     => Mage::helper('checkout')->__('Shipping Method'),
             'is_show'   => $this->isShow()
         ));
         parent::_construct();

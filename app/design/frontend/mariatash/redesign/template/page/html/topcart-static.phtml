@@ -1,0 +1,46 @@
+<script>
+	(function($) {
+            $.extend(Tipped.Skins, {
+                'customcart' : $.extend(true, { }, Tipped.Skins.white, {
+                    /*spinner: { padding: 10 },
+                    background: {
+                            color: [
+                            { position: 0, color: '#DEDEDE'}
+                            ]
+                    }*/
+                })
+            });
+	})(jQuery);
+
+	jQuery.noConflict();
+        jQuery(document).ready(function(){
+
+        //TIPPED PLUGIN////////////////////////////////////////////////////////////////////
+            Tipped.create(jQuery(".top-cart"), jQuery(".content-cart")[0], {
+                    skin: 'customcart',
+                    showOn: ['click', 'mouseover'],
+//                    hideOn: 'false',
+                    showDelay: 500,
+                    hideDelay: 500,
+//                    target: 'tab-top-cart',
+//                    stem: {height:5,width:10},
+                    onShow: function(content, element){
+                        Tipped.refresh(element);
+                    },
+                    onHide: function(content, element){
+                        jQuery('div.content-cart div.bottom div.padder div#body-content-cart').show();
+                        jQuery('div.content-cart div.bottom div.padder div.recently-added').hide();
+                        jQuery('button.close-tooltip').hide();
+                        jQuery('div.content-cart div.top div.padder').html(jQuery('<a><h1>VIEW YOUR CART</h1></a>').attr('href','<?php echo $this->getUrl('') ?>checkout/cart/')).append(jQuery("<div />").addClass("close close-tooltip"));
+                        jQuery('.just-added-to-cart').remove();
+                    }
+            });
+        });
+
+</script>
+<div class="top-cart">
+    <div class="fs1" aria-hidden="true" data-icon="(" id="tab-top-cart">
+        <a href="<?php echo $this->getUrl('') ?>checkout/cart/">Shopping Cart (<span>0</span>)</a>
+    </div>
+
+</div>

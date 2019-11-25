@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -165,7 +165,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
             foreach ($this->getAllowAttributes() as $attribute) {
                 $productAttribute   = $attribute->getProductAttribute();
 
-				if (!$productAttribute) continue;
+                if (!$productAttribute) continue;
 
                 $productAttributeId = $productAttribute->getId();
                 $attributeValue     = $product->getData($productAttribute->getAttributeCode());
@@ -187,14 +187,14 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
         foreach ($this->getAllowAttributes() as $attribute) {
             $productAttribute = $attribute->getProductAttribute();
 
-			if (!$productAttribute) continue;
+            if (!$productAttribute) continue;
 
             $attributeId = $productAttribute->getId();
             $info = array(
-               'id'        => $productAttribute->getId(),
-               'code'      => $productAttribute->getAttributeCode(),
-               'label'     => $attribute->getLabel(),
-               'options'   => array()
+                'id'        => $productAttribute->getId(),
+                'code'      => $productAttribute->getAttributeCode(),
+                'label'     => $attribute->getLabel(),
+                'options'   => array()
             );
 
             $optionPrices = array();
@@ -239,7 +239,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                         $productsIndex = array();
                     }
                     if ($currentProduct->getSku() == 'STORECARD') {
-                         if ($_currency->getCurrencyCode() == $_currency_usd->getCurrencyCode()) {
+                        if ($_currency->getCurrencyCode() == $_currency_usd->getCurrencyCode()) {
                             $labeldisp = $_currency_usd->formatTxt($value['label']);
                         }else{
                             $labeldisp = $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")";
@@ -267,7 +267,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                 }
             }
             if($this->_validateAttributeInfo($info)) {
-               $attributes[$attributeId] = $info;
+                $attributes[$attributeId] = $info;
             }
 
             // Add attribute default value (if set)
@@ -443,7 +443,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
 
         if ($product->isConfigurable()) {
-            if (!$selectedColor) {
+        if (!$selectedColor) {
 
 
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
@@ -489,87 +489,87 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
 
 
-            if ($selectedColor) {
+                if ($selectedColor) {
 
-                $selectedColorText = $optionHelper->getOptionText($selectedColor);
+                    $selectedColorText = $optionHelper->getOptionText($selectedColor);
 
-                $resource = Mage::getSingleton('core/resource');
-                $readConnection = $resource->getConnection('core_read');
-                $query="SELECT rel.parent_id,rel.child_id,atr.product_super_attribute_id,atr.attribute_id,itm.qty,cpen.value FROM `catalog_product_relation` rel JOIN catalog_product_super_attribute atr on atr.product_id = rel.parent_id join cataloginventory_stock_item itm on itm.product_id = rel.child_id JOIN catalog_product_entity_int cpen ON (cpen.attribute_id=atr.attribute_id AND cpen.entity_id=rel.child_id) where rel.parent_id = ".$productId." and itm.qty > 0 GROUP BY atr.attribute_id";
-                $results = $readConnection->fetchAll($query);
+                    $resource = Mage::getSingleton('core/resource');
+                    $readConnection = $resource->getConnection('core_read');
+                    $query="SELECT rel.parent_id,rel.child_id,atr.product_super_attribute_id,atr.attribute_id,itm.qty,cpen.value FROM `catalog_product_relation` rel JOIN catalog_product_super_attribute atr on atr.product_id = rel.parent_id join cataloginventory_stock_item itm on itm.product_id = rel.child_id JOIN catalog_product_entity_int cpen ON (cpen.attribute_id=atr.attribute_id AND cpen.entity_id=rel.child_id) where rel.parent_id = ".$productId." and itm.qty > 0 GROUP BY atr.attribute_id";
+                    $results = $readConnection->fetchAll($query);
 
-                if(count($results)>=2)
-                {
-
-
-                    $cnt=0;
-                    foreach ($results as $res) {
-
-                        $childid= $res['child_id'];
+                    if(count($results)>=2)
+                    {
 
 
-                        $query = "SELECT attribute_code FROM `eav_attribute` WHERE `attribute_id` = " . $res['attribute_id'];
+                        $cnt=0;
+                        foreach ($results as $res) {
+
+                            $childid= $res['child_id'];
 
 
-                        $results = $readConnection->fetchAll($query);
+                            $query = "SELECT attribute_code FROM `eav_attribute` WHERE `attribute_id` = " . $res['attribute_id'];
 
-                        if ($results[0]['attribute_code'] != 'metal') {
-                            if ($res['value'] != $selectedColor) {
-                                $cnt++;
 
-                                if ($cnt == 1) {
-                                    $selectValue1 = $res['value'];
-                                    $selAtr1 = $res['attribute_id'];
-                                }
-                                if (($cnt >= 2) && ($selectValue1 != $res['value'])) {
-                                    $selectValue2 = $res['value'];
-                                    $selAtr2 = $res['attribute_id'];
+                            $results = $readConnection->fetchAll($query);
 
-                                    break;
+                            if ($results[0]['attribute_code'] != 'metal') {
+                                if ($res['value'] != $selectedColor) {
+                                    $cnt++;
+
+                                    if ($cnt == 1) {
+                                        $selectValue1 = $res['value'];
+                                        $selAtr1 = $res['attribute_id'];
+                                    }
+                                    if (($cnt >= 2) && ($selectValue1 != $res['value'])) {
+                                        $selectValue2 = $res['value'];
+                                        $selAtr2 = $res['attribute_id'];
+
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
 
 
 
-                if($selectValue1 && !$selectValue2)
-                {
+                    if($selectValue1 && !$selectValue2)
+                    {
 
-                    echo "var id = 'amconf-image-".$selectedColor."';";
+                        echo "var id = 'amconf-image-".$selectedColor."';";
 
-                    echo "\n if($(id)){
+                        echo "\n if($(id)){
                             $(id).simulate('click');
                                 }";
+                        echo "\n spConfig.setInitialState('attribute".$selAtr1."','".$selectValue1."');";
 
-                    echo "\n spConfig.setInitialState('attribute".$selAtr1."','".$selectValue1."');";
+                    }
+                    else if($selectValue1 && $selectValue2)
+                    {
 
-                }
-                else if($selectValue1 && $selectValue2)
-                {
+                        echo "var id = 'amconf-image-".$selectedColor."';";
 
-                    echo "var id = 'amconf-image-".$selectedColor."';";
-
-                    echo "\n if($(id)){
+                        echo "\n if($(id)){
                             $(id).simulate('click');
                                 }";
-                    echo "\n spConfig.setInitialState('attribute".$selAtr1."','".$selectValue1."');";
-                    echo "\n spConfig.setInitialState('attribute".$selAtr2."','".$selectValue2."');";
+                        echo "\n spConfig.setInitialState('attribute".$selAtr1."','".$selectValue1."');";
+                        echo "\n spConfig.setInitialState('attribute".$selAtr2."','".$selectValue2."');";
 
-                }
-                else
-                {
-                    echo "var id = 'amconf-image-".$selectedColor."';";
+                    }
+                    else
+                    {
+                        echo "var id = 'amconf-image-".$selectedColor."';";
 
 
-                    echo "\n if($(id)){
+                        echo "\n if($(id)){
                             $(id).simulate('click');
                                 }";
+                    }
                 }
             }
-        }
 
     }
+
 }

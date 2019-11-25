@@ -1,0 +1,244 @@
+<?php
+/**
+ * Onepage checkout two shipment
+ * review page.
+ *
+ */
+?>
+<?php
+    $count = 0;
+    $mainQuote = Mage::getSingleton('checkout/session')->getQuote();
+    $billing = $mainQuote->getBillingAddress();
+    $one_ship = Mage::getSingleton('allure_multicheckout/ordered_session')->getOrdered();
+    $two_ship = Mage::getSingleton('allure_multicheckout/backordered_session')->getBackorder();
+?>
+<div class="two-shipment-billing-payment-mt">
+	<div class="checkout-two-shipment-billing-address-mt">
+		<h4 class="info-text-two">
+		<?= $this->__('Billing Address')?>
+		</h4>
+		<div class="row">
+  			<div class="col float-left">
+  				<address>
+  				<?= $billing->getFormated('html');?>
+  				</address>
+			</div>
+            <?php if( $this->helper('customer')->isLoggedIn() ): ?>
+            <span class="col review-edit text-right">
+            	<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?=$this->__('Edit')?></a>
+            </span>
+            <?php endif; ?>
+		</div>
+	</div>
+
+	<div class="checkout-two-shipment-payment-method-mt">
+    	<?php $payment = $mainQuote->getPayment();?>
+    	<h4 class="info-text-two">
+    		<?=$this->__('Payment method')?>
+    	</h4>
+  		<div class="row">
+  			<div class="col float-left">
+            <?php switch ($payment->getMethod()) {
+                case 'authorizenet':
+                    $cardTypes = Mage::getModel('payment/config')->getCcTypes();
+                    $cardTypeName = $cardTypes[$payment->getCcType()];
+                    $cardLast4 = $payment->getCcLast4();
+                    echo '<p class="para-normal">' . $cardTypeName . ' XXX XXX XXX ' . $cardLast4 . '</p>';
+                    break;
+                default:
+                    echo '<p class="para-normal">' . $payment->getMethodInstance()->getTitle() . '</p>';
+                    break;
+            }
+            ?>
+			</div>
+			<span class="col review-edit text-right">
+				<a class="link-button" href="javascript: accordion.openSection('opc-payment');"><?=$this->__('Edit')?></a>
+			</span>
+		</div>
+	</div>
+</div>
+
+<?php if(isset($one_ship) && !empty($one_ship)):?>
+<?php
+	$count += 1;
+    $quote = Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
+    $quote->collectTotals()->save();
+    $shipping = $quote->getShippingAddress();
+?>
+<div id="ordered-two-ship">
+    <h1 class="shipment-title">
+    	<?= $this->__('Shipment '. $count);?>
+    </h1>
+	<p class="shipment-message">
+		<span class="shipment-ref-number info-text-two">
+			<?= "Ref. #".$quote->getId();?>
+		</span>
+		<span class="shipment-notice-sp info-text-two">
+			<span class="shipment-color info-text-two">This</span>
+			<span class="shipment-notice"> order will ship within 24 hours (Mon-Fri).</span>
+		</span>
+	</p>
+
+    <div class="checkout-two-shipment-shipping-address-mt">
+    	<h4 class='info-text-two'>
+    	<?= $this->__('Shipping address')?>
+    	</h4>
+    	<div class="row">
+    		<div class="col float-left">
+    			<address><?=$shipping->getFormated('html')?></address>
+    		</div>
+            <?php if( $this->helper('customer')->isLoggedIn() ): ?>
+                <span class="col review-edit text-right">
+                	<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?= $this->__('Edit')?></a>
+                </span>
+            <?php endif; ?>
+    	</div>
+    </div>
+
+    <div class="checkout-two-shipment-shipping-method-mt">
+    	<h4 class='info-text-two'>
+    		<?= $this->__('Shipping method') ?>
+    	</h4>
+    	<div class="row">
+    		<div class="col float-left">
+    			<p class="para-normal">
+    				<?= $shipping->getShippingDescription() ?>
+    			</p>
+    		</div>
+    		<span class="col review-edit text-right">
+    			<a class="link-button" href="javascript: accordion.openSection('opc-shipping_method');"><?= $this->__('Edit')?></a>
+    		</span>
+    	</div>
+    </div>
+
+    <?php echo $this->getChildHtml('items_after'); ?>
+    <div id="checkout-review-table-wrapper">
+        <table class="data-table cart-table-items" id="checkout-review-table">
+            <thead>
+                <tr>
+                    <th colspan="2"><?= $this->__('Product') ?></th>
+                    <th class="text-right"><?= $this->__('Price') ?></th>
+                    <th class="text-center"><?= $this->__('Quantity') ?></th>
+                    <th class="text-right"><?= $this->__('Subtotal') ?></th>
+                </tr>
+            </thead>
+            <?php foreach($this->getOrderedItems() as $_item): ?>
+                <?php echo $this->getItemHtml($_item)?>
+            <?php endforeach ?>
+        </table>
+    </div>
+
+
+</div>
+<?php endif;?>
+
+<?php if(isset($two_ship) && !empty($two_ship)):?>
+<?php
+	$count += 1;
+    $quote1 = Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote();
+    $quote1->collectTotals()->save();
+    $shipping = $quote1->getShippingAddress();
+?>
+<div id="backordered-two-ship">
+	<h1 class="shipment-title">
+		<?= $this->__('Shipment '. $count);?>
+	</h1>
+	<p class="shipment-message">
+		<span class="shipment-ref-number info-text-two">
+		<?= "Ref. #".$quote1->getId();?>
+		</span>
+		<span class="shipment-notice-sp info-text-two">
+			<span class="shipment-color info-text-two">This</span>
+			<span class="shipment-notice"> order will ship once the remaining items are in stock.</span>
+		</span>
+	</p>
+
+    <div class="checkout-two-shipment-shipping-address-mt">
+    	<h4 class="info-text-two">
+    		<?= $this->__('Shipping address')?>
+    	</h4>
+    	<div class="row">
+      		<div class="col float-left">
+    			<address><?= $shipping->getFormated('html')?></address>
+    		</div>
+            <?php if( $this->helper('customer')->isLoggedIn() ): ?>
+                <span class="col review-edit text-right">
+                	<a class="link-button" href="javascript: accordion.openSection('opc-shipping');"><?=$this->__('Edit')?></a>
+                </span>
+            <?php endif; ?>
+    	</div>
+    </div>
+    <div class="checkout-two-shipment-shipping-method-mt">
+    	<h4 class="info-text-two">
+    		<?= $this->__('Shipping method')?>
+    	</h4>
+    	<div class="row">
+    		<div class="col float-left">
+    			<p class="para-normal">
+    			<?= $shipping->getShippingDescription()?>
+    			</p>
+    		</div>
+    		<span class="col review-edit text-right">
+    			<a class="link-button" href="javascript: accordion.openSection('opc-shipping_method');"><?=$this->__('Edit')?></a>
+    		</span>
+    	</div>
+    </div>
+
+    <?php echo $this->getChildHtml('items_after'); ?>
+
+    <div id="checkout-review-table-wrapper">
+        <table class="data-table cart-table-items" id="checkout-review-table">
+            <thead>
+                <tr>
+                    <th colspan="2"><?= $this->__('Product') ?></th>
+                    <th class="text-right"><?= $this->__('Price') ?></th>
+                    <th class="text-center"><?= $this->__('Quantity') ?></th>
+                    <th class="text-right"><?= $this->__('Subtotal') ?></th>
+                </tr>
+            </thead>
+            <?php foreach($this->getBackorderedItems() as $_item): ?>
+                <?php echo $this->getItemHtml($_item)?>
+            <?php endforeach ?>
+        </table>
+    </div>
+</div>
+<?php endif;?>
+
+<script type="text/javascript">
+//<![CDATA[
+    decorateTable('checkout-review-table');
+    truncateOptions();
+//]]>
+</script>
+<div id="checkout-review-submit" class="two-shipment">
+    <?php echo $this->getChildHtml('agreements') ?>
+    <p class="para-normal clear-both"><?php echo $this->__('Please review the information above, then click "CHECKOUT" Below.') ?></p>
+    <div class="checkout-privacy-policy">
+    	<p class="control">
+        	<label for="checkout_privacy_confirm" class="mt-custom-checkbox custom-checkbox custom-checkbox-two para-normal"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link link-button" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                <span class="checkmark"></span>
+          	</label>
+      	</p>
+   	</div>
+
+    <div class="buttons-set" id="review-buttons-container">
+        <?php echo $this->getChildHtml('button') ?>
+        <span class="please-wait" id="review-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submitting order information...')) ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+        </span>
+        <?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
+    	<?php $currentCurrency = strtoupper(Mage::app()->getStore()->getBaseCurrencyCode());?>
+    	<?php if(!empty($baseGrandTotal)):?>
+        <p class="mt-review-charge-note para-normal"><strong>Note: </strong>
+        	<?= $this->__("All orders are charged in ".$currentCurrency.". You will be charged ".$baseGrandTotal);?>
+        </p>
+        <?php endif;?>
+    </div>
+    <!-- <p class="link-button back-link"><a href="#" onclick="checkout.back(); return false;"><//?php echo $this->__('Back') ?></a></p> -->
+    <script type="text/javascript">
+    //<![CDATA[
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/successorder') ?>', $('checkout-agreements'));
+    //]]>
+    </script>
+</div>

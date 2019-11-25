@@ -1,0 +1,25 @@
+<!-- <div class="page-title title-buttons">
+	<h1><?php echo $this->__('My Saved Cards') ?></h1>
+</div> -->
+
+<div class="my-account">
+	<div class="col2-set">
+		<div class="box">
+			<div class="box-title">
+				<h3><?php echo $this->__('Payment Options') ?></h3>
+			</div>
+			<?php if( count( $this->getActiveMethods() ) > 1 ): ?>
+				<ul class="links">
+					<?php foreach( $this->getActiveMethods() as $method ): ?>
+						<li <?php if( Mage::registry('method') == $method ): ?>class="active"<?php endif; ?>><a href="<?php echo $this->getUrl( '*/*/*', array( 'method' => $method ) ); ?>"><?php echo Mage::getStoreConfig( 'payment/' . $method . '/title' ); ?></a></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			
+			<div class="manage-payment-method">
+				<?php echo $this->getChildHtml(); ?>
+			</div>
+		</div>
+	</div>
+</div>
+

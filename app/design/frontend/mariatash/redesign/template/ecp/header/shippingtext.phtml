@@ -1,0 +1,4 @@
+<?php if($this->getCanShow()): ?>
+	<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('call_now')->toHtml(); ?>
+    <div class="shippingtextheader"><?php echo $this->getActive()->getBlockContent()/*->getContentHeader()*/; ?></div>
+<?php endif; ?>

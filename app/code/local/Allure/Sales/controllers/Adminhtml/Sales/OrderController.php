@@ -104,4 +104,45 @@ class Allure_Sales_Adminhtml_Sales_OrderController extends Mage_Adminhtml_Sales_
         $this->_redirect('*/*/');
     }
     
+    /**
+     * Generate gift receipt if order contains gift item.
+     */
+    public function pdfOrdersGiftReceiptAction(){
+        $orderIds = $this->getRequest()->getPost('order_ids');
+        $flag = false;
+        if (!empty($orderIds)) {
+            foreach ($orderIds as $orderId) {
+                $order = Mage::getModel('sales/order')->load($orderId);
+                try{
+                    foreach ($order->getAllVisibleItems() as $item){
+                        if($item->getIsGiftItem()){ 
+                            if ($item->getParentItem()) {
+                                continue;
+                            }
+                            
+                            if (!isset($pdf)){
+                                $flag = true;
+                                $pdf = Mage::getModel('allure_sales/pdf_gift')->getPdf($item);
+                            }else{
+                                $pages = Mage::getModel('allure_sales/pdf_gift')->getPdf($item);
+                                $pdf->pages = array_merge ($pdf->pages, $pages->pages);
+                            }
+                        }
+                    }
+                }catch (Exception $e){
+                }
+            }
+            if ($flag) {
+                return $this->_prepareDownloadResponse(
+                    'order_gift_receipt'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(),
+                    'application/pdf'
+                    );
+            } else {
+                $this->_getSession()->addError($this->__('There are no printable documents related to selected orders.'));
+                $this->_redirect('*/*/');
+            }
+        }
+        $this->_redirect('*/*/');
+    }
+    
 }

@@ -1,0 +1,58 @@
+<?php 
+$colorsFamily = $this->getFamilyColors(); 
+?>
+<div class="colors-family">
+    <?php $layer = Mage::getModel("catalog/layer");
+            $category = Mage::registry('current_category');
+            $layer->setCurrentCategory($category);
+            $attributes = $layer->getFilterableAttributes();           
+            ?>
+    <span id="colors-family-btn">Colors</span>
+    <ul id="colors-family-options" style='display:none'>
+        <?php foreach($colorsFamily as $families): ?>
+            <li>
+                <?php foreach ($attributes as $attribute): 
+                    if($families->getColorApparel()!='Array' && (strcasecmp($attribute->getAttributeCode(), 'color_apparel')==0) || 
+                            $families->getDiamondColor()!='Array' && (strcasecmp($attribute->getAttributeCode(), 'diamond_color')==0) || 
+                            $families->getMetalColor()!='Array' && (strcasecmp($attribute->getAttributeCode(), 'metal_color')==0)):
+                ?>                
+                    <input class="colors-family-option <?php echo $families->getTitle() ?>-option" type="checkbox" attribute="<?php echo $attribute->getAttributeCode()?>" id="familycolor<?php echo $families->getColorfamilyId() ?>" label="<?php echo $families->getTitle()?>" name="<?php echo $families->getTitle() ?>" value="<?php echo $families->getColorfamilyId()?>" />
+                    <label for="<?php echo $families->getTitle()?>"><?php echo $families->getTitle()?></label>
+                <?php endif; endforeach; ?>                
+            </li>
+        <?php endforeach; ?> 
+        <div id="colorCloseDiv"><a href="javascript:;">Close</a></div>
+    </ul>
+   
+    <!--div id="colors-familiy-filters"></div-->
+</div>
+<script>
+    jQuery.noConflict();
+    
+    jQuery(document).ready(function(){
+        jQuery('div.filters-selected').append(jQuery('<div id="colors-familiy-filters"/>'));
+    })
+    
+    jQuery('div#colorCloseDiv, #colors-family-btn').click(function(){
+        jQuery('#colors-family-options').toggle();
+    });
+    
+    jQuery('input.colors-family-option').click(function(){
+        if(jQuery(this).is(':checked')) {  
+                 jQuery('div#clearAll').show();
+                 jQuery('#colors-familiy-filters').append(jQuery('<span class="attribute-selected" onClick="javascript:removeMe(this)" />').attr('value',jQuery(this).attr('id')).text(jQuery(this).attr('label')));
+                 <?php //echo $this->getReloadFunction().'()' ?>
+        } else {  
+                id = jQuery(this).attr('id');
+                jQuery('span[value^="'+id+'"]').remove();  
+                if( jQuery('.attribute-selected').length == 0 ){
+                    jQuery('#clearAll').hide();
+                }
+                //alert(jQuery('.attribute-selected').length);
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //jQuery('div#clearAll').show();
+        //jQuery('#colors-family-filters').append(jQuery('<span class="attribute-selected" onClick="javascript:removeMe(this)" />').attr('value',jQuery(this).attr('id')).text(jQuery(this).attr('label')));
+        reloadFilters();
+    })
+</script>

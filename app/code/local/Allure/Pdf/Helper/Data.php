@@ -269,4 +269,77 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
     }
     
     
+    /**
+     * get Item gift message
+     */
+    public function getItemGiftMessage($item, $flag = false){
+        try{
+            $giftHelper = Mage::helper('giftmessage/message');
+            if($giftHelper->getIsMessagesAvailable('order_item', $item) && $item->getGiftMessageId()){
+                $_giftMessage = $giftHelper->getGiftMessageForEntity($item);
+                $from = "From : ".$this->htmlEscape($_giftMessage->getSender());
+                $to   = "To : ".$this->htmlEscape($_giftMessage->getRecipient());
+                $message = $giftHelper->getEscapedGiftMessage($item);
+            }else {
+                $from = "From : ";
+                $to   = "To : ";
+                $message = " ";
+            }
+            $lines = array();
+            $lines[][] = array(
+                'text'  => "Gift Message",
+                'font' => 'bold',
+                'feed' => 35,
+                'height' => 12
+            );
+            $lineBlock = array(
+                'lines'  => $lines,
+                'height' => 20
+            );
+            
+            $linesFrom = array();
+            $linesFrom[][] = array(
+                'text'  => $from,
+                'font' => 'italic',
+                'feed' => 35
+            );
+            $lineBlockFrom = array(
+                'lines'  => $linesFrom,
+                'height' => 20
+            );
+            
+            $linesTo = array();
+            $linesTo[][] = array(
+                'text'  => $to,
+                'font' => 'italic',
+                'feed' => 35
+            );
+            $lineBlockTo = array(
+                'lines'  => $linesTo,
+                'height' => 20
+            );
+            
+            $linesMsg = array();
+            $linesMsg[][] = array(
+                'text'  => Mage::helper('core/string')->str_split($message, 80, true, true),
+                'font' => 'italic',
+                'feed' => 35,
+                'height' => 12
+            );
+            $lineBlockMsg = array(
+                'lines'  => $linesMsg,
+                'height' => 20
+            );
+            
+            return array(
+                "is_show"=>true,"from"=>$lineBlockFrom,
+                "to"=>$lineBlockTo,"message"=>$lineBlockMsg,
+                "label"=>$lineBlock
+            );
+        }catch (Exception $e){
+            
+        }
+    }
+    
+    
 }

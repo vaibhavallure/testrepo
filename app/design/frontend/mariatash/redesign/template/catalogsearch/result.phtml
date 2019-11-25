@@ -1,0 +1,63 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="second-header-image">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+</div>
+<div class="search_results">
+    <?php if($this->getResultCount()): ?>
+        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+        <div class="container">
+            <div class="page-title">
+                <?php if ($this->helper('rss/catalog')->getTagFeedUrl()): ?>
+                    <a href="<?php echo $this->helper('rss/catalog')->getTagFeedUrl() ?>" class="nobr link-rss"><?php echo $this->__('Subscribe to Feed') ?></a>
+                <?php endif; ?>
+                <h1 ><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('Showing %d results for', $this->getResultCount()) ?></h1>
+                <h1 class="searchKey"><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('"%s"', $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+            </div>
+        </div>
+        <?php if ($messages = $this->getNoteMessages()):?>
+            <p class="note-msg">
+                <?php foreach ($messages as $message):?>
+                    <?php echo $message?><br />
+                <?php endforeach;?>
+            </p>
+        <?php endif; ?>
+        <?php echo $this->getLayout()->createBlock('mana_filters/search')->setTemplate('manapro/filteradvanced/view.phtml')->toHtml(); ?>
+        <?php echo $this->getProductListHtml() ?>
+    <?php else: ?>
+
+    <!--NEW - NO RESULT CODE-->
+        <div class="container">
+            <div class="page-title">
+                <h1 class="searchKey"><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('"%s"', $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+                <h1 ><?=$this->__("Sorry, your search didn't match any results.") ?></h1>
+            </div>
+        </div>
+
+    <?php endif; ?>
+</div>
+
