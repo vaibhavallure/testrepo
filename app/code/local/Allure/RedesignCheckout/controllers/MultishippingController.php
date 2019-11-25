@@ -35,6 +35,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             $couponCode = $this->_getCheckout()->getCheckoutSession()->getCartCouponCode();
             if ($couponCode) {
                 $this->_getCheckout()->getQuote()->setCouponCode($couponCode)
+                ->setTotalsCollectedFlag(false)
                 ->collectTotals()->save();
             }
         }
@@ -407,6 +408,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             return;
         }
         
+        $this->_getCheckout()->getCheckoutSession()->setCartCouponCode();
         $couponCode = (string)$this->getRequest()->getParam('coupon_code');
         if ($this->getRequest()->getParam('remove') == 1) {
             $couponCode = '';
@@ -430,6 +432,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getCheckout()->getQuote()->getCouponCode()) {
+                    $this->_getCheckout()->getCheckoutSession()->setCartCouponCode($couponCode);
                     if (!$isAjax) {
                         $this->_getCheckoutSession()->addSuccess(
                             $this->__('Coupon code "%s" was applied.', Mage::helper('core')->htmlEscape($couponCode))
