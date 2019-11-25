@@ -136,6 +136,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     ->save();
             }
 
+            $this->_getSession()->setCartCouponCode();
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getQuote()->getCouponCode()) {
                     if (! $isAjax) {
@@ -148,6 +149,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                                 Mage::helper('core')->htmlEscape($couponCode));
                         $response['disable'] = true;
                     }
+                    $this->_getSession()->setCartCouponCode($couponCode);
                 } else {
                     if (! $isAjax) {
                         $this->_getSession()->addError(
