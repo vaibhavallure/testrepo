@@ -32,7 +32,7 @@ background: -webkit-linear-gradient(left,  rgba(204,204,204,0.71) 0%,rgba(204,20
 background: linear-gradient(to right,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', endColorstr='#adcccccc',GradientType=1 ); /* IE6-9 */ 
 }
-.bk-slide h1, a, span, p{color:#ffffff;}
+.bk-slide h1, .bk-slide a, .bk-slide span, .bk-slide p{color:#ffffff;}
 .flex-col{
 	display: flex;
 	flex-direction: column;
