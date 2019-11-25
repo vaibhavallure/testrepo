@@ -103,7 +103,7 @@ function loadOpenOrderView(evt){
             jQuery('#load-open-order-data').show();
             hideLoadingFancybox1('box-history');
             var type = window.location.hash.substr(1);
-            var order_id   = jQuery(evt).attr("data-order-id");
+            var order_id   = jQuery(evt).attr("data-order-id"); 
            // window.location.hash = type+"#info#"+order_id; // Removed due to overlay issue by RAM.
         }
     });
