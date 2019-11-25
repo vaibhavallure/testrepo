@@ -2270,7 +2270,7 @@ span#popup_loader_register {
   width: 14px !important;
 }
 
-.usd-account .icon-item span {
+.usd-account .icon-item span,.usd-account .icon-item a {
   color: #292929;
 }
 
