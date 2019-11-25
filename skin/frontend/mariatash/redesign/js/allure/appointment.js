@@ -1,5 +1,8 @@
 
 jQuery(document).ready(function () {
+
+    unsetLoader();
+
     jQuery(window).bind('orientationchange', function (event) {
         location.reload(true);
     });
