@@ -232,12 +232,18 @@
 		  	// Update slide caption
 		   	if ($(vars.slide_caption).length){
 				if ((api.getField('url')=="") || (api.getField('url')=="#")) {
-					(api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
+
+					if(0)
+					(api.getField('title')) ? $(vars.slide_caption).html('<span><img src="'+api.getField('title')+'" border="0"/></span>') : $(vars.slide_caption).html('');
+					else
+                    (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
 				}
-				else { 
-                
-                (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
-				}
+				else {
+                   if(0)
+                    (api.getField('title')) ? $(vars.slide_caption).html('<a href="'+api.getField('url')+'" target="_blank"><img src="'+api.getField('title')+'" border="0"/></a>') : $(vars.slide_caption).html('');
+                   else
+                    (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
+                 }
 		   	}
 		    // Update slide number      api.getField('slide_content')
 			if (vars.slide_current.length){

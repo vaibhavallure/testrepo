@@ -491,15 +491,19 @@ $mode  = $this->getMode();
         helpers: {
             title: null
         },
-        margin: [20, 60, 20, 60], // Increase left/right margin
+        margin: [2, 60, 20, 60], // Increase left/right margin
         width: 1200,
         minWidth: 1200,
         maxWidth: 1200,
         height:610,
         minHeight:610,
         maxHeight:610,
+        beforeLoad: function(current, previous) {
+            jQuery('body').addClass("fancybox-lock");
+        },
+            afterLoad: function(current, previous) {
 
-        afterLoad: function(current, previous) {
+            jQuery('body').addClass("fancybox-lock");
 
 //            jQuery('.fancybox-iframe').attr('scrolling', 'no');
            /* if (current.href == jQuery("div.category-products ul li:first-child div.actions a.btn-quickview").attr('href')) {
