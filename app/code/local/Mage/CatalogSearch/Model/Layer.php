@@ -56,7 +56,7 @@ class Mage_CatalogSearch_Model_Layer extends Mage_Catalog_Model_Layer
         /*Filter By Group Code Starts Here*/
 
         /*Find Group of Customer Start*/
-        Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
+//        Mage::log('Catalog Search Model Layer',Zend_Log::DEBUG,'search.log',true);
 
 
         $groupCollection = Mage::getModel('customer/group')->getCollection()->addFieldToFilter('customer_group_code', array('eq'=>'NOT LOGGED IN'));

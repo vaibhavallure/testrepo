@@ -291,6 +291,9 @@ jQuery(document).ready(function () {
         event.stopPropagation();
     });
     jQuery("#menu-btn").on("click", function () {
+        if(jQuery('#cross-icon').is(':visible')) {
+            jQuery("#cross-icon").click();
+        }
         if (jQuery('.mobile-main_menu').hasClass('active')) {
             jQuery('section.sub-menu').hide();
         }
