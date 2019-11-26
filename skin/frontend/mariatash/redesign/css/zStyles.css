@@ -2194,10 +2194,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	/* ipad portrait */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
-			top: 70px;
-			left:100px;
-			position: absolute;
+			top: 90px;
+			position: fixed;
 			z-index: 2;
+			right: 20px;
 		}
 	}
 
@@ -2205,17 +2205,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	/* ipad landscape */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
 		#cross-icon {
-			top: 125px;
-			left:100px;
-			position: absolute;
+			top: 150px;
+			position: fixed;
 			z-index: 2;
 		}
 	}
 	@media (max-width: 767px) {
 		#cross-icon {
-			top: 72px;
-			left: 60px;
-			position: absolute;
+			top: 100px;
+			/*left: 60px;*/
+			position: fixed;
 			z-index: 2;
 		}
 	}
