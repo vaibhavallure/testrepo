@@ -501,6 +501,9 @@ $mode  = $this->getMode();
         beforeLoad: function(current, previous) {
             jQuery('body').addClass("fancybox-lock");
         },
+        afterClose: function(current, previous) {
+            jQuery('body').removeClass("fancybox-lock");
+        },
             afterLoad: function(current, previous) {
 
             jQuery('body').addClass("fancybox-lock");

@@ -53,7 +53,7 @@ if($this->isthumbnailCat($pc->getName())){
                                     ?>
                                     <div class="common-option-div" id="c-<?= $child->getId() ?>">
                                         <div class="menu-head jwl-head text-uppercase">
-                                            <span><a href="/<?= $child->getRequestPath() ?>"><?= $this->__($child->getName()); ?></a></span>
+                                            <span><a href="<?= (!$child->hasChildren())? "/".$child->getRequestPath() : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
                                         </div>
                                         <div class="head-child">
                                             <ul class="p-0">

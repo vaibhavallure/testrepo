@@ -1568,7 +1568,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	@media(max-width: 1024px){
 		.catalogsearch-result-index .products-grid li.item .list-mt-w{
 			display: block!important;
-			left: 0px;
+			/*left: 0px;*/
 		}
 		.locations-wrapper .img-wrap{
 			max-width: 100%;
@@ -1580,6 +1580,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		.catalogsearch-result-index #narrow-by-list{
 			padding-left: 10px;
 		}
+
 	}
 	@media(max-width: 769px){
 		.category-shop-our-instagram .fs-timeline-detail .quick_link{
@@ -2179,4 +2180,51 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		background: -webkit-linear-gradient(top,  rgba(76,76,76,0.64) 0%,rgba(77,77,77,0.64) 1%,rgba(89,89,89,0.64) 12%,rgba(102,102,102,0.65) 50%,rgba(19,19,19,0.67) 100%); /* Chrome10-25,Safari5.1-6 */
 		background: linear-gradient(to bottom,  rgba(76,76,76,0.64) 0%,rgba(77,77,77,0.64) 1%,rgba(89,89,89,0.64) 12%,rgba(102,102,102,0.65) 50%,rgba(19,19,19,0.67) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a34c4c4c', endColorstr='#ab131313',GradientType=0 ); /* IE6-9 */
+	}
+
+	/*Search price fix*/
+	.wyomind-elasticsearch .regular-price span {
+		font-size: 14px;
+	}
+
+	.catalogsearch-result-index .price_tax_text {
+		display: none !important;
+	}
+
+	/* ipad portrait */
+	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
+		#cross-icon {
+			top: 90px;
+			position: fixed;
+			z-index: 2;
+			right: 20px;
+		}
+		.catalogsearch-result-index .mb-breadcrumbs ul.row.m-0 {
+			margin-left: 30px !important;
+		}
+	}
+
+
+	/* ipad landscape */
+	@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
+		#cross-icon {
+			top: 150px;
+			position: fixed;
+			z-index: 2;
+		}
+	}
+	@media (max-width: 767px) {
+		#cross-icon {
+			top: 90px;
+			/*left: 60px;*/
+			position: fixed;
+			z-index: 2;
+		}
+	}
+	/*Mobile devices Landscape*/
+	@media (max-width: 767px) and (orientation: landscape) {
+		.search-autocomplete {
+			max-height: 250px !important;
+		}
+
 	}
