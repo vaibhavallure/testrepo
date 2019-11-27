@@ -60,6 +60,7 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0.25px;
 	line-height: 17px;
+    padding-top:10px;
 }
 
 .info-text-one, .login-dropdown li a{
@@ -1685,7 +1686,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .menu-head a {
   font-family: urw-din-regular;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
 }
 .right-section {
   padding-left: 3px;

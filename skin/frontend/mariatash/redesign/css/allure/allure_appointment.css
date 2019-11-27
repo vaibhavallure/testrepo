@@ -162,6 +162,13 @@ button#btnBooking{
 		margin: 4px 0px;
 		display: block;
 	}
+	#icon-price-close img{
+		position: absolute;
+		right: 36px;
+	}
+	#icon-price-close{
+		width: 100%;
+	}
 
 }
 
@@ -1391,13 +1398,10 @@ tr.tr-piercing td span, tr.tr-piercing td {
 	.peoplediv {
     padding: 0 15px 0 0;
 	}
-	#icon-price-close{
-		width: 100%;
+	#icon-price-close img {
+		right: 24px;
 	}
-	#icon-price-close img{
-		position: absolute;
-    right: 24px;
-	}
+
 	.apt-cancel-buttons-set, .apt-modify-buttons-set{
 		width: 45%;
 	}
