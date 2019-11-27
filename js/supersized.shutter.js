@@ -233,13 +233,13 @@
 		   	if ($(vars.slide_caption).length){
 				if ((api.getField('url')=="") || (api.getField('url')=="#")) {
 
-					if(0)
+					if(1)
 					(api.getField('title')) ? $(vars.slide_caption).html('<span><img src="'+api.getField('title')+'" border="0"/></span>') : $(vars.slide_caption).html('');
 					else
                     (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
 				}
 				else {
-                   if(0)
+                   if(1)
                     (api.getField('title')) ? $(vars.slide_caption).html('<a href="'+api.getField('url')+'" target="_blank"><img src="'+api.getField('title')+'" border="0"/></a>') : $(vars.slide_caption).html('');
                    else
                     (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
