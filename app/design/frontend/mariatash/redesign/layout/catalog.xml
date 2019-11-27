@@ -48,7 +48,7 @@ Default layout, loads most of the pages
 		<reference name="head">
 			<action method="addItem"><type>skin_js</type><name>js/jquery-ui-1.9.2.custom.min.js</name><params/></action>
 			<action method="addItem"><type>skin_js</type><name>js/selectboxit/selectboxit.js</name><params/></action>
-            <action method="addItem"><type>skin_js</type><name>js/allure/jquery.panzoom.min.js</name><params/></action>
+            <action method="addItem"><type>skin_js</type><name>js/allure/jquery.panzoom.js</name><params/></action>
 			<action method="addCss"><stylesheet>css/selectboxit.css</stylesheet></action>
         </reference>
         <reference name="left">
