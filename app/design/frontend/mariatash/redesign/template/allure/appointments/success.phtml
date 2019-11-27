@@ -37,4 +37,13 @@ if($this->getPara("redirect-from")!="modify-success"):
         });
     </script>
     <?php endif; ?>
-<?php endif; ?>
+<?php
+else:
+ ?>
+    <script>
+        var currentUrl=window.location.href;
+        var newUrl=currentUrl.replace("redirect-from/modify-success","");
+        history.pushState({}, null, newUrl);
+    </script>
+<?php
+endif; ?>
