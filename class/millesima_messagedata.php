@@ -78,23 +78,13 @@ class Millesima_Messagedata extends Millesima_Abstract
             unset($data["objet-" . $lettre]);
 
             //traitement des promotionsCards
-            /**
-             * @todo sauvegarder les données des promtions cards quelques part...
-             */
-          /*  if ($data["promotionCardDescription-" . $lettre] != "") {
+
+            if ($data["promotionCardDescription-" . $lettre] != "") {
                 $langue["promotionCardDescription-" . $lettre] = $data["promotionCardDescription-" . $lettre];
             } else {
                 $langue["promotionCardDescription-" . $lettre] = null;
-            }*/
+            }
             unset($data["promotionCardDescription-" . $lettre]);
-            unset($data["isPromotionCard"]);
-            unset($data["isPromotionCardImage"]);
-            unset($data["promotionCardImageLink"]);
-            unset($data["promotionCardDiscountCode"]);
-
-
-
-
 
             //traitement partie "Titre de l'offre principale"
             if ($data["titre_" . $lettre] != "") {

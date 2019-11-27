@@ -1341,15 +1341,15 @@ function getCode($typebrief){
 
                                 </div>
                                 </div>
-                                <div class="row" id="promotionCardImageLink" id="block-promotion-card">
+                                <div class="row" id="block-promotion-card-image">
                                     <div class="col-md-6">
                                         <div class="form-group" style="margin-left:15px;">
-                                            <label for="promotionCardImageLink">Lien image</label>
+                                            <label for="ImageLink">Lien image</label>
                                             <input name="promotionCardImageLink" type="text" id="promotionCardImageLink" class="form-control">
                                             <p class="help-block">(Commun à tous les pays)</p>
                                         </div>
                                     </div>
-
+                                </div>
                                 </div>
                             </div>
 

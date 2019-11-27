@@ -476,6 +476,22 @@ function getMessageSaveInfo(this_select) {
                 $('input[type=radio][name=w_wallet][value="1"]').attr('checked', true);
             }
 
+            //ouverture du bloc google promotioncard
+            if(data.messageData.isPromotionCard == "1"){
+                $('input[type=radio][name=isPromotionCard][value="1"]').attr('checked', true);
+                afficheContenu('block-promotion-card');
+                if(data.messageData.isPromotionCardImage == "1"){
+                    $('input[type=radio][name=isPromotionCardImage][value="1"]').attr('checked', true);
+                    afficheContenu('block-promotion-card-image');
+
+                }
+            }
+
+            //remplissage promotionCardDiscountCode
+            $('#promotionCardDiscountCode').val(data.messageData.promotionCardDiscountCode);
+            //remplissage promotionCardImageLink
+            $('#promotionCardImageLink').val(data.messageData.promotionCardImageLink);
+
             //remplissage image principale
            if(data.messageData.block_image == "1"){
                 $('input[type=radio][name=block_image][value="1"]').attr('checked', true);
