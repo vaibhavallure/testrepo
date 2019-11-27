@@ -996,7 +996,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .zopim{
-	display: none!important;
+	/*display: none!important;*/
 }
 .lds-ellipsis{
 	position: absolute;
