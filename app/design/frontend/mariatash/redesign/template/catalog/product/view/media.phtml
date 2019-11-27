@@ -402,15 +402,15 @@ function shareLikeTwitter(){
                     $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
                 if($videoUrl){ ?>
                     var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87)->keepFrame(false); ?>" /></a>');
+                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
                 <?php }
                 if($secondVideoUrl){ ?>
                     var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87)->keepFrame(false); ?>" /></a>');
+                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87); ?>" /></a>');
                 <?php } ?>
                 if( urlCounter > 0 ){
                     <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
-                    jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87)->keepFrame(false); ?>" /></a>');
+                    jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
                     <?php //} ?>
                 }
             }
