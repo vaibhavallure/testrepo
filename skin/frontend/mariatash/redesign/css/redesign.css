@@ -1685,7 +1685,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .menu-head a {
   font-family: urw-din-regular;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
 }
 .right-section {
   padding-left: 3px;
