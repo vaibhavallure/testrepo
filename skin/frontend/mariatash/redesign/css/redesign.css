@@ -60,6 +60,7 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0.25px;
 	line-height: 17px;
+    padding-top:10px;
 }
 
 .info-text-one, .login-dropdown li a{
