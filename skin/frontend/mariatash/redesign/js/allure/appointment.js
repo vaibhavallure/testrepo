@@ -126,7 +126,7 @@ var addCustomer = function (srno) {
                     </div>
                     <div class="col-md-9 col-12 notify-label">
                         <label class="label translate-popup custom-checkbox para-normal" for="c${srno}">${__('Text Message (Message and data rates may apply)')}
-                          <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" =name="customer[${srno}][noti_sms]">
+                          <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" name="customer[${srno}][noti_sms]">
                           <span class="checkmark"></span>
                         </label>
                     </div>
