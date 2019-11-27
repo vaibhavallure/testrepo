@@ -631,13 +631,13 @@ if ($isAjaxCall) {
         zoomImgArray = JSON.parse('<?= json_encode($zoomImgArr) ?>');
         jQuery('.zoom-img').empty();
         jQuery('.zoom-bnt-container').empty();
-        var zoom_btn = '<div class="mt-5 buttons zoom-buttons d-block" id="button-1-'+productId+'"><button class="zoom-in" id="zoom-in-1-'+productId+'">Zoom In</button><button class="zoom-out" id="zoom-out-1-'+productId+'">Zoom Out</button><button class="zoom-reset" id="zoom-reset-1-'+productId+'">Reset</button> </div>';
+        var zoom_btn = '<div class="mt-5 buttons zoom-buttons d-block" id="button-1-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>" class="zoom-in" id="zoom-in-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>" class="zoom-out" id="zoom-out-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>" class="zoom-reset" id="zoom-reset-1-'+productId+'"/> </div>';
         var img_content ='<div class="panzoom d-block" id="panzoom-1-'+productId+'"> <img class="w-100" src="'+zoomImgArray[0]+'" ></div>';
         var cnt = 1;
         if(zoomImgArray.length > 1){
             jQuery.each(zoomImgArray,function (key,url) {
                 if(cnt !== 1) {
-                    zoom_btn = zoom_btn + '<div class="mt-5 buttons zoom-buttons d-none" id="button-'+cnt+'-'+productId+'"><button class="zoom-in" id="zoom-in-'+cnt+'-'+productId+'">Zoom In</button><button class="zoom-out" id="zoom-out-'+cnt+'-'+productId+'">Zoom Out</button><button class="zoom-reset" id="zoom-reset-'+cnt+'-'+productId+'">Reset</button></div>';
+                    zoom_btn = zoom_btn + '<div class="mt-5 buttons zoom-buttons d-none" id="button-'+cnt+'-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>"  class="zoom-in" id="zoom-in-'+cnt+'-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>"  class="zoom-out" id="zoom-out-'+cnt+'-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>"  class="zoom-reset" id="zoom-reset-'+cnt+'-'+productId+'"/></div>';
                     img_content  = img_content + '<div class="panzoom d-none" id="panzoom-'+cnt+'-'+productId+'"> <img src="' + url + '" class="w-100" ></div>';
                 }
                 cnt++;
@@ -668,6 +668,9 @@ if ($isAjaxCall) {
 
             // setImg(img_src);
             jQuery(".zoom-loader").hide();
+            if (jQuery(window).width() >= 992) {
+                jQuery('#product-detail-image').addClass('zoom-opened');
+            }
 
         });
 
@@ -678,10 +681,13 @@ if ($isAjaxCall) {
             jQuery(".catalog-category-view .footer").css("display","block");
 
             jQuery(".zoomPopup").css({"opacity":"0","pointer-events":"none"});
+            if (jQuery(window).width() >= 992) {
+                jQuery('#product-detail-image').removeClass('zoom-opened');
+            }
 
         });
 
-if(zoomImgArray.length >= 1){
+if(zoomImgArray.length > 1){
     jQuery('.zoom-prev').hide();
 }else{
     jQuery('.zoom-prev,.zoom-next').hide();
@@ -738,7 +744,7 @@ if(zoomImgArray.length >= 1){
     <div class="pop-up-cover big-popup-cover col-12">
         <div class="row">
             <div class="pop-title modal-header">
-                <div class="zoom-bnt-container container"></div>
+                <div class="zoom-bnt-container "></div>
                 <a href="#close" title="Close" class="close exit-large" id="zoomClose">
                     <div></div>
                 </a>
