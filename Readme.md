@@ -45,6 +45,8 @@ As of 18/11 the sendmail config does not apply to php-fpm containre on boot/rest
 > mysql> exit
 >
 > ByeBye
+>
+As of 2019/11/27 you are required to update database scheme by running query in bdd/db_upgrade_20192711.sql to handle promotionCards
 
 ## Using phpMyAdmin
 If you want to use phpmyadmin :
