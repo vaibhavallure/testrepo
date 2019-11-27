@@ -1597,7 +1597,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .head-child li a {
   font-size: 13px;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
   line-height: 13px;
   font-family: urw-din-xlight;
 }
