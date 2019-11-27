@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
 });
 
 function addToShoppingCart(button, formId, relode=false) {
-
+    setLoader();
     if (jQuery("div.t_Tooltip_customcart").length) {
         jQuery(".close-tooltip").trigger('click');
     }
@@ -138,6 +138,7 @@ function addToShoppingCart(button, formId, relode=false) {
     }, 'fast');
     var jqxhr = jQuery.get(urlAdd2Cart, dataSend, function (data) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
+            unsetLoader();
             alert(data);
         } else {
             jQuery('#ajax_cart_content').html(data);
@@ -158,6 +159,8 @@ function addToShoppingCart(button, formId, relode=false) {
             if(relode)
             location.reload();
 
+            unsetLoader();
+
             setTimeout(function() {
                 jQuery('#just_added').slideUp(1000);
                 jQuery('#topcart-popup').removeClass('just_added');
@@ -171,6 +174,7 @@ function addToShoppingCart(button, formId, relode=false) {
 };
 
 function addToShoppingCartFromQuickView(button, formId) {
+    setLoader();
     if (parent.jQuery("div.t_Tooltip_customcart").length) {
         parent.jQuery(".close-tooltip").trigger('click');
     }
@@ -238,8 +242,10 @@ function addToShoppingCartFromQuickView(button, formId) {
     parent.jQuery("div.top-cart").css("background", "url('" + parent.SKIN_URL + "frontend/mt/default/images/loading.gif') no-repeat scroll 0 0 transparent");
     var jqxhr = jQuery.get(urlAdd2Cart, dataSend, function (data) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
+            unsetLoader();
             alert(data);
         } else {
+            unsetLoader();
             parent.jQuery("html, body").animate({
                 scrollTop: 0
             }, "slow");

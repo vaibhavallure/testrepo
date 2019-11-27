@@ -1181,6 +1181,9 @@
   .form-search input.input-text{
     height: 60px !important;
   }
+  .appointment-container{
+    margin-top: 18px!important;
+  }
 }
 
 /********************** Mobile Portrait *****************/

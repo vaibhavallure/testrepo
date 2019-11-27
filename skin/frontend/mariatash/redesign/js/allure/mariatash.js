@@ -27,6 +27,10 @@ jQuery(document).ready(function () {
 
     unsetLoader();
 
+jQuery('.link-button').click(function(event) {
+    unsetLoader(); 
+});
+
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
