@@ -22,11 +22,15 @@ jQuery(document).ready(function () {
     });
 
     jQuery(window).bind('beforeunload', function() {
-          setLoader();
+        setLoader();
     });
-    jQuery(window).bind('load', function() {
-         unsetLoader();
-    });
+
+    unsetLoader();
+
+jQuery('.link-button').click(function(event) {
+    unsetLoader(); 
+});
+
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
