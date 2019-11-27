@@ -15,12 +15,12 @@ if($this->getPara("redirect-from")!="modify-success"):
                         </button>
                       </div>
                         </button>
-                        <span class="translate-popup appointment-popup-text para-normal">Your Appointment on <?= date("d M Y",strtotime($model->getAppointmentStart())); ?> </span><span class="translate-popup para-normal">at</span> <span class="para-normal"><?= date("H:i",strtotime($model->getAppointmentStart())); ?></span> <span class="translate-popup para-normal">is <?= ($this->isModify())? 'updated' : 'confirmed'?>!<br>
+                        <span class="translate-popup appointment-popup-text para-normal">Your Maria Tash Appointment on <?= date("d M Y",strtotime($model->getAppointmentStart())); ?> </span><span class="translate-popup para-normal">at</span> <span class="para-normal"><?= date("H:i",strtotime($model->getAppointmentStart())); ?></span> <span class="translate-popup para-normal">is <?= ($this->isModify())? 'updated' : 'confirmed'?>!<br>
                             You will receive a confirmation via email.<br>
                             Thanks!</span>
                         <div id="btnContinue" class="buttons-set apt-buttons-set row">
                             <button type="button"  <?= ($this->isModify())? "onclick=window.location.href='". $this->getStoreShortUrl()."/redirect-from/modify-success'": 'data-dismiss="modal"'?> class="input-box light-button mx-auto text-uppercase"  aria-label="Book Another Piercing">
-                                <span aria-hidden="true" class="translate-popup">Book Another Piercing</span>
+                                <span aria-hidden="true" class="translate-popup">Book Another Appointment</span>
                             </button>
                         </div>
                     </div>
