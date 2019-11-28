@@ -955,7 +955,7 @@
 
   #cross-icon {
     position: absolute;
-    top:9px;
+    top:0px;
     right: 20px;
     z-index: 1032;
   }
