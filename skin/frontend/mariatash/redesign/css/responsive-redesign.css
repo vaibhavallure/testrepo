@@ -568,6 +568,10 @@
   #cross-icon{
     right: 19px;
   }
+
+  #search_autocomplete {
+    max-height: 80vh !important;
+  }
 }
 
 /*All ipads*/
