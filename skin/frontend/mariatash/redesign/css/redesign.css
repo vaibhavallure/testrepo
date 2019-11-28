@@ -377,6 +377,7 @@ select{
 	background-image: url(../images/redesign/arrow-down-bk.png);
   background-repeat: no-repeat;
   background-position: 98% 50%;
+	background-size: 10px !important;
 }
 :focus {
 	outline: none !important;
@@ -564,6 +565,7 @@ input, select, textarea{
   width: 10px;
   height: 10px;
   margin-top: 3px;
+	background-size: 10px;
 }
 .login-dropdown li {
 	text-align: right;
@@ -628,6 +630,7 @@ input, select, textarea{
   height: 30px;
   width: 181px;
   padding: 3px 0 10px 24px;
+	background-size: 10px !important;
 }
 body{
   overflow-x: hidden !important;
@@ -1813,11 +1816,12 @@ bottom: 0px;
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
   content: '';
   height: 14px;
-  width: 19px;
+  width: 18px;
   background-position: right;
   position: absolute;
   right: 45px;
   transform: rotate(90deg);
+	background-size: 10px;
 }
 .mobile-main_menu.active{
   left:0;
@@ -2056,12 +2060,14 @@ div#narrow-by-list {
   right: 19px;
   transition: 0.5s;
   cursor: pointer;
+	background-size: 10px;
 }
 .faq-question.active span:after{
   background: url(../images/redesign/minus.png) no-repeat;
   background-position: right;
   content: '';
   transition: 0.5s;
+	background-size: 10px;
 }
 .faq-copy-section h1 {
   margin-bottom: 33px;
@@ -4483,6 +4489,7 @@ dt.post-lengthds-lbl {
 	background-position: 98% 50% !important;
 	border: 1px solid rgba(41,41,41,0.25) !important;
 	background: transparent;
+	background-size: 10px !important;
 }
 .date_wrapper-column select, #checkout-review-table {
   width: 100%;
