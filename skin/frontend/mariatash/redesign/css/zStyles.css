@@ -2202,6 +2202,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		.catalogsearch-result-index .mb-breadcrumbs ul.row.m-0 {
 			margin-left: 30px !important;
 		}
+		.jewelry .left-section .inner-box{
+			padding: 0 40px;
+		}
 	}
 
 
@@ -2219,6 +2222,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 			/*left: 60px;*/
 			position: fixed;
 			z-index: 1032;
+		}
+		.jewelry .left-section .inner-box{
+			padding: 0 20px;
 		}
 	}
 	/*Mobile devices Landscape*/
@@ -2249,6 +2255,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		.zoom-img.big-popup-image.row {
 			max-width: 500px;
 		}
+		.menu-head.jwl-head > span > a {
+			pointer-events: none;
+		}
+
 	}
 
 	.mobile_menu_overlay {

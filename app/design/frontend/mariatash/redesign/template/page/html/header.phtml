@@ -53,44 +53,44 @@
 </script>
 
 <?php
-    $baseUrl = Mage::getBaseUrl();
-    /** get customer login status */
-    $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
+$baseUrl = Mage::getBaseUrl();
+/** get customer login status */
+$isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
 
-    $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-    $isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
+$customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+$isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
 
-    /** ecp menus id */
-    //$locationMenuId = 1;
-    //$giftCardMenuId = 2;
-    //$wishlistMenuId = 3;
+/** ecp menus id */
+//$locationMenuId = 1;
+//$giftCardMenuId = 2;
+//$wishlistMenuId = 3;
 
-    $navBitmapImg = "";
-    $navWishlistImg = "";
-    $navUserImg = $this->getSkinUrl('images/redesign/nav-user.png');
+$navBitmapImg = "";
+$navWishlistImg = "";
+$navUserImg = $this->getSkinUrl('images/redesign/nav-user.png');
 
-    /** load ecp menu by id */
-    $menuArray = array(1,2);
-    if($isCustomerLogIn){
-        $menuArray[] = 3;
-    }
+/** load ecp menu by id */
+$menuArray = array(1,2,3);
+//    if($isCustomerLogIn){
+//        $menuArray[] = 3;
+//    }
 
-    $giftcard = $location = $wishlist = null;
-    $ecpMenuCollection = Mage::getModel('ecp_menu/menu')->getCollection();
-    $ecpMenuCollection->addFieldToFilter("menu_id",array("in" => $menuArray ));
-    if($ecpMenuCollection->getSize()){
-        foreach ($ecpMenuCollection as $menu){
-            if($menu->getId() == 1){
-                $location = $menu;
-                $navBitmapImg = $this->getSkinUrl('images/redesign/nav-bitmap.png');
-            }elseif ($menu->getId() == 2 && !$isWholesaleCustomer){
-                $giftcard = $menu;
-            }elseif ($menu->getId() == 3){
-                $wishlist = $menu;
-                $navWishlistImg = $this->getSkinUrl('images/redesign/nav-wishlist.png');
-            }
+$giftcard = $location = $wishlist = null;
+$ecpMenuCollection = Mage::getModel('ecp_menu/menu')->getCollection();
+$ecpMenuCollection->addFieldToFilter("menu_id",array("in" => $menuArray ));
+if($ecpMenuCollection->getSize()){
+    foreach ($ecpMenuCollection as $menu){
+        if($menu->getId() == 1){
+            $location = $menu;
+            $navBitmapImg = $this->getSkinUrl('images/redesign/nav-bitmap.png');
+        }elseif ($menu->getId() == 2 && !$isWholesaleCustomer){
+            $giftcard = $menu;
+        }elseif ($menu->getId() == 3){
+            $wishlist = $menu;
+            $navWishlistImg = $this->getSkinUrl('images/redesign/nav-wishlist.png');
         }
     }
+}
 ?>
 
 <header>
@@ -107,36 +107,40 @@
                             </h1>
                             <ul class="col-12 main-nav-link nav-links-left">
                                 <li class="icon-item">
-                                	<?php echo $this->getChildHtml('store_currency_selector') ?>
+                                    <?php echo $this->getChildHtml('store_currency_selector') ?>
                                 </li>
                                 <?php if($location):?>
-                                <li class="icon-item d-lg-block d-none">
-                                    <a class="icon-link" href="<?= $location->getUrl() ?>">
-                                    	<?= $this->__("Store Locations") ?>
-                                    </a>
-                                </li>
-                                <li class="icon-item d-lg-none d-block mt-1">
-                                    <a class="icon-link" href="<?= $location->getUrl() ?>">
-                                      <img width="14px" src="<?= $navBitmapImg; ?>">
-                                    </a>
-                                </li>
-                                  <?php endif;?>
+                                    <li class="icon-item d-lg-block d-none">
+                                        <a class="icon-link" href="<?= $location->getUrl() ?>">
+                                            <?= $this->__("Store Locations") ?>
+                                        </a>
+                                    </li>
+                                    <li class="icon-item d-lg-none d-block mt-1">
+                                        <a class="icon-link" href="<?= $location->getUrl() ?>">
+                                            <img width="14px" src="<?= $navBitmapImg; ?>">
+                                        </a>
+                                    </li>
+                                <?php endif;?>
                                 <?php if($giftcard):?>
-                                <!-- <li class="icon-item">
-                                    <a href="<//?= $giftcard->getUrl() ?>">
-                                    	<span><//?= $giftcard->getTitle() ?></span>
-                                    </a>
-                                </li> -->
+                                    <!-- <li class="icon-item">
+                                        <a href="<//?= $giftcard->getUrl() ?>">
+                                            <span><//?= $giftcard->getTitle() ?></span>
+                                        </a>
+                                    </li> -->
                                 <?php endif;?>
 
 
 
                                 <?php if($wishlist):?>
-                                <li class="icon-item d-lg-none d-block mt-1">
-                                	<a class="icon-link" href="<?= $wishlist->getUrl() ?>">
-                                    	<img width="20px" src="<?= $navWishlistImg; ?>">
-                                    </a>
-                                </li>
+                                    <li class="icon-item d-lg-none d-block mt-1">
+                                        <?php if($isCustomerLogIn):?>
+                                        <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
+                                            <?php else:?>
+                                            <a class="icon-link wishlist" onclick="signin()">
+                                                <?php endif;?>
+                                                <img width="20px" src="<?= $navWishlistImg; ?>">
+                                            </a>
+                                    </li>
                                 <?php endif; ?>
                             </ul>
                         </div>
@@ -146,7 +150,7 @@
                             <div class="text-center ml-0 ml-lg-0">
                                 <h1 class="mt-logo">
                                     <a class="navbar-brand" id="main-logo" href="<?php echo $this->getUrl('') ?>" >
-                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?>
+                                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?>
                                     </a>
                                 </h1>
                             </div>
@@ -165,38 +169,53 @@
 
 
                             <?php if($wishlist):?>
-                            <li class="icon-item d-lg-block d-none">
-                                <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
-                                	<img width="20px" src="<?= $navWishlistImg; ?>">
-                                </a>
-                            </li>
-                          	<?php endif; ?>
+                                <li class="icon-item d-lg-block d-none">
+                                    <?php if($isCustomerLogIn):?>
+                                    <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
+                                        <?php else:?>
+                                        <a class="icon-link wishlist" onclick="signin()">
+                                            <script>
+                                                var signin= function() {
+                                                    jQuery('body').addClass('allure_login_wishlist');
+                                                    jQuery("#sign_in_label").trigger('click');
+                                                }
+                                                jQuery(document).ready(function() {
+                                                    jQuery('.popupLoginModel .close').on('click', function () {
+                                                        jQuery('body').removeClass('allure_login_wishlist');
+                                                    });
+                                                });
+                                            </script>
+                                            <?php endif;?>
+                                            <img width="20px" src="<?= $navWishlistImg; ?>">
+                                        </a>
+                                </li>
+                            <?php endif; ?>
 
                             <li class="icon-item">
-                            	<div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div>
+                                <div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div>
                             </li>
 
                             <?php if ($isCustomerLogIn) :?>
-                            <li class="icon-user position-relative">
-                            	<a>
-                            		<img width="18px" src="<?= $navUserImg; ?>">
-                            	</a>
-                              	<div class="login-dropdown-cover">
-                                	<ul class="login-dropdown">
-                                  		<li><a href="<?= $baseUrl;?>customer/account"><?= $this->__('My Account')?></a></li>
-                                  		<li><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></li>
-                                  		<li><a href="<?= $baseUrl;?>customer/account/edit/"><?= $this->__('Login & Security') ?></a></li>
-                                  		<li class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></li>
-                                  		<li class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></li>
-                                	</ul>
-                              	</div>
-                            </li>
+                                <li class="icon-user position-relative">
+                                    <a>
+                                        <img width="18px" src="<?= $navUserImg; ?>">
+                                    </a>
+                                    <div class="login-dropdown-cover">
+                                        <ul class="login-dropdown">
+                                            <li><a href="<?= $baseUrl;?>customer/account"><?= $this->__('My Account')?></a></li>
+                                            <li><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></li>
+                                            <li><a href="<?= $baseUrl;?>customer/account/edit/"><?= $this->__('Login & Security') ?></a></li>
+                                            <li class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></li>
+                                            <li class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                             <?php else: ?>
-                            <li class="icon-item" id="sign_in_label">
-                            	<a href="javascript:void(0)">
-                              		<img width="18px" src="<?= $navUserImg; ?>">
-                              	</a>
-                            </li>
+                                <li class="icon-item" id="sign_in_label">
+                                    <a href="javascript:void(0)">
+                                        <img width="18px" src="<?= $navUserImg; ?>">
+                                    </a>
+                                </li>
                             <?php endif; ?>
                         </ul>
                     </div>
@@ -285,20 +304,20 @@ endif;
 ?>
 
 
- <!-- The Modal -->
- <div class="modal" id="locationPopup">
- 	<div class="modal-dialog">
-    	<div class="modal-content">
-        	<button type="button" class="close" data-dismiss="modal" class="close exit-large">
-            	<img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>">
-          	</button>
+<!-- The Modal -->
+<div class="modal" id="locationPopup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" class="close exit-large">
+                <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>">
+            </button>
 
             <!-- Modal body -->
-        	<div class="modal-body">
-         		<img src="<?php echo $this->getSkinUrl('images/ex-img.png'); ?>" class="img-responsive">
-        	</div>
+            <div class="modal-body">
+                <img src="<?php echo $this->getSkinUrl('images/ex-img.png'); ?>" class="img-responsive">
+            </div>
 
-      	</div>
+        </div>
     </div>
 </div>
 
