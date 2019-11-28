@@ -2189,7 +2189,9 @@ width: 323px;
 	/* ipad portrait */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
-			top: 10px;
+			top: 0px;
+			padding:10px;
+			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
 			right: 20px;
@@ -2208,14 +2210,17 @@ width: 323px;
 		#cross-icon {
 			padding: 10px;
 			top: 0px;
+			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
 		}
 	}
 	@media (max-width: 767px) {
 		#cross-icon {
-			top: 9px;
+			padding: 10px;
+			top: 0px;
 			/*left: 60px;*/
+			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
 		}

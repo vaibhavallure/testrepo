@@ -958,6 +958,8 @@
   #cross-icon {
     position: absolute;
     top:0px;
+    padding:10px;
+    margin-right: 10px;
     right: 20px;
     z-index: 1032;
   }
