@@ -18,17 +18,18 @@
     margin: 20px auto 0 !important
   }
   .footer-item-list.data-block:after {
-    background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
+    background: url(../images/redesign/downward-arrow.png) no-repeat;
     content: '';
     height: 18px;
     width: 18px;
     background-position: right;
     position: absolute;
     right: 0;
-    transform: rotate(90deg);
+    background-size: 10px;
+    top: 26px;
   }
   .footer-item-list.data-block.active:after {
-    transform: rotate(270deg);
+    transform: rotate(180deg);
     top: 30px;
   }
   .container-footlinks, .homepage-menu.mariatash-header {
@@ -178,7 +179,7 @@
     padding: 0 0 10px;
     border-bottom: 1px solid #292929;
     margin-bottom: 20px;
-    margin: 20px 15px;
+    margin: 35px 15px 20px;
   }
   .category-image img{
     display: none;
@@ -478,9 +479,9 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
-  .mobile-device .main-nav-title li:first-child {
+  /* .mobile-device .main-nav-title li:first-child {
     padding-top: 6px;
-  }
+  } */
   .mobile-device .menu-common-section{
     margin-top: 13px;
   }

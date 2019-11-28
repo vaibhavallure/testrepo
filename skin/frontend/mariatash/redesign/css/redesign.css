@@ -1797,13 +1797,16 @@ bottom: 0px;
   padding-left: 15px;
 }
 .mobile-main_menu li.nav-item:after {
-  background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
+  background: url(../images/redesign/downward-arrow.png) no-repeat;
   content: '';
   height: 18px;
   width: 18px;
   background-position: right;
   position: absolute;
   right: 0;
+	transform: rotate(270deg);
+	background-size: 10px;
+  top: 26px;
 }
 .close-section:after{
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
@@ -4002,6 +4005,7 @@ table thead {
   font-size: 11px;
 	line-height: 2;
 	font-style: normal;
+	color: rgba(41,41,41,0.9);
 }
 .select-currency.main-nav-link-dropdown span span {
   margin-right: 15px;
@@ -4755,4 +4759,7 @@ td.cart_col2 {
   color: rgba(41,41,41,0.9) !important;
 	text-decoration: underline;
   letter-spacing: 1px;
+}
+#popup-login-form .soc-login-btn{
+	margin-top: 30px;
 }
