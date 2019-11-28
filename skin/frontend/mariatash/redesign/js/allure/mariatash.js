@@ -22,7 +22,7 @@ jQuery(document).ready(function () {
     });
 
     jQuery(window).bind('beforeunload', function() {
-        setLoader();
+        // setLoader();
     });
 
     unsetLoader();
