@@ -2233,6 +2233,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		cursor: pointer;
 	}
 	.zoom-img.big-popup-image.row {
+		max-height: 500px;
 		height: auto;
 	}
 	.zoom-opened {
@@ -2246,6 +2247,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	@media (min-width: 992px) {
 
 		.zoom-img.big-popup-image.row {
-			width: 70%;
+			max-width: 500px;
 		}
 	}
