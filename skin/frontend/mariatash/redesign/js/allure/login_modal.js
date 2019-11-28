@@ -59,6 +59,10 @@ jQuery(document).ready(function(){
 						 $j('#login_msg_div').css('display','none');
 						 $j(".modalDialog").css({"opacity":"0","pointer-events":"none"});
 
+						 if($j('body').hasClass("allure_login_wishlist")){
+						 	console.log('in wishlist')
+							 window.location = "myaccount/#wishlist";
+						 }else
 						 if($j('body').hasClass("allure_login_page")) {
                             window.location = "/";
                         }
