@@ -26,15 +26,15 @@ if(Mage::getSingleton("core/session")->getData('appointment_expired'))
 { ?>
             <div class="modal-header">
                 <h1 class="modal-title w-100 text-center translate-popup"
-                    id="exampleModalLongTitle"><?php echo $this->__('Appointment No Longer Available For Modify') ?></h1>
+                    id="exampleModalLongTitle"><?php echo $this->__('Appointment No Longer Available For Modify.') ?></h1>
             </div>
             <div id="popupConfirmAppointment" class="modal-body p-0">
                 <div id="wrapperConfirmAppointment" class="">
                  <div class="apt-buttons-set w-100 text-center">
-                                    <button type="button" class="button input-box b translate-popup light-button" style="width: 200px"
-                                            title="<?php echo $this->__('Book Another Piercing') ?>"
+                                    <button type="button" class="button input-box b translate-popup light-button" style="width: 266px"
+                                            title="<?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>"
                                             onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
-                                        <span><span class="translate-popup"><?php echo $this->__('Book Another Piercing') ?></span></span>
+                                        <span><span class="translate-popup"><?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?></span></span>
                                     </button>
                                 </div>
                             </div>
@@ -118,9 +118,9 @@ $apt_email = $model->getEmail();
 
                                 <div class="apt-buttons-set mb-0">
                                     <button type="button" class="button input-box b translate-popup light-button"
-                                            title="<?php echo $this->__('Book Another Piercing') ?>"
+                                            title="<?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>"
                                             onclick="window.location.href='<?= $this->getStoreShortUrl() ?>/redirect-from/modify-success'">
-                                        <?php echo $this->__('Book Another Piercing') ?>
+                                        <?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>
                                     </button>
                                 </div>
                             </div>
@@ -139,10 +139,10 @@ else:
                     <div id="popupConfirmAppointment" class="modal-body p-0">
                         <div id="wrapperConfirmAppointment" class="">
                             <div class="apt-buttons-set w-100 text-center">
-                                <button type="button" class="button input-box b translate-popup light-button" style="width: 200px"
-                                        title="<?php echo $this->__('Book Another Piercing') ?>"
+                                <button type="button" class="button input-box b translate-popup light-button" style="width: 266px"
+                                        title="<?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>"
                                         onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
-                                    <span><span class="translate-popup"><?php echo $this->__('Book Another Piercing') ?></span></span>
+                                    <?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>
                                 </button>
                             </div>
                         </div>

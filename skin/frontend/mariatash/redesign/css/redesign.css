@@ -60,6 +60,7 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0.25px;
 	line-height: 17px;
+    padding-top:10px;
 }
 
 .info-text-one, .login-dropdown li a{
@@ -1597,7 +1598,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .head-child li a {
   font-size: 13px;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
   line-height: 13px;
   font-family: urw-din-xlight;
 }
@@ -1685,7 +1686,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .menu-head a {
   font-family: urw-din-regular;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
 }
 .right-section {
   padding-left: 3px;
@@ -2273,7 +2274,7 @@ span#popup_loader_register {
   width: 14px !important;
 }
 
-.usd-account .icon-item span {
+.usd-account .icon-item span,.usd-account .icon-item a {
   color: #292929;
 }
 
@@ -2369,7 +2370,7 @@ input[type='radio']{
 .prev,
 .next,
 .galleryFull .controls .prev,
-.galleryFull .controls .next{
+.galleryFull .controls .next, .zoom-next, .zoom-prev{
 	background: url(../images/Popup-side-arrow.png) no-repeat transparent;
 	width: 45px;
 	height: 100px;

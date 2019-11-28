@@ -18,29 +18,13 @@
                                 <div id="booking-box" class="col-12 booking-box">
                                     <div class="store-info-wrapper">
                                         <div class="col-12 p-0 ">
-                                            <div class="row">
-                                                <div class="col-12 store-name"><h1>New York</h1></div>
-                                                <div class="col-12 store-details">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6 col-12">
-                                                            <p class="para-lighter mb-0 store-left">653 Broadway</br>
-                                                                between Bleecker and Bond</br>
-                                                                New York, NY 10012</p>
-                                                            <p class="para-lighter">+1 212 253 0921 Store</br>
-                                                                +1 833 775 TASH Customer Service</p>
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-12 store-right text-lg-right">
-                                                            <p class="para-lighter">Monday — Saturday: 10AM - 8PM</br>
-                                                                Sunday: 12 - 7PM</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
+                                            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_service_location_and_contact')->toHtml()?>
                                         </div>
                                     </div>
                                     <div class="row walkin-top-text">
                                         <div class="col-12 mt-3 mb-1">
-                                            <p class="store-walkin">Appointments are currently unavailble at our New York Location. <span class="store-walkin--hl"> Walk-ins are always welcome.</span></p>
+                                            <p class="store-walkin">Appointments are currently unavailable at our New York Location. <span class="store-walkin--hl"> Walk-ins are always welcome.</span></p>
                                         </div>
                                     </div>
                                     <div class="banner">

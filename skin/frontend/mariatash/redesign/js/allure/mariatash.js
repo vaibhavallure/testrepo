@@ -27,6 +27,10 @@ jQuery(document).ready(function () {
 
     unsetLoader();
 
+jQuery('.link-button').click(function(event) {
+    unsetLoader(); 
+});
+
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
     jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
@@ -291,6 +295,9 @@ jQuery(document).ready(function () {
         event.stopPropagation();
     });
     jQuery("#menu-btn").on("click", function () {
+        if(jQuery('#cross-icon').is(':visible')) {
+            jQuery("#cross-icon").click();
+        }
         if (jQuery('.mobile-main_menu').hasClass('active')) {
             jQuery('section.sub-menu').hide();
         }

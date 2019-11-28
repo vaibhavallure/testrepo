@@ -17,6 +17,12 @@ if ($_product->getSizeSample() == 1) {
 }
 
 ?>
+<script type="text/javascript">
+                        var $x = jQuery.noConflict();
+                        $x(document).ready(function(){
+                            $x(".size_chart_link").fancybox();
+});
+</script>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
 <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
 <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>

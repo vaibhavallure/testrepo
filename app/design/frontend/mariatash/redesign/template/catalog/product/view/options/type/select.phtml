@@ -61,6 +61,7 @@
             var select_id=jQuery(this).attr("id");
             jQuery(element).each(function (idx, elm) {
                 var liCounter=1;
+                var optionCounter=1;
                 jQuery('option', elm).each(function (id, el) {
                     if(el.value!="") {
 
@@ -72,9 +73,12 @@
                             var liRow = "secondRow";
                         }
 
+                        liRow+= (optionCounter==1 && el.value!="")? " active":"";
+
                         jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class=" ' + liRow + '"><span>' + el.text + '</span></li>');
                         liCounter++;
                     }
+                    optionCounter++;
                 });
             });
             i++;

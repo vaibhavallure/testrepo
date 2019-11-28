@@ -128,9 +128,9 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
                 $outermostClassCode = ' class="' . $outermostClass . '" ';
                 $child->setClass($outermostClass);
             }
-
+             $childUrl=(strtolower($child->getName())=="jewelry")? "#" : $child->getUrl();
             $html .= '<li  data-id="'.str_replace(" ","_",strtolower($child->getName())).'"' . $this->_getRenderedMenuItemAttributes($child) . '>';
-            $html .= '<a href="' . $child->getUrl() . '" ' . $outermostClassCode . '><span>'
+            $html .= '<a href="' . $childUrl . '" ' . $outermostClassCode . '><span>'
                 . $this->escapeHtml($this->__($child->getName())) . '</span></a>';
 
 
