@@ -3866,7 +3866,7 @@ table thead {
 
 
 /*home page slider*/
-.homepageSliderControllers .prevS{
+/* .homepageSliderControllers .prevS{
 	content: "";
 	background-image: url("../images/white-active-arrow.png");
 	background-size: 100% 100%;
@@ -3890,7 +3890,7 @@ table thead {
 	height: 95px;
 	width: 40px;
 	cursor: pointer;
-}
+} */
 #slidecaption{
 	/*visibility: hidden;*/
 	position: absolute;
