@@ -35,7 +35,7 @@ if($this->getCurrencyCount()>0): ?>
                     if($this->helper('ecp_category')->checkRemoteFile($file)) { ?><img src="<?php echo $file ?>"/>
                   <?php } ?><span><?= $tmpSymbol[$tmpCurrenciesnew[$_code]];?></span>
                     <?php echo Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code) ?></span>
-                  <img src="<?php echo $this->getSkinUrl('images/redesign/downward-arrow.png') ?>">
+                  <img width="7px" src="<?php echo $this->getSkinUrl('images/redesign/downward-arrow.png') ?>">
                 </div>
                 <div class="arrow-down"></div>
             <?php }
