@@ -2226,11 +2226,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		.jewelry .left-section .inner-box{
 			padding: 0 20px;
 		}
+		.img-container-360{
+			top:25%;
+			left:35%;
+		}
 	}
 	/*Mobile devices Landscape*/
 	@media (max-width: 767px) and (orientation: landscape) {
 		.search-autocomplete {
 			max-height: 250px !important;
+		}
+		.img-container-360{
+			top:30%;
+			left:40%;
 		}
 
 	}

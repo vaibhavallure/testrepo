@@ -3246,7 +3246,7 @@ table thead {
 	text-decoration: underline;
 }
 .fancybox-type-iframe{
-	position: fixed!important;
+	position: fixed ;/*!important; removed because 1st Quick view on instagram gets hide*/
 }
 .quickview-index-index{
 	overflow: hidden;
