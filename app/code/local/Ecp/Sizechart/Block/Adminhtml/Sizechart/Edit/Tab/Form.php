@@ -21,7 +21,7 @@ class Ecp_Sizechart_Block_Adminhtml_Sizechart_Edit_Tab_Form extends Mage_Adminht
       ));
 
       $wysiwygConfig = Mage::getSingleton('cms/wysiwyg_config')->getConfig();
-      $adminKey= (Mage::getBaseUrl()=="https://www.mariatash.com/index.php/")? 'MariaTashGOadmin' : 'admin';
+      $adminKey= (Mage::getBaseUrl()=="https://www.mariatash.com/index.php/" || Mage::getBaseUrl()=="https://beta.mariatash.com/index.php/")? 'MariaTashGOadmin' : 'admin';
       $wysiwygConfig->setDirectivesUrl(str_replace('ecpsizechart',$adminKey,$wysiwygConfig->getDirectivesUrl()));
       $plugins = $wysiwygConfig->getPlugins();
       $plugins[0]['options']['onclick']['subject'] = str_replace('ecpsizechart','admin',$plugins[0]['options']['onclick']['subject']);
