@@ -70,9 +70,9 @@
     padding-left: 15px;
     margin-bottom: 17px;
   }
-  #search-input {
-    z-index: 2;
-  }
+  /*#search-input {*/
+  /*  z-index: 1032;*/
+  /*}*/
   .form-search input.input-text{
     background: #292929;
   }
@@ -557,7 +557,10 @@
     left: 0;
   }
   .mobile-device #search {
-    top: 68px;
+    top: 0px;
+    background: #292929;
+    color: white;
+    z-index: 1032;
   }
   .desktop-device #search{
     top: 72px;
@@ -935,10 +938,29 @@
   #search {
     background: #292929;
   }
-  .mobile-device #search{
-  top: 135px !important;
+}
+
+/* ipad landscape */
+@media (min-width:1024px) and (max-width:1366px) and (orientation:landscape) {
+  .mobile-device #search {
+    top: 0 !important;
+    background: #292929;
+    width: 100%;
+    color:#fff;
+  }
+
+  #cross-icon {
+    position: absolute;
+    top:9px;
+    right: 20px;
+    z-index: 1032;
+  }
+
+  #search-input {
+    z-index: 1032;
   }
 }
+
 
 /* ALl Mobiles */
 @media (max-width:767px) {
