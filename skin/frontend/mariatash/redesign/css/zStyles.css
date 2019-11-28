@@ -2228,3 +2228,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		}
 
 	}
+	.zoom-next,
+	.zoom-prev{
+		cursor: pointer;
+	}
+	.zoom-img.big-popup-image.row {
+		height: auto;
+	}
+	.zoom-opened {
+		z-index: 9999;
+	}
+	.zoom-in, .zoom-out, .zoom-reset {
+		width: 2.2rem;
+		cursor: pointer;
+		margin: 0 10px;
+	}
+	@media (min-width: 992px) {
+
+		.zoom-img.big-popup-image.row {
+			width: 70%;
+		}
+	}

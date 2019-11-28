@@ -285,6 +285,8 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
 
                 try {
                     $url = $this->getShortUrl($this->getModifyLink($appointmentCustomer,$isSpecialPopup));
+
+
                     if (strlen($url) < 1) {
                         $url = $this->getModifyLink($appointmentCustomer,$isSpecialPopup);
                     }
@@ -302,6 +304,10 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                         $smsText = str_replace("(date)", $date, $smsText);
                     }
                     $smsText = str_replace("(modify_link)", $url, $smsText);
+
+                    $booking_link = $this->getShortUrl(Mage::getBaseUrl().'appointments/');
+                    $smsText = str_replace("(book_link)", $booking_link,$smsText);
+
 
                     if (strlen(trim($phone)) > 0) {
                         $smsdata = $this->sendsms($phone, $smsText, $store_id);
