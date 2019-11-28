@@ -2272,3 +2272,10 @@ width: 323px;
 		z-index: 1031;
 		transition: all 0.5s;
 	}
+
+	/*Large Screen*/
+	@media (min-width: 1200px){
+		.cms-piercing-service .container-fluid.jewelry-container{
+			max-width: 1550px;
+		}
+	}
