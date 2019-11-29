@@ -291,7 +291,7 @@ jQuery('.link-button').click(function(event) {
         }
         });
 
-    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head').click(function(event){
+    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head,.select-currency-mobile,.wishlist,.my-account-mobile').click(function(event){
         event.stopPropagation();
     });
     jQuery("#menu-btn").on("click", function () {
