@@ -2189,7 +2189,9 @@ width: 323px;
 	/* ipad portrait */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
-			top: 10px;
+			top: 0px;
+			padding:10px;
+			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
 			right: 20px;
@@ -2206,15 +2208,19 @@ width: 323px;
 	/* ipad landscape */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
 		#cross-icon {
-			top: 10px;
+			padding: 10px;
+			top: 0px;
+			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
 		}
 	}
 	@media (max-width: 767px) {
 		#cross-icon {
-			top: 9px;
+			padding: 10px;
+			top: 0px;
 			/*left: 60px;*/
+			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
 		}
@@ -2271,4 +2277,11 @@ width: 323px;
 		height: 0%;
 		z-index: 1031;
 		transition: all 0.5s;
+	}
+
+	/*Large Screen*/
+	@media (min-width: 1200px){
+		.cms-piercing-service .container-fluid.jewelry-container{
+			max-width: 1550px;
+		}
 	}

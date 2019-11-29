@@ -2,7 +2,6 @@
 @media (max-width:1023px){
   .mobile-device .main-nav-title li {
     margin-right: 0;
-    /* text-align: center; */
     margin-top: 15px;
   }
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
@@ -45,10 +44,6 @@
   .social-media ul {
     margin-bottom: 40px;
   }
-  /* .inner-box {
-    width: 100%;
-    margin-left: 0;
-  } */
   .mobile-device .head-child, #appointments img {
     display: none;
     padding-left: 10px;
@@ -66,15 +61,12 @@
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
-    overflow-y: auto;
+    overflow-x: auto;
   }
   .piercing_options .image-text {
     padding-left: 15px;
     margin-bottom: 17px;
   }
-  /*#search-input {*/
-  /*  z-index: 1032;*/
-  /*}*/
   .form-search input.input-text{
     background: #292929;
   }
@@ -84,12 +76,13 @@
   #jewelry .menu-head span a:after {
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
-    height: 19px;
+    height: 20px;
     width: 19px;
     background-position: right;
     position: absolute;
     right: 30px;
     transition: 0.5s;
+    background-size: 10px;
   }
   #jewelry .menu-head span a.active:after {
     background: url(../images/redesign/minus.png) no-repeat;
@@ -957,7 +950,9 @@
 
   #cross-icon {
     position: absolute;
-    top:9px;
+    top:0px;
+    padding:10px;
+    margin-right: 10px;
     right: 20px;
     z-index: 1032;
   }
