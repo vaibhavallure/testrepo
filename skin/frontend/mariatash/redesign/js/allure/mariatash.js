@@ -330,7 +330,7 @@ jQuery('.link-button').click(function(event) {
 /*filter popup start---------------------------------*/
 
 jQuery(window).bind("load resize", function (e) {
-    var width = jQuery(window).width();
+   /* var width = jQuery(window).width();
     if ((width < 1023)) {
 
         if (jQuery('.filter-common-div').length) {
@@ -378,7 +378,7 @@ jQuery(window).bind("load resize", function (e) {
         jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
         jQuery('.filter-common-div').show();
         jQuery('.filterButton').hide();
-    }
+    }*/
 });
 /*filter popup end---------------------------------*/
 

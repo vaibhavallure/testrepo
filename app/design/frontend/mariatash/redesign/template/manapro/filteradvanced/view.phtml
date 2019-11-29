@@ -59,18 +59,21 @@
         <?php if($this->canShowOptions()): ?>
             <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
             <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
-            <ul id="narrow-by-list" class="mb-0">
-                <?php $_filters = $this->getFilters(); $i = 0; ?>
-                <?php foreach ($_filters as $_filter): ?>
-                <?php
-                		if (!$_filter->getCode()) {
-                			$_filterCode = iconv('utf-8', 'us-ascii//TRANSLIT', $_filter->getName());
-   							$_filterCode = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '_', $_filterCode));
-                			$_filter->setCode($_filterCode);
-                		}
-                ?>
-                <?php //echo (get_class($_filter));?>
-				<?php /*if($_filter->getItemsCount() && 'price' == $_filter->getCode()): */?><!--
+            <div class="allure_filter">
+                <dt class="filter-head al-hide">Filter By</dt>
+                <dd class="filter-contain al-hide" >
+                    <ul id="narrow-by-list" class="mb-0">
+                        <?php $_filters = $this->getFilters(); $i = 0; ?>
+                        <?php foreach ($_filters as $_filter): ?>
+                        <?php
+                        if (!$_filter->getCode()) {
+                            $_filterCode = iconv('utf-8', 'us-ascii//TRANSLIT', $_filter->getName());
+                            $_filterCode = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '_', $_filterCode));
+                            $_filter->setCode($_filterCode);
+                        }
+                        ?>
+                        <?php //echo (get_class($_filter));?>
+                        <?php /*if($_filter->getItemsCount() && 'price' == $_filter->getCode()): */?><!--
                     <li class="common-filter filtru-<?php /*echo $_filter->getCode(); */?>">
                         <div class="optionfilter" style="<?php /*if($_filter->getCode() != 'price') : */?><?php /*endif; */?>">
                             <dt><?php /*echo $this->__($_filter->getName()) */?></dt>
@@ -78,55 +81,65 @@
                         </div>
                     </li>
                 --><?php /*endif; */?>
-                <?php if($_filter->getItemsCount() ): //&& 'price' != $_filter->getCode()?>
-                    <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
-                        <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
-                            <dt><?php echo $this->__($_filter->getName()) ?></dt>
-                            <dd class="filtru-<?php echo $_filter->getCode().'-content-dtn'; ?>" style ="display:none">
-							<!-- <div class="filter_name"><//?php echo $this->__($_filter->getName()) ?></div> -->
-							<?php echo $_filter->getHtml() ?>
-							</dd>
-                        </div>
-                    </li>
-                    <script type="text/javascript">
-                        jQuery(document).ready(function(){
-                            var config_currency_selector_<?php echo $_filter->getCode() ?> = {
-                                over: function(){
-                                    //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
-                                },
-                                timeout: 200,
-                                out: function(){
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
-                                }
-                            };
+                        <?php if($_filter->getItemsCount() ): //&& 'price' != $_filter->getCode()?>
+                        <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
+                            <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
+                <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                <dd data-filter-code="<?= $_filter->getCode() ?>" class="filtru-<?php echo $_filter->getCode().'-content-dtn'; ?>" style ="display:none">
+                    <!-- <div class="filter_name"><//?php echo $this->__($_filter->getName()) ?></div> -->
+                    <?php echo $_filter->getHtml() ?>
+                </dd>
+            </div>
+        </li>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                var config_currency_selector_<?php echo $_filter->getCode() ?> = {
+                    over: function(){
+                        //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
+                    },
+                    timeout: 200,
+                    out: function(){
+                        jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
+                        jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
+                    }
+                };
 
-                            jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent( config_currency_selector_<?php echo $_filter->getCode() ?> );
-                            jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?>').click(function () {
-                                var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
-                                if(!showOrHide) {
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').addClass('show');
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
-                                }
-                                else {
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
-                                }
-                            });
-                        });
-                    </script>
-                <?php endif; ?>
-				<?php //if($i++ == 2) break?>
-                <?php endforeach; ?>
-                <?php if ($this->getLayer()->getState()->getFilters()): ?>
-                <li>
-              <div class="actions"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
-                </li>
-                <?php endif; ?>
-                <li id="total_item_counts_holder">
-                    <span class="info-text-two"></span>
-                </li>
-            </ul>
+                jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent( config_currency_selector_<?php echo $_filter->getCode() ?> );
+                jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
+                    var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
+                    if(!showOrHide) {
+                        jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').addClass('show');
+                        jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
+                    }
+                    else {
+                        jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
+                        jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
+                    }
+                });
+            });
+        </script>
+    <?php endif; ?>
+    <?php //if($i++ == 2) break?>
+    <?php endforeach; ?>
+        <?php if ($this->getLayer()->getState()->getFilters()): ?>
+            <li class="filter-actions">
+                <div class="actions"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions"><a class="link-button float-right" href="#"><?php echo $this->__('Apply') ?></a></div>
+            </li>
+            <?php else: ?>
+            <li class="filter-actions">
+                <div class="actions"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
+            </li>
+        <?php endif; ?>
+        <li id="total_item_counts_holder">
+            <span class="info-text-two"></span>
+        </li>
+        </ul>
+
+        </dd>
+            </div>
+<!--            --><?php //var_dump($this->getFiter()->getMSelectedValues())?>
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>
 
@@ -155,4 +168,66 @@
 
         jQuery("#total_item_counts_holder span").html(jQuery("#total_item_counts").html());
     });
+
+
+    jQuery('.allure_filter .filter-head').click(function () {
+        jQuery(".filter-head").toggleClass("showing");
+        jQuery(".filter-contain").slideToggle();
+    });
+
+    jQuery(window).bind("resize load",function () {
+        if (jQuery(window).width() <= 1023) {
+            jQuery(".allure_filter .filter-contain").hide();
+            jQuery(".allure_filter .filter-head").show();
+        }else
+        {
+            jQuery(".allure_filter .filter-contain").show();
+            jQuery(".allure_filter .filter-head").hide();
+        }
+        jQuery(".filter-contain").removeClass("al-hide");
+        jQuery(".filter-head").removeClass("al-hide");
+
+    });
+
+
+    jQuery(window).bind("scroll resize load",function () {
+
+    if (jQuery(window).width() <= 1023) {
+        var scroll = jQuery(window).scrollTop();
+        if (scroll > jQuery(".mariatash-header").outerHeight()) {
+               jQuery(".top-bar").addClass("sticky-bar");
+               jQuery(".filter-common-div").addClass("sticky-filter");
+        } else {
+            jQuery(".top-bar").removeClass("sticky-bar");
+            jQuery(".filter-common-div").removeClass("sticky-filter");
+        }
+    }
+    });
+
+
+
+    function applyFilter() {
+        if(jQuery(".filter-checkbox-input:checked").length) {
+            var filters = {};
+            var plainUrl="<?= $this->getClearUrl() ?>";
+            jQuery(".filter-checkbox-input:checked").each(function () {
+                var t = filters[jQuery(this).attr('data-var-name')];
+                filters[jQuery(this).attr('data-var-name')] = [...t ? t : [], jQuery(this).attr('data-var-value')
+                ];
+            });
+
+           var urlString=plainUrl.replace(".html","");
+           for(var key in filters)
+           {
+               urlString+="/"+key+"/"+filters[key].join("-");
+           }
+            urlString+=".html";
+
+//            console.log(urlString);
+
+            window.location=urlString;
+        }else {
+            alert("No value selected for filter");
+        }
+    }
 </script>

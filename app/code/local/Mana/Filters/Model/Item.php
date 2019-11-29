@@ -126,8 +126,27 @@ class Mana_Filters_Model_Item extends Mage_Catalog_Model_Layer_Filter_Item {
     }
 	public function getUniqueId($block) {
 		/* @var $helper Mana_Filters_Helper_Data */ $helper = Mage::helper(strtolower('Mana_Filters'));
-		return 'filter_'.$helper->getFilterName($this->getFilter(), $this->getFilter()).'_'.$this->getValue();
+     	return 'filter_'.$helper->getFilterName($this->getFilter(), $this->getFilter()).'_'.$this->getValue();
 	}
+
+	public function getReqVarName()
+    {
+        return str_replace("_","-",$this->getFilter()->getRequestVar());
+    }
+
+    public function getReqValue()
+    {
+        if($this->getReqVarName()=="price")
+        {
+            $value=explode(",",$this->getValue());
+            $minValue=($value[0]*$value[1])-$value[1];
+            $maxValue=($value[0]*$value[1]);
+            return $minValue."-".$maxValue;
+        }
+
+        $value=str_replace(" ","-",trim(strtolower($this->getLabel())));
+        return $value;
+    }
 
     /**
      * @return string

@@ -1,4 +1,9 @@
-
+ul#slide-list li a {
+	display: block;
+	width: 12px;
+	height: 12px;
+	background: url(../images/slider/nav-dot.png) no-repeat 0 -24px;
+}
 /*Standard Mendetory CSS*/
 
 h1{
@@ -2531,6 +2536,12 @@ ul#foo4 {
 }
 
 /*filter popup-----------------------------------------------------*/
+.allure_filter .al-hide{
+	display: none;
+}
+
+
+
 
 .filterPopup .modal-body{
 	padding: 0
