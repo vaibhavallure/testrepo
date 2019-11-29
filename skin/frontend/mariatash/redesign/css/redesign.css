@@ -2520,7 +2520,7 @@ ul#foo4 {
 }
 
 .cms-home #supersized{
-	z-index: -1!important;
+	z-index: 1 !important;
 }
 .select-currency.main-nav-link-dropdown img:first-child {
   display: none;
@@ -3895,8 +3895,9 @@ table thead {
 	/*visibility: hidden;*/
 	position: absolute;
 	top: 50%;
-  left: 11%;
-  transform: translatex(-50%);
+  left: 10px;
+  transform: translatey(-50%);
+	z-index: 2;
 }
 
 
@@ -4771,4 +4772,7 @@ td.cart_col2 {
 }
 #popup-login-form .soc-login-btn{
 	margin-top: 30px;
+}
+.cms-home .footer{
+	z-index: 2;
 }
