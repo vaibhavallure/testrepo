@@ -153,7 +153,7 @@ div.tab {
 
 /* Style the buttons inside the tab */
 div.tab button {
-    background-color: #f1f1f1;
+    background-color: rgba(41,41,41,0.9);
     float: left;
     border: none;
     outline: none;
@@ -176,12 +176,13 @@ div.tab button.active {
     background-color: #fff;/*#ccc;*/
     /* border: none; */
     transition-duration: 2s;
+    color: rgba(41,41,41,0.9);
 }
 
 /* Style the tab content */
 .tabcontent {
     display: none;
-    padding: 0px 12px;
+    /* padding: 0px 12px; */
   /* background: #d1d1d1;*/
 }
 
@@ -195,16 +196,16 @@ div.tab button.active {
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item{
-    padding: 12px;
-    background-color: #d1d1d1;
-    border-bottom: 9px solid #dedede;
+    padding: 19px 0;
+    /* background-color: #d1d1d1; */
+    border-bottom: 1px solid #d8d8d8;
     float: left;
     width: 100%;
 }
 
-.mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading{
+/* .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading{
 	padding: 12px;
-}
+} */
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-expire-date,
 .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name{
@@ -227,8 +228,8 @@ div.tab button.active {
 .mt-payment-details .card-details-main{
 	display: block;
     overflow: hidden;
-    padding: 0px 15px 10px 10px;
-    background-color: #dedede;
+    /* padding: 0px 15px 10px 10px;
+    background-color: #dedede; */
     width: 100%;
 }
 .mt-payment-details .card-details-main .mt-name-on-card{
@@ -985,10 +986,10 @@ div.a-column.a-span-last {
 }
 
 
-.mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-expire-date,
+/* .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-expire-date,
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-card-name {
    font-weight: 600;
-}
+} */
 
 #new-mt-saved-card .mt-new-payment-list .item{
 	padding: 10px;
@@ -1114,7 +1115,8 @@ div.tab button{
    text-transform: uppercase;
    font-weight: 600;
    /* margin-right: 1px; */
-   border-left: 1px solid #ccc;
+   border: 1px solid rgba(41,41,41,0.9);
+   color: #fff;
 }
 
 
@@ -1922,4 +1924,21 @@ li.order-info-tab-back{
 
 .myaccount-dashbord-img.mt-product-img{
 	margin-top: -10px;
+}
+
+/*allure redesign myaccount payment option css*/
+.my-account .breadcrumb-payment .breadcrumbs{
+    padding-left: 0;
+}
+.my-account .breadcrumb-payment .breadcrumbs ul{
+    padding-left: 0;
+}
+.my-account .breadcrumb-payment .breadcrumbs{
+    padding-left: 0;
+}
+.my-account .box .box-title h1{
+    padding-top: 55px;
+    margin-bottom: 16px;
+    font-size: 30px;
+    text-transform: capitalize;
 }

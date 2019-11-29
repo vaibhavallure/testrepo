@@ -50,6 +50,7 @@
                   jQuery('#search_autocomplete').css('width', '100%');
                   jQuery('#search_autocomplete').css('z-index', '1033');
                   jQuery('#search_autocomplete').css('overflow', 'scroll');
+                  jQuery('body').addClass('fancybox-lock');
                   jQuery("#cross-icon").hide();
                   let crossIconObj = jQuery('#cross-icon');
                   jQuery('#search-input').after(crossIconObj)
@@ -78,6 +79,7 @@
               if(jQuery('body').hasClass('mobile-device')) {
                 jQuery("#cross-icon").hide();
                   jQuery('.mobile_menu_overlay').css('height','0%');
+                  jQuery('body').removeClass('fancybox-lock');
                   jQuery('.mt-logo').show();
               }
                 if (jQuery(window).width() <= 1440) {
