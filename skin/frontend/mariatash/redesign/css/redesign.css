@@ -3898,8 +3898,27 @@ table thead {
   left: 10px;
   transform: translatey(-50%);
 	z-index: 2;
+	width: 323px;
+	height: 192px;
+	font-family: urw-din-bold;
 }
-
+.slider-caption-content {
+  text-align: center;
+	margin-top: 20px;
+}
+.bk-slide h1{
+	text-align: center;
+	font-size: 30px;
+}
+#slidecaption a {
+  color: #fff;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+.bk-slide p {
+  margin-bottom: 0;
+	font-family: urw-din-medium;
+}
 
 
 /*footer tooltip*/
