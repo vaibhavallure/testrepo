@@ -3904,6 +3904,7 @@ table thead {
 }
 .slider-caption-content {
   text-align: center;
+	margin-top: 20px;
 }
 .bk-slide h1{
 	text-align: center;
@@ -3913,6 +3914,10 @@ table thead {
   color: #fff;
   text-decoration: underline;
   text-transform: uppercase;
+}
+.bk-slide p {
+  margin-bottom: 0;
+	font-family: urw-din-medium;
 }
 
 
