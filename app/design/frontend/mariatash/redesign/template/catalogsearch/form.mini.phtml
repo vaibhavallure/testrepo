@@ -31,7 +31,7 @@
             <input class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
             <img class="position-absolute" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-wt.png'); ?>" alt="x">
         </div>
-        <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search">
+        <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search" title="Search">
         <div id="search_autocomplete" class="search-autocomplete"></div>
         <script type="text/javascript">
         //<![CDATA[
@@ -61,6 +61,7 @@
               jQuery("#search-icon").click(function(){
                 if(jQuery('body').hasClass('mobile-device')) {
                   jQuery("#cross-icon").show();
+                  jQuery('body').addClass('fancybox-lock');
                   jQuery('.mobile_menu_overlay').css('height','100%');
                   jQuery('.mt-logo').hide();
                 }
@@ -78,6 +79,7 @@
               if(jQuery('body').hasClass('mobile-device')) {
                 jQuery("#cross-icon").hide();
                   jQuery('.mobile_menu_overlay').css('height','0%');
+                  jQuery('body').removeClass('fancybox-lock');
                   jQuery('.mt-logo').show();
               }
                 if (jQuery(window).width() <= 1440) {

@@ -61,7 +61,8 @@
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .piercing_options .image-text {
     padding-left: 15px;
@@ -783,6 +784,9 @@
   }
   .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
     position: relative !important;
+  }
+  .cms-home .wrapper{
+    margin: 0 auto -98px;
   }
   /*Search CSS*/
   #cross-icon{

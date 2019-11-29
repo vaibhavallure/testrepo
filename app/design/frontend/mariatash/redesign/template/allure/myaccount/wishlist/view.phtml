@@ -250,7 +250,10 @@ jQuery(document).ready(function(){
 			return false;
 		}*/
 	}
-
+    function hideLoadingFancybox(){
+        jQuery.fancybox.hideLoading();
+        jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
+    }
 	function openShareForm(){
 		jQuery('.my-wishlist .mt-wishlist-table').hide();
 		jQuery('.my-wishlist .mt-wishlist-share-form').show();
