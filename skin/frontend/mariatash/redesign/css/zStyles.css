@@ -2285,12 +2285,12 @@ width: 323px;
 		transition: all 0.5s;
 	}
 
-	.h-100{
+	.cms-piercing-service  .h-100{
 		height: 100% !important;
 	}
 	/*Large Screen*/
 	@media (min-width: 1920px){
 		.cms-piercing-service .container-fluid.jewelry-container{
-			max-width: 1490px;
+			max-width: 1490px !important;
 		}
 	}
