@@ -75,7 +75,6 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap.min.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/bootstrap/popper.min.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/allure/mariatash.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/allure/jquery.mobile-1.4.5.min.js</name></action>
                 <!--CSS3 for IE-->
                 <!--<action method="addJs">-->
                     <!--<script>selectivizr.js</script>-->
