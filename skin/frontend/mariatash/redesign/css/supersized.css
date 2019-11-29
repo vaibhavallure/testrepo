@@ -137,7 +137,7 @@ body { background:#111; height:auto; width:auto; }
 	}
 	#slidecaption {
 		top: auto;
-		bottom: -40px;
+		bottom: 12px;
 		/* left: 0; */
 	}
 	.homepageSliderControllers .nextS,.homepageSliderControllers .prevS {
