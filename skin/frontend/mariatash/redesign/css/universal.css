@@ -1923,3 +1923,20 @@ li.order-info-tab-back{
 .myaccount-dashbord-img.mt-product-img{
 	margin-top: -10px;
 }
+
+/*allure redesign myaccount payment option css*/
+.my-account .breadcrumb-payment .breadcrumbs{
+    padding-left: 0;
+}
+.my-account .breadcrumb-payment .breadcrumbs ul{
+    padding-left: 0;
+}
+.my-account .breadcrumb-payment .breadcrumbs{
+    padding-left: 0;
+}
+.my-account .box .box-title h1{
+    padding-top: 55px;
+    margin-bottom: 16px;
+    font-size: 30px;
+    text-transform: capitalize;
+}
