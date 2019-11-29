@@ -34,12 +34,12 @@ body { background:#111; height:auto; width:auto; }
 
 @media (max-width: 767px) and (orientation: portrait){
 	body.cms-index-index.cms-home{
-		height: 700px!important;
+		height: 645px !important;
 	}
 
 	body.cms-index-index.cms-home .footer
 	{
-		padding-top: 0px!important;
+		padding-top: 0px !important;
 	}
 	#supersized{
 		position: absolute;
