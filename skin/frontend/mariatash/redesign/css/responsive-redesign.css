@@ -713,7 +713,7 @@
     margin-top: 28px;
   }
   #category-title{
-    margin: 16px 0 20px !important;
+    /* margin: 16px 0 20px !important; */
     padding: 0 !important;
   }
   .catalog-category-view #category-title{
@@ -794,6 +794,9 @@
   /*Search CSS*/
   #cross-icon{
     right: 8px;
+  }
+  .breadcrumbs{
+    margin-top: 19px;
   }
 }
 
@@ -946,6 +949,9 @@
   }
   .footer .social-media li{
     margin-right: 24px;
+  }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    height: 140px !important;
   }
 }
 
@@ -1711,6 +1717,9 @@
   }
   ul#slide-list{
     top: 310px;
+  }
+  .containerImage img{
+    margin: 30px auto 0;
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){
