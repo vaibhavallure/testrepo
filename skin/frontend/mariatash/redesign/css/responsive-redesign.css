@@ -61,7 +61,8 @@
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .piercing_options .image-text {
     padding-left: 15px;
