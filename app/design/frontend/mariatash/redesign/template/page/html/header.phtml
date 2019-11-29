@@ -136,7 +136,7 @@ if($ecpMenuCollection->getSize()){
                                         <?php if($isCustomerLogIn):?>
                                         <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
                                             <?php else:?>
-                                            <a class="icon-link wishlist" onclick="signin()">
+                                            <a class="icon-link wishlist" onclick="signin()" title="Wishlist">
                                                 <?php endif;?>
                                                 <img width="20px" src="<?= $navWishlistImg; ?>">
                                             </a>
@@ -173,7 +173,7 @@ if($ecpMenuCollection->getSize()){
                                     <?php if($isCustomerLogIn):?>
                                     <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
                                         <?php else:?>
-                                        <a class="icon-link wishlist" onclick="signin()">
+                                        <a class="icon-link wishlist" onclick="signin()" title="Wishlist">
                                             <script>
                                                 var signin= function() {
                                                     jQuery('body').addClass('allure_login_wishlist');
@@ -192,7 +192,7 @@ if($ecpMenuCollection->getSize()){
                             <?php endif; ?>
 
                             <li class="icon-item">
-                                <div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div>
+                                <div id="topcart-popup" title="Shopping Bag"><?php echo $this->getChildHtml('cart_sidebar') ?></div>
                             </li>
 
                             <?php if ($isCustomerLogIn) :?>
@@ -212,7 +212,7 @@ if($ecpMenuCollection->getSize()){
                                 </li>
                             <?php else: ?>
                                 <li class="icon-item" id="sign_in_label">
-                                    <a href="javascript:void(0)">
+                                    <a href="javascript:void(0)" title="Account">
                                         <img width="18px" src="<?= $navUserImg; ?>">
                                     </a>
                                 </li>
