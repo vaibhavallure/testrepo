@@ -146,7 +146,7 @@
                                                 	<p class="control">
                                                   		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
                                                        		<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= (false && $_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
-                                                            <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Two shipping charges will be applied.)')?>
+                                                            <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Multiple shipping charges will be applied.)')?>
                                                        	</label>
                                                 	</p>
                                                 </div>

@@ -134,7 +134,6 @@
   /*filter end----------------------------*/
   .mobile-device .main-nav-title li {
     margin-right: 0;
-    /* text-align: center; */
     margin-top: 15px;
   }
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
@@ -150,18 +149,20 @@
     margin: 20px auto 0 !important
   }
   .footer-item-list.data-block:after {
-    background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
+    background: url(../images/redesign/downward-arrow.png) no-repeat;
     content: '';
     height: 18px;
     width: 18px;
     background-position: right;
     position: absolute;
     right: 0;
-    transform: rotate(90deg);
+    background-size: 10px;
+    top: 26px;
   }
   .footer-item-list.data-block.active:after {
-    transform: rotate(270deg);
+    transform: rotate(180deg);
     top: 30px;
+    background-position: bottom left;
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
@@ -175,10 +176,6 @@
   .social-media ul {
     margin-bottom: 40px;
   }
-  /* .inner-box {
-    width: 100%;
-    margin-left: 0;
-  } */
   .mobile-device .head-child, #appointments img {
     display: none;
     padding-left: 10px;
@@ -196,14 +193,11 @@
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
-    overflow-y: auto;
+    overflow-x: auto;
   }
   .piercing_options .image-text {
     padding-left: 15px;
     margin-bottom: 17px;
-  }
-  #search-input {
-    z-index: 2;
   }
   .form-search input.input-text{
     background: #292929;
@@ -214,12 +208,13 @@
   #jewelry .menu-head span a:after {
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
-    height: 19px;
+    height: 20px;
     width: 19px;
     background-position: right;
     position: absolute;
     right: 30px;
     transition: 0.5s;
+    background-size: 10px;
   }
   #jewelry .menu-head span a.active:after {
     background: url(../images/redesign/minus.png) no-repeat;
@@ -310,7 +305,7 @@
     padding: 0 0 10px;
     border-bottom: 1px solid #292929;
     margin-bottom: 20px;
-    margin: 20px 15px;
+    margin: 35px 15px 20px;
   }
   .category-image img{
     display: none;
@@ -610,9 +605,9 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
-  .mobile-device .main-nav-title li:first-child {
+  /* .mobile-device .main-nav-title li:first-child {
     padding-top: 6px;
-  }
+  } */
   .mobile-device .menu-common-section{
     margin-top: 13px;
   }
@@ -689,13 +684,20 @@
     left: 0;
   }
   .mobile-device #search {
-    top: 68px;
+    top: 0px;
+    background: #292929;
+    color: white;
+    z-index: 1032;
   }
   .desktop-device #search{
     top: 72px;
   }
   #cross-icon{
     right: 19px;
+  }
+
+  #search_autocomplete {
+    max-height: 80vh !important;
   }
 }
 
@@ -1067,10 +1069,31 @@
   #search {
     background: #292929;
   }
-  .mobile-device #search{
-  top: 135px !important;
+}
+
+/* ipad landscape */
+@media (min-width:1024px) and (max-width:1366px) and (orientation:landscape) {
+  .mobile-device #search {
+    top: 0 !important;
+    background: #292929;
+    width: 100%;
+    color:#fff;
+  }
+
+  #cross-icon {
+    position: absolute;
+    top:0px;
+    padding:10px;
+    margin-right: 10px;
+    right: 20px;
+    z-index: 1032;
+  }
+
+  #search-input {
+    z-index: 1032;
   }
 }
+
 
 /* ALl Mobiles */
 @media (max-width:767px) {

@@ -382,6 +382,7 @@ select{
 	background-image: url(../images/redesign/arrow-down-bk.png);
   background-repeat: no-repeat;
   background-position: 98% 50%;
+	background-size: 10px !important;
 }
 :focus {
 	outline: none !important;
@@ -569,6 +570,7 @@ input, select, textarea{
   width: 10px;
   height: 10px;
   margin-top: 3px;
+	background-size: 10px;
 }
 .login-dropdown li {
 	text-align: right;
@@ -633,6 +635,7 @@ input, select, textarea{
   height: 30px;
   width: 181px;
   padding: 3px 0 10px 24px;
+	background-size: 10px !important;
 }
 body{
   overflow-x: hidden !important;
@@ -1803,23 +1806,27 @@ bottom: 0px;
   padding-left: 15px;
 }
 .mobile-main_menu li.nav-item:after {
-  background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
+  background: url(../images/redesign/downward-arrow.png) no-repeat;
   content: '';
   height: 18px;
   width: 18px;
   background-position: right;
   position: absolute;
   right: 0;
+	transform: rotate(270deg);
+	background-size: 10px;
+  top: 26px;
 }
 .close-section:after{
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
   content: '';
   height: 14px;
-  width: 19px;
+  width: 18px;
   background-position: right;
   position: absolute;
   right: 45px;
   transform: rotate(90deg);
+	background-size: 10px;
 }
 .mobile-main_menu.active{
   left:0;
@@ -2058,12 +2065,14 @@ div#narrow-by-list {
   right: 19px;
   transition: 0.5s;
   cursor: pointer;
+	background-size: 10px;
 }
 .faq-question.active span:after{
   background: url(../images/redesign/minus.png) no-repeat;
   background-position: right;
   content: '';
   transition: 0.5s;
+	background-size: 10px;
 }
 .faq-copy-section h1 {
   margin-bottom: 33px;
@@ -3257,7 +3266,7 @@ table thead {
 	text-decoration: underline;
 }
 .fancybox-type-iframe{
-	position: fixed!important;
+	position: fixed ;/*!important; removed because 1st Quick view on instagram gets hide*/
 }
 .quickview-index-index{
 	overflow: hidden;
@@ -3868,7 +3877,7 @@ table thead {
 
 
 /*home page slider*/
-.homepageSliderControllers .prevS{
+/* .homepageSliderControllers .prevS{
 	content: "";
 	background-image: url("../images/white-active-arrow.png");
 	background-size: 100% 100%;
@@ -3892,7 +3901,7 @@ table thead {
 	height: 95px;
 	width: 40px;
 	cursor: pointer;
-}
+} */
 #slidecaption{
 	/*visibility: hidden;*/
 	position: absolute;
@@ -4014,6 +4023,7 @@ table thead {
   font-size: 11px;
 	line-height: 2;
 	font-style: normal;
+	color: rgba(41,41,41,0.9);
 }
 .select-currency.main-nav-link-dropdown span span {
   margin-right: 15px;
@@ -4490,6 +4500,7 @@ dt.post-lengthds-lbl {
 	background-position: 98% 50% !important;
 	border: 1px solid rgba(41,41,41,0.25) !important;
 	background: transparent;
+	background-size: 10px !important;
 }
 .date_wrapper-column select, #checkout-review-table {
   width: 100%;
@@ -4767,4 +4778,7 @@ td.cart_col2 {
   color: rgba(41,41,41,0.9) !important;
 	text-decoration: underline;
   letter-spacing: 1px;
+}
+#popup-login-form .soc-login-btn{
+	margin-top: 30px;
 }

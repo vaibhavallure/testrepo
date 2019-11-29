@@ -22,15 +22,10 @@
 	background: white;
 }
 .bk-slide{
-width:305px; height:201px;
+height:192px;
 padding:10px;
 line-height: 42px;
-width: 305px;
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#cccccc+0,cccccc+100&0.71+0,0.68+100 */
-background: -moz-linear-gradient(left,  rgba(204,204,204,0.71) 0%, rgba(204,204,204,0.68) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right,  rgba(204,204,204,0.71) 0%,rgba(204,204,204,0.68) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', endColorstr='#adcccccc',GradientType=1 ); /* IE6-9 */
+width: 323px;
 }
 .bk-slide h1, .bk-slide a, .bk-slide span, .bk-slide p{color:#ffffff;}
 .flex-col{
@@ -2194,13 +2189,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	/* ipad portrait */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
-			top: 90px;
+			top: 0px;
+			padding:10px;
+			margin-right: 10px;
 			position: fixed;
-			z-index: 2;
+			z-index: 1032;
 			right: 20px;
 		}
 		.catalogsearch-result-index .mb-breadcrumbs ul.row.m-0 {
 			margin-left: 30px !important;
+		}
+		.jewelry .left-section .inner-box{
+			padding: 0 40px;
 		}
 	}
 
@@ -2208,23 +2208,38 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	/* ipad landscape */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
 		#cross-icon {
-			top: 150px;
+			padding: 10px;
+			top: 0px;
+			margin-right: 10px;
 			position: fixed;
-			z-index: 2;
+			z-index: 1032;
 		}
 	}
 	@media (max-width: 767px) {
 		#cross-icon {
-			top: 90px;
+			padding: 10px;
+			top: 0px;
 			/*left: 60px;*/
+			margin-right: 10px;
 			position: fixed;
-			z-index: 2;
+			z-index: 1032;
+		}
+		.jewelry .left-section .inner-box{
+			padding: 0 20px;
+		}
+		.img-container-360{
+			top:25%;
+			left:35%;
 		}
 	}
 	/*Mobile devices Landscape*/
 	@media (max-width: 767px) and (orientation: landscape) {
 		.search-autocomplete {
 			max-height: 250px !important;
+		}
+		.img-container-360{
+			top:30%;
+			left:40%;
 		}
 
 	}
@@ -2233,6 +2248,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 		cursor: pointer;
 	}
 	.zoom-img.big-popup-image.row {
+		max-height: 500px;
 		height: auto;
 	}
 	.zoom-opened {
@@ -2246,6 +2262,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5cccccc', e
 	@media (min-width: 992px) {
 
 		.zoom-img.big-popup-image.row {
-			width: 70%;
+			max-width: 500px;
+		}
+		.menu-head.jwl-head > span > a {
+			pointer-events: none;
+		}
+
+	}
+
+	.mobile_menu_overlay {
+		position: fixed;
+		background: white;
+		width: 100%;
+		height: 0%;
+		z-index: 1031;
+		transition: all 0.5s;
+	}
+
+	/*Large Screen*/
+	@media (min-width: 1200px){
+		.cms-piercing-service .container-fluid.jewelry-container{
+			max-width: 1550px;
 		}
 	}
