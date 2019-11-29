@@ -3226,9 +3226,16 @@ table th {
 table thead {
   border-bottom: 1px solid rgba(41,41,41,0.9);
 }
-.data-table.cart-table td, .paypal-express-review .data-table td {
+.paypal-express-review .data-table td {
   vertical-align: initial;
 	margin-top: 40px;
+}
+.data-table.cart-table td{
+	vertical-align: middle;
+	margin-top: 16px;
+}
+#shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col5 {
+  vertical-align: initial;
 }
 .gift-row {
   border-bottom: 1px solid #d8d8d8;
@@ -4794,4 +4801,8 @@ td.cart_col2 {
 }
 .cms-home .footer{
 	z-index: 2;
+}
+.mobile-device .for-space-to-bottom.cat-img-space {
+  background-image: none;
+  height: 70px !important;
 }
