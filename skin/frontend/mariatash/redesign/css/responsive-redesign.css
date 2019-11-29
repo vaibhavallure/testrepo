@@ -788,6 +788,9 @@
   .cms-home .wrapper{
     margin: 0 auto -98px;
   }
+  ul#slide-list{
+		bottom: 120px !important;
+	}
   /*Search CSS*/
   #cross-icon{
     right: 8px;
@@ -940,6 +943,9 @@
   }
   #search {
     background: #292929;
+  }
+  .footer .social-media li{
+    margin-right: 24px;
   }
 }
 
@@ -1407,6 +1413,9 @@
   .collat-wrap{
     width: 100%;
   }
+  ul#slide-list{
+    top: 360px;
+  }
 
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody, .mt-myaccount-page .data-table#wishlist-table{
@@ -1699,6 +1708,9 @@
   }
   .product-shop > .row{
     padding-left: 0;
+  }
+  ul#slide-list{
+    top: 310px;
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){
