@@ -32,7 +32,7 @@
 			<li class="mt-card-info <?php echo $code; ?>_add"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>
 				<div class="input-box">
-					<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+					<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry main-dropdown-box<?php endif; ?>">
 						<option value=""><?php echo $this->__('--Please Select--')?></option>
 						<?php foreach( Mage::helper('tokenbase')->getCcAvailableTypes( $code ) as $k => $v ): ?>
 							<option value="<?php echo $k ?>" <?php if(0&& $k == $this->getCard()->getAdditional('cc_type') ): ?>selected="selected"<?php endif; ?>><?php echo $v ?></option>
@@ -56,12 +56,12 @@
 			
 			<li id="<?php echo $code; ?>_cc_type_exp_div" class="mt-card-info <?php echo $code; ?>_add sp-methods"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date'); ?></label>
-				<div class="input-box">
-					<div class="v-fix">
-						<span><?php echo $this->__('Expiration Date'); ?></span>
+				<div class="input-box card-exp">
+					<div class="v-fix ">
+						<span class="para-normal date-label"><?php echo $this->__('Expiration Date'); ?></span>
 					</div>
-					<div class="v-fix">
-						<select id="<?php echo $code; ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+					<div class="v-fix exp-month">
+						<select id="<?php echo $code; ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry main-dropdown-box<?php endif; ?>">
 							<option value=""><?php echo $this->__('Month'); ?></option>
 							<?php $_ccExpMonth = $this->getCard()->getAdditional('cc_exp_month'); ?>
 							<?php foreach( Mage::helper('tokenbase')->getCcMonths() as $k=>$v ): ?>
@@ -69,8 +69,8 @@
 							<?php endforeach ?>
 						</select>
 					</div>
-					<div class="v-fix">
-						<select id="<?php echo $code; ?>_cc_exp_year" name="payment[cc_exp_year]" class="year <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+					<div class="v-fix exp-year">
+						<select id="<?php echo $code; ?>_cc_exp_year" name="payment[cc_exp_year]" class="year <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry main-dropdown-box<?php endif; ?>">
 							<option value=""><?php echo $this->__('Year'); ?></option>
 							<?php $_ccExpYear = $this->getCard()->getAdditional('cc_exp_year'); ?>
 							<?php foreach( Mage::helper('tokenbase')->getCcYears() as $k=>$v ): ?>
@@ -85,9 +85,9 @@
 				<li id="<?php echo $code; ?>_cc_type_cvv_div" class="mt-card-info <?php if( $requireCvv == 0 ): ?> <?php echo $code; ?>_add<?php endif; ?>" <?php if( $requireCvv == 0 ): ?><?php echo $style; ?><?php endif; ?>>
 					<label style="display: none" for="<?php echo $code; ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number'); ?></label>
 					<div class="input-box">
-						<span class="card-code">Security Code</span>
-						<div class="v-fix">
-							<input placeholder="CCV" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
+						<span class="card-code para-normal">Security Code</span>
+						<div class="v-fix cvv-box">
+							<input placeholder="CCV" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="cvv input-patern card-cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
 						</div>
 					</div>
 				</li>
@@ -95,7 +95,7 @@
 		</ul>
 	</li>
 	
-		<li><p class="mt-paycard-title"><?php echo $this->__('Cardholder Information'); ?></p></li>
+		<li><p class="mt-paycard-title cardholder-title"><?php echo $this->__('Cardholder Information'); ?></p></li>
 			<?php /*		<li>
 			<div class="input-box"><?php echo $this->getAddressesHtmlSelect('billing'); ?></div>
 				</li> */ ?>
@@ -105,71 +105,71 @@
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_fn" class="required"><em>*</em><?php echo $this->__('First Name'); ?></label>
 						<div class="input-box">
-							<input placeholder="First Name *" type="text" id="<?php echo $code; ?>_fn" name="billing[firstname]" class="input-text required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('firstname') ); ?>" />
+							<input placeholder="First Name *" type="text" id="<?php echo $code; ?>_fn" name="billing[firstname]" class="input-patern required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('firstname') ); ?>" />
 						</div>
 					</li>
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_ln" class="required"><em>*</em><?php echo $this->__('Last Name'); ?></label>
 						<div class="input-box">
-							<input placeholder="Last Name *" type="text" id="<?php echo $code; ?>_ln" name="billing[lastname]" class="input-text required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('lastname') ); ?>" />
+							<input placeholder="Last Name *" type="text" id="<?php echo $code; ?>_ln" name="billing[lastname]" class="input-patern  required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('lastname') ); ?>" />
 						</div>
 					</li>
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_company"><?php echo $this->__('Company'); ?></label>
 						<div class="input-box">
-							<input placeholder="Company" type="text" id="<?php echo $code; ?>_company" name="billing[company]" class="input-text" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('company') ); ?>" />
+							<input placeholder="Company" type="text" id="<?php echo $code; ?>_company" name="billing[company]" class="input-patern " value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('company') ); ?>" />
 						</div>
 					</li>
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_street" class="required"><em>*</em><?php echo $this->__('Street Address'); ?></label>
 						<div class="input-box">
-							<input placeholder="Street Address *" type="text" id="<?php echo $code; ?>_street" name="billing[street][]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('street') ?>" value="<?php //echo $this->escapeHtml( $this->getStreetLine(1) ); ?>" />
+							<input placeholder="Street Address *" type="text" id="<?php echo $code; ?>_street" name="billing[street][]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('street') ?>" value="<?php //echo $this->escapeHtml( $this->getStreetLine(1) ); ?>" />
 						</div>
 					</li>
 					<?php for ($i = 2, $n = Mage::helper('customer/address')->getStreetLines(); $i <= $n; $i++): ?>
 						<li class="<?php echo ($i%2==0)?'list-even':'list-odd'?>">
 							<div class="input-box">
-								<input placeholder="Street Address 2" type="text" id="<?php echo $code; ?>_street_<?php echo $i ?>" name="billing[street][]" class="input-text <?php echo str_replace( 'required-entry', '', Mage::helper('tokenbase')->getAttributeValidationClass('street') ); ?>" value="<?php //echo $this->escapeHtml( $this->getStreetLine($i) ); ?>" />
+								<input placeholder="Street Address 2" type="text" id="<?php echo $code; ?>_street_<?php echo $i ?>" name="billing[street][]" class="input-patern <?php echo str_replace( 'required-entry', '', Mage::helper('tokenbase')->getAttributeValidationClass('street') ); ?>" value="<?php //echo $this->escapeHtml( $this->getStreetLine($i) ); ?>" />
 							</div>
 						</li>
 					<?php endfor; ?>
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_city" class="required"><em>*</em><?php echo $this->__('City'); ?></label>
 						<div class="input-box">
-							<input placeholder="City *" type="text" id="<?php echo $code; ?>_city" name="billing[city]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('city') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('city') ); ?>" />
+							<input placeholder="City *" type="text" id="<?php echo $code; ?>_city" name="billing[city]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('city') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('city') ); ?>" />
 						</div>
 					</li>
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_st" class="required"><em>*</em><?php echo $this->__('State/Province'); ?></label>
 						<div class="input-box">
-							<select style="display:none;" class="validate-select required-entry" title="State/Province" name="billing[region_id]" id="region_id" >
+							<select style="display:none;" class="validate-select required-entry main-dropdown-box state-payment" title="State/Province" name="billing[region_id]" id="region_id" >
 								<option value=""><?php echo $this->__('Please select region, state or province'); ?></option>
 							</select>
-							<input placeholder="State/Province *" type="text" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('region') ?>" title="State/Province" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('region') ); ?>" name="billing[region]" id="region" />
+							<input placeholder="State/Province *" type="text" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('region') ?>" title="State/Province" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('region') ); ?>" name="billing[region]" id="region" />
 						</div>
 					</li>
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code'); ?></label>
 						<div class="input-box">
-							<input placeholder="Zip/Postal Code *" type="text" id="<?php echo $code; ?>_postcode" name="billing[postcode]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('postcode') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('postcode') ); ?>" />
+							<input placeholder="Zip/Postal Code *" type="text" id="<?php echo $code; ?>_postcode" name="billing[postcode]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('postcode') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('postcode') ); ?>" />
 						</div>
 					</li>
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_country" class="required"><em>*</em><?php echo $this->__('Country'); ?></label>
-						<div class="input-box">
+						<div class="input-box countrys">
 							<?php echo Mage::helper('tokenbase')->getCountryHtmlSelect( 'billing[country_id]', $this->getCard()->getAddress('country_id'), 'country' ); ?>
 						</div>
 					</li>
 					<li class="list-odd">
 						<label style="display: none"  for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
 						<div class="input-box">
-							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?>" id="telephone" />
+							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-patern <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?>" id="telephone" />
 						</div>
 					</li>
 					<li class="list-even">
 						<label style="display: none" for="fax"><?php echo $this->__('Fax') ?></label>
 						<div class="input-box">
-							<input placeholder="Fax" type="text" name="billing[fax]" id="fax" title="<?php echo $this->__('Fax') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('fax') ) ?>" class="input-text <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('fax') ?>" />
+							<input placeholder="Fax" type="text" name="billing[fax]" id="fax" title="<?php echo $this->__('Fax') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('fax') ) ?>" class="input-patern <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('fax') ?>" />
 						</div>
 					</li>
 				</ul>
@@ -177,7 +177,7 @@
 		</li>
 		
 		<li class="buttons-set">
-			<button class="button" type="submit"><span><span><?php echo $this->__('Continue'); ?></span></span></button>
+			<button class="button dark-button save_button" type="submit"><span><span><?php echo $this->__('Continue'); ?></span></span></button>
 			<a href="<?php //echo $this->getUrl('*/*', array('_secure' => true)); ?>"><?php //echo $this->__('Cancel'); ?></a>
 		</li>
 		
