@@ -31,7 +31,7 @@
             <input class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
             <img class="position-absolute" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-wt.png'); ?>" alt="x">
         </div>
-        <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search">
+        <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search" title="Search">
         <div id="search_autocomplete" class="search-autocomplete"></div>
         <script type="text/javascript">
         //<![CDATA[
@@ -50,7 +50,6 @@
                   jQuery('#search_autocomplete').css('width', '100%');
                   jQuery('#search_autocomplete').css('z-index', '1033');
                   jQuery('#search_autocomplete').css('overflow', 'scroll');
-                  jQuery('body').addClass('fancybox-lock');
                   jQuery("#cross-icon").hide();
                   let crossIconObj = jQuery('#cross-icon');
                   jQuery('#search-input').after(crossIconObj)
@@ -62,6 +61,7 @@
               jQuery("#search-icon").click(function(){
                 if(jQuery('body').hasClass('mobile-device')) {
                   jQuery("#cross-icon").show();
+                  jQuery('body').addClass('fancybox-lock');
                   jQuery('.mobile_menu_overlay').css('height','100%');
                   jQuery('.mt-logo').hide();
                 }
