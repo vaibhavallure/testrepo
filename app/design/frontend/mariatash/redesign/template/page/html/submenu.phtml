@@ -42,7 +42,12 @@ if($this->isthumbnailCat($pc->getName())){
                     <div class="row">
                         <div class="col-12 left-section">
                             <div class="row inner-box">
-                                <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
+                                <?php
+
+                                $withoutChildrenCategory=array();
+                                $withChildrenCategory=array();
+
+                                foreach ($this->getChildCategories($pc->getId()) as $child) {
                                     if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
                                         continue;
 
@@ -50,30 +55,69 @@ if($this->isthumbnailCat($pc->getName())){
                                         $childRightSection[] = $child;
                                         continue;
                                     }
-                                    ?>
-                                    <div class="common-option-div" id="c-<?= $child->getId() ?>">
-                                        <div class="menu-head jwl-head text-uppercase">
-                                            <span><a href="<?= (!$child->hasChildren())? "/".$child->getRequestPath() : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
-                                        </div>
-                                        <div class="head-child">
-                                            <ul class="p-0">
-                                                <?php foreach ($this->getChildCategories($child->getId()) as $child2) {
-                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
-                                                        continue;
-                                                    ?>
-                                                    <li class=""><a
-                                                                href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
-                                                    </li>
-                                                <?php } ?>
-                                                <?php  if(count($this->getChildCategories($child->getId()))):?>
+
+                                    if(strtolower($pc->getName()) == "jewelry"):
+
+                                    if($child->hasChildren())
+                                        $withChildrenCategory[]=$child;
+                                    else
+                                        $withoutChildrenCategory[]= $child;
+
+                                    else:
+                                        $withChildrenCategory[]=$child;
+
+                                    endif;
+                                    } ?>
+
+                                <?php if(count( $withoutChildrenCategory) && strtolower($pc->getName()) == "jewelry"): ?>
+                                <div class="common-option-div" id="c-<?= $pc->getId() ?>">
+                                    <div class="menu-head jwl-head text-uppercase">
+                                        <span><a href="#"><?= $this->__("shop by category"); ?></a></span>
+                                    </div>
+                                    <div class="head-child">
+                                        <ul class="p-0">
+                                            <?php foreach ($withoutChildrenCategory as $child2) {
+                                                ?>
+                                                <li class=""><a
+                                                            href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
+                                                </li>
+                                            <?php } ?>
+                                                <li class="view-all-products"><a
+                                                            href="/<?= $pc->getRequestPath() ?>"><?= $this->__("View All")?></a>
+                                                </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <?php endif;?>
+
+                                <?php foreach ($withChildrenCategory as $child): ?>
+                                <div class="common-option-div" id="c-<?= $child->getId() ?>">
+                                    <div class="menu-head jwl-head text-uppercase">
+                                        <span><a href="<?= (!$child->hasChildren())? "/".$child->getRequestPath() : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
+                                    </div>
+                                    <div class="head-child">
+                                        <ul class="p-0">
+                                            <?php foreach ($this->getChildCategories($child->getId()) as $child2) {
+                                                if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
+                                                    continue;
+                                                ?>
+                                                <li class=""><a
+                                                            href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
+                                                </li>
+                                            <?php } ?>
+                                            <?php  if(count($this->getChildCategories($child->getId()))):?>
                                                 <li class="view-all-products"><a
                                                             href="/<?= $child->getRequestPath() ?>"><?= $this->__("View All")?></a>
                                                 </li>
-                                                <?php endif;?>
-                                            </ul>
-                                        </div>
+                                            <?php endif;?>
+                                        </ul>
                                     </div>
-                                <?php } ?>
+                                </div>
+                                <?php endforeach; ?>
+
+
+
+
                             </div>
                     </div>
                     <div class="col-lg-5 col-12 text-uppercase right-section">
