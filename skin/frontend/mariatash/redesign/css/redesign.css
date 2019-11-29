@@ -3894,8 +3894,9 @@ table thead {
 #slidecaption{
 	/*visibility: hidden;*/
 	position: absolute;
-	top: 35%;
-	left: 10%;
+	top: 50%;
+  left: 11%;
+  transform: translatex(-50%);
 }
 
 
