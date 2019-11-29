@@ -2176,9 +2176,9 @@ line-height: 42px;
 		line-height: 42px;
 		background: rgba(41,41,41,0.9);
 	}
-	.cms-home .wrapper{
+	/* .cms-home .wrapper{
 		min-height: 602px;
-	}
+	} */
 
 	/*Search price fix*/
 	.wyomind-elasticsearch .regular-price span {
