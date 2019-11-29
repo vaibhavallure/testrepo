@@ -1185,7 +1185,7 @@
     margin-bottom: 50px;
   }
   .jewelry-container{
-    margin-top: 20px;
+    margin-top: 20px !important;
   }
   .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
     background-image: url(../images/redesign/thinner-cross.png);
