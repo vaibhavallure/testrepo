@@ -1008,8 +1008,8 @@
   .about-jewelry h1{
     margin-bottom: 20px;
   }
-  .cms-page-view h1, .category-press h1{
-    font-size: 25px;
+  .cms-page-view h1, .category-press h1, .categorypath-celebrity-clientele-html h1,.booking .store-info-wrapper h1, #shop_our_instagram h1{
+    font-size: 25px !important;
   }
   .faq-question span{
     font-size: 14px;
@@ -1108,7 +1108,7 @@
   #slidecaption{
     display: none;
   }
-  .cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
+.category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
   }
   .cart-collaterals.fix-section{
