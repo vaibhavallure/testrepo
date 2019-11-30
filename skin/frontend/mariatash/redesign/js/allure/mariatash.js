@@ -90,8 +90,14 @@ jQuery('.link-button').click(function(event) {
 
 
     jQuery(".mobile-sub_menu .menu-head").click(function () {
-        jQuery(this).find("a").toggleClass('active');
-        jQuery(this).parent().find(".head-child").toggle();
+    	var $ = jQuery;
+    	if ($(this).find("a").hasClass('active')) {
+    		$(this).find("a").removeClass('active');
+    		$(this).next().toggle();
+    	} else {
+    		$(this).find("a").addClass('active');
+    		$(this).next().toggle();
+    	}
     });
 
 

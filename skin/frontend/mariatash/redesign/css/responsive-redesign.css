@@ -48,6 +48,9 @@
     display: none;
     padding-left: 10px;
   }
+  .mobile-device .head-child.active {
+  	display: block;
+  }
   #appointments .col{
     width: 100%;
     margin-bottom: 9px;
