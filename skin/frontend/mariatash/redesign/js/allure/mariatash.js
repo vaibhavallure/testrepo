@@ -126,21 +126,22 @@ jQuery('.link-button').click(function(event) {
             /*zopim -- to change margin from bottom */
             var hidden = true;
             jQuery(window).mousemove(function (e) {
-    //      console.log('[PageY]',e)
-    //      console.log(jQuery(window).height())
-                if (e.screenY >= jQuery(window).height() - 50) {
-                    if (hidden) {
-                        jQuery(".zopim").addClass("bottom-change");
-                        jQuery(".container-footlinks.row").css("height", "59px");
-                        hidden = false;
-                    }
-                } else {
-                    jQuery(".zopim").removeClass("bottom-change");
-                    jQuery(".container-footlinks.row").css("height", "0px");
-                    hidden = true;
-                }
-            })
+                if (!jQuery('body').hasClass('cms-index-index')) {
 
+                    if (e.screenY >= jQuery(window).height() - 50) {
+                        if (hidden) {
+                            jQuery(".zopim").addClass("bottom-change");
+                            jQuery(".container-footlinks.row").css("height", "59px");
+                            hidden = false;
+                        }
+                    } else {
+                        jQuery(".zopim").removeClass("bottom-change");
+                        jQuery(".container-footlinks.row").css("height", "0px");
+                        hidden = true;
+                    }
+                }
+                }
+            )
             if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
                     jQuery(".footer").removeClass("floating");
                 }else {
