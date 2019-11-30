@@ -118,26 +118,34 @@ jQuery('.link-button').click(function(event) {
 
 
             /*zopim -- to change margin from bottom */
-            jQuery('.floating.footer').hover(
-                function () {
-                    jQuery(".zopim").addClass("bottom-change");
-                },
-                function () {
-                    setTimeout(function() {
+            var hidden = true;
+            jQuery(window).mousemove(function (e) {
+                if(!jQuery('body').hasClass('cms-index-index')) {
+                    if (e.screenY >= jQuery(window).height() - 50) {
+                        if (hidden) {
+                            jQuery(".zopim").addClass("bottom-change");
+                            jQuery(".container-footlinks.row").css("height","59px");
+                            hidden=false;
+                        }
+                    }
+                    else{
                         jQuery(".zopim").removeClass("bottom-change");
-                    }, 1000);
+                        jQuery(".container-footlinks.row").css("height","0px");
+                        hidden=true;
+                    }
                 }
-            );
-                if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
+            })
+
+            if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
                     jQuery(".footer").removeClass("floating");
                 }else {
                     jQuery(".footer").addClass("floating");
                 }
-            if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
+/*            if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
                 jQuery(".zopim").addClass("bottom-change");
             }else {
                 jQuery(".zopim").removeClass("bottom-change");
-            }
+            } */
             /*  zopim -code end-----------------*/
 
         }else {

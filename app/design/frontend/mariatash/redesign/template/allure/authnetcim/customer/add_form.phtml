@@ -16,11 +16,11 @@
 		<input type="hidden" name="payment[acceptjs_value]" id="<?php echo $code; ?>_acceptjs_value" value="" />
 		<input type="hidden" name="payment[cc_last4]" id="<?php echo $code; ?>_cc_last4" value="" />
 	<?php endif; ?>
-	<ul class="form-list">
+	<ul class="form-list add-new-payment-method-ul">
 	
 	<li id="mt-credit-card-info">
 		<ul>
-			<li class="card-info-title"><p class="mt-paycard-title"><?php echo $this->__('Credit Card Information'); ?></p></li>
+			<li class="card-info-title para-normal date-label"><p class="mt-paycard-title"><?php echo $this->__('Credit Card Information'); ?></p></li>
 		
 			<?php if(0&& $this->isEdit() ): ?>
 				<li>
@@ -57,9 +57,9 @@
 			<li id="<?php echo $code; ?>_cc_type_exp_div" class="mt-card-info <?php echo $code; ?>_add sp-methods"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date'); ?></label>
 				<div class="input-box card-exp">
-					<div class="v-fix ">
-						<span class="para-normal date-label"><?php echo $this->__('Expiration Date'); ?></span>
-					</div>
+					<!--<div class="v-fix ">
+						<span class="para-normal date-label"><?php /*echo $this->__('Expiration Date'); */?></span>
+					</div>-->
 					<div class="v-fix exp-month">
 						<select id="<?php echo $code; ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry main-dropdown-box<?php endif; ?>">
 							<option value=""><?php echo $this->__('Month'); ?></option>
@@ -85,7 +85,7 @@
 				<li id="<?php echo $code; ?>_cc_type_cvv_div" class="mt-card-info <?php if( $requireCvv == 0 ): ?> <?php echo $code; ?>_add<?php endif; ?>" <?php if( $requireCvv == 0 ): ?><?php echo $style; ?><?php endif; ?>>
 					<label style="display: none" for="<?php echo $code; ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number'); ?></label>
 					<div class="input-box">
-						<span class="card-code para-normal">Security Code</span>
+						<!--<span class="card-code para-normal">Security Code</span>-->
 						<div class="v-fix cvv-box">
 							<input placeholder="CCV" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="cvv input-patern card-cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
 						</div>
@@ -94,8 +94,8 @@
 			<?php endif; ?>
 		</ul>
 	</li>
-	
-		<li><p class="mt-paycard-title cardholder-title"><?php echo $this->__('Cardholder Information'); ?></p></li>
+
+		<li class="para-normal date-label"><p class="mt-paycard-title cardholder-title "><?php echo $this->__('Cardholder Information'); ?></p></li>
 			<?php /*		<li>
 			<div class="input-box"><?php echo $this->getAddressesHtmlSelect('billing'); ?></div>
 				</li> */ ?>

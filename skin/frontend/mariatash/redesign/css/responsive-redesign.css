@@ -1230,6 +1230,99 @@
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
+  .my-account .box{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .manage-payment-method .tablinks{
+    width: 50%;
+  }
+  .mt-new-payment .mt-new-payment-list{
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name img{
+    margin-top: 2px;
+  }
+  .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
+    width: 100%;
+  }
+  .manage-payment-method .mt-payment-details .card-details-main .mt-card-address{
+    width: 100%;
+    float: left;
+  }
+  .manage-payment-method #new-mt-add-payment-method .tabcontent{
+    padding: 0px;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul{
+    padding-left: 0;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info ul li{
+    width: 100%;
+  }
+  .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
+    margin-left: 0px;
+  }
+  .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul #billing-new-address-form ul li{
+    width: 100%;
+  }
+  .manage-payment-method .myaccount-add-payment-form #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul .buttons-set button{
+    margin-bottom: 25px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+  }
+  .manage-payment-method .mt-edit-form .radio-continue{
+    width: 50px!important;
+  }
+  .manage-payment-method .mt-edit-form .radio-change{
+    width: 50px!important
+  }
+  .manage-payment-method #new-mt-saved-card #mt-credit-card-info ul li{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .exp-year{
+    margin-left: 0px;
+  }
+  .manage-payment-method .mt-edit-form .exp-month{
+    margin-bottom: 10px;
+  }
+  .manage-payment-method #new-mt-saved-card #billing-new-address-form ul li{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .state-select-payment{
+    width: 100%;
+  }
+  .manage-payment-method #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form ul li.buttons-set{
+    float: left;
+    width: 100%;
+  }
+  li.buttons-set .btn-cancel-edit{
+    width: 150px!important;
+    float: right!important;
+    margin-right:0px!important;
+
+  }
+  li.buttons-set .btn-continue-edit{
+    width: 150px!important;
+    float: left!important;
+  }
+  .manage-payment-method #edit-main .box-title{
+    padding:7px 0px 7px 0px;
+  }
+
+
+
+
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1769,7 +1862,8 @@
     z-index: 1;
     position: fixed;
     bottom: 0px;
-    opacity: 0;
+    /*opacity: 0;*/
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
   .floating.footer:hover {
     opacity: 1;

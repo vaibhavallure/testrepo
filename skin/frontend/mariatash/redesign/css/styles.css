@@ -7778,6 +7778,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
 	margin: 0 auto;
 	width: 960px;
+	max-width: 100%;
 }
 
 #my-orders-table tbody a {
