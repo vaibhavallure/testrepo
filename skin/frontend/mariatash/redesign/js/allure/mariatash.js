@@ -96,7 +96,7 @@ jQuery('.link-button').click(function(event) {
     		$(this).next().removeClass('active');
     	} else {
     		$(this).find("a").addClass('active');
-    		$(this).next().removeClass('active');
+    		$(this).next().addClass('active');
     	}
     });
 
@@ -291,7 +291,7 @@ jQuery('.link-button').click(function(event) {
     	jQuery('#menu-btn').click()
     });
 
-    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head').click(function(event){
+    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head,.select-currency-mobile,.wishlist,.my-account-mobile').click(function(event){
         event.stopPropagation();
     });
     jQuery("#menu-btn").on("click", function () {
@@ -330,7 +330,7 @@ jQuery('.link-button').click(function(event) {
 /*filter popup start---------------------------------*/
 
 jQuery(window).bind("load resize", function (e) {
-    var width = jQuery(window).width();
+   /* var width = jQuery(window).width();
     if ((width < 1023)) {
 
         if (jQuery('.filter-common-div').length) {
@@ -378,7 +378,7 @@ jQuery(window).bind("load resize", function (e) {
         jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
         jQuery('.filter-common-div').show();
         jQuery('.filterButton').hide();
-    }
+    }*/
 });
 /*filter popup end---------------------------------*/
 

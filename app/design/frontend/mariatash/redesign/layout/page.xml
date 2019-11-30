@@ -166,7 +166,9 @@ Default layout, loads most of the pages
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
                 <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
                     <label>Navigation Bar</label>
-                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>
+                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
+                        <block type="directory/currency" name="store_currency_selector_mobile" as="store_currency_selector_mobile" template="allure/currencymanager/selector_for_mobile.phtml"/>
+                    </block>
                 </block>
                 <block type="page/html_wrapper" name="top.bar" as="topBar" translate="label">
                     <label>Breadcrumbs</label>
