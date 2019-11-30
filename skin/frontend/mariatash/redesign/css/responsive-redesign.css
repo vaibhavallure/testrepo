@@ -1,5 +1,188 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
+
+
+  /*filter -------------------------------*/
+  dt.filter-head:after {
+    background: url(../images/redesign/plus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+    background-size: 10px;
+  }
+  dt.filter-head.showing:after {
+    background: url(../images/redesign/minus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+  }
+  #narrow-by-list li div dt:after{
+    background: url(../images/redesign/plus-wt.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    background-size: 10px;
+  }
+
+  #narrow-by-list li div dt.showing:after {
+    background: url(../images/redesign/minus-wt.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+  }
+  #narrow-by-list li div dt{
+    background-image: none!important;
+  }
+
+
+
+
+.sticky-bar {
+  position: fixed;
+  top: 60px;
+  background: white;
+  z-index: 3;
+}
+  .sticky-filter{
+    position: fixed;
+    top: 80px;
+    width: 100%;
+    background: white;
+    z-index: 2;
+  }
+  #narrow-by-list li:first-child{
+    margin-top: 0px;
+  }
+  .allure_filter {
+    border: 1px solid lightslategray;
+    margin: 10px;
+  }
+  .allure_filter dt.filter-head {
+    cursor: pointer;
+    background: white !important;
+    width: auto;
+    padding: 6px 24px;
+    height: 33px;
+  }
+   .filtru-price .m-filter-slider {
+    margin-left: 10px;
+    margin-top: 11px;
+    margin-bottom: 50px;
+  }
+   .m-slider-selected-value{
+    width: 245px;
+  }
+   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    margin-top: 20px;
+  }
+   .selected-filters{
+    width: 100%;
+    position: static;
+    top:auto;
+    left: auto;
+  }
+   .selected-filters .currently{
+    display: none;
+  }
+   .selected-filters .actions.current{
+    width: 50%;
+    padding: 0 18px;
+  }
+  #narrow-by-list li div dd ol{
+    padding: 10px;
+  }
+  .selected-filters .actions.current a{
+    text-align: center;
+    background: #fff;
+    width: 100px;
+    height: 32px;
+    vertical-align: middle;
+    padding: 5px;
+    border: 1px solid #292929;
+  }
+  .filterButton:before{
+    content: '';
+    background-image: url(../images/filter.png);
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 30px;
+    position: absolute;
+  }
+  /* .filterButton{
+    padding-left: 10px;
+    width: 100%;
+    height: 32px;
+    display: block;
+  } */
+   #narrow-by-list dd{
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+   #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
+    width: 100%;
+  }
+   .pop-up-cover {
+    width: 100%;
+  }
+   #narrow-by-list li div dd ol {
+    padding: 15px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+   #narrow-by-list li div dd {
+    /*display: block!important;*/
+    position: relative;
+    top:auto;
+    left: auto;
+    border: none;
+     margin: 0px 10px;
+  }
+   #narrow-by-list{
+    padding: 0;
+    margin-left:0;
+  }
+   #narrow-by-list li div dt {
+    cursor: pointer;
+    background: #292929 !important;
+    border: none;
+    color: white;
+    width: auto;
+    padding: 6px 24px;
+    height: 34px;
+  }
+   #narrow-by-list li {
+    min-width: 100%;
+     padding-left: 0px;
+  }
+   #narrow-by-list ol li {
+    min-width: 208px;
+    padding: 0;
+  }
+  .filter-actions{
+    padding: 0px 10px!important;
+  }
+  /*filter end----------------------------*/
   .mobile-device .main-nav-title li {
     margin-right: 0;
     margin-top: 15px;
@@ -47,6 +230,9 @@
   .mobile-device .head-child, #appointments img {
     display: none;
     padding-left: 10px;
+  }
+  .mobile-device .head-child.active {
+  	display: block;
   }
   #appointments .col{
     width: 100%;
@@ -713,7 +899,7 @@
     margin-top: 28px;
   }
   #category-title{
-    margin: 16px 0 20px !important;
+    /* margin: 16px 0 20px !important; */
     padding: 0 !important;
   }
   .catalog-category-view #category-title{
@@ -788,9 +974,15 @@
   .cms-home .wrapper{
     margin: 0 auto -98px;
   }
+  ul#slide-list{
+		bottom: 120px !important;
+	}
   /*Search CSS*/
   #cross-icon{
     right: 8px;
+  }
+  .breadcrumbs{
+    margin-top: 19px;
   }
 }
 
@@ -941,6 +1133,12 @@
   #search {
     background: #292929;
   }
+  .footer .social-media li{
+    margin-right: 24px;
+  }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    height: 140px !important;
+  }
 }
 
 /* ipad landscape */
@@ -963,6 +1161,13 @@
 
   #search-input {
     z-index: 1032;
+  }
+  .select-currency-mobile, .wishlist-section-mobile, .account-section-mobile {
+    display: none;
+  }
+  #apply-filter-btn{
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 
@@ -1050,7 +1255,7 @@
     top: 11.5px;
   }
   .m-filter-checkboxes label {
-    font-size: 11px !important;
+    margin-bottom: 12px;
   }
   .breadcrumbs :last-child {
     padding-right: 0;
@@ -1080,7 +1285,7 @@
     margin-top: 28px;
   }
   .filter-common-div{
-    display: none;
+    /*display: none;*/
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
@@ -1185,7 +1390,7 @@
     margin-bottom: 50px;
   }
   .jewelry-container{
-    margin-top: 20px;
+    margin-top: 20px !important;
   }
   .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
     background-image: url(../images/redesign/thinner-cross.png);
@@ -1406,6 +1611,9 @@
   }
   .collat-wrap{
     width: 100%;
+  }
+  ul#slide-list{
+    top: 360px;
   }
 
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
@@ -1699,6 +1907,12 @@
   }
   .product-shop > .row{
     padding-left: 0;
+  }
+  ul#slide-list{
+    top: 310px;
+  }
+  .containerImage img{
+    margin: 30px auto 0;
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){

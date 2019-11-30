@@ -24,15 +24,17 @@
 }
 
 .acc-products-wrapper #narrow-by-list-new {
-    height: 78px;
+    height: 55px;
     display: flex;
-    align-items: center;
+    align-items: start;
     border-bottom: 1px solid #dedede;
     margin-bottom: 0;
-    display: grid;
-    align-content: center;
+    /* display: grid; */
+    align-content: start;
     grid-auto-flow: column;
     grid-column-gap: 5px;
+    margin-top: 20px;
+    padding: 0 0 0 12px !important;
 }
 
 .acc-products-wrapper #narrow-by-list-new li {

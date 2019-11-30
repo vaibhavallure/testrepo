@@ -31,9 +31,79 @@
  * @see Mage_Page_Block_Html_Topmenu
  */
 ?>
-<?php $_menu = $this->getHtml('level-top') ?>
+<?php $_menu = $this->getHtml('level-top');
+$isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
+$isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
+
+?>
+
 <?php if($_menu): ?>
     <ul id="top-nav" class="navbar-nav main-nav-title allure-menu">
         <?php echo $_menu ?>
+        <?php
+             if($isMobile):?>
+                 <li class="currency-section-for-mobile" style="background: white">
+                 <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
+                 </li>
+                 <?php
+                 $wishlist=Mage::getModel('ecp_menu/menu')->load(3);
+                 if($wishlist):?>
+                     <li class="wishlist-section-mobile" style="background: white">
+                         <?php if($isCustomerLogIn):?>
+                         <a class="icon-link wishlist"  href="<?= $wishlist->getUrl() ?>">
+                             <?php else:?>
+                             <a class="icon-link wishlist"  onclick="signin()">
+                                 <?php endif;?>
+                                    wishlist
+                             </a>
+                             <script>
+                                 var signin= function() {
+                                     jQuery('body').addClass('allure_login_wishlist');
+                                     jQuery("#sign_in_label").trigger('click');
+                                 }
+                                 jQuery(document).ready(function() {
+                                     jQuery('.popupLoginModel .close').on('click', function () {
+                                         jQuery('body').removeClass('allure_login_wishlist');
+                                     });
+                                 });
+                             </script>
+                     </li>
+                 <?php endif; ?>
+
+                 <?php if ($isCustomerLogIn) :?>
+                     <li class="icon-user position-relative account-section-mobile" style="background: white">
+                         <dl>
+                             <dt><a class="my-account-mobile">
+                             My Account
+                         </a></dt>
+                         <div class="login-dropdown-cover-mobile" style="display: none">
+                                 <dd><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></dd>
+                                 <dd><a href="<?= $baseUrl;?>customer/account/edit/"><?= $this->__('Login & Security') ?></a></dd>
+                                 <dd class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></dd>
+                                 <dd><a href="<?= $baseUrl;?>customer/paymentinfo"><?= $this->__('Payment Option')?></a></dd>
+                             <dd class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></dd>
+                         </div>
+                         </dl>
+                     </li>
+                 <script>
+                     jQuery(".my-account-mobile").on("click",function () {
+                        jQuery(".login-dropdown-cover-mobile").slideToggle();
+                     });
+                 </script>
+                 <?php else: ?>
+                     <li class="icon-item" id="sign_in_label" style="background: white">
+                         <a href="javascript:void(0)" onclick="signin()">
+                             sign in
+                         </a>
+                     </li>
+                 <script>
+                     var signin= function() {
+                         jQuery("#sign_in_label").trigger('click');
+                     }
+                 </script>
+                 <?php endif; ?>
+
+             <?php endif;
+        ?>
     </ul>
 <?php endif ?>

@@ -38,10 +38,36 @@
 				#tray-button{ float:right; margin-top:1px; border-left:1px solid #333; background:url('../images/slider/bg-hover.png') repeat-x 0 44px; }
 					#tray-button:hover{ background-position:0 1px; cursor:pointer; } */
 
-ul#slide-list{ position:absolute; margin: 0 !important;left: 50%;bottom: 80px;z-index:9999;}
-ul#slide-list li{ list-style:none; width:12px; height:12px; float:left; margin:7px 0 0 0; }
-ul#slide-list li.current-slide a, ul#slide-list li.current-slide a:hover{ background-position:0 0px; } 
-ul#slide-list li a{ display:block; width:12px; height:12px; background:url('/skin/frontend/mt/default/images/slider/nav-dot.png') no-repeat 0 -24px; } 
+ul#slide-list {
+    position: absolute;
+    margin: 0 !important;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 70px;
+    text-align: center;
+}
+ul#slide-list li { 
+	list-style:none; 
+	display: inline-block;
+	padding: 5px;
+}
+ul#slide-list li a{
+	display: block;
+    width: 20px;
+    height: 20px;
+    /* background: url(/skin/frontend/mt/default/images/slider/nav-dot.png) no-repeat 0 -24px; */
+    /* transform: translatex(-50%); */
+    background-size: 25px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+ul#slide-list li.current-slide a, ul#slide-list li.current-slide a:hover{ 
+	/* background-position:0 0px; */ 
+	background-color: #9e8353;
+}
 ul#slide-list li a:hover{ background-position:0 -12px; cursor:pointer; }
 
 	/* Progress Bar

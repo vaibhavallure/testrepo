@@ -1,4 +1,9 @@
-
+ul#slide-list li a {
+	display: block;
+	width: 12px;
+	height: 12px;
+	background: url(../images/slider/nav-dot.png) no-repeat 0 -24px;
+}
 /*Standard Mendetory CSS*/
 
 h1{
@@ -719,7 +724,7 @@ nav.mariatash-header {
 	background: #2929297d;
 	width: 100%;
 	height: 100%;
-	z-index: 1;
+	z-index: 3;
 }
 
 .mariatash-header .navbar-nav li a {
@@ -2540,6 +2545,12 @@ ul#foo4 {
 }
 
 /*filter popup-----------------------------------------------------*/
+.allure_filter .al-hide{
+	display: none;
+}
+
+
+
 
 .filterPopup .modal-body{
 	padding: 0
@@ -3226,9 +3237,16 @@ table th {
 table thead {
   border-bottom: 1px solid rgba(41,41,41,0.9);
 }
-.data-table.cart-table td, .paypal-express-review .data-table td {
+.paypal-express-review .data-table td {
   vertical-align: initial;
 	margin-top: 40px;
+}
+.data-table.cart-table td{
+	vertical-align: middle;
+	margin-top: 16px;
+}
+#shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col5 {
+  vertical-align: initial;
 }
 .gift-row {
   border-bottom: 1px solid #d8d8d8;
@@ -4794,4 +4812,28 @@ td.cart_col2 {
 }
 .cms-home .footer{
 	z-index: 2;
+}
+.mobile-device .for-space-to-bottom.cat-img-space {
+  background-image: none;
+  height: 70px !important;
+}
+.filter-actions {
+  display: flex;
+}
+.desktop-device #apply-filter-btn{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.mobile-device #apply-filter-btn{
+	margin-right: 3px;
+}
+.desktop-device #total_item_counts_holder{
+	margin-top: 8px !important;
+}
+.mobile-device .filter-actions{
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
+.mobile-device #clear-all-filter {
+  margin-left: 13px;
 }
