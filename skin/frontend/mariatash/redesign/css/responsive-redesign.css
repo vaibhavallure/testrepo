@@ -3,6 +3,55 @@
 
 
   /*filter -------------------------------*/
+  dt.filter-head:after {
+    background: url(../images/redesign/plus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+    background-size: 10px;
+  }
+  dt.filter-head.showing:after {
+    background: url(../images/redesign/minus.png) no-repeat;
+    content: '';
+    height: 19px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+  }
+  #narrow-by-list li div dt:after{
+    background: url(../images/redesign/plus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    background-size: 10px;
+  }
+
+  #narrow-by-list li div dt.showing:after {
+    background: url(../images/redesign/minus.png) no-repeat;
+    content: '';
+    height: 19px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+  }
+  #narrow-by-list li div dt{
+    background-image: none!important;
+  }
+
+
+
+
 .sticky-bar {
   position: fixed;
   top: 60px;
