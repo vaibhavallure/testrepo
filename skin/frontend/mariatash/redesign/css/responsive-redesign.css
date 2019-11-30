@@ -61,7 +61,8 @@
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .piercing_options .image-text {
     padding-left: 15px;
@@ -712,7 +713,7 @@
     margin-top: 28px;
   }
   #category-title{
-    margin: 16px 0 20px !important;
+    /* margin: 16px 0 20px !important; */
     padding: 0 !important;
   }
   .catalog-category-view #category-title{
@@ -784,9 +785,18 @@
   .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
     position: relative !important;
   }
+  .cms-home .wrapper{
+    margin: 0 auto -98px;
+  }
+  ul#slide-list{
+		bottom: 120px !important;
+	}
   /*Search CSS*/
   #cross-icon{
     right: 8px;
+  }
+  .breadcrumbs{
+    margin-top: 19px;
   }
 }
 
@@ -936,6 +946,12 @@
   }
   #search {
     background: #292929;
+  }
+  .footer .social-media li{
+    margin-right: 24px;
+  }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    height: 140px !important;
   }
 }
 
@@ -1181,7 +1197,7 @@
     margin-bottom: 50px;
   }
   .jewelry-container{
-    margin-top: 20px;
+    margin-top: 20px !important;
   }
   .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
     background-image: url(../images/redesign/thinner-cross.png);
@@ -1402,6 +1418,9 @@
   }
   .collat-wrap{
     width: 100%;
+  }
+  ul#slide-list{
+    top: 360px;
   }
 
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
@@ -1695,6 +1714,12 @@
   }
   .product-shop > .row{
     padding-left: 0;
+  }
+  ul#slide-list{
+    top: 310px;
+  }
+  .containerImage img{
+    margin: 30px auto 0;
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){

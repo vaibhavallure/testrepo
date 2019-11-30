@@ -1,104 +1,116 @@
 <script type="text/javascript" language="javascript">
-jQuery.noConflict();
+    jQuery.noConflict();
 
-jQuery(document).ready(function() {
-    var startPoint =1;
-    if(jQuery(".cur_active").length>0) {
-        var startPoint = parseInt(jQuery(".cur_active").attr("data-count")) - 1;
-    }
+    jQuery(document).ready(function() {
+
+        var startPoint =1;
+        if(jQuery(".cur_active").length>0) {
+            var startPoint = parseInt(jQuery(".cur_active").attr("data-count")) - 1;
+        }
         jQuery('#foo3').jcarousel({
-        initCallback: mycarousel_initCallback,
-        buttonNextCallback: mycarousel_buttonNextCallback,
-        buttonPrevCallback: mycarousel_buttonPrevCallback,
-        buttonNextHTML: null,
-        buttonPrevHTML: null,
-        scroll:1,
-        start:startPoint
+            initCallback: mycarousel_initCallback,
+            buttonNextCallback: mycarousel_buttonNextCallback,
+            buttonPrevCallback: mycarousel_buttonPrevCallback,
+            buttonNextHTML: null,
+            buttonPrevHTML: null,
+            scroll:1,
+            start:startPoint
         });
 
 
-    jQuery(window).resize();
+        jQuery(window).resize();
 
-    jQuery('div.main div.col-main div.category-title').remove();
+        jQuery('div.main div.col-main div.category-title').remove();
 
-});
-function trigger(carousel)
-{
-    var width = jQuery(window).width();
-    if ((width < 767)) {
-        setTimeout(function () {
-            var link = jQuery('.jcarousel-item-' + carousel.first + ' a').attr('href');
-            window.location = link;
-        }, 2000);
-    }
-}
+        if(jQuery('.img-cat').length > 0) {
+            jQuery(".img-cat").on("swipeleft", function () {
+                console.log('swipeleft');
+                jQuery('#next3').click();
+            });
+            jQuery(".img-cat").on("swiperight", function () {
+                console.log('swiperight');
+                jQuery('#prev3').click();
+            });
+        }
 
-function mycarousel_initCallback(carousel) {
-    jQuery('#prev3').bind('click', function() {
-        carousel.prev();
-        trigger(carousel);
-        return false;
     });
-
-    jQuery('#next3').bind('click', function() {
-        carousel.next();
-        trigger(carousel);
-        return false;
-    });
-    carousel;
-};
-
-function mycarousel_buttonNextCallback(carousel, button, enabled) {
-    if(enabled){
-        jQuery("#next3").css('opacity',1);
-    }else{
-        jQuery("#next3").css('opacity',0.13);
+    function trigger(carousel)
+    {
+        var width = jQuery(window).width();
+        if ((width < 767)) {
+            setTimeout(function () {
+                var link = jQuery('.jcarousel-item-' + carousel.first + ' a').attr('href');
+                window.location = link;
+            }, 2000);
+        }
     }
-};
 
-function mycarousel_buttonPrevCallback(carousel, button, enabled) {
-    if(enabled){
-        jQuery("#prev3").css('opacity',1);
-    }else{
-        jQuery("#prev3").css('opacity',0.13);
-    }
-};
+    function mycarousel_initCallback(carousel) {
+        jQuery('#prev3').bind('click', function() {
+            carousel.prev();
+            trigger(carousel);
+            return false;
+        });
 
-jQuery(window).resize(function() {
+        jQuery('#next3').bind('click', function() {
+            carousel.next();
+            trigger(carousel);
+            return false;
+        });
+        carousel;
+    };
+
+    function mycarousel_buttonNextCallback(carousel, button, enabled) {
+        if(enabled){
+            jQuery("#next3").css('opacity',1);
+        }else{
+            jQuery("#next3").css('opacity',0.13);
+        }
+    };
+
+    function mycarousel_buttonPrevCallback(carousel, button, enabled) {
+        if(enabled){
+            jQuery("#prev3").css('opacity',1);
+        }else{
+            jQuery("#prev3").css('opacity',0.13);
+        }
+    };
+
+    jQuery(window).resize(function() {
         var wi = 0;
         jQuery('ul#foo3 li').each(function(key,element){
-           wi += jQuery(element).width();
+            wi += jQuery(element).width();
         });
 
         if(wi >= document.body.offsetWidth){
-                jQuery('#next3, #prev3').show();
+            jQuery('#next3, #prev3').show();
         }else{
-                jQuery('#next3, #prev3').hide();
+            jQuery('#next3, #prev3').hide();
         }
-});
+    });
 
 </script>
 <div class="page-title category-title">
     <?php $_category = Mage::registry('current_category') ?>
     <?php
     if ($_imgUrl = $_category->getImageUrl()) {
-	?>
-		<script type="text/javascript" language="javascript">
-			jQuery(document).ready(function() {
-				jQuery('.col-main').addClass('thumbnail-image');
-				jQuery('.top-container').addClass('thumbnail-image');
-			});
-			</script>
-	<?php
-        if($_category->getCategoryBleed()) {
-            echo '<style type="text/css">
+        ?>
+        <script type="text/javascript" language="javascript">
+            jQuery(document).ready(function() {
+                jQuery('.col-main').addClass('thumbnail-image');
+                jQuery('.top-container').addClass('thumbnail-image');
+            });
+        </script>
+    <?php
+    if($_category->getCategoryBleed()) {
+        echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         // .caroufredsel_wrapper {margin-top: 240px !important}
                         #productsContainer-wrapper { margin-top: 75px !important; }
                   </style>';
-        }
-        else {
-            echo '<style type="text/css">
+    }
+    else {
+        echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                         #productsContainer-wrapper { margin-top: 75px !important; }
                         .category-products{
@@ -187,16 +199,16 @@ jQuery(window).resize(function() {
 
                           
                 </style>';
-        }
+    }
     }
     else {
-		?>
-			<script type="text/javascript" language="javascript">
-			jQuery(document).ready(function() {
-				jQuery('.col-main').addClass('isBleed');
-			});
-			</script>
-			<?php
+    ?>
+        <script type="text/javascript" language="javascript">
+            jQuery(document).ready(function() {
+                jQuery('.col-main').addClass('isBleed');
+            });
+        </script>
+        <?php
         echo '<style type="text/css">
                         div.main div.col-main div.category-title {display: none;}
                   </style>';
@@ -207,20 +219,21 @@ jQuery(window).resize(function() {
 </div>
 <?php $_collection = $this->getCategories() ?>
 <div class="cartilage-section w-100 position-relative">
-<div class="caroufredsel_wrapper" >
-	<?php if(count($_collection)) { ?>
-    <ul id="foo3">
-		<?php $i = 1;?>
-        <?php foreach($_collection as $category): ?>
-            <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
-            <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <div class="caroufredsel_wrapper" >
+        <?php if(count($_collection)) { ?>
+            <ul id="foo3">
+                <?php $i = 1;?>
+                <?php foreach($_collection as $category): ?>
+                    <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
+                    <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
+                        <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
 
-	<?php } ?>
+        <?php } ?>
+    </div>
+    <div class="prev" id="prev3"></div>
+    <div class="next" id="next3"></div>
 </div>
-<div class="prev" id="prev3"></div>
-<div class="next" id="next3"></div>
-</div>
+

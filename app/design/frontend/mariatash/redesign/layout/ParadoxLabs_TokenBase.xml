@@ -11,7 +11,20 @@
 	<customer_paymentinfo_index>
 		<label>Customer Payment Data Manager</label>
 		<update handle="customer_account" />
-		
+		<reference name="breadcrumbs">
+			<action method="addCrumb">
+				<crumbName>Home</crumbName>
+				<crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+			</action>
+			<action method="addCrumb">
+				<crumbName>My Account</crumbName>
+				<crumbInfo><label>My Account</label><title>My Account</title><link>/customer/account/</link></crumbInfo>
+			</action>
+			<action method="addCrumb">
+				<crumbName>Payment Option</crumbName>
+				<crumbInfo><label>Payment Option</label><title>Payment Option</title><link>/</link></crumbInfo>
+			</action>
+		</reference>
 		<!-- referencing content rather than my.account for compatibility back to 1.4. -->
 		<reference name="content">
 			<!-- The active payment method can inject itself into this wrapper with handle customer_paymentinfo_index_{method}. -->
