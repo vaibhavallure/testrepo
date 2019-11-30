@@ -22,10 +22,13 @@
 	background: white;
 }
 .bk-slide{
-height:192px;
+/* height:192px; */
 padding:10px;
 line-height: 42px;
-width: 323px;
+/* width: 323px; */
+}
+#slidecaption h1{
+	text-align: center;
 }
 .bk-slide h1, .bk-slide a, .bk-slide span, .bk-slide p{color:#ffffff;}
 .flex-col{
@@ -1634,9 +1637,9 @@ width: 323px;
 		.catalogsearch-result-index .breadcrumbs{
 			/*margin-top: 30px!important;*/
 		}
-		#shop_our_instagram h1{
+		/* #shop_our_instagram h1{
 			margin-top: 35px;
-		}
+		} */
 		#fs-instagram-view-container #fs-detail-close{
 			width: 24px;
 			background-size: contain;
@@ -1983,6 +1986,7 @@ width: 323px;
    }
    .mt-new-purchase .mt-purchase-btn button{
      height: 40px !important;
+     width: 100%;
    }
    #purchase-history .data-table.cart-table td{
      margin-top: 10px !important;
@@ -2167,15 +2171,15 @@ width: 323px;
 	}
 
 	.bk-slide{
-		width:305px; height:138px;
+		width:100%;
+		height:100%;
 		padding:10px;
 		line-height: 42px;
-		width: 305px;
-		background: -moz-linear-gradient(top,  rgba(76,76,76,0.64) 0%, rgba(77,77,77,0.64) 1%, rgba(89,89,89,0.64) 12%, rgba(102,102,102,0.65) 50%, rgba(19,19,19,0.67) 100%); /* FF3.6-15 */
-		background: -webkit-linear-gradient(top,  rgba(76,76,76,0.64) 0%,rgba(77,77,77,0.64) 1%,rgba(89,89,89,0.64) 12%,rgba(102,102,102,0.65) 50%,rgba(19,19,19,0.67) 100%); /* Chrome10-25,Safari5.1-6 */
-		background: linear-gradient(to bottom,  rgba(76,76,76,0.64) 0%,rgba(77,77,77,0.64) 1%,rgba(89,89,89,0.64) 12%,rgba(102,102,102,0.65) 50%,rgba(19,19,19,0.67) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a34c4c4c', endColorstr='#ab131313',GradientType=0 ); /* IE6-9 */
+		background: rgba(41,41,41,0.9);
 	}
+	/* .cms-home .wrapper{
+		min-height: 602px;
+	} */
 
 	/*Search price fix*/
 	.wyomind-elasticsearch .regular-price span {
@@ -2231,6 +2235,12 @@ width: 323px;
 			top:25%;
 			left:35%;
 		}
+		.cms-piercing-service .wrapper {
+			overflow: hidden;
+		}
+		.cms-piercing-service .about-jewelry {
+			margin-bottom: 20px;
+		}
 	}
 	/*Mobile devices Landscape*/
 	@media (max-width: 767px) and (orientation: landscape) {
@@ -2279,9 +2289,48 @@ width: 323px;
 		transition: all 0.5s;
 	}
 
+	.cms-piercing-service  .h-100{
+		height: 100% !important;
+	}
 	/*Large Screen*/
-	@media (min-width: 1200px){
+	@media (min-width: 1920px){
 		.cms-piercing-service .container-fluid.jewelry-container{
-			max-width: 1550px;
+			max-width: 1490px !important;
 		}
 	}
+
+    /*Email : Lowercase*/
+    input[name=email],
+    input[name="login[username]"],
+    .email{
+        text-transform: lowercase;
+    }
+
+    input[name=email]::-webkit-input-placeholder,
+    input[name="login[username]"]::-webkit-input-placeholder, /* WebKit browsers */
+    .email::-webkit-input-placeholder{ /* WebKit browsers */
+        text-transform: none;
+    }
+    input[name=email]:-moz-placeholder,
+    input[name="login[username]"]:-moz-placeholder, /* Mozilla Firefox 4 to 18 */
+    .email:-moz-placeholder{ /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    input[name=email]::-moz-placeholder,
+    input[name="login[username]"]::-moz-placeholder,
+    .email::-moz-placeholder
+    { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    input[name=email]:-ms-input-placeholder,
+    input[name="login[username]"]:-ms-input-placeholder,
+    .email:-ms-input-placeholder
+    { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    input[name=email]::placeholder ,
+    input[name="login[username]"]::placeholder,
+    .email::placeholder
+    { /* Recent browsers */
+        text-transform: none;
+    }

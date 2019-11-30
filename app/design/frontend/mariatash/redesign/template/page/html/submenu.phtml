@@ -1,5 +1,5 @@
 <?php
-$parentCategory=$this->getParentCategories();
+$parentCategory = $this->getParentCategories();
 
 foreach ($parentCategory as $pc):
 if($pc->getChildrenCount()):
@@ -10,17 +10,17 @@ if($this->isthumbnailCat($pc->getName())){
     <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-jewelry-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
       <div class="text-right submenu-upper-section d-lg-none d-block">
           <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
-                        <span class="close-section">Back</span>
-                        </div>
+          <span class="close-section">Back</span>
+      </div>
         <div class="row menu-inner">
             <div class="col-12 mt-lg-0 mt-4">
                 <div class="row div-row">
 
 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
-                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
-                                        continue;
-                                    ?>
-    <div class="col-lg col-12 piercing_options"> <a href="/<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
+        if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
+            continue;
+        ?>
+<div class="col-lg col-12 piercing_options"> <a href="/<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
     <div class="image-text text-center">
       <h6 class="text-uppercase text-white"><?= $this->__($child->getName())?></h6>
     </div>
@@ -33,10 +33,10 @@ if($this->isthumbnailCat($pc->getName())){
     else{
         ?>
         <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-appointment-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
-                                  <div class="text-right submenu-upper-section d-lg-none d-block">
-                                      <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($this->__($pc->getName())) ?></a></span>
-                                    <span class="close-section ">Back</span>
-                                  </div>
+          <div class="text-right submenu-upper-section d-lg-none d-block">
+              <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($this->__($pc->getName())) ?></a></span>
+            <span class="close-section ">Back</span>
+          </div>
             <div class="row piercing-inner">
                 <div class="col-lg-12 menu-common-section">
                     <div class="row">
@@ -55,6 +55,7 @@ if($this->isthumbnailCat($pc->getName())){
                                         $childRightSection[] = $child;
                                         continue;
                                     }
+
 
                                     if(strtolower($pc->getName()) == "jewelry"):
 
@@ -108,6 +109,7 @@ if($this->isthumbnailCat($pc->getName())){
                                             <?php  if(count($this->getChildCategories($child->getId()))):?>
                                                 <li class="view-all-products"><a
                                                             href="/<?= $child->getRequestPath() ?>"><?= $this->__("View All")?></a>
+
                                                 </li>
                                             <?php endif;?>
                                         </ul>
@@ -120,19 +122,21 @@ if($this->isthumbnailCat($pc->getName())){
 
                             </div>
                     </div>
+                    <?php if (false) :?>
                     <div class="col-lg-5 col-12 text-uppercase right-section">
                         <div class="row">
                             <?php foreach ($childRightSection  as $childR){ ?>
-                            <a href="/<//?= $childR->getRequestPath() ?>">
+                            <a href="/<?php echo $childR->getRequestPath() ?>">
                                 <div class="col-md col-12 p-0 text-center special-menu">
-                                    <img width="228px" src="<//?= $this->getCatThumbnail($childR->getId()) ?>">
-                                    <div class="product-name image-text"><h6 class="text-uppercase text-white"><?= $this->__($childR->getName()); ?></h6></div>
+                                    <img width="228px" src="<?php echo $this->getCatThumbnail($childR->getId()) ?>">
+                                    <div class="product-name image-text"><h6 class="text-uppercase text-white"><?php echo $this->__($childR->getName()); ?></h6></div>
                                 </div>
                             </a>
                         <?php } ?>
                     </div>
+                    <?php endif;?>
                 </div>
-                </div>
+             </div>
         </section>
         <?php
     }
