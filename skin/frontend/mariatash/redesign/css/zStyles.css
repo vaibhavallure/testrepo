@@ -1335,7 +1335,8 @@ line-height: 42px;
 
 .mt-new-myaccount-dashbord .messages{
 	position: absolute!important;
-	top: 92%!important;
+	/*top: 92%!important;*/
+	top: 85%!important;
 	left: 0!important;
 }
 
