@@ -2270,7 +2270,7 @@ line-height: 42px;
 	@media (min-width: 992px) {
 
 		.zoom-img.big-popup-image.row {
-			/*max-width: 500px;*/
+			max-width: 500px;
 		}
 		.menu-head.jwl-head > span > a {
 			pointer-events: none;
