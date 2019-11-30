@@ -66,8 +66,7 @@ body { background:#111; height:auto; width:auto; }
 		width: 36px;
 		z-index: 1;
 	}
-	.homepageSliderControllers .nextS
-	{
+	.homepageSliderControllers .nextS{
 		left: auto;
 		right: 14px;
 	}
@@ -137,8 +136,8 @@ body { background:#111; height:auto; width:auto; }
 	}
 	#slidecaption {
 		top: auto;
-		bottom: 12px;
-		/* left: 0; */
+		bottom: 40px;
+		left: 30px;
 	}
 	.homepageSliderControllers .nextS,.homepageSliderControllers .prevS {
      top: 45%;

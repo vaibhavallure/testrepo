@@ -1637,9 +1637,9 @@ line-height: 42px;
 		.catalogsearch-result-index .breadcrumbs{
 			/*margin-top: 30px!important;*/
 		}
-		#shop_our_instagram h1{
+		/* #shop_our_instagram h1{
 			margin-top: 35px;
-		}
+		} */
 		#fs-instagram-view-container #fs-detail-close{
 			width: 24px;
 			background-size: contain;
@@ -2333,5 +2333,3 @@ line-height: 42px;
     { /* Recent browsers */
         text-transform: none;
     }
-
-    
