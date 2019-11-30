@@ -28,6 +28,7 @@
     background: white !important;
     width: auto;
     padding: 5px 10px;
+    height: 33px;
   }
    .filtru-price .m-filter-slider {
     margin-left: 10px;
@@ -119,6 +120,7 @@
     color: white;
     width: auto;
     padding: 5px 10px;
+    height: 34px;
   }
    #narrow-by-list li {
     min-width: 100%;
@@ -1197,7 +1199,7 @@
     top: 11.5px;
   }
   .m-filter-checkboxes label {
-    font-size: 11px !important;
+    margin-bottom: 12px;
   }
   .breadcrumbs :last-child {
     padding-right: 0;
