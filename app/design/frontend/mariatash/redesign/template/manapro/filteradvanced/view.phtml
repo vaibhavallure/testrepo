@@ -108,10 +108,12 @@
                 jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
                     var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
                     if(!showOrHide) {
+                        jQuery(this).addClass("showing");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').addClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
                     }
                     else {
+                        jQuery(this).removeClass("showing");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
                     }
