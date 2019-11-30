@@ -801,8 +801,6 @@ nav.mariatash-header {
 	background: rgba(41, 41, 41, 0.9);
 	width: 100%;
 	margin: 0;
-	transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
-	height: 0px;
 }
 .footer {
   padding-top: 60px !important;
