@@ -99,8 +99,8 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Grid extends Mage_Adminhtml_Block_
           'index'     => 'switch',
           'type'      => 'options',
           'options'   => array(
-              0 => 'HTML',
-              1 => 'Thumbnail',
+              1 => 'HTML',
+              0 => 'Thumbnail',
           ),
       ));
       
