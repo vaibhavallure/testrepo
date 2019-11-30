@@ -795,7 +795,7 @@ div.a-column.a-span-last {
 
 .mt-new-purchase fieldset{
 	/*margin: -17px 0px 0px 0px;*/
-    padding: 0px;
+   padding: 0px 10px;
 }
 
 .mt-new-purchase .mt-purchase-btn button{
@@ -1104,7 +1104,7 @@ padding: 0 0 8px 0;
    font-size: 12px;
 }
 
-div.tab button{
+.manage-payment-method .tab button{
    /*background-color: #f1f1f1;*/
    float: left;
    /*border: none;*/
@@ -1937,8 +1937,87 @@ li.order-info-tab-back{
     padding-left: 0;
 }
 .my-account .box .box-title h1{
-    padding-top: 55px;
+    padding-top: 20px;
     margin-bottom: 16px;
     font-size: 30px;
     text-transform: capitalize;
+}
+.myaccount-add-payment-form #mt-credit-card-info .mt-card-info{
+    width: 47.7%;
+    float: none;
+    clear: both;
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .input-box{
+    float: none;
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box {
+    float: none;
+}
+.manage-payment-method #new-mt-add-payment-method.tabcontent{
+    background: #fffcfc;
+}
+.manage-payment-method #billing-new-address-form {
+        width: 100%;
+     border-right: none;
+     padding-right: 0px;
+     min-height: 390px;
+}
+
+.myaccount-add-payment-form select {
+    background-color: transparent;
+    border: 1px solid rgba(41,41,41,0.25)!important;
+}
+.myaccount-add-payment-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
+    width: 99%!important;
+}
+ .myaccount-add-payment-form #mt-credit-card-info .mt-card-info #authnetcim_name_on_card{
+     width: 99%!important;
+ }
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp{
+     width: 100%;
+ }
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-month {
+    width: 48%;
+    float: left;
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
+    width: 48%;
+    float: left;
+    margin-left: 15px;
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp select{
+    width: 100%;
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_cvv_div .card-cvv{
+    width: 100%;
+}
+#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box .cvv-box{
+    width: 100%;
+}
+.myaccount-add-payment-form #billing-new-address-form .input-box select{
+    width: 322px;
+}
+.myaccount-add-payment-form #billing-new-address-form .countrys select{
+    border: 0.5px solid #292929;
+    font-family: urw-din-xlight;
+    font-size: 18px;
+    color: rgba(41,41,41,0.90);
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .date-label{
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 0!important;
+}
+.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_cvv_div span.card-code{
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 0!important;
+    margin-top: 10px;
+}
+.myaccount-add-payment-form .cardholder-title{
+    padding-left: 40px;
+}
+.manage-payment-method .payment-card-name,.payment-card-exp{
+    text-transform: uppercase;
+    font-weight: bold;
 }

@@ -137,7 +137,13 @@ var addCustomer = function (srno) {
 
     jQuery('.customer_section').append(newCustomer);
     jQuery('#customer' + srno).show('slow');
-
+    jQuery( ".firstname, .lastname").unbind( "keyup" );
+    jQuery('.firstname').keyup(function (evt) {
+        convert(jQuery(this),'firstname',evt);
+    });
+    jQuery('.lastname').keyup(function (evt) {
+        convert(jQuery(this),'lastname',evt);
+    });
 
    var iti= window.intlTelInput(document.querySelector("#phonenumber" + srno), {
         // initialCountry: 'fr',
@@ -202,11 +208,21 @@ var removeCustomer = function (srno) {
     customer.hide('slow', function () {
         customer.remove();
     });
+
 };
 var removeCustomerJob = function (srno) {
     var job = jQuery('#customer' + (srno + 1) + 'job');
     job.hide('slow', function () {
         job.remove();
+    });
+
+    jQuery( ".firstname, .lastname").unbind( "keyup" );
+
+    jQuery('.firstname').keyup(function (evt) {
+        convert(jQuery(this),'firstname',evt);
+    });
+    jQuery('.lastname').keyup(function (evt) {
+        convert(jQuery(this),'lastname',evt);
     });
 };
 
