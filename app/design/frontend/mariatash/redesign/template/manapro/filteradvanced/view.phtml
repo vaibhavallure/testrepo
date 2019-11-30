@@ -60,7 +60,7 @@
             <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
             <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
             <div class="allure_filter">
-                <dt class="filter-head al-hide">Filter By</dt>
+                <dt class="filter-head al-hide para-normal">Filter By</dt>
                 <dd class="filter-contain al-hide" >
                     <ul id="narrow-by-list" class="mb-0">
                         <?php $_filters = $this->getFilters(); $i = 0; ?>
@@ -126,12 +126,12 @@
         <?php if ($this->getLayer()->getState()->getFilters()): ?>
             <li class="filter-actions">
                 <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
-                <div class="actions"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="clear-all-filter"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
             </li>
             <?php else: ?>
             <li class="filter-actions">
                 <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
-                <div class="actions"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="clear-all-filter"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
             </li>
         <?php endif; ?>
         <li id="total_item_counts_holder">

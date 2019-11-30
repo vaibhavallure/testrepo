@@ -4822,10 +4822,18 @@ td.cart_col2 {
 }
 .desktop-device #apply-filter-btn{
 	margin-left: 10px;
-}
-#apply-filter-btn{
 	margin-right: 10px;
+}
+.mobile-device #apply-filter-btn{
+	margin-right: 3px;
 }
 .desktop-device #total_item_counts_holder{
 	margin-top: 8px !important;
+}
+.mobile-device .filter-actions{
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
+.mobile-device #clear-all-filter {
+  margin-left: 13px;
 }
