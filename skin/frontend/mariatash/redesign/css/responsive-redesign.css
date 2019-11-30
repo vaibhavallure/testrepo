@@ -7,7 +7,7 @@
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
     height: 20px;
-    width: 19px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -17,18 +17,18 @@
   dt.filter-head.showing:after {
     background: url(../images/redesign/minus.png) no-repeat;
     content: '';
-    height: 19px;
-    width: 19px;
+    height: 20px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
     /*transition: 0.5s;*/
   }
   #narrow-by-list li div dt:after{
-    background: url(../images/redesign/plus.png) no-repeat;
+    background: url(../images/redesign/plus-wt.png) no-repeat;
     content: '';
     height: 20px;
-    width: 19px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -36,10 +36,10 @@
   }
 
   #narrow-by-list li div dt.showing:after {
-    background: url(../images/redesign/minus.png) no-repeat;
+    background: url(../images/redesign/minus-wt.png) no-repeat;
     content: '';
-    height: 19px;
-    width: 19px;
+    height: 20px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -76,7 +76,8 @@
     cursor: pointer;
     background: white !important;
     width: auto;
-    padding: 5px 10px;
+    padding: 6px 24px;
+    height: 33px;
   }
    .filtru-price .m-filter-slider {
     margin-left: 10px;
@@ -167,7 +168,8 @@
     border: none;
     color: white;
     width: auto;
-    padding: 5px 10px;
+    padding: 6px 24px;
+    height: 34px;
   }
    #narrow-by-list li {
     min-width: 100%;
@@ -1160,6 +1162,13 @@
   #search-input {
     z-index: 1032;
   }
+  .select-currency-mobile, .wishlist-section-mobile, .account-section-mobile {
+    display: none;
+  }
+  #apply-filter-btn{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 
@@ -1246,7 +1255,7 @@
     top: 11.5px;
   }
   .m-filter-checkboxes label {
-    font-size: 11px !important;
+    margin-bottom: 12px;
   }
   .breadcrumbs :last-child {
     padding-right: 0;
