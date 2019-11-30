@@ -2188,7 +2188,6 @@ line-height: 42px;
 	.catalogsearch-result-index .price_tax_text {
 		display: none !important;
 	}
-
 	/* ipad portrait */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
@@ -2333,3 +2332,10 @@ line-height: 42px;
     { /* Recent browsers */
         text-transform: none;
     }
+
+	/*Estimate Shipping */
+	.shipping .additional-message span {
+		font-family: urw-din-medium !important;
+		font-size: 10px !important;
+		color: rgba(41,41,41,0.90) !important;
+	}
