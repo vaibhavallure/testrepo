@@ -96,7 +96,7 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Grid extends Mage_Adminhtml_Block_
           'header'    => Mage::helper('ecp_slideshow')->__('Caption Mode'),
           'align'     => 'left',
           'width'     => '80px',
-          'index'     => 'status',
+          'index'     => 'switch',
           'type'      => 'options',
           'options'   => array(
               0 => 'HTML',
