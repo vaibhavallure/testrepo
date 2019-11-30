@@ -91,6 +91,18 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Grid extends Mage_Adminhtml_Block_
           'align'     =>'left',
           'index'     => 'position',
       ));
+
+   $this->addColumn('switch', array(
+          'header'    => Mage::helper('ecp_slideshow')->__('Caption Mode'),
+          'align'     => 'left',
+          'width'     => '80px',
+          'index'     => 'status',
+          'type'      => 'options',
+          'options'   => array(
+              0 => 'HTML',
+              1 => 'Thumbnail',
+          ),
+      ));
       
       $this->addColumn('status', array(
           'header'    => Mage::helper('ecp_slideshow')->__('Status'),
