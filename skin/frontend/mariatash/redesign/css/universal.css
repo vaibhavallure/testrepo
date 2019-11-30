@@ -1556,7 +1556,7 @@ margin-right: 10px;
 }
 
 .manage-payment-method #edit-main .box-title{
- padding: 7px 0px;
+ padding: 7px 0px 7px 40px;
 }
 
 .my-account .input-box select {
@@ -1979,11 +1979,13 @@ li.order-info-tab-back{
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-month {
     width: 48%;
     float: left;
+    margin-bottom: 10px;
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
     width: 48%;
     float: left;
     margin-left: 15px;
+    margin-bottom: 10px;
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp select{
     width: 100%;
@@ -2015,9 +2017,123 @@ li.order-info-tab-back{
     margin-top: 10px;
 }
 .myaccount-add-payment-form .cardholder-title{
-    padding-left: 40px;
+    /*padding-left: 40px;*/
 }
-.manage-payment-method .payment-card-name,.payment-card-exp{
-    text-transform: uppercase;
-    font-weight: bold;
+.manage-payment-method .payment-card-name{
+    font-size: 18px;
+}
+.manage-payment-method .payment-card-exp{
+    font-size: 18px;
+}
+.myaccount-add-payment-form #mt-credit-card-info ul{
+    padding-left: 0px;
+}
+.myaccount-add-payment-form .add-new-payment-method-ul{
+    padding-left: 20px;
+}
+.myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info p.mt-paycard-title{
+    margin-top: 30px;
+}
+.myaccount-add-payment-form #billing-new-address-form ul{
+    padding-left: 0px;
+}
+.manage-payment-method .mt-edit-form .radio-continue{
+    display: block;
+    width: 50px!important;
+    float: left;
+    height: 20px!important;
+}
+.manage-payment-method .mt-edit-form .radio-change{
+    display: block;
+    width: 50px;
+    float: left;
+    height: 20px!important;
+}
+.manage-payment-method li.cardholder-info-title{
+    width: 100%;
+    float: left;
+    margin-top: 1rem;
+}
+.manage-payment-method .mt-edit-form #mt-credit-card-info ul{
+    padding-left: 0px;
+}
+ .manage-payment-method .mt-edit-form #billing-new-address-form ul{
+     padding-left: 0px;
+ }
+.manage-payment-method .mt-edit-form ul li#billing-new-address-form{
+    float: left;
+    min-height: auto;
+}
+.manage-payment-method .mt-edit-form ul li.buttons-set{
+    float: right;
+    margin-bottom: 25px;
+}
+.manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
+    width: 99%!important;
+}
+.manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_name_on_card{
+    width: 99%!important;
+}
+.manage-payment-method .mt-edit-form .card-exp{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+/*.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp{
+    width: 100%;
+}*/
+.manage-payment-method .mt-edit-form .exp-month {
+    width: 48%;
+    float: left;
+}
+.manage-payment-method .mt-edit-form .exp-year{
+    width: 48%;
+    float: left;
+    margin-left: 13px;
+}
+.manage-payment-method #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp select{
+    width: 100%;
+}
+.manage-payment-method .mt-edit-form .cvv-textbox{
+    width: 100%;
+}
+.manage-payment-method .mt-edit-form .state-select-payment{
+    width: 322px;
+}
+.manage-payment-method .mt-edit-form .country-select-payment select{
+    width: 322px;
+}
+.para-font{
+    font-size: 18px;
+}
+.manage-payment-method .mt-payment-details .card-details-main {
+    padding-top: 20px
+}
+.manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
+    width: 60%;
+    float: left;
+}
+.manage-payment-method .mt-payment-details .card-details-main .mt-card-address{
+    width: 40%;
+    float: right;
+    margin-top: 0px;
+}
+.manage-payment-method .mt-payment-details .card-details-main .card-title{
+    font-size: 18px;
+    font-weight: 400;
+    padding: 0px;
+}
+li.buttons-set .btn-cancel-edit{
+    margin-right: 10px!important;
+}
+.mt-new-payment-list .mt-payment-card-btn button.card-btn-edit{
+    float: left;
+    width: 100px!important;
+    height: 37px;
+}
+.mt-new-payment-list .mt-payment-card-btn button.card-btn-delete{
+    float: left;
+    width: 100px!important;
+    height: 37px;
+    margin-left: 10px;
 }
