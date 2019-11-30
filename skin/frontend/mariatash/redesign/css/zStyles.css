@@ -2339,3 +2339,8 @@ line-height: 42px;
 		font-size: 10px !important;
 		color: rgba(41,41,41,0.90) !important;
 	}
+	/*Product Detail Page*/
+	.catalog-product-view .product-view .fs-timeline-detail {
+		z-index: 9999;
+	}
+
