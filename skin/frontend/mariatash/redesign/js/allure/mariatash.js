@@ -120,40 +120,43 @@ jQuery('.link-button').click(function(event) {
             /*zopim -- to change margin from bottom */
             var hidden = true;
             //show footer if mouse is at bottom and not at the end of the scroll
-            jQuery(window).mousemove(function (e) {
-                if(!jQuery('body').hasClass('cms-index-index') && !(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height())) {
-                    if (e.screenY >= jQuery(window).height() - 50) {
-                        if (hidden) {
-                            jQuery(".zopim").addClass("bottom-change");
-                            jQuery(".container-footlinks.row").css("height","59px");
-                            hidden=false;
+            if(jQuery(window).width() > 768){
+                jQuery(window).mousemove(function (e) {
+                    if(!jQuery('body').hasClass('cms-index-index') && !(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height())) {
+                        if (e.screenY >= jQuery(window).height() - 50) {
+                            if (hidden) {
+                                jQuery(".zopim").addClass("bottom-change");
+                                jQuery(".container-footlinks.row").css("height","59px");
+                                hidden=false;
+                            }
+                        }
+                        else{
+                            jQuery(".zopim").removeClass("bottom-change");
+                            jQuery(".container-footlinks.row").css("height","0px");
+                            hidden=true;
                         }
                     }
-                    else{
-                        jQuery(".zopim").removeClass("bottom-change");
-                        jQuery(".container-footlinks.row").css("height","0px");
-                        hidden=true;
-                    }
+                })
+                //if scroll is at bottom show footer
+                if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
+                    jQuery(".zopim").addClass("bottom-change");
+                    jQuery(".container-footlinks.row").css("height","59px");
+                    hidden=false;
+
+                }else {
+                    jQuery(".zopim").removeClass("bottom-change");
+                    jQuery(".container-footlinks.row").css("height","0px");
+                    hidden=true;
                 }
-            })
+            }else {
+
+            }
 
             if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
                     jQuery(".footer").removeClass("floating");
                 }else {
                     jQuery(".footer").addClass("floating");
                 }
-
-             //if scroll is at bottom show footer
-            if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
-                jQuery(".zopim").addClass("bottom-change");
-                jQuery(".container-footlinks.row").css("height","59px");
-                hidden=false;
-
-            }else {
-                jQuery(".zopim").removeClass("bottom-change");
-                jQuery(".container-footlinks.row").css("height","0px");
-                hidden=true;
-            }
             /*  zopim -code end-----------------*/
 
         }else {
