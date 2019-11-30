@@ -125,13 +125,13 @@
     <?php endforeach; ?>
         <?php if ($this->getLayer()->getState()->getFilters()): ?>
             <li class="filter-actions">
-                <div class="actions"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
                 <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
+                <div class="actions"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
             </li>
             <?php else: ?>
             <li class="filter-actions">
-                <div class="actions"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
                 <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
+                <div class="actions"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
             </li>
         <?php endif; ?>
         <li id="total_item_counts_holder">

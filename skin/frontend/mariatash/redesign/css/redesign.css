@@ -4822,3 +4822,15 @@ td.cart_col2 {
   background-image: none;
   height: 70px !important;
 }
+.filter-actions {
+  display: flex;
+}
+.desktop-device #apply-filter-btn{
+	margin-left: 10px;
+}
+#apply-filter-btn{
+	margin-right: 10px;
+}
+.desktop-device #total_item_counts_holder{
+	margin-top: 8px !important;
+}
