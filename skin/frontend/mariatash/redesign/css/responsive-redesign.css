@@ -6,8 +6,8 @@
   dt.filter-head:after {
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
-    height: 20px;
-    width: 19px;
+    height: 24px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -17,15 +17,15 @@
   dt.filter-head.showing:after {
     background: url(../images/redesign/minus.png) no-repeat;
     content: '';
-    height: 19px;
-    width: 19px;
+    height: 24px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
     /*transition: 0.5s;*/
   }
   #narrow-by-list li div dt:after{
-    background: url(../images/redesign/plus.png) no-repeat;
+    background: url(../images/redesign/plus-wt.png) no-repeat;
     content: '';
     height: 20px;
     width: 19px;
@@ -36,7 +36,7 @@
   }
 
   #narrow-by-list li div dt.showing:after {
-    background: url(../images/redesign/minus.png) no-repeat;
+    background: url(../images/redesign/minus-wt.png) no-repeat;
     content: '';
     height: 19px;
     width: 19px;
