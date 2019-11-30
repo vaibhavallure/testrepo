@@ -2021,6 +2021,7 @@
     /*opacity: 0;*/
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
+
   .floating.footer:hover {
     opacity: 1;
   }
@@ -2035,6 +2036,10 @@
     margin: auto;
     width: 553px;
     height: 312px;
+  }
+  .container-footlinks {
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+    height: 0px;
   }
 }
 
