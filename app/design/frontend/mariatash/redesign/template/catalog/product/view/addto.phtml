@@ -65,6 +65,9 @@ if($_product->isConfigurable()){
                         <?php /*?>jQuery('#ajax_loading').hide();<?php */?>
                         if (data.status == 'ERROR') {
                             if (data.message == 'login') {
+                                <?php echo Mage::getSingleton('core/session')->setMywish('1');
+                                    Mage::getSingleton('core/session')->setPwish('1');
+                                ?>
                                 console.log(data);
 
                                 parent.jQuery("#sign_in_label").trigger('click');
