@@ -96,7 +96,7 @@ jQuery('.link-button').click(function(event) {
     		$(this).next().removeClass('active');
     	} else {
     		$(this).find("a").addClass('active');
-    		$(this).next().removeClass('active');
+    		$(this).next().addClass('active');
     	}
     });
 
