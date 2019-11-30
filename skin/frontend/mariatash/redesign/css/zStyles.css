@@ -2204,6 +2204,10 @@ line-height: 42px;
 		.jewelry .left-section .inner-box{
 			padding: 0 40px;
 		}
+		body.cms-index-index.cms-home .footer
+		{
+			padding-top: 60px !important;
+		}
 	}
 
 
@@ -2270,7 +2274,7 @@ line-height: 42px;
 	@media (min-width: 992px) {
 
 		.zoom-img.big-popup-image.row {
-			/*max-width: 500px;*/
+			max-width: 500px;
 		}
 		.menu-head.jwl-head > span > a {
 			pointer-events: none;
@@ -2344,6 +2348,7 @@ line-height: 42px;
 		z-index: 9999;
 	}
 	/*Border Throughout site for tooltip*/
-	.t_ContentContainer.t_clearfix.t_Content_allure_footer {
+	.t_ContentContainer.t_clearfix.t_Content_allure_footer,
+	.icon-user .login-dropdown{
 		border: 0.5px solid;
 	}
