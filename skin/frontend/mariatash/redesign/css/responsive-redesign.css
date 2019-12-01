@@ -976,6 +976,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    height: 80px !important;
+  }
   #category-title{
     /* margin: 16px 0 20px !important; */
     padding: 0 !important;

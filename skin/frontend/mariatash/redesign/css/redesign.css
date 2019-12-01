@@ -4815,8 +4815,8 @@ td.cart_col2 {
 	z-index: 2;
 }
 .mobile-device .for-space-to-bottom.cat-img-space {
-  background-image: none;
-  height: 70px !important;
+  background-image: none !important;
+  height: 50px !important;
 }
 .filter-actions {
   display: flex;
