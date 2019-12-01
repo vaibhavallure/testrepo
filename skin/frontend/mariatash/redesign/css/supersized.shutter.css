@@ -39,34 +39,34 @@
 					#tray-button:hover{ background-position:0 1px; cursor:pointer; } */
 
 ul#slide-list {
-    position: absolute;
-    margin: 0 !important;
-    z-index: 2;
-    display: block;
-    width: 100%;
-    left: 0;
-    right: 0;
-    bottom: 70px;
-    text-align: center;
+  position: absolute;
+  margin: 0 !important;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 70px;
+  text-align: center;
 }
-ul#slide-list li { 
-	list-style:none; 
+ul#slide-list li {
+	list-style:none;
 	display: inline-block;
 	padding: 5px;
 }
 ul#slide-list li a{
 	display: block;
-    width: 20px;
-    height: 20px;
-    /* background: url(/skin/frontend/mt/default/images/slider/nav-dot.png) no-repeat 0 -24px; */
-    /* transform: translatex(-50%); */
-    background-size: 25px;
-    background-color: #fff;
-    border-radius: 10px;
+  width: 16px;
+  height: 16px;
+  /* background: url(/skin/frontend/mt/default/images/slider/nav-dot.png) no-repeat 0 -24px; */
+  /* transform: translatex(-50%); */
+  background-size: 25px;
+  background-color: #fff;
+  border-radius: 10px;
 }
-ul#slide-list li.current-slide a, ul#slide-list li.current-slide a:hover{ 
-	/* background-position:0 0px; */ 
-	background-color: #9e8353;
+ul#slide-list li.current-slide a, ul#slide-list li.current-slide a:hover{
+	/* background-position:0 0px; */
+	background-color: #292929;
 }
 ul#slide-list li a:hover{ background-position:0 -12px; cursor:pointer; }
 
