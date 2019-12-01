@@ -193,6 +193,7 @@ div.tab button.active {
 .mt-new-payment .mt-new-payment-list{
 	margin-left: -12px;
 	margin-right: 12px;
+    float: left;
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item{
@@ -1576,7 +1577,8 @@ width: 245px;
 .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name img{
 	width: 38px;
     float: left;
-    margin-top: -4px;
+    /*margin-top: -4px;*/
+    margin-top: 2px;
     padding-right: 10px;
 }
 
@@ -1983,6 +1985,7 @@ li.order-info-tab-back{
     width: 48%;
     float: left;
     margin-left: 4%;
+    margin-bottom: 10px;
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp select{
     width: 100%;
@@ -2027,9 +2030,11 @@ li.order-info-tab-back{
 }
 .myaccount-add-payment-form .add-new-payment-method-ul{
     padding-left: 20px;
+    float: left;
 }
 .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info p.mt-paycard-title{
-    margin-top: 30px;
+    /*margin-top: 30px;*/
+    margin-top: 18px;
 }
 .myaccount-add-payment-form #billing-new-address-form ul{
     padding-left: 0px;
@@ -2150,4 +2155,7 @@ li.buttons-set .btn-cancel-edit{
 }*/
 .manage-payment-method li#billing-new-address-form{
     margin-top: 0px;
+}
+.manage-payment-method #new-mt-saved-card form ul {
+    float: left;
 }

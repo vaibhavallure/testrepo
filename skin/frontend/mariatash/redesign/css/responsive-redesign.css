@@ -610,6 +610,7 @@
     padding-left: 0;
     margin-left: 0;
     margin-right: 0;
+    float: left;
   }
   .manage-payment-method #mt-credit-card-info .mt-card-info {
     width: 47%;
@@ -1366,6 +1367,7 @@
   }
   .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul .buttons-set button{
     margin-bottom: 25px;
+    margin-top: 5px;
   }
   .manage-payment-method #new-mt-saved-card form ul{
     padding-left: 0px;
