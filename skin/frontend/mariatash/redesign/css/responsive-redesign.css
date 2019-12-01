@@ -1,7 +1,9 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
 
-
+  .menu_overlay {
+    z-index: 3;
+  }
   /*filter -------------------------------*/
   dt.filter-head:after {
     background: url(../images/redesign/plus.png) no-repeat;
