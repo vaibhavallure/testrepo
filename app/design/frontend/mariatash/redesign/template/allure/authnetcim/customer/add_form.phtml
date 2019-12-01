@@ -29,7 +29,7 @@
 				</li>
 			<?php endif; ?>
 			<?php $style = ' style="display:block"' ; ?>
-			<li class="mt-card-info <?php echo $code; ?>_add"<?php echo $style; ?>>
+			<li class="mt-card-info <?php echo $code; ?>_add payment-card-type"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>
 				<div class="input-box">
 					<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry main-dropdown-box<?php endif; ?>">
@@ -40,7 +40,7 @@
 					</select>
 				</div>
 			</li>
-			<li class="mt-card-info mt-cc-number <?php echo $code; ?>_add"<?php echo $style; ?>>
+			<li class="mt-card-info mt-cc-number <?php echo $code; ?>_add payment-card-number"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_cc_number" class="required"><em>*</em><?php echo $this->__('Credit Card Number'); ?></label>
 				<div class="input-box">
 					<input placeholder="Credit Card Number" type="text" id="<?php echo $code; ?>_cc_number" autocomplete="off" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number'); ?>" class="input-text <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry validate-cc-number<?php endif; ?>" value="" />
@@ -54,7 +54,7 @@
 				</div>
 			</li>
 			
-			<li id="<?php echo $code; ?>_cc_type_exp_div" class="mt-card-info <?php echo $code; ?>_add sp-methods"<?php echo $style; ?>>
+			<li id="<?php echo $code; ?>_cc_type_exp_div" class="mt-card-info <?php echo $code; ?>_add sp-methods payment-exp-date"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date'); ?></label>
 				<div class="input-box card-exp">
 					<!--<div class="v-fix ">
