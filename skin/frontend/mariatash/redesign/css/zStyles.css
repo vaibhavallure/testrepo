@@ -1987,6 +1987,7 @@ line-height: 42px;
    }
    .mt-new-purchase .mt-purchase-btn button{
      height: 40px !important;
+     width: 100%;
    }
    #purchase-history .data-table.cart-table td{
      margin-top: 10px !important;

@@ -38,6 +38,10 @@ $_helper = $this->helper('catalog/output');
 $mediaUrl = Mage::getBaseUrl('media');
 $_test = $this->getRequest()->getParam('test');
 $mode  = $this->getMode();
+
+
+$category = Mage::registry('current_category');
+
 ?>
 
 <?php if($isMobile): ?>
@@ -139,8 +143,17 @@ $mode  = $this->getMode();
 <?php if (!$_productCollection->count() || ($price == '0,0')): ?>
     <div class="category-products">
         <div id="productsContainer-wrapper">
+
+        <?php
+        $urlString = Mage::helper('core/url')->getCurrentUrl();
+        $url = Mage::getSingleton('core/url')->parseUrl($urlString);
+        $path = $url->getPath();
+        ?>
             <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
-        </div>
+          <?php if($path!="/".$category->getRequestPath()):?>
+            <p><a class="link-button" href="/<?= $category->getRequestPath()?>">Clear Filter</a></p>
+          <?php endif; ?>
+    </div>
     </div>
 <?php else: ?>
     <div class="category-products">
