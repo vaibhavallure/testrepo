@@ -53,11 +53,11 @@ body { background:#111; height:auto; width:auto; }
 		display: block;
 		position: absolute;
 		top: 506px;
-		  left: 0px;
+		left: 0px;
 		width: 100%;
 	}
 	#slidecaption img {
-	width: 100%;
+		width: 100%;
 	}
 	.homepageSliderControllers .prevS,.homepageSliderControllers .nextS {
 		top: 200px;

@@ -1,9 +1,3 @@
-ul#slide-list li a {
-	display: block;
-	width: 12px;
-	height: 12px;
-	background: url(../images/slider/nav-dot.png) no-repeat 0 -24px;
-}
 /*Standard Mendetory CSS*/
 
 h1{
