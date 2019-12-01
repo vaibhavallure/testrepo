@@ -4855,7 +4855,7 @@ td.cart_col2 {
 	font-family: urw-din-medium;
 	font-weight: normal;
 }
-.select-currency-mobile img, .my-account-mobile img{
+.select-currency-mobile .currency-arrow, .my-account-mobile img{
 	margin-left: 10px;
 }
 .login-dropdown-cover-mobile, .currency-selector-contain-mobile {
@@ -4865,9 +4865,9 @@ td.cart_col2 {
   border-top: 1px solid #292929;
   padding: 20px 0 10px;
 }
-dd.user-sign-out{
-	border: none;
-}
 .account-section-mobile dl {
   margin-bottom: 0;
+}
+.currency-selector-contain-mobile dl i {
+  margin-right: 8px;
 }

@@ -78,7 +78,7 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                          <dl>
                              <dt><a class="my-account-mobile">
                                <span>My Account</span>
-                               <img width="12px" src="<?php echo $this->getSkinUrl('images/redesign/arrow-down-bk.png') ?>">
+                               <img class="currency-arrow" width="12px" src="<?php echo $this->getSkinUrl('images/redesign/arrow-down-bk.png') ?>">
                          </a></dt>
                          <div class="login-dropdown-cover-mobile" style="display: none">
                                  <dd><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></dd>
@@ -94,12 +94,13 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                  <script>
                      jQuery(".my-account-mobile").on("click",function () {
                         jQuery(".login-dropdown-cover-mobile").slideToggle();
+                        jQuery(".account-section-mobile").css('border-bottom', 'none');
                      });
                  </script>
                  <?php else: ?>
-                     <li class="icon-item" id="sign_in_label" style="background: white">
+                     <li class="icon-item" id="sign_in_label">
                          <a href="javascript:void(0)" onclick="signin()">
-                             sign in
+                             <span>Sign In</span>
                          </a>
                      </li>
                  <script>
