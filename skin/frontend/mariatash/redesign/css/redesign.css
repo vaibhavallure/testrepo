@@ -959,7 +959,7 @@ ul.swatch .swatch-item a {
 .navbar-toggler {
     border: none;
     position: absolute;
-    top: 0;
+    top: 8px;
     left: 10px;
 }
 
@@ -1516,6 +1516,9 @@ input[type="checkbox"]:checked+label:before {
 .mt-logo {
   padding: 0px 0 14px 0;
   font-size: 22px !important;
+}
+#top-nav{
+	padding-bottom: 31px;
 }
 .mobile-device #top-nav {
   padding-bottom: 0;

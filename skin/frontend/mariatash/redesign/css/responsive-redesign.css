@@ -662,6 +662,7 @@
   }
   .mobile-device .menu-common-section{
     margin-top: 13px;
+    padding-bottom: 50px;
   }
   .common-option-div{
     width: 100%;
@@ -681,9 +682,12 @@
     padding: 0 30px;
   }
   .navigation-parent{
-  	height: 100vh;
-  	overflow-y: auto;
+  	/* height: 100vh;
+  	overflow-y: auto; */
     padding-bottom: 60px;
+  }
+  .mobile-main_menu .main-nav-title li:last-child {
+    border-bottom: none;
   }
 }
 
@@ -1018,9 +1022,9 @@
   .homepage-menu{
     padding-top: 21px !important;
   }
-  /* .navbar-toggler {
-    top: 21px !important;
-  } */
+  .navbar-toggler {
+    top: 22px !important;
+  }
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
