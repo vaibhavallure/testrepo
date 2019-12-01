@@ -1335,7 +1335,8 @@ line-height: 42px;
 
 .mt-new-myaccount-dashbord .messages{
 	position: absolute!important;
-	top: 92%!important;
+	/*top: 92%!important;*/
+	top: 85%!important;
 	left: 0!important;
 }
 
@@ -2189,7 +2190,6 @@ line-height: 42px;
 	.catalogsearch-result-index .price_tax_text {
 		display: none !important;
 	}
-
 	/* ipad portrait */
 	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
@@ -2205,6 +2205,10 @@ line-height: 42px;
 		}
 		.jewelry .left-section .inner-box{
 			padding: 0 40px;
+		}
+		body.cms-index-index.cms-home .footer
+		{
+			padding-top: 60px !important;
 		}
 	}
 
@@ -2334,3 +2338,19 @@ line-height: 42px;
     { /* Recent browsers */
         text-transform: none;
     }
+
+	/*Estimate Shipping */
+	.shipping .additional-message span {
+		font-family: urw-din-medium !important;
+		font-size: 10px !important;
+		color: rgba(41,41,41,0.90) !important;
+	}
+	/*Product Detail Page*/
+	.catalog-product-view .product-view .fs-timeline-detail {
+		z-index: 9999;
+	}
+	/*Border Throughout site for tooltip*/
+	.t_ContentContainer.t_clearfix.t_Content_allure_footer,
+	.icon-user .login-dropdown{
+		border: 0.5px solid;
+	}
