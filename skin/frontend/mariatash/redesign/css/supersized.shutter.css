@@ -41,7 +41,7 @@
 ul#slide-list {
   position: absolute;
   margin: 0 !important;
-  z-index: 2;
+  z-index: 3;
   display: block;
   width: 100%;
   left: 0;

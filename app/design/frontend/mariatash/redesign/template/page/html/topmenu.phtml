@@ -40,21 +40,24 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
 <?php if($_menu): ?>
     <ul id="top-nav" class="navbar-nav main-nav-title allure-menu">
         <?php echo $_menu ?>
+      </ul>
         <?php
              if($isMobile):?>
-                 <li class="currency-section-for-mobile" style="background: white">
-                 <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
+             <div class="top-nav-v2">
+               <ul>
+                 <li class="currency-section-for-mobile">
+                   <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
                  </li>
                  <?php
                  $wishlist=Mage::getModel('ecp_menu/menu')->load(3);
                  if($wishlist):?>
-                     <li class="wishlist-section-mobile" style="background: white">
+                     <li class="wishlist-section-mobile">
                          <?php if($isCustomerLogIn):?>
                          <a class="icon-link wishlist"  href="<?= $wishlist->getUrl() ?>">
                              <?php else:?>
                              <a class="icon-link wishlist"  onclick="signin()">
                                  <?php endif;?>
-                                    wishlist
+                                    <span>wishlist</span>
                              </a>
                              <script>
                                  var signin= function() {
@@ -71,10 +74,11 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                  <?php endif; ?>
 
                  <?php if ($isCustomerLogIn) :?>
-                     <li class="icon-user position-relative account-section-mobile" style="background: white">
+                     <li class="icon-user position-relative account-section-mobile">
                          <dl>
                              <dt><a class="my-account-mobile">
-                             My Account
+                               <span>My Account</span>
+                               <img width="12px" src="<?php echo $this->getSkinUrl('images/redesign/arrow-down-bk.png') ?>">
                          </a></dt>
                          <div class="login-dropdown-cover-mobile" style="display: none">
                                  <dd><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></dd>
@@ -85,6 +89,8 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                          </div>
                          </dl>
                      </li>
+                   </ul>
+                   </div>
                  <script>
                      jQuery(".my-account-mobile").on("click",function () {
                         jQuery(".login-dropdown-cover-mobile").slideToggle();
