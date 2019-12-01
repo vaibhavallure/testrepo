@@ -38,6 +38,7 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
 ?>
 
 <?php if($_menu): ?>
+  <div class="navigation-parent">
     <ul id="top-nav" class="navbar-nav main-nav-title allure-menu">
         <?php echo $_menu ?>
       </ul>
@@ -91,6 +92,7 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                      </li>
                    </ul>
                    </div>
+                 </div>
                  <script>
                      jQuery(".my-account-mobile").on("click",function () {
                         jQuery(".login-dropdown-cover-mobile").slideToggle();

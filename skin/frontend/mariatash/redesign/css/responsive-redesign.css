@@ -660,9 +660,6 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
-  /* .mobile-device .main-nav-title li:first-child {
-    padding-top: 6px;
-  } */
   .mobile-device .menu-common-section{
     margin-top: 13px;
   }
@@ -682,6 +679,10 @@
   }
   .vertical-middle {
     padding: 0 30px;
+  }
+  .navigation-parent{
+  	height: 100vh;
+  	overflow-y: auto;
   }
 }
 
@@ -1613,6 +1614,7 @@
   }
   .navbar-toggler{
     left:0;
+    top:0;
   }
   .maria-left-menus {
     left: 50px;

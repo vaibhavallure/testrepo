@@ -1542,6 +1542,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .maria-right-menus{
   right: 15px;
+	top:0;
 }
 .main-nav-title li {
   margin-right: 40px;
@@ -2534,7 +2535,7 @@ ul#foo4 {
 	text-indent: -9999px;
 	/* background: url('../images/back_view_url.png') no-repeat scroll 0 0; */
 	background-size:100%;
-	transparent;
+	background: transparent;
 }
 
 /*filter popup-----------------------------------------------------*/
@@ -4834,6 +4835,7 @@ td.cart_col2 {
 .mobile-device #clear-all-filter {
   margin-left: 13px;
 }
+/******************Navigation Pull*************************/
 .currency-section-for-mobile, .wishlist-section-mobile, .account-section-mobile{
 	text-align: left;
   border-bottom: 1px solid #292929;
@@ -4842,9 +4844,6 @@ td.cart_col2 {
   text-transform: uppercase;
   position: relative;
 }
-/* .top-nav-v2 ul{
-	padding-left: 0;
-} */
 .top-nav-v2{
 	background: #d8d8d8;
 }
@@ -4854,6 +4853,7 @@ td.cart_col2 {
 	letter-spacing: 1px;
 	font-family: urw-din-medium;
 	font-weight: normal;
+	text-transform: capitalize;
 }
 .select-currency-mobile .currency-arrow, .my-account-mobile img{
 	margin-left: 10px;
