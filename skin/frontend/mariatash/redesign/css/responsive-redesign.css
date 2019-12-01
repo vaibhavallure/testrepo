@@ -685,6 +685,7 @@
   .navigation-parent{
   	height: 100vh;
   	overflow-y: auto;
+    padding-bottom: 60px;
   }
 }
 
@@ -855,9 +856,9 @@
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
-  .navbar-toggler{
+  /* .navbar-toggler{
     top: 25px;
-  }
+  } */
   .maria-left-menus{
     left: 77px;
   }
@@ -1019,9 +1020,9 @@
   .homepage-menu{
     padding-top: 21px !important;
   }
-  .navbar-toggler {
+  /* .navbar-toggler {
     top: 21px !important;
-  }
+  } */
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
@@ -1109,10 +1110,6 @@
   .mobile-device #appointments {
     padding: 55px 32px 32px 32px;
   }
-  /* .inner-box {
-    width: 534px;
-    margin-left: 15px;
-  } */
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
@@ -1212,6 +1209,9 @@
   .mobile-device .for-space-to-bottom.cat-img-space{
     height: 140px !important;
   }
+  .top-nav-v2{
+    display: none;
+  }
 }
 
 /* ipad landscape */
@@ -1275,10 +1275,11 @@
   .cvv-textbox input{
     width: 100%;
   }
-
-
+  .mt-logo{
+    padding: 0px 0 6px 0;
+  }
   .homepage-menu {
-    padding-top: 18px !important;
+    padding-top: 8px !important;
     padding: 0;
   }
   .about-designer{
@@ -1616,13 +1617,14 @@
   }
   .navbar-toggler{
     left:0;
-    top:0;
+    /* top:0; */
   }
   .maria-left-menus {
     left: 50px;
   }
   .mt-logo img {
     width: 130px;
+    margin-top: 1px;
   }
   .footer ul .footer-item-list{
     max-width: 100%;
@@ -2010,7 +2012,6 @@
   .myaccount-add-payment-form .add-new-payment-method-ul {
     padding-left: 0;
   }
-
   .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
     width: 48.5%;
     float: left;
@@ -2031,10 +2032,9 @@
   .myaccount-add-payment-form #billing-new-address-form .input-box select{
     width: 100%;
   }
-
-
-
-
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    top: 55px;
+  }
   .maria-left-menus{
     left:85px;
   }
@@ -2361,9 +2361,9 @@
     top: 4px;
     left: 70px;
   }
-.navbar-toggler{
+/* .navbar-toggler{
     top: 28px;
-  }
+  } */
   .copy-section {
     padding: 0;
   }

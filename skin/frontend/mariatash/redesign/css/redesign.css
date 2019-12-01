@@ -959,7 +959,7 @@ ul.swatch .swatch-item a {
 .navbar-toggler {
     border: none;
     position: absolute;
-    top: 16px;
+    top: 0;
     left: 10px;
 }
 
@@ -1517,7 +1517,7 @@ input[type="checkbox"]:checked+label:before {
   padding: 0px 0 14px 0;
   font-size: 22px !important;
 }
-#top-nav {
+.mobile-device #top-nav {
   padding-bottom: 0;
 }
 .mariatash-header:hover #top-nav {
@@ -1781,7 +1781,7 @@ bottom: 0px;
   background: #292929;
   width: 330px;
   left: -420px;
-  top: 68px;
+  top: 51px;
   position: fixed;
   z-index: 999;
   display: block;
@@ -1831,7 +1831,7 @@ bottom: 0px;
 .mobile-sub_menu .sub-menu {
   left: 0;
   width: 330px !important;
-  top: 69px;
+  top: 51px;
 }
 .mobile-sub_menu .right-section img {
   display: none;
