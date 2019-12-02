@@ -1307,7 +1307,7 @@
     height: 70px !important;
   }
   .catalog-product-view .for-space-to-bottom{
-    height: 60px !important;
+    height: 44px !important;
   }
   .mobile-device .copy-section{
     margin: 20px 0 0;
@@ -1635,7 +1635,7 @@
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 25px;
+    padding-left: 20px;
   }
   .custom-container {
     max-width: 370px;
