@@ -1,5 +1,190 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
+
+  .menu_overlay {
+    z-index: 3;
+  }
+  /*filter -------------------------------*/
+  dt.filter-head:after {
+    background: url(../images/redesign/plus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+    background-size: 10px;
+  }
+  dt.filter-head.showing:after {
+    background: url(../images/redesign/minus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+  }
+  #narrow-by-list li div dt:after{
+    background: url(../images/redesign/plus-wt.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    background-size: 10px;
+  }
+
+  #narrow-by-list li div dt.showing:after {
+    background: url(../images/redesign/minus-wt.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 24px;
+    background-position: right;
+    position: absolute;
+    right: 10px;
+    /*transition: 0.5s;*/
+  }
+  #narrow-by-list li div dt{
+    background-image: none!important;
+  }
+
+
+
+
+.sticky-bar {
+  position: fixed;
+  top: 60px;
+  background: white;
+  z-index: 3;
+}
+  .sticky-filter{
+    position: fixed;
+    top: 80px;
+    width: 100%;
+    background: white;
+    z-index: 2;
+  }
+  #narrow-by-list li:first-child{
+    margin-top: 0px;
+  }
+  .allure_filter {
+    border: 1px solid lightslategray;
+    margin: 10px;
+  }
+  .allure_filter dt.filter-head {
+    cursor: pointer;
+    background: white !important;
+    width: auto;
+    padding: 6px 24px;
+    height: 33px;
+  }
+   .filtru-price .m-filter-slider {
+    margin-left: 10px;
+    margin-top: 11px;
+    margin-bottom: 50px;
+  }
+   .m-slider-selected-value{
+    width: 245px;
+  }
+   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    margin-top: 20px;
+  }
+   .selected-filters{
+    width: 100%;
+    position: static;
+    top:auto;
+    left: auto;
+  }
+   .selected-filters .currently{
+    display: none;
+  }
+   .selected-filters .actions.current{
+    width: 50%;
+    padding: 0 18px;
+  }
+  #narrow-by-list li div dd ol{
+    padding: 10px;
+  }
+  .selected-filters .actions.current a{
+    text-align: center;
+    background: #fff;
+    width: 100px;
+    height: 32px;
+    vertical-align: middle;
+    padding: 5px;
+    border: 1px solid #292929;
+  }
+  .filterButton:before{
+    content: '';
+    background-image: url(../images/filter.png);
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 30px;
+    position: absolute;
+  }
+  /* .filterButton{
+    padding-left: 10px;
+    width: 100%;
+    height: 32px;
+    display: block;
+  } */
+   #narrow-by-list dd{
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+   #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
+    width: 100%;
+  }
+   .pop-up-cover {
+    width: 100%;
+  }
+   #narrow-by-list li div dd ol {
+    padding: 15px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+   #narrow-by-list li div dd {
+    /*display: block!important;*/
+    position: relative;
+    top:auto;
+    left: auto;
+    border: none;
+     margin: 0px 10px;
+  }
+   #narrow-by-list{
+    padding: 0;
+    margin-left:0;
+  }
+   #narrow-by-list li div dt {
+    cursor: pointer;
+    background: #292929 !important;
+    border: none;
+    color: white;
+    width: auto;
+    padding: 6px 24px;
+    height: 34px;
+  }
+   #narrow-by-list li {
+    min-width: 100%;
+     padding-left: 0px;
+  }
+   #narrow-by-list ol li {
+    min-width: 208px;
+    padding: 0;
+  }
+  .filter-actions{
+    padding: 0px 10px!important;
+  }
+  /*filter end----------------------------*/
   .mobile-device .main-nav-title li {
     margin-right: 0;
     margin-top: 15px;
@@ -47,6 +232,9 @@
   .mobile-device .head-child, #appointments img {
     display: none;
     padding-left: 10px;
+  }
+  .mobile-device .head-child.active {
+  	display: block;
   }
   #appointments .col{
     width: 100%;
@@ -474,11 +662,9 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
-  /* .mobile-device .main-nav-title li:first-child {
-    padding-top: 6px;
-  } */
   .mobile-device .menu-common-section{
     margin-top: 13px;
+    padding-bottom: 50px;
   }
   .common-option-div{
     width: 100%;
@@ -496,6 +682,14 @@
   }
   .vertical-middle {
     padding: 0 30px;
+  }
+  .navigation-parent{
+  	/* height: 100vh;
+  	overflow-y: auto; */
+    padding-bottom: 60px;
+  }
+  .mobile-main_menu .main-nav-title li:last-child {
+    border-bottom: none;
   }
 }
 
@@ -531,6 +725,7 @@
   }
   .footer{
     z-index:0;
+    clear: both;
   }
   .desktop-device .products-grid li.item .list-mt-w{
     position: absolute;
@@ -572,6 +767,75 @@
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
+
+  .my-account .box {
+    padding-left: 45px;
+    padding-right: 45px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 100%;
+  }
+  .manage-payment-method #mt-credit-card-info .mt-card-info{
+    width: 47%;
+    float: left;
+    clear: none;
+  }
+  .mt-new-payment li.payment-exp-date {
+    margin-right: 6%;
+  }
+  .cvv-textbox input{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form #mt-credit-card-info ul{
+    padding-left: 0px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+    float: left;
+    width: 100%;
+  }
+  .mt-new-payment .mt-new-payment-list{
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+    float: left;
+  }
+  .manage-payment-method #mt-credit-card-info .mt-card-info {
+    width: 47%;
+    float: left;
+    clear: none;
+  }
+  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .exp-year {
+    width: 48.5%;
+    float: left;
+    margin-left: 9px;
+  }
+  .mt-new-payment li.payment-card-type {
+    margin-right: 6%;
+  }
+  .manage-payment-method #edit-main .box-title {
+    padding: 7px 0px 7px 0px;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul {
+    padding-left: 0;
+    float: left;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul{
+    padding-left: 0px;
+  }
+  #new-mt-add-payment-method li.payment-card-type {
+    margin-right: 6%;
+  }
+  #new-mt-add-payment-method li.payment-exp-date {
+    margin-left: 6%;
+  }
+
+
   .caroufredsel_wrapper{
     width: 79%;
   }
@@ -596,9 +860,9 @@
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
-  .navbar-toggler{
+  /* .navbar-toggler{
     top: 25px;
-  }
+  } */
   .maria-left-menus{
     left: 77px;
   }
@@ -712,6 +976,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    height: 80px !important;
+  }
   #category-title{
     /* margin: 16px 0 20px !important; */
     padding: 0 !important;
@@ -761,7 +1028,7 @@
     padding-top: 21px !important;
   }
   .navbar-toggler {
-    top: 21px !important;
+    top: 22px !important;
   }
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
@@ -850,10 +1117,6 @@
   .mobile-device #appointments {
     padding: 55px 32px 32px 32px;
   }
-  /* .inner-box {
-    width: 534px;
-    margin-left: 15px;
-  } */
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
@@ -953,6 +1216,9 @@
   .mobile-device .for-space-to-bottom.cat-img-space{
     height: 140px !important;
   }
+  .top-nav-v2{
+    display: none;
+  }
 }
 
 /* ipad landscape */
@@ -976,13 +1242,51 @@
   #search-input {
     z-index: 1032;
   }
+  .select-currency-mobile, .wishlist-section-mobile, .account-section-mobile {
+    display: none;
+  }
+  #apply-filter-btn{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 
-/* ALl Mobiles */
+/* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
+  .my-account .box{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .mt-new-payment .mt-new-payment-list{
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name img{
+    margin-top: 2px;
+  }
+  .manage-payment-method #edit-main .box-title{
+    padding:7px 0px 7px 0px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+    float: left;
+    width: 100%;
+  }
+  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 100%;
+  }
+  .cvv-textbox input{
+    width: 100%;
+  }
+  .mt-logo{
+    padding: 0px 0 6px 0;
+  }
   .homepage-menu {
-    padding-top: 18px !important;
+    padding-top: 8px !important;
     padding: 0;
   }
   .about-designer{
@@ -1008,8 +1312,8 @@
   .about-jewelry h1{
     margin-bottom: 20px;
   }
-  .cms-page-view h1, .category-press h1{
-    font-size: 25px;
+  .cms-page-view h1, .category-press h1, .categorypath-celebrity-clientele-html h1,.booking .store-info-wrapper h1, #shop_our_instagram h1{
+    font-size: 25px !important;
   }
   .faq-question span{
     font-size: 14px;
@@ -1062,7 +1366,7 @@
     top: 11.5px;
   }
   .m-filter-checkboxes label {
-    font-size: 11px !important;
+    margin-bottom: 12px;
   }
   .breadcrumbs :last-child {
     padding-right: 0;
@@ -1092,7 +1396,7 @@
     margin-top: 28px;
   }
   .filter-common-div{
-    display: none;
+    /*display: none;*/
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
@@ -1108,7 +1412,7 @@
   #slidecaption{
     display: none;
   }
-  .cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
+.category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
   }
   .cart-collaterals.fix-section{
@@ -1225,22 +1529,109 @@
   }
 }
 
-/********************** Mobile Portrait *****************/
+/********************** Mobile Portrait *****************/           /*mobport*/
 @media (max-width:767px) and (orientation:portrait) {
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
+
+  .manage-payment-method .tablinks{
+    width: 50%;
+  }
+
+
+  .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
+    width: 100%;
+  }
+  .manage-payment-method .mt-payment-details .card-details-main .mt-card-address{
+    width: 100%;
+    float: left;
+  }
+  .manage-payment-method #new-mt-add-payment-method .tabcontent{
+    padding: 0px;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul{
+    padding-left: 0;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info ul li{
+    width: 100%;
+  }
+  .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
+    margin-left: 0px;
+  }
+  .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul #billing-new-address-form ul li{
+    width: 100%;
+  }
+  .manage-payment-method .myaccount-add-payment-form #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul .buttons-set button{
+    margin-bottom: 25px;
+    margin-top: 5px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+  }
+  .manage-payment-method .mt-edit-form .radio-continue{
+    width: 50px!important;
+  }
+  .manage-payment-method .mt-edit-form .radio-change{
+    width: 50px!important
+  }
+  .manage-payment-method #new-mt-saved-card #mt-credit-card-info ul li{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .exp-year{
+    margin-left: 0px;
+  }
+  .manage-payment-method .mt-edit-form .exp-month{
+    margin-bottom: 10px;
+  }
+  .manage-payment-method #new-mt-saved-card #billing-new-address-form ul li{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .state-select-payment{
+    width: 100%;
+  }
+  .manage-payment-method #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form ul li.buttons-set{
+    float: left;
+    width: 100%;
+  }
+  li.buttons-set .btn-cancel-edit{
+    width: 150px!important;
+    float: right!important;
+    margin-right:0px!important;
+
+  }
+  li.buttons-set .btn-continue-edit{
+    width: 150px!important;
+    float: left!important;
+  }
+  .manage-payment-method #edit-main .box-title{
+    padding:7px 0px 7px 0px;
+  }
+  .manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
+    width: 100%;
+  }
+
+
+
   .main-nav-link li{
     margin-right: 14px;
   }
   .navbar-toggler{
     left:0;
+    /* top:0; */
   }
   .maria-left-menus {
     left: 50px;
   }
   .mt-logo img {
     width: 130px;
+    margin-top: 1px;
   }
   .footer ul .footer-item-list{
     max-width: 100%;
@@ -1589,8 +1980,68 @@
   }
 }
 
-/* Mobile landscape */
+/* Mobile landscape */                                      /*allmobland*/
 @media (max-width:767px) and (orientation:landscape) {
+  .manage-payment-method .mt-edit-form #billing-new-address-form ul li input{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .state-select-payment{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .country-select-payment select{
+    width: 100%;
+  }
+  /*#mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 48%;
+  }*/
+  .manage-payment-method #mt-credit-card-info .mt-card-info{
+    width: 47%;
+    float: left;
+    clear: none;
+  }
+  .manage-payment-method .mt-edit-form .exp-year{
+    width: 48.5%;
+    float: left;
+    margin-left:9px;
+  }
+  .manage-payment-method #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
+    width: 100%;
+  }
+  .mt-new-payment li.payment-card-type{
+    margin-right: 6%;
+  }
+  .mt-new-payment li.payment-exp-date{
+    margin-right: 6%;
+  }
+  li.payment-card-number input{
+    width: 100%;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul {
+    padding-left: 0;
+  }
+  .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
+    width: 48.5%;
+    float: left;
+    margin-left: 9px;
+  }
+  #new-mt-add-payment-method li.payment-card-type{
+    margin-right: 6%;
+  }
+  #new-mt-add-payment-method li.payment-exp-date{
+    margin-left: 6%;
+  }
+  .manage-payment-method #new-mt-add-payment-method #billing-new-address-form ul li input {
+    width: 100%;
+  }
+  /*.manage-payment-method #new-mt-add-payment-method select{
+    width: 100%;
+  }*/
+  .myaccount-add-payment-form #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    top: 55px;
+  }
   .maria-left-menus{
     left:85px;
   }
@@ -1769,8 +2220,10 @@
     z-index: 1;
     position: fixed;
     bottom: 0px;
-    opacity: 0;
+    /*opacity: 0;*/
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
+
   .floating.footer:hover {
     opacity: 1;
   }
@@ -1785,6 +2238,10 @@
     margin: auto;
     width: 553px;
     height: 312px;
+  }
+  .container-footlinks {
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+    height: 0px;
   }
 }
 
@@ -1911,9 +2368,9 @@
     top: 4px;
     left: 70px;
   }
-.navbar-toggler{
+/* .navbar-toggler{
     top: 28px;
-  }
+  } */
   .copy-section {
     padding: 0;
   }

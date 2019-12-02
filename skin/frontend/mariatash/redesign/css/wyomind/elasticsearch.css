@@ -65,6 +65,10 @@
 {
     border-bottom: none !important;
 }
+/*spcial price*/
+.search-autocomplete ul.wyomind-elasticsearch li .info.price {
+    margin-left: 56px;
+}
 
 
 
