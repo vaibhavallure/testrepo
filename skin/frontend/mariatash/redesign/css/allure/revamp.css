@@ -61,6 +61,10 @@
 	}
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  visibility: hidden;
+}
+
 #fancybox-loading {
 	margin-left: 0 !important;
 }
@@ -206,8 +210,9 @@ ul#product-suggestion-items-slider button.owl-prev span {
 	.zoom-link {
 	    position: absolute;
 	    /* bottom: 105px; */
-	    right: 15px;
-    	top: -30px;
+	    /*right: 15px;*/
+    	/*top: -30px;*/
+		top:5px;
 	}
 	
 	.insta-main, .recently-view, .you_may_like {
