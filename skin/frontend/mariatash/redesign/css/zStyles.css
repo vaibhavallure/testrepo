@@ -2210,6 +2210,10 @@ line-height: 42px;
 		{
 			padding-top: 60px !important;
 		}
+		.menu-common-section .inner-box {
+			justify-content: space-evenly;
+			padding: 0 162px;
+		}
 	}
 
 
