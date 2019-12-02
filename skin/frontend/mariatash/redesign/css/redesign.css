@@ -1929,7 +1929,7 @@ div#narrow-by-list {
 }
 #narrow-by-list li div dd{
   position: absolute;
-  top: 29px;
+  top: 33px;
   height: auto;
   cursor: pointer;
   z-index: 2;
