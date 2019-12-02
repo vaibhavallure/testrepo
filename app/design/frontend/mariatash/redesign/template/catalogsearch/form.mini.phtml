@@ -28,7 +28,7 @@
     <div class="form-search">
         <!-- <label for="search"><//?php echo $this->__('Search') ?></label> -->
         <div id="search-input" class="position-relative" style="display:none;">
-            <input class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
+            <input type="search" class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
             <img class="position-absolute" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-wt.png'); ?>" alt="x">
         </div>
         <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search" title="Search">
