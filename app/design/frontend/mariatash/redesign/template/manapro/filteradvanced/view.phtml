@@ -163,10 +163,13 @@
 		}
 	}
     jQuery(document).ready(function() {
+
         jQuery('#narrow-by-list div.optionfilter').live('mouseleave', function(){
-            var parent_class = jQuery(this).parent().attr('class');
-            if(jQuery('#selectedfilter').val() != '') {
-                jQuery('.'+parent_class+' .m-show-less-action').click();
+            if (jQuery(window).width() > 1023) {
+                var parent_class = jQuery(this).parent().attr('class');
+                if (jQuery('#selectedfilter').val() != '') {
+                    jQuery('.' + parent_class + ' .m-show-less-action').click();
+                }
             }
         });
 
@@ -208,8 +211,13 @@
         block.css("padding-bottom","0");
     }
 
+    var meth="load";
+    if(jQuery("body").hasClass("desktop-device"))
+    {
+         meth="resize load";
+    }
 
-    jQuery(window).bind("resize load",function () {
+    jQuery(window).bind(meth,function () {
         if (jQuery(window).width() <= 1023) {
             jQuery(".allure_filter .filter-contain").hide();
             jQuery(".allure_filter .filter-head").show();
