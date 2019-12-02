@@ -858,7 +858,10 @@
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 198px;
+    /*top: 198px;*/
+  }
+  .sticky-filter {
+  padding-top: 10px;
   }
   .maria-left-menus{
     left: 77px;
