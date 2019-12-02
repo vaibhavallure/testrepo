@@ -117,6 +117,23 @@
     display: none;
 }
 
+.containerThumb .thumb a {
+    display: block;
+    border-bottom: 2px solid transparent;
+}
+
+.containerThumb .thumb a.active {
+    border-bottom-color: rgba(41,41,41,0.9);
+}
+
+.containerThumb .thumb a img {
+	border: 1px solid #D4D4D4;
+}
+
+.containerThumb .thumb a.active img {
+	border: 1px solid rgba(41,41,41,0.9);
+}
+
 ul#recently-viewed-items-slider,
 ul#product-suggestion-items-slider {
     padding: 0;
@@ -191,6 +208,10 @@ ul#product-suggestion-items-slider button.owl-prev span {
 	    /* bottom: 105px; */
 	    right: 15px;
     	top: -30px;
+	}
+	
+	.insta-main, .recently-view, .you_may_like {
+		margin: 30px 0 0;
 	}
 }
 
