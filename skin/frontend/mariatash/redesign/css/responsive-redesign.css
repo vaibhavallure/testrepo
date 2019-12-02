@@ -71,7 +71,7 @@
     margin-top: 0px;
   }
   .allure_filter {
-    border: 1px solid lightslategray;
+    border: 1px solid #000;
     margin: 10px;
   }
   .allure_filter dt.filter-head {
@@ -1613,9 +1613,6 @@
   .manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
     width: 100%;
   }
-
-
-
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1811,7 +1808,9 @@
   ul#slide-list{
     top: 360px;
   }
-
+  #foo3 li{
+    width: 191px;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody, .mt-myaccount-page .data-table#wishlist-table{
     display: grid;
