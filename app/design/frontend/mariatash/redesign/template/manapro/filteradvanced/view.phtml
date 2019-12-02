@@ -163,10 +163,13 @@
 		}
 	}
     jQuery(document).ready(function() {
+
         jQuery('#narrow-by-list div.optionfilter').live('mouseleave', function(){
-            var parent_class = jQuery(this).parent().attr('class');
-            if(jQuery('#selectedfilter').val() != '') {
-                jQuery('.'+parent_class+' .m-show-less-action').click();
+            if (jQuery(window).width() > 1023) {
+                var parent_class = jQuery(this).parent().attr('class');
+                if (jQuery('#selectedfilter').val() != '') {
+                    jQuery('.' + parent_class + ' .m-show-less-action').click();
+                }
             }
         });
 
