@@ -72,7 +72,7 @@
   }
   .allure_filter {
     border: 1px solid #000;
-    margin: 10px;
+    margin: 2px 8px;
   }
   .allure_filter dt.filter-head {
     cursor: pointer;
