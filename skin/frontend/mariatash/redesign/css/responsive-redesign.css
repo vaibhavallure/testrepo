@@ -56,7 +56,7 @@
 
 .sticky-bar {
   position: fixed;
-  top: 60px;
+  top: 50px;
   background: white;
   z-index: 3;
 }
@@ -71,8 +71,8 @@
     margin-top: 0px;
   }
   .allure_filter {
-    border: 1px solid lightslategray;
-    margin: 10px;
+    border: 1px solid #000;
+    margin: 2px 8px;
   }
   .allure_filter dt.filter-head {
     cursor: pointer;
@@ -146,19 +146,18 @@
     width: 100%;
   }
    #narrow-by-list li div dd ol {
-    padding: 15px 0 0;
+    margin: 15px 0 0;
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    padding: 0;
   }
    #narrow-by-list li div dd {
-    /*display: block!important;*/
-    position: relative;
-    top:auto;
-    left: auto;
-    border: none;
-     margin: 0px 10px;
+	/*display: block!important;*/
+	position: relative;
+	top:auto;
+	left: auto;
+	border: none;
+	padding: 0px 10px;
   }
    #narrow-by-list{
     padding: 0;
@@ -563,7 +562,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 35px;
+    /*margin-top: 35px;*/
+    padding-top: 35px;
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
@@ -683,7 +683,7 @@
   .vertical-middle {
     padding: 0 30px;
   }
-  .navigation-parent{
+  .mobile-device .navigation-parent{
   	/* height: 100vh;
   	overflow-y: auto; */
     padding-bottom: 60px;
@@ -860,9 +860,6 @@
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
-  /* .navbar-toggler{
-    top: 25px;
-  } */
   .maria-left-menus{
     left: 77px;
   }
@@ -1027,9 +1024,9 @@
   .homepage-menu{
     padding-top: 21px !important;
   }
-  .navbar-toggler {
+  /* .navbar-toggler {
     top: 22px !important;
-  }
+  } */
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
@@ -1065,6 +1062,10 @@
   .breadcrumbs{
     margin-top: 19px;
   }
+  .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    width: 625px;
+    margin: 0 auto;
+  }
 }
 
 
@@ -1099,6 +1100,9 @@
   }
   #narrow-by-list li div dt {
     width: 161.4px;
+  }
+  .desktop-device #narrow-by-list li div dt {
+    width: 100%
   }
   #narrow-by-list li div dd{
     width: 161px;
@@ -1304,7 +1308,7 @@
     height: 70px !important;
   }
   .catalog-product-view .for-space-to-bottom{
-    height: 60px !important;
+    height: 44px !important;
   }
   .mobile-device .copy-section{
     margin: 20px 0 0;
@@ -1501,7 +1505,7 @@
     margin-bottom: 50px;
   }
   .jewelry-container{
-    margin-top: 20px !important;
+    /*margin-top: 20px !important;*/
   }
   .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
     background-image: url(../images/redesign/thinner-cross.png);
@@ -1534,12 +1538,9 @@
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
-
   .manage-payment-method .tablinks{
     width: 50%;
   }
-
-
   .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
     width: 100%;
   }
@@ -1617,9 +1618,6 @@
   .manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
     width: 100%;
   }
-
-
-
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1639,7 +1637,7 @@
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 25px;
+    padding-left: 20px;
   }
   .custom-container {
     max-width: 370px;
@@ -1732,7 +1730,8 @@
     width: 49%;
   }
   .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
-    width: 68%;
+    width: 100%;
+    padding: 0 25px;
   }
   .image_carousel .item.product-view-instagram-item img{
     height: auto;
@@ -1793,12 +1792,12 @@
     min-height: 320px;
   }
   .containerImage img {
-    width: 90%;
+    width: 100%;
     margin: 20px auto 0;
   }
   .containerThumb {
     /* width: 340px; */
-    overflow-y: scroll;
+     overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
   }
@@ -1814,7 +1813,9 @@
   ul#slide-list{
     top: 360px;
   }
-
+  #foo3 li{
+    width: 191px;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody, .mt-myaccount-page .data-table#wishlist-table{
     display: grid;
@@ -1976,7 +1977,7 @@
   .catalog-common-grid .product-image img{
     margin-top: 20px;
   }
-  .products-grid li.item{
+  .mobile-device .products-grid li.item{
     height: 256px;
   }
 }
@@ -2180,6 +2181,10 @@
   .containerImage img{
     margin: 30px auto 0;
   }
+  .allure_filter{
+    width: 550px;
+    margin: 0 auto;
+  }
 }
 @media (max-width:1024px) and (orientation:portrairt){
   .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
@@ -2232,9 +2237,9 @@
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .floating.footer:hover {
-    opacity: 1;
-  }
+  /*.floating.footer:hover {*/
+  /*  opacity: 1;*/
+  /*}*/
   .pdp-image-section{
     margin-top: 80px;
   }
@@ -2249,7 +2254,20 @@
   }
   .container-footlinks {
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+    /*height: 0px;*/
+  }
+
+  .main-container {
+    padding-bottom: 60px;
+  }
+  .footer {
+    padding-top: 0px !important;
     height: 0px;
+    bottom: -1px;
+    position: fixed;
+    z-index: 1;
+    padding: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
@@ -2531,6 +2549,18 @@
   }
   .desktop-device .common-option-div{
     padding:0;
+  }
+  .navbar-toggler{
+    top: 10px;
+  }
+  nav.mariatash-header{
+    padding-top: 7px !important;
+  }
+  .mt-logo{
+    padding: 0px 0 5px 0;
+  }
+  .desktop-device .inner-box{
+    padding: 0 32px;
   }
 }
 @media (max-width:991px){

@@ -12172,16 +12172,6 @@ li.item h2.product-name {text-align: center;}
 	float: left;
 }
 
-.catalogsearch-result-index .block-layered-nav {
-	top: 232px;
-	/*padding: 8px 0 0 0;*/
-}
-
-
-.catalogsearch-result-index .block-layered-nav-bg {
-	top: 232px;
-	width: 98%;
-}
 
 /**
  * @category    Mana

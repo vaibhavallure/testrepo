@@ -104,8 +104,10 @@
                     }
                 };
 
-                jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent( config_currency_selector_<?php echo $_filter->getCode() ?> );
-                jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
+                if (jQuery(window).width() > 1023) {
+                    jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent(config_currency_selector_<?php echo $_filter->getCode() ?> );
+                }
+                    jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
                     var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
                     if(!showOrHide) {
                         jQuery(this).addClass("showing");
@@ -114,6 +116,7 @@
                     }
                     else {
                         jQuery(this).removeClass("showing");
+                        jQuery("body").removeClass("fancybox-lock");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
                     }
@@ -172,9 +175,39 @@
 
 
     jQuery('.allure_filter .filter-head').click(function () {
-        jQuery(".filter-head").toggleClass("showing");
-        jQuery(".filter-contain").slideToggle();
-    });
+        if(!jQuery(".filter-head").hasClass("showing")) {
+            jQuery(".filter-head").addClass("showing");
+            jQuery(".filter-contain").slideDown();
+            jQuery("body").css("overflow","hidden");
+            jQuery(".allure_filter").addClass("scrolling");
+            scrollToFilter();
+        }else {
+            jQuery(".filter-head").removeClass("showing");
+            jQuery(".filter-contain").slideUp();
+            jQuery("body").css("overflow","auto");
+            jQuery(".allure_filter").removeClass("scrolling");
+            unScrollToFilter();
+        }
+        });
+
+    function scrollToFilter()
+    {
+        var block = jQuery(".filter-common-div");
+        block.css("height", "100vh");
+        block.css("overflow", "auto");
+//        block.css("background", "transparent");
+        block.css("padding-bottom","200px");
+
+    }
+    function unScrollToFilter()
+    {
+        var block = jQuery(".filter-common-div");
+        block.css("height", "auto");
+        block.css("overflow", "auto");
+//        block.css("background", "white");
+        block.css("padding-bottom","0");
+    }
+
 
     jQuery(window).bind("resize load",function () {
         if (jQuery(window).width() <= 1023) {
@@ -213,14 +246,14 @@
 
             <?php if($this->getRequest()->getControllerName()=="result"):?>
             var plainUrl="<?= explode("?",$this->getClearUrl())[0]?>";
-            var tail="<?= explode("?",$this->getClearUrl())[1]?>";
+            var tail="?<?= explode("?",$this->getClearUrl())[1]?>";
 
             <?php else: ?>
             var plainUrl="<?= $this->getClearUrl() ?>";
             var tail=".html";
             <?php endif ?>
 
-            var controller="<?= $this->getRequest()->getActionName(); ?>";
+            var controller="<?= $this->getRequest()->getControllerName(); ?>";
             jQuery(".filter-checkbox-input:checked").each(function () {
                 var t = filters[jQuery(this).attr('data-var-name')];
                 filters[jQuery(this).attr('data-var-name')] = [...t ? t : [], jQuery(this).attr('data-var-value')

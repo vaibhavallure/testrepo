@@ -74,7 +74,7 @@ button#ApplePayPaymentMethodsButton {
 
 .apple-pay-button-black-with-text > .logo {
     background-image: -webkit-named-image(apple-pay-logo-white);
-    background-color: black;
+    /*background-color: black;*/
 }
 .apple-pay-button-white-with-text > .logo {
     background-image: -webkit-named-image(apple-pay-logo-black);

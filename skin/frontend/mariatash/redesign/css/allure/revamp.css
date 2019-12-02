@@ -113,6 +113,109 @@
     float: left;
 }
 
+.containerThumb .thumb:empty {
+    display: none;
+}
+
+.containerThumb .thumb a {
+    display: block;
+    border-bottom: 2px solid transparent;
+}
+
+.containerThumb .thumb a.active {
+    border-bottom-color: rgba(41,41,41,0.9);
+}
+
+.containerThumb .thumb a img {
+	border: 1px solid #D4D4D4;
+}
+
+.containerThumb .thumb a.active img {
+	border: 1px solid rgba(41,41,41,0.9);
+}
+
+ul#recently-viewed-items-slider,
+ul#product-suggestion-items-slider {
+    padding: 0;
+}
+
+ul#recently-viewed-items-slider li,
+ul#product-suggestion-items-slider li {
+    /* width: 100%; */
+}
+
+ul#recently-viewed-items-slider li img,
+ul#product-suggestion-items-slider li img {
+    width: 100%;
+}
+
+li.recentview a {
+	display: block;
+	overflow: hidden;
+}
+
+ul#recently-viewed-items-slider  .owl-nav,
+ul#product-suggestion-items-slider  .owl-nav {
+    margin-top: 10px;
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    width: 100%;
+}
+
+.owl-theme .owl-dots {display: none}
+
+ul#recently-viewed-items-slider button.owl-prev,
+ul#product-suggestion-items-slider button.owl-prev,
+ul#recently-viewed-items-slider button.owl-next,
+ul#product-suggestion-items-slider button.owl-next {
+    position: absolute;
+}
+
+
+ul#recently-viewed-items-slider button.owl-prev,
+ul#product-suggestion-items-slider button.owl-prev {
+    left: -20px;
+}
+
+ul#recently-viewed-items-slider button.owl-next,
+ul#product-suggestion-items-slider button.owl-next {
+    right: -20px;
+}
+
+
+ul#recently-viewed-items-slider button.owl-prev span,
+ul#product-suggestion-items-slider button.owl-prev span,
+ul#recently-viewed-items-slider button.owl-next span,
+ul#product-suggestion-items-slider button.owl-next span {
+	background: url(../../images/Popup-side-arrow.png) no-repeat transparent;
+    background-size: 12px !important;
+    width: 12px;
+    height: 45px;
+    font-size: 0;
+    display: block;
+}
+
+ul#recently-viewed-items-slider button.owl-prev span,
+ul#product-suggestion-items-slider button.owl-prev span {
+	transform: rotate(180deg);
+	margin-top: -18px;
+}
+
+@media (max-width: 1023px) {
+	.zoom-link {
+	    position: absolute;
+	    /* bottom: 105px; */
+	    /*right: 15px;*/
+    	/*top: -30px;*/
+		top:5px;
+	}
+	
+	.insta-main, .recently-view, .you_may_like {
+		margin: 30px 0 0;
+	}
+}
+
 @media (max-width: 767px) and (orientation: portrait) {
 	
 	#wishlist-table, 
