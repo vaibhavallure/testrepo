@@ -1,6 +1,10 @@
 <?php $code   = Mage::registry('tokenbase_method'); ?>
 <?php $method = Mage::helper('payment')->getMethodInstance( $code ); ?>
 
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
+
 <div id="add-main-form"></div>
 <div id="add-main">
 
@@ -87,7 +91,7 @@
 					<div class="input-box">
 						<!--<span class="card-code para-normal">Security Code</span>-->
 						<div class="v-fix cvv-box">
-							<input placeholder="CCV" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="cvv input-patern card-cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
+							<input placeholder="CVV" type="password" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="cvv input-patern validate-digits-range digits-range-001-9999 card-cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value=""  maxlength="4"/>
 						</div>
 					</div>
 				</li>
@@ -134,10 +138,10 @@
 						</li>
 					<?php endfor; ?>
 					<li class="list-odd">
-						<label style="display: none" for="<?php echo $code; ?>_city" class="required"><em>*</em><?php echo $this->__('City'); ?></label>
-						<div class="input-box">
-							<input placeholder="City *" type="text" id="<?php echo $code; ?>_city" name="billing[city]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('city') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('city') ); ?>" />
-						</div>
+                        <label style="display: none" for="<?php echo $code; ?>_country" class="required"><em>*</em><?php echo $this->__('Country'); ?></label>
+                        <div class="input-box countrys">
+                            <?php echo Mage::helper('tokenbase')->getCountryHtmlSelect( 'billing[country_id]', $this->getCard()->getAddress('country_id'), 'country' ); ?>
+                        </div>
 					</li>
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_st" class="required"><em>*</em><?php echo $this->__('State/Province'); ?></label>
@@ -149,21 +153,21 @@
 						</div>
 					</li>
 					<li class="list-odd">
-						<label style="display: none" for="<?php echo $code; ?>_postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code'); ?></label>
-						<div class="input-box">
-							<input placeholder="Zip/Postal Code *" type="text" id="<?php echo $code; ?>_postcode" name="billing[postcode]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('postcode') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('postcode') ); ?>" />
-						</div>
+                        <label style="display: none" for="<?php echo $code; ?>_city" class="required"><em>*</em><?php echo $this->__('City'); ?></label>
+                        <div class="input-box">
+                            <input placeholder="City *" type="text" id="<?php echo $code; ?>_city" name="billing[city]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('city') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('city') ); ?>" />
+                        </div>
 					</li>
 					<li class="list-even">
-						<label style="display: none" for="<?php echo $code; ?>_country" class="required"><em>*</em><?php echo $this->__('Country'); ?></label>
-						<div class="input-box countrys">
-							<?php echo Mage::helper('tokenbase')->getCountryHtmlSelect( 'billing[country_id]', $this->getCard()->getAddress('country_id'), 'country' ); ?>
-						</div>
+                        <label style="display: none" for="<?php echo $code; ?>_postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code'); ?></label>
+                        <div class="input-box">
+                            <input placeholder="Zip/Postal Code *" type="text" id="<?php echo $code; ?>_postcode" name="billing[postcode]" class="input-patern required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('postcode') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('postcode') ); ?>" />
+                        </div>
 					</li>
-					<li class="list-odd">
+					<li class="list-odd phone-number">
 						<label style="display: none"  for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
 						<div class="input-box">
-							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-patern <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?>" id="telephone" />
+							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-patern<?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?> validate-mobileno" id="tele1" />
 						</div>
 					</li>
 					<li class="list-even">
@@ -252,4 +256,22 @@
 	//]]>
 	</script>
 <?php endif; ?>
+
+    <script type="text/javascript">
+        let utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        jQuery(document).ready(function () {
+            if (jQuery("#tele1").length) {
+                var iti = window.intlTelInput(document.querySelector("#tele1"), {
+//                                                initialCountry: 'fr',
+                    autoFormat: false,
+                    autoHideDialCode: false,
+                    autoPlaceholder: false,
+                    nationalMode: false,
+                    //utilsScript:  utilPath
+                });
+                allureIntlTelValidate(jQuery("#tele1"), iti);
+            }
+        });
+    </script>
 </div>

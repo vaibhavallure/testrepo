@@ -191,9 +191,11 @@ div.tab button.active {
 }
 
 .mt-new-payment .mt-new-payment-list{
-	margin-left: -12px;
-	margin-right: 12px;
+	/*margin-left: -12px;
+	margin-right: 12px;*/
     float: left;
+    width: 100%;
+    padding-left: 0px;
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item{
@@ -1326,14 +1328,16 @@ width: 63%;
 #new-mt-saved-card #billing-new-address-form li.list-odd,
 .myaccount-add-payment-form #billing-new-address-form li.list-even,
 .myaccount-add-payment-form #billing-new-address-form li.list-odd{
-	width: 47%;
-	padding: 5px 5px 5px 0px;
+	width: 322px;
+	/*padding: 5px 5px 5px 0px;*/
+    padding: 5px 0px 5px 0px;
 }
 
 #new-mt-saved-card #billing-new-address-form li.list-odd,
 .myaccount-add-payment-form #billing-new-address-form li.list-odd{
 	float: right;
 	margin-right: 0px;
+    margin-left: 40px;
 }
 
 #new-mt-saved-card #billing-new-address-form li.list-even,
@@ -1408,7 +1412,7 @@ width: 63%;
 }
 #new-mt-add-payment-method.tabcontent {
     /*display: none;*/
-    padding: 1px 8px 0px;
+    padding: 1px 0px 0px;
     background: #d1d1d1;
     margin-top: 0px;
 }
@@ -1423,7 +1427,8 @@ width: 63%;
 }
 
 #mt-credit-card-info .mt-card-info{
-	width: 47.7%;
+	/*width: 47.7%;*/
+    width: 322px;
     float: left;
     clear: both;
 }
@@ -1542,7 +1547,8 @@ margin-right: 10px;
 } */
 
 #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
-   width:100% ;
+  /* width:100% ;*/
+    width: 322px;
 }
 
 /* #authnetcim_cc_type_exp_div .v-fix {
@@ -1558,7 +1564,7 @@ margin-right: 10px;
 }
 
 .manage-payment-method #edit-main .box-title{
- padding: 7px 0px 7px 40px;
+ padding: 7px 0px 7px 0px;
 }
 
 .my-account .input-box select {
@@ -1943,7 +1949,8 @@ li.order-info-tab-back{
     text-transform: capitalize;
 }
 .myaccount-add-payment-form #mt-credit-card-info .mt-card-info{
-    width: 47.7%;
+    /*width: 47.7%;*/
+    width: 322px;
     float: none;
     clear: both;
 }
@@ -1991,7 +1998,8 @@ li.order-info-tab-back{
     width: 100%;
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_cvv_div .card-cvv{
-    width: 100%;
+   /* width: 100%;*/
+    width: 322px;
 }
 #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box .cvv-box{
     width: 100%;
@@ -2029,7 +2037,8 @@ li.order-info-tab-back{
     padding-left: 0px;
 }
 .myaccount-add-payment-form .add-new-payment-method-ul{
-    padding-left: 20px;
+    /*padding-left: 20px;*/
+    padding-left: 0px;
     float: left;
 }
 .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info p.mt-paycard-title{
@@ -2058,6 +2067,7 @@ li.order-info-tab-back{
 }
 .manage-payment-method .mt-edit-form #mt-credit-card-info ul{
     padding-left: 0px;
+    width: 100%;
 }
  .manage-payment-method .mt-edit-form #billing-new-address-form ul{
      padding-left: 0px;
@@ -2086,7 +2096,8 @@ li.order-info-tab-back{
     width: 100%;
 }*/
 .manage-payment-method .mt-edit-form .exp-month {
-    width: 48.5%;
+    /*width: 48.5%;*/
+    width: 47.4%;
     float: left;
 }
 .manage-payment-method .mt-edit-form .exp-year{
@@ -2158,4 +2169,15 @@ li.buttons-set .btn-cancel-edit{
 }
 .manage-payment-method #new-mt-saved-card form ul {
     float: left;
+    padding-left: 0px;
+}
+.manage-payment-method .radio-select-option{
+    margin-bottom: 10px;
+}
+.manage-payment-method .intl-tel-input .selected-flag .iti-flag{
+    top: 0;
+    left: 17px;
+}
+.manage-payment-method li.phone-number .input-box .validation-advice {
+    position: absolute;
 }
