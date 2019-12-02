@@ -213,14 +213,14 @@
 
             <?php if($this->getRequest()->getControllerName()=="result"):?>
             var plainUrl="<?= explode("?",$this->getClearUrl())[0]?>";
-            var tail="<?= explode("?",$this->getClearUrl())[1]?>";
+            var tail="?<?= explode("?",$this->getClearUrl())[1]?>";
 
             <?php else: ?>
             var plainUrl="<?= $this->getClearUrl() ?>";
             var tail=".html";
             <?php endif ?>
 
-            var controller="<?= $this->getRequest()->getActionName(); ?>";
+            var controller="<?= $this->getRequest()->getControllerName(); ?>";
             jQuery(".filter-checkbox-input:checked").each(function () {
                 var t = filters[jQuery(this).attr('data-var-name')];
                 filters[jQuery(this).attr('data-var-name')] = [...t ? t : [], jQuery(this).attr('data-var-value')
