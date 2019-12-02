@@ -144,7 +144,7 @@
     width: 100%;
   }
    .pop-up-cover {
-    width: 100%;
+   /* width: 100%;*/
   }
    #narrow-by-list li div dd ol {
     margin: 15px 0 0;
