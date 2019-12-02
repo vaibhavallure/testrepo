@@ -37,7 +37,7 @@ $childProductArr = $this->getChildProductArray();
         		$imageUrl = $_post->getStandardResolution();
         	}
         }
-
+        $imageUrl = $_post->getStandardResolution();
         $_options = json_decode($_post->getHotspots());
         $points = "";
         $productsLinks = "";
