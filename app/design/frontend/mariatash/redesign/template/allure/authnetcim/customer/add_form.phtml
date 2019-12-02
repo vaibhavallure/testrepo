@@ -1,6 +1,10 @@
 <?php $code   = Mage::registry('tokenbase_method'); ?>
 <?php $method = Mage::helper('payment')->getMethodInstance( $code ); ?>
 
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
+
 <div id="add-main-form"></div>
 <div id="add-main">
 
@@ -163,7 +167,7 @@
 					<li class="list-odd">
 						<label style="display: none"  for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
 						<div class="input-box">
-							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-patern <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?>" id="telephone" />
+							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-patern<?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?> validate-mobileno" id="tele1" />
 						</div>
 					</li>
 					<li class="list-even">
@@ -252,4 +256,22 @@
 	//]]>
 	</script>
 <?php endif; ?>
+
+    <script type="text/javascript">
+        let utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        jQuery(document).ready(function () {
+            if (jQuery("#tele1").length) {
+                var iti = window.intlTelInput(document.querySelector("#tele1"), {
+//                                                initialCountry: 'fr',
+                    autoFormat: false,
+                    autoHideDialCode: false,
+                    autoPlaceholder: false,
+                    nationalMode: false,
+                    //utilsScript:  utilPath
+                });
+                allureIntlTelValidate(jQuery("#tele1"), iti);
+            }
+        });
+    </script>
 </div>
