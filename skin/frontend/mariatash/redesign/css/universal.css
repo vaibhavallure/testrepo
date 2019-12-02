@@ -2178,7 +2178,6 @@ li.buttons-set .btn-cancel-edit{
     top: 0;
     left: 17px;
 }
-/*
-.manage-payment-method .input-box .validation-advice {
+.manage-payment-method li.phone-number .input-box .validation-advice {
     position: absolute;
-}*/
+}
