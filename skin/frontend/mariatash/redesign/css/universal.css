@@ -2181,3 +2181,7 @@ li.buttons-set .btn-cancel-edit{
 .manage-payment-method li.phone-number .input-box .validation-advice {
     position: absolute;
 }
+.manage-payment-method form {
+    display: block;
+    overflow: hidden;
+}
