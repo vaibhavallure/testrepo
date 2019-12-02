@@ -4,16 +4,12 @@
     }
     jQuery.noConflict();
 
-
-
     jQuery(document).ready(function(){
 
         jQuery(window).bind("scroll",function(){
             Tipped.hide('.popbox_ajax');
             Tipped.hide('.popbox');
         });
-
-
 
         jQuery(window).bind("resize",function(){
             var width = jQuery(window).width();
@@ -289,52 +285,25 @@
         </ul>
         <div class="col-lg-2 col-12 social-media">
           <div class="row justify-content-lg-end">
-        <ul>
-            <!-- <div class="sm-qr">
-                <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_yelp/yelp/yelpurl')); ?>" target="_blank"> Y </a>
-            </div> -->
-            <li class="sm-pr" style="text-align: left;">
-                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/instaurl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/redesign/social-media/instagram.png')?>"></a>
-            </li>
-            <!-- <div class="sm-tw">
-                <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/twitterurl')); ?>" target="_blank"> TW </a>
-            </div> -->
-            <li class="sm-fb">
-                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/facebookurl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/redesign/social-media/facebook.png')?>"></a>
-            </li>
-            <li class="sm-insta">
-                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/pinteresturl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/redesign/social-media/pinterest.png')?>"></a>
-            </li>
-        </ul>
-      </div>
+            <ul>
+                <li class="sm-pr" style="text-align: left;">
+                    <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/instaurl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/social/instagram.png')?>"></a>
+                </li>
+                <li class="sm-fb">
+                    <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/facebookurl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/social/facebook.png')?>"></a>
+                </li>
+                <li class="sm-insta">
+                    <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/pinteresturl')); ?>" target="_blank"><img src="<?php echo $this->getSkinUrl('images/social/pinterest.png')?>"></a>
+                </li>
+            </ul>
+      	</div>
       </div>
     </div>
 </div>
 
-
-
-
-<script>
+<script type="text/javascript">
     function goTop() {
         var body = jQuery("html, body");
         body.stop().animate({scrollTop:0}, 500, 'swing');
     }
 </script>
-
-
-<style>
-    #container
-    {
-        width: 300px;
-        overflow: hidden;
-    }
-
-    /* THESE ARE THE INDIVIDUAL SLIDE PROPERTIES */
-    .slide
-    {
-        width: 300px;
-        height: auto;
-        overflow: hidden;
-        float: left;
-    }
-</style>
