@@ -241,7 +241,8 @@
                 <version>4.8.5</version>
                 <extension_code>els</extension_code>
                 <get_online_license>1</get_online_license>
-            <activation_key>ENY6QMP8IC8XLT1MR</activation_key></license>
+            	<activation_key>ENY6QMP8IC8XLT1MR</activation_key>
+            </license>
             <general>
                 <enable_response_header>1</enable_response_header>
             </general>
@@ -253,6 +254,7 @@
                 <suggests_limit>5</suggests_limit>
             </autocomplete>
             <product>
+            	<show_out_of_stock>0</show_out_of_stock>
                 <auto_redirect>0</auto_redirect>
                 <enable>1</enable>
                 <enable_autocomplete>1</enable_autocomplete>
