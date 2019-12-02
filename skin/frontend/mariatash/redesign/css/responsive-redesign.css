@@ -56,7 +56,7 @@
 
 .sticky-bar {
   position: fixed;
-  top: 60px;
+  top: 50px;
   background: white;
   z-index: 3;
 }
