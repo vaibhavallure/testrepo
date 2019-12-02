@@ -155,6 +155,10 @@ class Allure_Exporter_Model_Exportorders extends Allure_Exporter_Model_Exporter
         $this->io->streamOpen($file, 'w+');
         $this->io->streamLock(true);
         $orderId = $orders[0];
+        
+        $liveCustomerId = 211228;
+        $this->prepareCustomerData($liveCustomerId);
+        
         $ordersCollection = Mage::getModel('sales/order')->getCollection();
         $ordersCollection->addFieldToFilter("entity_id", array("gteq" => $orderId));
         foreach ($ordersCollection as $order) {
@@ -226,6 +230,51 @@ class Allure_Exporter_Model_Exportorders extends Allure_Exporter_Model_Exporter
         $this->io->streamWrite("\n");
     }
     
+    private function prepareCustomerData($startCustomerId){
+        $customerTable = self::CUSTOMER_ENTITY;
+        $customers = $this->connection->fetchAll("SELECT * FROM {$customerTable} WHERE entity_id > {$startCustomerId}");
+        foreach ($customers as $customer){
+            $customerId = $customer["entity_id"];
+            foreach ($this->customerArray as $tableCustomerName){
+                $resultsCustomer = $this->connection->fetchAll("SELECT * FROM {$tableCustomerName} WHERE entity_id = {$customerId}");
+                $this->prepareInsertQuery($resultsCustomer, $tableCustomerName);
+            }
+            
+            $customerAddressTable = self::CUSTOMER_ADDRESS_ENTITY;
+            $resultsAddress = $this->connection->fetchAll("SELECT * FROM {$customerAddressTable} WHERE parent_id = {$customerId}");
+            $this->prepareInsertQuery($resultsAddress, $customerAddressTable);
+            
+            foreach ($resultsAddress as $result){
+                $entityId = $result["entity_id"];
+                foreach ($this->customerAddressArray as $tableName){
+                    if($tableName != self::CUSTOMER_ADDRESS_ENTITY){
+                        $results = $this->connection->fetchAll("SELECT * FROM {$tableName} WHERE entity_id = {$entityId}");
+                        $this->prepareInsertQuery($results, $tableName);
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
+    private function prepareCustomerAddressData($startCustomerId){
+        $customerId = $order["customer_id"];
+        $customerAddressTable = self::CUSTOMER_ADDRESS_ENTITY;
+        $results = $this->connection->fetchAll("SELECT * FROM {$customerAddressTable} WHERE parent_id = {$customerId}");
+        $this->prepareInsertQuery($results, $customerAddressTable);
+        
+        foreach ($results as $result){
+            $entityId = $result["entity_id"];
+            foreach ($this->customerAddressArray as $tableName){
+                if($tableName != self::CUSTOMER_ADDRESS_ENTITY){
+                    $results = $this->connection->fetchAll("SELECT * FROM {$tableName} WHERE entity_id = {$entityId}");
+                    $this->prepareInsertQuery($results, $tableName);
+                }
+            }
+        }
+    }
+    
     
     private function prepareCustomer($order){
         $customerId = $order["customer_id"];
@@ -281,8 +330,8 @@ class Allure_Exporter_Model_Exportorders extends Allure_Exporter_Model_Exporter
     }
     
     protected function writeOrder($order,$fp){
-        $this->prepareCustomer($order);
-        $this->prepareCustomerAddress($order);
+        //$this->prepareCustomer($order);
+        //$this->prepareCustomerAddress($order);
         //order information
         $tableName = self::SALES_FLAT_ORDER;
         $results = $this->connection->fetchAll("SELECT * FROM {$tableName} WHERE entity_id = {$order->getId()}");
