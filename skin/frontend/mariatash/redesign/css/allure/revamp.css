@@ -189,8 +189,8 @@ ul#product-suggestion-items-slider button.owl-prev span {
 	.zoom-link {
 	    position: absolute;
 	    /* bottom: 105px; */
-	    right: 0;
-	    top: -25px;
+	    right: 15px;
+    	top: -30px;
 	}
 }
 
