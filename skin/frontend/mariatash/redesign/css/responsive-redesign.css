@@ -562,7 +562,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 35px;
+    /*margin-top: 35px;*/
+    padding-top: 35px;
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
@@ -1023,9 +1024,9 @@
   .homepage-menu{
     padding-top: 21px !important;
   }
-  .navbar-toggler {
+  /* .navbar-toggler {
     top: 22px !important;
-  }
+  } */
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
@@ -1795,7 +1796,7 @@
   }
   .containerThumb {
     /* width: 340px; */
-    /* overflow-y: scroll; */
+     overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
   }
@@ -2542,7 +2543,16 @@
     padding:0;
   }
   .navbar-toggler{
-    top: 28px;
+    top: 10px;
+  }
+  nav.mariatash-header{
+    padding-top: 7px !important;
+  }
+  .mt-logo{
+    padding: 0px 0 5px 0;
+  }
+  .desktop-device .inner-box{
+    padding: 0 32px;
   }
 }
 @media (max-width:991px){
