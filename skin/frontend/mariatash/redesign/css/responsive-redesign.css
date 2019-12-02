@@ -562,7 +562,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 35px;
+    /*margin-top: 35px;*/
+    padding-top: 35px;
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
@@ -1795,7 +1796,7 @@
   }
   .containerThumb {
     /* width: 340px; */
-    /* overflow-y: scroll; */
+     overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
   }
