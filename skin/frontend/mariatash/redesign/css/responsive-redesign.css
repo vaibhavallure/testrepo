@@ -860,9 +860,6 @@
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
-  /* .navbar-toggler{
-    top: 25px;
-  } */
   .maria-left-menus{
     left: 77px;
   }
@@ -1064,6 +1061,10 @@
   }
   .breadcrumbs{
     margin-top: 19px;
+  }
+  .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    width: 625px;
+    margin: 0 auto;
   }
 }
 
@@ -1534,12 +1535,9 @@
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
-
   .manage-payment-method .tablinks{
     width: 50%;
   }
-
-
   .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
     width: 100%;
   }

@@ -628,7 +628,7 @@ input, select, textarea{
   border: 1px solid rgba(41,41,41,0.60);
   height: 30px;
   width: 181px;
-  padding: 3px 0 10px 24px;
+  padding: 4px 0 8px 24px;
 	background-size: 10px !important;
 }
 body{
@@ -4829,7 +4829,7 @@ td.cart_col2 {
 	margin-right: 3px;
 }
 .desktop-device #total_item_counts_holder{
-	margin-top: 8px !important;
+	margin-top: 9px !important;
 }
 .mobile-device .filter-actions{
 	flex-direction: row-reverse;
