@@ -2245,6 +2245,12 @@ line-height: 42px;
 		.cms-piercing-service .about-jewelry {
 			margin-bottom: 20px;
 		}
+		.cms-page-view .simple-page-title h1,
+		.cms-page-view .about-jewelry h1 {
+			margin-bottom: 0px !important;
+		}
+
+
 	}
 	/*Mobile devices Landscape*/
 	@media (max-width: 767px) and (orientation: landscape) {
@@ -2282,6 +2288,13 @@ line-height: 42px;
 			pointer-events: none;
 		}
 
+	}
+	/*Desktop Devices*/
+	@media only screen and (min-width: 1025px) {
+		.celebPopup .product-info {
+			overflow-y: scroll;
+			max-height: 500px;
+		}
 	}
 
 	.mobile_menu_overlay {
@@ -2353,4 +2366,8 @@ line-height: 42px;
 	.t_ContentContainer.t_clearfix.t_Content_allure_footer,
 	.icon-user .login-dropdown{
 		border: 0.5px solid;
+	}
+
+	.celebPopup .product-info{
+		position: relative;
 	}
