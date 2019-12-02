@@ -113,11 +113,14 @@
                         jQuery(this).addClass("showing");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').addClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
+                        scrollToFilter();
                     }
                     else {
                         jQuery(this).removeClass("showing");
+                        jQuery("body").removeClass("fancybox-lock");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
+                        scrollToFilter();
                     }
                 });
             });
@@ -174,9 +177,38 @@
 
 
     jQuery('.allure_filter .filter-head').click(function () {
-        jQuery(".filter-head").toggleClass("showing");
-        jQuery(".filter-contain").slideToggle();
-    });
+        if(!jQuery(".filter-head").hasClass("showing")) {
+            jQuery(".filter-head").addClass("showing");
+            jQuery(".filter-contain").slideDown();
+            jQuery("body").addClass("fancybox-lock");
+            jQuery(".allure_filter").addClass("scrolling");
+            scrollToFilter();
+        }else {
+            jQuery(".filter-head").removeClass("showing");
+            jQuery(".filter-contain").slideUp();
+            jQuery("body").removeClass("fancybox-lock");
+            jQuery(".allure_filter").removeClass("scrolling");
+            unScrollToFilter();
+        }
+        });
+
+    function scrollToFilter()
+    {
+        var block = jQuery(".allure_filter.scrolling");
+        block.css("height", "auto");
+        if(block.length) {
+            var blockHeight = (block.outerHeight()>255)?block.outerHeight():255;
+            block.css("height", blockHeight);
+            block.css("overflow", "auto");
+        }
+    }
+    function unScrollToFilter()
+    {
+        var block = jQuery(".allure_filter");
+        block.css("height", "auto");
+        block.css("overflow", "auto");
+    }
+
 
     jQuery(window).bind("resize load",function () {
         if (jQuery(window).width() <= 1023) {
