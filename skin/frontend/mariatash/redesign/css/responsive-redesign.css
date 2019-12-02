@@ -1792,7 +1792,7 @@
     min-height: 320px;
   }
   .containerImage img {
-    width: 90%;
+    width: 100%;
     margin: 20px auto 0;
   }
   .containerThumb {
