@@ -209,6 +209,10 @@ ul#product-suggestion-items-slider button.owl-prev span {
 	    right: 15px;
     	top: -30px;
 	}
+	
+	.insta-main, .recently-view, .you_may_like {
+		margin: 30px 0 0;
+	}
 }
 
 @media (max-width: 767px) and (orientation: portrait) {
