@@ -71,7 +71,7 @@ if($configProduct->isConfigurable()){
 
         if (is_null($productAttribute)) {
             Mage::log("Issue with Product::".$_cpid,Zend_log::DEBUG,'product_errors.log',true);
-			continue;
+            continue;
         }
         $attrid = $productAttribute->getId();
         $allowAttrs[] = $productAttribute->getAttributeCode();
@@ -106,8 +106,8 @@ if($configProduct->isConfigurable()){
         $realAttribute = @array_diff($config_attr,$colors);
 
         if ($realAttribute && count($realAttribute)) {
-			$config_attr   = $realAttribute[0];
-		}
+            $config_attr   = $realAttribute[0];
+        }
     }
 
     if($colorOptionId){
@@ -124,9 +124,9 @@ if($configProduct->isConfigurable()){
             $attribute_code = $prod->$method();
             if($colorOptionId == $attribute_code){
                 if($prod->getVideo()) {
-                        $_cpid = $prod->getEntityId();
-                        $configProduct = Mage::getModel('catalog/product')->load($_cpid);
-                        break;
+                    $_cpid = $prod->getEntityId();
+                    $configProduct = Mage::getModel('catalog/product')->load($_cpid);
+                    break;
                 }
             }
         }
@@ -168,281 +168,284 @@ if (!$videoUrl && $secondVideoUrl)
 <!--Array for Zoom image-->
 <script>
     var zoomImgArray = new Array();
+    var productId = '<?= $_product->getId()?>';
+    var currentImg = 1;
 </script>
 <?php $count = count($gallery); ?>
 <?php $zoomImgArr = array()?>
 <?php if ( $count >= 1 ): ?>
-        <?php $counter = 1; ?>
-        <div id="imageRepo" class="d-none">
-            <?php foreach ($gallery as $_image): ?>
-                <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
-                <?php $zoomImgArr[] = $_image->getUrl();?>
-                <?php $counter++; ?>
-            <?php endforeach; ?>
-        </div>
-        <div id="thumbRepo" class="d-none">
-            <?php foreach ($gallery as $_image): ?>
-                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(87,87); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>" viewon="<?php echo $_image->getViewon() ?>"/>
-                <?php $counter++; ?>
-            <?php endforeach; ?>
-        </div>
+    <?php $counter = 1; ?>
+    <div id="imageRepo" class="d-none">
+        <?php foreach ($gallery as $_image): ?>
+            <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+            <?php $zoomImgArr[] = $_image->getUrl();?>
+            <?php $counter++; ?>
+        <?php endforeach; ?>
+    </div>
+    <div id="thumbRepo" class="d-none">
+        <?php foreach ($gallery as $_image): ?>
+            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(FALSE)->keepFrame(FALSE)->resize(87,87); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>" viewon="<?php echo $_image->getViewon() ?>"/>
+            <?php $counter++; ?>
+        <?php endforeach; ?>
+    </div>
 <?php endif   ?>
 
 <script type="text/javascript">
 
-function setFacebook(){
-    var url = "http://www.facebook.com/plugins/like.php?href=<?php echo urlencode( $this->helper('core/url')->getCurrentUrl());?>%3Fproductviewfb%3D1%26fb%3D1%26productid%3D<?php echo $_product->getId();?>%26image%3D"+jQuery('.containerImage img').attr('data')+"&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&colorscheme=light&amp;action=like&amp;height=21";
-    jQuery('#facepv').html('<iframe id="likefb" src="'+url+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>');
-}
+    function setFacebook(){
+        var url = "http://www.facebook.com/plugins/like.php?href=<?php echo urlencode( $this->helper('core/url')->getCurrentUrl());?>%3Fproductviewfb%3D1%26fb%3D1%26productid%3D<?php echo $_product->getId();?>%26image%3D"+jQuery('.containerImage img').attr('data')+"&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&colorscheme=light&amp;action=like&amp;height=21";
+        jQuery('#facepv').html('<iframe id="likefb" src="'+url+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>');
+    }
 
-function loadImage(numImage,obj){
-    jQuery('.containerImage').html("");
-    jQuery(".thumb .active").removeClass("active");
-    jQuery('.thumb.thumb1').removeClass("active");
-    jQuery(obj).addClass("active");
-    jQuery(".containerImage").fadeIn(1000, function(){
-       jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
-    });
+    function loadImage(numImage,obj){
+        jQuery('.containerImage').html("");
+        jQuery(".thumb .active").removeClass("active");
+        jQuery('.thumb.thumb1').removeClass("active");
+        jQuery(obj).addClass("active");
+        jQuery(".containerImage").fadeIn(1000, function(){
+            jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
+        });
 
-    var zoom_img = jQuery('#zoom-img');
-    zoom_img.attr('data-src','');
-    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('data-src'));
+        var zoom_img = jQuery('#zoom-img');
+        zoom_img.attr('data-src','');
+        zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('data-src'));
 
-    setFacebook();
+        setFacebook();
 
-    shareLikeTwitter();
-}
+        shareLikeTwitter();
+    }
 
-function loadImageConf(numImage){
-    jQuery(".containerImage").fadeIn(1000, function(){
-        jQuery('.containerImage').html(imgArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()]['imageRepo'][numImage]);
-    });
+    function loadImageConf(numImage){
+        jQuery(".containerImage").fadeIn(1000, function(){
+            jQuery('.containerImage').html(imgArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()]['imageRepo'][numImage]);
+        });
 
-    setFacebook();
+        setFacebook();
 
-    shareLikeTwitter();
-}
+        shareLikeTwitter();
+    }
 
-function loadBaseImage(){
-    jQuery(".containerImage").fadeIn(1000, function(){
-        <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
-        jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
-        jQuery('.thumb.thumb1').addClass("active");
-    });
-    var zoom_img = jQuery('#zoom-img');
-    zoom_img.attr('data-src','');
-    zoom_img.attr('data-src',jQuery('#imageRepo img').eq(0).attr('data-src'));
-    setFacebook();
+    function loadBaseImage(){
+        jQuery(".containerImage").fadeIn(1000, function(){
+            <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
+            jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
+            jQuery('.thumb.thumb1').addClass("active");
+        });
+        // var zoom_img = jQuery('#zoom-img');
+        // zoom_img.attr('data-src','');
+        // zoom_img.attr('data-src',jQuery('#imageRepo img').eq(0).attr('data-src'));
+        setFacebook();
 
-    shareLikeTwitter();
-}
+        shareLikeTwitter();
+    }
 
-var loadTimes=0;
-function loadVideo(video,obj){
-	jQuery('.containerImage').hide();
-    jQuery(".thumb .active").removeClass("active");
-    jQuery(obj).addClass("active");
+    var loadTimes=0;
+    function loadVideo(video,obj){
+        jQuery('.containerImage').hide();
+        jQuery(".thumb .active").removeClass("active");
+        jQuery(obj).addClass("active");
 
-     var player = document.getElementById('video_' + video);
-     if(player){
-         var src = player.src;
+        var player = document.getElementById('video_' + video);
+        if(player){
+            var src = player.src;
 
-         //allure code ws02 start
-         if(src.indexOf(':/') != -1){
-         	var newUrl = src.slice( src.indexOf(':/') + 1 );
-         	src = newUrl;
-         }
-       	//allure code end
-
-         if(src.search("autoplay=0") != -1){
-            src = src.replace("autoplay=0","autoplay=1");
-         }
-         player.src = src;
-     }
-     jQuery('.containerVideo_' + video).show();
-}
-
-function closeVideo(){
-	jQuery('.containerImage img').show();
-    var player = jQuery('[id^="video-"] iframe');
-    if(player){
-        player.each(function(index,iframe) {
-            if (iframe.src) {
-                src = iframe.src.replace("autoplay=1","autoplay=0");
-                iframe.src = src;
+            //allure code ws02 start
+            if(src.indexOf(':/') != -1){
+                var newUrl = src.slice( src.indexOf(':/') + 1 );
+                src = newUrl;
             }
+            //allure code end
+
+            if(src.search("autoplay=0") != -1){
+                src = src.replace("autoplay=0","autoplay=1");
+            }
+            player.src = src;
+        }
+        jQuery('.containerVideo_' + video).show();
+    }
+
+    function closeVideo(){
+        jQuery('.containerImage img').show();
+        var player = jQuery('[id^="video-"] iframe');
+        if(player){
+            player.each(function(index,iframe) {
+                if (iframe.src) {
+                    src = iframe.src.replace("autoplay=1","autoplay=0");
+                    iframe.src = src;
+                }
+            });
+        }
+        jQuery('[id^="video-"]').hide();
+    }
+    function closeVid(){
+        //jQuery('.containerVideo').hide();
+    }
+
+    function createZoomview(){
+        jQuery.facybox.loading();
+        <?php $url = $this->getUrl('productview/index/sendproduct'); ?>
+        var widthWindow = (jQuery(window).width());
+        var heightWindow = jQuery(window).height();
+        var widthFullimage = widthWindow * 0.86;
+        var heightFullimage = heightWindow;
+
+        var widthThumbimage = widthWindow * 0.12;
+        var heightThumbimage = heightWindow * 0.24;
+        var productId = jQuery('input[name="product"]').val();
+        var productName = jQuery.trim(jQuery('.product-view .product-name').text());
+        jQuery(function(){
+            jQuery.ajax({
+                url: "<?php echo $url ?>",
+                data: {
+                    product: productId,
+                    productName: productName,
+                    widthwindow:widthWindow,
+                    heightwindow:heightWindow,
+                    widthfullimage:widthFullimage,
+                    heightfullimage:heightFullimage,
+                    widththumbimage:widthThumbimage,
+                    heightthumbimage:heightThumbimage
+                },
+
+                success: function(data){
+                    jQuery.facybox(data, 'fullscreen-slide');
+                    jQuery('#facybox').css({top:0,left:0, margin: 0, padding: 0, position: 'fixed'});
+                    jQuery('a.close').hide();
+                }
+            });
+        })
+    }
+
+    function windOpn(url){
+        window.open (url,"mywindow","menubar=1,resizable=1,width=700,height=350");
+    }
+
+    function sharePinit(){
+        jQuery('#pinit').click(function(){
+            windOpn('//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
         });
     }
-    jQuery('[id^="video-"]').hide();
-}
-function closeVid(){
-    //jQuery('.containerVideo').hide();
-}
 
-function createZoomview(){
-    jQuery.facybox.loading();
-    <?php $url = $this->getUrl('productview/index/sendproduct'); ?>
-    var widthWindow = (jQuery(window).width());
-    var heightWindow = jQuery(window).height();
-    var widthFullimage = widthWindow * 0.86;
-    var heightFullimage = heightWindow;
+    function shareLikeTwitter(){
+        //TWITTER
+        /* jQuery('#twitter').sharrre({
+             share: { twitter: true },
+             enableHover: false,
+             enableTracking: true,
+             template: '<a class="boxx" href="#"><div class="count" href="#">{total}</div><div class="share"><span></span>Tweet</div></a>',
+             buttons: { twitter: {via: 'mariatash'}},
+             click: function(api, options){
+                   api.simulateClick();
+                   api.openPopup('twitter');
+             }
+         });*/
+    }
 
-    var widthThumbimage = widthWindow * 0.12;
-    var heightThumbimage = heightWindow * 0.24;
-    var productId = jQuery('input[name="product"]').val();
-    var productName = jQuery.trim(jQuery('.product-view .product-name').text());
-   jQuery(function(){
-        jQuery.ajax({
-            url: "<?php echo $url ?>",
-            data: {
-                product: productId,
-                productName: productName,
-                widthwindow:widthWindow,
-                heightwindow:heightWindow,
-                widthfullimage:widthFullimage,
-                heightfullimage:heightFullimage,
-                widththumbimage:widthThumbimage,
-                heightthumbimage:heightThumbimage
-            },
-
-            success: function(data){
-                jQuery.facybox(data, 'fullscreen-slide');
-                jQuery('#facybox').css({top:0,left:0, margin: 0, padding: 0, position: 'fixed'});
-                jQuery('a.close').hide();
-            }
+    jQuery(document).ready(function(){
+        /*********************************************************/
+        /*Gallery View*/
+        jQuery('.containerImage,.btnFullscreen').mouseover(function() {
+            jQuery('.btnFullscreen').show();
+        }).mouseout(function() {
+            jQuery('.btnFullscreen').hide();
         });
-    })
-}
+        jQuery('#loader').hide();
+        <?php $hasVideo = ($_product->getVideo()) ? $_product->getVideo() : (($_product->getSecondVideo()) ? $_product->getSecondVideo() : '');?>
+        var videoCounter = <?php echo strlen($hasVideo)?>;
+        var urlCounter = <?php echo strlen($_product->getUrl())?>;
+        <?php if ( $count > 1 ): ?>
+        var counterJs = 0;
+        var numImages = parseInt(jQuery('#thumbRepo img').length);
+        var urlVideo = '';
 
-function windOpn(url){
-    window.open (url,"mywindow","menubar=1,resizable=1,width=700,height=350");
-}
+        loadBaseImage();
 
-function sharePinit(){
-    jQuery('#pinit').click(function(){
-        windOpn('//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
-    });
-}
+        jQuery('#thumbRepo img').each(function(number){
+            if(jQuery(this).attr('viewon') == 1) {
 
-function shareLikeTwitter(){
-    //TWITTER
-   /* jQuery('#twitter').sharrre({
-        share: { twitter: true },
-        enableHover: false,
-        enableTracking: true,
-        template: '<a class="boxx" href="#"><div class="count" href="#">{total}</div><div class="share"><span></span>Tweet</div></a>',
-        buttons: { twitter: {via: 'mariatash'}},
-        click: function(api, options){
-              api.simulateClick();
-              api.openPopup('twitter');
-        }
-    });*/
-}
+                if(numImages <5)
+                    jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" ><div class="url-caption">VIEW ON MODEL</div><img src="'+jQuery(this).attr('src')+'" /></a>');
+                else {
+                    var modalImg = numImages - 1;
+                    jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+modalImg+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                }
+                counterJs++;
+            } else {
+                if( videoCounter  == 0 ){
+                    if(counterJs==0)
+                        var activeClass="class='active'";
+                    else
+                        var activeClass="";
 
-	jQuery(document).ready(function(){
-	    /*********************************************************/
-    /*Gallery View*/
-    jQuery('.containerImage,.btnFullscreen').mouseover(function() {
-       jQuery('.btnFullscreen').show();
-    }).mouseout(function() {
-       jQuery('.btnFullscreen').hide();
-    });
-    jQuery('#loader').hide();
-	<?php $hasVideo = ($_product->getVideo()) ? $_product->getVideo() : (($_product->getSecondVideo()) ? $_product->getSecondVideo() : '');?>
-    var videoCounter = <?php echo strlen($hasVideo)?>;
-    var urlCounter = <?php echo strlen($_product->getUrl())?>;
-    <?php if ( $count > 1 ): ?>
-            var counterJs = 0;
-            var numImages = jQuery('#thumbRepo img').length;
-            var urlVideo = '';
-
-            loadBaseImage();
-
-            jQuery('#thumbRepo img').each(function(number){
-                 if(jQuery(this).attr('viewon') == 1) {
-
-                     if(numImages < 5)
-                        jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" ><div class="url-caption">VIEW ON MODEL</div><img src="'+jQuery(this).attr('src')+'" /></a>');
-                    else {
-                        jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                    if(number <= 3){
+                        jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" '+activeClass+'><img src="'+jQuery(this).attr('src')+'" /></a>');
+                        counterJs++;
                     }
-                    counterJs++;
-                } else {
-                     if( videoCounter  == 0 ){
-                         if(counterJs==0)
-                             var activeClass="class='active'";
-                         else
-                             var activeClass="";
 
-                         if(number <= 3){
-                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" '+activeClass+'><img src="'+jQuery(this).attr('src')+'" /></a>');
-                            counterJs++;
-                        }
-
-                     }
-                     else{
-                         if(number <= 3){
-                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" '+activeClass+'><img src="'+jQuery(this).attr('src')+'" /></a>');
-                            counterJs++;
-                         }
+                }
+                else{
+                    if(number <= 3){
+                        jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" '+activeClass+'><img src="'+jQuery(this).attr('src')+'" /></a>');
+                        counterJs++;
                     }
-               }
-
-            });
-            if( videoCounter  == 0 ){
-                <?php //if ( $count == 0 ): ?>
-                    if( urlCounter > 0 ){
-                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::getModel('catalog/product')->getThumbnailUrl();?>" /></a>');
-                    }
-                <?php //endif; ?>
-            }
-            else{
-                <?php
-                if($_product->getVideoThumb() == 'thumbnail/video/')
-                    $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
-                if($videoUrl){ ?>
-                    var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
-                <?php }
-                if($secondVideoUrl){ ?>
-                    var id_video = (counterJs > 3) ? 4 : counterJs;
-                    jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87); ?>" /></a>');
-                <?php } ?>
-                if( urlCounter > 0 ){
-                    <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
-                    jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
-                    <?php //} ?>
                 }
             }
 
-    <?php endif; ?>
+        });
+        if( videoCounter  == 0 ){
+            <?php //if ( $count == 0 ): ?>
+            if( urlCounter > 0 ){
+                jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::getModel('catalog/product')->getThumbnailUrl();?>" /></a>');
+            }
+            <?php //endif; ?>
+        }
+        else{
+            <?php
+            if($_product->getVideoThumb() == 'thumbnail/video/')
+                $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
+            if($videoUrl){ ?>
+            var id_video = (counterJs > 3) ? 4 : counterJs;
+            jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            <?php }
+            if($secondVideoUrl){ ?>
+            var id_video = (counterJs > 3) ? 4 : counterJs;
+            jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87); ?>" /></a>');
+            <?php } ?>
+            if( urlCounter > 0 ){
+                <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
+                jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
+                <?php //} ?>
+            }
+        }
 
-    <?php if ( $count == 1 ): ?>
+        <?php endif; ?>
+
+        <?php if ( $count == 1 ): ?>
         loadBaseImage();
         if (videoCounter == 0) {
             if (urlCounter > 0) {
                 jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::getModel('catalog/product')->getThumbnailUrl();?>" /></a>');
             }else{
-            	        <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(87,87); ?>
-            	        jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
-                }
+                <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(87,87); ?>
+                jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
+            }
         } else {
             <?php if($_product->getVideoThumb() == 'thumbnail/video/')
-                    $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
+            $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
             if($videoUrl){ ?>
-                jQuery('#thumbRepo img').each(function(number){
-                         jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
-                         return;
-                });
-                jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            jQuery('#thumbRepo img').each(function(number){
+                jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                return;
+            });
+            jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
             <?php }
             if($secondVideoUrl){ ?>
-                jQuery('#thumbRepo img').each(function(number){
-                    jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
-                    return;
-                });
-                jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
-                <?php } ?>
+            jQuery('#thumbRepo img').each(function(number){
+                jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                return;
+            });
+            jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            <?php } ?>
             if (urlCounter > 0) {
                 <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
                 jQuery('.thumb').eq(2).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
@@ -450,28 +453,28 @@ function shareLikeTwitter(){
             }
         }
 
-    <?php endif; ?>
+        <?php endif; ?>
 
-    <?php if ( $count == 0 ): ?>
+        <?php if ( $count == 0 ): ?>
         jQuery('.containerImage').html('<img src="<?php echo Mage::getModel('catalog/product')->getImageUrl();?>" />');
 
         if( videoCounter  == 0 ){
-        <?php //if ( $count == 0 ): ?>
+            <?php //if ( $count == 0 ): ?>
             if( urlCounter > 0 ){
                 jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php Mage::getModel('catalog/product')->getThumbnailUrl()?>" /></a>');
             }
         } else{
             <?php if( $_product->getVideoThumb() != 'thumbnail/video/' && $videoUrl){ ?>
-                jQuery('.thumb').eq(0).html('<div class="video-caption" onclick="loadVideo();">VIDEO</div><a href="javascript:;" onclick="loadVideo();"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            jQuery('.thumb').eq(0).html('<div class="video-caption" onclick="loadVideo();">VIDEO</div><a href="javascript:;" onclick="loadVideo();"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            <?php } ?>
+            if( urlCounter > 0 ){
+                <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
+                jQuery('.thumb').eq(1).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
                 <?php } ?>
-                if( urlCounter > 0 ){
-                    <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
-                    jQuery('.thumb').eq(1).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
-                    <?php } ?>
-                }
+            }
         }
-    <?php endif; ?>
-});
+        <?php endif; ?>
+    });
 
 
 
@@ -482,17 +485,17 @@ function shareLikeTwitter(){
 <div class="gallery col-12">
 
     <div class="row pdp-image-section">
-    <div class="containerThumb col-lg-2">
-        <div class="thumb thumb1"></div>
-        <div class="thumb thumb2"></div>
-        <div class="thumb thumb3"></div>
-        <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
-        <div class="thumb thumb5"></div>
-        <div class="zoom-link">
-            <a class="link-button" data-src="" id="zoom-img">Click to Zoom</a>
+        <div class="containerThumb col-lg-2">
+            <div class="thumb thumb1"></div>
+            <div class="thumb thumb2"></div>
+            <div class="thumb thumb3"></div>
+            <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
+            <div class="thumb thumb5"></div>
+            <div class="zoom-link">
+                <a class="link-button" data-src="" id="zoom-img">Click to Zoom</a>
+            </div>
         </div>
-    </div>
-    <div class="containerImage col-lg-10"></div>
+        <div class="containerImage col-lg-10"></div>
 
         <?php if($videoUrl):?><!-- Check video url-->
         <?php
@@ -548,41 +551,41 @@ if ($isAjaxCall) {
     $_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name') . " - " . strip_tags($_product->getDescription());
     $_pinlinkHref = '//pinterest.com/pin/create/button/?' . http_build_query($_pinlink);
 }
- ?>
+?>
 <script>
-	<?php if($this->getReloadYT()): ?>
-		onYouTubeIframeAPIReady();
-	<?php else: ?>
-      		var tag = document.createElement('script');
-      		tag.src = "//www.youtube.com/iframe_api";
-      		var firstScriptTag = document.getElementsByTagName('script')[0];
-      		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    <?php if($this->getReloadYT()): ?>
+    onYouTubeIframeAPIReady();
+    <?php else: ?>
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-		var player;
-	<?php endif; ?>
+    var player;
+    <?php endif; ?>
 
-	      function onYouTubeIframeAPIReady() {
+    function onYouTubeIframeAPIReady() {
 
-	      }
+    }
 
-      var done = false;
-      function onPlayerStateChange(event) {
+    var done = false;
+    function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.ENDED && !done) {
-			player.playVideo();
-	}else if (event.data == YT.PlayerState.PLAYING && !done) {
-		jQuery('.btnClose').hide();
-	}else if (event.data == YT.PlayerState.PAUSED && !done) {
-		jQuery('.btnClose').show();
+            player.playVideo();
+        }else if (event.data == YT.PlayerState.PLAYING && !done) {
+            jQuery('.btnClose').hide();
+        }else if (event.data == YT.PlayerState.PAUSED && !done) {
+            jQuery('.btnClose').show();
         }
-      }
+    }
 
-      function stopVideo() {
+    function stopVideo() {
         player.stopVideo();
-      }
+    }
 
-    </script>
-    <div style="display: none;" id="current_option_id"><?php echo $colorOptionId ;?></div>
-    <script type="text/javascript">
+</script>
+<div style="display: none;" id="current_option_id"><?php echo $colorOptionId ;?></div>
+<script type="text/javascript">
     jQuery(document).ready(function(){
         <?php if ($isAjaxCall): ?>
         // re-render pint it button
@@ -595,16 +598,16 @@ if ($isAjaxCall) {
         }
         /* Add tooltip for color icon*/
         jQuery('.amconf-images-container').each(function(){
-               /* jQuery(this).find('img').each(function(){
-                    var imgid  = jQuery(this).attr('id'),
-                        imgalt = jQuery(this).attr('alt');
-                    Tipped.create(jQuery("#"+imgid), imgalt, {
-                            skin: 'customTiny',
-                            showOn: ['click', 'mouseover'],
-                            background: { color: '#fff', opacity: .7 }
-                        });
-                });*/
-            });
+            /* jQuery(this).find('img').each(function(){
+                 var imgid  = jQuery(this).attr('id'),
+                     imgalt = jQuery(this).attr('alt');
+                 Tipped.create(jQuery("#"+imgid), imgalt, {
+                         skin: 'customTiny',
+                         showOn: ['click', 'mouseover'],
+                         background: { color: '#fff', opacity: .7 }
+                     });
+             });*/
+        });
 
         /* Attribute Post Length */
         if(jQuery('#attribute189').html()){
@@ -627,19 +630,48 @@ if ($isAjaxCall) {
 
         /*Zoom Image - for next image*/
         zoomImgArray = JSON.parse('<?= json_encode($zoomImgArr) ?>');
+        jQuery('.zoom-img').empty();
+        jQuery('.zoom-bnt-container').empty();
+        var zoom_btn = '<div class="mt-5 buttons zoom-buttons d-block" id="button-1-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>" class="zoom-in" id="zoom-in-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>" class="zoom-out" id="zoom-out-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>" class="zoom-reset" id="zoom-reset-1-'+productId+'"/> </div>';
+        var img_content ='<div class="panzoom d-block" id="panzoom-1-'+productId+'"> <img class="w-100" src="'+zoomImgArray[0]+'" ></div>';
+        var cnt = 1;
+        if(zoomImgArray.length > 1){
+            jQuery.each(zoomImgArray,function (key,url) {
+                if(cnt !== 1) {
+                    zoom_btn = zoom_btn + '<div class="mt-5 buttons zoom-buttons d-none" id="button-'+cnt+'-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>"  class="zoom-in" id="zoom-in-'+cnt+'-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>"  class="zoom-out" id="zoom-out-'+cnt+'-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>"  class="zoom-reset" id="zoom-reset-'+cnt+'-'+productId+'"/></div>';
+                    img_content  = img_content + '<div class="panzoom d-none" id="panzoom-'+cnt+'-'+productId+'"> <img src="' + url + '" class="w-100" ></div>';
+                }
+                cnt++;
+            })
+        }
+
+        jQuery('.zoom-img').append(img_content);
+        jQuery('.zoom-bnt-container').append(zoom_btn);
+        for(var i=1;i<= zoomImgArray.length;i++) {
+            jQuery('#panzoom-'+i+'-'+productId).panzoom({
+                $zoomIn: jQuery("#zoom-in-"+i+"-"+productId),
+                $zoomOut: jQuery("#zoom-out-"+i+"-"+productId),
+                $reset: jQuery("#zoom-reset-"+i+"-"+productId)
+            });
+        }
 
         jQuery('#zoom-img').on('click',function () {
-            var img_src = jQuery(this).attr('data-src');
+            jQuery(".zoom-reset").click();
+            jQuery(".zoom-loader").show();
+            // var img_src = jQuery(this).attr('data-src');
 
-            clearImg();
+            // clearImg();
             jQuery(".zoomPopup").css({"opacity": "1", "pointer-events": "auto"});
 
             unScrollBody();
             jQuery(".catalog-category-view .footer").css("display","none");
 
-            jQuery(".zoom-loader").show();
-            setImg(img_src);
+
+            // setImg(img_src);
             jQuery(".zoom-loader").hide();
+            if (jQuery(window).width() >= 992) {
+                jQuery('#product-detail-image').addClass('zoom-opened');
+            }
 
         });
 
@@ -650,15 +682,54 @@ if ($isAjaxCall) {
             jQuery(".catalog-category-view .footer").css("display","block");
 
             jQuery(".zoomPopup").css({"opacity":"0","pointer-events":"none"});
+            if (jQuery(window).width() >= 992) {
+                jQuery('#product-detail-image').removeClass('zoom-opened');
+            }
 
         });
-        function setImg(img) {
-            jQuery(".zoom-img").css({"background-image":"url("+img+")","background-size":"contain","background-repeat":"no-repeat","background-position":"center"});
-        }
 
-        function clearImg() {
-            jQuery(".zoom-img").css({"background-image":"","background-size":""});
-        }
+if(zoomImgArray.length > 1){
+    jQuery('.zoom-prev').hide();
+}else{
+    jQuery('.zoom-prev,.zoom-next').hide();
+}
+        jQuery(".zoom-next").click(function () {
+
+
+            if(currentImg !== zoomImgArray.length){
+                jQuery('.panzoom, .zoom-buttons').removeClass('d-block');
+                jQuery('.panzoom, .zoom-buttons').addClass('d-none');
+                var img_div = jQuery('#panzoom-'+(currentImg+1)+'-'+productId);
+                var btn_div = jQuery('#button-'+(currentImg+1)+'-'+productId);
+                img_div.addClass('d-block');
+                btn_div.addClass('d-block');
+                currentImg = currentImg + 1;
+                if(currentImg === zoomImgArray.length){
+                    jQuery(".zoom-next").hide();
+                }
+                if(currentImg > 1){
+                    jQuery('.zoom-prev').show();
+                }
+            }
+
+        });
+        jQuery(".zoom-prev").click(function () {
+            if(currentImg !== 1){
+                jQuery('.panzoom, .zoom-buttons').removeClass('d-block');
+                jQuery('.panzoom, .zoom-buttons').addClass('d-none');
+                var img_div = jQuery('#panzoom-'+(currentImg-1)+'-'+productId);
+                var btn_div = jQuery('#button-'+(currentImg-1)+'-'+productId);
+                img_div.addClass('d-block');
+                btn_div.addClass('d-block');
+                currentImg = currentImg - 1;
+                if(currentImg === 1){
+                    jQuery(".zoom-prev").hide();
+                }
+                if(currentImg < zoomImgArray.length) {
+                    jQuery(".zoom-next").show();
+                }
+            }
+        })
     });
 
 
@@ -667,3 +738,38 @@ if ($isAjaxCall) {
 
 
 </script>
+
+
+<!--Zoom Popup-->
+<div id="openModal" class="zoomPopup"> <!--do not remove celebPopup class-->
+    <div class="pop-up-cover big-popup-cover col-12">
+        <div class="row">
+            <div class="pop-title modal-header">
+                <div class="zoom-bnt-container "></div>
+                <a href="#close" title="Close" class="close exit-large" id="zoomClose">
+                    <div></div>
+                </a>
+            </div>
+            <div class="body modal-body big-popup-body col-12">
+                <div class="row">
+
+                    <div class="col-12">
+                        <!--DO not remove zoom-img class-->
+                        <div class="zoom-img big-popup-image row"></div>
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="prev zoom-prev" data-current="1"></div>
+            <div class="next zoom-next" data-current="1"></div>
+            <div class="zoom-loader" style="display: none">
+                <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
+            </div>
+
+        </div>
+    </div>
+</div>

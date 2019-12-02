@@ -51,21 +51,45 @@ if ($_product->getSizeSample() == 1) {
             .done(function(response) {
             var spConfig = new Product.Config(JSON.parse(response.jsonconfigtest));
 
-            <?php
-                    $optionHelper=Mage::helper('allure_catalog');
-                    $metal=$this->getRequest()->getParam("metal");
-                    if($metal){
-                        $selectedColor=$optionHelper->getOptionNumber($metal);
-                    }elseif($this->getRequest()->getParam("optionId")){
-                        $selectedColor=$this->getRequest()->getParam("optionId");
+                //new function to auto selection options
+
+                spConfig.setInitialState = function(dropdown_id,value)
+                {
+                    var dropdown = $(dropdown_id);
+
+                    if(jQuery('#'+dropdown_id).length)
+                    {
+                        for(index = 0; index < dropdown.length; index++)
+                        {
+                            if(dropdown[index].value == value)
+                            {
+                                dropdown.selectedIndex = index;
+
+                                var element = dropdown;
+                                var event = 'change';
+
+                                if(document.createEventObject)
+                                {
+                                    var evt = document.createEventObject();
+                                    return element.fireEvent('on'+event,evt)
+                                }
+                                else
+                                {
+                                    var evt = document.createEvent("HTMLEvents");
+                                    evt.initEvent(event, true, true );
+                                    return !element.dispatchEvent(evt);
+                                }
+                            }
+                        }
                     }
-                    ?>
-               var id = 'amconf-image-<?php echo $selectedColor; ?>';
-                if($(id)){
-                    $(id).simulate('click');
-                    //document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
-                }    
-        });
+
+                };
+
+
+
+                <?= $this->getInStockAttribute() ?>
+
+            });
     </script>
 <?php endif;?>
 <script type="text/javascript">

@@ -18,7 +18,7 @@
 		  		    <input id='firstname' placeholder="First Name*" type="text" name='firstname' class="ele_width required-entry"/>
 				</div>
 				<div class="input-form">
-		  		    <input id='lastname' placeholder="Last Name" type="text" name='lastname' class="ele_width required-entry"/>
+		  		    <input id='lastname' placeholder="Last Name*" type="text" name='lastname' class="ele_width required-entry"/>
 				</div>
 				<div class="input-form">
 		  		    <input id='email-register' placeholder="Email*" type="text" name='email' class="ele_width required-entry validate-email"/>
@@ -72,17 +72,18 @@
 <div id="openModal" class="popupSignUpConfirmationModel">
 	<div class="pop-up-cover">
 		<div class="pop-title modal-header">
-			<a href="#close" title="Close" class="close exit-large">
+			<a  href="javascript:void(0);" title="Close" class="close towhishred exit-large">
 				<img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
 			</a>
 			<h1><?php echo $this->__("New Account Confirmation")?></h1>
 		</div>
 		<div class="body modal-body">
 			<p class="para-normal">Thank you for joining Maria Tash!</p>
+ 
 		</div>
 	</div>
 </div>
-
+ 
 
 
 <script type="text/javascript">
@@ -91,4 +92,19 @@ if (typeof Allure == "undefined") {
 }
 Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
+
+            jQuery('.towhishred').click(function(event){
+                event.preventDefault();event.stopPropagation();
+                var wishvar = '<?php echo Mage::getSingleton("core/session")->getMywish();?>';  
+                var pid = '<?php echo Mage::getSingleton("core/session")->getPwish();?>';  
+                    if(pid && pid != ''){
+                    jQuery('.link-wishlist').trigger('click');   
+                    <?php echo Mage::getSingleton("core/session")->unsPwish();?>;                      
+                    setTimeout(function(){                
+                    window.location.href='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>'+"/myaccount/#wishlist";         
+                    }, 2000);
+                     exit;
+                }
+                 
+});
 </script>

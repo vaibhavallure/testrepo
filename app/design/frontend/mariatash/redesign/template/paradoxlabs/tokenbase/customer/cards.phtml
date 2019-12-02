@@ -68,8 +68,8 @@
   		
   		<?php if( count( $this->getCards() ) > 0 ): ?>
   			<li class="mt-payment-item mt-heading">
-	  			<div class="mt-card-name"><?php echo $this->__('Your credit and debit cards')?></div>
-	  			<div class="mt-expire-date"><?php echo $this->__('Expires')?></div>
+	  			<div class="mt-card-name para-normal payment-card-name"><?php echo $this->__('Your credit and debit cards')?></div>
+	  			<div class="mt-expire-date para-normal payment-card-exp"><?php echo $this->__('Expires')?></div>
 	  			<div class="mt-icon"></div>
   			</li>
   		
@@ -99,28 +99,28 @@
 	  			
 	  			<li class="mt-payment-details card-details-<?php echo $card->getId()?>" data-card-id="<?php echo  $card->getId()?>">
 	  				<div class="card-details-main">
-	  					<div class="mt-name-on-card">
-	  						<div class="card-title">Name on the Card</div>
-	  						<div><?php echo $nameOnCard;?></div>
+	  					<div class="mt-name-on-card para-normal">
+	  						<div class="card-title para-font">Name on the Card</div>
+	  						<div class="para-normal"><?php echo $nameOnCard;?></div>
 	  					</div>
 	  					<div class="mt-card-address">
-	  						<div class="card-title">Billing Address</div>
-	  						<div><?php echo $cardAddress;?></div>
+	  						<div class="card-title para-normal">Billing Address</div>
+	  						<div class="para-normal"><?php echo $cardAddress;?></div>
 	  						<?php if( $card->isInUse() ): ?>
 								<abbr title="<?php echo $this->__('This payment record cannot be modified while associated with pending orders.'); ?>"><?php echo $this->__('Card In Use'); ?></abbr>
 							<?php else: ?>
 	  						<div class="mt-payment-card-btn">
-	  							<form  action="<?php echo Mage::getUrl('*/*', array('_secure' => true, 'method' => $card->getMethod())) ?>" method="post">
+	  							<form  action="<?php echo Mage::getUrl('*/*', array('_secure' => true, 'method' => $card->getMethod())) ?>" method="post" class="edit-card-btn">
 									<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
 									<input type="hidden" name="id" value="<?php echo $card->getId() ?>" />
 									<input type="hidden" name="method" value="<?php echo $card->getMethod(); ?>" />
-									<button id="edit-form-btn-id-<?php echo $card->getId();?>" class="button" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
+									<button id="edit-form-btn-id-<?php echo $card->getId();?>" class="button save_button card-btn-edit" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
 								</form>
-								<form action="<?php echo Mage::getUrl('*/*/delete', array('_secure' => true, 'method' => $card->getMethod())) ?>" id="delete_form_<?php echo $card->getId() ?>" method="post">
+								<form action="<?php echo Mage::getUrl('*/*/delete', array('_secure' => true, 'method' => $card->getMethod())) ?>" id="delete_form_<?php echo $card->getId() ?>" method="post" class="delete-card-btn">
 									<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
 									<input type="hidden" name="id" value="<?php echo $card->getId() ?>" />
 									<input type="hidden" name="method" value="<?php echo $card->getMethod(); ?>" />
-									<button id="delete-form-btn-id-<?php echo $card->getId();?>" class="button" type="button"
+									<button id="delete-form-btn-id-<?php echo $card->getId();?>" class="button save_button card-btn-delete" type="button"
                                             onclick="confirmBox('<?php echo $this->__('Are you sure you want to delete this payment record?'); ?>',function() {
                                                     document.getElementById('delete_form_<?php echo $card->getId() ?>').submit();
                                                     },'DELETE');"

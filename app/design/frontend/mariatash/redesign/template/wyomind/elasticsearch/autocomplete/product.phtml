@@ -24,6 +24,8 @@ $_imgSize = $this->getImageSize();
         <?php endif ?>
         <div class="info">
             <span class="name  para-lighter"><?php echo $this->escapeHtml($_product->getName()) ?></span>
+        </div>
+        <div class="info price">
             <span class="price  para-lighter"><?php echo $this->getPriceHtml($_product) ?></span>
         </div>
         <div class="clearer"><!-- --></div>

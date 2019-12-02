@@ -61,10 +61,15 @@ if($_product->isConfigurable()){
                     dataType: 'json',
                     type: 'post',
                     data: data,
+                    beforeSend: function() {  setLoader(); 
+                    },
                     success: function (data) {
                         <?php /*?>jQuery('#ajax_loading').hide();<?php */?>
                         if (data.status == 'ERROR') {
                             if (data.message == 'login') {
+                                <?php echo Mage::getSingleton('core/session')->setMywish('1');
+                                    Mage::getSingleton('core/session')->setPwish('1');
+                                ?>
                                 console.log(data);
 
                                 parent.jQuery("#sign_in_label").trigger('click');
@@ -72,8 +77,9 @@ if($_product->isConfigurable()){
 
                             } else {
                                 alert(data.message);
-                            }
-                        } else {
+                            } 
+                        } else {jQuery('#fancybox-loading').css('display','none');
+                                jQuery('.fancybox-overlay').css('display','none');
                             jQuery('.faveSuccess').html(data.message).show();
                             setTimeout(function(){
                                 jQuery('.faveSuccess').fadeOut(3000);

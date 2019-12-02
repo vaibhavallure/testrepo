@@ -133,7 +133,7 @@ iframe {
 
  #mt-credit-card-info li #authnetcim_cc_type,#mt-credit-card-info li #authnetcim_cc_number
 {
-	width: 100% !important;
+	width: 100%;
 	padding: 2px;
 	margin-bottom: 10px;
 }
@@ -635,10 +635,10 @@ width: 94%;
 {
     margin: 0;
 }
-.pop-link .soc-login-btn{
+/* .pop-link .soc-login-btn{
     clear: left !important;
     float: left !important;
-}
+} */
 .facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
     width: 200px;
     float: right;

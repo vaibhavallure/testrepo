@@ -120,13 +120,13 @@ var addCustomer = function (srno) {
                     </div>
                     <div class="col-md-3 col-12 notify-label">
                       <label class="label translate-popup custom-checkbox para-normal" for="em${srno}">${__('Email')}
-                        <input type="checkbox" id="em${srno}" name="" checked>
+                        <input type="checkbox" id="em${srno}" name="" checked disabled>
                         <span class="checkmark"></span>
                       </label>
                     </div>
-                    <div class="col-md-9 col-12 notify-label">
+                    <div class="col-md-9 col-12 notify-label p-lg-0 p-md-0">
                         <label class="label translate-popup custom-checkbox para-normal" for="c${srno}">${__('Text Message (Message and data rates may apply)')}
-                          <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" =name="customer[${srno}][noti_sms]">
+                          <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" name="customer[${srno}][noti_sms]">
                           <span class="checkmark"></span>
                         </label>
                     </div>
@@ -137,7 +137,13 @@ var addCustomer = function (srno) {
 
     jQuery('.customer_section').append(newCustomer);
     jQuery('#customer' + srno).show('slow');
-
+    jQuery( ".firstname, .lastname").unbind( "keyup" );
+    jQuery('.firstname').keyup(function (evt) {
+        convert(jQuery(this),'firstname',evt);
+    });
+    jQuery('.lastname').keyup(function (evt) {
+        convert(jQuery(this),'lastname',evt);
+    });
 
    var iti= window.intlTelInput(document.querySelector("#phonenumber" + srno), {
         // initialCountry: 'fr',
@@ -202,11 +208,21 @@ var removeCustomer = function (srno) {
     customer.hide('slow', function () {
         customer.remove();
     });
+
 };
 var removeCustomerJob = function (srno) {
     var job = jQuery('#customer' + (srno + 1) + 'job');
     job.hide('slow', function () {
         job.remove();
+    });
+
+    jQuery( ".firstname, .lastname").unbind( "keyup" );
+
+    jQuery('.firstname').keyup(function (evt) {
+        convert(jQuery(this),'firstname',evt);
+    });
+    jQuery('.lastname').keyup(function (evt) {
+        convert(jQuery(this),'lastname',evt);
     });
 };
 

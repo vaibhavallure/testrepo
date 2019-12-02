@@ -39,7 +39,7 @@ class Ecp_Slideshow_Block_Home
 			->setOrder('position', 'asc')
 			;
         foreach ($collection as $item) {
-            $tmpImages[] = "{image : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideBackground()."', title : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideThumb()."', url : '".$item->getUrl()."', description : '".str_replace("\r\n","",$item->getSlideContent())."', background: '".$item->getBackground()."'}";
+            $tmpImages[] = "{image : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideBackground()."', title : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideThumb()."', url : '".$item->getUrl()."', description : '".str_replace("\r\n","",$item->getSlideContent())."', background: '".$item->getBackground()."', switch: '".$item->getSwitch()."'}";
         }
         return '['.implode(',',$tmpImages).']';
     }

@@ -1,4 +1,3 @@
-
 /*Standard Mendetory CSS*/
 
 h1{
@@ -60,6 +59,7 @@ h4{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 0.25px;
 	line-height: 17px;
+    padding-top:10px;
 }
 
 .info-text-one, .login-dropdown li a{
@@ -376,6 +376,7 @@ select{
 	background-image: url(../images/redesign/arrow-down-bk.png);
   background-repeat: no-repeat;
   background-position: 98% 50%;
+	background-size: 10px !important;
 }
 :focus {
 	outline: none !important;
@@ -563,6 +564,7 @@ input, select, textarea{
   width: 10px;
   height: 10px;
   margin-top: 3px;
+	background-size: 10px;
 }
 .login-dropdown li {
 	text-align: right;
@@ -612,9 +614,9 @@ input, select, textarea{
   padding-top: 8px;
   margin-bottom: 0 !important;
 }
-.user-address{
+/* .user-address{
 	margin-bottom: 13px !important;
-}
+} */
 
 #narrow-by-list li div dt{
   cursor: pointer;
@@ -627,6 +629,7 @@ input, select, textarea{
   height: 30px;
   width: 181px;
   padding: 3px 0 10px 24px;
+	background-size: 10px !important;
 }
 body{
   overflow-x: hidden !important;
@@ -794,10 +797,9 @@ nav.mariatash-header {
   margin-right: 40px;
 }
 .container-footlinks {
-  background: rgba(41, 41, 41, 0.9);
+	background: rgba(41, 41, 41, 0.9);
 	width: 100%;
-  margin: 0;
-	transition: all 1s;
+	margin: 0;
 }
 .footer {
   padding-top: 60px !important;
@@ -957,7 +959,7 @@ ul.swatch .swatch-item a {
 .navbar-toggler {
     border: none;
     position: absolute;
-    top: 16px;
+    top: 8px;
     left: 10px;
 }
 
@@ -1515,8 +1517,11 @@ input[type="checkbox"]:checked+label:before {
   padding: 0px 0 14px 0;
   font-size: 22px !important;
 }
-#top-nav {
-  padding-bottom: 31px;
+#top-nav{
+	padding-bottom: 31px;
+}
+.mobile-device #top-nav {
+  padding-bottom: 0;
 }
 .mariatash-header:hover #top-nav {
   padding-bottom: 31px;
@@ -1540,6 +1545,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .maria-right-menus{
   right: 15px;
+	top:0;
 }
 .main-nav-title li {
   margin-right: 40px;
@@ -1597,7 +1603,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .head-child li a {
   font-size: 13px;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
   line-height: 13px;
   font-family: urw-din-xlight;
 }
@@ -1685,7 +1691,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .menu-head a {
   font-family: urw-din-regular;
-  letter-spacing: 2px;
+  letter-spacing: 0px;
 }
 .right-section {
   padding-left: 3px;
@@ -1776,9 +1782,9 @@ bottom: 0px;
 }
 .mobile-main_menu{
   background: #292929;
-  width: 290px;
+  width: 330px;
   left: -420px;
-  top: 68px;
+  top: 51px;
   position: fixed;
   z-index: 999;
   display: block;
@@ -1797,23 +1803,27 @@ bottom: 0px;
   padding-left: 15px;
 }
 .mobile-main_menu li.nav-item:after {
-  background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
+  background: url(../images/redesign/downward-arrow.png) no-repeat;
   content: '';
   height: 18px;
   width: 18px;
   background-position: right;
   position: absolute;
   right: 0;
+	transform: rotate(270deg);
+	background-size: 10px;
+  top: 26px;
 }
 .close-section:after{
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
   content: '';
   height: 14px;
-  width: 19px;
+  width: 18px;
   background-position: right;
   position: absolute;
   right: 45px;
   transform: rotate(90deg);
+	background-size: 10px;
 }
 .mobile-main_menu.active{
   left:0;
@@ -1823,8 +1833,8 @@ bottom: 0px;
 }
 .mobile-sub_menu .sub-menu {
   left: 0;
-  width: 290px !important;
-  top: 69px;
+  width: 330px !important;
+  top: 51px;
 }
 .mobile-sub_menu .right-section img {
   display: none;
@@ -2052,12 +2062,14 @@ div#narrow-by-list {
   right: 19px;
   transition: 0.5s;
   cursor: pointer;
+	background-size: 10px;
 }
 .faq-question.active span:after{
   background: url(../images/redesign/minus.png) no-repeat;
   background-position: right;
   content: '';
   transition: 0.5s;
+	background-size: 10px;
 }
 .faq-copy-section h1 {
   margin-bottom: 33px;
@@ -2366,7 +2378,7 @@ input[type='radio']{
 .prev,
 .next,
 .galleryFull .controls .prev,
-.galleryFull .controls .next{
+.galleryFull .controls .next, .zoom-next, .zoom-prev{
 	background: url(../images/Popup-side-arrow.png) no-repeat transparent;
 	width: 45px;
 	height: 100px;
@@ -2510,7 +2522,7 @@ ul#foo4 {
 }
 
 .cms-home #supersized{
-	z-index: -1!important;
+	z-index: 1 !important;
 }
 .select-currency.main-nav-link-dropdown img:first-child {
   display: none;
@@ -2526,10 +2538,16 @@ ul#foo4 {
 	text-indent: -9999px;
 	/* background: url('../images/back_view_url.png') no-repeat scroll 0 0; */
 	background-size:100%;
-	transparent;
+	background: transparent;
 }
 
 /*filter popup-----------------------------------------------------*/
+.allure_filter .al-hide{
+	display: none;
+}
+
+
+
 
 .filterPopup .modal-body{
 	padding: 0
@@ -3216,9 +3234,16 @@ table th {
 table thead {
   border-bottom: 1px solid rgba(41,41,41,0.9);
 }
-.data-table.cart-table td, .paypal-express-review .data-table td {
+.paypal-express-review .data-table td {
   vertical-align: initial;
 	margin-top: 40px;
+}
+.data-table.cart-table td{
+	vertical-align: middle;
+	margin-top: 16px;
+}
+#shopping-cart-table td.cart_col3, #shopping-cart-table td.cart_col5 {
+  vertical-align: initial;
 }
 .gift-row {
   border-bottom: 1px solid #d8d8d8;
@@ -3245,7 +3270,7 @@ table thead {
 	text-decoration: underline;
 }
 .fancybox-type-iframe{
-	position: fixed!important;
+	position: fixed ;/*!important; removed because 1st Quick view on instagram gets hide*/
 }
 .quickview-index-index{
 	overflow: hidden;
@@ -3856,7 +3881,7 @@ table thead {
 
 
 /*home page slider*/
-.homepageSliderControllers .prevS{
+/* .homepageSliderControllers .prevS{
 	content: "";
 	background-image: url("../images/white-active-arrow.png");
 	background-size: 100% 100%;
@@ -3880,14 +3905,35 @@ table thead {
 	height: 95px;
 	width: 40px;
 	cursor: pointer;
-}
+} */
 #slidecaption{
 	/*visibility: hidden;*/
 	position: absolute;
-	top: 35%;
-	left: 10%;
+	top: 50%;
+  left: 10px;
+  transform: translatey(-50%);
+	z-index: 2;
+	width: 323px;
+	height: 192px;
+	font-family: urw-din-bold;
 }
-
+.slider-caption-content {
+  text-align: center;
+	margin-top: 20px;
+}
+.bk-slide h1{
+	text-align: center;
+	font-size: 30px;
+}
+#slidecaption a {
+  color: #fff;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+.bk-slide p {
+  margin-bottom: 0;
+	font-family: urw-din-medium;
+}
 
 
 /*footer tooltip*/
@@ -4002,6 +4048,7 @@ table thead {
   font-size: 11px;
 	line-height: 2;
 	font-style: normal;
+	color: rgba(41,41,41,0.9);
 }
 .select-currency.main-nav-link-dropdown span span {
   margin-right: 15px;
@@ -4478,6 +4525,7 @@ dt.post-lengthds-lbl {
 	background-position: 98% 50% !important;
 	border: 1px solid rgba(41,41,41,0.25) !important;
 	background: transparent;
+	background-size: 10px !important;
 }
 .date_wrapper-column select, #checkout-review-table {
   width: 100%;
@@ -4680,6 +4728,10 @@ td.cart_col2 {
    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #67b168;
 }
 /*******************/
+.zopim {
+	transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+}
+
 .zopim.bottom-change{
 	bottom:60px!important;
 }
@@ -4755,4 +4807,73 @@ td.cart_col2 {
   color: rgba(41,41,41,0.9) !important;
 	text-decoration: underline;
   letter-spacing: 1px;
+}
+#popup-login-form .soc-login-btn{
+	margin-top: 30px;
+}
+.cms-home .footer{
+	z-index: 2;
+}
+.mobile-device .for-space-to-bottom.cat-img-space {
+  background-image: none !important;
+  height: 50px !important;
+}
+.filter-actions {
+  display: flex;
+}
+.desktop-device #apply-filter-btn{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.mobile-device #apply-filter-btn{
+	margin-right: 3px;
+}
+.desktop-device #total_item_counts_holder{
+	margin-top: 8px !important;
+}
+.mobile-device .filter-actions{
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
+.mobile-device #clear-all-filter {
+  margin-left: 13px;
+}
+/******************Navigation Pull*************************/
+.currency-section-for-mobile, .wishlist-section-mobile, .account-section-mobile{
+	text-align: left;
+  border-bottom: 1px solid #292929;
+  width: 93%;
+  padding: 20px 0px 20px;
+  text-transform: uppercase;
+  position: relative;
+}
+.top-nav-v2{
+	background: #d8d8d8;
+}
+.currency-section-for-mobile span, .wishlist-section-mobile span, .account-section-mobile span, .signin-section-mobile span{
+	font-size: 13px;
+	color: rgba(41,41,41,0.9);
+	letter-spacing: 1px;
+	font-family: urw-din-medium;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+.select-currency-mobile .currency-arrow, .my-account-mobile img{
+	margin-left: 10px;
+}
+.login-dropdown-cover-mobile, .currency-selector-contain-mobile {
+  margin-top: 20px;
+}
+.login-dropdown-cover-mobile dd, .currency-selector-contain-mobile dd {
+  border-top: 1px solid #292929;
+  padding: 20px 0 10px;
+}
+.account-section-mobile dl {
+  margin-bottom: 0;
+}
+.currency-selector-contain-mobile dl i {
+  margin-right: 8px;
+}
+.signin-section-mobile {
+  padding: 20px 0px 20px;
 }
