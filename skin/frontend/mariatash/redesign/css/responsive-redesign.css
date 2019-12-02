@@ -144,19 +144,18 @@
     width: 100%;
   }
    #narrow-by-list li div dd ol {
-    padding: 15px 0 0;
+    margin: 15px 0 0;
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    padding: 0;
   }
    #narrow-by-list li div dd {
-    /*display: block!important;*/
-    position: relative;
-    top:auto;
-    left: auto;
-    border: none;
-     margin: 0px 10px;
+	/*display: block!important;*/
+	position: relative;
+	top:auto;
+	left: auto;
+	border: none;
+	padding: 0px 10px;
   }
    #narrow-by-list{
     padding: 0;
@@ -1718,7 +1717,8 @@
     width: 49%;
   }
   .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
-    width: 68%;
+    width: 100%;
+    padding: 0 25px;
   }
   .image_carousel .item.product-view-instagram-item img{
     height: auto;
@@ -1784,7 +1784,7 @@
   }
   .containerThumb {
     /* width: 340px; */
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     padding-left: 65px;
     padding-right: 52px;
   }

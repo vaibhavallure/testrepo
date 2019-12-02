@@ -35,9 +35,9 @@
                 <div class="block-title text-uppercase mb-3">
                     <span class="para-bold"><?php echo $this->__('Recently Viewed') ?></span>
                 </div>
-                <ul id="foo2" style="overflow: hidden;">
+                <ul id="recently-viewed-items-slider" class="owl-carousel owl-theme">
                     <?php foreach ($_products as $_item): ?>
-                        <li style="width: 280px; height: 362px" class="item recentview">
+                        <li class="item">
                             <a href="<?php echo $this->getProductUrl($_item) ?>">
                                 <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(280,362) ?>" alt="<?php echo $_item->getName() ?>" />
                             </a>
@@ -45,59 +45,31 @@
                     <?php endforeach; ?>
                 </ul>
                 <div class="clearfix"></div>
-
-
             </div>
-            <a class="prev" id="foo2_prev" href="#"><span>prev</span></a>
-            <a class="next" id="foo2_next" href="#"><span>next</span></a>
-            <div class="pagination" id="foo2_pag"></div>
             <script type="text/javascript">
-                jQuery.noConflict();
-
                 jQuery(document).ready(function() {
-
-                    jQuery('#foo2').jcarousel({
-                        initCallback: mycarousel_initCallbackProd2,
-                        buttonNextCallback: mycarousel_buttonPrevCallbackProd2,
-                        buttonPrevCallback: mycarousel_buttonNextCallbackProd2,
-                        // This tells jCarousel NOT to autobuild prev/next buttons
-                        buttonNextHTML: null,
-                        buttonPrevHTML: null,
-                        itemFallbackDimension: 90,
-                        scroll:1
-                    });
+                    var $ =  jQuery;
+                	$('#recently-viewed-items-slider').owlCarousel({
+                	    loop:true,
+                	    margin:10,
+                	    responsiveClass:true,
+                	    responsive:{
+                	        0:{
+                	            items:1,
+                	            nav:true
+                	        },
+                	        600:{
+                	            items:3,
+                	            nav:false
+                	        },
+                	        1000:{
+                	            items:4,
+                	            nav:true,
+                	            loop:false
+                	        }
+                	    }
+                	});
                 });
-
-                function mycarousel_initCallbackProd2(carousel) {
-                    jQuery('#foo2_prev').bind('click', function() {
-                        carousel.prev();
-                        return false;
-                    });
-
-                    jQuery('#foo2_next').bind('click', function() {
-                        carousel.next();
-                        return false;
-                    });
-                };
-
-                function mycarousel_buttonNextCallbackProd2(carousel, button, enabled) {
-                    if(enabled){
-                        jQuery("#foo2_prev").css('opacity',1);
-                    }else{
-                        jQuery("#foo2_prev").css('opacity',0.13);
-                    }
-                };
-
-                function mycarousel_buttonPrevCallbackProd2(carousel, button, enabled) {
-                    if(enabled){
-                        jQuery("#foo2_next").css('opacity',1);
-                    }else{
-                        jQuery("#foo2_next").css('opacity',0.13);
-                    }
-                };
-
-                if(jQuery('ul#foo2 li.item').length <= 4)
-                    jQuery("#foo2_next , #foo2_prev").hide();
             </script>
         </div>
     </div>
