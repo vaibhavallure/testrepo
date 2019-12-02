@@ -2283,6 +2283,13 @@ line-height: 42px;
 		}
 
 	}
+	/*Desktop Devices*/
+	@media only screen and (min-width: 1025px) {
+		.celebPopup .product-info {
+			overflow-y: scroll;
+			max-height: 500px;
+		}
+	}
 
 	.mobile_menu_overlay {
 		position: fixed;
@@ -2353,4 +2360,8 @@ line-height: 42px;
 	.t_ContentContainer.t_clearfix.t_Content_allure_footer,
 	.icon-user .login-dropdown{
 		border: 0.5px solid;
+	}
+
+	.celebPopup .product-info{
+		position: relative;
 	}
