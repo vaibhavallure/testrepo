@@ -66,6 +66,7 @@
     width: 100%;
     background: white;
     z-index: 2;
+    padding-top: 2px;
   }
   #narrow-by-list li:first-child{
     margin-top: 0px;
