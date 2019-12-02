@@ -797,7 +797,7 @@ div.a-column.a-span-last {
 
 .mt-new-purchase fieldset{
 	/*margin: -17px 0px 0px 0px;*/
-    padding: 0px;
+   padding: 0px 10px;
 }
 
 .mt-new-purchase .mt-purchase-btn button{

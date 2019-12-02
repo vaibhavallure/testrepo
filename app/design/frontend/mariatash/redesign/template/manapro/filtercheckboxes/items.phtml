@@ -16,10 +16,10 @@
 ?>
 <ol class="m-filter-checkboxes">
 <?php // print "<pre>";  var_export(get_class($this));    var_export(get_class_methods(get_class($this))); debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS); die;?>
-<?php foreach ($this->getItems() as $_item): ?>
+<?php foreach ($this->getItems() as $_item):
+
+    ?>
     <li <?php /*if ($_item->getMSelected()): ?>class="m-selected-ln-item"<?php endif;*/ ?>>
-
-
 		<?php //Old code of Mana
 			if(0):
 		?>
@@ -33,11 +33,11 @@
         <?php endif;?>
 
         <?php // Allure changed code Start ?>
-        <label class="custom-checkbox" onClick="location.href='<?php echo $this->urlEscape($_item->getMSelected() ? $_item->getRemoveUrl() : $_item->getUrl()) ?>';" for="<?php echo $_item->getUniqueId($_item) ?>">
-          <input type="checkbox" id="<?php echo $_item->getUniqueId($_item) ?>" value="<?php echo $_item->getValue() ?>" <?php if ($_item->getMSelected()): ?>checked="checked"<?php endif; ?> onClick="location.href='<?php echo $this->urlEscape($_item->getMSelected() ? $_item->getRemoveUrl() : $_item->getUrl()) ?>';" />
+        <label class="custom-checkbox" data-onClick="location.href='<?php echo $this->urlEscape($_item->getMSelected() ? $_item->getRemoveUrl() : $_item->getUrl()) ?>';" for="<?php echo $_item->getUniqueId($_item) ?>">
+          <input data-var-value="<?= $_item->getReqValue() ?>" data-var-name="<?= $_item->getReqVarName()?>" class="filter-checkbox-input" type="checkbox" id="<?php echo $_item->getUniqueId($_item) ?>" value="<?php echo $_item->getValue() ?>" <?php if ($_item->getMSelected()): ?>checked="checked"<?php endif; ?> data-onClick="location.href='<?php echo $this->urlEscape($_item->getMSelected() ? $_item->getRemoveUrl() : $_item->getUrl()) ?>';" />
           <span class="checkmark"></span>
         </label>
-		<label onClick="location.href='<?php echo $this->urlEscape($_item->getMSelected() ? $_item->getRemoveUrl() : $_item->getUrl()) ?>';" for="<?php echo $_item->getUniqueId($_item) ?>"><span <?php if ($_item->getMSelected()): ?>class="m-selected-checkbox-item"<?php endif; ?>><?php echo $_item->getLabel() ?></span></label>
+		<label data-onClick="location.href='<?php echo $this->urlEscape($_item->getMSelected() ? $_item->getRemoveUrl() : $_item->getUrl()) ?>';" for="<?php echo $_item->getUniqueId($_item) ?>"><span <?php if ($_item->getMSelected()): ?>class="m-selected-checkbox-item"<?php endif; ?>><?php echo $_item->getLabel() ?></span></label>
         <?php // Allure changed code End ?>
 
         <?php /*?>(<?php echo $_item->getCount() ?>)<?php */?>
