@@ -56,7 +56,7 @@
 
 .sticky-bar {
   position: fixed;
-  top: 60px;
+  top: 50px;
   background: white;
   z-index: 3;
 }
@@ -72,7 +72,7 @@
   }
   .allure_filter {
     border: 1px solid #000;
-    margin: 10px;
+    margin: 2px 8px;
   }
   .allure_filter dt.filter-head {
     cursor: pointer;
@@ -1635,7 +1635,7 @@
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 25px;
+    padding-left: 20px;
   }
   .custom-container {
     max-width: 370px;
