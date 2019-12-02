@@ -813,7 +813,7 @@
   .manage-payment-method .mt-edit-form .exp-year {
     width: 48.5%;
     float: left;
-    margin-left: 9px;
+    margin-left: 13px;
   }
   .mt-new-payment li.payment-card-type {
     margin-right: 6%;
@@ -1547,6 +1547,7 @@
   .manage-payment-method .mt-payment-details .card-details-main .mt-card-address{
     width: 100%;
     float: left;
+    margin-top: 15px;
   }
   .manage-payment-method #new-mt-add-payment-method .tabcontent{
     padding: 0px;
@@ -1983,6 +1984,13 @@
 
 /* Mobile landscape */                                      /*allmobland*/
 @media (max-width:767px) and (orientation:landscape) {
+  #new-mt-saved-card #billing-new-address-form li.list-even, #new-mt-saved-card #billing-new-address-form li.list-odd, .myaccount-add-payment-form #billing-new-address-form li.list-even, .myaccount-add-payment-form #billing-new-address-form li.list-odd{
+    width: 47%;
+    margin-left: 0px;
+  }
+  .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_cvv_div .card-cvv{
+    width: 100%;
+  }
   .manage-payment-method .mt-edit-form #billing-new-address-form ul li input{
     width: 100%;
   }
@@ -2003,7 +2011,7 @@
   .manage-payment-method .mt-edit-form .exp-year{
     width: 48.5%;
     float: left;
-    margin-left:9px;
+    margin-left:12px;
   }
   .manage-payment-method #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
     width: 100%;
@@ -2023,7 +2031,7 @@
   .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
     width: 48.5%;
     float: left;
-    margin-left: 9px;
+    margin-left: 10px;
   }
   #new-mt-add-payment-method li.payment-card-type{
     margin-right: 6%;
