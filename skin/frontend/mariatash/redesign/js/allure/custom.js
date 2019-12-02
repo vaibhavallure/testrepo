@@ -4,7 +4,7 @@ var isConvertLname = true;
 jQuery( document ).ready(function() {
 
     /*CONVERT FIRSTNAME AND LASTNAME IN CAPITAL LETTERS*/
-    jQuery('.firstname, input[name="firstname"], input[name="billing[firstname]"], input[name="shipping[firstname]"]').keyup(function (evt) {
+    jQuery('input[name="mail_from"],input[name="mail_to"],.firstname, input[name="firstname"], input[name="billing[firstname]"], input[name="shipping[firstname]"]').keyup(function (evt) {
        convert(jQuery(this),'firstname',evt);
     });
     jQuery('.lastname,input[name="mail_to"],input[name="mail_from"],input[name="lastname"],input[name="billing[lastname]"],input[name="shipping[lastname]"]').keyup(function (evt) {

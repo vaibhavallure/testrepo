@@ -224,7 +224,7 @@
 		----------------------------*/
 	 	beforeAnimation : function(direction){
 		    if (api.options.progress_bar && !vars.is_paused) $(vars.progress_bar).stop().animate({left : -$(window).width()}, 0 );
-
+//console.log(api.getField('switch')+'======');
 		  	/* Update Fields
 		  	----------------------------*/
                 var cls = "";
@@ -233,13 +233,13 @@
 		   	if ($(vars.slide_caption).length){
 				if ((api.getField('url')=="") || (api.getField('url')=="#")) {
 
-					if(0)
+					if(api.getField('switch') == 0)
 					(api.getField('title')) ? $(vars.slide_caption).html('<span><img src="'+api.getField('title')+'" border="0"/></span>') : $(vars.slide_caption).html('');
 					else
                     (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');
 				}
 				else {
-                   if(0)
+                   if(api.getField('switch') == 0)
                     (api.getField('title')) ? $(vars.slide_caption).html('<a href="'+api.getField('url')+'" target="_blank"><img src="'+api.getField('title')+'" border="0"/></a>') : $(vars.slide_caption).html('');
                    else
                     (api.getField('description')) ? $(vars.slide_caption).html('<div class="'+cls+'">'+api.getField('description')+'</div>') : $(vars.slide_caption).html('');

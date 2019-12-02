@@ -1,13 +1,15 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
 
-
+  .menu_overlay {
+    z-index: 3;
+  }
   /*filter -------------------------------*/
   dt.filter-head:after {
     background: url(../images/redesign/plus.png) no-repeat;
     content: '';
     height: 20px;
-    width: 19px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -17,18 +19,18 @@
   dt.filter-head.showing:after {
     background: url(../images/redesign/minus.png) no-repeat;
     content: '';
-    height: 19px;
-    width: 19px;
+    height: 20px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
     /*transition: 0.5s;*/
   }
   #narrow-by-list li div dt:after{
-    background: url(../images/redesign/plus.png) no-repeat;
+    background: url(../images/redesign/plus-wt.png) no-repeat;
     content: '';
     height: 20px;
-    width: 19px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -36,10 +38,10 @@
   }
 
   #narrow-by-list li div dt.showing:after {
-    background: url(../images/redesign/minus.png) no-repeat;
+    background: url(../images/redesign/minus-wt.png) no-repeat;
     content: '';
-    height: 19px;
-    width: 19px;
+    height: 20px;
+    width: 24px;
     background-position: right;
     position: absolute;
     right: 10px;
@@ -69,14 +71,14 @@
     margin-top: 0px;
   }
   .allure_filter {
-    border: 1px solid lightslategray;
+    border: 1px solid #000;
     margin: 10px;
   }
   .allure_filter dt.filter-head {
     cursor: pointer;
     background: white !important;
     width: auto;
-    padding: 5px 10px;
+    padding: 6px 24px;
     height: 33px;
   }
    .filtru-price .m-filter-slider {
@@ -144,19 +146,18 @@
     width: 100%;
   }
    #narrow-by-list li div dd ol {
-    padding: 15px 0 0;
+    margin: 15px 0 0;
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    padding: 0;
   }
    #narrow-by-list li div dd {
-    /*display: block!important;*/
-    position: relative;
-    top:auto;
-    left: auto;
-    border: none;
-     margin: 0px 10px;
+	/*display: block!important;*/
+	position: relative;
+	top:auto;
+	left: auto;
+	border: none;
+	padding: 0px 10px;
   }
    #narrow-by-list{
     padding: 0;
@@ -168,7 +169,7 @@
     border: none;
     color: white;
     width: auto;
-    padding: 5px 10px;
+    padding: 6px 24px;
     height: 34px;
   }
    #narrow-by-list li {
@@ -660,11 +661,9 @@
   .giftcards .div_selector_year {
     width: 20%;
   }
-  /* .mobile-device .main-nav-title li:first-child {
-    padding-top: 6px;
-  } */
   .mobile-device .menu-common-section{
     margin-top: 13px;
+    padding-bottom: 50px;
   }
   .common-option-div{
     width: 100%;
@@ -682,6 +681,14 @@
   }
   .vertical-middle {
     padding: 0 30px;
+  }
+  .mobile-device .navigation-parent{
+  	/* height: 100vh;
+  	overflow-y: auto; */
+    padding-bottom: 60px;
+  }
+  .mobile-main_menu .main-nav-title li:last-child {
+    border-bottom: none;
   }
 }
 
@@ -717,6 +724,7 @@
   }
   .footer{
     z-index:0;
+    clear: both;
   }
   .desktop-device .products-grid li.item .list-mt-w{
     position: absolute;
@@ -758,6 +766,75 @@
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
+
+  .my-account .box {
+    padding-left: 45px;
+    padding-right: 45px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 100%;
+  }
+  .manage-payment-method #mt-credit-card-info .mt-card-info{
+    width: 47%;
+    float: left;
+    clear: none;
+  }
+  .mt-new-payment li.payment-exp-date {
+    margin-right: 6%;
+  }
+  .cvv-textbox input{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form #mt-credit-card-info ul{
+    padding-left: 0px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+    float: left;
+    width: 100%;
+  }
+  .mt-new-payment .mt-new-payment-list{
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+    float: left;
+  }
+  .manage-payment-method #mt-credit-card-info .mt-card-info {
+    width: 47%;
+    float: left;
+    clear: none;
+  }
+  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .exp-year {
+    width: 48.5%;
+    float: left;
+    margin-left: 9px;
+  }
+  .mt-new-payment li.payment-card-type {
+    margin-right: 6%;
+  }
+  .manage-payment-method #edit-main .box-title {
+    padding: 7px 0px 7px 0px;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul {
+    padding-left: 0;
+    float: left;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul{
+    padding-left: 0px;
+  }
+  #new-mt-add-payment-method li.payment-card-type {
+    margin-right: 6%;
+  }
+  #new-mt-add-payment-method li.payment-exp-date {
+    margin-left: 6%;
+  }
+
+
   .caroufredsel_wrapper{
     width: 79%;
   }
@@ -781,9 +858,6 @@
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
-  }
-  .navbar-toggler{
-    top: 25px;
   }
   .maria-left-menus{
     left: 77px;
@@ -898,6 +972,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    height: 80px !important;
+  }
   #category-title{
     /* margin: 16px 0 20px !important; */
     padding: 0 !important;
@@ -947,7 +1024,7 @@
     padding-top: 21px !important;
   }
   .navbar-toggler {
-    top: 21px !important;
+    top: 22px !important;
   }
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
@@ -984,6 +1061,10 @@
   .breadcrumbs{
     margin-top: 19px;
   }
+  .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    width: 625px;
+    margin: 0 auto;
+  }
 }
 
 
@@ -1019,6 +1100,9 @@
   #narrow-by-list li div dt {
     width: 161.4px;
   }
+  .desktop-device #narrow-by-list li div dt {
+    width: 100%
+  }
   #narrow-by-list li div dd{
     width: 161px;
   }
@@ -1036,10 +1120,6 @@
   .mobile-device #appointments {
     padding: 55px 32px 32px 32px;
   }
-  /* .inner-box {
-    width: 534px;
-    margin-left: 15px;
-  } */
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
@@ -1139,6 +1219,9 @@
   .mobile-device .for-space-to-bottom.cat-img-space{
     height: 140px !important;
   }
+  .top-nav-v2{
+    display: none;
+  }
 }
 
 /* ipad landscape */
@@ -1162,13 +1245,51 @@
   #search-input {
     z-index: 1032;
   }
+  .select-currency-mobile, .wishlist-section-mobile, .account-section-mobile {
+    display: none;
+  }
+  #apply-filter-btn{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 
-/* ALl Mobiles */
+/* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
+  .my-account .box{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .mt-new-payment .mt-new-payment-list{
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name img{
+    margin-top: 2px;
+  }
+  .manage-payment-method #edit-main .box-title{
+    padding:7px 0px 7px 0px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+    float: left;
+    width: 100%;
+  }
+  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 100%;
+  }
+  .cvv-textbox input{
+    width: 100%;
+  }
+  .mt-logo{
+    padding: 0px 0 6px 0;
+  }
   .homepage-menu {
-    padding-top: 18px !important;
+    padding-top: 8px !important;
     padding: 0;
   }
   .about-designer{
@@ -1194,8 +1315,8 @@
   .about-jewelry h1{
     margin-bottom: 20px;
   }
-  .cms-page-view h1, .category-press h1{
-    font-size: 25px;
+  .cms-page-view h1, .category-press h1, .categorypath-celebrity-clientele-html h1,.booking .store-info-wrapper h1, #shop_our_instagram h1{
+    font-size: 25px !important;
   }
   .faq-question span{
     font-size: 14px;
@@ -1294,7 +1415,7 @@
   #slidecaption{
     display: none;
   }
-  .cms-page-view h1, .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
+.category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
   }
   .cart-collaterals.fix-section{
@@ -1383,7 +1504,7 @@
     margin-bottom: 50px;
   }
   .jewelry-container{
-    margin-top: 20px !important;
+    /*margin-top: 20px !important;*/
   }
   .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
     background-image: url(../images/redesign/thinner-cross.png);
@@ -1411,22 +1532,103 @@
   }
 }
 
-/********************** Mobile Portrait *****************/
+/********************** Mobile Portrait *****************/           /*mobport*/
 @media (max-width:767px) and (orientation:portrait) {
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
+  }
+  .manage-payment-method .tablinks{
+    width: 50%;
+  }
+  .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
+    width: 100%;
+  }
+  .manage-payment-method .mt-payment-details .card-details-main .mt-card-address{
+    width: 100%;
+    float: left;
+  }
+  .manage-payment-method #new-mt-add-payment-method .tabcontent{
+    padding: 0px;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul{
+    padding-left: 0;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info ul li{
+    width: 100%;
+  }
+  .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
+    margin-left: 0px;
+  }
+  .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul #billing-new-address-form ul li{
+    width: 100%;
+  }
+  .manage-payment-method .myaccount-add-payment-form #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul .buttons-set button{
+    margin-bottom: 25px;
+    margin-top: 5px;
+  }
+  .manage-payment-method #new-mt-saved-card form ul{
+    padding-left: 0px;
+  }
+  .manage-payment-method .mt-edit-form .radio-continue{
+    width: 50px!important;
+  }
+  .manage-payment-method .mt-edit-form .radio-change{
+    width: 50px!important
+  }
+  .manage-payment-method #new-mt-saved-card #mt-credit-card-info ul li{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .exp-year{
+    margin-left: 0px;
+  }
+  .manage-payment-method .mt-edit-form .exp-month{
+    margin-bottom: 10px;
+  }
+  .manage-payment-method #new-mt-saved-card #billing-new-address-form ul li{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .state-select-payment{
+    width: 100%;
+  }
+  .manage-payment-method #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form ul li.buttons-set{
+    float: left;
+    width: 100%;
+  }
+  li.buttons-set .btn-cancel-edit{
+    width: 150px!important;
+    float: right!important;
+    margin-right:0px!important;
+
+  }
+  li.buttons-set .btn-continue-edit{
+    width: 150px!important;
+    float: left!important;
+  }
+  .manage-payment-method #edit-main .box-title{
+    padding:7px 0px 7px 0px;
+  }
+  .manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
+    width: 100%;
   }
   .main-nav-link li{
     margin-right: 14px;
   }
   .navbar-toggler{
     left:0;
+    /* top:0; */
   }
   .maria-left-menus {
     left: 50px;
   }
   .mt-logo img {
     width: 130px;
+    margin-top: 1px;
   }
   .footer ul .footer-item-list{
     max-width: 100%;
@@ -1526,7 +1728,8 @@
     width: 49%;
   }
   .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
-    width: 68%;
+    width: 100%;
+    padding: 0 25px;
   }
   .image_carousel .item.product-view-instagram-item img{
     height: auto;
@@ -1587,12 +1790,12 @@
     min-height: 320px;
   }
   .containerImage img {
-    width: 90%;
+    width: 100%;
     margin: 20px auto 0;
   }
   .containerThumb {
     /* width: 340px; */
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     padding-left: 65px;
     padding-right: 52px;
   }
@@ -1608,7 +1811,9 @@
   ul#slide-list{
     top: 360px;
   }
-
+  #foo3 li{
+    width: 191px;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody, .mt-myaccount-page .data-table#wishlist-table{
     display: grid;
@@ -1770,13 +1975,73 @@
   .catalog-common-grid .product-image img{
     margin-top: 20px;
   }
-  .products-grid li.item{
+  .mobile-device .products-grid li.item{
     height: 256px;
   }
 }
 
-/* Mobile landscape */
+/* Mobile landscape */                                      /*allmobland*/
 @media (max-width:767px) and (orientation:landscape) {
+  .manage-payment-method .mt-edit-form #billing-new-address-form ul li input{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .state-select-payment{
+    width: 100%;
+  }
+  .manage-payment-method .mt-edit-form .country-select-payment select{
+    width: 100%;
+  }
+  /*#mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+    width: 48%;
+  }*/
+  .manage-payment-method #mt-credit-card-info .mt-card-info{
+    width: 47%;
+    float: left;
+    clear: none;
+  }
+  .manage-payment-method .mt-edit-form .exp-year{
+    width: 48.5%;
+    float: left;
+    margin-left:9px;
+  }
+  .manage-payment-method #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
+    width: 100%;
+  }
+  .mt-new-payment li.payment-card-type{
+    margin-right: 6%;
+  }
+  .mt-new-payment li.payment-exp-date{
+    margin-right: 6%;
+  }
+  li.payment-card-number input{
+    width: 100%;
+  }
+  .myaccount-add-payment-form .add-new-payment-method-ul {
+    padding-left: 0;
+  }
+  .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
+    width: 48.5%;
+    float: left;
+    margin-left: 9px;
+  }
+  #new-mt-add-payment-method li.payment-card-type{
+    margin-right: 6%;
+  }
+  #new-mt-add-payment-method li.payment-exp-date{
+    margin-left: 6%;
+  }
+  .manage-payment-method #new-mt-add-payment-method #billing-new-address-form ul li input {
+    width: 100%;
+  }
+  /*.manage-payment-method #new-mt-add-payment-method select{
+    width: 100%;
+  }*/
+  .myaccount-add-payment-form #billing-new-address-form .input-box select{
+    width: 100%;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    top: 55px;
+  }
   .maria-left-menus{
     left:85px;
   }
@@ -1907,6 +2172,10 @@
   .containerImage img{
     margin: 30px auto 0;
   }
+  .allure_filter{
+    width: 550px;
+    margin: 0 auto;
+  }
 }
 @media (max-width:1024px) and (orientation:portrairt){
   .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
@@ -1958,9 +2227,10 @@
     /*opacity: 0;*/
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
-  .floating.footer:hover {
-    opacity: 1;
-  }
+
+  /*.floating.footer:hover {*/
+  /*  opacity: 1;*/
+  /*}*/
   .pdp-image-section{
     margin-top: 80px;
   }
@@ -1972,6 +2242,23 @@
     margin: auto;
     width: 553px;
     height: 312px;
+  }
+  .container-footlinks {
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+    /*height: 0px;*/
+  }
+
+  .main-container {
+    padding-bottom: 60px;
+  }
+  .footer {
+    padding-top: 0px !important;
+    height: 0px;
+    bottom: -1px;
+    position: fixed;
+    z-index: 1;
+    padding: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
@@ -2098,9 +2385,9 @@
     top: 4px;
     left: 70px;
   }
-.navbar-toggler{
+/* .navbar-toggler{
     top: 28px;
-  }
+  } */
   .copy-section {
     padding: 0;
   }
@@ -2253,6 +2540,9 @@
   }
   .desktop-device .common-option-div{
     padding:0;
+  }
+  .navbar-toggler{
+    top: 28px;
   }
 }
 @media (max-width:991px){

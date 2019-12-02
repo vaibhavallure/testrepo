@@ -7778,6 +7778,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
 	margin: 0 auto;
 	width: 960px;
+	max-width: 100%;
 }
 
 #my-orders-table tbody a {
@@ -12171,16 +12172,6 @@ li.item h2.product-name {text-align: center;}
 	float: left;
 }
 
-.catalogsearch-result-index .block-layered-nav {
-	top: 232px;
-	/*padding: 8px 0 0 0;*/
-}
-
-
-.catalogsearch-result-index .block-layered-nav-bg {
-	top: 232px;
-	width: 98%;
-}
 
 /**
  * @category    Mana

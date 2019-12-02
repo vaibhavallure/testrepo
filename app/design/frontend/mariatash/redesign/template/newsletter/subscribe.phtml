@@ -174,4 +174,16 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
         });
 
     }
+
+    jQuery( document ).ready(function() {
+
+        /*CONVERT FIRSTNAME AND LASTNAME IN CAPITAL LETTERS*/
+        jQuery('#first_name').keyup(function (evt) {
+            convert(jQuery(this),'firstname',evt);
+        });
+        jQuery('#last_name').keyup(function (evt) {
+            convert(jQuery(this),'lastname',evt);
+        });
+
+    });
 </script>

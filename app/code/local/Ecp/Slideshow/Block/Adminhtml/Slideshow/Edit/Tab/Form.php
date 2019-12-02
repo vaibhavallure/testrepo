@@ -76,7 +76,21 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Edit_Tab_Form extends Mage_Adminht
         ));
 
 
-    
+    $fieldset->addField('switch', 'select', array(
+          'label'     => Mage::helper('ecp_slideshow')->__('Switch Caption Mode'),
+          'name'      => 'switch',
+          'values'    => array(
+              array(
+                  'value'     => 1,
+                  'label'     => Mage::helper('ecp_slideshow')->__('HTML'),
+              ),
+
+              array(
+                  'value'     => 0,
+                  'label'     => Mage::helper('ecp_slideshow')->__('Thumbnail'),
+              ),
+          ),
+      ));
 		      
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('ecp_slideshow')->__('Status'),
