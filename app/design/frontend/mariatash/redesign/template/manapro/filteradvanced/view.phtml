@@ -211,8 +211,13 @@
         block.css("padding-bottom","0");
     }
 
+    var meth="load";
+    if(jQuery("body").hasClass("desktop-device"))
+    {
+         meth="resize load";
+    }
 
-    jQuery(window).bind("load",function () {
+    jQuery(window).bind(meth,function () {
         if (jQuery(window).width() <= 1023) {
             jQuery(".allure_filter .filter-contain").hide();
             jQuery(".allure_filter .filter-head").show();
