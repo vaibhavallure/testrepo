@@ -885,6 +885,14 @@ class Wyomind_Elasticsearch_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getStoreConfigFlag('elasticsearch/category/show_path');
     }
+    
+    /**
+     * @return bool
+     */
+    public function getShowOutOfStockProducts()
+    {
+        return Mage::getStoreConfigFlag('elasticsearch/product/show_out_of_stock');
+    }
 
     /**
      * Adds Elasticsearch header in response for easy debugging
