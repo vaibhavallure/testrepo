@@ -806,7 +806,6 @@ nav.mariatash-header {
   height: 60px;
   z-index: 1;
 	padding: 0;
-	/*transition: all 1s;*/
 }
 .footer .footer-item-list a {
   color: #fff;
@@ -4731,7 +4730,6 @@ td.cart_col2 {
 .zopim {
 	transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
 }
-
 .zopim.bottom-change{
 	bottom:60px!important;
 }

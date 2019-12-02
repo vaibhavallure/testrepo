@@ -2319,12 +2319,16 @@ line-height: 42px;
     /*Email : Lowercase*/
     input[name=email],
     input[name="login[username]"],
+    input[name="mail_to_email"],
+    input[name="mail_from_email"],
     .email{
         text-transform: lowercase;
     }
 
     input[name=email]::-webkit-input-placeholder,
-    input[name="login[username]"]::-webkit-input-placeholder, /* WebKit browsers */
+    input[name="login[username]"]::-webkit-input-placeholder,
+	input[name="mail_from_email"]::-webkit-input-placeholder,
+	input[name="mail_from_email"]::-webkit-input-placeholder,
     .email::-webkit-input-placeholder{ /* WebKit browsers */
         text-transform: none;
     }
@@ -2347,6 +2351,8 @@ line-height: 42px;
     }
     input[name=email]::placeholder ,
     input[name="login[username]"]::placeholder,
+	input[name="mail_to_email"]::placeholder,
+	input[name="mail_from_email"]::placeholder,
     .email::placeholder
     { /* Recent browsers */
         text-transform: none;
