@@ -104,8 +104,10 @@
                     }
                 };
 
-                jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent( config_currency_selector_<?php echo $_filter->getCode() ?> );
-                jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
+                if (jQuery(window).width() > 1023) {
+                    jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent(config_currency_selector_<?php echo $_filter->getCode() ?> );
+                }
+                    jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
                     var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
                     if(!showOrHide) {
                         jQuery(this).addClass("showing");
