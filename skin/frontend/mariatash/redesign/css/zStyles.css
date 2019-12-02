@@ -2210,6 +2210,7 @@ line-height: 42px;
 		{
 			padding-top: 60px !important;
 		}
+
 	}
 
 
@@ -2221,6 +2222,10 @@ line-height: 42px;
 			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
+		}
+		.menu-common-section .inner-box {
+			justify-content: space-evenly;
+			padding: 0 162px;
 		}
 	}
 	@media (max-width: 767px) {
