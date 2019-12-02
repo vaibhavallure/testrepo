@@ -1,0 +1,72 @@
+<?php
+$text = Mage::getStoreConfig('currency/options/currency_symbol');
+$configArr = explode( ';',$text);
+foreach ($configArr as $_arr) {
+    $_arrTmp = explode(' ',trim($_arr));
+    $tmpCurrencies[] = $_arrTmp[0];
+
+	if (count($_arrTmp) > 1) {
+    	$tmpSymbol[] = $_arrTmp[1];
+	} else {
+		$tmpSymbol[] = '';
+	}
+}
+
+
+$category = Mage::registry('current_category');
+$categoryPara="";
+if ($category && $category->getId())
+{
+    $categoryPara="categoryid/".$category->getId();
+}
+?>
+<?php $arrayCurrencies = array();
+
+if($this->getCurrencyCount()>0): ?>
+        <?php foreach ($this->getCurrencies() as $_code => $_name):
+            $tmpCurrenciesnew=array_flip($tmpCurrencies);
+            ?>
+            <?php if($_code==$this->getCurrentCurrencyCode()) { ?>
+                <div class="select-currency-mobile">
+                    <span ><?php
+                    $file = Mage::getBaseUrl('media').'wysiwyg/flags/'.$_code.'.png';
+                    if($this->helper('ecp_category')->checkRemoteFile($file)) { ?><img src="<?php echo $file ?>"/>
+                  <?php } ?><span><?= $tmpSymbol[$tmpCurrenciesnew[$_code]];?></span>
+                    <?php echo Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code) ?></span>
+                  <img width="12px" src="<?php echo $this->getSkinUrl('images/redesign/arrow-down-bk.png') ?>">
+                </div>
+            <?php }
+            $arrayCurrencies[$_code] = $_name;
+            ?>
+        <?php endforeach;
+
+        if(!empty($arrayCurrencies)):?>
+        <?php
+            foreach($tmpCurrencies as $key => $value)
+                if(!empty($value) && isset($arrayCurrencies[$value])) {
+                    $_arrayCurrencies[$value] = $arrayCurrencies[$value];
+                    $_symbolCurrencies[$value] = $tmpSymbol[$key];
+                }
+        ?>
+
+        <div class="currency-selector-contain-mobile" style="display: none">
+            <dl class="">
+            <?php foreach ($_arrayCurrencies as $_code => $_name): ?>
+                <dd>
+                    <a href="<?php echo $this->getUrl('currencymanager/currency/switch/to/'.$_code."/".$categoryPara); ?>" >
+                    <?php echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code).'</span>' ?>
+                </a>
+                </dd>
+            <?php endforeach; ?>
+            </dl>
+        <?php endif;?>
+        </div>
+<?php endif; ?>
+
+<script type="text/javascript">
+    jQuery.noConflict();
+    jQuery(".select-currency-mobile").on("click",function () {
+            jQuery(".currency-selector-contain-mobile").slideToggle();
+    });
+
+</script>

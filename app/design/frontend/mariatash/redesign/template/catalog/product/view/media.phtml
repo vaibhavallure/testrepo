@@ -197,13 +197,23 @@ if (!$videoUrl && $secondVideoUrl)
         jQuery('#facepv').html('<iframe id="likefb" src="'+url+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>');
     }
 
-    function loadImage(numImage,obj){
-        jQuery('.containerImage').html("");
+    function loadImage(numImage,obj) {
         jQuery(".thumb .active").removeClass("active");
         jQuery('.thumb.thumb1').removeClass("active");
         jQuery(obj).addClass("active");
         jQuery(".containerImage").fadeIn(1000, function(){
-            jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
+            //jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
+            var mainImage = jQuery('.containerImage>img');
+            var width = mainImage.width();
+            var src = mainImage.attr('src');
+            var newImage = jQuery('#imageRepo img').eq(numImage);
+            var newData = newImage.attr('data');
+            var newSrc = newImage.attr('src');
+
+            if (src != newSrc) {
+            	mainImage.attr('src',newSrc);
+            	mainImage.attr('data',newData);
+            }
         });
 
         var zoom_img = jQuery('#zoom-img');
@@ -327,18 +337,6 @@ if (!$videoUrl && $secondVideoUrl)
     }
 
     function shareLikeTwitter(){
-        //TWITTER
-        /* jQuery('#twitter').sharrre({
-             share: { twitter: true },
-             enableHover: false,
-             enableTracking: true,
-             template: '<a class="boxx" href="#"><div class="count" href="#">{total}</div><div class="share"><span></span>Tweet</div></a>',
-             buttons: { twitter: {via: 'mariatash'}},
-             click: function(api, options){
-                   api.simulateClick();
-                   api.openPopup('twitter');
-             }
-         });*/
     }
 
     jQuery(document).ready(function(){
@@ -355,7 +353,7 @@ if (!$videoUrl && $secondVideoUrl)
         var urlCounter = <?php echo strlen($_product->getUrl())?>;
         <?php if ( $count > 1 ): ?>
         var counterJs = 0;
-        var numImages = jQuery('#thumbRepo img').length;
+        var numImages = parseInt(jQuery('#thumbRepo img').length);
         var urlVideo = '';
 
         loadBaseImage();
@@ -363,10 +361,11 @@ if (!$videoUrl && $secondVideoUrl)
         jQuery('#thumbRepo img').each(function(number){
             if(jQuery(this).attr('viewon') == 1) {
 
-                if(numImages < 5)
+                if(numImages <5)
                     jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);" ><div class="url-caption">VIEW ON MODEL</div><img src="'+jQuery(this).attr('src')+'" /></a>');
                 else {
-                    jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
+                    var modalImg = numImages - 1;
+                    jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+modalImg+',this);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                 }
                 counterJs++;
             } else {
@@ -520,9 +519,9 @@ if (!$videoUrl && $secondVideoUrl)
         if (strpos($secondVideoUrl, 'youtube.com') != false) {
             $secondVideoUrl = str_replace('watch?v=', 'embed/', $configProduct->getVideo());
         }
-        if(strpos($secondVideoUrl,'?')!= false) {
+        if (strpos($secondVideoUrl,'?')!= false) {
             $secondVideoUrl.= '&autoplay=0';
-        }else{
+        } else {
             $secondVideoUrl.= '?autoplay=0';
         }
         ?>
@@ -535,9 +534,6 @@ if (!$videoUrl && $secondVideoUrl)
         </div>-->
     </div>
 </div>
-
-
-
 
 <?php
 $matches ='';
@@ -591,22 +587,6 @@ if ($isAjaxCall) {
         jQuery('#pinterest-button-load').html('<a href="<?php echo $_pinlinkHref ?>" class="pin-it-button"></a>');
         jQuery.ajax({ url: '//assets.pinterest.com/js/pinit.js', dataType: 'script', cache: true});
         <?php endif; ?>
-        var id = 'amconf-image-<?php echo $colorOptionId ;?>';
-        if($(id)){
-            //$(id).simulate('click');
-        }
-        /* Add tooltip for color icon*/
-        jQuery('.amconf-images-container').each(function(){
-            /* jQuery(this).find('img').each(function(){
-                 var imgid  = jQuery(this).attr('id'),
-                     imgalt = jQuery(this).attr('alt');
-                 Tipped.create(jQuery("#"+imgid), imgalt, {
-                         skin: 'customTiny',
-                         showOn: ['click', 'mouseover'],
-                         background: { color: '#fff', opacity: .7 }
-                     });
-             });*/
-        });
 
         /* Attribute Post Length */
         if(jQuery('#attribute189').html()){
@@ -687,13 +667,13 @@ if ($isAjaxCall) {
 
         });
 
-if(zoomImgArray.length > 1){
-    jQuery('.zoom-prev').hide();
-}else{
-    jQuery('.zoom-prev,.zoom-next').hide();
-}
+        if (zoomImgArray.length > 1) {
+            jQuery('.zoom-prev').hide();
+        } else {
+            jQuery('.zoom-prev,.zoom-next').hide();
+        }
+        
         jQuery(".zoom-next").click(function () {
-
 
             if(currentImg !== zoomImgArray.length){
                 jQuery('.panzoom, .zoom-buttons').removeClass('d-block');
@@ -730,14 +710,7 @@ if(zoomImgArray.length > 1){
             }
         })
     });
-
-
-
-
-
-
 </script>
-
 
 <!--Zoom Popup-->
 <div id="openModal" class="zoomPopup"> <!--do not remove celebPopup class-->
@@ -755,12 +728,7 @@ if(zoomImgArray.length > 1){
                     <div class="col-12">
                         <!--DO not remove zoom-img class-->
                         <div class="zoom-img big-popup-image row"></div>
-
-
                     </div>
-
-
-
                 </div>
             </div>
             <div class="prev zoom-prev" data-current="1"></div>
@@ -768,7 +736,6 @@ if(zoomImgArray.length > 1){
             <div class="zoom-loader" style="display: none">
                 <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
             </div>
-
         </div>
     </div>
 </div>

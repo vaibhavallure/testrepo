@@ -35,7 +35,7 @@ Default layout, loads most of the pages
         <block type="page/html" name="root" output="toHtml" template="page/2columns-left.phtml">
 
             <block type="page/html_head" name="head" as="head">
-				        <action method="addJs"><script>prototype/prototype.js</script></action>
+				<action method="addJs"><script>prototype/prototype.js</script></action>
                 <action method="addJs"><script>lib/ccard.js</script></action>
                 <action method="addJs"><script>prototype/validation.js</script></action>
                 <action method="addJs"><script>scriptaculous/builder.js</script></action>
@@ -51,7 +51,7 @@ Default layout, loads most of the pages
 
                 <action method="addJs"><script>jquery/jquery-1.12.4.min.js</script></action>
                 <action method="addJs"><script>jquery/jquery-migrate-1.4.1.min.js</script></action>
-				        <action method="addJs"><script>jquery/jquery.mCustomScrollbar.concat.min.js</script></action>
+				<action method="addJs"><script>jquery/jquery.mCustomScrollbar.concat.min.js</script></action>
                 <action method="addJs"><script>jquery/tipped/excanvas/excanvas.js</script></action>
                 <action method="addJs"><script>jquery/tipped/tipped/tipped.js</script></action>
                 <action method="addJs"><script>jquery/tipped/spinners/spinners.min.js</script></action>
@@ -65,9 +65,9 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>priceslider/jquery.dependClass-0.1.js</script></action>
                 <action method="addJs"><script>priceslider/draggable-0.1.js</script></action>
                 <action method="addJs"><script>priceslider/jquery.slider.js</script></action>
-            	  <action method="addJs"><script>ecp/overlay.js</script></action>
+            	<action method="addJs"><script>ecp/overlay.js</script></action>
                 <action method="addJs"><script>jquery/inputToSelect.v1.1.js</script></action>
-				        <action method="addJs"><script>selectivizr.js</script></action>
+				<action method="addJs"><script>selectivizr.js</script></action>
                 <action method="addJs"><script>jquery.hoverIntent.minified.js</script></action>
                 <action method="addJs"><script>allure/intel-tel-validation.js</script></action>
                 <action method="addJs"><script>allure/phone_valid.js</script></action>
@@ -90,7 +90,10 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>jquery/fancybox/jquery.fancybox.pack.js</script></action>
                 <action method="addJs"><script>jquery/fancybox/jquery.mousewheel-3.0.6.pack.js</script></action>
                 <action method="addCss"><stylesheet>css/fancybox/jquery.fancybox.css</stylesheet></action>
-				        <action method="addCss"><stylesheet>css/quickview/scroll/jquery.mCustomScrollbar.css</stylesheet></action>
+                
+                <action method="addCss"><stylesheet>owlcarousel/css/owl.carousel.min.css</stylesheet></action>
+                <action method="addCss"><stylesheet>owlcarousel/css/owl.theme.default.min.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/quickview/scroll/jquery.mCustomScrollbar.css</stylesheet></action>
                 <!--FancyboxEND-->
                 <action method="addCss"><stylesheet>css/styles.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/dtnteam.css</stylesheet></action>
@@ -111,21 +114,21 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/try_on.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/contact-mt.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/styles-form-mt.css</stylesheet></action>
-				        <action method="addCss"><stylesheet>css/allure.css</stylesheet></action>
-				        <action method="addCss"><stylesheet>css/universal.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/allure.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/universal.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/jslider.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/jslider.plastic.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/bootstrap/bootstrap.min.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/redesign.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/responsive-redesign.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/fonts/fonts.css</stylesheet></action>
-                 <action method="addCss"><stylesheet>css/zStyles.css</stylesheet></action>
-                 <action method="addCss"><stylesheet>css/allure/revamp.css</stylesheet></action>
+                <action method="addCss"><stylesheet>css/zStyles.css</stylesheet></action>
+                <action method="addCss"><stylesheet>css/allure/revamp.css</stylesheet></action>
                 <action method="addItem"><type>skin_js</type><name>js/allure/allure_alerts.js</name></action>
-
 
                 <action method="addItem"><type>js</type><name>lib/ds-sleight.js</name><params/><if>lt IE 7</if></action>
                 <action method="addItem"><type>skin_js</type><name>js/ie6.js</name><params/><if>lt IE 7</if></action>
+                <action method="addItem"><type>skin_js</type><name>owlcarousel/js/owl.carousel.min.js</name><params/></action>
 
                 <action method="addCss"><stylesheet>css/allure/bootstrap.css</stylesheet></action>
                 <!--BUGFIX CSS ADDED-->
@@ -166,7 +169,9 @@ Default layout, loads most of the pages
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
                 <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
                     <label>Navigation Bar</label>
-                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>
+                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
+                        <block type="directory/currency" name="store_currency_selector_mobile" as="store_currency_selector_mobile" template="allure/currencymanager/selector_for_mobile.phtml"/>
+                    </block>
                 </block>
                 <block type="page/html_wrapper" name="top.bar" as="topBar" translate="label">
                     <label>Breadcrumbs</label>

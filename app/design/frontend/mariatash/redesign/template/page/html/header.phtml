@@ -131,17 +131,7 @@ if($ecpMenuCollection->getSize()){
 
 
 
-                                <?php if($wishlist):?>
-                                    <li class="icon-item d-lg-none d-block mt-1">
-                                        <?php if($isCustomerLogIn):?>
-                                        <a class="icon-link" href="<?= $wishlist->getUrl() ?>">
-                                            <?php else:?>
-                                            <a class="icon-link wishlist" onclick="signin()" title="Wishlist">
-                                                <?php endif;?>
-                                                <img width="20px" src="<?= $navWishlistImg; ?>">
-                                            </a>
-                                    </li>
-                                <?php endif; ?>
+                              
                             </ul>
                         </div>
                     </div>

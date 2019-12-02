@@ -1,5 +1,13 @@
 jQuery(document).ready(function () {
 
+    //on enter search
+    jQuery('#search').keydown( (e) => {
+//        console.log(e.keyCode)
+        if(e.keyCode==13){
+            jQuery('#search_mini_form').append(jQuery('#search-input').clone())
+            jQuery('#search_mini_form').submit()
+        }
+    })
 
 
     /*if(jQuery("body").hasClass("catalog-product-view") && !jQuery("body").hasClass("quickview-index-index")) {
@@ -90,8 +98,14 @@ jQuery('.link-button').click(function(event) {
 
 
     jQuery(".mobile-sub_menu .menu-head").click(function () {
-        jQuery(this).find("a").toggleClass('active');
-        jQuery(this).parent().find(".head-child").toggle();
+    	var $ = jQuery;
+    	if ($(this).find("a").hasClass('active')) {
+    		$(this).find("a").removeClass('active');
+    		$(this).next().removeClass('active');
+    	} else {
+    		$(this).find("a").addClass('active');
+    		$(this).next().addClass('active');
+    	}
     });
 
 
@@ -118,26 +132,43 @@ jQuery('.link-button').click(function(event) {
 
 
             /*zopim -- to change margin from bottom */
-            jQuery('.floating.footer').hover(
-                function () {
+            var hidden = true;
+            //show footer if mouse is at bottom and not at the end of the scroll
+            if(jQuery(window).width() > 768){
+                jQuery(window).mousemove(function (e) {
+                    if(!jQuery('body').hasClass('cms-index-index') && !(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height())) {
+                        if (e.screenY >= jQuery(window).height() - 50) {
+                            if (hidden) {
+                                jQuery(".zopim").addClass("bottom-change");
+                                jQuery("#footer8").css("height","59px");
+                                hidden=false;
+                            }
+                        }
+                        else{
+                            jQuery(".zopim").removeClass("bottom-change");
+                            jQuery("#footer8").css("height","0px");
+                            hidden=true;
+                        }
+                    }
+                })
+                //if scroll is at bottom show footer
+                if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
                     jQuery(".zopim").addClass("bottom-change");
-                },
-                function () {
-                    setTimeout(function() {
-                        jQuery(".zopim").removeClass("bottom-change");
-                    }, 1000);
+                    jQuery("#footer8").css("height","60px");
+                    hidden=false;
+
+                }else {
+                    jQuery(".zopim").removeClass("bottom-change");
+                    jQuery("#footer8").css("height","0px");
+                    hidden=true;
                 }
-            );
-                if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
+            }
+
+            if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
                     jQuery(".footer").removeClass("floating");
                 }else {
                     jQuery(".footer").addClass("floating");
                 }
-            if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
-                jQuery(".zopim").addClass("bottom-change");
-            }else {
-                jQuery(".zopim").removeClass("bottom-change");
-            }
             /*  zopim -code end-----------------*/
 
         }else {
@@ -279,19 +310,15 @@ jQuery('.link-button').click(function(event) {
 
 
     /*----------------mobile menu js-----------------------*/
-
-
-    jQuery('html').click(function() {
-        if(jQuery('.mobile-main_menu').hasClass('active')) {
-            jQuery('.mobile-main_menu').removeClass('active');
-            jQuery('#menu-btn').removeClass("change");
-            jQuery('body').removeClass("fancybox-lock");
-            jQuery(".menu_overlay").addClass("d-none");
-            jQuery('section.sub-menu').hide();
+    
+    jQuery(document).on('click','.menu_overlay', function(e){
+    	event.stopPropagation();
+        if (jQuery(window).width() <= 1023) {
+            jQuery('#menu-btn').click()
         }
-        });
+    });
 
-    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head').click(function(event){
+    jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head,.select-currency-mobile,.wishlist,.my-account-mobile').click(function(event){
         event.stopPropagation();
     });
     jQuery("#menu-btn").on("click", function () {
@@ -330,7 +357,7 @@ jQuery('.link-button').click(function(event) {
 /*filter popup start---------------------------------*/
 
 jQuery(window).bind("load resize", function (e) {
-    var width = jQuery(window).width();
+   /* var width = jQuery(window).width();
     if ((width < 1023)) {
 
         if (jQuery('.filter-common-div').length) {
@@ -378,7 +405,7 @@ jQuery(window).bind("load resize", function (e) {
         jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
         jQuery('.filter-common-div').show();
         jQuery('.filterButton').hide();
-    }
+    }*/
 });
 /*filter popup end---------------------------------*/
 

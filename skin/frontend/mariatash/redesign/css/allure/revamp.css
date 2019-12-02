@@ -1,4 +1,69 @@
+#fancybox-loading > div,
+#fancybox-loading > div:before,
+#fancybox-loading > div:after {
+	border-radius: 50%;
+	width: 2.5em !important;
+	height: 2.5em !important;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation: load7 1.8s infinite ease-in-out;
+	animation: load7 1.8s infinite ease-in-out;
+	background: none !important;
+	z-index: 10002;
+}
+#fancybox-loading > div {
+	color: #292929;
+	font-size: 18px;
+	/* margin: 80px auto; */
+	position: relative;
+	text-indent: -9999em;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s;
+	margin-top: -80px;
+	margin-bottom: 80px;
+	margin-left: -25px;
+}
+#fancybox-loading > div:before,
+#fancybox-loading > div:after {
+	content: '';
+	position: absolute;
+	top: 0;
+}
+#fancybox-loading > div:before {
+	left: -4em;
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s;
+}
+#fancybox-loading > div:after {
+	left: 4em;
+}
+@-webkit-keyframes load7 {
+	0%,
+	80%,
+	100% {
+	  	box-shadow: 0 2.5em 0 -1.3em;
+	}
+	40% {
+		box-shadow: 0 2.5em 0 0;
+	}
+}
+@keyframes load7 {
+	0%,
+	80%,
+	100% {
+		box-shadow: 0 2.5em 0 -1.3em;
+	}
+	40% {
+		box-shadow: 0 2.5em 0 0;
+	}
+}
 
+#fancybox-loading {
+	margin-left: 0 !important;
+}
 
 #myaccount-shopping-cart-table .cart_col2 .purchase-store-name {
 	position: relative;
@@ -24,15 +89,17 @@
 }
 
 .acc-products-wrapper #narrow-by-list-new {
-    height: 78px;
+    height: 55px;
     display: flex;
-    align-items: center;
+    align-items: start;
     border-bottom: 1px solid #dedede;
     margin-bottom: 0;
-    display: grid;
-    align-content: center;
+    /* display: grid; */
+    align-content: start;
     grid-auto-flow: column;
     grid-column-gap: 5px;
+    margin-top: 20px;
+    padding: 0 0 0 12px !important;
 }
 
 .acc-products-wrapper #narrow-by-list-new li {
@@ -44,6 +111,104 @@
     display: block;
     height: 100%;
     float: left;
+}
+
+.containerThumb .thumb:empty {
+    display: none;
+}
+
+.containerThumb .thumb a {
+    display: block;
+    border-bottom: 2px solid transparent;
+}
+
+.containerThumb .thumb a.active {
+    border-bottom-color: rgba(41,41,41,0.9);
+}
+
+.containerThumb .thumb a img {
+	border: 1px solid #D4D4D4;
+}
+
+.containerThumb .thumb a.active img {
+	border: 1px solid rgba(41,41,41,0.9);
+}
+
+ul#recently-viewed-items-slider,
+ul#product-suggestion-items-slider {
+    padding: 0;
+}
+
+ul#recently-viewed-items-slider li,
+ul#product-suggestion-items-slider li {
+    /* width: 100%; */
+}
+
+ul#recently-viewed-items-slider li img,
+ul#product-suggestion-items-slider li img {
+    width: 100%;
+}
+
+li.recentview a {
+	display: block;
+	overflow: hidden;
+}
+
+ul#recently-viewed-items-slider  .owl-nav,
+ul#product-suggestion-items-slider  .owl-nav {
+    margin-top: 10px;
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    width: 100%;
+}
+
+.owl-theme .owl-dots {display: none}
+
+ul#recently-viewed-items-slider button.owl-prev,
+ul#product-suggestion-items-slider button.owl-prev,
+ul#recently-viewed-items-slider button.owl-next,
+ul#product-suggestion-items-slider button.owl-next {
+    position: absolute;
+}
+
+
+ul#recently-viewed-items-slider button.owl-prev,
+ul#product-suggestion-items-slider button.owl-prev {
+    left: -20px;
+}
+
+ul#recently-viewed-items-slider button.owl-next,
+ul#product-suggestion-items-slider button.owl-next {
+    right: -20px;
+}
+
+
+ul#recently-viewed-items-slider button.owl-prev span,
+ul#product-suggestion-items-slider button.owl-prev span,
+ul#recently-viewed-items-slider button.owl-next span,
+ul#product-suggestion-items-slider button.owl-next span {
+	background: url(../../images/Popup-side-arrow.png) no-repeat transparent;
+    background-size: 12px !important;
+    width: 12px;
+    height: 45px;
+    font-size: 0;
+    display: block;
+}
+
+ul#recently-viewed-items-slider button.owl-prev span,
+ul#product-suggestion-items-slider button.owl-prev span {
+	transform: rotate(180deg);
+	margin-top: -18px;
+}
+
+@media (max-width: 1023px) {
+	.zoom-link {
+	    position: absolute;
+	    /* bottom: 105px; */
+	    right: 15px;
+    	top: -30px;
+	}
 }
 
 @media (max-width: 767px) and (orientation: portrait) {
