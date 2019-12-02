@@ -71,7 +71,7 @@
     margin-top: 0px;
   }
   .allure_filter {
-    border: 1px solid lightslategray;
+    border: 1px solid #000;
     margin: 10px;
   }
   .allure_filter dt.filter-head {
@@ -146,19 +146,18 @@
     width: 100%;
   }
    #narrow-by-list li div dd ol {
-    padding: 15px 0 0;
+    margin: 15px 0 0;
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    padding: 0;
   }
    #narrow-by-list li div dd {
-    /*display: block!important;*/
-    position: relative;
-    top:auto;
-    left: auto;
-    border: none;
-     margin: 0px 10px;
+	/*display: block!important;*/
+	position: relative;
+	top:auto;
+	left: auto;
+	border: none;
+	padding: 0px 10px;
   }
    #narrow-by-list{
     padding: 0;
@@ -860,9 +859,6 @@
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 198px;
   }
-  /* .navbar-toggler{
-    top: 25px;
-  } */
   .maria-left-menus{
     left: 77px;
   }
@@ -1064,6 +1060,10 @@
   }
   .breadcrumbs{
     margin-top: 19px;
+  }
+  .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    width: 625px;
+    margin: 0 auto;
   }
 }
 
@@ -1534,12 +1534,9 @@
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
-
   .manage-payment-method .tablinks{
     width: 50%;
   }
-
-
   .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
     width: 100%;
   }
@@ -1616,9 +1613,6 @@
   .manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
     width: 100%;
   }
-
-
-
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1731,7 +1725,8 @@
     width: 49%;
   }
   .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
-    width: 68%;
+    width: 100%;
+    padding: 0 25px;
   }
   .image_carousel .item.product-view-instagram-item img{
     height: auto;
@@ -1797,7 +1792,7 @@
   }
   .containerThumb {
     /* width: 340px; */
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     padding-left: 65px;
     padding-right: 52px;
   }
@@ -1813,7 +1808,9 @@
   ul#slide-list{
     top: 360px;
   }
-
+  #foo3 li{
+    width: 191px;
+  }
   /* TABLE TO DIV CONVERSION - SHOPPING CART */
   #shopping-cart-form tbody, .checkout-onepage-index #checkout-review-table tbody, .paypal-express-review tbody, .mt-myaccount-page .data-table#wishlist-table{
     display: grid;

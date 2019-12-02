@@ -184,14 +184,13 @@ class Wyomind_Elasticsearch_Client extends \Elastica\Client
 
         $suggest = new \Elastica\Suggest();
         $fields = $type->getSearchFields($q, 'std', false);
-        $suggestedFields = new Varien_Object(array('name.std'));
         foreach ($fields as $field) {
             $suggestField = new \Elastica\Suggest\Phrase($field, $field);
             $suggestField->setText($q);
             $suggestField->setGramSize(1);
             $suggestField->setMaxErrors(.9);
             $candidate = new \Elastica\Suggest\CandidateGenerator\DirectGenerator($field);
-            $candidate->setParam('min_word_length', 1);
+            $candidate->setParam('min_word_length', 2);
             $suggestField->addCandidateGenerator($candidate);
             $suggest->addSuggestion($suggestField);
             $search->getQuery()->setSuggest($suggest);
