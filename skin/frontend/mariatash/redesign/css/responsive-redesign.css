@@ -72,7 +72,7 @@
   }
   .allure_filter {
     border: 1px solid #000;
-    margin: 10px;
+    margin: 2px 8px;
   }
   .allure_filter dt.filter-head {
     cursor: pointer;
@@ -1023,9 +1023,9 @@
   .homepage-menu{
     padding-top: 21px !important;
   }
-  .navbar-toggler {
+  /* .navbar-toggler {
     top: 22px !important;
-  }
+  } */
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
@@ -2542,7 +2542,16 @@
     padding:0;
   }
   .navbar-toggler{
-    top: 28px;
+    top: 10px;
+  }
+  nav.mariatash-header{
+    padding-top: 7px !important;
+  }
+  .mt-logo{
+    padding: 0px 0 5px 0;
+  }
+  .desktop-device .inner-box{
+    padding: 0 32px;
   }
 }
 @media (max-width:991px){

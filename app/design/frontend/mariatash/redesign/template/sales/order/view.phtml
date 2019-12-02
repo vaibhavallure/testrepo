@@ -76,8 +76,9 @@
 
     foreach($tracks as $shippingNo => $track){
         foreach($track as $itemNo => $pack){
-            $trackingnumberfix = str_replace (" ", "", $pack->getTracking());
+
             if(is_object($pack)){
+                $trackingnumberfix = str_replace (" ", "", $pack->getTracking());git st
                 if($pack->getErrorMessage()){
                     if ($pack->getCarrier() == 'usps') { 
                         ?>
