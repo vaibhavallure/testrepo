@@ -570,7 +570,7 @@ width: 245px;
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
-    position: relative;
+    /*position: relative;*/
     bottom: 0;
   }
   .big-popup-body{
