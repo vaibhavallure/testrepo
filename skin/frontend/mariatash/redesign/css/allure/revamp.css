@@ -333,6 +333,7 @@ ul#product-suggestion-items-slider .owl-item {
 	div#apply-filter-btn a {
 		color: #fff !important;
 		text-decoration: none !important;
+		float: right;
 	}
 	
 	div#clear-all-filter a {
