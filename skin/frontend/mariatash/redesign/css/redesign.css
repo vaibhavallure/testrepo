@@ -1990,9 +1990,9 @@ div#narrow-by-list {
 .cms-page-view .top-bar {
   display: none;
 }
-#narrow-by-list .actions{
+/* #narrow-by-list .actions{
 	margin-top: 5px;
-}
+} */
 /* Designer Page */
 .second-header-image{
   position: absolute;
@@ -3032,8 +3032,8 @@ ul.tabs li{
   margin-bottom: 8px;
 }
 #total_item_counts_holder {
-  	margin-top: 15px !important;
-	margin-left: 14px;
+  margin-top: 15px !important;
+	margin-left: 5px;
 }
 
 
@@ -4820,15 +4820,11 @@ td.cart_col2 {
 .filter-actions {
   display: flex;
 }
-.desktop-device #apply-filter-btn{
-	margin-left: 10px;
-	margin-right: 10px;
-}
 .mobile-device #apply-filter-btn{
 	margin-right: 3px;
 }
 .desktop-device #total_item_counts_holder{
-	margin-top: 9px !important;
+	margin-top: 10px !important;
 }
 .mobile-device .filter-actions{
 	flex-direction: row;
