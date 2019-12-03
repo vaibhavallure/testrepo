@@ -50,263 +50,255 @@
   #narrow-by-list li div dt{
     background-image: none!important;
   }
-
-
-
-
 .sticky-bar {
   position: fixed;
   top: 50px;
   background: white;
   z-index: 3;
 }
-  .sticky-filter{
-    position: fixed;
-    top: 80px;
-    width: 100%;
-    background: white;
-    z-index: 2;
-    padding-top: 2px;
-  }
-  #narrow-by-list li:first-child{
-    margin-top: 0px;
-  }
-  .allure_filter {
-    border: 1px solid #000;
-    margin: 2px 8px 15px;
-    border-width: 1px 1px 0;
-  }
-  .allure_filter dt.filter-head {
-    cursor: pointer;
-    background: white !important;
-    width: auto;
-    padding: 6px 24px;
-    height: 33px;
-    border-bottom: 1px solid #000;
-  }
-  .allure_filter.scrolling{
-    border-width: 1px 1px 1px;
-  }
-   .filtru-price .m-filter-slider {
-    margin-left: 10px;
-    margin-top: 11px;
-    margin-bottom: 50px;
-  }
-   .m-slider-selected-value{
-    width: 245px;
-  }
-   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    padding-top: 20px;
-     background: white;
-  }
-   .selected-filters{
-    width: 100%;
-    position: static;
-    top:auto;
-    left: auto;
-  }
-   .selected-filters .currently{
-    display: none;
-  }
-   .selected-filters .actions.current{
-    width: 50%;
-    padding: 0 18px;
-  }
-  #narrow-by-list li div dd ol{
-    padding: 10px;
-  }
-  .selected-filters .actions.current a{
-    text-align: center;
-    background: #fff;
-    width: 100px;
-    height: 32px;
-    vertical-align: middle;
-    padding: 5px;
-    border: 1px solid #292929;
-  }
-  .filterButton:before{
-    content: '';
-    background-image: url(../images/filter.png);
-    width: 20px;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    height: 30px;
-    position: absolute;
-  }
-  /* .filterButton{
-    padding-left: 10px;
-    width: 100%;
-    height: 32px;
-    display: block;
-  } */
-   #narrow-by-list dd{
-    width: 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-   #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
-    width: 100%;
-  }
-   .pop-up-cover {
-   /* width: 100%;*/
-  }
-   #narrow-by-list li div dd ol {
-    margin: 15px 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-  }
-   #narrow-by-list li div dd {
-  	/*display: block!important;*/
-  	position: relative;
-  	top:auto;
-  	left: auto;
-  	border: none;
-  	padding: 0px 10px;
-  }
-   #narrow-by-list{
-    padding: 0;
-    margin-left:0;
-  }
-   #narrow-by-list li div dt {
-    cursor: pointer;
-    background: #292929 !important;
-    border: none;
-    color: white;
-    width: auto;
-    padding: 6px 24px;
-    height: 34px;
-  }
-   #narrow-by-list li {
-    min-width: 100%;
-     padding-left: 0px;
-  }
-   #narrow-by-list ol li {
-    min-width: 208px;
-    padding: 0;
-  }
-  .filter-actions{
-    padding: 0px 10px!important;
-  }
+
+.sticky-filter{
+  position: fixed;
+  top: 80px;
+  width: 100%;
+  background: white;
+  z-index: 2;
+  padding-top: 2px;
+  padding-bottom: 7px !important;
+}
+#narrow-by-list li:first-child{
+  margin-top: 0px;
+}
+.allure_filter {
+  border: 1px solid #000;
+  margin: 8px 8px 3px;
+  border-width: 1px 1px 0;
+}
+.allure_filter dt.filter-head {
+  cursor: pointer;
+  background: white !important;
+  width: auto;
+  padding: 6px 24px;
+  height: 33px;
+  border-bottom: 1px solid #000;
+}
+.allure_filter.scrolling{
+  border-width: 1px 1px 1px;
+}
+.filtru-price .m-filter-slider {
+  margin-left: 10px;
+  margin-top: 11px;
+  margin-bottom: 50px;
+}
+.m-slider-selected-value{
+width: 245px;
+}
+.block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+  padding-top: 8px;
+  background: white;
+}
+.selected-filters{
+  width: 100%;
+  position: static;
+  top:auto;
+  left: auto;
+}
+.selected-filters .currently{
+  display: none;
+}
+.selected-filters .actions.current{
+  width: 50%;
+  padding: 0 18px;
+}
+#narrow-by-list li div dd ol{
+  padding: 10px;
+}
+.selected-filters .actions.current a{
+  text-align: center;
+  background: #fff;
+  width: 100px;
+  height: 32px;
+  vertical-align: middle;
+  padding: 5px;
+  border: 1px solid #292929;
+}
+.filterButton:before{
+  content: '';
+  background-image: url(../images/filter.png);
+  width: 20px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 30px;
+  position: absolute;
+}
+ #narrow-by-list dd{
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+ #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
+  width: 100%;
+}
+ .pop-up-cover {
+ /* width: 100%;*/
+}
+ #narrow-by-list li div dd ol {
+  margin: 15px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+}
+ #narrow-by-list li div dd {
+	/*display: block!important;*/
+	position: relative;
+	top:auto;
+	left: auto;
+	border: none;
+	padding: 0px 10px;
+}
+ #narrow-by-list{
+  padding: 0;
+  margin-left:0;
+}
+ #narrow-by-list li div dt {
+  cursor: pointer;
+  background: #292929 !important;
+  border: none;
+  color: white;
+  width: auto;
+  padding: 6px 24px;
+  height: 34px;
+}
+ #narrow-by-list li {
+  min-width: 100%;
+   padding-left: 0px;
+}
+ #narrow-by-list ol li {
+  min-width: 208px;
+  padding: 0;
+}
+.filter-actions{
+  padding: 0px 10px!important;
+}
   /*filter end----------------------------*/
-  .mobile-device .main-nav-title li {
-    margin-right: 0;
-    margin-top: 15px;
-  }
-  .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
-    display: none;
-  }
-  .main-nav-link li:nth-child(2) {
-    margin-right: 18px;
-  }
-  .footer ul .footer-item-list{
-    max-width: 47%;
-    flex: 0 0 47%;
-    padding: 20px 0 10px 0;
-    margin: 20px auto 0 !important
-  }
-  .footer-item-list.data-block:after {
-    background: url(../images/redesign/downward-arrow.png) no-repeat;
-    content: '';
-    height: 18px;
-    width: 18px;
-    background-position: right;
-    position: absolute;
-    right: 0;
-    background-size: 10px;
-    top: 26px;
-  }
-  .footer-item-list.data-block.active:after {
-    transform: rotate(180deg);
-    top: 30px;
-    background-position: bottom left;
-  }
-  .container-footlinks, .homepage-menu.mariatash-header {
-    background: rgb(41, 41, 41);
-  }
-  .footer .footlinks li,.social-media ul{
-    position: relative;
-  }
-  .footer .social-media li:last-child{
-    margin-right: 0;
-  }
-  .social-media ul {
-    margin-bottom: 40px;
-  }
-  .mobile-device .head-child, #appointments img {
-    display: none;
-    padding-left: 10px;
-  }
-  .mobile-device .head-child.active {
-  	display: block;
-  }
-  #appointments .col{
-    width: 100%;
-    margin-bottom: 9px;
-    flex: 0 0 100%;
-  }
-  #appointments{
-    padding: 0;
-  }
-  .maria-right-menus{
-    right: 0;
-  }
-  .mobile-main_menu, .mobile-sub_menu .sub-menu {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  .piercing_options .image-text {
-    padding-left: 15px;
-    margin-bottom: 17px;
-  }
-  .form-search input.input-text{
-    background: #292929;
-  }
-  .form-search input.input-text{
-    padding-bottom: 2px;
-  }
-  #jewelry .menu-head span a:after {
-    background: url(../images/redesign/plus.png) no-repeat;
-    content: '';
-    height: 20px;
-    width: 19px;
-    background-position: right;
-    position: absolute;
-    right: 30px;
-    transition: 0.5s;
-    background-size: 10px;
-  }
-  #jewelry .menu-head span a.active:after {
-    background: url(../images/redesign/minus.png) no-repeat;
-    content: '';
-    height: 19px;
-    width: 19px;
-    background-position: right;
-    position: absolute;
-    right: 30px;
-    transition: 0.5s;
-  }
-  .menu-head {
-    margin-bottom: 9px;
-  }
-  .common-option-div{
-    margin-bottom: 20px;
-  }
-  .head-child ul {
-    margin-bottom: 0;
-  }
-  .menu-head span a, .mobile-sub_menu .image-text h6 {
-    color: #000 !important;
-  }
-  .footer .footlinks li:first-child{
-    margin-left: 0;
-  }
-  .second-header-image{
-    display: none;
-  }
+.mobile-device .main-nav-title li {
+  margin-right: 0;
+  margin-top: 15px;
+}
+.maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
+  display: none;
+}
+.main-nav-link li:nth-child(2) {
+  margin-right: 18px;
+}
+.footer ul .footer-item-list{
+  max-width: 47%;
+  flex: 0 0 47%;
+  padding: 20px 0 10px 0;
+  margin: 20px auto 0 !important
+}
+.footer-item-list.data-block:after {
+  background: url(../images/redesign/downward-arrow.png) no-repeat;
+  content: '';
+  height: 18px;
+  width: 18px;
+  background-position: right;
+  position: absolute;
+  right: 0;
+  background-size: 10px;
+  top: 26px;
+}
+.footer-item-list.data-block.active:after {
+  transform: rotate(180deg);
+  top: 30px;
+  background-position: bottom left;
+}
+.container-footlinks, .homepage-menu.mariatash-header {
+  background: rgb(41, 41, 41);
+}
+.footer .footlinks li,.social-media ul{
+  position: relative;
+}
+.footer .social-media li:last-child{
+  margin-right: 0;
+}
+.social-media ul {
+  margin-bottom: 40px;
+}
+.mobile-device .head-child, #appointments img {
+  display: none;
+  padding-left: 10px;
+}
+.mobile-device .head-child.active {
+	display: block;
+}
+#appointments .col{
+  width: 100%;
+  margin-bottom: 9px;
+  flex: 0 0 100%;
+}
+#appointments{
+  padding: 0;
+}
+.maria-right-menus{
+  right: 0;
+}
+.mobile-main_menu, .mobile-sub_menu .sub-menu {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.piercing_options .image-text {
+  padding-left: 15px;
+  margin-bottom: 17px;
+}
+.form-search input.input-text{
+  background: #292929;
+}
+.form-search input.input-text{
+  padding-bottom: 2px;
+}
+#jewelry .menu-head span a:after {
+  background: url(../images/redesign/plus.png) no-repeat;
+  content: '';
+  height: 20px;
+  width: 19px;
+  background-position: right;
+  position: absolute;
+  right: 30px;
+  transition: 0.5s;
+  background-size: 10px;
+}
+#jewelry .menu-head span a.active:after {
+  background: url(../images/redesign/minus.png) no-repeat;
+  content: '';
+  height: 19px;
+  width: 19px;
+  background-position: right;
+  position: absolute;
+  right: 30px;
+  transition: 0.5s;
+}
+.menu-head {
+  margin-bottom: 9px;
+}
+.common-option-div{
+  margin-bottom: 20px;
+}
+.head-child ul {
+  margin-bottom: 0;
+}
+.menu-head span a, .mobile-sub_menu .image-text h6 {
+  color: #000 !important;
+}
+.footer .footlinks li:first-child{
+  margin-left: 0;
+}
+.second-header-image{
+  display: none;
+}
   .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
     background: rgba(41,41,41)
   }
@@ -1407,6 +1399,10 @@
   }
   .catalog-category-view .category-title h1{
     text-align: center;
+    line-height: 0.3;
+  }
+  .catalog-category-view .breadcrumbs{
+    margin-top: 7px;
   }
   .category-products{
     margin-top: 0;
