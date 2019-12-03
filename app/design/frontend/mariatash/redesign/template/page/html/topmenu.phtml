@@ -38,48 +38,47 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
 ?>
 
 <?php if($_menu): ?>
-  <div class="navigation-parent">
-    <ul id="top-nav" class="navbar-nav main-nav-title allure-menu">
-        <?php echo $_menu ?>
-      </ul>
-      <?php
-      if($isMobile):?>
-          <div class="top-nav-v2">
-              <ul>
-                  <li class="currency-section-for-mobile">
-                      <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
-                  </li>
-                  <!-- <?php
-                  /*$wishlist=Mage::getModel('ecp_menu/menu')->load(3);
-                  if($wishlist):*/?><!--
-                      <li class="wishlist-section-mobile">
-                          <?php /*if($isCustomerLogIn):*/?>
-                          <a class="icon-link wishlist"  href="<?/*= $wishlist->getUrl() */?>">
-                              <?php /*else:*/?>
-                              <a class="icon-link wishlist"  onclick="signin()">
-                                  <?php /*endif;*/?>
-                                  <span>wishlist</span>
-                              </a>
-                              <script>
-                                  var signin= function() {
-                                      jQuery('body').addClass('allure_login_wishlist');
-                                      jQuery("#sign_in_label").trigger('click');
-                                  }
-                                  jQuery(document).ready(function() {
-                                      jQuery('.popupLoginModel .close').on('click', function () {
-                                          jQuery('body').removeClass('allure_login_wishlist');
-                                      });
-                                  });
-                              </script>
-                      </li>
-                  <?php /*endif; */?> -->
+    <div class="navigation-parent">
+        <ul id="top-nav" class="navbar-nav main-nav-title allure-menu">
+            <?php echo $_menu ?>
+        </ul>
+        <?php
+        if($isMobile):?>
+            <div class="top-nav-v2">
+                <ul>
+                    <li class="currency-section-for-mobile">
+                        <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
+                    </li>
+                </ul>
+            </div>
+        <?php endif;?>
+    </div>
+<?php endif ?>
 
-              </ul>
-          </div>
-      <?php endif;?>
-      </div>
-      <?php endif ?>
-
+<?php
+/*$wishlist=Mage::getModel('ecp_menu/menu')->load(3);
+if($wishlist):*/?><!--
+          <li class="wishlist-section-mobile">
+              <?php /*if($isCustomerLogIn):*/?>
+              <a class="icon-link wishlist"  href="<?/*= $wishlist->getUrl() */?>">
+                  <?php /*else:*/?>
+                  <a class="icon-link wishlist"  onclick="signin()">
+                      <?php /*endif;*/?>
+                      <span>wishlist</span>
+                  </a>
+                  <script>
+                      var signin= function() {
+                          jQuery('body').addClass('allure_login_wishlist');
+                          jQuery("#sign_in_label").trigger('click');
+                      }
+                      jQuery(document).ready(function() {
+                          jQuery('.popupLoginModel .close').on('click', function () {
+                              jQuery('body').removeClass('allure_login_wishlist');
+                          });
+                      });
+                  </script>
+          </li>
+      <?php /*endif; */?>
 
       <?php /*if ($isCustomerLogIn) :*/?>
       <li class="icon-user position-relative account-section-mobile">
@@ -118,3 +117,5 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
   }
 </script>
 --><?php /*endif; */?>
+
+
