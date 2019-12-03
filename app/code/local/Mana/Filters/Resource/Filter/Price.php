@@ -12,6 +12,80 @@
  * Mana_Filters_Model_Filter_Price::_getResource().
  */
 class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav_Mysql4_Layer_Filter_Price {
+    var $_priceRanges;
+    
+    public function getPriceRanges($model = NULL)
+    {
+        if (!isset($this->_priceRanges)) {
+            $currencyRate = Mage::app()->getStore()->getCurrentCurrencyRate();
+            
+            if ($currencyRate == 1) {
+                $this->_priceRanges = array(
+                    1 => 0,
+                    2 => 300,
+                    3 => 600,
+                    4 => 1000,
+                    5 => 1500,
+                    6 => 2000,
+                    7 => 2500,
+                    8 => 5000,
+                    9 => 10000
+                );
+            } else if ($currencyRate > 5 && $currencyRate <= 10) {
+                $this->_priceRanges = array(
+                    1 => 0,
+                    2 => 500,
+                    3 => 1000,
+                    4 => 1500,
+                    5 => 2000,
+                    6 => 2500,
+                    7 => 5000,
+                    8 => 10000,
+                    9 => 20000
+                );
+            } else if ($currencyRate > 10 && $currencyRate <= 30) {
+                $this->_priceRanges = array(
+                    1 => 0,
+                    2 => 1000,
+                    3 => 2000,
+                    4 => 5000,
+                    5 => 8000,
+                    6 => 10000,
+                    7 => 20000,
+                    8 => 30000,
+                    9 => 50000,
+                    10=> 75000
+                );
+            } else if ($currencyRate > 30 && $currencyRate <= 50) {
+                $this->_priceRanges = array(
+                    1 => 0,
+                    2 => 1500,
+                    3 => 3000,
+                    4 => 5000,
+                    5 => 10000,
+                    6 => 20000,
+                    7 => 30000,
+                    8 => 50000,
+                    9 => 75000
+                );
+            } else if ($currencyRate > 50) {
+                $this->_priceRanges = array(
+                    1 => 0,
+                    2 => 2500,
+                    3 => 5000,
+                    4 => 10000,
+                    5 => 20000,
+                    6 => 50000,
+                    7 => 75000,
+                    8 => 100000,
+                    9 => 125000
+                );
+            }
+        } 
+        
+        return $this->_priceRanges;
+    }
+    
     protected function _getSelectOnCollection($collection, $filter)
     {
         if (Mage::helper('mana_core')->isMageVersionEqualOrGreater('1.7')) {
@@ -26,7 +100,6 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
         $collection->addPriceData($filter->getCustomerGroupId(), $filter->getWebsiteId());
 
         $select = clone $collection->getSelect();
-        //$sql = $select->__toString();
 
         // reset columns, order and limitation conditions
         $select->reset(Zend_Db_Select::COLUMNS);
@@ -109,20 +182,44 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
             if ($range == 0) {
                 $range = 1;
             }
+            
+            $rangeExpr = array();
+            
+            $lastPrice = 1;
+            $nextIndex = 1;
+            
+            $priceRanges = $this->getPriceRanges($model);
+            
+            foreach ($priceRanges as $index => $maxPrice) {
+                $currentPrice = $maxPrice - 1;
+                $currentIndex = $index - 1;
+                
+                if ($maxPrice != 0) {
+                    $rangeExpr[] = "when {$priceExpression} between {$lastPrice} and {$currentPrice} then {$currentIndex}";
+                    $lastPrice = $maxPrice;
+                    $nextIndex = $index;
+                }
+            }
+            
+            $rangeExprString = "FLOOR(({$priceExpression}) / {$range}) + 1";
+            
+            if (count($rangeExpr)) {
+                $rangeExprString = "CASE ".implode("\n", $rangeExpr)." ELSE {$nextIndex} END";
+            }
+            
             $countExpr = new Zend_Db_Expr('COUNT(*)');
-            $rangeExpr = new Zend_Db_Expr("FLOOR(({$priceExpression}) / {$range}) + 1");
+            //$rangeExpr = new Zend_Db_Expr("FLOOR(({$priceExpression}) / {$range}) + 1");
+            $rangeExpr = new Zend_Db_Expr($rangeExprString);
 
             $select->columns(array(
                 'range' => $rangeExpr,
                 'count' => $countExpr
             ));
-            $select->group($rangeExpr)->order($rangeExpr);
+            $select->group('range')->order('range');
 
             Mage::helper('mana_filters')->resetProductCollectionWhereClause($select);
             $select->where("{$table}.min_price > 0");
 
-//Mage::log($select->__toString(), Zend_Log::DEBUG, 'price.log' );
-//Mage::log(json_encode($this->_getReadAdapter()->fetchPairs($select)), Zend_Log::DEBUG, 'price.log' );
             return $this->_getReadAdapter()->fetchPairs($select);
         }
         else {
@@ -147,7 +244,7 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
 
             $select->where("{$table}.min_price > 0");
             $select->group('range');
-            $sql = $select->__toString();
+            
             return $connection->fetchPairs($select);
         }
     }
@@ -179,11 +276,11 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
         $condition = '';
         foreach ($model->getMSelectedValues() as $selection) {
             if (strpos($selection, ',') !== false) {
-                list($index, $range) = explode(',', $selection);
-                $range = $this->getPriceRange($index, $range);
+                list($from, $to) = explode(',', $selection);
+               
                 if ($condition != '') $condition .= ' OR ';
-                $condition .= '(('.$priceExpr . ' >= '. $range['from'].') '.
-                    'AND ('.$priceExpr . ($this->isUpperBoundInclusive() ? ' <= ' : ' < '). $range['to'].'))';
+                $condition .= '(('.$priceExpr . ' >= '. $from.') '.
+                    'AND ('.$priceExpr . ($this->isUpperBoundInclusive() ? ' <= ' : ' < '). $to.'))';
             }
         }
 
@@ -192,6 +289,7 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
                 ->distinct()
                 ->where($condition);
         }
+        
         return $this;
     }
 
@@ -221,20 +319,16 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
             $fix = $this->_getConfigurablePriceFix();
             $maxPriceExpr = new Zend_Db_Expr("MAX({$table}.min_price {$additional} {$fix}) AS m_max_price");
         }
-
-        //Mage::helper('mana_filters')->resetProductCollectionWhereClause($select);
+        
         $select->columns(array($maxPriceExpr))->order('m_max_price DESC');
-        //$sql = ((string)$select);
         $result  = $connection->fetchOne($select) * $filter->getCurrencyRate();
-//        Mage::log('MAX select: ' . ((string)$select), Zend_Log::DEBUG, 'price.log');
-//        Mage::log("MAX result: $result", Zend_Log::DEBUG, 'price.log');
-//        Mage::log('LIST select: '. (string)$filter->getLayer()->getProductCollection()->getSelect(), Zend_Log::DEBUG, 'price.log');
-//        $this->getCount($filter, 1);
+        
         return $result;
     }
 
     public function getPriceRange($index, $range) {
-    	return array('from' => $range * ($index - 1), 'to' => $range * $index);
+    	//return array('from' => $range * ($index - 1), 'to' => $range * $index);
+        return array('from' => $this->_priceRanges[$index], 'to' => $this->_priceRanges[$index+1]);
     }
 
     protected function _getConfigurablePriceFix() {
@@ -365,5 +459,4 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
 
         }
     }
-
 }
