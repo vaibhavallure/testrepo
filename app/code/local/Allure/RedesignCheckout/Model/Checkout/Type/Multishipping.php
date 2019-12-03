@@ -17,6 +17,24 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
     }
     
     /**
+     * Reimport customer address info to quote shipping address
+     *
+     * @param int $addressId customer address id
+     * @return Mage_Checkout_Model_Type_Multishipping
+     */
+    public function updateQuoteCustomerShippingAddress($addressId)
+    {
+        if ($address = $this->getCustomer()->getAddressById($addressId)) {
+            $this->getQuote()->getShippingAddressByCustomerAddressId($addressId)
+            ->setCollectShippingRates(true)
+            ->importCustomerAddress($address)
+            ->collectTotals();
+            $this->getQuote()->collectTotals()->save();
+        }
+        return $this;
+    }
+    
+    /**
      * prepare the the request data and add gift wrap 
      * related information into passed array data.
      * @param array $info
