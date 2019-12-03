@@ -93,6 +93,14 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             }
         }
 
+        if($layer=$this->getLayer()) {
+            if($sortOption=$layer->getCurrentCategory()->getForcefullySortingBy()) {
+                $this->_productCollection->getSelect()->reset( Zend_Db_Select::ORDER );
+                $this->_productCollection->getSelect()->order('e.'.$sortOption.' desc');
+            }
+        }
+
+
         return $this->_productCollection;
     }
 
@@ -488,7 +496,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
                     array_push($gemstoneArra,$gems);
                 endif;
             endif;
-/*DISABLE METAL*/
+            /*DISABLE METAL*/
 
 //            $optionsValues = $this->getIcons($currentProductId);
 //            if(!empty($optionsValues)):
@@ -532,7 +540,7 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             $cnt++;
         endforeach;
 
-         sort($priceArray);
+        sort($priceArray);
 
         $priceArray = $filter_helper->createGroups($priceArray);
 
