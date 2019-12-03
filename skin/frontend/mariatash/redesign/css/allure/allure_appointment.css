@@ -1,7 +1,10 @@
 body{
 	overflow-x: unset !important;
 }
-
+.appointments-book-modify .dialogBg
+{
+	z-index:0!important;
+}
 .book-app-btn {
 	width: 266px;
 }
