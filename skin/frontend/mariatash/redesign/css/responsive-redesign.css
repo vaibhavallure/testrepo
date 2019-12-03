@@ -703,6 +703,9 @@ width: 245px;
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
+  .manage-payment-method .tablinks {
+    width: 50%;
+  }
   .my-account .login_security .breadcrumbs{
     margin-top: 13px;
     position: absolute;
@@ -1585,9 +1588,6 @@ width: 245px;
 @media (max-width:767px) and (orientation:portrait) {
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
-  }
-  .manage-payment-method .tablinks{
-    width: 50%;
   }
   .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
     width: 100%;

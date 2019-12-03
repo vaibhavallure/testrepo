@@ -513,12 +513,13 @@ target="_blank"><i class="fa fa-link"></i>
                         success: function(data) {
                             //instagram_posts
                             jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
-                            // setTimeout(
-                            //     function()
-                            //     {
-                            //         // unsetLoader();
-                            //         // jQuery('.loader').hide();
-                            //     }, 2000);
+                            setTimeout(
+                                function()
+                                {
+                                    // unsetLoader();
+                                    // jQuery('.loader').hide();
+                                    jQuery('.insta-loader').css({"display":"none"});
+                                }, 2000);
                         }
                     });
 
