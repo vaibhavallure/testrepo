@@ -130,13 +130,13 @@
     <?php endforeach; ?>
         <?php if ($this->getLayer()->getState()->getFilters()): ?>
             <li class="filter-actions">
-                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
-                <div class="actions" id="clear-all-filter"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="clear-all-filter"><a class="link-button btn btn-link" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button btn btn-dark"><?php echo $this->__('Apply') ?></a></div>
             </li>
             <?php else: ?>
             <li class="filter-actions">
-                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
-                <div class="actions" id="clear-all-filter"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="clear-all-filter"><a class="link-button btn btn-link" href="#"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button btn btn-dark"><?php echo $this->__('Apply') ?></a></div>
             </li>
         <?php endif; ?>
         <li id="total_item_counts_holder">

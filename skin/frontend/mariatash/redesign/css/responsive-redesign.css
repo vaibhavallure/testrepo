@@ -1086,7 +1086,7 @@ width: 245px;
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
-  .my-account .edit-new-address{
+  .my-account .edit-new-address,.my-account-login-security{
     flex: 0 0 70%;
     max-width: 70%;
   }
