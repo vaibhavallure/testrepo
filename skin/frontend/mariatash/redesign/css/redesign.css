@@ -628,7 +628,7 @@ input, select, textarea{
   border: 1px solid rgba(41,41,41,0.60);
   height: 30px;
   width: 181px;
-  padding: 3px 0 10px 24px;
+  padding: 4px 0 8px 24px;
 	background-size: 10px !important;
 }
 body{
@@ -806,7 +806,6 @@ nav.mariatash-header {
   height: 60px;
   z-index: 1;
 	padding: 0;
-	/*transition: all 1s;*/
 }
 .footer .footer-item-list a {
   color: #fff;
@@ -4731,7 +4730,6 @@ td.cart_col2 {
 .zopim {
 	transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
 }
-
 .zopim.bottom-change{
 	bottom:60px!important;
 }
@@ -4817,6 +4815,7 @@ td.cart_col2 {
 .mobile-device .for-space-to-bottom.cat-img-space {
   background-image: none !important;
   height: 50px !important;
+	background-color: transparent;
 }
 .filter-actions {
   display: flex;
@@ -4829,7 +4828,7 @@ td.cart_col2 {
 	margin-right: 3px;
 }
 .desktop-device #total_item_counts_holder{
-	margin-top: 8px !important;
+	margin-top: 9px !important;
 }
 .mobile-device .filter-actions{
 	flex-direction: row-reverse;

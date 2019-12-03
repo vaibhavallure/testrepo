@@ -87,7 +87,7 @@
 				
 				$cardTypeImg = strtolower($card->getAdditional('cc_type'))."-card.png";
 			?>
-	  			<li class="mt-payment-item mt-list-item" id="mt-payment-item-<?php echo $card->getId()?>">
+	  			<li class="mt-payment-item mt-list-item para-normal" id="mt-payment-item-<?php echo $card->getId()?>">
 		  			<div class="mt-card-name">
 		  			<img src="<?php echo $this->getSkinUrl('images/myaccount/').$cardTypeImg?>" />
 		  			<?php echo $cardType." ending in ".$cardEndLabel?></div>
@@ -114,13 +114,13 @@
 									<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
 									<input type="hidden" name="id" value="<?php echo $card->getId() ?>" />
 									<input type="hidden" name="method" value="<?php echo $card->getMethod(); ?>" />
-									<button id="edit-form-btn-id-<?php echo $card->getId();?>" class="button save_button card-btn-edit" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
+									<button id="edit-form-btn-id-<?php echo $card->getId();?>" class="button card-btn-edit light-button" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
 								</form>
 								<form action="<?php echo Mage::getUrl('*/*/delete', array('_secure' => true, 'method' => $card->getMethod())) ?>" id="delete_form_<?php echo $card->getId() ?>" method="post" class="delete-card-btn">
 									<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
 									<input type="hidden" name="id" value="<?php echo $card->getId() ?>" />
 									<input type="hidden" name="method" value="<?php echo $card->getMethod(); ?>" />
-									<button id="delete-form-btn-id-<?php echo $card->getId();?>" class="button save_button card-btn-delete" type="button"
+									<button id="delete-form-btn-id-<?php echo $card->getId();?>" class="button light-button card-btn-delete" type="button"
                                             onclick="confirmBox('<?php echo $this->__('Are you sure you want to delete this payment record?'); ?>',function() {
                                                     document.getElementById('delete_form_<?php echo $card->getId() ?>').submit();
                                                     },'DELETE');"
