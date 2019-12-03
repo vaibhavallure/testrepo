@@ -1,6 +1,10 @@
 <?php
 if($this->isAdmin())
     echo "<style>header{display: none} .footer{display: none}</style>";
+
+if($this->isMobile())
+    echo "<style>.footer{display: none}</style>";
+
 ?>
 
 
@@ -31,7 +35,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_expired'))
             <div id="popupConfirmAppointment" class="modal-body p-0">
                 <div id="wrapperConfirmAppointment" class="">
                  <div class="apt-buttons-set w-100 text-center">
-                                    <button type="button" class="button input-box b translate-popup light-button" style="width: 266px"
+                                    <button type="button" class="button input-box b translate-popup light-button book-app-btn"
                                             title="<?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>"
                                             onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
                                         <span><span class="translate-popup"><?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?></span></span>
@@ -117,7 +121,7 @@ $apt_email = $model->getEmail();
                                 </div>
 
                                 <div class="apt-buttons-set mb-0">
-                                    <button type="button" class="button input-box b translate-popup light-button"
+                                    <button type="button" class="button input-box b translate-popup light-button book-app-btn2"
                                             title="<?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>"
                                             onclick="window.location.href='<?= $this->getStoreShortUrl() ?>/redirect-from/modify-success'">
                                         <?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>
@@ -139,7 +143,7 @@ else:
                     <div id="popupConfirmAppointment" class="modal-body p-0">
                         <div id="wrapperConfirmAppointment" class="">
                             <div class="apt-buttons-set w-100 text-center">
-                                <button type="button" class="button input-box b translate-popup light-button" style="width: 266px"
+                                <button type="button" class="button input-box b translate-popup light-button book-app-btn"
                                         title="<?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>"
                                         onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
                                     <?php echo $this->__('BOOK ANOTHER APPOINTMENT') ?>
@@ -155,6 +159,8 @@ else:
     jQuery(document).ready(function() {
         jQuery('.modal-confirm-appointment').on('hide.bs.modal', function (e) {return false;});
         jQuery('.modal-confirm-appointment').modal('show', {backdrop: 'static', keyboard: false});
+        jQuery.fancybox.hideLoading();
+        jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
     });
 
     var conf=false;
@@ -163,6 +169,9 @@ else:
 
         confirmBox(__("Are you sure you want to cancel an scheduled appointment?"),function(){
             //Logic to cancel the apt
+            jQuery('.checkout-success .apt-cancel-buttons-set').empty();
+            jQuery('.checkout-success .apt-modify-buttons-set').empty();
+
             var reloadurl = '<?php echo $this->getUrl('*/book/cancelapt',array('id'=>$cancel_apt_id,'_secure' => true)); ?>';
             jQuery.ajax({
                 url: reloadurl, //Relative or absolute path to response.php file
