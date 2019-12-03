@@ -359,7 +359,8 @@ foreach($collection as $date_to) {
 
 </style>
 
-<div class='loader'>
+<div class="insta-loader"></div>
+<div class='loader d-none'><!--DEFAULT INSTA LOADER DISPLAY NONE-->
     <div class='loader--dot'></div>
     <div class='loader--dot'></div>
     <div class='loader--dot'></div>
@@ -484,7 +485,7 @@ target="_blank"><i class="fa fa-link"></i>
 </script>
 
 <script type="text/javascript">
-    jQuery('.loader').css({"display":"none"});
+    // jQuery('.loader').hide();
 
     var xhr = null;
     var page = 2;
@@ -498,7 +499,8 @@ target="_blank"><i class="fa fa-link"></i>
         }
         if(condition){
             if(page<=totalPages){
-                setLoader();
+                // setLoader();
+                jQuery('.insta-loader').show();
                 if( xhr == null ) {
                     //xhr.abort();
                     //xhr = null;
@@ -510,11 +512,13 @@ target="_blank"><i class="fa fa-link"></i>
                         data: {'page':page},
                         success: function(data) {
                             //instagram_posts
+                            jQuery('.insta-loader').hide();
                             jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
                             setTimeout(
                                 function()
                                 {
-                                    unsetLoader();
+                                    // unsetLoader();
+                                    // jQuery('.loader').hide();
                                 }, 2000);
                         }
                     });
@@ -524,6 +528,7 @@ target="_blank"><i class="fa fa-link"></i>
                 }
             }else{
                 jQuery('.loader').css({"display":"none"});
+                jQuery('.insta-loader').hide();
             }
         }
     });
