@@ -123,6 +123,13 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         else
             return false;
     }
+    public function isMobile()
+    {
+        if(Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER ))
+            return true;
+        else
+            return false;
+    }
     public function isReleaseSubmitted($flag)
     {
         echo  ($flag) ? 'disabled title="Your release form has been submitted and is unable to be changed on line.  You may edit the form when you arrive for your appointment."': '';
