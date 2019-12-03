@@ -306,10 +306,18 @@ ul#product-suggestion-items-slider .owl-item {
 	border-radius: 0;
 }
 
+.top-nav-v2 {
+	display: none;
+}
+
 @media (max-width: 1023px) {
 	.zoom-link {
 	    position: absolute;
 		top:5px;
+	}
+	
+	.top-nav-v2 {
+		display: block;
 	}
 	
 	.insta-main, .recently-view, .you_may_like {
@@ -318,6 +326,21 @@ ul#product-suggestion-items-slider .owl-item {
 	
 	#narrow-by-list .actions {
 	    width: 100%;
+	}
+	
+	li.filter-actions {
+		display: none;
+	}
+	
+	div.filter-actions {
+		display: flex !important;
+		width:100%;
+	}
+	
+	.filter-contain {
+		padding-bottom: 52.5px;
+		margin: 0;
+		position: relative;
 	}
 	
 	div#clear-all-filter {
@@ -337,7 +360,7 @@ ul#product-suggestion-items-slider .owl-item {
 	}
 	
 	div#clear-all-filter a {
-	    padding-right: 0;
+	    padding-left: 0;
 	}
 }
 
