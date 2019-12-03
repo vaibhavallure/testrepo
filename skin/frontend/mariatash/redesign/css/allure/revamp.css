@@ -217,6 +217,11 @@ ul#instagram-items-slider button.owl-prev span {
 	margin-top: -18px;
 }
 
+ul#recently-viewed-items-slider .owl-item,
+ul#product-suggestion-items-slider .owl-item{
+	background: #f2f2f2;
+}
+
 @media (max-width: 1023px) {
 	.zoom-link {
 	    position: absolute;
