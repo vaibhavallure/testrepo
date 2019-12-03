@@ -769,7 +769,7 @@ width: 245px;
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
 
-  .my-account .box {
+  .my-account .myaccount-payment-option .box {
     padding-left: 45px;
     padding-right: 45px;
     margin-left: auto;
@@ -1271,7 +1271,7 @@ width: 245px;
 
 /* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
-  .my-account .box{
+  .my-account .myaccount-payment-option .box{
     padding-left: 15px;
     padding-right: 15px;
     margin-left: auto;
