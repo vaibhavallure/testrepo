@@ -2402,5 +2402,9 @@ line-height: 42px;
 	}
 
 	img#cross-icon {
-		width: 32px;
+	    width: 17px;
+	    padding: 0;
+	    top: 5px;
+	    right: 0px;
+	    margin: 0px;
 	}
