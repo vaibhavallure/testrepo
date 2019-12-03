@@ -8,12 +8,47 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
 {
     const XML_MULTI_ADDRESS_ORDER_EMAIL_ALLOW = 'sales_email/allure_multiaddress_sales_email/multi_order_allow_email';
     
+    const CHECKOUT_LOG_FILE = "checkout_multishipping.log";
+    
+    protected $logStatus;
+    
     public function _init(){
         //$couponCode = $this->getCheckoutSession()->getCartCouponCode();
         parent::_init();
         /* if ($couponCode) {
             $this->getQuote()->setCouponCode($couponCode)->collectTotals()->save();
         } */
+    }
+    
+    private function getLogStatus(){
+        if(!$this->logStatus){
+            $this->logStatus = Mage::helper("allure_multicheckout")->getOnePagelogStatus();
+        }
+        return $this->logStatus;
+    }
+    
+    private function addMultishippingLog($data){
+        if($this->getLogStatus()) {;
+            Mage::log($data,Zend_Log::DEBUG,self::CHECKOUT_LOG_FILE,true);
+        }
+    }
+    
+    /**
+     * Reimport customer address info to quote shipping address
+     *
+     * @param int $addressId customer address id
+     * @return Mage_Checkout_Model_Type_Multishipping
+     */
+    public function updateQuoteCustomerShippingAddress($addressId)
+    {
+        if ($address = $this->getCustomer()->getAddressById($addressId)) {
+            $this->getQuote()->getShippingAddressByCustomerAddressId($addressId)
+            ->setCollectShippingRates(true)
+            ->importCustomerAddress($address)
+            ->collectTotals();
+            $this->getQuote()->collectTotals()->save();
+        }
+        return $this;
     }
     
     /**
@@ -108,8 +143,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             }
             $giftItem = null;
         } catch (Exception $e) {
-            Mage::log("addGiftWrap method - Exception:",Zend_Log::DEBUG,'abc.log',true);
-            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+            $this->addMultishippingLog("addGiftWrap method - Exception:".$e->getMessage());
         }
     }
     
@@ -137,8 +171,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             }
             $this->save();
         } catch (Exception $e) {
-            Mage::log("setBackorderFlag method - Exception:",Zend_Log::DEBUG,'abc.log',true);
-            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+            $this->addMultishippingLog("setBackorderFlag method - Exception:".$e->getMessage());
         }
     }
     
@@ -217,8 +250,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 }
             }
         } catch (Exception $e) {
-            Mage::log("createSeparetShipment method - Exception:",Zend_Log::DEBUG,'abc.log',true);
-            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
+            $this->addMultishippingLog("createSeparetShipment method - Exception:".$e->getMessage());
         }
     }
     
@@ -229,7 +261,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
      */
     public function setShippingItemsInformation($info)
     {
-        Mage::log($info,Zend_Log::DEBUG,"abc.log",true);
+        $this->addMultishippingLog($info);
         if (is_array($info)) {
             $giftQty = array(); $giftWrapQtyArr = array();
             $this->prepareRequestWithGiftWrap($info, $giftQty, $giftWrapQtyArr);
