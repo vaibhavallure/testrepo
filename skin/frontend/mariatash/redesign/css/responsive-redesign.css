@@ -1655,9 +1655,6 @@ width: 245px;
   .manage-payment-method .payment-card-exp {
     font-size: 15px;
   }
-
-
-
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1953,7 +1950,7 @@ width: 245px;
     float: left;
     margin-top: 0;
   }
-  #slide-list{
+  .bk-slide{
     border-bottom: 1px solid #7f7f7f;
   }
   /*Checkout*/
