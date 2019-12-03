@@ -36,7 +36,6 @@ class Mana_Filters_Model_Query extends Varien_Object
         return $this;
     }
     protected function _init() {
-        //Mage::log('---', Zend_Log::DEBUG, 'performance.log');
         $this->_productCollection = $this->getLayer()->getProductCollection();
         $this->_productCollectionPrototype = clone $this->_productCollection;
         $this->_selectPrototype = clone $this->_productCollection->getSelect();
@@ -146,11 +145,12 @@ class Mana_Filters_Model_Query extends Varien_Object
         else {
             $result = $currentFilter['processedRange'];
         }
+        
         $this->_filters[$code] = $currentFilter;
 
         return $result;
     }
-    public function getFilterCounts($code, $cache = true) {
+    public function getFilterCounts($code, $cache = false) {
         $currentFilter = $this->_filters[$code];
         /* @var $currentFilterModel Mana_Filters_Interface_Filter */
         $currentFilterModel = $currentFilter['model'];
@@ -163,7 +163,6 @@ class Mana_Filters_Model_Query extends Varien_Object
                 $mainSelect = clone $this->_productCollection->getSelect();
 
                 $collection = $this->createProductCollection();
-                //$sql = $collection->getSelect()->__toString();
                 foreach ($this->_filters as $filter) {
                     /* @var $filterModel Mana_Filters_Interface_Filter */
                     $filterModel = $filter['model'];
@@ -174,6 +173,7 @@ class Mana_Filters_Model_Query extends Varien_Object
                 }
 
                 $counts = $currentFilterModel->countOnCollection($collection);
+                
                 $currentFilter['processedCounts'] = $currentFilterModel->processCounts($counts);
 
                 $this->_copyParts($this->_productCollection->getSelect(), $mainSelect);
@@ -182,6 +182,7 @@ class Mana_Filters_Model_Query extends Varien_Object
                 $this->_filters[$code] = $currentFilter;
             }
         }
+        
         return $currentFilter['processedCounts'];
     }
 

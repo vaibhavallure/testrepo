@@ -427,7 +427,12 @@ class ManaPro_FilterSuperSlider_Model_Observer extends Mage_Core_Helper_Abstract
         $helper = Mage::helper(strtolower('ManaPro_FilterSuperSlider'));
         $fromPrice = $helper->formatNumber($range['from'], $model->getFilterOptions());
         $toPrice = $helper->formatNumber($range['to'], $model->getFilterOptions());
-        $result->setLabel(Mage::helper('catalog')->__('%s - %s', $fromPrice, $toPrice));
+        
+        if ($range['to']) {
+            $result->setLabel(Mage::helper('catalog')->__('%s -</span><span> %s</span>', $fromPrice, $toPrice));
+        } else {
+            $result->setLabel(Mage::helper('catalog')->__('%s +</span>', $fromPrice));
+        }
     }
     /**
      * REPLACE THIS WITH DESCRIPTION (handles event "m_before_load_filter_collection")

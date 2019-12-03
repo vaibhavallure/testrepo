@@ -40,11 +40,14 @@ class Mana_Filters_Model_Item extends Mage_Catalog_Model_Layer_Filter_Item {
             $this->getFilter()->getRequestVar()=>implode('_', $values),
             // MANA_END
             Mage::getBlockSingleton('page/html_pager')->getPageVarName() => null // exclude current page from urls
-        );
+    	);
+    	
         if ($this->coreHelper()->isManadevDependentFilterInstalled() && $this->dependentHelper()->areDependentFiltersClearedOnParentFilterChange()) {
             $query = $this->dependentHelper()->removeDependentFiltersFromUrl($query, $this->getFilter()->getRequestVar());
         }
+        
         $params = array('_current'=>true, '_m_escape' => '', '_use_rewrite'=>true, '_query'=>$query, '_secure' => Mage::app()->getFrontController()->getRequest()->isSecure());
+        
         return Mage::helper('mana_filters')->markLayeredNavigationUrl(Mage::getUrl('*/*/*', $params), '*/*/*', $params);
     }
     
@@ -139,8 +142,8 @@ class Mana_Filters_Model_Item extends Mage_Catalog_Model_Layer_Filter_Item {
         if($this->getReqVarName()=="price")
         {
             $value=explode(",",$this->getValue());
-            $minValue=($value[0]*$value[1])-$value[1];
-            $maxValue=($value[0]*$value[1]);
+            $minValue=$value[0];//($value[0]*$value[1])-$value[1];
+            $maxValue=$value[1];//($value[0]*$value[1]);
             return $minValue."-".$maxValue;
         }
 
