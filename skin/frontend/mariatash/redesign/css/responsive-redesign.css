@@ -1576,9 +1576,11 @@ width: 245px;
   }
   .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info ul li{
     width: 100%;
+    overflow: hidden;
   }
   .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
     margin-left: 0px;
+    padding-top: 10px;
   }
   .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul #billing-new-address-form ul li{
     width: 100%;

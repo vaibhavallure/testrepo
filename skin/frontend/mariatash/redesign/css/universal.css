@@ -306,7 +306,7 @@ div.tab button.active {
 } */
 
 #authnetcim_name_on_card{
-	margin-bottom: 10px;
+	/*margin-bottom: 10px;*/
 }
 
 /* #billing-new-address-form select{
@@ -1355,9 +1355,9 @@ width: 63%;
 
 .mt-payment-card-btn{
 	margin: 20px 0 5px;
-    /*overflow: hidden;
-    width: 100%;
-    display: block;*/
+    overflow: hidden;
+   /* width: 100%;*/
+    display: block;
 }
 
 .mt-payment-card-btn button#delete-form-btn-id-1{
@@ -1956,6 +1956,7 @@ li.order-info-tab-back{
     width: 322px;
     float: none;
     clear: both;
+    overflow: hidden;
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .input-box{
     float: none;
@@ -1989,13 +1990,13 @@ li.order-info-tab-back{
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-month {
     width: 48%;
     float: left;
-    margin-bottom: 10px;
+   /* margin-bottom: 10px;*/
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
     width: 48%;
     float: left;
     margin-left: 4%;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp select{
     width: 100%;
@@ -2094,7 +2095,7 @@ li.order-info-tab-back{
 .manage-payment-method .mt-edit-form .card-exp{
     width: 100%;
     float: left;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 /*.myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp{
     width: 100%;
@@ -2193,3 +2194,12 @@ li.buttons-set .btn-cancel-edit{
     /*display: block;*/
     overflow: hidden;
 }
+.manage-payment-method #mt-credit-card-info li #authnetcim_cc_type, .manage-payment-method #mt-credit-card-info li #authnetcim_cc_number {
+    margin-bottom: 0px;
+}
+.manage-payment-method #new-mt-add-payment-method li.payment-card-type,.payment-card-number,.payment-exp-date,#authnetcim_cc_type_cvv_div,.name-on-card{
+    padding: 5px 0 5px 0;
+}
+ .manage-payment-method #new-mt-saved-card li.payment-card-type,.payment-card-number,.payment-exp-date,#authnetcim_cc_type_cvv_div{
+     padding: 5px 0 5px 0;
+ }
