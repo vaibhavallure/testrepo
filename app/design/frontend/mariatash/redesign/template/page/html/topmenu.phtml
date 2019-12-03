@@ -49,6 +49,31 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                     <li class="currency-section-for-mobile">
                         <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
                     </li>
+                   <?php
+                    $wishlist=Mage::getModel('ecp_menu/menu')->load(3);
+                    if($wishlist):?>
+          <li class="wishlist-section-mobile">
+              <?php if($isCustomerLogIn):?>
+              <a class="icon-link wishlist"  href="<?/*= $wishlist->getUrl() */?>">
+                  <?php else:?>
+                  <a class="icon-link wishlist"  onclick="signinwishlistMob()">
+                      <?php endif;?>
+                      <span>wishlist</span>
+                  </a>
+                  <script>
+                      var signinwishlistMob= function() {
+                          jQuery('body').addClass('allure_login_wishlist');
+                          jQuery("#menu-btn").trigger('click');
+                          jQuery("#sign_in_label").trigger('click');
+                      }
+                      jQuery(document).ready(function() {
+                          jQuery('.popupLoginModel .close').on('click', function () {
+                              jQuery('body').removeClass('allure_login_wishlist');
+                          });
+                      });
+                  </script>
+          </li>
+      <?php endif; ?>
                 </ul>
             </div>
         <?php endif;?>
