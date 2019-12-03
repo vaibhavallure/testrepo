@@ -1733,7 +1733,7 @@ input[type="checkbox"]:checked+label:before {
 
 .products-grid li.item .list-mt-w > .row{
 	position: relative;
-  height: 100%;
+  	height: 100%;
 	width: 100%;
 	margin: 0 auto;
 }
@@ -2549,14 +2549,9 @@ ul#foo4 {
 .allure_filter .al-hide{
 	display: none;
 }
-
-
-
-
 .filterPopup .modal-body{
 	padding: 0
 }
-
 .filterPopup .close div,.celebPopup .close div,.pressPopup .close div,.zoomPopup .close div{
   background-image: url("../images/redesign/login-cross.png");
   width: 25px;
@@ -2567,7 +2562,6 @@ ul#foo4 {
 .filterPopup .close{
 	z-index: 2;
 }
-
 #narrow-by-list li{
   float: left;
 	padding: 0;
@@ -2620,12 +2614,6 @@ ul#foo4 {
   height: 30px;
   position: absolute;
 }
-/* .filterButton{
-  padding-left: 10px;
-  width: 100%;
-  height: 32px;
-  display: block;
-} */
 .filterPopup #narrow-by-list dd{
 	width: 100%;
 	flex: 0 0 100%;
@@ -2696,9 +2684,6 @@ ul#foo4 {
   background: #f2f2f2;
 	padding-bottom: 25px;
 }
-/* .catalog-product-view .for-space-to-bottom {
-  height: 127px;
-} */
 .catalog-product-view .homepage-menu.mariatash-header{
 	background: rgba(40,40,40,0.9);
 }
@@ -2710,9 +2695,6 @@ ul#foo4 {
 }
 .product-shop {
   margin-top: 75px;
-	/* max-width: 457px;
-  width: 100%;
-  padding-left: 50px; */
 }
 .product-shop > .row{
 	width: 457px;
@@ -2720,7 +2702,6 @@ ul#foo4 {
 }
 .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
   margin-bottom: 16px;
-	/* max-width: 180px; */;
 	max-width: 160px;
 }
 .priceCategory {
@@ -2945,16 +2926,7 @@ ul.tabs li{
 	/*margin-top: 20%;*/
 }
 
-
-
-
-
-
-
-
-
 /*instagram slider*/
-
 .image_carousel .item.product-view-instagram-item, .image_carousel .item.product-view-instagram-item img{
   height: 222.5px;
   width: 222.5px;
