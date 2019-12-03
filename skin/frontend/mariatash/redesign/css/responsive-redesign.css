@@ -698,6 +698,10 @@ width: 245px;
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
+  .my-account .login_security .breadcrumbs{
+    margin-top: 13px;
+    position: absolute;
+  }
   .toolbar-top {
     display: none;
   }
@@ -1645,7 +1649,7 @@ width: 245px;
   .manage-payment-method .payment-card-exp {
     font-size: 15px;
   }
-  .manage-payment-method ul.mt-new-payment-list
+
 
 
   .main-nav-link li{
