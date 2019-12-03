@@ -1250,6 +1250,15 @@ width: 245px;
   .mobile-device .for-space-to-bottom.cat-img-space{
     background-color: rgba(41,41,41,0.9);
   }
+  .footer {
+    padding-top: 0px !important;
+    height: 0px;
+    bottom: -1px;
+    position: fixed;
+    z-index: 1;
+    padding: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+  }
 }
 
 /* ipad landscape */
@@ -2312,6 +2321,7 @@ width: 245px;
   .main-container {
     padding-bottom: 60px;
   }
+
   .footer {
     padding-top: 0px !important;
     height: 0px;
