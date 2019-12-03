@@ -771,7 +771,7 @@ width: 245px;
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
 
-  .my-account .box {
+  .my-account .myaccount-payment-option .box {
     padding-left: 45px;
     padding-right: 45px;
     margin-left: auto;
@@ -1273,7 +1273,7 @@ width: 245px;
 
 /* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
-  .my-account .box{
+  .my-account .myaccount-payment-option .box{
     padding-left: 15px;
     padding-right: 15px;
     margin-left: auto;
@@ -2633,6 +2633,11 @@ width: 245px;
 @media (min-width:768px) and (max-width:1023px) {
   .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
+  }
+  .desktop-device .allure_filter{
+    margin-left: 109px;
+    width: 660px;
+    margin-top: 0px;
   }
 }
 @media (min-width:786px) and (max-width:1111px){
