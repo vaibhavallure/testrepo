@@ -154,10 +154,9 @@ jQuery('.link-button').click(function(event) {
                 //if scroll is at bottom show footer
                 if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
                     jQuery(".zopim").addClass("bottom-change");
-                    jQuery("#footer8").css("height","60px");
-                    hidden=false;
-
-                }else {
+                    jQuery("#footer8").css("height", "60px");
+                    hidden = false;
+                } else if(!parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0 || jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none'){
                     jQuery(".zopim").removeClass("bottom-change");
                     jQuery("#footer8").css("height","0px");
                     hidden=true;
