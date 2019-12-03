@@ -259,7 +259,7 @@ width: 245px;
   padding-left: 15px;
   margin-bottom: 17px;
 }
-.form-search input.input-text{
+ .mobile-device.form-search input.input-text{
   background: #292929;
 }
 .form-search input.input-text{
@@ -757,7 +757,7 @@ width: 245px;
     flex: 0 0 100%;
     max-width: 100%;
   }
-  #search {
+   .mobile-device #search {
     position: fixed;
     width: 100%;
     left: 0;
@@ -1135,7 +1135,7 @@ width: 245px;
   #narrow-by-list li div dd{
     width: 161px;
   }
-  .form-search input.input-text{
+    .mobile-device .form-search input.input-text{
     width: 200px;
     height: 60px !important;
   }
@@ -1239,9 +1239,10 @@ width: 245px;
     right: 26px !important;
     width: 40% !important;
   }
-  #search {
-    background: #292929;
-  }
+
+    .mobile-device #search {
+        background: #292929;
+    }
   .footer .social-media li{
     margin-right: 24px;
   }
@@ -1569,7 +1570,8 @@ width: 245px;
     max-width: 100%;
     width: 100%;
   }
-  .form-search input.input-text{
+
+  .mobile-device.form-search input.input-text{
     height: 60px !important;
   }
   .appointment-container{
@@ -2112,7 +2114,7 @@ width: 245px;
   .maria-left-menus{
     left:85px;
   }
-  .form-search input.input-text{
+  .mobile-device.form-search input.input-text{
     width: 150px;
   }
   .custom-container {
@@ -2512,7 +2514,7 @@ width: 245px;
   .position-bottom{
     padding-right: 24px;
   }
-  .form-search input.input-text{
+    .mobile-device .form-search input.input-text{
     width: 270px;
   }
 }
