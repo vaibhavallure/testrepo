@@ -1329,7 +1329,8 @@ line-height: 42px;
 
 .customer-address-index .messages{
 	position: absolute;
-	top: 105px;
+	/*top: 105px;*/
+	top: 55px;
 	display: block;
 }
 
