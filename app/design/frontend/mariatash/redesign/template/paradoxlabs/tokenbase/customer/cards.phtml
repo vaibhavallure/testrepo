@@ -87,7 +87,7 @@
 				
 				$cardTypeImg = strtolower($card->getAdditional('cc_type'))."-card.png";
 			?>
-	  			<li class="mt-payment-item mt-list-item" id="mt-payment-item-<?php echo $card->getId()?>">
+	  			<li class="mt-payment-item mt-list-item para-normal" id="mt-payment-item-<?php echo $card->getId()?>">
 		  			<div class="mt-card-name">
 		  			<img src="<?php echo $this->getSkinUrl('images/myaccount/').$cardTypeImg?>" />
 		  			<?php echo $cardType." ending in ".$cardEndLabel?></div>

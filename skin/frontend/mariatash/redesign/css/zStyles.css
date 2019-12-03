@@ -2373,13 +2373,13 @@ line-height: 42px;
 	.catalog-product-view .product-view .fs-timeline-detail {
 		z-index: 9999;
 	}
-	/*Border Throughout site for tooltip*/
+	/*Border Throughout site for tooltip*/git c`git
 	.t_ContentContainer.t_clearfix.t_Content_allure_footer,
 	.icon-user .login-dropdown{
 		border: 0.5px solid;
 	}
 
-	.celebPopup .product-info{
+	.category-celebrity-clientele .celebPopup .product-info{
 		position: relative;
 	}
 

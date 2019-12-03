@@ -257,7 +257,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
         $cNotFound = Mana_Seo_Model_ParsedUrl::CORRECT_NOT_FOUND_ATTRIBUTE_FILTER_URL_KEY;
         $cExpectedParameterName = Mana_Seo_Model_ParsedUrl::CORRECT_EXPECTED_PARAMETER_NAME_FOR_ATTRIBUTE_FILTER_URL_KEY;
         $cRedundantParameterName = Mana_Seo_Model_ParsedUrl::CORRECT_REDUNDANT_PARAMETER_NAME_FOR_ATTRIBUTE_FILTER_URL_KEY;
-
+        
         // split by "-", add correction for token beginning with "-"
         if (($text = $token->getTextToBeParsed()) !== '' && ($tokens = $this->_scanUntilSeparator($token, $this->_schema->getMultipleValueSeparator()))) {
             // get all valid attribute value URL keys
@@ -416,6 +416,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
 
         $originalToken = $token;
         if ($pairs = $this->_scanNumbers($token, $this->_schema->getMultipleValueSeparator(), $this->_schema->getPriceSeparator(), '-')) {
+            
             foreach ($pairs as $pair) {
                 if (!$this->_setPriceFilter($token, $pair['from'], $pair['to'])) {
                     if (!$this->_correct($token, $cInvalid, __LINE__, json_encode($pair))) {
@@ -424,7 +425,6 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
                 }
             }
         }
-
         return $this->_parseParameters($originalToken->zoomOut());
     }
 
@@ -1113,6 +1113,8 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
     protected function _setCurrentAttribute($token, $id, $code) {
         $cParameterAlreadyMet = Mana_Seo_Model_ParsedUrl::CORRECT_PARAMETER_ALREADY_MET;
         $token->setAttributeId($id)->setAttributeCode($code);
+        
+        
         if ($code && $token->hasQueryParameter($code)) {
             return $this->_correct($token, $cParameterAlreadyMet, __LINE__, $code);
         }
@@ -1152,7 +1154,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
 
         /* @var $core Mana_Core_Helper_Data */
         $core = Mage::helper('mana_core');
-
+        
         $isSlider = $core->isManadevLayeredNavigationInstalled() &&
             in_array($token->getParameterUrl()->getFilterDisplay(), array('slider', 'range', 'min_max_slider'));
         if ($this->_schema->getUseRangeBounds() || $isSlider) {
@@ -1179,7 +1181,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
                     return false;
                 }
 
-                $token->addQueryParameter($token->getAttributeCode(), "$index,$range");
+                $token->addQueryParameter($token->getAttributeCode(), "$from,$to");
             }
         }
         else {
@@ -1304,6 +1306,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
                 $count++;
             }
         }
+        
         return $count <= Mage::getStoreConfig('mana/seo/max_correction_count')
             ? true
             : $this->_setResult($token);
