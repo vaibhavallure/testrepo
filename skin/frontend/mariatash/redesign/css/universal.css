@@ -153,7 +153,7 @@ div.tab {
 
 /* Style the buttons inside the tab */
 div.tab button {
-    background-color: #fff;
+    background-color: rgba(41,41,41,0.9);
     float: left;
     border: none;
     outline: none;
@@ -173,10 +173,10 @@ div.tab button {
 
 /* Create an active/current tablink class */
 div.tab button.active {
-    background-color: rgba(41,41,41,0.9);/*#ccc;*/
+    background-color: #fff;/*#ccc;*/
     /* border: none; */
     transition-duration: 2s;
-    color: #fff;
+    color: rgba(41,41,41,0.9);
 }
 
 /* Style the tab content */
@@ -1120,7 +1120,7 @@ padding: 0 0 8px 0;
    font-weight: 600;
    /* margin-right: 1px; */
    border: 1px solid rgba(41,41,41,0.9);
-   color: rgba(41,41,41,0.9);
+   color: #fff;
 }
 
 
