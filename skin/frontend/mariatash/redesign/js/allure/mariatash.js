@@ -143,8 +143,7 @@ jQuery('.link-button').click(function(event) {
                                 jQuery("#footer8").css("height","59px");
                                 hidden=false;
                             }
-                        }
-                        else{
+                        } else if(!parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0 || jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none'){{
                             jQuery(".zopim").removeClass("bottom-change");
                             jQuery("#footer8").css("height","0px");
                             hidden=true;
@@ -156,7 +155,7 @@ jQuery('.link-button').click(function(event) {
                     jQuery(".zopim").addClass("bottom-change");
                     jQuery("#footer8").css("height", "60px");
                     hidden = false;
-                } else if(!parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0 || jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none'){
+                } else
                     jQuery(".zopim").removeClass("bottom-change");
                     jQuery("#footer8").css("height","0px");
                     hidden=true;
