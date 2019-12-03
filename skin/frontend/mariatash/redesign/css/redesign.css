@@ -1511,6 +1511,7 @@ input[type="checkbox"]:checked+label:before {
   letter-spacing: 1px;
   padding: 0px 0 10px 0;
 	height: 31px !important;
+	z-index: 1060;
 }
 .mt-logo {
   padding: 0px 0 14px 0;
