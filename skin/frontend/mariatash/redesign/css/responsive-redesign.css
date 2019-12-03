@@ -2634,6 +2634,11 @@ width: 245px;
   .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
   }
+  .desktop-device .allure_filter{
+    margin-left: 109px;
+    width: 660px;
+    margin-top: 0px;
+  }
 }
 @media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
