@@ -3209,7 +3209,7 @@ ul.tabs li{
 }
 .insta-main .image_carousel,.recently-view .image_carousel,.you_may_like .image_carousel{
   width: 80%;
-  overflow: hidden;
+  /*overflow: hidden;*/
   position: relative;
   margin: auto
 }

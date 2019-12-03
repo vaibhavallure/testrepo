@@ -211,12 +211,23 @@ class Allure_Exporter_Model_Exportorders extends Allure_Exporter_Model_Exporter
             $columns = "";
             $values = "";
             foreach ($result as $key => $value){
+                if(empty($value)) continue ;
+                if(unserialize($value)){
+                    //$value = str_replace('"','\"',$value);
+                }else{
+                    $value = str_replace("'", "\'", $value);
+                }
+                
                 $columns .= "`". $key . "`" . ",";
-                if(is_numeric($value)){
+                if(is_numeric($value) && $key != "protect_code"){
                     $values .= $value . ",";
                 }else{
                     $values .= "'".$value ."'". ",";
                 }
+            }
+            if($tableName == self::SALES_FLAT_ORDER_PAYMENT){
+                $columns .= "`ccforpos_ref_no`,`cp1forpos_ref_no`,`cp2forpos_ref_no`,`codforpos_ref_no`,`cashforpos_ref_no`". ",";
+                $values .= "'','','','',''". ",";
             }
             $columns = trim($columns, ",");
             $values = trim($values, ",");

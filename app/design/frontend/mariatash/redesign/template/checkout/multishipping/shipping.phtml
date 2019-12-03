@@ -71,7 +71,7 @@ function setShippingAddress(eleId, addrId ,custAddrId){
             							<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
                                         	<input type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" 
                                         		value="1" class="checkbox shipping-signature" 
-                                        		<?php if($isSignature):?>checked="checked"<?php endif;?> 
+                                        		<?php //if($isSignature):?>checked="checked"<?php //endif;?> 
                                         		data-address_id="<?= $_address->getId()?>" 
                                         		data-is_international="<?= $isIternational?>" />
                                             <span class="checkmark"></span>
