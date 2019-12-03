@@ -570,7 +570,7 @@ width: 245px;
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
-    position: relative;
+    /*position: relative;*/
     bottom: 0;
   }
   .big-popup-body{
@@ -697,6 +697,10 @@ width: 245px;
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
+  .my-account .login_security .breadcrumbs{
+    margin-top: 13px;
+    position: absolute;
+  }
   .toolbar-top {
     display: none;
   }
@@ -770,7 +774,7 @@ width: 245px;
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
 
-  .my-account .box {
+  .my-account .myaccount-payment-option .box {
     padding-left: 45px;
     padding-right: 45px;
     margin-left: auto;
@@ -1272,7 +1276,7 @@ width: 245px;
 
 /* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
-  .my-account .box{
+  .my-account .myaccount-payment-option .box{
     padding-left: 15px;
     padding-right: 15px;
     margin-left: auto;
@@ -1651,7 +1655,7 @@ width: 245px;
   .manage-payment-method .payment-card-exp {
     font-size: 15px;
   }
-  .manage-payment-method ul.mt-new-payment-list
+
 
 
   .main-nav-link li{
