@@ -1276,6 +1276,23 @@ width: 245px;
     margin-top: 8px !important;
   }
 }
+@media (min-width:1024px) and (max-width:1366px) and (orientation:portrait) {
+  .footer {
+    padding-top: 0px !important;
+    height: 0px;
+    bottom: -1px;
+    position: fixed;
+    z-index: 1;
+    padding: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+  }
+  .footer .social-media ul {
+    padding-left: 1px;
+  }
+  .footer .social-media li {
+    margin-right: 24px;
+  }
+}
 
 /* ipad landscape */
 @media (min-width:1024px) and (max-width:1366px) and (orientation:landscape) {
