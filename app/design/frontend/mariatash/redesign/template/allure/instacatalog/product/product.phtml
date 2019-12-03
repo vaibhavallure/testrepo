@@ -14,13 +14,13 @@ $childProductArr = $this->getChildProductArray();
 			<div class="block-title text-uppercase mb-3">
 				<span class="para-bold"><?php echo $this->__('on instagram') ?></span>
 			</div>
-			<ul id="foo6"  style="overflow: hidden">
-				<?php
+        	<ul id="instagram-items-slider" class="owl-carousel owl-theme">
+			<?php
 				$shareBaseUrl = Mage::getBaseUrl('web') . "instacatalog/feed/shareview/id/";
 				$productArr = $this->getInstagramHotspotProducts();
 				foreach ($collection as $feeds) :
-					?>
-					<?php
+		?>
+		<?php
         $feed = $feeds; // Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
         $media_id = $feed->getId(); /* getMediaId(); */
         $_post = $feed;
@@ -89,7 +89,7 @@ $childProductArr = $this->getChildProductArray();
         	$points .= '<div class="fs-arrow-up"></div>';
         	$points .= 'Shop it // " ' . $productName . '</div></div></a>';
 
-        	 $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $productId));
+        	$quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $productId));
 
         	$productsLinks .= '<div class="fs-text-link-container ">';
         	$productsLinks .= '<a class="fs-text-product fs-link-list ' . $current_product_class . '" ';
@@ -106,33 +106,31 @@ $childProductArr = $this->getChildProductArray();
         	$product = null;
         }
         ?>
-        <li class="item product-view-instagram-item"><a
-        	class="fancybox fancybox.iframe quickview-youmayalsolike"
-        	id='product-quickview-<?php echo $feed->getId() ?>'
-        	onclick="instagramView.show(this);" media-id="<?php echo $media_id?>"">
-        	<img src="<?php echo $imageUrl ?>" alt="" />
-        </a>
-        <div style="display: none;" id="details-insta-<?php echo $media_id?>"
-        	data-user-name="<?php $_post->getUsername()?>"
-        	data-img-url="<?php echo $_post->getStandardResolution()?>"
-        	data-create-date="<?php echo $createDate?>"
-        	data-share-url="<?php echo $shareUrl?>">
-        	<div id="insta-caption-<?php echo $media_id?>"
-        		style="display: none;"><?php echo json_decode($_post->getCaption()) ?></div>
-        		<div id="insta-product-mark-<?php echo $media_id?>"
-        			style="display: none;"><?php echo $points ?></div>
-        			<div id="insta-product-details-<?php echo $media_id?>"
-        				style="display: none;"><?php echo $productsLinks ?></div>
-        			</div></li>
-        		<?php endforeach;?>
-        	</ul>
-
+                <li class="item">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike"
+                            id='product-quickview-<?php echo $feed->getId() ?>'
+                            onclick="instagramView.show(this);" media-id="<?php echo $media_id?>" style="background-image: url(<?php echo $imageUrl ?>);">
+                    	<img src="<?php echo $imageUrl ?>" alt="" />
+                    </a>
+    				<div style="display: none;" id="details-insta-<?php echo $media_id?>"
+                    	data-user-name="<?php $_post->getUsername()?>"
+                    	data-img-url="<?php echo $_post->getStandardResolution()?>"
+                    	data-create-date="<?php echo $createDate?>"
+                    	data-share-url="<?php echo $shareUrl?>">
+                    	<div id="insta-caption-<?php echo $media_id?>"
+                    		style="display: none;"><?php echo json_decode($_post->getCaption()) ?>
+                    	</div>
+                		<div id="insta-product-mark-<?php echo $media_id?>"
+                			style="display: none;"><?php echo $points ?>
+                		</div>
+            			<div id="insta-product-details-<?php echo $media_id?>"
+            				style="display: none;"><?php echo $productsLinks ?>
+            			</div>
+            		</div>
+                 </li>
+    		<?php endforeach;?>
+            </ul>
         </div>
-        <div class="clearfix"></div>
-        <a class="prev" id="foo6_prev" href="#"><span>prev</span></a> <a
-        class="next" id="foo6_next" href="#"><span>next</span></a>
-
-        <div class="pagination" id="foo6_pag"></div>
     </div>
     <div id="instagram-view-container">
     	<div id="showcase"
@@ -243,6 +241,29 @@ $childProductArr = $this->getChildProductArray();
 	</script>
 
 	<script>
+        jQuery(document).ready(function() {
+            var $ =  jQuery;
+            $('#instagram-items-slider').owlCarousel({
+                loop:true,
+                margin:10,
+                responsiveClass:true,
+                responsive:{
+                    0:{
+                        items:1,
+                        nav:true
+                    },
+                    600:{
+                        items:3,
+                        nav:false
+                    },
+                    1000:{
+                        items:5,
+                        nav:true,
+                        loop:false
+                    }
+                }
+            });
+        });
 		jQuery(document).ready(function(){
 			jQuery('.fs-text-product').hover(function(){
 				var id = jQuery(this).attr('data-link-id');
@@ -309,51 +330,51 @@ $childProductArr = $this->getChildProductArray();
         }
     });
 
-		jQuery(document).ready(function () {
+		// jQuery(document).ready(function () {
+        //
+		// 	jQuery('#foo6').jcarousel({
+		// 		initCallback: mycarousel_initCallbackProd1,
+		// 		buttonNextCallback: mycarousel_buttonPrevCallbackProd1,
+		// 		buttonPrevCallback: mycarousel_buttonNextCallbackProd1,
+        //         // This tells jCarousel NOT to autobuild prev/next buttons
+        //         buttonNextHTML: null,
+        //         buttonPrevHTML: null,
+        //         itemFallbackDimension: 90,
+        //         scroll:1
+        //     });
+        //
+		// });
 
-			jQuery('#foo6').jcarousel({
-				initCallback: mycarousel_initCallbackProd1,
-				buttonNextCallback: mycarousel_buttonPrevCallbackProd1,
-				buttonPrevCallback: mycarousel_buttonNextCallbackProd1,
-                // This tells jCarousel NOT to autobuild prev/next buttons
-                buttonNextHTML: null,
-                buttonPrevHTML: null,
-                itemFallbackDimension: 90,
-                scroll:1
-            });
+		// function mycarousel_initCallbackProd1(carousel) {
+		// 	jQuery('#foo6_prev').bind('click', function () {
+		// 		carousel.prev();
+		// 		return false;
+		// 	});
+        //
+		// 	jQuery('#foo6_next').bind('click', function () {
+		// 		carousel.next();
+		// 		return false;
+		// 	});
+		// }
 
-		});
-
-		function mycarousel_initCallbackProd1(carousel) {
-			jQuery('#foo6_prev').bind('click', function () {
-				carousel.prev();
-				return false;
-			});
-
-			jQuery('#foo6_next').bind('click', function () {
-				carousel.next();
-				return false;
-			});
-		}
-
-		function mycarousel_buttonNextCallbackProd1(carousel, button, enabled) {
-			if (enabled) {
-				jQuery("#foo6_prev").css('opacity', 1);
-			} else {
-				jQuery("#foo6_prev").css('opacity', 0.13);
-			}
-		}
-
-		function mycarousel_buttonPrevCallbackProd1(carousel, button, enabled) {
-			if (enabled) {
-				jQuery("#foo6_next").css('opacity', 1);
-			} else {
-				jQuery("#foo6_next").css('opacity', 0.13);
-			}
-		}
-
-		if (jQuery('ul#foo6 li.item').length < 4){
-			jQuery("#foo6_next , #foo6_prev").hide();
-		}
+		// function mycarousel_buttonNextCallbackProd1(carousel, button, enabled) {
+		// 	if (enabled) {
+		// 		jQuery("#foo6_prev").css('opacity', 1);
+		// 	} else {
+		// 		jQuery("#foo6_prev").css('opacity', 0.13);
+		// 	}
+		// }
+        //
+		// function mycarousel_buttonPrevCallbackProd1(carousel, button, enabled) {
+		// 	if (enabled) {
+		// 		jQuery("#foo6_next").css('opacity', 1);
+		// 	} else {
+		// 		jQuery("#foo6_next").css('opacity', 0.13);
+		// 	}
+		// }
+        //
+		// if (jQuery('ul#foo6 li.item').length < 4){
+		// 	jQuery("#foo6_next , #foo6_prev").hide();
+		// }
 	</script>
 <?php endif; ?>

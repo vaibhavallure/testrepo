@@ -1,6 +1,12 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
 
+  .for-space-to-bottom.cat-img-space {
+    background-image: none !important;
+    height: 50px !important;
+    background-color: transparent;
+  }
+
   .menu_overlay {
     z-index: 3;
   }
@@ -50,257 +56,260 @@
   #narrow-by-list li div dt{
     background-image: none!important;
   }
-
-
-
-
 .sticky-bar {
   position: fixed;
   top: 50px;
   background: white;
   z-index: 3;
 }
-  .sticky-filter{
-    position: fixed;
-    top: 80px;
-    width: 100%;
-    background: white;
-    z-index: 2;
-    padding-top: 2px;
-  }
-  #narrow-by-list li:first-child{
-    margin-top: 0px;
-  }
-  .allure_filter {
-    border: 1px solid #000;
-    margin: 2px 8px;
-  }
-  .allure_filter dt.filter-head {
-    cursor: pointer;
-    background: white !important;
-    width: auto;
-    padding: 6px 24px;
-    height: 33px;
-  }
-   .filtru-price .m-filter-slider {
-    margin-left: 10px;
-    margin-top: 11px;
-    margin-bottom: 50px;
-  }
-   .m-slider-selected-value{
-    width: 245px;
-  }
-   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    margin-top: 20px;
-  }
-   .selected-filters{
-    width: 100%;
-    position: static;
-    top:auto;
-    left: auto;
-  }
-   .selected-filters .currently{
-    display: none;
-  }
-   .selected-filters .actions.current{
-    width: 50%;
-    padding: 0 18px;
-  }
-  #narrow-by-list li div dd ol{
-    padding: 10px;
-  }
-  .selected-filters .actions.current a{
-    text-align: center;
-    background: #fff;
-    width: 100px;
-    height: 32px;
-    vertical-align: middle;
-    padding: 5px;
-    border: 1px solid #292929;
-  }
-  .filterButton:before{
-    content: '';
-    background-image: url(../images/filter.png);
-    width: 20px;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    height: 30px;
-    position: absolute;
-  }
-  /* .filterButton{
-    padding-left: 10px;
-    width: 100%;
-    height: 32px;
-    display: block;
-  } */
-   #narrow-by-list dd{
-    width: 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-   #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
-    width: 100%;
-  }
-   .pop-up-cover {
-   /* width: 100%;*/
-  }
-   #narrow-by-list li div dd ol {
-    margin: 15px 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-  }
-   #narrow-by-list li div dd {
+
+.sticky-filter{
+  position: fixed;
+  top: 80px;
+  width: 100%;
+  background: white;
+  z-index: 2;
+  padding-top: 2px;
+  padding-bottom: 7px !important;
+}
+#narrow-by-list li:first-child{
+  margin-top: 0px;
+}
+.allure_filter {
+  border: 1px solid #000;
+  margin: 0 8px 3px;
+  border-width: 1px 1px 0;
+}
+.allure_filter dt.filter-head {
+  cursor: pointer;
+  background: white !important;
+  width: auto;
+  padding: 6px 24px;
+  height: 33px;
+  border-bottom: 1px solid #000;
+}
+.allure_filter.scrolling{
+  border-width: 1px 1px 1px;
+}
+.filtru-price .m-filter-slider {
+  margin-left: 10px;
+  margin-top: 11px;
+  margin-bottom: 50px;
+}
+.m-slider-selected-value{
+width: 245px;
+}
+.block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+  padding-top: 8px;
+  background: white;
+}
+.selected-filters{
+  width: 100%;
+  position: static;
+  top:auto;
+  left: auto;
+}
+.selected-filters .currently{
+  display: none;
+}
+.selected-filters .actions.current{
+  width: 50%;
+  padding: 0 18px;
+}
+#narrow-by-list li div dd ol{
+  padding: 10px;
+}
+.selected-filters .actions.current a{
+  text-align: center;
+  background: #fff;
+  width: 100px;
+  height: 32px;
+  vertical-align: middle;
+  padding: 5px;
+  border: 1px solid #292929;
+}
+.filterButton:before{
+  content: '';
+  background-image: url(../images/filter.png);
+  width: 20px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 30px;
+  position: absolute;
+}
+ #narrow-by-list dd{
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+ #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
+  width: 100%;
+}
+ .pop-up-cover {
+ /* width: 100%;*/
+}
+ #narrow-by-list li div dd ol {
+  margin: 15px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+}
+ #narrow-by-list li div dd {
 	/*display: block!important;*/
 	position: relative;
 	top:auto;
 	left: auto;
 	border: none;
 	padding: 0px 10px;
-  }
-   #narrow-by-list{
-    padding: 0;
-    margin-left:0;
-  }
-   #narrow-by-list li div dt {
-    cursor: pointer;
-    background: #292929 !important;
-    border: none;
-    color: white;
-    width: auto;
-    padding: 6px 24px;
-    height: 34px;
-  }
-   #narrow-by-list li {
-    min-width: 100%;
-     padding-left: 0px;
-  }
-   #narrow-by-list ol li {
-    min-width: 208px;
-    padding: 0;
-  }
-  .filter-actions{
-    padding: 0px 10px!important;
-  }
+}
+ #narrow-by-list{
+  padding: 0;
+  margin-left:0;
+}
+ #narrow-by-list li div dt {
+  cursor: pointer;
+  background: #292929 !important;
+  border: none;
+  color: white;
+  width: auto;
+  padding: 6px 24px;
+  height: 34px;
+}
+ #narrow-by-list li {
+  	min-width: 100%;
+   	padding-left: 0px;
+   	flex-direction: row;
+}
+ #narrow-by-list ol li {
+  min-width: 208px;
+  padding: 0;
+}
+.filter-actions{
+    padding: 10px!important;
+    position: absolute;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid rgba(41,41,41,0.3);
+}
   /*filter end----------------------------*/
-  .mobile-device .main-nav-title li {
-    margin-right: 0;
-    margin-top: 15px;
-  }
-  .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
-    display: none;
-  }
-  .main-nav-link li:nth-child(2) {
-    margin-right: 18px;
-  }
-  .footer ul .footer-item-list{
-    max-width: 47%;
-    flex: 0 0 47%;
-    padding: 20px 0 10px 0;
-    margin: 20px auto 0 !important
-  }
-  .footer-item-list.data-block:after {
-    background: url(../images/redesign/downward-arrow.png) no-repeat;
-    content: '';
-    height: 18px;
-    width: 18px;
-    background-position: right;
-    position: absolute;
-    right: 0;
-    background-size: 10px;
-    top: 26px;
-  }
-  .footer-item-list.data-block.active:after {
-    transform: rotate(180deg);
-    top: 30px;
-    background-position: bottom left;
-  }
-  .container-footlinks, .homepage-menu.mariatash-header {
-    background: rgb(41, 41, 41);
-  }
-  .footer .footlinks li,.social-media ul{
-    position: relative;
-  }
-  .footer .social-media li:last-child{
-    margin-right: 0;
-  }
-  .social-media ul {
-    margin-bottom: 40px;
-  }
-  .mobile-device .head-child, #appointments img {
-    display: none;
-    padding-left: 10px;
-  }
-  .mobile-device .head-child.active {
-  	display: block;
-  }
-  #appointments .col{
-    width: 100%;
-    margin-bottom: 9px;
-    flex: 0 0 100%;
-  }
-  #appointments{
-    padding: 0;
-  }
-  .maria-right-menus{
-    right: 0;
-  }
-  .mobile-main_menu, .mobile-sub_menu .sub-menu {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  .piercing_options .image-text {
-    padding-left: 15px;
-    margin-bottom: 17px;
-  }
-  .form-search input.input-text{
-    background: #292929;
-  }
-  .form-search input.input-text{
-    padding-bottom: 2px;
-  }
-  #jewelry .menu-head span a:after {
-    background: url(../images/redesign/plus.png) no-repeat;
-    content: '';
-    height: 20px;
-    width: 19px;
-    background-position: right;
-    position: absolute;
-    right: 30px;
-    transition: 0.5s;
-    background-size: 10px;
-  }
-  #jewelry .menu-head span a.active:after {
-    background: url(../images/redesign/minus.png) no-repeat;
-    content: '';
-    height: 19px;
-    width: 19px;
-    background-position: right;
-    position: absolute;
-    right: 30px;
-    transition: 0.5s;
-  }
-  .menu-head {
-    margin-bottom: 9px;
-  }
-  .common-option-div{
-    margin-bottom: 20px;
-  }
-  .head-child ul {
-    margin-bottom: 0;
-  }
-  .menu-head span a, .mobile-sub_menu .image-text h6 {
-    color: #000 !important;
-  }
-  .footer .footlinks li:first-child{
-    margin-left: 0;
-  }
-  .second-header-image{
-    display: none;
-  }
+.mobile-device .main-nav-title li {
+  margin-right: 0;
+  margin-top: 15px;
+}
+.maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
+  display: none;
+}
+.main-nav-link li:nth-child(2) {
+  margin-right: 18px;
+}
+.footer ul .footer-item-list{
+  max-width: 47%;
+  flex: 0 0 47%;
+  padding: 20px 0 10px 0;
+  margin: 20px auto 0 !important
+}
+.footer-item-list.data-block:after {
+  background: url(../images/redesign/downward-arrow.png) no-repeat;
+  content: '';
+  height: 18px;
+  width: 18px;
+  background-position: right;
+  position: absolute;
+  right: 0;
+  background-size: 10px;
+  top: 26px;
+}
+.footer-item-list.data-block.active:after {
+  transform: rotate(180deg);
+  top: 30px;
+  background-position: bottom left;
+}
+.container-footlinks, .homepage-menu.mariatash-header {
+  background: rgb(41, 41, 41);
+}
+.footer .footlinks li,.social-media ul{
+  position: relative;
+}
+.footer .social-media li:last-child{
+  margin-right: 0;
+}
+.social-media ul {
+  margin-bottom: 40px;
+}
+.mobile-device .head-child, #appointments img {
+  display: none;
+  padding-left: 10px;
+}
+.mobile-device .head-child.active {
+	display: block;
+}
+#appointments .col{
+  width: 100%;
+  margin-bottom: 9px;
+  flex: 0 0 100%;
+}
+#appointments{
+  padding: 0;
+}
+.maria-right-menus{
+  right: 0;
+}
+.mobile-main_menu, .mobile-sub_menu .sub-menu {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.piercing_options .image-text {
+  padding-left: 15px;
+  margin-bottom: 17px;
+}
+ .mobile-device.form-search input.input-text{
+  background: #292929;
+}
+.form-search input.input-text{
+  padding-bottom: 2px;
+}
+#jewelry .menu-head span a:after {
+  background: url(../images/redesign/plus.png) no-repeat;
+  content: '';
+  height: 20px;
+  width: 19px;
+  background-position: right;
+  position: absolute;
+  right: 30px;
+  transition: 0.5s;
+  background-size: 10px;
+}
+#jewelry .menu-head span a.active:after {
+  background: url(../images/redesign/minus.png) no-repeat;
+  content: '';
+  height: 19px;
+  width: 19px;
+  background-position: right;
+  position: absolute;
+  right: 30px;
+  transition: 0.5s;
+}
+.menu-head {
+  margin-bottom: 9px;
+}
+.common-option-div{
+  margin-bottom: 20px;
+}
+.head-child ul {
+  margin-bottom: 0;
+}
+.menu-head span a, .mobile-sub_menu .image-text h6 {
+  color: #000 !important;
+}
+.footer .footlinks li:first-child{
+  margin-left: 0;
+}
+.second-header-image{
+  display: none;
+}
   .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
     background: rgba(41,41,41)
   }
@@ -450,6 +459,10 @@
   .collat-wrap{
     margin: 0 auto;
   }
+  #narrow-by-list {
+    max-height: 400px;
+    overflow-y: scroll;
+  }
   /*Different Footer */
   .customer-care-list {
   	padding: 0;
@@ -568,7 +581,7 @@
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
-    position: relative;
+    /*position: relative;*/
     bottom: 0;
   }
   .big-popup-body{
@@ -669,7 +682,6 @@
   }
   .common-option-div{
     width: 100%;
-    padding: 0 16px;
   }
   .menu-common-section{
     margin-top: 13px;
@@ -696,6 +708,13 @@
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
+  .manage-payment-method .tablinks {
+    width: 50%;
+  }
+  .my-account .login_security .breadcrumbs{
+    margin-top: 13px;
+    position: absolute;
+  }
   .toolbar-top {
     display: none;
   }
@@ -743,7 +762,7 @@
     flex: 0 0 100%;
     max-width: 100%;
   }
-  #search {
+   .mobile-device #search {
     position: fixed;
     width: 100%;
     left: 0;
@@ -769,22 +788,22 @@
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
 
-  .my-account .box {
+  .my-account .myaccount-payment-option .box {
     padding-left: 45px;
     padding-right: 45px;
     margin-left: auto;
     margin-right: auto;
   }
-  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+ /* #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
     width: 100%;
-  }
+  }*/
   .manage-payment-method #mt-credit-card-info .mt-card-info{
     width: 47%;
     float: left;
     clear: none;
   }
   .mt-new-payment li.payment-exp-date {
-    margin-right: 6%;
+    margin-right: 33px;
   }
   .cvv-textbox input{
     width: 100%;
@@ -804,20 +823,21 @@
     float: left;
   }
   .manage-payment-method #mt-credit-card-info .mt-card-info {
-    width: 47%;
+   /* width: 47%;*/
+    width: 322px;
     float: left;
     clear: none;
   }
-  #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+  /*#mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
     width: 100%;
-  }
+  }*/
   .manage-payment-method .mt-edit-form .exp-year {
     width: 48.5%;
     float: left;
     margin-left: 13px;
   }
   .mt-new-payment li.payment-card-type {
-    margin-right: 6%;
+    margin-right: 33px;
   }
   .manage-payment-method #edit-main .box-title {
     padding: 7px 0px 7px 0px;
@@ -830,10 +850,14 @@
     padding-left: 0px;
   }
   #new-mt-add-payment-method li.payment-card-type {
-    margin-right: 6%;
+    margin-right: 33px;
   }
   #new-mt-add-payment-method li.payment-exp-date {
-    margin-left: 6%;
+    margin-left: 33px;
+  }
+  .manage-payment-method #new-mt-saved-card #billing-new-address-form li.list-odd, .myaccount-add-payment-form #billing-new-address-form li.list-odd{
+    margin-left: 33px;
+    float: left;
   }
 
 
@@ -871,7 +895,7 @@
     margin-right: 0px;
   }
   .mobile-sub_menu .sub-menu{
-    top: 77px;
+    top: 54px;
   }
   .about-designer{
     padding: 0 45px;
@@ -905,7 +929,7 @@
     width: 380px !important;
   }
   .mobile-main_menu{
-    top: 76px;
+    top: 54px;
   }
   .five-col{
     width: 49%;
@@ -977,9 +1001,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  .mobile-device .for-space-to-bottom.cat-img-space{
+  /* .mobile-device .for-space-to-bottom.cat-img-space{
     height: 80px !important;
-  }
+  } */
   #category-title{
     /* margin: 16px 0 20px !important; */
     padding: 0 !important;
@@ -1069,12 +1093,17 @@
   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
     width: 625px;
     margin: 0 auto;
+    margin-bottom: 20px;
   }
 }
 
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
+  .my-account .edit-new-address,.my-account-login-security{
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
   .about-designer{
     padding: 0 26px;
   }
@@ -1103,15 +1132,18 @@
     margin: 0.5%;
   }
   #narrow-by-list li div dt {
-    width: 161.4px;
+    width: 100%;
+  }
+  .m-filter-checkboxes label {
+	    margin-bottom: 12px;
   }
   .desktop-device #narrow-by-list li div dt {
     width: 100%
   }
   #narrow-by-list li div dd{
-    width: 161px;
+    width: 100%;
   }
-  .form-search input.input-text{
+    .mobile-device .form-search input.input-text{
     width: 200px;
     height: 60px !important;
   }
@@ -1215,9 +1247,10 @@
     right: 26px !important;
     width: 40% !important;
   }
-  #search {
-    background: #292929;
-  }
+
+    .mobile-device #search {
+        background: #292929;
+    }
   .footer .social-media li{
     margin-right: 24px;
   }
@@ -1226,6 +1259,18 @@
   }
   .top-nav-v2{
     display: none;
+  }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    background-color: rgba(41,41,41,0.9);
+  }
+  .footer {
+    padding-top: 0px !important;
+    height: 0px;
+    bottom: -1px;
+    position: fixed;
+    z-index: 1;
+    padding: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
 }
 
@@ -1259,10 +1304,16 @@
   }
 }
 
+@media (max-width: 1023px) and (orientation: landscape) {
+	#narrow-by-list {
+	    max-height: 200px;
+	}
+}
+
 
 /* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
-  .my-account .box{
+  .my-account .myaccount-payment-option .box{
     padding-left: 15px;
     padding-right: 15px;
     margin-left: auto;
@@ -1388,6 +1439,10 @@
   }
   .catalog-category-view .category-title h1{
     text-align: center;
+    line-height: 0.3;
+  }
+  .catalog-category-view .breadcrumbs{
+    margin-top: 7px;
   }
   .category-products{
     margin-top: 0;
@@ -1529,11 +1584,19 @@
     max-width: 100%;
     width: 100%;
   }
-  .form-search input.input-text{
+
+  .mobile-device.form-search input.input-text{
     height: 60px !important;
   }
   .appointment-container{
     margin-top: 18px!important;
+  }
+  .mt-logo img {
+    width: 130px;
+  }
+  .common-option-div{
+    width: 100%;
+    padding: 0 16px;
   }
 }
 
@@ -1541,9 +1604,6 @@
 @media (max-width:767px) and (orientation:portrait) {
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
-  }
-  .manage-payment-method .tablinks{
-    width: 50%;
   }
   .manage-payment-method .mt-payment-details .card-details-main .mt-name-on-card{
     width: 100%;
@@ -1561,9 +1621,11 @@
   }
   .myaccount-add-payment-form .add-new-payment-method-ul #mt-credit-card-info ul li{
     width: 100%;
+    overflow: hidden;
   }
   .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
     margin-left: 0px;
+    padding-top: 10px;
   }
   .manage-payment-method #new-mt-add-payment-method .add-new-payment-method-ul #billing-new-address-form ul li{
     width: 100%;
@@ -1622,6 +1684,12 @@
   .manage-payment-method .mt-edit-form #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
     width: 100%;
   }
+  .manage-payment-method .payment-card-name,.payment-card-exp {
+    font-size: 15px;
+  }
+  .manage-payment-method .payment-card-exp {
+    font-size: 15px;
+  }
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1631,10 +1699,6 @@
   }
   .maria-left-menus {
     left: 50px;
-  }
-  .mt-logo img {
-    width: 130px;
-    margin-top: 1px;
   }
   .footer ul .footer-item-list{
     max-width: 100%;
@@ -1921,6 +1985,9 @@
     float: left;
     margin-top: 0;
   }
+  .bk-slide{
+    border-bottom: 1px solid #7f7f7f;
+  }
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
@@ -2013,9 +2080,9 @@
     clear: none;
   }
   .manage-payment-method .mt-edit-form .exp-year{
-    width: 48.5%;
-    float: left;
-    margin-left:12px;
+    width: 47.4%;
+    float: right;
+   /* margin-left:10px;*/
   }
   .manage-payment-method #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
     width: 100%;
@@ -2033,9 +2100,9 @@
     padding-left: 0;
   }
   .myaccount-add-payment-form #mt-credit-card-info #authnetcim_cc_type_exp_div .card-exp .exp-year{
-    width: 48.5%;
-    float: left;
-    margin-left: 10px;
+    width: 48%;
+    float: right;
+    /*margin-left: 10px;*/
   }
   #new-mt-add-payment-method li.payment-card-type{
     margin-right: 6%;
@@ -2052,13 +2119,16 @@
   .myaccount-add-payment-form #billing-new-address-form .input-box select{
     width: 100%;
   }
+  .myaccount-add-payment-form #billing-new-address-form ul{
+    float: none;
+  }
   .mobile-main_menu, .mobile-sub_menu .sub-menu{
-    top: 55px;
+    top: 53px;
   }
   .maria-left-menus{
     left:85px;
   }
-  .form-search input.input-text{
+  .mobile-device.form-search input.input-text{
     width: 150px;
   }
   .custom-container {
@@ -2186,8 +2256,12 @@
     margin: 30px auto 0;
   }
   .allure_filter{
-    width: 550px;
-    margin: 0 auto;
+    /* width: 550px;
+    margin: 0 auto; */
+  }
+  .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    padding-top: 15px;
+    padding-bottom: 5px;
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){
@@ -2264,6 +2338,7 @@
   .main-container {
     padding-bottom: 60px;
   }
+
   .footer {
     padding-top: 0px !important;
     height: 0px;
@@ -2453,7 +2528,7 @@
   .position-bottom{
     padding-right: 24px;
   }
-  .form-search input.input-text{
+    .mobile-device .form-search input.input-text{
     width: 270px;
   }
 }
@@ -2601,6 +2676,11 @@
 @media (min-width:768px) and (max-width:1023px) {
   .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
+  }
+  .desktop-device .allure_filter{
+    margin-left: 109px;
+    width: 660px;
+    margin-top: 0px;
   }
 }
 @media (min-width:786px) and (max-width:1111px){

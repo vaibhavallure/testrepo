@@ -11,6 +11,10 @@
             Tipped.hide('.popbox');
         });
 
+        jQuery('#link_email_signup').click(function(){
+            jQuery('.t_Tooltip').toggle();
+        });
+
         jQuery(window).bind("resize",function(){
             var width = jQuery(window).width();
 
@@ -58,7 +62,8 @@
                 offset:{y:-6},
                 ajax: true,//{type: 'post',cache: false},
                 hook: 'topmiddle',
-                hideOn: 'click-outside',
+                hideOn: 'false',
+                hideOthers: true,
                 onShow: function (content, element) {
                     //<![CDATA[
                     var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
@@ -71,6 +76,7 @@
 //                jQuery("#country").click(function(){
 //                    jQuery("#tld_r_ul").show(200);
 //                });
+
                     // prevent bind event multiple times
                     jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
                     jQuery('#country_subscribe').bind('click', toggleCountrySelect);

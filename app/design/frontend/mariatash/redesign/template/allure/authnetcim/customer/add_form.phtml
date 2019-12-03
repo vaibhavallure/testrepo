@@ -4,7 +4,7 @@
 <div id="add-main-form"></div>
 <div id="add-main">
 
-<form class="" action="<?php echo $this->getAction(); ?>" method="post" id="form-validate-mt" <?php echo ( $this->isEdit() ) ? 'style="display:block"' : 'style="display:block"'; ?> data-edit="<?php echo ($this->isEdit())?"edit":"add"?>">
+<form class="add-new-card-form" action="<?php echo $this->getAction(); ?>" method="post" id="form-validate-mt" <?php echo ( $this->isEdit() ) ? 'style="display:block"' : 'style="display:block"'; ?> data-edit="<?php echo ($this->isEdit())?"edit":"add"?>">
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<input type="hidden" name="id" value="<?php //echo $this->getCard()->getId(); ?>" />
 	<input type="hidden" name="method" value="<?php echo $code; ?>" />
@@ -87,7 +87,7 @@
 					<div class="input-box">
 						<!--<span class="card-code para-normal">Security Code</span>-->
 						<div class="v-fix cvv-box">
-							<input placeholder="CVV" type="password" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="cvv input-patern validate-digits-range digits-range-001-9999 card-cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value=""  maxlength="4"/>
+							<input placeholder="CVV" type="password" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="cvv input-text validate-digits-range digits-range-001-9999 card-cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value=""  maxlength="4"/>
 						</div>
 					</div>
 				</li>

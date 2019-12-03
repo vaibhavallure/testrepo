@@ -359,7 +359,8 @@ foreach($collection as $date_to) {
 
 </style>
 
-<div class='loader'>
+<div class="insta-loader"></div>
+<div class='loader'><!--DEFAULT INSTA LOADER DISPLAY NONE-->
     <div class='loader--dot'></div>
     <div class='loader--dot'></div>
     <div class='loader--dot'></div>
@@ -478,14 +479,14 @@ target="_blank"><i class="fa fa-link"></i>
 <script>
     //temp
     jQuery(document).ready(function(){
-        jQuery('.category-products').hide();
+        jQuery('.insta-loader').css({"display":"none"});
     });
 
 </script>
 
 <script type="text/javascript">
     jQuery('.loader').css({"display":"none"});
-
+    // jQuery('.insta-loader').css({"display":"none"});
     var xhr = null;
     var page = 2;
     var totalPages = <?php echo $totalPageSize?>;
@@ -498,7 +499,8 @@ target="_blank"><i class="fa fa-link"></i>
         }
         if(condition){
             if(page<=totalPages){
-                setLoader();
+                // setLoader();
+                jQuery('.insta-loader').css({"display":"block"});
                 if( xhr == null ) {
                     //xhr.abort();
                     //xhr = null;
@@ -514,7 +516,9 @@ target="_blank"><i class="fa fa-link"></i>
                             setTimeout(
                                 function()
                                 {
-                                    unsetLoader();
+                                    // unsetLoader();
+                                    // jQuery('.loader').hide();
+                                    jQuery('.insta-loader').css({"display":"none"});
                                 }, 2000);
                         }
                     });
@@ -523,7 +527,8 @@ target="_blank"><i class="fa fa-link"></i>
                     page ++;
                 }
             }else{
-                jQuery('.loader').css({"display":"none"});
+                // jQuery('.loader').css({"display":"none"});
+                jQuery('.insta-loader').css({"display":"none"});
             }
         }
     });

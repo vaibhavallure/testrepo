@@ -193,13 +193,20 @@ Product view
 
             <action method="addJs"><script>jquery/facybox/facybox.js</script></action>
 
-
+			<action method="addItem"><type>skin_js</type><name>smartzoom/js/tooltipster.bundle.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>smartzoom/js/hammer.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>smartzoom/js/TweenMax.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>smartzoom/js/jquery.pinchzoomer.min.js</name></action>
 
             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>
 
             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/facybox.css</stylesheet></action>
-            <action method="addItem">
+            
+            <action method="addCss"><stylesheet>smartzoom/css/pinchzoomer.min.css</stylesheet></action>
+           	<action method="addCss"><stylesheet>smartzoom/css/tooltipster.bundle.min.css</stylesheet></action>
+           
+			<action method="addItem">
                 <type>js</type>
                 <name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>-->
             </action>

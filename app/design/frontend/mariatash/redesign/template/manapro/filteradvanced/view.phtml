@@ -55,40 +55,30 @@
 
       </div>
 
-
         <?php if($this->canShowOptions()): ?>
-            <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
-            <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
-            <div class="allure_filter">
-                <dt class="filter-head al-hide para-normal">Filter By</dt>
-                <dd class="filter-contain al-hide" >
-                    <ul id="narrow-by-list" class="mb-0">
-                        <?php $_filters = $this->getFilters(); $i = 0; ?>
-                        <?php foreach ($_filters as $_filter): ?>
-                        <?php
-                        if (!$_filter->getCode()) {
-                            $_filterCode = iconv('utf-8', 'us-ascii//TRANSLIT', $_filter->getName());
-                            $_filterCode = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '_', $_filterCode));
-                            $_filter->setCode($_filterCode);
-                        }
-                        ?>
-                        <?php //echo (get_class($_filter));?>
-                        <?php /*if($_filter->getItemsCount() && 'price' == $_filter->getCode()): */?><!--
-                    <li class="common-filter filtru-<?php /*echo $_filter->getCode(); */?>">
-                        <div class="optionfilter" style="<?php /*if($_filter->getCode() != 'price') : */?><?php /*endif; */?>">
-                            <dt><?php /*echo $this->__($_filter->getName()) */?></dt>
-                            <dd><li><?php /*echo $_filter->getHtml() */?></li></dd>
-                        </div>
-                    </li>
-                --><?php /*endif; */?>
-                        <?php if($_filter->getItemsCount() ): //&& 'price' != $_filter->getCode()?>
-                        <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
-                            <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
-                <dt><?php echo $this->__($_filter->getName()) ?></dt>
-                <dd data-filter-code="<?= $_filter->getCode() ?>" class="filtru-<?php echo $_filter->getCode().'-content-dtn'; ?>" style ="display:none">
-                    <!-- <div class="filter_name"><//?php echo $this->__($_filter->getName()) ?></div> -->
-                    <?php echo $_filter->getHtml() ?>
-                </dd>
+        <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
+        <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
+        <div class="allure_filter">
+            <dt class="filter-head al-hide para-normal">Filter By</dt>
+            <dd class="filter-contain al-hide" >
+                <ul id="narrow-by-list" class="mb-0">
+                    <?php $_filters = $this->getFilters(); $i = 0; ?>
+                    <?php foreach ($_filters as $_filter): ?>
+                    <?php
+                    if (!$_filter->getCode()) {
+                        $_filterCode = iconv('utf-8', 'us-ascii//TRANSLIT', $_filter->getName());
+                        $_filterCode = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '_', $_filterCode));
+                        $_filter->setCode($_filterCode);
+                    }
+                    ?>
+                    <?php if($_filter->getItemsCount() ): //&& 'price' != $_filter->getCode()?>
+                    <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
+                        <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
+                    <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                    <dd data-filter-code="<?= $_filter->getCode() ?>" class="filtru-<?php echo $_filter->getCode().'-content-dtn'; ?>" style ="display:none">
+                
+                		<?php echo $_filter->getHtml() ?>
+            		</dd>
             </div>
         </li>
         <script type="text/javascript">
@@ -110,6 +100,8 @@
                     jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
                     var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
                     if(!showOrHide) {
+                        jQuery('.optionfilter dd').slideUp(300);
+                        jQuery('.optionfilter dt').removeClass("showing");
                         jQuery(this).addClass("showing");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').addClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
@@ -128,20 +120,24 @@
     <?php endforeach; ?>
         <?php if ($this->getLayer()->getState()->getFilters()): ?>
             <li class="filter-actions">
-                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
-                <div class="actions" id="clear-all-filter"><a class="link-button" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="clear-all-filter"><a class="link-button btn btn-link" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button btn btn-link"><?php echo $this->__('Apply') ?></a></div>
             </li>
             <?php else: ?>
             <li class="filter-actions">
-                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button float-right"><?php echo $this->__('Apply') ?></a></div>
-                <div class="actions" id="clear-all-filter"><a class="link-button" href="#"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="clear-all-filter"><a class="link-button btn btn-link" href="#"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button btn btn-link"><?php echo $this->__('Apply') ?></a></div>
             </li>
         <?php endif; ?>
         <li id="total_item_counts_holder">
             <span class="info-text-two"></span>
         </li>
-        </ul>
-        </dd>
+    </ul>
+    <div class="filter-actions d-none">
+        <div class="actions" id="clear-all-filter"><a class="link-button btn btn-link" href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+        <div class="actions" id="apply-filter-btn" ><a onclick="applyFilter()" class="link-button btn btn-dark"><?php echo $this->__('Apply') ?></a></div>
+    </div>
+    </dd>
             </div>
 <!--            --><?php //var_dump($this->getFiter()->getMSelectedValues())?>
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
@@ -198,16 +194,15 @@
         var block = jQuery(".filter-common-div");
         block.css("height", "100vh");
         block.css("overflow", "auto");
-//        block.css("background", "transparent");
+        block.css("background", "transparent");
         block.css("padding-bottom","200px");
-
     }
     function unScrollToFilter()
     {
         var block = jQuery(".filter-common-div");
         block.css("height", "auto");
         block.css("overflow", "auto");
-//        block.css("background", "white");
+        block.css("background", "white");
         block.css("padding-bottom","0");
     }
 

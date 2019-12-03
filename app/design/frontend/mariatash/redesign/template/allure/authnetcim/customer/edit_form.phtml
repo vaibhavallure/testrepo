@@ -85,7 +85,7 @@
 						<div class="input-box">
 							<!--<span class="card-code">Security Code</span>-->
 							<div class="v-fix cvv-textbox">
-								<input placeholder="CVV" type="password" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text main validate-digits-range digits-range-001-9999 cvv-input input-cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" maxlength="4" value=""/>
+								<input placeholder="CVV" type="password" title="<?php echo $this->__('Card Verification Number'); ?>" class="input-text main cvv input-cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?> required-entry <?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" maxlength="4" autocomplete="off" value=""/>
 							</div>
 						</div>
 					</li>
