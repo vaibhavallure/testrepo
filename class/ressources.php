@@ -1528,15 +1528,15 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							"703" => array(
-										"libelle" => "<strong>Champagnes</strong> at light prices",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							"704" => array(
-										"libelle" => "<strong>Rosés</strong> at light prices",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							"705" => array(
-										"libelle" => "<strong>White wines</strong> at light prices",
+										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
 										),
 							);
