@@ -23,6 +23,7 @@ class Mana_Filters_Model_Filter_Price
      */
     protected function _renderItemLabel($range, $value)
     {
+        $this->_getResource()->getPriceRanges();
         $range = $this->_getResource()->getPriceRange($value, $range);
         $result = new Varien_Object();
         Mage::dispatchEvent('m_render_price_range', array('range' => $range, 'model' => $this, 'result' => $result));
@@ -52,13 +53,16 @@ class Mana_Filters_Model_Filter_Price
 
         $range = $this->getPriceRange();
         $dbRanges = $query->getFilterCounts($this->getFilterOptions()->getCode());
+        $manualRanges = $this->_getResource()->getPriceRanges();
+        //echo "<pre>";print_r($this->getFilterOptions()->getCode());die;
         if ($this->_getIsFilterable() == 2) {
-            $nonEmptyRanges = $dbRanges;
-            $dbRanges = array();
-            for ($i = 1; ($i - 1) * $range < $this->getMaxPriceInt(); $i++) {
-                $dbRanges[$i]  = isset($nonEmptyRanges[$i]) ? $nonEmptyRanges[$i] : 0;
-            }
+             $nonEmptyRanges = $dbRanges;
+             $dbRanges = array();
+             for ($i = 1; $manualRanges[$i] < $this->getMaxPriceInt(); $i++) {
+                 $dbRanges[$i]  = isset($nonEmptyRanges[$i]) ? $nonEmptyRanges[$i] : 0;
+             }
         }
+        
         $data = array();
 
         $selectedIndexes = array();
@@ -68,12 +72,13 @@ class Mana_Filters_Model_Filter_Price
                 $selectedIndexes[] = $index;
             }
         }
-
+        
         foreach ($dbRanges as $index => $count) {
-            $isSelected = in_array($index, $selectedIndexes);
+            $isSelected = in_array($manualRanges[$index], $selectedIndexes);
+            
             $data[] = array(
                 'label' => $this->_renderItemLabel($range, $index),
-                'value' => $index . ',' . $range,
+                'value' => $manualRanges[$index] . "," . $manualRanges[$index+1],
                 'count' => $count,
                 'm_selected' => $isSelected,
                 'm_show_selected' => $this->getFilterOptions()->getIsReverse() ? !$isSelected : $isSelected,
@@ -413,8 +418,13 @@ class Mana_Filters_Model_Filter_Price
                 }
 
             }
+            $range = 100;
             $this->setData('price_range', $range);
         }
+        
+        $range = 100;
+        $this->setData('price_range', $range);
+        
         return $this->getData('price_range');
     }
     public function init() {

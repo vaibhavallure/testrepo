@@ -116,6 +116,7 @@
                     }
                     else {
                         jQuery(this).removeClass("showing");
+                        jQuery("body").removeClass("fancybox-lock");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
                     }
@@ -162,10 +163,13 @@
 		}
 	}
     jQuery(document).ready(function() {
+
         jQuery('#narrow-by-list div.optionfilter').live('mouseleave', function(){
-            var parent_class = jQuery(this).parent().attr('class');
-            if(jQuery('#selectedfilter').val() != '') {
-                jQuery('.'+parent_class+' .m-show-less-action').click();
+            if (jQuery(window).width() > 1023) {
+                var parent_class = jQuery(this).parent().attr('class');
+                if (jQuery('#selectedfilter').val() != '') {
+                    jQuery('.' + parent_class + ' .m-show-less-action').click();
+                }
             }
         });
 
@@ -174,11 +178,46 @@
 
 
     jQuery('.allure_filter .filter-head').click(function () {
-        jQuery(".filter-head").toggleClass("showing");
-        jQuery(".filter-contain").slideToggle();
-    });
+        if(!jQuery(".filter-head").hasClass("showing")) {
+            jQuery(".filter-head").addClass("showing");
+            jQuery(".filter-contain").slideDown();
+            jQuery("body").css("overflow","hidden");
+            jQuery(".allure_filter").addClass("scrolling");
+            scrollToFilter();
+        }else {
+            jQuery(".filter-head").removeClass("showing");
+            jQuery(".filter-contain").slideUp();
+            jQuery("body").css("overflow","auto");
+            jQuery(".allure_filter").removeClass("scrolling");
+            unScrollToFilter();
+        }
+        });
 
-    jQuery(window).bind("resize load",function () {
+    function scrollToFilter()
+    {
+        var block = jQuery(".filter-common-div");
+        block.css("height", "100vh");
+        block.css("overflow", "auto");
+//        block.css("background", "transparent");
+        block.css("padding-bottom","200px");
+
+    }
+    function unScrollToFilter()
+    {
+        var block = jQuery(".filter-common-div");
+        block.css("height", "auto");
+        block.css("overflow", "auto");
+//        block.css("background", "white");
+        block.css("padding-bottom","0");
+    }
+
+    var meth="load";
+    if(jQuery("body").hasClass("desktop-device"))
+    {
+         meth="resize load";
+    }
+
+    jQuery(window).bind(meth,function () {
         if (jQuery(window).width() <= 1023) {
             jQuery(".allure_filter .filter-contain").hide();
             jQuery(".allure_filter .filter-head").show();

@@ -422,12 +422,25 @@ class ManaPro_FilterSuperSlider_Model_Observer extends Mage_Core_Helper_Abstract
         /* @var $range array */ $range = $observer->getEvent()->getRange();
         /* @var $model Mana_Filters_Model_Filter_Decimal */ $model = $observer->getEvent()->getModel();
         /* @var $result Varien_Object */ $result = $observer->getEvent()->getResult();
+        
+        if ($range['to']) {
+            $range['to'] -= 1;
+        }
 
         /* @var $helper ManaPro_FilterSuperSlider_Helper_Data */
         $helper = Mage::helper(strtolower('ManaPro_FilterSuperSlider'));
         $fromPrice = $helper->formatNumber($range['from'], $model->getFilterOptions());
         $toPrice = $helper->formatNumber($range['to'], $model->getFilterOptions());
-        $result->setLabel(Mage::helper('catalog')->__('%s - %s', $fromPrice, $toPrice));
+        
+        if ($range['to']) {
+            if ($range['from']) {
+                $result->setLabel(Mage::helper('catalog')->__('%s -</span><span> %s</span>', $fromPrice, $toPrice));
+            } else {
+                $result->setLabel(Mage::helper('catalog')->__('< %s', $toPrice));
+            }
+        } else {
+            $result->setLabel(Mage::helper('catalog')->__('%s +</span>', $fromPrice));
+        }
     }
     /**
      * REPLACE THIS WITH DESCRIPTION (handles event "m_before_load_filter_collection")

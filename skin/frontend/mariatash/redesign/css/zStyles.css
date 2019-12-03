@@ -2210,6 +2210,7 @@ line-height: 42px;
 		{
 			padding-top: 60px !important;
 		}
+
 	}
 
 
@@ -2221,6 +2222,10 @@ line-height: 42px;
 			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
+		}
+		.menu-common-section .inner-box {
+			justify-content: space-evenly;
+			padding: 0 162px;
 		}
 	}
 	@media (max-width: 767px) {
@@ -2368,12 +2373,16 @@ line-height: 42px;
 	.catalog-product-view .product-view .fs-timeline-detail {
 		z-index: 9999;
 	}
-	/*Border Throughout site for tooltip*/
+	/*Border Throughout site for tooltip*/git c`git
 	.t_ContentContainer.t_clearfix.t_Content_allure_footer,
 	.icon-user .login-dropdown{
 		border: 0.5px solid;
 	}
 
-	.celebPopup .product-info{
+	.category-celebrity-clientele .celebPopup .product-info{
 		position: relative;
+	}
+
+	img#cross-icon {
+		width: 32px;
 	}

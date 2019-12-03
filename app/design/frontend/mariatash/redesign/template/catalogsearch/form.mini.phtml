@@ -24,73 +24,73 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
-    <div class="form-search">
-        <!-- <label for="search"><//?php echo $this->__('Search') ?></label> -->
-        <div id="search-input" class="position-relative" style="display:none;">
-            <input class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" type="text" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
-            <img class="position-absolute" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-wt.png'); ?>" alt="x">
-        </div>
-        <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search" title="Search">
-        <div id="search_autocomplete" class="search-autocomplete"></div>
-        <script type="text/javascript">
-        //<![CDATA[
-            var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo Mage::getStoreConfig('ecp_searchbox/searchbox/instructional_text')?>');
-            searchForm.initAutocomplete('<?php echo $this->helper('catalogsearch')->getSuggestUrl() ?>', 'search_autocomplete');
-        //]]>
-        </script>
-        <script>
-            jQuery(document).ready(function(){              
-              if(jQuery('body').hasClass('mobile-device')) {
-                  jQuery('.menu_overlay').after(jQuery('#search-input'));
-                  jQuery('.menu_overlay').after(jQuery('#search_autocomplete'));
-                  jQuery('#search_autocomplete').css('position', ' fixed');
-                  jQuery('#search_autocomplete').css('left', '0px');
-                  jQuery('#search_autocomplete').css('top', '41px');
-                  jQuery('#search_autocomplete').css('width', '100%');
-                  jQuery('#search_autocomplete').css('z-index', '1033');
-                  jQuery('#search_autocomplete').css('overflow', 'scroll');
-                  jQuery("#cross-icon").hide();
-                  let crossIconObj = jQuery('#cross-icon');
-                  jQuery('#search-input').after(crossIconObj)
-			 
-                jQuery(crossIconObj).removeClass('position-absolute')
-                jQuery(crossIconObj).css('margin-top','6px')
-              }
-
-              jQuery("#search-icon").click(function(){
-                if(jQuery('body').hasClass('mobile-device')) {
-                  jQuery("#cross-icon").show();
-                  jQuery('body').addClass('fancybox-lock');
-                  jQuery('.mobile_menu_overlay').css('height','100%');
-                  jQuery('.mt-logo').hide();
-                }
-                
-                jQuery(this).hide();
-
-                  if (jQuery(window).width() <= 1440) {
-                      jQuery("ul.allure-menu").addClass("search-active");
-                        }
-                  jQuery("#search-input").show();
-                  jQuery("#search").focus();
-              });
-
-            jQuery("#cross-icon").click(function(){
-              if(jQuery('body').hasClass('mobile-device')) {
-                jQuery("#cross-icon").hide();
-                  jQuery('.mobile_menu_overlay').css('height','0%');
-                  jQuery('body').removeClass('fancybox-lock');
-                  jQuery('.mt-logo').show();
-              }
-                if (jQuery(window).width() <= 1440) {
-                    jQuery("ul.allure-menu").removeClass("search-active");
-                }
-                jQuery('#search_autocomplete').hide();
-                jQuery("#search-input").hide();
-                jQuery("#search").val('');
-              jQuery("#search-icon").show();
-            });
-});
-        </script>
+<div class="form-search">
+    <!-- <label for="search"><//?php echo $this->__('Search') ?></label> -->
+    <div id="search-input" class="position-relative" style="display:none;">
+		<form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
+            <input type="search" class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
+            <img class="position-absolute" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/small-cross.png'); ?>" alt="x">
+       	</form>
     </div>
-</form>
+    <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search" title="Search">
+    <div id="search_autocomplete" class="search-autocomplete"></div>
+    <script type="text/javascript">
+    //<![CDATA[
+        var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo Mage::getStoreConfig('ecp_searchbox/searchbox/instructional_text')?>');
+        searchForm.initAutocomplete('<?php echo $this->helper('catalogsearch')->getSuggestUrl() ?>', 'search_autocomplete');
+    //]]>
+    </script>
+    <script>
+        jQuery(document).ready(function(){              
+          if(jQuery('body').hasClass('mobile-device')) {
+              jQuery('.menu_overlay').after(jQuery('#search-input'));
+              jQuery('.menu_overlay').after(jQuery('#search_autocomplete'));
+              jQuery('#search_autocomplete').css('position', ' fixed');
+              jQuery('#search_autocomplete').css('left', '0px');
+              jQuery('#search_autocomplete').css('top', '41px');
+              jQuery('#search_autocomplete').css('width', '100%');
+              jQuery('#search_autocomplete').css('z-index', '1033');
+              jQuery('#search_autocomplete').css('overflow', 'scroll');
+              jQuery("#cross-icon").hide();
+              let crossIconObj = jQuery('#cross-icon');
+              jQuery('#search-input').after(crossIconObj)
+		 
+            jQuery(crossIconObj).removeClass('position-absolute')
+            jQuery(crossIconObj).css('margin-top','6px')
+          }
+
+          jQuery("#search-icon").click(function(){
+            if(jQuery('body').hasClass('mobile-device')) {
+              jQuery("#cross-icon").show();
+              jQuery('body').addClass('fancybox-lock');
+              jQuery('.mobile_menu_overlay').css('height','100%');
+              jQuery('.mt-logo').hide();
+            }
+            
+            jQuery(this).hide();
+
+              if (jQuery(window).width() <= 1440) {
+                  jQuery("ul.allure-menu").addClass("search-active");
+                    }
+              jQuery("#search-input").show();
+              jQuery("#search").focus();
+          });
+
+        jQuery("#cross-icon").click(function(){
+          if(jQuery('body').hasClass('mobile-device')) {
+            jQuery("#cross-icon").hide();
+              jQuery('.mobile_menu_overlay').css('height','0%');
+              jQuery('body').removeClass('fancybox-lock');
+              jQuery('.mt-logo').show();
+          }
+            if (jQuery(window).width() <= 1440) {
+                jQuery("ul.allure-menu").removeClass("search-active");
+            }
+            jQuery('#search_autocomplete').hide();
+            jQuery("#search-input").hide();
+            jQuery("#search").val('');
+          jQuery("#search-icon").show();
+        });
+});
+    </script>
+</div>
