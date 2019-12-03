@@ -4,7 +4,9 @@ jQuery(document).ready(function () {
     jQuery('#search').keydown( (e) => {
 //        console.log(e.keyCode)
         if(e.keyCode==13){
-            jQuery('#search_mini_form').append(jQuery('#search-input').clone())
+            let clone = jQuery('#search-input').clone();
+            jQuery(clone).css('display','none');
+            jQuery('#search_mini_form').append(clone);
             jQuery('#search_mini_form').submit()
         }
     })
