@@ -2389,7 +2389,8 @@ input[type='radio']{
 	height: 100px;
 	display: block;
 	position: absolute;
-	top:30%;
+	/*top:30%;*/
+	top: 45%;
 }
 .prev,
 .galleryFull .controls .prev {
