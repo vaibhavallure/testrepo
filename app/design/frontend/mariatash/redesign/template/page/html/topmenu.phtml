@@ -54,7 +54,7 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                     if($wishlist):?>
           <li class="wishlist-section-mobile">
               <?php if($isCustomerLogIn):?>
-              <a class="icon-link wishlist"  href="<?/*= $wishlist->getUrl() */?>">
+              <a class="icon-link wishlist"  href="<?= $wishlist->getUrl() ?>">
                   <?php else:?>
                   <a class="icon-link wishlist"  onclick="signinwishlistMob()">
                       <?php endif;?>

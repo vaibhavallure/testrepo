@@ -1,6 +1,16 @@
 body{
 	overflow-x: unset !important;
 }
+.appointments-book-modify .dialogBg
+{
+	z-index:0!important;
+}
+.book-app-btn {
+	width: 266px;
+}
+.book-app-btn2 {
+	width: 266px;
+}
 /*Loader*/
 .showonmobile
 {
@@ -748,6 +758,10 @@ div#btnBookTop {
 	.pop-up-title{
 		max-width: 363px;
 	}
+
+	.book-app-btn {
+		width: fit-content;
+	}
 	/* td.td-piercing-name,
 	td.td-price {
 		padding-bottom: 5px;
@@ -1407,8 +1421,9 @@ tr.tr-piercing td span, tr.tr-piercing td {
 		width: 45%;
 	}
 	#popupConfirmAppointment .apt-buttons-set {
-    width: 93%;
+    width: 100%;
 	}
+
 	.success-field {
     padding: 0 6px;
 	}

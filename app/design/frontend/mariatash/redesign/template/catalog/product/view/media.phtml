@@ -238,7 +238,7 @@ if (!$videoUrl && $secondVideoUrl)
     function loadBaseImage(){
         jQuery(".containerImage").fadeIn(1000, function(){
             <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
-            jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
+            jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data-src="<?php echo $_product;?>" data="0"/>');
             jQuery('.thumb.thumb1').addClass("active");
         });
         // var zoom_img = jQuery('#zoom-img');

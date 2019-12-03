@@ -11,6 +11,10 @@
             Tipped.hide('.popbox');
         });
 
+        jQuery('#link_email_signup').click(function(){
+            jQuery('.t_Tooltip').toggle();
+        });
+
         jQuery(window).bind("resize",function(){
             var width = jQuery(window).width();
 
@@ -20,7 +24,7 @@
                     jQuery("#footer8").addClass("deskFooter");
                     jQuery("#footer8").removeClass("mobileFooter");
 //                    alert("Screen resolution changed page needs to be reload.");
-                    //location.reload();
+                    location.reload();
                 }
             }else{
                 console.log(width);
@@ -28,7 +32,7 @@
                     jQuery("#footer8").addClass("mobileFooter");
                     jQuery("#footer8").removeClass("deskFooter");
 //                    alert("Screen resolution changed page needs to be reload.");
-                  //  location.reload();
+                   location.reload();
                 }
             }
         });
@@ -58,7 +62,8 @@
                 offset:{y:-6},
                 ajax: true,//{type: 'post',cache: false},
                 hook: 'topmiddle',
-                hideOn: 'click-outside',
+                hideOn: 'false',
+                hideOthers: true,
                 onShow: function (content, element) {
                     //<![CDATA[
                     var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
@@ -72,9 +77,6 @@
 //                    jQuery("#tld_r_ul").show(200);
 //                });
 
-                    jQuery('#link_sign-up-for-newsletter').click(function(){
-                     jQuery('.t_Tooltip').toggle();
-                     });
                     // prevent bind event multiple times
                     jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
                     jQuery('#country_subscribe').bind('click', toggleCountrySelect);
@@ -91,11 +93,11 @@
             jQuery("#footer8").addClass("mobileFooter");
 
             jQuery('#popup_ajax_contain').load(jQuery(".popbox_ajax").attr("data-tipped"));
-            jQuery(".popbox").on("click",function () {               
+            jQuery(".popbox").on("click",function () {
                jQuery('#'+jQuery(this).attr("data-tooltip-id")).slideToggle();
                jQuery(this).parent().parent().toggleClass("active");
             });
-            jQuery('.footer-item-list.data-block').after().on("click",function (elem) {                
+            jQuery('.footer-item-list.data-block').after().on("click",function (elem) {
                 let currentTag = jQuery(elem.target).prop('tagName');
                 if(currentTag === 'LI') {
                     let child = jQuery(this).find('#link_customer-care').children()[0]
@@ -103,8 +105,8 @@
                         jQuery('#'+jQuery(child).attr("data-tooltip-id")).slideToggle();
                         jQuery(this).toggleClass("active");
                     }else {
-                        jQuery(this).toggleClass("active");                        
-                        jQuery('#popup_ajax_contain').slideToggle();                        
+                        jQuery(this).toggleClass("active");
+                        jQuery('#popup_ajax_contain').slideToggle();
                         //<![CDATA[
                 var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
                 new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('EMAIL ADDRESS') ?>');
@@ -112,8 +114,8 @@
                 new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('LAST NAME') ?>');
                 new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
                 //]]>
-                    }                    
-                }                
+                    }
+                }
             });
             jQuery(".popbox_ajax").on("click",function () {
                 jQuery(this).parent().parent().toggleClass("active");

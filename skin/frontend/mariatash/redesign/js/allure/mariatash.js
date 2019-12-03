@@ -4,7 +4,9 @@ jQuery(document).ready(function () {
     jQuery('#search').keydown( (e) => {
 //        console.log(e.keyCode)
         if(e.keyCode==13){
-            jQuery('#search_mini_form').append(jQuery('#search-input').clone())
+            let clone = jQuery('#search-input').clone();
+            jQuery(clone).css('display','none');
+            jQuery('#search_mini_form').append(clone);
             jQuery('#search_mini_form').submit()
         }
     })
@@ -112,6 +114,8 @@ jQuery('.link-button').click(function(event) {
     jQuery(window).bind("resize scroll load",function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
+        
+        jQuery('.for-space-to-bottom').css("min-height",headerHeight+"px");
 
 
         if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)
@@ -134,35 +138,35 @@ jQuery('.link-button').click(function(event) {
             /*zopim -- to change margin from bottom */
             var hidden = true;
             //show footer if mouse is at bottom and not at the end of the scroll
-            if(jQuery(window).width() > 768){
+            if(jQuery(window).width() > 768) {
                 jQuery(window).mousemove(function (e) {
-                    if(!jQuery('body').hasClass('cms-index-index') && !(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height())) {
+                    if (!jQuery('body').hasClass('cms-index-index') && !(jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height())) {
                         if (e.screenY >= jQuery(window).height() - 50) {
                             if (hidden) {
                                 jQuery(".zopim").addClass("bottom-change");
-                                jQuery("#footer8").css("height","59px");
-                                hidden=false;
+                                jQuery("#footer8").css("height", "59px");
+                                hidden = false;
+                            } else if (!parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0
+                                || jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none') {
+                                jQuery(".zopim").removeClass("bottom-change");
+                                jQuery("#footer8").css("height", "0px");
+                                hidden = true;
                             }
                         }
-                        else{
-                            jQuery(".zopim").removeClass("bottom-change");
-                            jQuery("#footer8").css("height","0px");
-                            hidden=true;
-                        }
                     }
-                })
+                });
                 //if scroll is at bottom show footer
-                if(jQuery(window).scrollTop() + jQuery(window).height()==jQuery(document).height()) {
+                if (jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
                     jQuery(".zopim").addClass("bottom-change");
-                    jQuery("#footer8").css("height","60px");
-                    hidden=false;
-
-                }else {
+                    jQuery("#footer8").css("height", "60px");
+                    hidden = false;
+                } else {
                     jQuery(".zopim").removeClass("bottom-change");
-                    jQuery("#footer8").css("height","0px");
-                    hidden=true;
+                    jQuery("#footer8").css("height", "0px");
+                    hidden = true;
                 }
             }
+
 
             if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
                     jQuery(".footer").removeClass("floating");

@@ -1502,7 +1502,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .form-search input.input-text{
   float: left;
-  width: 360px;
+  width: 25vw;
   border: none;
   background: none;
   border-bottom: 1px solid #fff;
@@ -1718,18 +1718,18 @@ input[type="checkbox"]:checked+label:before {
 }
 
 /* Catalog Page CSS */
-.products-grid li.item .list-mt-w{
-  position: absolute;
-	/*height: 100%;*/
-  width: 100%;
-	/*top: 19px;*/
-  padding: 0 22px;
-	left: 50%;
-  transform: translatex(-50%);
+.products-grid li.item .list-mt-w {
+  	position: absolute;
+    padding: 20px 10px 10px;
+    left: 0px;
+    right: 0;
+    top: 0;
+    background-color: rgba(255,255,255,0.4);
+    bottom: auto;
 }
-.products-grid li.item .list-mt-w > .row{
+.products-grid li.item .list-mt-w > .row {
 	position: relative;
-  height: 100%;
+  	height: 100%;
 	width: 100%;
 	margin: 0 auto;
 }
@@ -1986,9 +1986,9 @@ div#narrow-by-list {
 .cms-page-view .top-bar {
   display: none;
 }
-#narrow-by-list .actions{
-	margin-top: 4px;
-}
+/* #narrow-by-list .actions{
+	margin-top: 5px;
+} */
 /* Designer Page */
 .second-header-image{
   position: absolute;
@@ -3025,11 +3025,11 @@ ul.tabs li{
 }
 .cartilage-section {
 	margin-top: 17px;
-  margin-bottom: 8px;
+  	margin-bottom: 8px;
 }
 #total_item_counts_holder {
-  margin-top: 5px;
-	margin-left: 14px;
+  margin-top: 15px !important;
+	margin-left: 5px;
 }
 
 
@@ -3209,7 +3209,7 @@ ul.tabs li{
 }
 .insta-main .image_carousel,.recently-view .image_carousel,.you_may_like .image_carousel{
   width: 80%;
-  overflow: hidden;
+  /*overflow: hidden;*/
   position: relative;
   margin: auto
 }
@@ -4812,31 +4812,21 @@ td.cart_col2 {
 .cms-home .footer{
 	z-index: 2;
 }
-.mobile-device .for-space-to-bottom.cat-img-space {
-  background-image: none !important;
-  height: 50px !important;
-	background-color: transparent;
-}
+
 .filter-actions {
   display: flex;
-}
-.desktop-device #apply-filter-btn{
-	margin-left: 10px;
-	margin-right: 10px;
 }
 .mobile-device #apply-filter-btn{
 	margin-right: 3px;
 }
 .desktop-device #total_item_counts_holder{
-	margin-top: 9px !important;
+	margin-top: 10px !important;
 }
 .mobile-device .filter-actions{
-	flex-direction: row-reverse;
+	flex-direction: row;
 	justify-content: space-between;
 }
-.mobile-device #clear-all-filter {
-  margin-left: 13px;
-}
+
 /******************Navigation Pull*************************/
 .currency-section-for-mobile, .wishlist-section-mobile, .account-section-mobile{
 	text-align: left;

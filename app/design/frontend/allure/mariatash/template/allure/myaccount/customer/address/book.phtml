@@ -222,7 +222,7 @@ function saveAddressData(){
 	var account_form = new VarienForm('address-form-validate', false); 
 	if(account_form.validator.validate()){ 
 		jQuery('#mt-addressbook-tab .messages > li').removeClass('error-msg');
-		jQuery('#mt-addressbook-tab .messages > li').removeClass('success-msg');	
+		jQuery('#mt-addressbook-tab .messages > li').removeClass('success-msg ');
 		showLoadingFancybox();
 		jQuery.ajax({
 	        url: '<?php echo Mage::getBaseUrl('web').'customer/address/saveAjax';?>',

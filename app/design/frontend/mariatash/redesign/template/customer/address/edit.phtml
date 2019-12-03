@@ -37,7 +37,7 @@
 <div class="new_address">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 edit-new-address">
                 <style>
                     .address-edit-itel-cstm {
                         border: none;
@@ -154,7 +154,7 @@
         </li>
         <li <?php if($this->canSetAsDefaultBilling()) echo ' class="control mt-4"' ?>>
             <?php if($this->isDefaultBilling()): ?>
-                <?php echo $this->__('Default Billing Address') ?>
+                <?php //echo $this->__('Default Billing Address') ?>
                 <?php elseif($this->canSetAsDefaultBilling()): ?>
                     <label for="primary_billing" class="custom-checkbox para-normal"><?php echo $this->__('Use as my default billing address') ?>
                      <input type="checkbox" id="primary_billing" name="default_billing" value="1" title="<?php echo $this->__('Use as My Default Billing Address') ?>" class="checkbox" />
@@ -164,9 +164,9 @@
                         <input type="hidden" name="default_billing" value="1" />
                     <?php endif; ?>
                 </li>
-                <li <?php if($this->canSetAsDefaultShipping()) echo ' class="control"' ?>>
+                <li <?php if($this->canSetAsDefaultShipping()) echo ' class="control mt-4"' ?>>
                     <?php if($this->isDefaultShipping()): ?>
-                     <?php echo $this->__('Default Shipping Address') ?>
+                     <?php //echo $this->__('Default Shipping Address') ?>
                      <?php elseif($this->canSetAsDefaultShipping()): ?>
                        <label class="custom-checkbox para-normal" for="primary_shipping"><?php echo $this->__('Use as my default shipping address') ?>
                             <input type="checkbox" id="primary_shipping" name="default_shipping" value="1" title="<?php echo $this->__('Use as My Default Shipping Address') ?>" class="checkbox" />
