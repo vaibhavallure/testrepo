@@ -180,7 +180,11 @@ width: 245px;
   padding: 0;
 }
 .filter-actions{
-  padding: 0px 10px!important;
+    padding: 0px 10px!important;
+    position: absolute;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid rgba(41,41,41,0.3);
 }
   /*filter end----------------------------*/
 .mobile-device .main-nav-title li {
@@ -451,6 +455,7 @@ width: 245px;
   #narrow-by-list {
     max-height: 400px;
     overflow-y: scroll;
+    padding-bottom: 40px;
   }
   /*Different Footer */
   .customer-care-list {
