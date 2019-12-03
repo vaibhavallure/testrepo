@@ -6,7 +6,10 @@
 .cms-home #supersized-loader:after,
 .awac-loader-label,
 .awac-loader-label:before,
-.awac-loader-label:after{
+.awac-loader-label:after,
+.insta-loader,
+.insta-loader:before,
+.insta-loader:after{
 	border-radius: 50%;
 	width: 2.5em !important;
 	height: 2.5em !important;
@@ -19,7 +22,8 @@
 }
 #fancybox-loading > div ,
 .cms-home #supersized-loader,
-.awac-loader-label{
+.awac-loader-label,
+.insta-loader{
 	color: #292929;
 	font-size: 18px;
 	/* margin: 80px auto; */
@@ -39,21 +43,25 @@
 .cms-home #supersized-loader:before,
 .cms-home #supersized-loader:after,
 .awac-loader-label:before,
-.awac-loader-label:after{
+.awac-loader-label:after,
+.insta-loader:before,
+.insta-loader:after{
 	content: '';
 	position: absolute;
 	top: 0;
 }
 #fancybox-loading > div:before,
 .cms-home #supersized-loader:before,
-.awac-loader-label:before{
+.awac-loader-label:before,
+.insta-loader:before{
 	left: -4em;
 	-webkit-animation-delay: -0.32s;
 	animation-delay: -0.32s;
 }
 #fancybox-loading > div:after,
 .cms-home #supersized-loader:after,
-.awac-loader-label:after{
+.awac-loader-label:after,
+.insta-loader:after{
 	left: 4em;
 }
 @-webkit-keyframes load7 {
@@ -282,9 +290,11 @@ ul#product-suggestion-items-slider .owl-item {
 	top: 50%;
 	left: 50%;
 }
-.awac-loader-label {
+.awac-loader-label,
+.insta-loader{
 	left: 50%;
-	top:40px;
+	margin-top: 20px;
+	font-size: 12px;
 }
 
 @media (max-width: 1023px) {
