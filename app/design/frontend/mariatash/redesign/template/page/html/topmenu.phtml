@@ -49,15 +49,15 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                   <li class="currency-section-for-mobile">
                       <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
                   </li>
-                  <?php
-                  $wishlist=Mage::getModel('ecp_menu/menu')->load(3);
-                  if($wishlist): ?>
+                  <!-- <?php
+                  /*$wishlist=Mage::getModel('ecp_menu/menu')->load(3);
+                  if($wishlist):*/?><!--
                       <li class="wishlist-section-mobile">
-                          <?php if($isCustomerLogIn):?>
-                          <a class="icon-link wishlist"  href="<?= $wishlist->getUrl() ?>">
-                              <?php else:?>
+                          <?php /*if($isCustomerLogIn):*/?>
+                          <a class="icon-link wishlist"  href="<?/*= $wishlist->getUrl() */?>">
+                              <?php /*else:*/?>
                               <a class="icon-link wishlist"  onclick="signin()">
-                                  <?php endif;?>
+                                  <?php /*endif;*/?>
                                   <span>wishlist</span>
                               </a>
                               <script>
@@ -72,7 +72,7 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                                   });
                               </script>
                       </li>
-                  <?php endif; ?>
+                  <?php /*endif; */?> -->
 
               </ul>
           </div>
