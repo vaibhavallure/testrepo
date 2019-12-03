@@ -3032,7 +3032,7 @@ ul.tabs li{
   margin-bottom: 8px;
 }
 #total_item_counts_holder {
-  margin-top: 5px;
+  	margin-top: 15px !important;
 	margin-left: 14px;
 }
 
@@ -4835,7 +4835,7 @@ td.cart_col2 {
 	margin-top: 9px !important;
 }
 .mobile-device .filter-actions{
-	flex-direction: row-reverse;
+	flex-direction: row;
 	justify-content: space-between;
 }
 
