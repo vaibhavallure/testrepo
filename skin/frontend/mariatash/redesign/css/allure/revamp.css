@@ -124,6 +124,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .containerThumb .thumb a {
     display: block;
     border-bottom: 2px solid transparent;
+	width: 100%;
 }
 
 .containerThumb .thumb a.active {
@@ -139,7 +140,8 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 ul#recently-viewed-items-slider,
-ul#product-suggestion-items-slider {
+ul#product-suggestion-items-slider,
+ul#instagram-items-slider{
     padding: 0;
 }
 
@@ -149,7 +151,8 @@ ul#product-suggestion-items-slider li {
 }
 
 ul#recently-viewed-items-slider li img,
-ul#product-suggestion-items-slider li img {
+ul#product-suggestion-items-slider li img,
+ul#instagram-items-slider li a img {
     width: 100%;
 }
 
@@ -159,7 +162,8 @@ li.recentview a {
 }
 
 ul#recently-viewed-items-slider  .owl-nav,
-ul#product-suggestion-items-slider  .owl-nav {
+ul#product-suggestion-items-slider  .owl-nav,
+ul#instagram-items-slider  .owl-nav {
     margin-top: 10px;
     position: absolute;
     top: 50%;
@@ -171,27 +175,33 @@ ul#product-suggestion-items-slider  .owl-nav {
 
 ul#recently-viewed-items-slider button.owl-prev,
 ul#product-suggestion-items-slider button.owl-prev,
+ul#instagram-items-slider button.owl-prev,
 ul#recently-viewed-items-slider button.owl-next,
-ul#product-suggestion-items-slider button.owl-next {
+ul#product-suggestion-items-slider button.owl-next,
+ul#instagram-items-slider button.owl-next {
     position: absolute;
 }
 
 
 ul#recently-viewed-items-slider button.owl-prev,
-ul#product-suggestion-items-slider button.owl-prev {
+ul#product-suggestion-items-slider button.owl-prev,
+ul#instagram-items-slider button.owl-prev {
     left: -20px;
 }
 
 ul#recently-viewed-items-slider button.owl-next,
-ul#product-suggestion-items-slider button.owl-next {
+ul#product-suggestion-items-slider button.owl-next,
+ul#instagram-items-slider button.owl-next {
     right: -20px;
 }
 
 
 ul#recently-viewed-items-slider button.owl-prev span,
 ul#product-suggestion-items-slider button.owl-prev span,
+ul#instagram-items-slider button.owl-prev span,
 ul#recently-viewed-items-slider button.owl-next span,
-ul#product-suggestion-items-slider button.owl-next span {
+ul#product-suggestion-items-slider button.owl-next span,
+ul#instagram-items-slider button.owl-next span {
 	background: url(../../images/Popup-side-arrow.png) no-repeat transparent;
     background-size: 12px !important;
     width: 12px;
@@ -201,7 +211,8 @@ ul#product-suggestion-items-slider button.owl-next span {
 }
 
 ul#recently-viewed-items-slider button.owl-prev span,
-ul#product-suggestion-items-slider button.owl-prev span {
+ul#product-suggestion-items-slider button.owl-prev span,
+ul#instagram-items-slider button.owl-prev span {
 	transform: rotate(180deg);
 	margin-top: -18px;
 }

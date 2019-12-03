@@ -71,6 +71,10 @@
 //                jQuery("#country").click(function(){
 //                    jQuery("#tld_r_ul").show(200);
 //                });
+
+                    jQuery('#link_sign-up-for-newsletter').click(function(){
+                     jQuery('.t_Tooltip').toggle();
+                     });
                     // prevent bind event multiple times
                     jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
                     jQuery('#country_subscribe').bind('click', toggleCountrySelect);
