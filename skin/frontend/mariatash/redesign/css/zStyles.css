@@ -2382,3 +2382,7 @@ line-height: 42px;
 	.celebPopup .product-info{
 		position: relative;
 	}
+
+	img#cross-icon {
+		width: 32px;
+	}

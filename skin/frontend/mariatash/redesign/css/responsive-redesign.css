@@ -66,6 +66,7 @@
     width: 100%;
     background: white;
     z-index: 2;
+    padding-top: 2px;
   }
   #narrow-by-list li:first-child{
     margin-top: 0px;
@@ -143,7 +144,7 @@
     width: 100%;
   }
    .pop-up-cover {
-    width: 100%;
+   /* width: 100%;*/
   }
    #narrow-by-list li div dd ol {
     margin: 15px 0 0;
@@ -858,7 +859,10 @@
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg, .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 198px;
+    /*top: 198px;*/
+  }
+  .sticky-filter {
+  padding-top: 10px;
   }
   .maria-left-menus{
     left: 77px;

@@ -1,10 +1,6 @@
 <?php $code   = Mage::registry('tokenbase_method'); ?>
 <?php $method = Mage::helper('payment')->getMethodInstance( $code ); ?>
 
-<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
-<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
-<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
-
 <div id="edit-main-form"></div>
 
 <div id="edit-main">
@@ -14,7 +10,7 @@
 		<h2 class="para-font"><?php echo $this->__('Editing Card %s', $this->getCard()->getLabel()); ?></h2>
 	</div>
 
-<form class="mt-edit-form" action="<?php echo $this->getAction(); ?>" method="post" id="form-validate" <?php echo ( $this->isEdit() ) ? 'style="display:block"' : 'style="display:block"'; ?> data-edit="<?php echo ($this->isEdit())?"edit":"add"?>">
+<form class="mt-edit-form" action="<?php echo $this->getAction(); ?>" method="post" id="form-validate mt-edit-form" <?php echo ( $this->isEdit() ) ? 'style="display:block"' : 'style="display:block"'; ?> data-edit="<?php echo ($this->isEdit())?"edit":"add"?>">
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<input type="hidden" name="id" value="<?php echo $this->getCard()->getId(); ?>" />
 	<input type="hidden" name="method" value="<?php echo $code; ?>" />
