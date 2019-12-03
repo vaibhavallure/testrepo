@@ -1719,18 +1719,18 @@ input[type="checkbox"]:checked+label:before {
 
 /* Catalog Page CSS */
 .products-grid li.item .list-mt-w{
-  position: absolute;
-	/*height: 100%;*/
-  width: 100%;
-	/*top: 19px;*/
-  padding: 0 22px;
+	position: absolute;
+/* height: 100%; */
+	width: 100%;
+	padding: 0 20px;
 	left: 50%;
-  transform: translatex(-50%);
-	/* min-height: 70px;
-  background: rgba(0, 0, 0, 0.1);
-	top: 4px;
-	padding-top: 18px; */
+	transform: translatex(-50%);
 }
+.desktop-device .products-grid li.item .list-mt-w{
+	background-color: rgba(255,255,255,0.6);
+	bottom: auto;
+}
+
 .products-grid li.item .list-mt-w > .row{
 	position: relative;
   height: 100%;
@@ -1740,7 +1740,7 @@ input[type="checkbox"]:checked+label:before {
 
 .list-mt-w.list-top-section{
 	height: auto;
-	top: 19px;
+	top: 4px;
 }
 .list-mt-w.list-bottom-section {
 bottom: 0px;
@@ -1919,6 +1919,7 @@ bottom: 0px;
 }
 .list-mt-upper {
   min-height: 39px;
+	padding-top: 18px;
 }
 
 div#narrow-by-list {
