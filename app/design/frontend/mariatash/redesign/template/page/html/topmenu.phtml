@@ -63,8 +63,8 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                   <script>
                       var signinwishlistMob= function() {
                           jQuery('body').addClass('allure_login_wishlist');
-                          jQuery("#sign_in_label").trigger('click');
                           jQuery("#menu-btn").trigger('click');
+                          jQuery("#sign_in_label").trigger('click');
                       }
                       jQuery(document).ready(function() {
                           jQuery('.popupLoginModel .close').on('click', function () {
