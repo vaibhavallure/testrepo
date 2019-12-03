@@ -71,7 +71,7 @@
 }
 .allure_filter {
   border: 1px solid #000;
-  margin: 8px 8px 3px;
+  margin: 0 8px 3px;
   border-width: 1px 1px 0;
 }
 .allure_filter dt.filter-head {
@@ -570,7 +570,7 @@ width: 245px;
     margin-bottom: 10px;
   }
   .celebPopup .product-info {
-    position: relative;
+    /*position: relative;*/
     bottom: 0;
   }
   .big-popup-body{
@@ -671,7 +671,6 @@ width: 245px;
   }
   .common-option-div{
     width: 100%;
-    padding: 0 16px;
   }
   .menu-common-section{
     margin-top: 13px;
@@ -882,7 +881,7 @@ width: 245px;
     margin-right: 0px;
   }
   .mobile-sub_menu .sub-menu{
-    top: 77px;
+    top: 54px;
   }
   .about-designer{
     padding: 0 45px;
@@ -1558,6 +1557,13 @@ width: 245px;
   .appointment-container{
     margin-top: 18px!important;
   }
+  .mt-logo img {
+    width: 130px;
+  }
+  .common-option-div{
+    width: 100%;
+    padding: 0 16px;
+  }
 }
 
 /********************** Mobile Portrait *****************/           /*mobport*/
@@ -1653,9 +1659,6 @@ width: 245px;
   .manage-payment-method .payment-card-exp {
     font-size: 15px;
   }
-
-
-
   .main-nav-link li{
     margin-right: 14px;
   }
@@ -1665,10 +1668,6 @@ width: 245px;
   }
   .maria-left-menus {
     left: 50px;
-  }
-  .mt-logo img {
-    width: 130px;
-    margin-top: 1px;
   }
   .footer ul .footer-item-list{
     max-width: 100%;
@@ -1955,6 +1954,9 @@ width: 245px;
     float: left;
     margin-top: 0;
   }
+  .bk-slide{
+    border-bottom: 1px solid #7f7f7f;
+  }
   /*Checkout*/
   #checkoutSteps {
     padding: 0;
@@ -2089,9 +2091,6 @@ width: 245px;
   .myaccount-add-payment-form #billing-new-address-form ul{
     float: none;
   }
-
-
-
   .mobile-main_menu, .mobile-sub_menu .sub-menu{
     top: 55px;
   }
@@ -2228,6 +2227,10 @@ width: 245px;
   .allure_filter{
     width: 550px;
     margin: 0 auto;
+  }
+  .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    padding-top: 15px;
+    padding-bottom: 5px;
   }
 }
 @media (max-width:1024px) and (orientation:portrairt){

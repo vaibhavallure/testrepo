@@ -233,6 +233,11 @@ ul#instagram-items-slider button.owl-prev span {
 	margin-top: -18px;
 }
 
+ul#recently-viewed-items-slider .owl-item,
+ul#product-suggestion-items-slider .owl-item{
+	background: #f2f2f2;
+}
+
 .cms-home #supersized-loader {
 	position: fixed;
 	top: 50%;
