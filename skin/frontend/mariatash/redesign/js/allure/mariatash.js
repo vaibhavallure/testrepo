@@ -4,7 +4,9 @@ jQuery(document).ready(function () {
     jQuery('#search').keydown( (e) => {
 //        console.log(e.keyCode)
         if(e.keyCode==13){
-            jQuery('#search_mini_form').append(jQuery('#search-input').clone())
+            let clone = jQuery('#search-input').clone();
+            jQuery(clone).css('display','none');
+            jQuery('#search_mini_form').append(clone);
             jQuery('#search_mini_form').submit()
         }
     })
@@ -112,6 +114,8 @@ jQuery('.link-button').click(function(event) {
     jQuery(window).bind("resize scroll load",function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
+        
+        jQuery('.for-space-to-bottom').css("min-height",headerHeight+"px");
 
 
         if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)

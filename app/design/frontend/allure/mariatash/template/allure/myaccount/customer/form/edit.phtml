@@ -155,7 +155,7 @@ function submitAccountInfo(){
 			        var html = '<li><span>'+data.message+'</span></li>';
 			        html = '<ul>'+html+'</ul>';
 			        jQuery('#mt-accountinfo-tab .messages > li').html(html);
-			        jQuery('#mt-accountinfo-tab .messages > li').addClass('success-msg');	
+			        jQuery('#mt-accountinfo-tab .messages > li').addClass('success-msg');
 			    }else{
 			    	if(data.error.constructor === Array) {
 				    	var len = data.error.length;
