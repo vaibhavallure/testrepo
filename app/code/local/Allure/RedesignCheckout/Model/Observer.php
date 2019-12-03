@@ -47,8 +47,12 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
      */
     public function checkoutEventSaveSignature($observer)
     {
+        $logStatus = Mage::helper("allure_multicheckout")->getOnePagelogStatus();
         $signatureDelivery = $observer->getEvent()->getRequest()->getParam('no_signature_delivery');
-        Mage::log($signatureDelivery,Zend_Log::DEBUG,'abc.log',true);
+        if($logStatus){
+            Mage::log("delivery signature",Zend_Log::DEBUG,'checkout_multishipping.log',true);
+            Mage::log($signatureDelivery,Zend_Log::DEBUG,'checkout_multishipping.log',true);
+        }
         $quote = $observer->getEvent()->getQuote();
         $addresses = $quote->getAllShippingAddresses();
         foreach ($addresses as $address){
