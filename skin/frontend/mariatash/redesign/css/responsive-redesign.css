@@ -96,7 +96,8 @@
     width: 245px;
   }
    .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    margin-top: 20px;
+    padding-top: 20px;
+     background: white;
   }
    .selected-filters{
     width: 100%;
