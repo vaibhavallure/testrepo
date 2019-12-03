@@ -31,31 +31,6 @@
  */
 ?>
 <?php header('X-Frame-Options: GOFORIT'); ?>
-
-<!--<script type="text/javascript">// <![CDATA[
-(function (w, d, load) {
- var script,
- first = d.getElementsByTagName('SCRIPT')[0],
- n = load.length,
- i = 0,
- go = function () {
-   for (i = 0; i < n; i = i + 1) {
-     script = d.createElement('SCRIPT');
-     script.type = 'text/javascript';
-     script.async = true;
-     script.src = load[i];
-     first.parentNode.insertBefore(script, first);
-   }
- }
- if (w.attachEvent) {
-   w.attachEvent('onload', go);
- } else {
-   w.addEventListener('load', go, false);
- }
-}(window, document,
- ['//assets.pinterest.com/js/pinit.js']
-));
-// ]]></script>-->
 <?php
 $isAjaxCall = $this->getRequest()->getControllerName() == 'media' && $this->getRequest()->getActionName() == 'index';
 $_product = $this->getProduct();
@@ -177,7 +152,7 @@ if (!$videoUrl && $secondVideoUrl)
     <?php $counter = 1; ?>
     <div id="imageRepo" class="d-none">
         <?php foreach ($gallery as $_image): ?>
-            <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+            <img data-src="<?= $_image->getUrl()?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
             <?php $zoomImgArr[] = $_image->getUrl();?>
             <?php $counter++; ?>
         <?php endforeach; ?>
@@ -192,33 +167,33 @@ if (!$videoUrl && $secondVideoUrl)
 
 <script type="text/javascript">
 
+	var smartZoom = null;
+
     function setFacebook(){
-        var url = "http://www.facebook.com/plugins/like.php?href=<?php echo urlencode( $this->helper('core/url')->getCurrentUrl());?>%3Fproductviewfb%3D1%26fb%3D1%26productid%3D<?php echo $_product->getId();?>%26image%3D"+jQuery('.containerImage img').attr('data')+"&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&colorscheme=light&amp;action=like&amp;height=21";
+        var url = "http://www.facebook.com/plugins/like.php?href=<?php echo urlencode( $this->helper('core/url')->getCurrentUrl());?>%3Fproductviewfb%3D1%26fb%3D1%26productid%3D<?php echo $_product->getId();?>%26image%3D"+jQuery('.containerImage .zoomHolder img').attr('data')+"&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&colorscheme=light&amp;action=like&amp;height=21";
         jQuery('#facepv').html('<iframe id="likefb" src="'+url+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>');
     }
 
-    function loadImage(numImage,obj) {
+    function loadImage(numImage, obj) {
         jQuery(".thumb .active").removeClass("active");
         jQuery('.thumb.thumb1').removeClass("active");
         jQuery(obj).addClass("active");
-        jQuery(".containerImage").fadeIn(1000, function(){
+        jQuery(".containerImage div.zoomHolder").fadeIn(1000, function(){
             //jQuery('.containerImage').html('<img src="'+jQuery('#imageRepo img').eq(numImage).attr('src')+'" data="'+jQuery('#imageRepo img').eq(numImage).attr('data')+'" />');
-            var mainImage = jQuery('.containerImage>img');
+            var mainImage = jQuery('.containerImage div.zoomHolder>img');
             var width = mainImage.width();
             var src = mainImage.attr('src');
             var newImage = jQuery('#imageRepo img').eq(numImage);
             var newData = newImage.attr('data');
+            var newDataSrc = newImage.attr('data-src');
             var newSrc = newImage.attr('src');
 
             if (src != newSrc) {
             	mainImage.attr('src',newSrc);
             	mainImage.attr('data',newData);
+            	mainImage.attr('data-src',newDataSrc);
             }
         });
-
-        var zoom_img = jQuery('#zoom-img');
-        zoom_img.attr('data-src','');
-        zoom_img.attr('data-src',jQuery('#imageRepo img').eq(numImage).attr('data-src'));
 
         setFacebook();
 
@@ -226,8 +201,8 @@ if (!$videoUrl && $secondVideoUrl)
     }
 
     function loadImageConf(numImage){
-        jQuery(".containerImage").fadeIn(1000, function(){
-            jQuery('.containerImage').html(imgArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()]['imageRepo'][numImage]);
+        jQuery(".containerImage div.zoomHolder").fadeIn(1000, function(){
+            jQuery('.containerImage div.zoomHolder').html(imgArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()]['imageRepo'][numImage]);
         });
 
         setFacebook();
@@ -236,9 +211,9 @@ if (!$videoUrl && $secondVideoUrl)
     }
 
     function loadBaseImage(){
-        jQuery(".containerImage").fadeIn(1000, function(){
+        jQuery(".containerImage div.zoomHolder").fadeIn(1000, function(){
             <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
-            jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
+            jQuery('.containerImage div.zoomHolder').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data="0"/>');
             jQuery('.thumb.thumb1').addClass("active");
         });
         // var zoom_img = jQuery('#zoom-img');
@@ -251,7 +226,7 @@ if (!$videoUrl && $secondVideoUrl)
 
     var loadTimes=0;
     function loadVideo(video,obj){
-        jQuery('.containerImage').hide();
+        jQuery('.containerImage div.zoomHolder').hide();
         jQuery(".thumb .active").removeClass("active");
         jQuery(obj).addClass("active");
 
@@ -275,7 +250,7 @@ if (!$videoUrl && $secondVideoUrl)
     }
 
     function closeVideo(){
-        jQuery('.containerImage img').show();
+        jQuery('.containerImage div.zoomHolder').show();
         var player = jQuery('[id^="video-"] iframe');
         if(player){
             player.each(function(index,iframe) {
@@ -290,63 +265,32 @@ if (!$videoUrl && $secondVideoUrl)
     function closeVid(){
         //jQuery('.containerVideo').hide();
     }
-
-    function createZoomview(){
-        jQuery.facybox.loading();
-        <?php $url = $this->getUrl('productview/index/sendproduct'); ?>
-        var widthWindow = (jQuery(window).width());
-        var heightWindow = jQuery(window).height();
-        var widthFullimage = widthWindow * 0.86;
-        var heightFullimage = heightWindow;
-
-        var widthThumbimage = widthWindow * 0.12;
-        var heightThumbimage = heightWindow * 0.24;
-        var productId = jQuery('input[name="product"]').val();
-        var productName = jQuery.trim(jQuery('.product-view .product-name').text());
-        jQuery(function(){
-            jQuery.ajax({
-                url: "<?php echo $url ?>",
-                data: {
-                    product: productId,
-                    productName: productName,
-                    widthwindow:widthWindow,
-                    heightwindow:heightWindow,
-                    widthfullimage:widthFullimage,
-                    heightfullimage:heightFullimage,
-                    widththumbimage:widthThumbimage,
-                    heightthumbimage:heightThumbimage
-                },
-
-                success: function(data){
-                    jQuery.facybox(data, 'fullscreen-slide');
-                    jQuery('#facybox').css({top:0,left:0, margin: 0, padding: 0, position: 'fixed'});
-                    jQuery('a.close').hide();
-                }
-            });
-        })
-    }
-
+    
     function windOpn(url){
         window.open (url,"mywindow","menubar=1,resizable=1,width=700,height=350");
     }
 
     function sharePinit(){
         jQuery('#pinit').click(function(){
-            windOpn('//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
+            windOpn('//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage .zoomHolder img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
         });
     }
 
     function shareLikeTwitter(){
+    	//jQuery(".containerImage img").attr("data-elem","pinchzoomer");
+    	
+    	//if (!jQuery(".containerImage div").attr('data-elem'))
+    	//jQuery(".containerImage div#wrapperImage .zoomHolder").attr('style','');
+    	if (!smartZoom) {
+    		smartZoom = jQuery(".containerImage div#wrapperImage .zoomHolder").pinchzoomer();
+    	} else {
+    		PinchZoomer.objs[0].resetElem(true, true);
+    	}
     }
 
     jQuery(document).ready(function(){
         /*********************************************************/
         /*Gallery View*/
-        jQuery('.containerImage,.btnFullscreen').mouseover(function() {
-            jQuery('.btnFullscreen').show();
-        }).mouseout(function() {
-            jQuery('.btnFullscreen').hide();
-        });
         jQuery('#loader').hide();
         <?php $hasVideo = ($_product->getVideo()) ? $_product->getVideo() : (($_product->getSecondVideo()) ? $_product->getSecondVideo() : '');?>
         var videoCounter = <?php echo strlen($hasVideo)?>;
@@ -454,7 +398,7 @@ if (!$videoUrl && $secondVideoUrl)
         <?php endif; ?>
 
         <?php if ( $count == 0 ): ?>
-        jQuery('.containerImage').html('<img src="<?php echo Mage::getModel('catalog/product')->getImageUrl();?>" />');
+        jQuery('.containerImage div.zoomHolder').html('<img src="<?php echo Mage::getModel('catalog/product')->getImageUrl();?>" />');
 
         if( videoCounter  == 0 ){
             <?php //if ( $count == 0 ): ?>
@@ -487,13 +431,10 @@ if (!$videoUrl && $secondVideoUrl)
             <div class="thumb thumb1"></div>
             <div class="thumb thumb2"></div>
             <div class="thumb thumb3"></div>
-            <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
+            <div class="thumb thumb4"></div>
             <div class="thumb thumb5"></div>
-            <div class="zoom-link">
-                <a class="link-button" data-src="" id="zoom-img">Click to Zoom</a>
-            </div>
         </div>
-        <div class="containerImage col-lg-10"></div>
+        <div class="containerImage col-lg-10"><div id="wrapperImage"><div class="zoomHolder"></div></div></div>
 
         <?php if($videoUrl):?><!-- Check video url-->
         <?php
@@ -606,136 +547,5 @@ if ($isAjaxCall) {
         } else {
             jQuery('.delayed-product').addClass('display_none');
         }
-
-        /*Zoom Image - for next image*/
-        zoomImgArray = JSON.parse('<?= json_encode($zoomImgArr) ?>');
-        jQuery('.zoom-img').empty();
-        jQuery('.zoom-bnt-container').empty();
-        var zoom_btn = '<div class="mt-5 buttons zoom-buttons d-block" id="button-1-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>" class="zoom-in" id="zoom-in-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>" class="zoom-out" id="zoom-out-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>" class="zoom-reset" id="zoom-reset-1-'+productId+'"/> </div>';
-        var img_content ='<div class="panzoom d-block" id="panzoom-1-'+productId+'"> <img class="w-100" src="'+zoomImgArray[0]+'" ></div>';
-        var cnt = 1;
-        if(zoomImgArray.length > 1){
-            jQuery.each(zoomImgArray,function (key,url) {
-                if(cnt !== 1) {
-                    zoom_btn = zoom_btn + '<div class="mt-5 buttons zoom-buttons d-none" id="button-'+cnt+'-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>"  class="zoom-in" id="zoom-in-'+cnt+'-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>"  class="zoom-out" id="zoom-out-'+cnt+'-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>"  class="zoom-reset" id="zoom-reset-'+cnt+'-'+productId+'"/></div>';
-                    img_content  = img_content + '<div class="panzoom d-none" id="panzoom-'+cnt+'-'+productId+'"> <img src="' + url + '" class="w-100" ></div>';
-                }
-                cnt++;
-            })
-        }
-
-        jQuery('.zoom-img').append(img_content);
-        jQuery('.zoom-bnt-container').append(zoom_btn);
-        for(var i=1;i<= zoomImgArray.length;i++) {
-            jQuery('#panzoom-'+i+'-'+productId).panzoom({
-                $zoomIn: jQuery("#zoom-in-"+i+"-"+productId),
-                $zoomOut: jQuery("#zoom-out-"+i+"-"+productId),
-                $reset: jQuery("#zoom-reset-"+i+"-"+productId)
-            });
-        }
-
-        jQuery('#zoom-img').on('click',function () {
-            jQuery(".zoom-reset").click();
-            jQuery(".zoom-loader").show();
-            // var img_src = jQuery(this).attr('data-src');
-
-            // clearImg();
-            jQuery(".zoomPopup").css({"opacity": "1", "pointer-events": "auto"});
-
-            unScrollBody();
-            jQuery(".catalog-category-view .footer").css("display","none");
-
-
-            // setImg(img_src);
-            jQuery(".zoom-loader").hide();
-            if (jQuery(window).width() >= 992) {
-                jQuery('#product-detail-image').addClass('zoom-opened');
-            }
-
-        });
-
-        jQuery("#zoomClose").on('click',function(){
-            jQuery(".zoom-loader").hide();
-
-            scrollBody();
-            jQuery(".catalog-category-view .footer").css("display","block");
-
-            jQuery(".zoomPopup").css({"opacity":"0","pointer-events":"none"});
-            if (jQuery(window).width() >= 992) {
-                jQuery('#product-detail-image').removeClass('zoom-opened');
-            }
-
-        });
-
-        if (zoomImgArray.length > 1) {
-            jQuery('.zoom-prev').hide();
-        } else {
-            jQuery('.zoom-prev,.zoom-next').hide();
-        }
-        
-        jQuery(".zoom-next").click(function () {
-
-            if(currentImg !== zoomImgArray.length){
-                jQuery('.panzoom, .zoom-buttons').removeClass('d-block');
-                jQuery('.panzoom, .zoom-buttons').addClass('d-none');
-                var img_div = jQuery('#panzoom-'+(currentImg+1)+'-'+productId);
-                var btn_div = jQuery('#button-'+(currentImg+1)+'-'+productId);
-                img_div.addClass('d-block');
-                btn_div.addClass('d-block');
-                currentImg = currentImg + 1;
-                if(currentImg === zoomImgArray.length){
-                    jQuery(".zoom-next").hide();
-                }
-                if(currentImg > 1){
-                    jQuery('.zoom-prev').show();
-                }
-            }
-
-        });
-        jQuery(".zoom-prev").click(function () {
-            if(currentImg !== 1){
-                jQuery('.panzoom, .zoom-buttons').removeClass('d-block');
-                jQuery('.panzoom, .zoom-buttons').addClass('d-none');
-                var img_div = jQuery('#panzoom-'+(currentImg-1)+'-'+productId);
-                var btn_div = jQuery('#button-'+(currentImg-1)+'-'+productId);
-                img_div.addClass('d-block');
-                btn_div.addClass('d-block');
-                currentImg = currentImg - 1;
-                if(currentImg === 1){
-                    jQuery(".zoom-prev").hide();
-                }
-                if(currentImg < zoomImgArray.length) {
-                    jQuery(".zoom-next").show();
-                }
-            }
-        })
     });
 </script>
-
-<!--Zoom Popup-->
-<div id="openModal" class="zoomPopup"> <!--do not remove celebPopup class-->
-    <div class="pop-up-cover big-popup-cover col-12">
-        <div class="row">
-            <div class="pop-title modal-header">
-                <div class="zoom-bnt-container "></div>
-                <a href="#close" title="Close" class="close exit-large" id="zoomClose">
-                    <div></div>
-                </a>
-            </div>
-            <div class="body modal-body big-popup-body col-12">
-                <div class="row">
-
-                    <div class="col-12">
-                        <!--DO not remove zoom-img class-->
-                        <div class="zoom-img big-popup-image row"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="prev zoom-prev" data-current="1"></div>
-            <div class="next zoom-next" data-current="1"></div>
-            <div class="zoom-loader" style="display: none">
-                <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
-            </div>
-        </div>
-    </div>
-</div>

@@ -1991,7 +1991,7 @@ div#narrow-by-list {
   display: none;
 }
 #narrow-by-list .actions{
-	margin-top: 4px;
+	margin-top: 5px;
 }
 /* Designer Page */
 .second-header-image{
@@ -4838,9 +4838,7 @@ td.cart_col2 {
 	flex-direction: row-reverse;
 	justify-content: space-between;
 }
-.mobile-device #clear-all-filter {
-  margin-left: 13px;
-}
+
 /******************Navigation Pull*************************/
 .currency-section-for-mobile, .wishlist-section-mobile, .account-section-mobile{
 	text-align: left;

@@ -2237,22 +2237,30 @@ line-height: 42px;
 			position: fixed;
 			z-index: 1032;
 		}
-		.jewelry .left-section .inner-box{
+
+		.jewelry .left-section .inner-box {
 			padding: 0 20px;
 		}
-		.img-container-360{
-			top:25%;
-			left:35%;
+
+		.img-container-360 {
+			top: 25%;
+			left: 35%;
 		}
+
 		.cms-piercing-service .wrapper {
 			overflow: hidden;
 		}
+
 		.cms-piercing-service .about-jewelry {
 			margin-bottom: 20px;
 		}
+
 		.cms-page-view .simple-page-title h1,
 		.cms-page-view .about-jewelry h1 {
 			margin-bottom: 0px !important;
+		}
+		.insta-loader{
+			margin-top: 5px;
 		}
 
 
@@ -2267,6 +2275,12 @@ line-height: 42px;
 			left:40%;
 		}
 
+	}
+	/*Mobile devices portrait*/
+	@media (max-width: 767px) and (orientation: portrait) {
+		.category-inspiration .celebPopup .product-info {
+			position: relative;
+		}
 	}
 	.zoom-next,
 	.zoom-prev{
