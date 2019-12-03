@@ -110,6 +110,8 @@
                     jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?> div dt').click(function () {
                     var showOrHide = jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').hasClass('show');
                     if(!showOrHide) {
+                        jQuery('.optionfilter dd').slideUp(300);
+                        jQuery('.optionfilter dt').removeClass("showing");
                         jQuery(this).addClass("showing");
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').addClass('show');
                         jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
@@ -198,16 +200,15 @@
         var block = jQuery(".filter-common-div");
         block.css("height", "100vh");
         block.css("overflow", "auto");
-//        block.css("background", "transparent");
+        block.css("background", "transparent");
         block.css("padding-bottom","200px");
-
     }
     function unScrollToFilter()
     {
         var block = jQuery(".filter-common-div");
         block.css("height", "auto");
         block.css("overflow", "auto");
-//        block.css("background", "white");
+        block.css("background", "white");
         block.css("padding-bottom","0");
     }
 
