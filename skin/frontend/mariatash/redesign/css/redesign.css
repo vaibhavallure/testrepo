@@ -4816,11 +4816,7 @@ td.cart_col2 {
 .cms-home .footer{
 	z-index: 2;
 }
-.mobile-device .for-space-to-bottom.cat-img-space {
-  background-image: none !important;
-  height: 50px !important;
-	background-color: transparent;
-}
+
 .filter-actions {
   display: flex;
 }

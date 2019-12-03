@@ -1,6 +1,12 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
 
+  .for-space-to-bottom.cat-img-space {
+    background-image: none !important;
+    height: 50px !important;
+    background-color: transparent;
+  }
+
   .menu_overlay {
     z-index: 3;
   }
