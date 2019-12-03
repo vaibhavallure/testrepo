@@ -41,7 +41,7 @@
         <p class="info-text-two"><?= $this->__('Delivery Signature Option.')?></p>
         <p class="control">
         	<label for="no_signature_delivery" class="para-normal custom-checkbox custom-checkbox-two">
-           		<input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" <?php if($quote->getNoSignatureDelivery()):?>checked="checked"<?php endif; ?>  class="checkbox shipping-signature" data-is_international="<?= $isIternational?>" />
+           		<input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" <?php //if($quote->getNoSignatureDelivery()):?>checked="checked"<?php //endif; ?>  class="checkbox shipping-signature" data-is_international="<?= $isIternational?>" />
       			<span class="checkmark"></span>
       			<?= $this->__('Require signature upon delivery.')?>
         	</label>
