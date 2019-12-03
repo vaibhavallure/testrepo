@@ -1354,7 +1354,10 @@ width: 63%;
 
 
 .mt-payment-card-btn{
-	margin: 10px 0 0;
+	margin: 20px 0 5px;
+    /*overflow: hidden;
+    width: 100%;
+    display: block;*/
 }
 
 .mt-payment-card-btn button#delete-form-btn-id-1{
@@ -2047,6 +2050,7 @@ li.order-info-tab-back{
 }
 .myaccount-add-payment-form #billing-new-address-form ul{
     padding-left: 0px;
+    float: left;
 }
 .manage-payment-method .mt-edit-form .radio-continue{
     display: block;
@@ -2181,15 +2185,11 @@ li.buttons-set .btn-cancel-edit{
 .manage-payment-method li.phone-number .input-box .validation-advice {
     position: absolute;
 }
-.manage-payment-method form#mt-edit-form {
-    display: block;
-    overflow: hidden;
-}
-.manage-payment-method form#mt-edit-form {
-    display: block;
+.manage-payment-method #new-mt-saved-card{
+    /*display: block;*/
     overflow: hidden;
 }
 .manage-payment-method form.add-new-card-form{
-    display: block;
+    /*display: block;*/
     overflow: hidden;
 }
