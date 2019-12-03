@@ -1720,7 +1720,7 @@ input[type="checkbox"]:checked+label:before {
 /* Catalog Page CSS */
 .products-grid li.item .list-mt-w {
   	position: absolute;
-    padding: 20px 10px 10px;
+    padding: 20px 20px 10px;
     left: 0px;
     right: 0;
     top: 0;
