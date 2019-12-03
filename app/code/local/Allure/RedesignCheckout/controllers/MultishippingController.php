@@ -8,6 +8,18 @@ require_once ('app/code/core/Mage/Checkout/controllers/MultishippingController.p
 class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_MultishippingController
 {
     const WHOLESALE_GROUP_ID = 2;
+    const CHECKOUT_LOG_FILE = "checkout_multishipping.log";
+    
+    private function addCheckoutLogs($action){
+        $logStatus = Mage::helper("allure_multicheckout")->getOnePagelogStatus();
+        if(!$logStatus) return;
+        
+        $quote = $this->_getCheckoutSession()->getQuote();
+        $customerInfo = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
+        $customerInfo .= $quote->getCustomerEmail();
+        Mage::log("{$action}::\tQuote Id: ".$quote->getId().', Customer: '.$customerInfo,Zend_log::DEBUG,self::CHECKOUT_LOG_FILE,true);
+    }
+    
     
     /**
      * Check customer group id is wholesale & if it is 
@@ -21,7 +33,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
         
         $action = strtolower($this->getRequest()->getActionName());
         $checkoutSessionQuote = $this->_getCheckoutSession()->getQuote();
-        
+        $this->addCheckoutLogs($action);
         if ($action == 'addresses') {
             $quote = $this->_getCheckout()->getQuote();
             $addresses  = $quote->getAllAddresses();
