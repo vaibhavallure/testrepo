@@ -1131,9 +1131,9 @@ width: 245px;
     background: #eee;
     margin: 0.5%;
   }
-  #narrow-by-list li div dt {
+  /* #narrow-by-list li div dt {
     width: 100%;
-  }
+  } */
   .m-filter-checkboxes label {
 	    margin-bottom: 12px;
   }
@@ -1271,6 +1271,9 @@ width: 245px;
     z-index: 1;
     padding: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+  }
+  #total_item_counts_holder{
+    margin-top: 8px !important;
   }
 }
 @media (min-width:1024px) and (max-width:1366px) and (orientation:portrait) {
@@ -1456,7 +1459,6 @@ width: 245px;
   }
   .catalog-category-view .category-title h1{
     text-align: center;
-    line-height: 0.3;
   }
   .catalog-category-view .breadcrumbs{
     margin-top: 7px;
@@ -2691,9 +2693,9 @@ width: 245px;
     }
 }
 @media (min-width:768px) and (max-width:1023px) {
-  .desktop-device .homepage-menu.mariatash-header{
+  /* .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
-  }
+  } */
   .desktop-device .allure_filter{
     margin-left: 109px;
     width: 660px;
