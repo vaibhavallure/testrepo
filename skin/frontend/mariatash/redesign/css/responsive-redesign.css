@@ -172,8 +172,9 @@ width: 245px;
   height: 34px;
 }
  #narrow-by-list li {
-  min-width: 100%;
-   padding-left: 0px;
+  	min-width: 100%;
+   	padding-left: 0px;
+   	flex-direction: row;
 }
  #narrow-by-list ol li {
   min-width: 208px;
