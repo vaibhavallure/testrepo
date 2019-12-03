@@ -1721,15 +1721,15 @@ input[type="checkbox"]:checked+label:before {
 .products-grid li.item .list-mt-w{
   position: absolute;
 	/*height: 100%;*/
-  width: 97%;
+  width: 100%;
 	/*top: 19px;*/
   padding: 0 22px;
 	left: 50%;
   transform: translatex(-50%);
-	min-height: 70px;
+	/* min-height: 70px;
   background: rgba(0, 0, 0, 0.1);
 	top: 4px;
-	padding-top: 18px;
+	padding-top: 18px; */
 }
 .products-grid li.item .list-mt-w > .row{
 	position: relative;
