@@ -332,6 +332,11 @@ ul#product-suggestion-items-slider .owl-item {
 	
 	div#apply-filter-btn a {
 		color: #fff !important;
+		text-decoration: none !important;
+	}
+	
+	div#clear-all-filter a {
+	    padding-right: 0;
 	}
 }
 
