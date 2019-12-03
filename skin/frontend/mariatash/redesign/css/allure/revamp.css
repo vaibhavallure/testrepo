@@ -217,6 +217,45 @@ ul#instagram-items-slider button.owl-prev span {
 	margin-top: -18px;
 }
 
+.containerImage #wrapperImage {
+	width:100%;
+	height:auto;
+	position:relative;
+	overflow:hidden
+}
+
+.controlHolder {
+    border-radius: 5px;
+    background: rgba(0,0,0,.4);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px;
+    z-index: 100;
+    border-radius: 0;
+}
+
+#instagram-items-slider .owl-stage {
+	display: flex;
+}
+
+#instagram-items-slider .owl-stage li.item {
+	height:100%;
+}
+
+#instagram-items-slider .owl-stage .owl-item a {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#instagram-items-slider .owl-stage .owl-item a img {
+	visibility: hidden;
+}
+
 @media (max-width: 1023px) {
 	.zoom-link {
 	    position: absolute;
