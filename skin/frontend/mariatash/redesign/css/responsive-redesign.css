@@ -73,7 +73,8 @@
   }
   .allure_filter {
     border: 1px solid #000;
-    margin: 2px 8px;
+    margin: 2px 8px 15px;
+    border-width: 1px 1px 0;
   }
   .allure_filter dt.filter-head {
     cursor: pointer;
@@ -81,6 +82,10 @@
     width: auto;
     padding: 6px 24px;
     height: 33px;
+    border-bottom: 1px solid #000;
+  }
+  .allure_filter.scrolling{
+    border-width: 1px 1px 1px;
   }
    .filtru-price .m-filter-slider {
     margin-left: 10px;
@@ -153,12 +158,12 @@
     padding: 0;
   }
    #narrow-by-list li div dd {
-	/*display: block!important;*/
-	position: relative;
-	top:auto;
-	left: auto;
-	border: none;
-	padding: 0px 10px;
+  	/*display: block!important;*/
+  	position: relative;
+  	top:auto;
+  	left: auto;
+  	border: none;
+  	padding: 0px 10px;
   }
    #narrow-by-list{
     padding: 0;
@@ -449,6 +454,10 @@
   }
   .collat-wrap{
     margin: 0 auto;
+  }
+  #narrow-by-list {
+    max-height: 400px;
+    overflow-y: scroll;
   }
   /*Different Footer */
   .customer-care-list {
@@ -910,7 +919,7 @@
     width: 380px !important;
   }
   .mobile-main_menu{
-    top: 76px;
+    top: 54px;
   }
   .five-col{
     width: 49%;
@@ -982,9 +991,9 @@
   .cartilage-section {
     margin-top: 28px;
   }
-  .mobile-device .for-space-to-bottom.cat-img-space{
+  /* .mobile-device .for-space-to-bottom.cat-img-space{
     height: 80px !important;
-  }
+  } */
   #category-title{
     /* margin: 16px 0 20px !important; */
     padding: 0 !important;
@@ -1074,6 +1083,7 @@
   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
     width: 625px;
     margin: 0 auto;
+    margin-bottom: 20px;
   }
 }
 
@@ -1231,6 +1241,9 @@
   }
   .top-nav-v2{
     display: none;
+  }
+  .mobile-device .for-space-to-bottom.cat-img-space{
+    background-color: rgba(41,41,41,0.9);
   }
 }
 
