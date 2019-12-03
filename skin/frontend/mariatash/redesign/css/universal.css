@@ -2185,11 +2185,11 @@ li.buttons-set .btn-cancel-edit{
 .manage-payment-method li.phone-number .input-box .validation-advice {
     position: absolute;
 }
-.manage-payment-method form#mt-edit-form {
-    display: block;
+.manage-payment-method #new-mt-saved-card{
+    /*display: block;*/
     overflow: hidden;
 }
 .manage-payment-method form.add-new-card-form{
-    display: block;
+    /*display: block;*/
     overflow: hidden;
 }
