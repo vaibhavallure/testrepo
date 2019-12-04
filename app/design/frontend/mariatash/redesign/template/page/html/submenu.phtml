@@ -87,7 +87,6 @@ if($this->isthumbnailCat($pc->getName())){
                                                     if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
                                                         continue;
                                                     ?>
-                                                    ?>
                                                     <li class=""><a href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
                                                     </li>
                                                     <?php
