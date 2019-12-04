@@ -2149,12 +2149,14 @@ li.buttons-set .btn-cancel-edit{
     float: left;
     width: 100px!important;
     height: 37px;
+    padding-top: 0;
 }
 .mt-new-payment-list .mt-payment-card-btn button.card-btn-delete{
     float: left;
     width: 100px!important;
     height: 37px;
     margin-left: 10px;
+    padding-top: 0;
 }
 
 #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
