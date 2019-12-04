@@ -788,6 +788,9 @@ ul.tabs li{
     height: 50px !important;
     background-color: transparent;
   }
+  #signup-exit {
+    display: none;
+  }
 }
 /*qqqq*/
 
@@ -1167,20 +1170,20 @@ ul.tabs li{
   .btn-quickview {
     display: none !important;
   }
-  .block-layered-nav dd a, .block-layered-nav label{
+  /* .block-layered-nav dd a, .block-layered-nav label{
     font-size: 10px !important;
-  }
-  .common-redesign-checkout .for-space-to-bottom{
+  } */
+  /* .common-redesign-checkout .for-space-to-bottom{
     height: 252px !important;
-  }
-  .checkout-cart-index .for-space-to-bottom,
+  } */
+  /* .checkout-cart-index .for-space-to-bottom,
   .checkout-multishipping-addresses .for-space-to-bottom,
   .checkout-multishipping-shipping .for-space-to-bottom,
   .checkout-multishipping-delivery .for-space-to-bottom,
   .checkout-multishipping-billing .for-space-to-bottom,
   .checkout-multishipping-overview .for-space-to-bottom {
     height: 265px !important;
-  }
+  } */
   .checkout-multishipping-addresses .col-main,
   .checkout-multishipping-shipping .col-main,
   .checkout-multishipping-delivery .col-main,
@@ -1261,7 +1264,8 @@ ul.tabs li{
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
   #total_item_counts_holder{
-    margin-top: 8px !important;
+    margin-top: 11px !important;
+    margin-left: 0;
   }
   .maria-left-menus{
     left: 55px;
@@ -1273,7 +1277,7 @@ ul.tabs li{
     top: 64px;
   }
   .for-space-to-bottom {
-    height: auto;
+    height: auto !important;
   }
   #appointments .menu-inner .mt-4 {
     margin-top: 1.5rem !important;
@@ -1284,6 +1288,16 @@ ul.tabs li{
   }
   .social-media > .row.justify-content-lg-end {
     justify-content: start !important;
+  }
+  .locations-wrapper .img-wrap{
+    max-width: 70% !important;
+  }
+  .product-detail-parent{
+    margin-top: -6px;
+  }
+  .quick_link{
+    display: block !important;
+    margin-bottom: 0;
   }
 }
 /* ipad pro portrait */
@@ -1327,10 +1341,10 @@ ul.tabs li{
   #search-input {
     z-index: 1032;
   }
-  #apply-filter-btn{
+  /* #apply-filter-btn{
     margin-left: 10px;
     margin-right: 10px;
-  }
+  } */
 }
 
 @media (max-width: 1023px) and (orientation: landscape) {
@@ -2152,7 +2166,7 @@ ul.tabs li{
     float: none;
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu{
-    top: 53px;
+    top: 52px;
   }
   .maria-left-menus{
     left:85px;
