@@ -4853,3 +4853,10 @@ td.cart_col2 {
 #prev3, #next3 { /*For Cartilage filters*/
   top: 30%;
 }
+
+#signup-exit{
+	position: absolute;
+	top: 16px;
+	right: 20px;
+	cursor: auto;
+}
