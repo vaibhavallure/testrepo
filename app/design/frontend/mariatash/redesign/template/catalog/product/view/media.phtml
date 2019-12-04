@@ -610,6 +610,8 @@ if ($isAjaxCall) {
         /*Zoom Image - for next image*/
         zoomImgArray = JSON.parse('<?= json_encode($zoomImgArr) ?>');
         jQuery('.zoom-img').empty();
+        jQuery('.zoom-next,.zoom-prev').unbind('click');
+        jQuery('.zoom-prev,.zoom-next').show();
         jQuery('.zoom-bnt-container').empty();
         var zoom_btn = '<div class="mt-5 buttons zoom-buttons d-block" id="button-1-'+productId+'"><img src="<?= $this->getSkinUrl('images/zoom-icons/plus.svg')?>" class="zoom-in" id="zoom-in-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/minus.svg')?>" class="zoom-out" id="zoom-out-1-'+productId+'"/><img src="<?= $this->getSkinUrl('images/zoom-icons/undo.svg')?>" class="zoom-reset" id="zoom-reset-1-'+productId+'"/> </div>';
         var img_content ='<div class="panzoom d-block" id="panzoom-1-'+productId+'"> <img class="w-100" src="'+zoomImgArray[0]+'" ></div>';
@@ -712,30 +714,3 @@ if ($isAjaxCall) {
     });
 </script>
 
-<!--Zoom Popup-->
-<div id="openModal" class="zoomPopup"> <!--do not remove celebPopup class-->
-    <div class="pop-up-cover big-popup-cover col-12">
-        <div class="row">
-            <div class="pop-title modal-header">
-                <div class="zoom-bnt-container "></div>
-                <a href="#close" title="Close" class="close exit-large" id="zoomClose">
-                    <div></div>
-                </a>
-            </div>
-            <div class="body modal-body big-popup-body col-12">
-                <div class="row">
-
-                    <div class="col-12">
-                        <!--DO not remove zoom-img class-->
-                        <div class="zoom-img big-popup-image row"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="prev zoom-prev" data-current="1"></div>
-            <div class="next zoom-next" data-current="1"></div>
-            <div class="zoom-loader" style="display: none">
-                <img src="<?php echo $this->getSkinUrl('images/vmt_loader.gif') ?>" alt="Loading..." >
-            </div>
-        </div>
-    </div>
-</div>
