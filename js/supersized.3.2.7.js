@@ -154,7 +154,7 @@
 					var anchor = '<span></span>';
 
 					if (imageLink != "") {
-						anchor = '<a '+imageLink+' target="_blank"></a>'
+						anchor = '<a '+imageLink+' target="_self"></a>'
 					}
 
 					imgPrev.appendTo(slidePrev).wrap(anchor).parent().parent().addClass('image-loading prevslide');
@@ -178,7 +178,7 @@
 			var anchor = '<span></span>';
 
 			if (imageLink != "") {
-				anchor = '<a '+imageLink+' target="_blank"></a>'
+				anchor = '<a '+imageLink+' target="_self"></a>'
 			}
 
 			img.appendTo(slideCurrent).wrap(anchor).parent().parent().addClass('image-loading activeslide');
@@ -197,7 +197,7 @@
 				var anchor = '<span></span>';
 
 				if (imageLink != "") {
-					anchor = '<a '+imageLink+' target="_blank"></a>'
+					anchor = '<a '+imageLink+' target="_self"></a>'
 				}
 				var imgNext = $('<img src="'+base.options.slides[loadNext].image+'"/>');
 				var slideNext = base.el+' li:eq('+loadNext+')';
@@ -507,7 +507,7 @@
 			if (!$(targetList).html()){
 
 				// If links should open in new window
-				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+				var linkTarget = base.options.new_window ? ' target="_self"' : '';
 
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
@@ -616,7 +616,7 @@
 			var targetList = base.el+' li:eq('+loadSlide+')';
 			if (!$(targetList).html()){
 				// If links should open in new window
-				var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+				var linkTarget = base.options.new_window ? ' target="_self"' : '';
 				imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 				var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
 				var anchor = '<span></span>';
@@ -788,7 +788,7 @@
         base._placeSlide = function(place){
 
 			// If links should open in new window
-			var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+			var linkTarget = base.options.new_window ? ' target="_self"' : '';
 
 			loadSlide = false;
 
@@ -800,7 +800,7 @@
 
 				if (!$(targetList).html()){
 					// If links should open in new window
-					var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+					var linkTarget = base.options.new_window ? ' target="_self"' : '';
 
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 					var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
@@ -827,7 +827,7 @@
 
 				if (!$(targetList).html()){
 					// If links should open in new window
-					var linkTarget = base.options.new_window ? ' target="_blank"' : '';
+					var linkTarget = base.options.new_window ? ' target="_self"' : '';
 
 					imageLink = (base.options.slides[loadSlide].url) ? "href='" + base.options.slides[loadSlide].url + "'" : "";	// If link exists, build it
 					var img = $('<img src="'+base.options.slides[loadSlide].image+'"/>');
