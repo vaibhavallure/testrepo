@@ -9,6 +9,7 @@ require_once ('app/code/local/MT/Checkout/controllers/OnepageController.php');
 class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageController
 {
     const WHOLESALE_GROUP_ID = 2;
+    const GUEST_GROUP_ID = 0;
     const ONEPAGE_LOG_FILE = "onepage.log";
     
     protected $logStatus;
@@ -66,6 +67,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             if(strtolower($action) == "success"){
                return $this;                
             }elseif($isAmazonPaymentForGeneralCustomer){
+                return $this;
+            }elseif($customerGroupId == self::GUEST_GROUP_ID){
                 return $this;
             }elseif(!$this->getOnepage()->getQuote()->isVirtual()){
                 $this->_redirect("*/multishipping");
@@ -151,7 +154,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
         if ($this->getRequest()->isPost()) {
             /** gift item */
-            $this->getOnepage()->saveGiftItem();
+            $giftItems = $this->getRequest()->getParam("ship");
+            $this->getOnepage()->saveGiftItem($giftItems);
             
             /** Save customer billing address. */
             $dataBilling = $this->getRequest()->getPost('billing', array());
@@ -442,7 +446,12 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                 if (strtolower($quoteObj->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
                     $this->loadLayout('checkout_onepage_shipment_review');
                 } else {
-                    $this->loadLayout('checkout_onepage_review');
+                    $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+                    if($customerGroupId == 2){
+                        $this->loadLayout('checkout_onepage_review');
+                    }else{
+                        $this->loadLayout('checkout_onepage_review_general_customer');
+                    }
                 }
                 $result['goto_section'] = 'review';
                 $result['update_section'] = array(
