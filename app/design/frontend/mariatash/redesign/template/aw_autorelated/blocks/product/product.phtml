@@ -99,7 +99,7 @@ if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE
                 ?>
                 <li class="item">
                     <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $product->getId() ?>' href="<?php echo $product->getProductUrl() ?>">
-                        <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(280,362); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" />
+                        <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(500,500); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" />
                     </a>
                 </li>
             <?php endforeach; ?>

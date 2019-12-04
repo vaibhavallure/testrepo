@@ -122,7 +122,7 @@ jQuery(document).ready(function(){
 			var firstname 		= $j('#firstname').val();
 			var lastname 		= $j('#lastname').val();
 			var email 			= $j('#email-register').val();
-			var password 		= $j('#password').val();
+			var password 		= $j('#password1').val();
 			var is_subscribed 	= $j('#popup_is_subscribed').is(":checked");
 			var key				= Allure.RegisterModelFormKey;
 
