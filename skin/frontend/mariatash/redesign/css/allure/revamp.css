@@ -7,6 +7,10 @@
     padding: 0 0 20px;
 }
 
+.cms-no-route .std dl dt {
+    font-weight: bold;
+    padding-bottom: 5px;
+}
 
 
 #fancybox-loading > div,
