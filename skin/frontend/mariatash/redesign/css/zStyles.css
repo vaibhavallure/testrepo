@@ -2195,7 +2195,7 @@ line-height: 42px;
 		display: none !important;
 	}
 	/* ipad portrait */
-	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
+	@media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
 			top: 0px;
 			padding:10px;
@@ -2212,18 +2212,22 @@ line-height: 42px;
 		{
 			padding-top: 60px !important;
 		}
+        .zoom-img.big-popup-image.row {
+			max-height: 100% !important;
+		}
 
 	}
 
 
 	/* ipad landscape */
-	@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
+	@media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
 		#cross-icon {
 			padding: 10px;
 			top: 0px;
 			margin-right: 10px;
 			position: fixed;
 			z-index: 1032;
+			right: 10px !important;
 		}
 		/* .menu-common-section .inner-box {
 			justify-content: space-evenly;
@@ -2294,8 +2298,9 @@ line-height: 42px;
 		height: auto;
 	}
 	.zoom-opened {
-		z-index: 9999;
+		/*z-index: 9999;*/
 	}
+
 	.zoom-in, .zoom-out, .zoom-reset {
 		width: 2.2rem;
 		cursor: pointer;

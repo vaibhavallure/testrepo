@@ -4,6 +4,9 @@
  */
 ?>
 <?php $quote = $this->getQuote();?>
+<?php $helper = Mage::helper("allure_multicheckout");?>
+<?php $isSingleProduct = $helper->isQuoteContainSingleProduct()?>
+
 <?php $items = $quote->getAllVisibleItems();?>
 <div class="data-table col-12" id="multiship-addresses-table">
 	<div class="row">
@@ -73,6 +76,24 @@
                        	</div>
                  	</div>
                    	<?php endif;?>
+                   	
+                   	<?php 
+                   	$customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+                   	?>
+                   	
+                   	<?php if(false && !empty($message) && !$isSingleProduct && $customerGroupId != 2): ?>
+                    <?php $tmpMessage = $message;?>
+                    <?php if(!preg_match('/instock-product/', strtolower($tmpMessage) )):?>
+                    	<div class="gift-messages">
+                        	<p class="control">
+                           		<label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getId()?>">
+                                	<input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getId()?>" value="1" class="checkbox" <?= (false && $_item->getIsSeparateShip()) ? 'checked="checked"': "" ?>>
+                                   	<span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Multiple shipping charges will be applied.)')?>
+                               	</label>
+                        	</p>
+                   		</div>
+                  	<?php endif;?>
+                  	<?php endif;?>
             		
              	</div>
              </div>

@@ -16,9 +16,9 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping extends Mage_Checkout
             'label'     => Mage::helper('checkout')->__('Billing & Shipping Address'),
             'is_show'   => $this->isShow()
         ));
-        if ($this->isCustomerLoggedIn()) {
+        //if ($this->isCustomerLoggedIn()) {
             $this->getCheckout()->setStepData('shipping', 'allow', true);
-        }
+        //}
         
     }
 }
