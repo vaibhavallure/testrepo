@@ -59,7 +59,7 @@
                 offset:{y:-6},
                 ajax: true,//{type: 'post',cache: false},
                 hook: 'topmiddle',
-                // hideOn: 'true',
+                hideOn: 'false',
                 // hideOthers: true,
                 onShow: function (content, element) {
                     //<![CDATA[
@@ -128,6 +128,10 @@
         }
 
         jQuery('#link_email-signup').on('click',function(){
+            jQuery('.t_Tooltip.t_Tooltip_allure_footer').toggle()
+        });
+
+        jQuery('#link_sign-up-for-newsletter').on('click',function(){
             jQuery('.t_Tooltip.t_Tooltip_allure_footer').toggle()
         });
     });
