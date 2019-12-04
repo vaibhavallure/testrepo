@@ -1,68 +1,67 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
 
-  .for-space-to-bottom.cat-img-space {
-    background-image: none !important;
-    height: 50px !important;
-    background-color: transparent;
-  }
+.for-space-to-bottom.cat-img-space {
+  background-image: none !important;
+  height: 50px !important;
+  background-color: transparent;
+}
 
-  .menu_overlay {
-    z-index: 3;
-  }
-  /*filter -------------------------------*/
-  dt.filter-head:after {
-    background: url(../images/redesign/plus.png) no-repeat;
-    content: '';
-    height: 20px;
-    width: 24px;
-    background-position: right;
-    position: absolute;
-    right: 10px;
-    /*transition: 0.5s;*/
-    background-size: 10px;
-  }
-  dt.filter-head.showing:after {
-    background: url(../images/redesign/minus.png) no-repeat;
-    content: '';
-    height: 20px;
-    width: 24px;
-    background-position: right;
-    position: absolute;
-    right: 10px;
-    /*transition: 0.5s;*/
-  }
-  #narrow-by-list li div dt:after{
-    background: url(../images/redesign/plus-wt.png) no-repeat;
-    content: '';
-    height: 20px;
-    width: 24px;
-    background-position: right;
-    position: absolute;
-    right: 10px;
-    background-size: 10px;
-  }
+.menu_overlay {
+  z-index: 3;
+}
+/*filter -------------------------------*/
+dt.filter-head:after {
+  background: url(../images/redesign/plus.png) no-repeat;
+  content: '';
+  height: 20px;
+  width: 24px;
+  background-position: right;
+  position: absolute;
+  right: 10px;
+  /*transition: 0.5s;*/
+  background-size: 10px;
+}
+dt.filter-head.showing:after {
+  background: url(../images/redesign/minus.png) no-repeat;
+  content: '';
+  height: 20px;
+  width: 24px;
+  background-position: right;
+  position: absolute;
+  right: 10px;
+  /*transition: 0.5s;*/
+}
+#narrow-by-list li div dt:after{
+  background: url(../images/redesign/plus-wt.png) no-repeat;
+  content: '';
+  height: 20px;
+  width: 24px;
+  background-position: right;
+  position: absolute;
+  right: 10px;
+  background-size: 10px;
+}
 
-  #narrow-by-list li div dt.showing:after {
-    background: url(../images/redesign/minus-wt.png) no-repeat;
-    content: '';
-    height: 20px;
-    width: 24px;
-    background-position: right;
-    position: absolute;
-    right: 10px;
-    /*transition: 0.5s;*/
-  }
-  #narrow-by-list li div dt{
-    background-image: none!important;
-  }
+#narrow-by-list li div dt.showing:after {
+  background: url(../images/redesign/minus-wt.png) no-repeat;
+  content: '';
+  height: 20px;
+  width: 24px;
+  background-position: right;
+  position: absolute;
+  right: 10px;
+  /*transition: 0.5s;*/
+}
+#narrow-by-list li div dt{
+  background-image: none!important;
+}
 .sticky-bar {
   position: fixed;
   top: 50px;
   background: white;
   z-index: 3;
 }
-
 .sticky-filter{
   position: fixed;
   top: 80px;
@@ -187,11 +186,11 @@ width: 245px;
   padding: 0;
 }
 .filter-actions{
-    padding: 10px!important;
-    position: absolute;
-    bottom: 0;
-    background: #fff;
-    border-top: 1px solid rgba(41,41,41,0.3);
+  padding: 10px!important;
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid rgba(41,41,41,0.3);
 }
   /*filter end----------------------------*/
 .mobile-device .main-nav-title li {
@@ -310,400 +309,400 @@ width: 245px;
 .second-header-image{
   display: none;
 }
-  .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
-    background: rgba(41,41,41)
-  }
-  .responsive-direction{
-    flex-direction: column-reverse;
-  }
-  .jewelry-copy-even{
-    text-align: left;
-  }
-  .image-section, .copy-section{
-    padding: 0;
-  }
-  .mobile-device .jewelry-container{
-    margin-top: 0;
-    margin-bottom: 0px;
-  }
-  .mobile-device .designer-copy{
-    margin: 30px 0 5px;
-  }
-  .faq-main > .row{
-    flex-direction: column-reverse;
-  }
-  .faq-image-section img {
-    padding-right: 0px;
-    width: 100%;
-  }
-  .gift-card-main > .row {
-    flex-direction: initial;
-  }
-  .gift-card-main .faq-image-section img {
-    padding-right: 0;
-    width: 100%;
-    height: 100%;
-  }
-  #faq-one {
-    margin-top: 15px;
-  }
-  .faq-main h1 {
-    text-align: center;
-  }
-  .customer-care-page .main {
-    padding-bottom: 0;
-  }
-  .content-customer {
-    margin: 15px 0 0;
-  }
-  .piercing_options{
-    padding: 0 15px;
-  }
-  .mobile-sub_menu .image-text h6{
-    margin-bottom: 37px;
-  }
-  .parent-category {
-    font-size: 13px;
-    text-transform: uppercase;
-    font-family: urw-din-bold;
-  }
-  .submenu-upper-section {
-    padding: 0 0 10px;
-    border-bottom: 1px solid #292929;
-    margin-bottom: 20px;
-    margin: 35px 15px 20px;
-  }
-  .category-image img{
-    display: none;
-  }
-  .newsletter-mt {
-    display: none;
-  }
-  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
-    border-bottom: 1px solid #fff;
-    padding-bottom: 10px;
-    text-transform: uppercase;
-  }
-  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
-    margin-top: 7px;
-  }
-  #tooltip-id-contact-us table td{
-    color: white;
-  }
-  #tooltip-id-our-jewelry {
-    margin-top: 13px;
-  }
-  .contact-table, .customer-care-list {
-    line-height: 35px;
-  }
-  .form-subscribe-mt{
-    margin-top: 20px;
-  }
-  .customer-care-list li span{
-    font-size: 12px;
-  }
-  #link_about-maria-tash a, #link_about-our-jewelry a, #link_accessibility a{
-    font-size: 13px;
-    letter-spacing: 0.5px;
-  }
-  #container{
-    height: 80px;
-  }
-  .form-subscribe-mt .input-box{
-    margin-bottom: 10px;
-  }
-  #success {
-    margin-bottom: 30px;
-  }
-  #success p {
-    margin: 15px 0px 0px 0;
-    letter-spacing: 1px;
-  }
-  .designer-image img{
-    width: 100%;
-  }
-  .level-top.parent span:hover {
-    border-bottom: none;
-  }
-  .maria-left-menus{
-    top: 2px;
-  }
-  .shop_by_look .big-popup-body {
-    padding: 48px 26px 48px 29px!important;
-  }
-  .popup-right-section{
-    padding: 0 30px 0 6px;
-  }
-  .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main,
-  .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main, .paypal-express-overview .col-main{
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  #narrow-by-list li div dd ol li{
-    width: auto;
-  }
-  .checkout-multishipping-success .multiple-checkout, .checkout-onepage-success .multiple-checkout, .checkout-onepage-successorder .multiple-checkout{
-    width: 90%;
-  }
-  .checkout-onepage-index .for-space-to-bottom {
-    height: 120px !important;
-  }
-  .checkout-cart-index .for-space-to-bottom,
-  .checkout-multishipping-addresses .for-space-to-bottom,
-  .checkout-multishipping-shipping .for-space-to-bottom,
-  .checkout-multishipping-delivery .for-space-to-bottom,
-  .checkout-multishipping-billing .for-space-to-bottom,
-  .checkout-multishipping-overview .for-space-to-bottom{
-    height: 110px !important;
-  }
-  .collat-wrap{
-    margin: 0 auto;
-  }
-  #narrow-by-list {
-    max-height: 400px;
-    overflow-y: scroll;
-  }
-  /*Different Footer */
-  .customer-care-list {
-  	padding: 0;
-    width: 100%;
-  }
-  #tooltip-id-customer-care{
-  	width: 100% !important;
-  }
-  .customer-care-list li{
-  	width: 100%;
-  }
-  #piercing .inner-box{
-    width: 100%;
-  }
-  .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
-  	color: #fff;
-  	font-size: 12px;
-  	font-family: urw-din-medium;
-  	letter-spacing: 0.5px;
-  }
-  #tooltip-id-our-jewelry .slide {
-  	width: 300px;
-  	height: 120px;
-  	overflow: hidden;
-  	float: left;
-  	overflow-y: auto;
-  	color: #fff;
-  }
-  #tooltip-id-our-jewelry a.next-content-block-seo{
-    margin-right: -15px;
-  }
-  .form-subscribe-mt{
-    margin-top: 10px;
-    width: auto;
-  }
-  #newsletter-form .link-button{
-  	color: #fff !important;
-  }
-  .form-subscribe-mt .checkmark:after{
-  	background: #fff;
-  }
-  #newsletter-form .dark-button{
-    border: 1px solid #fff;
-  	background: transparent;
-  	color: #fff;
-    padding: 10px;
-  }
-  .form-subscribe-mt input, .form-subscribe-mt select {
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 10px;
-  }
-  .footer-item-list span {
-    font-size: 12px !important;
-    font-family: urw-din-medium;
-  	letter-spacing: 0 !important;
-    text-transform: uppercase;
-  }
-  .footer-items a:hover {
-    text-decoration: none;
-  }
-  .footerlink-icons .item-icons img {
-    width: 22px;
-  }
-  #foo4_next, #foo4_prev{
-    top: 40%;
-  }
-  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
-  	color: red !important;
-  }
-  #newsletter-form .validation-advice{
-    position: relative;
-    top:0;
-  }
-  #appointments .image-text{
-    position: relative;
-    background: none;
-  }
-  .image-text{
-    background: none;
-  }
+.catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
+  background: rgba(41,41,41)
+}
+.responsive-direction{
+  flex-direction: column-reverse;
+}
+.jewelry-copy-even{
+  text-align: left;
+}
+.image-section, .copy-section{
+  padding: 0;
+}
+.mobile-device .jewelry-container{
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+.mobile-device .designer-copy{
+  margin: 30px 0 5px;
+}
+.faq-main > .row{
+  flex-direction: column-reverse;
+}
+.faq-image-section img {
+  padding-right: 0px;
+  width: 100%;
+}
+.gift-card-main > .row {
+  flex-direction: initial;
+}
+.gift-card-main .faq-image-section img {
+  padding-right: 0;
+  width: 100%;
+  height: 100%;
+}
+#faq-one {
+  margin-top: 15px;
+}
+.faq-main h1 {
+  text-align: center;
+}
+.customer-care-page .main {
+  padding-bottom: 0;
+}
+.content-customer {
+  margin: 15px 0 0;
+}
+.piercing_options{
+  padding: 0 15px;
+}
+.mobile-sub_menu .image-text h6{
+  margin-bottom: 37px;
+}
+.parent-category {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-family: urw-din-bold;
+}
+.submenu-upper-section {
+  padding: 0 0 10px;
+  border-bottom: 1px solid #292929;
+  margin-bottom: 20px;
+  margin: 35px 15px 20px;
+}
+.category-image img{
+  display: none;
+}
+.newsletter-mt {
+  display: none;
+}
+.popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
+  border-bottom: 1px solid #fff;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+#tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
+  margin-top: 7px;
+}
+#tooltip-id-contact-us table td{
+  color: white;
+}
+#tooltip-id-our-jewelry {
+  margin-top: 13px;
+}
+.contact-table, .customer-care-list {
+  line-height: 35px;
+}
+.form-subscribe-mt{
+  margin-top: 20px;
+}
+.customer-care-list li span{
+  font-size: 12px;
+}
+#link_about-maria-tash a, #link_about-our-jewelry a, #link_accessibility a{
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+#container{
+  height: 80px;
+}
+.form-subscribe-mt .input-box{
+  margin-bottom: 10px;
+}
+#success {
+  margin-bottom: 30px;
+}
+#success p {
+  margin: 15px 0px 0px 0;
+  letter-spacing: 1px;
+}
+.designer-image img{
+  width: 100%;
+}
+.level-top.parent span:hover {
+  border-bottom: none;
+}
+.maria-left-menus{
+  top: 2px;
+}
+.shop_by_look .big-popup-body {
+  padding: 48px 26px 48px 29px!important;
+}
+.popup-right-section{
+  padding: 0 30px 0 6px;
+}
+.checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main,
+.checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main, .paypal-express-overview .col-main{
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+#narrow-by-list li div dd ol li{
+  width: auto;
+}
+.checkout-multishipping-success .multiple-checkout, .checkout-onepage-success .multiple-checkout, .checkout-onepage-successorder .multiple-checkout{
+  width: 90%;
+}
+.checkout-onepage-index .for-space-to-bottom {
+  height: 120px !important;
+}
+.checkout-cart-index .for-space-to-bottom,
+.checkout-multishipping-addresses .for-space-to-bottom,
+.checkout-multishipping-shipping .for-space-to-bottom,
+.checkout-multishipping-delivery .for-space-to-bottom,
+.checkout-multishipping-billing .for-space-to-bottom,
+.checkout-multishipping-overview .for-space-to-bottom{
+  height: 110px !important;
+}
+.collat-wrap{
+  margin: 0 auto;
+}
+#narrow-by-list {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+/*Different Footer */
+.customer-care-list {
+	padding: 0;
+  width: 100%;
+}
+#tooltip-id-customer-care{
+	width: 100% !important;
+}
+.customer-care-list li{
+	width: 100%;
+}
+#piercing .inner-box{
+  width: 100%;
+}
+.contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
+	color: #fff;
+	font-size: 12px;
+	font-family: urw-din-medium;
+	letter-spacing: 0.5px;
+}
+#tooltip-id-our-jewelry .slide {
+	width: 300px;
+	height: 120px;
+	overflow: hidden;
+	float: left;
+	overflow-y: auto;
+	color: #fff;
+}
+#tooltip-id-our-jewelry a.next-content-block-seo{
+  margin-right: -15px;
+}
+.form-subscribe-mt{
+  margin-top: 10px;
+  width: auto;
+}
+#newsletter-form .link-button{
+	color: #fff !important;
+}
+.form-subscribe-mt .checkmark:after{
+	background: #fff;
+}
+#newsletter-form .dark-button{
+  border: 1px solid #fff;
+	background: transparent;
+	color: #fff;
+  padding: 10px;
+}
+.form-subscribe-mt input, .form-subscribe-mt select {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.footer-item-list span {
+  font-size: 12px !important;
+  font-family: urw-din-medium;
+	letter-spacing: 0 !important;
+  text-transform: uppercase;
+}
+.footer-items a:hover {
+  text-decoration: none;
+}
+.footerlink-icons .item-icons img {
+  width: 22px;
+}
+#foo4_next, #foo4_prev{
+  top: 40%;
+}
+#newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
+	color: red !important;
+}
+#newsletter-form .validation-advice{
+  position: relative;
+  top:0;
+}
+#appointments .image-text{
+  position: relative;
+  background: none;
+}
+.image-text{
+  background: none;
+}
 /* Catalog Filter CSS */
-  .m-filter-checkboxes{
-    display: flex;
-  }
-  .m-filter-checkboxes li {
-    flex-basis: 0;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    max-width: 25%;
-  }
-  .common-filter {
-    display: flex;
-  }
-  .thumb.thumb1 img {
-    margin-top: 0;
-  }
-  .pdp-image-section{
-    flex-direction: column-reverse;
-  }
-  .thumb img{
-    margin-top: 0;
-  }
-  .thumb {
-    margin-left: 5px;
-  }
-  .thumb:first-child {
-    margin-left: 0;
-  }
-  .containerThumb{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    /*margin-top: 35px;*/
-    padding-top: 35px;
-    margin-bottom: 10px;
-  }
-  .celebPopup .product-info {
-    /*position: relative;*/
-    bottom: 0;
-  }
-  .big-popup-body{
-    padding: 28px 93px !important;
-  }
-  .popup-below-content {
-    margin-top: 8px;
-    padding: 0 36px 0px 35px;
-  }
-  .category-image-bleed{ /* Head Image */
-    display: none;
-  }
-  ul.tabs li{
-    flex: 0 0 33.33% !important;
-    max-width: 33.33% !important;
-  }
-  .catalog-category-view .simple-page-title{
-    padding: 0!important;
-  }
-  .btn-quickview {
-    display: none !important;
-  }
-  #tooltip-id-our-jewelry a.previous-content-block-seo {
-    background: url(../images/white-active-arrow.png) no-repeat 0 0;
-    width: 14px;
-    height: 20px;
-    display: block;
-    float: right;
-    margin-right: 10px;
-    text-indent: -9000px;
-    background-size: 100% 100%;
-    position: relative;
-    transform: rotate(180deg);
-  }
-  #tooltip-id-our-jewelry a.next-content-block-seo {
-    background: url(../images/white-active-arrow.png) no-repeat 0 0;
-    width: 14px;
-    height: 20px;
-    display: block;
-    float: right;
-    margin-right: 10px;
-    text-indent: -9000px;
-    background-size: 100% 100%;
-    position: relative;
-    margin-left: 10px;
-  }
-  #tooltip-id-our-jewelry #container{
-    height: auto;
-  }
-  #total_item_counts_holder{
-    display: none;
-  }
-  .login-dropdown {
-    position: absolute;
-    width: 137px;
-    right: 10px;
-    top: 22px;
-    padding-top: 18px;
-    line-height: 25px;
-  }
-  .checkoutPopupLoginModel .pop-up-cover{
-    width: 520px;
-  }
-  .guest-right{
-    max-width: 100%;
-    flex: 0 0 100%;
-  }
-  .checkoutPopupLoginModel #signin-btn-popup, .checkoutPopupLoginModel .sign-in-register{
-    margin: 25px 0 75px;
-  }
-  .guest-checkout button{
-    margin-top: 60px;
-  }
-  .checkoutPopupLoginModel .social-options {
-    padding-bottom: 60px;
-  }
-  .url-caption{
-    margin-top: 37px;
-  }
-  .video-caption {
-    margin-top: 39px;
-  }
-  .containerVideo {
-    margin-top: 40px;
-  }
-  .giftcards .div_selector_month{
-    width: 40%;
-  }
-  .giftcards .div_selector_day{
-    width: 30%;
-  }
-  .giftcards .div_selector_year {
-    width: 20%;
-  }
-  .mobile-device .menu-common-section{
-    margin-top: 13px;
-    padding-bottom: 50px;
-  }
-  .common-option-div{
-    width: 100%;
-  }
-  .menu-common-section{
-    margin-top: 13px;
-  }
-  .general-piercing-information{
-    margin-top: 0 !important;
-    margin-bottom: 30px;
-  }
-  .paypal-express-review .col-main{
-    padding: 0;
-  }
-  .vertical-middle {
-    padding: 0 30px;
-  }
-  .mobile-device .navigation-parent{
-  	/* height: 100vh;
-  	overflow-y: auto; */
-    padding-bottom: 60px;
-  }
-  .mobile-main_menu .main-nav-title li:last-child {
-    border-bottom: none;
-  }
+.m-filter-checkboxes{
+  display: flex;
+}
+.m-filter-checkboxes li {
+  flex-basis: 0;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 25%;
+}
+.common-filter {
+  display: flex;
+}
+.thumb.thumb1 img {
+  margin-top: 0;
+}
+.pdp-image-section{
+  flex-direction: column-reverse;
+}
+.thumb img{
+  margin-top: 0;
+}
+.thumb {
+  margin-left: 5px;
+}
+.thumb:first-child {
+  margin-left: 0;
+}
+.containerThumb{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /*margin-top: 35px;*/
+  padding-top: 35px;
+  margin-bottom: 10px;
+}
+.celebPopup .product-info {
+  /*position: relative;*/
+  bottom: 0;
+}
+.big-popup-body{
+  padding: 28px 93px !important;
+}
+.popup-below-content {
+  margin-top: 8px;
+  padding: 0 36px 0px 35px;
+}
+.category-image-bleed{ /* Head Image */
+  display: none;
+}
+ul.tabs li{
+  flex: 0 0 33.33% !important;
+  max-width: 33.33% !important;
+}
+.catalog-category-view .simple-page-title{
+  padding: 0!important;
+}
+.btn-quickview {
+  display: none !important;
+}
+#tooltip-id-our-jewelry a.previous-content-block-seo {
+  background: url(../images/white-active-arrow.png) no-repeat 0 0;
+  width: 14px;
+  height: 20px;
+  display: block;
+  float: right;
+  margin-right: 10px;
+  text-indent: -9000px;
+  background-size: 100% 100%;
+  position: relative;
+  transform: rotate(180deg);
+}
+#tooltip-id-our-jewelry a.next-content-block-seo {
+  background: url(../images/white-active-arrow.png) no-repeat 0 0;
+  width: 14px;
+  height: 20px;
+  display: block;
+  float: right;
+  margin-right: 10px;
+  text-indent: -9000px;
+  background-size: 100% 100%;
+  position: relative;
+  margin-left: 10px;
+}
+#tooltip-id-our-jewelry #container{
+  height: auto;
+}
+#total_item_counts_holder{
+  display: none;
+}
+.login-dropdown {
+  position: absolute;
+  width: 137px;
+  right: 10px;
+  top: 22px;
+  padding-top: 18px;
+  line-height: 25px;
+}
+.checkoutPopupLoginModel .pop-up-cover{
+  width: 520px;
+}
+.guest-right{
+  max-width: 100%;
+  flex: 0 0 100%;
+}
+.checkoutPopupLoginModel #signin-btn-popup, .checkoutPopupLoginModel .sign-in-register{
+  margin: 25px 0 75px;
+}
+.guest-checkout button{
+  margin-top: 60px;
+}
+.checkoutPopupLoginModel .social-options {
+  padding-bottom: 60px;
+}
+.url-caption{
+  margin-top: 37px;
+}
+.video-caption {
+  margin-top: 39px;
+}
+.containerVideo {
+  margin-top: 40px;
+}
+.giftcards .div_selector_month{
+  width: 40%;
+}
+.giftcards .div_selector_day{
+  width: 30%;
+}
+.giftcards .div_selector_year {
+  width: 20%;
+}
+.mobile-device .menu-common-section{
+  margin-top: 13px;
+  padding-bottom: 50px;
+}
+.common-option-div{
+  width: 100%;
+}
+.menu-common-section{
+  margin-top: 13px;
+}
+.general-piercing-information{
+  margin-top: 0 !important;
+  margin-bottom: 30px;
+}
+.paypal-express-review .col-main{
+  padding: 0;
+}
+.vertical-middle {
+  padding: 0 30px;
+}
+.mobile-device .navigation-parent{
+	/* height: 100vh;
+	overflow-y: auto; */
+  padding-bottom: 60px;
+}
+.mobile-main_menu .main-nav-title li:last-child {
+  border-bottom: none;
+}
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -718,11 +717,6 @@ width: 245px;
   .toolbar-top {
     display: none;
   }
-  /* .products-grid li.item .list-mt-w{
-    position: relative;
-    background: #eee;
-    padding: 0px 5px 5px 5px;
-  } */
   .catalog-common-grid .product-image img:hover{
     -ms-transform: none; /* IE 9 */
     -webkit-transform: none; /* Safari 3-8 */
@@ -796,9 +790,6 @@ width: 245px;
     margin-left: auto;
     margin-right: auto;
   }
- /* #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
-    width: 100%;
-  }*/
   .manage-payment-method #mt-credit-card-info .mt-card-info{
     width: 47%;
     float: left;
@@ -830,9 +821,6 @@ width: 245px;
     float: left;
     clear: none;
   }
-  /*#mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
-    width: 100%;
-  }*/
   .manage-payment-method .mt-edit-form .exp-year {
     width: 48.5%;
     float: left;
@@ -861,8 +849,6 @@ width: 245px;
     margin-left: 33px;
     float: left;
   }
-
-
   .caroufredsel_wrapper{
     width: 79%;
   }
@@ -1003,9 +989,6 @@ width: 245px;
   .cartilage-section {
     margin-top: 28px;
   }
-  /* .mobile-device .for-space-to-bottom.cat-img-space{
-    height: 80px !important;
-  } */
   #category-title{
     /* margin: 16px 0 20px !important; */
     padding: 0 !important;
@@ -1054,9 +1037,6 @@ width: 245px;
   .homepage-menu{
     padding-top: 21px !important;
   }
-  /* .navbar-toggler {
-    top: 22px !important;
-  } */
   .giftcards.product-shop > .row, .product-maria-tash-in-store-gift-card .product-shop > .row{
     padding: 0 130px;
   }
@@ -1133,9 +1113,6 @@ width: 245px;
     background: #eee;
     margin: 0.5%;
   }
-  /* #narrow-by-list li div dt {
-    width: 100%;
-  } */
   .m-filter-checkboxes label {
 	    margin-bottom: 12px;
   }
@@ -1249,10 +1226,9 @@ width: 245px;
     right: 26px !important;
     width: 40% !important;
   }
-
-    .mobile-device #search {
-        background: #292929;
-    }
+  .mobile-device #search {
+      background: #292929;
+  }
   .footer .social-media li{
     margin-right: 24px;
   }
@@ -1334,7 +1310,7 @@ width: 245px;
 }
 
 
-/* ALl Mobiles */                         /*allmob*/
+/* ALl Mobiles */
 @media (max-width:767px) {
   .customer-paymentinfo-index .messages {
     margin-top: 15px;
@@ -2139,9 +2115,6 @@ width: 245px;
   .manage-payment-method #new-mt-add-payment-method #billing-new-address-form ul li input {
     width: 100%;
   }
-  /*.manage-payment-method #new-mt-add-payment-method select{
-    width: 100%;
-  }*/
   .myaccount-add-payment-form #billing-new-address-form .input-box select{
     width: 100%;
   }
@@ -2499,9 +2472,6 @@ width: 245px;
     top: 4px;
     left: 70px;
   }
-/* .navbar-toggler{
-    top: 28px;
-  } */
   .copy-section {
     padding: 0;
   }
