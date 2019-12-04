@@ -8,7 +8,7 @@ $childRightSection=array();
 if($this->isthumbnailCat($pc->getName())){
     ?>
     <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-jewelry-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
-      <div class="text-right submenu-upper-section d-lg-none d-block">
+      <div class="text-right submenu-upper-section d-lg-none d-block ipad-block">
           <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
           <span class="close-section">Back</span>
       </div>
@@ -33,7 +33,7 @@ if($this->isthumbnailCat($pc->getName())){
     else{
         ?>
         <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-appointment-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
-          <div class="text-right submenu-upper-section d-lg-none d-block">
+          <div class="text-right submenu-upper-section d-lg-none d-block ipad-block">
               <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($this->__($pc->getName())) ?></a></span>
             <span class="close-section ">Back</span>
           </div>
@@ -57,9 +57,12 @@ if($this->isthumbnailCat($pc->getName())){
                                     }
 
 
+
                                     if(strtolower($pc->getName()) == "jewelry"):
 
-                                    if($child->hasChildren())
+                                        $child = Mage::getModel('catalog/category')->load($child->getId());
+
+                                    if($child->hasChildren() || $child->getSetVirtualChild())
                                         $withChildrenCategory[]=$child;
                                     else
                                         $withoutChildrenCategory[]= $child;

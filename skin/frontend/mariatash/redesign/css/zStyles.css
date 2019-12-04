@@ -2207,9 +2207,7 @@ line-height: 42px;
 		.catalogsearch-result-index .mb-breadcrumbs ul.row.m-0 {
 			margin-left: 30px !important;
 		}
-		.jewelry .left-section .inner-box{
-			padding: 0 34px;
-		}
+		
 		body.cms-index-index.cms-home .footer
 		{
 			padding-top: 60px !important;
@@ -2231,10 +2229,10 @@ line-height: 42px;
 			z-index: 1032;
 			right: 10px !important;
 		}
-		.menu-common-section .inner-box {
+		/* .menu-common-section .inner-box {
 			justify-content: space-evenly;
 			padding: 0 162px;
-		}
+		} */
 	}
 	@media (max-width: 767px) {
 		#cross-icon {
