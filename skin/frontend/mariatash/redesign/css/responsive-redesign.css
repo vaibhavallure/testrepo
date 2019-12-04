@@ -459,7 +459,8 @@ width: 245px;
   margin: 0 auto;
 }
 #narrow-by-list {
-  max-height: 400px;
+  /*max-height: 400px;*/
+  max-height: 350px;
   overflow-y: scroll;
 }
 /*Different Footer */
