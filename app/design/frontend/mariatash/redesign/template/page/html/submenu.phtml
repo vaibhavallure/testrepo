@@ -57,9 +57,12 @@ if($this->isthumbnailCat($pc->getName())){
                                     }
 
 
+
                                     if(strtolower($pc->getName()) == "jewelry"):
 
-                                    if($child->hasChildren())
+                                        $child = Mage::getModel('catalog/category')->load($child->getId());
+
+                                    if($child->hasChildren() || $child->getSetVirtualChild())
                                         $withChildrenCategory[]=$child;
                                     else
                                         $withoutChildrenCategory[]= $child;
