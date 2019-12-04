@@ -2211,3 +2211,6 @@ li.buttons-set .btn-cancel-edit{
 .customer-address-index .main-container .messages ul li{
     /*margin-top: 0px;*/
 }
+.customer-paymentinfo-index .messages {
+    margin-top: 15px;
+}
