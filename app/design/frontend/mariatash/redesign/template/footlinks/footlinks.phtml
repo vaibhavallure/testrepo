@@ -10,10 +10,7 @@
             Tipped.hide('.popbox_ajax');
             Tipped.hide('.popbox');
         });
-
-        jQuery('#link_email_signup').click(function(){
-            jQuery('.t_Tooltip').toggle();
-        });
+        
 
         jQuery(window).bind("resize",function(){
             var width = jQuery(window).width();
@@ -63,7 +60,7 @@
                 ajax: true,//{type: 'post',cache: false},
                 hook: 'topmiddle',
                 hideOn: 'false',
-                hideOthers: true,
+                // hideOthers: true,
                 onShow: function (content, element) {
                     //<![CDATA[
                     var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
@@ -129,6 +126,14 @@
                 //]]>
             });
         }
+
+        jQuery('#link_email-signup').on('click',function(){
+            jQuery('.t_Tooltip.t_Tooltip_allure_footer').toggle()
+        });
+
+        jQuery('#link_sign-up-for-newsletter').on('click',function(){
+            jQuery('.t_Tooltip.t_Tooltip_allure_footer').toggle()
+        });
     });
 </script>
 
