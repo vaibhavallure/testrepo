@@ -65,6 +65,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
             </div>
                 <?php
                 $url =  Mage::getModel('catalog/product')->loadByAttribute('sku',"STORECARD")->getProductUrl();
+                $url=str_replace("/jewelry","",$url);
                 ?>
                 <div class="swatch-section">
                     <div class="chooseList row giftcardtype">
