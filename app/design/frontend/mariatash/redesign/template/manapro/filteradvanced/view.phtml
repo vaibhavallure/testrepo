@@ -192,11 +192,7 @@
     function scrollToFilter()
     {
         var block = jQuery(".filter-common-div");
-        if (jQuery(window).width() <= 1023) {
-                block.css("height", "90vh");
-            }else {
-                block.css("height", "100vh");
-        }
+        block.css("height", "100vh");
         block.css("overflow", "auto");
         block.css("background", "transparent");
         block.css("padding-bottom","200px");

@@ -1449,6 +1449,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getProductUrl($useSid = null)
     {
+        return $this->getCategoryProductUrl(3);
+        
         return $this->getUrlModel()->getProductUrl($this, $useSid);
     }
 
@@ -1472,6 +1474,31 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     public function formatUrlKey($str)
     {
         return $this->getUrlModel()->formatUrlKey($str);
+    }
+    
+    /**
+     * Retrieve Product URL
+     *
+     * @param  bool $useSid
+     * @return string
+     */
+    public function getCategoryProductUrl($category = null)
+    {
+        if ($category) {
+            
+            $product = Mage::getModel('catalog/product')->load($this->getId());
+            
+            if (!($category instanceof Mage_Catalog_Model_Category)) {
+                $category = Mage::getModel('catalog/category')->load($category);
+                $product->setCategory($category);
+            }
+            
+            $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."".$this->getUrlModel()->getUrlPath($product, $category);
+            
+            return $url;
+        }
+        
+        return $this->getProductUrl();
     }
 
     /**
