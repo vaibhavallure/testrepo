@@ -3,13 +3,11 @@
 		<a href="#close" title="Close" class="close">X</a>
 		<h2 class="appointment-login-popup-header">Sign In with Maria Tash</h2>
 		<div>
-			<label for="name">Username*:  <input id='username' type="text" name='username' class="ele_width"/>
-			</label>
+			<label for="name">Username*:  <input id='username' type="text" name='username' class="ele_width"/></label>
 		</div>
 		<br />
 		<div>
-			<label for="kraj">Password*:  <input id='passwd' type="password" name='passwd' class="ele_width"/>
-			</label>
+			<label for="kraj">Password*:  <input id='passwd' type="password" name='passwd' class="validate-password ele_width"/></label>
 		</div>
 		<br />
 		<span id="login-msg-span">&nbsp;</span>
@@ -21,13 +19,13 @@
 <script type="text/javascript">
 
 jQuery("#signin-maria").on('click',function(){	
-jQuery(".modalDialog").css({"opacity":"1","pointer-events":"auto"});
-	});
+	jQuery(".modalDialog").css({"opacity":"1","pointer-events":"auto"});
+});
 
 
 jQuery(".close").on('click',function(){console.log('hiee');
-jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-	});
+	jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
+});
 
 jQuery("#signin-btn").on('click',function(){
 
@@ -40,24 +38,21 @@ var request = {
 		};
 		
 jQuery.ajax({
-	
-	url : '<?php echo $this->getUrl('appointments/index/ajaxLogin',array('_secure' => true));?>',
-	dataType : 'json',
-	type : 'POST',
-	data: {request:request},
-	success : function(data){
-		if(data.success){
-			 jQuery('#login-msg-span').html(data.msg);
-			 jQuery('#reg_form').html(data.output);
-			 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-            location.reload();
-
-		}else{
-		 jQuery('#login-msg-span').html(data.error);
-		}
+        	url : '<?php echo $this->getUrl('appointments/index/ajaxLogin',array('_secure' => true));?>',
+        	dataType : 'json',
+        	type : 'POST',
+        	data: {request:request},
+        	success : function(data){
+    		if (data.success){
+    			 jQuery('#login-msg-span').html(data.msg);
+    			 jQuery('#reg_form').html(data.output);
+    			 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
+                location.reload();
+    
+    		} else {
+    			jQuery('#login-msg-span').html(data.error);
+    		}
 		}
 	});
-
-
-	});
+});
  </script> 
