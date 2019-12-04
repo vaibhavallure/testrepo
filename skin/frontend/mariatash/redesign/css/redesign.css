@@ -1463,10 +1463,6 @@ input[type="checkbox"]:checked+label:before {
   color: #fff;
   letter-spacing: 1px;
 }
-.level-top.parent span:hover {
-  border-bottom: 6px solid #fff;
-  padding-bottom: 28px;
-}
 .main-nav-title li:last-child {
   margin-right: 0;
 }

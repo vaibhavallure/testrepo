@@ -2371,6 +2371,10 @@ ul.tabs li{
   .close-section{
     display: none;
   }
+  .level-top.parent span:hover {
+    border-bottom: 6px solid #fff;
+    padding-bottom: 28px;
+  }
 }
 
 @media (min-width: 1200px){
