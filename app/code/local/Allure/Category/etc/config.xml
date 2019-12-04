@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Allure_Category>
-            <version>0.1.5</version>
+            <version>0.1.7</version>
         </Allure_Category>
     </modules>
     <global>

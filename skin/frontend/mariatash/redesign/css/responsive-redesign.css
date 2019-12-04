@@ -1,12 +1,10 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
-
 .for-space-to-bottom.cat-img-space {
   background-image: none !important;
   height: 50px !important;
   background-color: transparent;
 }
-
 .menu_overlay {
   z-index: 3;
 }
@@ -96,7 +94,7 @@ dt.filter-head.showing:after {
   margin-bottom: 50px;
 }
 .m-slider-selected-value{
-width: 245px;
+  width: 245px;
 }
 .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
   padding-top: 8px;
@@ -177,9 +175,9 @@ width: 245px;
   height: 34px;
 }
  #narrow-by-list li {
-  	min-width: 100%;
-   	padding-left: 0px;
-   	flex-direction: row;
+	min-width: 100%;
+ 	padding-left: 0px;
+ 	flex-direction: row;
 }
  #narrow-by-list ol li {
   min-width: 208px;
@@ -193,118 +191,26 @@ width: 245px;
   border-top: 1px solid rgba(41,41,41,0.3);
 }
   /*filter end----------------------------*/
-.mobile-device .main-nav-title li {
-  margin-right: 0;
-  margin-top: 15px;
-}
-.maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
-  display: none;
-}
 .main-nav-link li:nth-child(2) {
   margin-right: 18px;
-}
-.footer ul .footer-item-list{
-  max-width: 47%;
-  flex: 0 0 47%;
-  padding: 20px 0 10px 0;
-  margin: 20px auto 0 !important
-}
-.footer-item-list.data-block:after {
-  background: url(../images/redesign/downward-arrow.png) no-repeat;
-  content: '';
-  height: 18px;
-  width: 18px;
-  background-position: right;
-  position: absolute;
-  right: 0;
-  background-size: 10px;
-  top: 26px;
-}
-.footer-item-list.data-block.active:after {
-  transform: rotate(180deg);
-  top: 30px;
-  background-position: bottom left;
-}
-.container-footlinks, .homepage-menu.mariatash-header {
-  background: rgb(41, 41, 41);
-}
-.footer .footlinks li,.social-media ul{
-  position: relative;
-}
-.footer .social-media li:last-child{
-  margin-right: 0;
-}
-.social-media ul {
-  margin-bottom: 40px;
-}
-.mobile-device .head-child, #appointments img {
-  display: none;
-  padding-left: 10px;
-}
-.mobile-device .head-child.active {
-	display: block;
-}
-#appointments .col{
-  width: 100%;
-  margin-bottom: 9px;
-  flex: 0 0 100%;
-}
-#appointments{
-  padding: 0;
 }
 .maria-right-menus{
   right: 0;
 }
-.mobile-main_menu, .mobile-sub_menu .sub-menu {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.piercing_options .image-text {
-  padding-left: 15px;
-  margin-bottom: 17px;
-}
- .mobile-device.form-search input.input-text{
+.mobile-device.form-search input.input-text{
   background: #292929;
 }
 .form-search input.input-text{
   padding-bottom: 2px;
 }
-#jewelry .menu-head span a:after {
-  background: url(../images/redesign/plus.png) no-repeat;
-  content: '';
-  height: 20px;
-  width: 19px;
-  background-position: right;
-  position: absolute;
-  right: 30px;
-  transition: 0.5s;
-  background-size: 10px;
-}
-#jewelry .menu-head span a.active:after {
-  background: url(../images/redesign/minus.png) no-repeat;
-  content: '';
-  height: 19px;
-  width: 19px;
-  background-position: right;
-  position: absolute;
-  right: 30px;
-  transition: 0.5s;
-}
 .menu-head {
   margin-bottom: 9px;
-}
-.common-option-div{
-  margin-bottom: 20px;
 }
 .head-child ul {
   margin-bottom: 0;
 }
 .menu-head span a, .mobile-sub_menu .image-text h6 {
-  color: #000 !important;
-}
-.footer .footlinks li:first-child{
-  margin-left: 0;
+  color: rgba(41,41,41,0.9) !important;
 }
 .second-header-image{
   display: none;
@@ -355,61 +261,11 @@ width: 245px;
 .content-customer {
   margin: 15px 0 0;
 }
-.piercing_options{
-  padding: 0 15px;
-}
-.mobile-sub_menu .image-text h6{
-  margin-bottom: 37px;
-}
-.parent-category {
-  font-size: 13px;
-  text-transform: uppercase;
-  font-family: urw-din-bold;
-}
-.submenu-upper-section {
-  padding: 0 0 10px;
-  border-bottom: 1px solid #292929;
-  margin-bottom: 20px;
-  margin: 35px 15px 20px;
-}
 .category-image img{
   display: none;
 }
-.newsletter-mt {
-  display: none;
-}
-.popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
-  border-bottom: 1px solid #fff;
-  padding-bottom: 10px;
-  text-transform: uppercase;
-}
-#tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
-  margin-top: 7px;
-}
-#tooltip-id-contact-us table td{
-  color: white;
-}
-#tooltip-id-our-jewelry {
-  margin-top: 13px;
-}
-.contact-table, .customer-care-list {
-  line-height: 35px;
-}
-.form-subscribe-mt{
-  margin-top: 20px;
-}
-.customer-care-list li span{
-  font-size: 12px;
-}
-#link_about-maria-tash a, #link_about-our-jewelry a, #link_accessibility a{
-  font-size: 13px;
-  letter-spacing: 0.5px;
-}
 #container{
   height: 80px;
-}
-.form-subscribe-mt .input-box{
-  margin-bottom: 10px;
 }
 #success {
   margin-bottom: 30px;
@@ -464,82 +320,9 @@ width: 245px;
   overflow-y: scroll;
 }
 /*Different Footer */
-.customer-care-list {
-	padding: 0;
-  width: 100%;
-}
-#tooltip-id-customer-care{
-	width: 100% !important;
-}
-.customer-care-list li{
-	width: 100%;
-}
-#piercing .inner-box{
-  width: 100%;
-}
-.contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
-	color: #fff;
-	font-size: 12px;
-	font-family: urw-din-medium;
-	letter-spacing: 0.5px;
-}
-#tooltip-id-our-jewelry .slide {
-	width: 300px;
-	height: 120px;
-	overflow: hidden;
-	float: left;
-	overflow-y: auto;
-	color: #fff;
-}
-#tooltip-id-our-jewelry a.next-content-block-seo{
-  margin-right: -15px;
-}
-.form-subscribe-mt{
-  margin-top: 10px;
-  width: auto;
-}
-#newsletter-form .link-button{
-	color: #fff !important;
-}
-.form-subscribe-mt .checkmark:after{
-	background: #fff;
-}
-#newsletter-form .dark-button{
-  border: 1px solid #fff;
-	background: transparent;
-	color: #fff;
-  padding: 10px;
-}
-.form-subscribe-mt input, .form-subscribe-mt select {
-  width: 100%;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-.footer-item-list span {
-  font-size: 12px !important;
-  font-family: urw-din-medium;
-	letter-spacing: 0 !important;
-  text-transform: uppercase;
-}
-.footer-items a:hover {
-  text-decoration: none;
-}
-.footerlink-icons .item-icons img {
-  width: 22px;
-}
+
 #foo4_next, #foo4_prev{
   top: 40%;
-}
-#newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
-	color: red !important;
-}
-#newsletter-form .validation-advice{
-  position: relative;
-  top:0;
-}
-#appointments .image-text{
-  position: relative;
-  background: none;
 }
 .image-text{
   background: none;
@@ -676,13 +459,6 @@ ul.tabs li{
 .giftcards .div_selector_year {
   width: 20%;
 }
-.mobile-device .menu-common-section{
-  margin-top: 13px;
-  padding-bottom: 50px;
-}
-.common-option-div{
-  width: 100%;
-}
 .menu-common-section{
   margin-top: 13px;
 }
@@ -700,9 +476,6 @@ ul.tabs li{
 	/* height: 100vh;
 	overflow-y: auto; */
   padding-bottom: 60px;
-}
-.mobile-main_menu .main-nav-title li:last-child {
-  border-bottom: none;
 }
 }
 
@@ -757,28 +530,266 @@ ul.tabs li{
     flex: 0 0 100%;
     max-width: 100%;
   }
-   .mobile-device #search {
+   #search {
     position: fixed;
     width: 100%;
     left: 0;
   }
-  .mobile-device #search {
+  #search {
     top: 0px;
     background: #292929;
     color: white;
     z-index: 1032;
   }
-  .desktop-device #search{
-    top: 72px;
-  }
+  /*.desktop-device #search{*/
+  /*  top: 72px;*/
+  /*}*/
   #cross-icon{
     right: 19px;
   }
-
   #search_autocomplete {
     max-height: 80vh !important;
   }
+  .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
+    display: none;
+  }
+  .navbar-expand-lg .navbar-collapse {
+    display: none !important;
+  }
+  .common-option-div{
+    width: 100%;
+  }
+  #jewelry .menu-head span a:after {
+    background: url(../images/redesign/plus.png) no-repeat;
+    content: '';
+    height: 20px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 30px;
+    transition: 0.5s;
+    background-size: 10px;
+  }
+  #jewelry .menu-head span a.active:after {
+    background: url(../images/redesign/minus.png) no-repeat;
+    content: '';
+    height: 19px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 30px;
+    transition: 0.5s;
+  }
+  .submenu-upper-section {
+    padding: 0 0 10px;
+    border-bottom: 1px solid #292929;
+    margin-bottom: 20px;
+    margin: 35px 15px 20px;
+  }
+  .parent-category {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: urw-din-bold;
+  }
+  .mobile-device .menu-common-section{
+    margin-top: 13px;
+    padding-bottom: 50px;
+  }
+  .common-option-div{
+    margin-bottom: 20px;
+  }
+  .mobile-device .main-nav-title li {
+    margin-right: 0;
+    margin-top: 15px;
+  }
+  .mobile-main_menu .main-nav-title li:last-child {
+    border-bottom: none;
+  }
+  .top-nav-v2{
+    display: none;
+  }
+  .container-footlinks, .homepage-menu.mariatash-header {
+    background: rgb(41, 41, 41);
+  }
+  .footlinks {
+    margin: 20px 0 18px 0;
+    padding: 0 10px;
+  }
+  .mobile-device .head-child.active {
+  	display: block;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  #appointments .col{
+    width: 100%;
+    margin-bottom: 9px;
+    flex: 0 0 100%;
+  }
+  #appointments{
+    padding: 0;
+  }
+  .mobile-device .head-child, #appointments img {
+    display: none;
+    padding-left: 10px;
+  }
+  #appointments .image-text{
+    position: relative;
+    background: none;
+  }
+  .piercing_options{
+    padding: 0 15px;
+    width: 100%;
+    flex: 0 0 100%;
+  }
+  .mobile-sub_menu .image-text h6{
+    margin-bottom: 37px;
+  }
+  .piercing_options .image-text {
+    padding-left: 15px;
+    margin-bottom: 17px;
+  }
+  .footer ul .footer-item-list{
+    max-width: 47%;
+    flex: 0 0 47%;
+    padding: 20px 0 10px 0;
+    margin: 20px auto 0 !important
+  }
+  .footer-item-list.data-block:after {
+    background: url(../images/redesign/downward-arrow.png) no-repeat;
+    content: '';
+    height: 18px;
+    width: 18px;
+    background-position: right;
+    position: absolute;
+    right: 0;
+    background-size: 10px;
+    top: 26px;
+  }
+  .footer-item-list.data-block.active:after {
+    transform: rotate(180deg);
+    top: 30px;
+    background-position: bottom left;
+  }
+  .footer .footlinks li,.social-media ul{
+    position: relative;
+  }
+  .footer .social-media li:last-child{
+    margin-right: 0;
+  }
+  .social-media ul {
+    margin-bottom: 40px;
+  }
+  .newsletter-mt {
+    display: none;
+  }
+  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+  }
+  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
+    margin-top: 7px;
+  }
+  #tooltip-id-contact-us table td{
+    color: white;
+  }
+  #tooltip-id-our-jewelry {
+    margin-top: 13px;
+  }
+  .contact-table, .customer-care-list {
+    line-height: 35px;
+  }
+  .form-subscribe-mt{
+    margin-top: 20px;
+  }
+  .customer-care-list li span{
+    font-size: 12px;
+  }
+  .footer-item-list span {
+    font-size: 12px !important;
+    font-family: urw-din-medium;
+  	letter-spacing: 0 !important;
+    text-transform: uppercase;
+  }
+  .footer .footlinks li:first-child{
+    margin-left: 0;
+  }
+  #tooltip-id-customer-care{
+  	width: 100% !important;
+  }
+  .customer-care-list {
+  	padding: 0;
+    width: 100%;
+  }
+  .customer-care-list li{
+  	width: 100%;
+  }
+  #piercing .inner-box{
+    width: 100%;
+  }
+  .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
+  	color: #fff;
+  	font-size: 12px;
+  	font-family: urw-din-medium;
+  	letter-spacing: 0.5px;
+  }
+  #tooltip-id-our-jewelry .slide {
+  	width: 300px;
+  	height: 120px;
+  	overflow: hidden;
+  	float: left;
+  	overflow-y: auto;
+  	color: #fff;
+  }
+  #tooltip-id-our-jewelry a.next-content-block-seo{
+    margin-right: -15px;
+  }
+  .form-subscribe-mt{
+    margin-top: 10px;
+    width: auto;
+  }
+  #newsletter-form .link-button{
+  	color: #fff !important;
+  }
+  .form-subscribe-mt .checkmark:after{
+  	background: #fff;
+  }
+  #newsletter-form .dark-button{
+    border: 1px solid #fff;
+  	background: transparent;
+  	color: #fff;
+    padding: 10px;
+  }
+  .form-subscribe-mt input, .form-subscribe-mt select {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+  .footer-items a:hover {
+    text-decoration: none;
+  }
+  .footerlink-icons .item-icons img {
+    width: 22px;
+  }
+  #link_about-maria-tash a, #link_about-our-jewelry a, #link_accessibility a{
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
+  	color: red !important;
+  }
+  #newsletter-form .validation-advice{
+    position: relative;
+    top:0;
+  }
+  .form-subscribe-mt .input-box{
+    margin-bottom: 10px;
+  }
 }
+/*qqqq*/
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
@@ -868,6 +879,30 @@ ul.tabs li{
   .desktop-device .category-image img{
     display: block;
   }
+  .ipad-none{
+    display: none !important;
+  }
+  .ipad-block{
+    display: block !important;
+  }
+  nav.mariatash-header{
+    padding-top: 15px !important;
+  }
+  .mt-logo{
+    padding: 0px 0 10px 0;
+  }
+  .jewelry .left-section .inner-box{
+    padding: 0 34px;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    width: 380px !important;
+  }
+  .social-media ul {
+    padding-left: 22px;
+  }
+  #newsletter-form .dark-button{
+    float: right;
+  }
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
@@ -914,12 +949,6 @@ ul.tabs li{
     max-width: 650px;
     margin: 0 auto;
   }
-  .mobile-main_menu, .mobile-sub_menu .sub-menu{
-    width: 380px !important;
-  }
-  .mobile-main_menu{
-    top: 54px;
-  }
   .five-col{
     width: 49%;
   }
@@ -931,16 +960,6 @@ ul.tabs li{
   .form-search input.input-text{
     width: 550px;
     height: 60px !important;
-  }
-  .footlinks {
-    margin: 20px 0 18px 0;
-    padding: 0 10px;
-  }
-  #newsletter-form .dark-button{
-    float: right;
-  }
-  .social-media ul {
-    padding-left: 22px;
   }
   .filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
     padding: 0 58px 30px;
@@ -1078,6 +1097,12 @@ ul.tabs li{
     margin: 0 auto;
     margin-bottom: 20px;
   }
+  .navbar-toggler{
+    top: 15px;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    top: 67px;
+  }
 }
 
 
@@ -1123,19 +1148,9 @@ ul.tabs li{
   #narrow-by-list li div dd{
     width: 100%;
   }
-    .mobile-device .form-search input.input-text{
+  .mobile-device .form-search input.input-text{
     width: 200px;
     height: 60px !important;
-  }
-  .menu-inner{
-    overflow-x: auto;
-  }
-  .div-row{
-    width:1250px;
-    overflow-x: scroll;
-  }
-  .mobile-device #appointments {
-    padding: 55px 32px 32px 32px;
   }
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
@@ -1228,7 +1243,7 @@ ul.tabs li{
     width: 40% !important;
   }
   .mobile-device #search {
-      background: #292929;
+    background: #292929;
   }
   .footer .social-media li{
     margin-right: 24px;
@@ -1236,23 +1251,42 @@ ul.tabs li{
   .mobile-device .for-space-to-bottom.cat-img-space{
     height: 140px !important;
   }
-  .top-nav-v2{
-    display: none;
-  }
   .mobile-device .for-space-to-bottom.cat-img-space{
     background-color: rgba(41,41,41,0.9);
   }
   .footer {
     padding-top: 0px !important;
-    height: 0px;
-    bottom: -1px;
-    position: fixed;
+    height: auto !important;
+    bottom: -3px;
+    /* position: fixed; */
     z-index: 1;
     padding: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
   #total_item_counts_holder{
     margin-top: 8px !important;
+  }
+  .maria-left-menus{
+    left: 55px;
+  }
+  .navbar-toggler{
+    top: 10px;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    top: 64px;
+  }
+  .for-space-to-bottom {
+    height: auto;
+  }
+  #appointments .menu-inner .mt-4 {
+    margin-top: 1.5rem !important;
+  }
+  .footlinks, .social-media{
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  .social-media > .row.justify-content-lg-end {
+    justify-content: start !important;
   }
 }
 /* ipad pro portrait */
@@ -1271,6 +1305,9 @@ ul.tabs li{
   }
   .footer .social-media li {
     margin-right: 24px;
+  }
+  #appointments .menu-inner .mt-4 {
+    margin-top: 1.5rem !important;
   }
 }
 
@@ -1587,7 +1624,7 @@ ul.tabs li{
     width: 100%;
   }
 
-  .mobile-device.form-search input.input-text{
+  .form-search input.input-text{
     height: 60px !important;
   }
   .appointment-container{
@@ -2264,20 +2301,13 @@ ul.tabs li{
     padding-bottom: 5px;
   }
 }
-@media (max-width:1024px) and (orientation:portrairt){
+@media (max-width:1024px) and (orientation:portrait){
   .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
     max-width: 100%;
   }
 }
 
 @media (min-width:1024px){
-  .close-section{
-    display: none;
-  }
-  .level-top.parent.active_menu span {
-    border-bottom: 6px solid #fff;
-    padding-bottom: 28px;
-  }
   .vertical-middle {
     margin: 0;
     position: absolute;
@@ -2314,10 +2344,6 @@ ul.tabs li{
     /*opacity: 0;*/
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
-
-  /*.floating.footer:hover {*/
-  /*  opacity: 1;*/
-  /*}*/
   .pdp-image-section{
     margin-top: 80px;
   }
@@ -2334,11 +2360,9 @@ ul.tabs li{
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
     /*height: 0px;*/
   }
-
   .main-container {
     padding-bottom: 60px;
   }
-
   .footer {
     padding-top: 0px !important;
     height: 0px;
@@ -2347,6 +2371,13 @@ ul.tabs li{
     z-index: 1;
     padding: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+  }
+  .level-top.parent.active_menu span {
+    border-bottom: 6px solid #fff;
+    padding-bottom: 28px;
+  }
+  .close-section{
+    display: none;
   }
 }
 
@@ -2372,10 +2403,6 @@ ul.tabs li{
 
 /************** Big Screen Laptops ***************/
 @media (min-width:1920px){
-  /* .inner-box{
-    width: 742px;
-    margin-left: 300px;
-  } */
   .custom-container{
     max-width: 1318px !important;
   }
@@ -2626,15 +2653,6 @@ ul.tabs li{
   .desktop-device .common-option-div{
     padding:0;
   }
-  .navbar-toggler{
-    top: 10px;
-  }
-  nav.mariatash-header{
-    padding-top: 7px !important;
-  }
-  .mt-logo{
-    padding: 0px 0 5px 0;
-  }
   .desktop-device .inner-box{
     padding: 0 32px;
   }
@@ -2650,9 +2668,9 @@ ul.tabs li{
   .piercing_options .image-text{
     margin-bottom: 40px;
   }
-  #search{
-    top: 80px;
-  }
+  /*#search{*/
+  /*  top: 80px;*/
+  /*}*/
 }
 @media (max-width:749px){
   .desktop-device .product-shop > .row{
@@ -2686,11 +2704,11 @@ ul.tabs li{
   }
 }
 @media (min-width:992px){
-  .cms-home .homepage-menu.mariatash-header {
-    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
-  }
   .cms-home .homepage-menu.mariatash-header:hover{
   	background: rgba(41, 41, 41, 0.9) !important;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    display: block !important;
   }
 }
 @media (max-width:992px){
@@ -2737,6 +2755,12 @@ ul.tabs li{
   .products-grid li.item a{
     display: block !important;
   }
+  .navbar-expand-lg .navbar-toggler {
+    display: none !important;
+  }
+  .cms-home .homepage-menu.mariatash-header {
+    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
+  }
 }
 @media (min-width:1366px) and (max-width:1390px){
   .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
@@ -2754,5 +2778,12 @@ ul.tabs li{
 @media (min-width:1025px) and (max-width:1130px){
   .category-earring-pairs.catalog-category-view .product-name{
   	max-width: 120px;
+  }
+}
+
+
+@media (min-width: 1025px) and (max-width: 1254px) {
+  .form-search input.input-text{
+    width: 250px;
   }
 }
