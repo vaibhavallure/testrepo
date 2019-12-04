@@ -47,10 +47,10 @@ class Mage_Checkout_Block_Onepage extends Mage_Checkout_Block_Onepage_Abstract
 
         $stepCodes = array(/* 'login', */ 'billing', 'shipping', 'shipping_method', 'payment', 'review');
         
-        //if($this->isCustomerLoggedIn()){
+        if($this->isCustomerLoggedIn()){
             if(Mage::helper('checkoutstep')->isQuoteContainOutOfStockProducts())
         	   array_splice($stepCodes, 2, 0, 'delivery_option');
-        //}
+        }
         
         if ($this->isCustomerLoggedIn()) {
             $stepCodes = array_diff($stepCodes, array('login'));
