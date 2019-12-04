@@ -42,7 +42,7 @@
     </script>
     <script>
         jQuery(document).ready(function(){              
-          if(jQuery('body').hasClass('mobile-device')) {
+          if(jQuery(window).width() < 1025) {
               jQuery('.menu_overlay').after(jQuery('#search-input'));
               jQuery('.menu_overlay').after(jQuery('#search_autocomplete'));
               jQuery('#search_autocomplete').css('position', ' fixed');
@@ -60,12 +60,12 @@
           }
 
           jQuery("#search-icon").click(function(){
-            if(jQuery('body').hasClass('mobile-device')) {
-              jQuery("#cross-icon").show();
-              jQuery('body').addClass('fancybox-lock');
-              jQuery('.mobile_menu_overlay').css('height','100%');
-              jQuery('.mt-logo').hide();
-            }
+              if (jQuery(window).width() < 1025) {
+                  jQuery("#cross-icon").show();
+                  jQuery('body').addClass('fancybox-lock');
+                  jQuery('.mobile_menu_overlay').css('height', '100%');
+                  jQuery('.mt-logo').hide();
+              }
             
             jQuery(this).hide();
 
@@ -77,7 +77,7 @@
           });
 
         jQuery("#cross-icon").click(function(){
-          if(jQuery('body').hasClass('mobile-device')) {
+            if (jQuery(window).width() < 1025) {
             jQuery("#cross-icon").hide();
               jQuery('.mobile_menu_overlay').css('height','0%');
               jQuery('body').removeClass('fancybox-lock');
