@@ -1,10 +1,5 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
-.for-space-to-bottom.cat-img-space {
-  background-image: none !important;
-  height: 50px !important;
-  background-color: transparent;
-}
 .menu_overlay {
   z-index: 3;
 }
@@ -606,7 +601,7 @@ ul.tabs li{
     border-bottom: none;
   }
   .top-nav-v2{
-    display: none;
+    display: block !important;
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
@@ -787,6 +782,11 @@ ul.tabs li{
   }
   .form-subscribe-mt .input-box{
     margin-bottom: 10px;
+  }
+  .for-space-to-bottom.cat-img-space {
+    background-image: none !important;
+    height: 50px !important;
+    background-color: transparent;
   }
 }
 /*qqqq*/
@@ -1118,9 +1118,9 @@ ul.tabs li{
   .mobile-device .about-designer h1{
     margin-bottom: 20px;
   }
-  .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
+  /* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
     height: 170px !important;
-  }
+  } */
   .about-jewelry{
     padding: 0 26px;
   }
@@ -1145,9 +1145,9 @@ ul.tabs li{
   .desktop-device #narrow-by-list li div dt {
     width: 100%
   }
-  #narrow-by-list li div dd{
+  /* #narrow-by-list li div dd{
     width: 100%;
-  }
+  } */
   .mobile-device .form-search input.input-text{
     width: 200px;
     height: 60px !important;
@@ -1155,9 +1155,9 @@ ul.tabs li{
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
-  .ecp-celebrities-index-index .for-space-to-bottom {
+  /* .ecp-celebrities-index-index .for-space-to-bottom {
     height: 240px;
-  }
+  } */
   .desktop-device .product-shop {
     margin-top: 71px;
     width: 100%;
@@ -1221,9 +1221,9 @@ ul.tabs li{
   .pressPopup .big-popup-body{
     height: 708px;
   }
-  .catalog-category-view.category-press .for-space-to-bottom{
+  /* .catalog-category-view.category-press .for-space-to-bottom{
     height: 220px !important;
-  }
+  } */
   .gift-card-main .faq-image-section img {
     padding: 10px;
     width: 100%;
@@ -1247,9 +1247,6 @@ ul.tabs li{
   }
   .footer .social-media li{
     margin-right: 24px;
-  }
-  .mobile-device .for-space-to-bottom.cat-img-space{
-    height: 140px !important;
   }
   .mobile-device .for-space-to-bottom.cat-img-space{
     background-color: rgba(41,41,41,0.9);
@@ -1319,7 +1316,6 @@ ul.tabs li{
     width: 100%;
     color:#fff;
   }
-
   #cross-icon {
     position: absolute;
     top:0px;
@@ -1328,12 +1324,8 @@ ul.tabs li{
     right: 20px;
     z-index: 1032;
   }
-
   #search-input {
     z-index: 1032;
-  }
-  .select-currency-mobile, .wishlist-section-mobile, .account-section-mobile {
-    display: none;
   }
   #apply-filter-btn{
     margin-left: 10px;
@@ -2378,6 +2370,10 @@ ul.tabs li{
   }
   .close-section{
     display: none;
+  }
+  .level-top.parent span:hover {
+    border-bottom: 6px solid #fff;
+    padding-bottom: 28px;
   }
 }
 

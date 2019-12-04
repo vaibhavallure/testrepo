@@ -1463,10 +1463,6 @@ input[type="checkbox"]:checked+label:before {
   color: #fff;
   letter-spacing: 1px;
 }
-.level-top.parent span:hover {
-  border-bottom: 6px solid #fff;
-  padding-bottom: 28px;
-}
 .main-nav-title li:last-child {
   margin-right: 0;
 }
@@ -4852,4 +4848,11 @@ td.cart_col2 {
 }
 #prev3, #next3 { /*For Cartilage filters*/
   top: 30%;
+}
+
+#signup-exit{
+	position: absolute;
+	top: 16px;
+	right: 20px;
+	cursor: auto;
 }

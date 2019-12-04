@@ -136,7 +136,6 @@ jQuery('.link-button').click(function(event) {
 
 
             let hidden = true;
-            jQuery('.t_Tooltip.t_Tooltip_allure_footer').mouseleave(() => { jQuery('.t_Tooltip.t_Tooltip_allure_footer').toggle();});
 
             /*zopim -- to change margin from bottom */
             //show footer if mouse is at bottom and not at the end of the scroll
