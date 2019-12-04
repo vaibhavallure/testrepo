@@ -757,20 +757,20 @@ ul.tabs li{
     flex: 0 0 100%;
     max-width: 100%;
   }
-   .mobile-device #search {
+   #search {
     position: fixed;
     width: 100%;
     left: 0;
   }
-  .mobile-device #search {
+  #search {
     top: 0px;
     background: #292929;
     color: white;
     z-index: 1032;
   }
-  .desktop-device #search{
-    top: 72px;
-  }
+  /*.desktop-device #search{*/
+  /*  top: 72px;*/
+  /*}*/
   #cross-icon{
     right: 19px;
   }
@@ -1587,7 +1587,7 @@ ul.tabs li{
     width: 100%;
   }
 
-  .mobile-device.form-search input.input-text{
+  .form-search input.input-text{
     height: 60px !important;
   }
   .appointment-container{
@@ -2650,9 +2650,9 @@ ul.tabs li{
   .piercing_options .image-text{
     margin-bottom: 40px;
   }
-  #search{
-    top: 80px;
-  }
+  /*#search{*/
+  /*  top: 80px;*/
+  /*}*/
 }
 @media (max-width:749px){
   .desktop-device .product-shop > .row{
@@ -2754,5 +2754,12 @@ ul.tabs li{
 @media (min-width:1025px) and (max-width:1130px){
   .category-earring-pairs.catalog-category-view .product-name{
   	max-width: 120px;
+  }
+}
+
+
+@media (min-width: 1025px) and (max-width: 1254px) {
+  .form-search input.input-text{
+    width: 250px;
   }
 }
