@@ -4847,3 +4847,6 @@ td.cart_col2 {
 .signin-section-mobile {
   padding: 20px 0px 20px;
 }
+#prev3, #next3 { /*For Cartilage filters*/
+  top: 30%;
+}
