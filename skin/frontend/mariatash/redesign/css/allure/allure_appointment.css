@@ -1186,6 +1186,7 @@ div#page-wrapper{
 }
 #price-list td {
 	padding: 0;
+	vertical-align: middle;
 }
 #price-list {
   border: 1px solid #f2f2f2;
