@@ -6,6 +6,8 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+die;
+
 $orderIds = array(454175, 454176);
 $orderObjArray = array();
 foreach ($orderIds as $orderId){
