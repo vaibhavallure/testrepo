@@ -2412,3 +2412,6 @@ line-height: 42px;
 	    right: 0px;
 	    margin: 0px;
 	}
+	.insta-loader {
+		margin-top: 0px !important;
+	}
