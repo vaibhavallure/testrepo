@@ -787,7 +787,9 @@ width: 245px;
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
-
+  .customer-paymentinfo-index.messages {
+    padding-left: 45px;
+  }
   .my-account .myaccount-payment-option .box {
     padding-left: 45px;
     padding-right: 45px;
@@ -1131,9 +1133,9 @@ width: 245px;
     background: #eee;
     margin: 0.5%;
   }
-  #narrow-by-list li div dt {
+  /* #narrow-by-list li div dt {
     width: 100%;
-  }
+  } */
   .m-filter-checkboxes label {
 	    margin-bottom: 12px;
   }
@@ -1272,9 +1274,30 @@ width: 245px;
     padding: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
+  #total_item_counts_holder{
+    margin-top: 8px !important;
+  }
+}
+/* ipad pro portrait */
+@media (min-width:1024px) and (max-width:1366px) and (orientation:portrait) {
+  .footer {
+    padding-top: 0px !important;
+    height: 0px;
+    bottom: -1px;
+    position: fixed;
+    z-index: 1;
+    padding: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+  }
+  .footer .social-media ul {
+    padding-left: 1px;
+  }
+  .footer .social-media li {
+    margin-right: 24px;
+  }
 }
 
-/* ipad landscape */
+/* ipad pro landscape */
 @media (min-width:1024px) and (max-width:1366px) and (orientation:landscape) {
   .mobile-device #search {
     top: 0 !important;
@@ -1313,6 +1336,9 @@ width: 245px;
 
 /* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
+  .customer-paymentinfo-index .messages {
+    margin-top: 15px;
+  }
   .my-account .myaccount-payment-option .box{
     padding-left: 15px;
     padding-right: 15px;
@@ -1439,7 +1465,6 @@ width: 245px;
   }
   .catalog-category-view .category-title h1{
     text-align: center;
-    line-height: 0.3;
   }
   .catalog-category-view .breadcrumbs{
     margin-top: 7px;
@@ -1602,6 +1627,7 @@ width: 245px;
 
 /********************** Mobile Portrait *****************/           /*mobport*/
 @media (max-width:767px) and (orientation:portrait) {
+
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
@@ -2674,9 +2700,9 @@ width: 245px;
     }
 }
 @media (min-width:768px) and (max-width:1023px) {
-  .desktop-device .homepage-menu.mariatash-header{
+  /* .desktop-device .homepage-menu.mariatash-header{
     background: no-repeat;
-  }
+  } */
   .desktop-device .allure_filter{
     margin-left: 109px;
     width: 660px;
