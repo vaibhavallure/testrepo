@@ -177,7 +177,7 @@ if (!$videoUrl && $secondVideoUrl)
     <?php $counter = 1; ?>
     <div id="imageRepo" class="d-none">
         <?php foreach ($gallery as $_image): ?>
-            <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+            <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(500,500); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
             <?php $zoomImgArr[] = $_image->getUrl();?>
             <?php $counter++; ?>
         <?php endforeach; ?>
@@ -237,7 +237,7 @@ if (!$videoUrl && $secondVideoUrl)
 
     function loadBaseImage(){
         jQuery(".containerImage").fadeIn(1000, function(){
-            <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
+            <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(500,500); ?>
             jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data-src="<?php echo $_product;?>" data="0"/>');
             jQuery('.thumb.thumb1').addClass("active");
         });
