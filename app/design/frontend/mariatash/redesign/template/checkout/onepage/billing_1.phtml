@@ -42,12 +42,17 @@
 
 <fieldset id="fieldset-billing" style="display: none;">
 	<ul class="form-list p-0">
+		
     	<?php //if($_hasAddresses): ?>
     	<li class="wide" <?php if (!$_hasAddresses): ?> style="display:none;"<?php endif; ?>>
         	<label class="info-text-two" for="billing-address-select"><?php echo $this->__('Please select your Billing address:') ?></label>
             	<div class="input-box">
                 	<?php Varien_Profiler::start('DTN: getHtmlSelect binling'); ?>
+                	<?php if($this->isCustomerLoggedIn()): ?>
                 	<?php echo $this->getAddressesHtmlSelect('billing') ?>
+                	<?php else:?>
+                		<select id="billing-address-select"></select>
+                	<?php endif;?>
                     <?php Varien_Profiler::stop('DTN: getHtmlSelect binling'); ?>
              	</div>
      	</li>
@@ -236,6 +241,7 @@
                     </li>
                     <?php endif ?>
 
+					<?php if($this->isCustomerLoggedIn()):?>
                     <li class="fields" id="register-customer-password">
                     	<div class="field">
                         	<label for="billing:customer_password"
@@ -259,6 +265,8 @@
                             </div>
                      	</div>
                     </li>
+                    <?php endif; ?>
+                    
                     <?php endif; ?>
 
                     <?php if ($this->isCustomerLoggedIn() && $_hasAddresses): ?>
