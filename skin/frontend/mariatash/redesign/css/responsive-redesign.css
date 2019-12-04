@@ -787,7 +787,9 @@ width: 245px;
 
 /*All ipads*/
 @media (min-width:767px) and (max-width:1024px){
-
+  .customer-paymentinfo-index.messages {
+    padding-left: 45px;
+  }
   .my-account .myaccount-payment-option .box {
     padding-left: 45px;
     padding-right: 45px;
@@ -1276,6 +1278,7 @@ width: 245px;
     margin-top: 8px !important;
   }
 }
+/* ipad pro portrait */
 @media (min-width:1024px) and (max-width:1366px) and (orientation:portrait) {
   .footer {
     padding-top: 0px !important;
@@ -1294,7 +1297,7 @@ width: 245px;
   }
 }
 
-/* ipad landscape */
+/* ipad pro landscape */
 @media (min-width:1024px) and (max-width:1366px) and (orientation:landscape) {
   .mobile-device #search {
     top: 0 !important;
@@ -1333,6 +1336,9 @@ width: 245px;
 
 /* ALl Mobiles */                         /*allmob*/
 @media (max-width:767px) {
+  .customer-paymentinfo-index .messages {
+    margin-top: 15px;
+  }
   .my-account .myaccount-payment-option .box{
     padding-left: 15px;
     padding-right: 15px;
@@ -1621,6 +1627,7 @@ width: 245px;
 
 /********************** Mobile Portrait *****************/           /*mobport*/
 @media (max-width:767px) and (orientation:portrait) {
+
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
