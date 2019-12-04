@@ -70,34 +70,68 @@ if($this->isthumbnailCat($pc->getName())){
                                     endif;
                                     } ?>
 
-                                <?php if(count( $withoutChildrenCategory) && strtolower($pc->getName()) == "jewelry"): ?>
+                                <?php if((count( $withoutChildrenCategory) || $pc->getSetVirtualChild()) && strtolower($pc->getName()) == "jewelry"): ?>
                                 <div class="common-option-div" id="c-<?= $pc->getId() ?>">
                                     <div class="menu-head jwl-head text-uppercase">
                                         <span><a href="#"><?= $this->__("shop by category"); ?></a></span>
                                     </div>
                                     <div class="head-child">
                                         <ul class="p-0">
-                                            <?php foreach ($withoutChildrenCategory as $child2) {
-                                                ?>
+
+                                            <?php
+                                            $pc = Mage::getModel('catalog/category')->load($pc->getId());
+                                            if($pc->getSetVirtualChild()):
+                                                $virtualChildren=explode(",",$pc->getSetVirtualChild());
+                                                foreach ($virtualChildren as $catid) {
+                                                    $child2 = Mage::getModel('catalog/category')->load($catid);
+                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
+                                                        continue;
+                                                    ?>
+                                                    ?>
+                                                    <li class=""><a href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
+                                                    </li>
+                                                    <?php
+                                                }
+                                             else: ?>
+                                            <?php foreach ($withoutChildrenCategory as $child2) { ?>
                                                 <li class=""><a
                                                             href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
                                                 </li>
                                             <?php } ?>
+                                            <?php endif; ?>
+
+
+                                         <?php if($pc->getShowViewAllOption()):?>
                                                 <li class="view-all-products"><a
                                                             href="/<?= $pc->getRequestPath() ?>"><?= $this->__("View All")?></a>
                                                 </li>
+                                            <?php endif; ?>
                                         </ul>
                                     </div>
                                 </div>
                                 <?php endif;?>
 
-                                <?php foreach ($withChildrenCategory as $child): ?>
+                                <?php foreach ($withChildrenCategory as $child):
+                                    $child = Mage::getModel('catalog/category')->load($child->getId());
+                                    ?>
                                 <div class="common-option-div" id="c-<?= $child->getId() ?>">
                                     <div class="menu-head jwl-head text-uppercase">
                                         <span><a href="<?= (!$child->hasChildren())? "/".$child->getRequestPath() : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
                                     </div>
                                     <div class="head-child">
                                         <ul class="p-0">
+                                            <?php if($child->getSetVirtualChild()):
+                                                $virtualChildren=explode(",",$child->getSetVirtualChild());
+                                                foreach ($virtualChildren as $catid) {
+                                                    $child2 = Mage::getModel('catalog/category')->load($catid);
+                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
+                                                        continue;
+                                                    ?>
+                                                    <li class=""><a href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
+                                                    </li>
+                                                    <?php
+                                                }
+                                             else: ?>
                                             <?php foreach ($this->getChildCategories($child->getId()) as $child2) {
                                                 if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
                                                     continue;
@@ -106,19 +140,19 @@ if($this->isthumbnailCat($pc->getName())){
                                                             href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
                                                 </li>
                                             <?php } ?>
+                                            <?php endif; ?>
                                             <?php  if(count($this->getChildCategories($child->getId()))):?>
-                                                <li class="view-all-products"><a
+                                                <?php if($child->getShowViewAllOption()):?>
+                                                    <li class="view-all-products"><a
                                                             href="/<?= $child->getRequestPath() ?>"><?= $this->__("View All")?></a>
 
                                                 </li>
+                                                <?php endif; ?>
                                             <?php endif;?>
                                         </ul>
                                     </div>
                                 </div>
                                 <?php endforeach; ?>
-
-
-
 
                             </div>
                     </div>
