@@ -24,14 +24,14 @@
 		  		    <input id='email-register' placeholder="Email*" type="text" name='email' class="ele_width required-entry validate-email"/>
 				</div>
 				<div class="input-form">
-		  		    <input id='password' placeholder="Password*" type="password" name='password' class="ele_width input-text required-entry validate-password consistent-password"/>
+		  		    <input id='password1' placeholder="Password*" type="password" name='password' class="ele_width input-text required-entry validate-password-custom consistent-password"/>
 							<div class="">
 								<img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
                                 <img class="eye-image show-hide-on-click close-eye" src="<?php echo $this->getSkinUrl("images/eye-c.png")?>" alt="">
                             </div>
 				</div>
 				<div class="input-form">
-		  		    <input id='confirmation' placeholder="Confirm Password*" type="password" title="Confirm Password" name='confirmation' class="ele_width input-text required-entry validate-cpassword consistent-password"/>
+		  		    <input id='confirmation1' placeholder="Confirm Password*" type="password" title="Confirm Password" name='confirmation' class="ele_width input-text required-entry validate-cpassword-custom consistent-password"/>
 							<div class="">
 								<img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
                                 <img class="eye-image show-hide-on-click close-eye" src="<?php echo $this->getSkinUrl("images/eye-c.png")?>" alt="">
@@ -107,4 +107,29 @@ Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/acc
                 }
                  
 });
+            
+Validation.addAllThese([
+	['validate-password-custom', 'Please enter 6 or more characters without leading or trailing spaces.', function(v) {
+        var pass=v.strip(); /*strip leading and trailing spaces*/
+        return (!(v.length>0 && v.length < 6) && v.length == pass.length);
+    }],
+    ['validate-cpassword-custom', 'Please make sure your passwords match.', function(v) {
+        var conf = $('confirmation1') ? $('confirmation1') : $$('.validate-cpassword-custom')[0];
+        var pass = false;
+        if ($('password1')) {
+            pass = $('password1');
+        }
+        var passwordElements = $$('.validate-password-custom');
+        for (var i = 0; i < passwordElements.size(); i++) {
+            var passwordElement = passwordElements[i];
+            if (passwordElement.up('form').id == conf.up('form').id) {
+                pass = passwordElement;
+            }
+        }
+        if ($$('.validate-admin-password').size()) {
+            pass = $$('.validate-admin-password')[0];
+        }
+        return (pass.value == conf.value);
+    }]
+]);            
 </script>

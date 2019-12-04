@@ -1721,11 +1721,10 @@ input[type="checkbox"]:checked+label:before {
 /* Catalog Page CSS */
 .products-grid li.item .list-mt-w{
 	position: absolute;
-/* height: 100%; */
-	width: 100%;
-	padding: 0 20px;
-	left: 50%;
-	transform: translatex(-50%);
+    left: 0;
+    padding: 0 20px;
+    left: 4px;
+    right: 4px;
 }
 .desktop-device .products-grid li.item .list-mt-w{
 	background-color: rgba(255,255,255,0.6);
