@@ -190,8 +190,8 @@ $category = Mage::registry('current_category');
                         foreach ($_productCollection as $_product): ?>
                             <?php
                             $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $_product->getId()));
-                            $productUrl = $_product->getProductUrl();
-                            $currentProductId = $_product->getId();
+                            //$productUrl = $_product->getProductUrl();
+                            $productUrl = $_product->getCategoryProductUrl(3);
                             $simples = $this->getIcons($currentProductId);
                             $firstOption = null;
                             ?>
@@ -199,9 +199,9 @@ $category = Mage::registry('current_category');
                                 <a id="<?php echo $_product->getId() ?>"
                                    href="<?php echo $productUrl; ?>"
                                    class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>" class="productimg"
-                                                           src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(450, 585); ?>"
-                                                           width="277" height="352"
-                                                           alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
+                                       src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(450, 585); ?>"
+                                       width="277" height="352"
+                                       alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
                                 <div class="grid-mt-w col-12">
                                   <div class="row">
                                     <div class="col-8">
@@ -291,9 +291,8 @@ $category = Mage::registry('current_category');
                             ?>
                             <?php
                             $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $_product->getId()));
-                            $productUrl = $_product->getProductUrl();
-                            $currentProductId = $_product->getId();
-                            $simples = $this->getIcons($currentProductId);
+                            //$productUrl = $_product->getProductUrl();
+                            $productUrl = $_product->getCategoryProductUrl(3);
                             ?>
                             <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
 
