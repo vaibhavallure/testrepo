@@ -19,7 +19,7 @@ class Mana_Filters_Resource_Filter_Price extends Mage_Catalog_Model_Resource_Eav
         if (!isset($this->_priceRanges)) {
             $currencyRate = Mage::app()->getStore()->getCurrentCurrencyRate();
             
-            if ($currencyRate == 1 || ($currencyRate > 1.00 && $currencyRate <= 5)) {
+            if ($currencyRate > 0 && $currencyRate <= 5) {
                 $this->_priceRanges = array(
                     1 => 0,
                     2 => 300,
