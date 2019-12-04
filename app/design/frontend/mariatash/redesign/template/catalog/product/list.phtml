@@ -292,7 +292,6 @@ $category = Mage::registry('current_category');
                             <?php
                             $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $_product->getId()));
                             //$productUrl = $_product->getProductUrl();
-                            $currentProductId = $_product->getId();
                             $productUrl = $_product->getCategoryProductUrl(3);
                             ?>
                             <li class="item five-col" id="item-<?php echo $_product->getId() ?>">

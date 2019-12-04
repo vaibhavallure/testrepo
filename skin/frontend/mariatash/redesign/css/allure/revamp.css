@@ -1,3 +1,14 @@
+.cms-no-route .std {
+    padding: 15px;
+    font-family: urw-din-light;
+}
+
+.cms-no-route .page-title {
+    padding: 0 0 20px;
+}
+
+
+
 #fancybox-loading > div,
 #fancybox-loading > div:before,
 #fancybox-loading > div:after,
