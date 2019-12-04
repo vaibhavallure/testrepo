@@ -1488,12 +1488,12 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
             
             $product = Mage::getModel('catalog/product')->load($this->getId());
             
-            if ($category && $product->canBeShowInCategory($category)) {
+            if (!($category instanceof Mage_Catalog_Model_Category)) {
                 $category = Mage::getModel('catalog/category')->load($category);
                 $product->setCategory($category);
             }
             
-            $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."".$product->getUrlPath($category);
+            $url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."".$this->getUrlModel()->getUrlPath($product, $category);
             
             return $url;
         }
