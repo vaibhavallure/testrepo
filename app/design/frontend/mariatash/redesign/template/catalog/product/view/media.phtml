@@ -177,14 +177,14 @@ if (!$videoUrl && $secondVideoUrl)
     <?php $counter = 1; ?>
     <div id="imageRepo" class="d-none">
         <?php foreach ($gallery as $_image): ?>
-            <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(392,512); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
+            <img data-src ="<?= $_image->getUrl()?>"src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(500,500); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>"/>
             <?php $zoomImgArr[] = $_image->getUrl();?>
             <?php $counter++; ?>
         <?php endforeach; ?>
     </div>
     <div id="thumbRepo" class="d-none">
         <?php foreach ($gallery as $_image): ?>
-            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(FALSE)->keepFrame(FALSE)->resize(87,87); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>" viewon="<?php echo $_image->getViewon() ?>"/>
+            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(FALSE)->keepFrame(FALSE)->resize(120,120); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" data="<?php echo $_image->getId();?>" viewon="<?php echo $_image->getViewon() ?>"/>
             <?php $counter++; ?>
         <?php endforeach; ?>
     </div>
@@ -237,7 +237,7 @@ if (!$videoUrl && $secondVideoUrl)
 
     function loadBaseImage(){
         jQuery(".containerImage").fadeIn(1000, function(){
-            <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(392,512); ?>
+            <?php $_img = $this->helper('catalog/image')->init($_product, 'image')->resize(500,500); ?>
             jQuery('.containerImage').html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'image');?>"  data-src="<?php echo $_product;?>" data="0"/>');
             jQuery('.thumb.thumb1').addClass("active");
         });
@@ -403,15 +403,15 @@ if (!$videoUrl && $secondVideoUrl)
                 $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
             if($videoUrl){ ?>
             var id_video = (counterJs > 3) ? 4 : counterJs;
-            jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img  src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 120,120); ?>" /></a>');
             <?php }
             if($secondVideoUrl){ ?>
             var id_video = (counterJs > 3) ? 4 : counterJs;
-            jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 87,87); ?>" /></a>');
+            jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 120,120); ?>" /></a>');
             <?php } ?>
             if( urlCounter > 0 ){
                 <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
-                jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 87,87); ?>" /></a>');
+                jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 120,120); ?>" /></a>');
                 <?php //} ?>
             }
         }
@@ -424,7 +424,7 @@ if (!$videoUrl && $secondVideoUrl)
             if (urlCounter > 0) {
                 jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::getModel('catalog/product')->getThumbnailUrl();?>" /></a>');
             }else{
-                <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(87,87); ?>
+                <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(120,120); ?>
                 jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
             }
         } else {
@@ -435,14 +435,14 @@ if (!$videoUrl && $secondVideoUrl)
                 jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                 return;
             });
-            jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img  src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb ,120,120); ?>" /></a>');
             <?php }
             if($secondVideoUrl){ ?>
             jQuery('#thumbRepo img').each(function(number){
                 jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
                 return;
             });
-            jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img width="87" height="87" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
+            jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\',this);">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img  src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 87,87); ?>" /></a>');
             <?php } ?>
             if (urlCounter > 0) {
                 <?php if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
