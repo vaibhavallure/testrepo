@@ -33,13 +33,19 @@
         <?php endif; ?>
         <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
             <ul class="form-list">
-                <?php if(false && $this->getQuote()->isAllowedGuestCheckout() ): ?>
+                <?php if($this->getQuote()->isAllowedGuestCheckout() ): ?>
                 <li class="control">
-                    <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" /><label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
+                	<label id="label-login-guest" class="radio custom-radio para-normal" for="login:guest"><?php echo $this->__('Checkout as Guest') ?> 
+            			<input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" />
+        				<span class="radiomark"></span>
+        			</label>
                 </li>
                 <?php endif; ?>
                 <li class="control">
-                    <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" /><label for="login:register"><?php echo $this->__('Register') ?></label>
+                	<label id="label-login-register" class="radio custom-radio para-normal" for="login:register"><?php echo $this->__('Register') ?>
+            			<input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" />
+        				<span class="radiomark"></span>
+        			</label>
                 </li>
                 
                 <li class="buttons-set">

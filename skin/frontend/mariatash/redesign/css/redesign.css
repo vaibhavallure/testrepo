@@ -1502,7 +1502,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .form-search input.input-text{
   float: left;
-  width: 25vw;
+  width: 360px;
   border: none;
   background: none;
   border-bottom: 1px solid #fff;
@@ -4846,4 +4846,7 @@ td.cart_col2 {
 }
 .signin-section-mobile {
   padding: 20px 0px 20px;
+}
+#prev3, #next3 { /*For Cartilage filters*/
+  top: 30%;
 }
