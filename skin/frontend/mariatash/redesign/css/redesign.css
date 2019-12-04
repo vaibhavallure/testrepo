@@ -4817,6 +4817,9 @@ td.cart_col2 {
 .top-nav-v2{
 	background: #d8d8d8;
 }
+.top-nav-v2 ul li:last-child {
+  border-bottom: none;
+}
 .currency-section-for-mobile span, .wishlist-section-mobile span, .account-section-mobile span, .signin-section-mobile span{
 	font-size: 13px;
 	color: rgba(41,41,41,0.9);
@@ -4843,4 +4846,7 @@ td.cart_col2 {
 }
 .signin-section-mobile {
   padding: 20px 0px 20px;
+}
+#prev3, #next3 { /*For Cartilage filters*/
+  top: 30%;
 }
