@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
     unsetLoader();
 
 jQuery('.link-button').click(function(event) {
-    unsetLoader(); 
+    unsetLoader();
 });
 
     /*move cartilage section to filter bottom*/
@@ -114,7 +114,7 @@ jQuery('.link-button').click(function(event) {
     jQuery(window).bind("resize scroll load",function () {
         var headerHeight = jQuery(".mariatash-header").outerHeight();
         jQuery('.open-navigation').css("padding-top", headerHeight);
-        
+
         jQuery('.for-space-to-bottom').css("min-height",headerHeight+"px");
 
 
@@ -315,10 +315,10 @@ jQuery('.link-button').click(function(event) {
 
 
     /*----------------mobile menu js-----------------------*/
-    
+
     jQuery(document).on('click','.menu_overlay', function(e){
     	event.stopPropagation();
-        if (jQuery(window).width() <= 1023) {
+        if (jQuery(window).width() <= 1024) {
             jQuery('#menu-btn').click()
         }
     });
@@ -466,4 +466,3 @@ var unsetLoader= function(){
     jQuery.fancybox.hideLoading();
     jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
 }
-
