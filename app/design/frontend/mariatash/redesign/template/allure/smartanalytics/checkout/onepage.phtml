@@ -265,7 +265,8 @@ jQuery(document).ready(function($) {
 			}
 
 			//send gift item message data from review page
-			if($('checkout-onepage-review-form').length){
+			console.log(jQuery('#checkout-onepage-review-form'));
+			if(jQuery('#checkout-onepage-review-form').length){
 				params += '&'+Form.serialize('checkout-onepage-review-form');
 			}
 			

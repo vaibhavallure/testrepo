@@ -25,6 +25,16 @@
  */
 $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormActionUrl());
 ?>
+
+<img id="signup-exit" width="16px" src="<?php echo $this->getSkinUrl('images/redesign/thinner-cross.png'); ?>" alt="X" height="14px">
+
+
+<script>
+    jQuery('#signup-exit').on('click',function (e) {
+        jQuery('.t_Tooltip.t_Tooltip_allure_footer').hide()
+    })
+    jQuery('.t_Tooltip.t_Tooltip_allure_footer').mouseleave(() => { jQuery('.t_Tooltip.t_Tooltip_allure_footer').hide();});
+</script>
 <div id="newsletter-form" >
     <form action="<?= $newsletterFormURL ?>" method="post" id="newsletter-validate-detail">
         <div class="form-subscribe-mt row">

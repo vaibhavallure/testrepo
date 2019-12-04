@@ -1463,10 +1463,6 @@ input[type="checkbox"]:checked+label:before {
   color: #fff;
   letter-spacing: 1px;
 }
-.level-top.parent span:hover {
-  border-bottom: 6px solid #fff;
-  padding-bottom: 28px;
-}
 .main-nav-title li:last-child {
   margin-right: 0;
 }
@@ -1502,7 +1498,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .form-search input.input-text{
   float: left;
-  width: 25vw;
+  width: 360px;
   border: none;
   background: none;
   border-bottom: 1px solid #fff;
@@ -2138,7 +2134,7 @@ div#narrow-by-list {
   left: 50%;
   transform: translate(-50%,-50%);
   max-height: calc(100vh - 10px);
-  /* overflow-y: auto; */
+  overflow-y: auto;
 	border-radius: 0;
 }
 .pop-title a {
@@ -4704,6 +4700,9 @@ td.cart_col2 {
    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #67b168;
    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #67b168;
 }
+.checkout-onepage-index .order-review .buttons-set.disabled {
+	text-align: unset;
+}
 /*******************/
 .zopim {
 	transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
@@ -4817,6 +4816,9 @@ td.cart_col2 {
 .top-nav-v2{
 	background: #d8d8d8;
 }
+.top-nav-v2 ul li:last-child {
+  border-bottom: none;
+}
 .currency-section-for-mobile span, .wishlist-section-mobile span, .account-section-mobile span, .signin-section-mobile span{
 	font-size: 13px;
 	color: rgba(41,41,41,0.9);
@@ -4843,4 +4845,14 @@ td.cart_col2 {
 }
 .signin-section-mobile {
   padding: 20px 0px 20px;
+}
+#prev3, #next3 { /*For Cartilage filters*/
+  top: 30%;
+}
+
+#signup-exit{
+	position: absolute;
+	top: 16px;
+	right: 20px;
+	cursor: auto;
 }

@@ -14,6 +14,13 @@
 <?php $sender = $_giftMessage->getSender();?>
 <?php $receipt = $_giftMessage->getRecipient();?>
 <?php endif;?>
+
+<?php 
+if(Mage::getSingleton('customer/session')->isLoggedIn()){
+    $sender = $this->getEscaped($sender, $this->getDefaultFrom());
+}
+?>
+
 <div class="col-12">
 	<div class="row">
 	<div class="col-lg-5 col-md-5 col-12 to-from-section">
@@ -30,7 +37,7 @@
 				<input type="text" placeholder="From"
 					name="giftmessage[<?php echo $_item->getId() ?>][from]"
 					id="gift-message-<?php echo $_item->getId() ?>-from"
-					title="<?php echo $this->__('From') ?>" value="<?php echo $this->getEscaped($sender, $this->getDefaultFrom()) ?>"
+					title="<?php echo $this->__('From') ?>" value="<?php echo $sender ?>"
 					class="input-text validation-passed" />
 		</div>
 	</div>

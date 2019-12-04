@@ -42,7 +42,11 @@
        		<li class="wide" <?php if (!$this->customerHasAddresses()): ?> style="display:none;"<?php endif; ?>>
             	<label for="shipping-address-select" class="info-text-two"><?php echo $this->__('Please select your Shipping address:') ?></label>
               	<div class="input-box">
+              		<?php if($this->isCustomerLoggedIn()): ?>
                 	<?php echo $this->getAddressesHtmlSelect('shipping') ?>
+                	<?php else:?>
+                		<select id="shipping-address-select"></select>
+                	<?php endif;?>
                 </div>
         	</li>
    			<?php //endif; ?>
@@ -220,11 +224,18 @@
             	<?php //billing address html render here.?>
             	<?= $this->getChildhtml("billing");?>
             </li>
+            
+            <?php 
+            $isChecked = true;
+            if($this->isCustomerLoggedIn()){
+                $isChecked = $this->getAddress()->getSameAsBilling();
+            }
+            ?>
 
            	<li class="control">
             	<label class="para-normal mb-4 custom-checkbox custom-checkbox-two" for="shipping:same_as_billing">
                 	<input type="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing"
-                    	value="1"<?php if ($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?>
+                    	value="1"<?php if ($isChecked): ?> checked="checked"<?php endif; ?>
                         title="<?php echo $this->__('Billing address is same as shipping') ?>"
                         onclick="Mage.Cookies.set('click_same_as_billing',1); shipping.setSameAsShipping(this.checked);"
                         class="checkbox"/>
@@ -233,6 +244,11 @@
                </label>
             </li>
         </ul>
+        
+        <?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
+        <?php if($customerGroupId != 2):?>
+        <?php echo $this->getChildHtml("onepage.gift_item");?>
+        <?php endif;?>
 
         <div class="buttons-set" id="shipping-buttons-container">
             <button type="button" class="button light-button next-button float-right" title="<?php echo $this->__('Next') ?>" onclick="shipping.save()">
@@ -246,6 +262,7 @@
         	</span>
         </div>
     </fieldset>
+    
 </form>
 
 <script type="text/javascript">

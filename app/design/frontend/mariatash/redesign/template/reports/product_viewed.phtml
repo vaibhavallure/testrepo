@@ -39,7 +39,7 @@
                     <?php foreach ($_products as $_item): ?>
                         <li class="item">
                             <a href="<?php echo $this->getProductUrl($_item) ?>">
-                                <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(280,362) ?>" alt="<?php echo $_item->getName() ?>" />
+                                <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(500,500) ?>" alt="<?php echo $_item->getName() ?>" />
                             </a>
                         </li>
                     <?php endforeach; ?>

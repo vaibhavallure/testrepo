@@ -1965,7 +1965,7 @@ li.order-info-tab-back{
     float: none;
 }
 .manage-payment-method #new-mt-add-payment-method.tabcontent{
-    background: #fffcfc;
+    background: #fff;
 }
 .manage-payment-method #billing-new-address-form {
         width: 100%;
@@ -2210,4 +2210,7 @@ li.buttons-set .btn-cancel-edit{
  }*/
 .customer-address-index .main-container .messages ul li{
     /*margin-top: 0px;*/
+}
+.customer-paymentinfo-index .messages {
+    margin-top: 15px;
 }

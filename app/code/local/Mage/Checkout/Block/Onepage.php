@@ -45,10 +45,12 @@ class Mage_Checkout_Block_Onepage extends Mage_Checkout_Block_Onepage_Abstract
         //New Code Adding step delivery_option here
 		//$stepCodes = array('login', 'billing', 'shipping', 'shipping_method','delivery_option', 'payment', 'review');
 
-        $stepCodes = array('login', 'billing', 'shipping', 'shipping_method', 'payment', 'review');
+        $stepCodes = array(/* 'login', */ 'billing', 'shipping', 'shipping_method', 'payment', 'review');
         
-        if(Mage::helper('checkoutstep')->isQuoteContainOutOfStockProducts())
-        	array_splice($stepCodes, 3, 0, 'delivery_option');
+        if($this->isCustomerLoggedIn()){
+            if(Mage::helper('checkoutstep')->isQuoteContainOutOfStockProducts())
+        	   array_splice($stepCodes, 2, 0, 'delivery_option');
+        }
         
         if ($this->isCustomerLoggedIn()) {
             $stepCodes = array_diff($stepCodes, array('login'));
@@ -69,6 +71,6 @@ class Mage_Checkout_Block_Onepage extends Mage_Checkout_Block_Onepage_Abstract
     public function getActiveStep()
     {
         //$this->isCustomerLoggedIn() ? 'billing' : 'login';
-        return $this->isCustomerLoggedIn() ? 'shipping' : 'login';
+        return $this->isCustomerLoggedIn() ? 'shipping' : 'shipping';
     }
 }

@@ -35,10 +35,10 @@ class Wyomind_Elasticsearch_Autocomplete
      * @return string
      */
     public function search($q,
-            $searchTerm,
-            $currency,
-            $customerGroup,
-            Wyomind_Elasticsearch_Index $index)
+                           $searchTerm,
+                           $currency,
+                           $customerGroup,
+                           Wyomind_Elasticsearch_Index $index)
     {
         $autocomplete = new Wyomind_Elasticsearch_Block_Autocomplete_Result($searchTerm, $this->_config);
 
@@ -108,7 +108,7 @@ class Wyomind_Elasticsearch_Autocomplete
             $ids = array_values(array_unique($ids));
             if (!empty($ids)) {
                 $response = $type->request('_mget', \Elastica\Request::POST, array('ids' => $ids))
-                        ->getData();
+                    ->getData();
 
                 $docs = array();
                 $count = 0;
@@ -122,15 +122,17 @@ class Wyomind_Elasticsearch_Autocomplete
                             {
                                 if($this->isallowed($data))
                                 {
-                                     if ($pcount < $limit) {
-                                         if($data['image'] == ""){
-                                             $_product = Mage::getModel('catalog/product')->load($data['id']);
-                                             $image = Mage::helper('catalog/image')->init($_product, 'small_image')->resize(50,50);
-                                             $data['image'] = $image;
-                                         }
+                                    if ($pcount < $limit) {
+                                        $_product = Mage::getModel('catalog/product')->load($data['id']);
+                                        if($_product->isAvailable()):
+                                            if($data['image'] == ""){
+                                                $image = Mage::helper('catalog/image')->init($_product, 'small_image')->resize(50,50);
+                                                $data['image'] = $image;
+                                            }
                                             $docs[] = new Varien_Object($data);
                                             $pcount++;
-                                        }
+                                        endif;
+                                    }
                                 }
                             }
                             else {
@@ -180,7 +182,7 @@ class Wyomind_Elasticsearch_Autocomplete
             }
         }
 
-      return true;
+        return true;
 
     }
 

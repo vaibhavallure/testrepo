@@ -486,7 +486,7 @@ target="_blank"><i class="fa fa-link"></i>
 
 <script type="text/javascript">
     jQuery('.loader').css({"display":"none"});
-    // jQuery('.insta-loader').css({"display":"none"});
+    jQuery('.insta-loader').css({"display":"none"});
     var xhr = null;
     var page = 2;
     var totalPages = <?php echo $totalPageSize?>;
@@ -500,7 +500,7 @@ target="_blank"><i class="fa fa-link"></i>
         if(condition){
             if(page<=totalPages){
                 // setLoader();
-                jQuery('.insta-loader').css({"display":"block"});
+
                 if( xhr == null ) {
                     //xhr.abort();
                     //xhr = null;
@@ -510,16 +510,20 @@ target="_blank"><i class="fa fa-link"></i>
                         dataType : 'json',
                         type : 'POST',
                         data: {'page':page},
+                        beforeSend:function(){
+                            jQuery('.insta-loader').css({"display":"block"});
+                        },
                         success: function(data) {
                             //instagram_posts
-                            jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
+
                             setTimeout(
                                 function()
                                 {
                                     // unsetLoader();
                                     // jQuery('.loader').hide();
                                     jQuery('.insta-loader').css({"display":"none"});
-                                }, 2000);
+                                    jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
+                                }, 3000);
                         }
                     });
 
