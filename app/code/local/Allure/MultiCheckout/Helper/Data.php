@@ -15,6 +15,8 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     const MULTI_MAIN_ORDER  = 'Multiple - Main';
     const MULTI_BACK_ORDER  = 'Multiple - Backorder';
     
+    const GIFT_WRAP_SKU = "GIFT_WRAP";
+    
     const XML_PATH_RETAILER_CUSTOMER_PAYMENT_METHODS = 'allure_multicheckout/retail/payment_methods';
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_NOW_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_now';
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
@@ -178,5 +180,33 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
             }
             $backorderSession->setBackorder(null);
         }
+    }
+    
+    /**
+     * Check quote contain single product.
+     * @return boolean
+     */
+    public function isQuoteContainSingleProduct(){
+        $quote = $this->getQuote();
+        $flag = false;
+        if($quote->getItemsCount() == 1){
+            $flag = true;
+        }else{
+            $quoteItems = $quote->getAllVisibleItems();
+            $cnt = 0;
+            foreach ($quoteItems as $item){
+                if($item->getProduct()->getIsVirtual() || $item->getSku() == self::GIFT_WRAP_SKU){
+                    continue;
+                }
+                $cnt++;
+                if($cnt > 1){
+                    break;
+                }
+            }
+            if($cnt == 1){
+                $flag = true;
+            }
+        }
+        return $flag;
     }
 }

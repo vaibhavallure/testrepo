@@ -1502,7 +1502,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .form-search input.input-text{
   float: left;
-  width: 25vw;
+  width: 360px;
   border: none;
   background: none;
   border-bottom: 1px solid #fff;
