@@ -89,7 +89,7 @@ If you want to use phpmyadmin :
 - Test stuffs before deploying ...
 
 ## Todos
-- Save PromotionCards to database
+- ~Save PromotionCards to database~
 - Create a task to copy tinyclues/archivage on internal network
 - Ugrade Slim Library as we're using a very old one
 - Migrate database to mysql 8.0 using modern encoding utf8mb4
