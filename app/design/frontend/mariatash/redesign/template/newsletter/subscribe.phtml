@@ -33,7 +33,7 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
     jQuery('#signup-exit').on('click',function (e) {
         jQuery('.t_Tooltip.t_Tooltip_allure_footer').hide()
     })
-    jQuery('.t_Tooltip.t_Tooltip_allure_footer').mouseleave(() => { jQuery('.t_Tooltip.t_Tooltip_allure_footer').hide();});
+    // jQuery('.t_Tooltip.t_Tooltip_allure_footer').mouseleave(() => { jQuery('.t_Tooltip.t_Tooltip_allure_footer').hide();});
 </script>
 <div id="newsletter-form" >
     <form action="<?= $newsletterFormURL ?>" method="post" id="newsletter-validate-detail">
