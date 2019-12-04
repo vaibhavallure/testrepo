@@ -343,7 +343,9 @@ switch ($country) {
 		
 		$revendeurs="DIESE ANGEBOT IST AUSSCHLIESSLICH AN ENDVERBRAUCHER GERICHTET.";
 		
+		$ht="";
 		$ttc=" inkl.19% MwSt.";
+		$fnpx1btlleht="";
 		$fnpx1btllettc="/Flasche inkl.19% MwSt.";
 		$fnpxcaissettc="/Kiste inkl.19% MwSt.";
 		$legendepxind=""; //*Preisangabe pro Kiste inklusive 19% Mehrwertsteuer
