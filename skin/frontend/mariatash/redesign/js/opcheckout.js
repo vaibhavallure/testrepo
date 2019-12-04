@@ -733,6 +733,16 @@ Shipping.prototype = {
                 response = {};
             }
         }
+        
+        if(response.totals_html){
+        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+        	$('totalsDivRightNav').innerHTML = response.totals_html;
+        }
+        
+        if(response.sidebar_html){
+        	$('ajax_cart_content').innerHTML = response.sidebar_html;
+        }
+        
         if (response.error){
             if ((typeof response.message) == 'string') {
                 alert(response.message);
