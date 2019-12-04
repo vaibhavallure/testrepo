@@ -57,9 +57,12 @@ if($this->isthumbnailCat($pc->getName())){
                                     }
 
 
+
                                     if(strtolower($pc->getName()) == "jewelry"):
 
-                                    if($child->hasChildren())
+                                        $child = Mage::getModel('catalog/category')->load($child->getId());
+
+                                    if($child->hasChildren() || $child->getSetVirtualChild())
                                         $withChildrenCategory[]=$child;
                                     else
                                         $withoutChildrenCategory[]= $child;
@@ -140,14 +143,14 @@ if($this->isthumbnailCat($pc->getName())){
                                                 </li>
                                             <?php } ?>
                                             <?php endif; ?>
-                                            <?php  if(count($this->getChildCategories($child->getId()))):?>
+                                            <?php  //if(count($this->getChildCategories($child->getId()))):?>
                                                 <?php if($child->getShowViewAllOption()):?>
                                                     <li class="view-all-products"><a
                                                             href="/<?= $child->getRequestPath() ?>"><?= $this->__("View All")?></a>
 
                                                 </li>
                                                 <?php endif; ?>
-                                            <?php endif;?>
+                                            <?php //endif;?>
                                         </ul>
                                     </div>
                                 </div>

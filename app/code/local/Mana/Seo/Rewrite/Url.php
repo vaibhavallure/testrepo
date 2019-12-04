@@ -45,7 +45,7 @@ class Mana_Seo_Rewrite_Url extends Mage_Core_Model_Url {
 //        $this->_escape = isset($routeParams['_escape']) ? $routeParams['_escape'] :
 //            (isset($routeParams['_m_escape']) ? $routeParams['_m_escape'] : $this->_escape);
         Mana_Core_Profiler2::start(__METHOD__, true);
-
+        
         $this->_routeParams = $routeParams;
         if ($this->_isValidPageType($routePath) &&
             (isset($routeParams['_use_rewrite']) || $routePath == 'catalogsearch/result'))
@@ -115,6 +115,7 @@ class Mana_Seo_Rewrite_Url extends Mage_Core_Model_Url {
             $queryParams = $this->getQueryParams();
             $seoParams = array();
             $excludedParams = explode(',', Mage::getStoreConfig('mana/seo/excluded_parameters'));
+            
             foreach ($this->getQueryParams() as $key => $value) {
                 $path = false;
 
@@ -540,6 +541,11 @@ class Mana_Seo_Rewrite_Url extends Mage_Core_Model_Url {
             }
         }
         $path = $this->_encode($parameterUrl->getFinalUrlKey()) . $this->_schema->getFirstValueSeparator() . $path;
+         
+        /* print_r($value);
+        print_r($parameterUrl->getData());
+        
+        var_dump($path);die;  */
 
         return $path;
     }
@@ -749,6 +755,7 @@ class Mana_Seo_Rewrite_Url extends Mage_Core_Model_Url {
                     break;
                 case Mana_Seo_Model_ParsedUrl::PARAMETER_PRICE:
                     list($from, $to) = explode(',', $value);
+                    
                     
                     $index = $from;
                     $range = $to;

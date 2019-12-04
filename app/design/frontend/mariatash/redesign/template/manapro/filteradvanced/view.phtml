@@ -179,12 +179,14 @@
             jQuery(".filter-contain").slideDown();
             jQuery("body").css("overflow","hidden");
             jQuery(".allure_filter").addClass("scrolling");
+            jQuery(".zopim").css("display","none");
             scrollToFilter();
         }else {
             jQuery(".filter-head").removeClass("showing");
             jQuery(".filter-contain").slideUp();
             jQuery("body").css("overflow","auto");
             jQuery(".allure_filter").removeClass("scrolling");
+            jQuery(".zopim").css("display","block");
             unScrollToFilter();
         }
         });
