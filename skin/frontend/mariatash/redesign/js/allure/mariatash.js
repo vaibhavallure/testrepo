@@ -135,8 +135,10 @@ jQuery('.link-button').click(function(event) {
               }
 
 
+            let hidden = true;
+            jQuery('.t_Tooltip.t_Tooltip_allure_footer').mouseleave(() => { jQuery('.t_Tooltip.t_Tooltip_allure_footer').toggle();});
+
             /*zopim -- to change margin from bottom */
-            var hidden = true;
             //show footer if mouse is at bottom and not at the end of the scroll
             if(jQuery(window).width() > 768) {
                 jQuery(window).mousemove(function (e) {
@@ -146,12 +148,12 @@ jQuery('.link-button').click(function(event) {
                                 jQuery(".zopim").addClass("bottom-change");
                                 jQuery("#footer8").css("height", "59px");
                                 hidden = false;
-                            } else if (!parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0
-                                || jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none') {
-                                jQuery(".zopim").removeClass("bottom-change");
-                                jQuery("#footer8").css("height", "0px");
-                                hidden = true;
                             }
+                        }else if ( !(parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0)
+                            || (jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none') ) {
+                            jQuery(".zopim").removeClass("bottom-change");
+                            jQuery("#footer8").css("height", "0px");
+                            hidden = true;
                         }
                     }
                 });
