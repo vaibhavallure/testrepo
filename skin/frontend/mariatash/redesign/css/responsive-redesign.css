@@ -2152,7 +2152,7 @@ ul.tabs li{
     float: none;
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu{
-    top: 53px;
+    top: 52px;
   }
   .maria-left-menus{
     left:85px;
@@ -2370,6 +2370,10 @@ ul.tabs li{
   }
   .close-section{
     display: none;
+  }
+  .level-top.parent span:hover {
+    border-bottom: 6px solid #fff;
+    padding-bottom: 28px;
   }
 }
 
