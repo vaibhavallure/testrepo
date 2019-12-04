@@ -1445,8 +1445,8 @@ tr.tr-piercing td span, tr.tr-piercing td {
 		text-align: right !important;
 	}
 }
-@media (min-width:1025px) {
-	.floating.footer:hover {
-		opacity: 1;
-	}
-}
+/*@media (min-width:1025px) {*/
+/*	.floating.footer:hover {*/
+/*		opacity: 1;*/
+/*	}*/
+/*}*/
