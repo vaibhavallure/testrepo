@@ -416,7 +416,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
 
         $originalToken = $token;
         if ($pairs = $this->_scanNumbers($token, $this->_schema->getMultipleValueSeparator(), $this->_schema->getPriceSeparator(), '-')) {
-            
+           
             foreach ($pairs as $pair) {
                 if (!$this->_setPriceFilter($token, $pair['from'], $pair['to'])) {
                     if (!$this->_correct($token, $cInvalid, __LINE__, json_encode($pair))) {
@@ -634,6 +634,11 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
                 $pair['to'] = $minusText . $mbstring->substr($text, $pos);
                 $pos = false;
             }
+            
+            if ($pair['to'] === '') {
+                $pair['to'] = 9999999;
+            }
+            
             if ($pair['to'] === '' || !is_numeric($pair['to'])) {
                 $this->_correct($token, $cInvalid, __LINE__, $text);
 
@@ -783,7 +788,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
 
         $accentSensitive = $this->_schema->getData('accent_insensitive')
             ? ''
-            : ' COLLATE utf8_bin';
+            : '';
         $collection
             ->setSchemaFilter($this->_schema)
             ->addTypeFilter($type)
@@ -805,6 +810,7 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
             $select->where(implode(' OR ', $keys));
 
         }
+        
         return $collection;
     }
 
@@ -1174,14 +1180,17 @@ class Mana_Seo_Helper_UrlParser extends Mage_Core_Helper_Abstract  {
                 if ($from == $to) {
                     return false;
                 }
-                $range = $to - $from;
-                $rawIndex = $to / $range;
-                $index = round($rawIndex);
-                if (abs($index - $rawIndex) >= 0.001) {
-                    return false;
-                }
-
+                
                 $token->addQueryParameter($token->getAttributeCode(), "$from,$to");
+               
+                if (0) {// Disable Range Check
+                    $range = $to - $from;
+                    $rawIndex = $to / $range;
+                    $index = round($rawIndex);
+                    if (abs($index - $rawIndex) >= 0.001) {
+                        return false;
+                    }
+                }
             }
         }
         else {
