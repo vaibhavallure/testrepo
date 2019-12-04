@@ -2195,7 +2195,7 @@ line-height: 42px;
 		display: none !important;
 	}
 	/* ipad portrait */
-	@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
+	@media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
 		#cross-icon {
 			top: 0px;
 			padding:10px;
@@ -2207,19 +2207,20 @@ line-height: 42px;
 		.catalogsearch-result-index .mb-breadcrumbs ul.row.m-0 {
 			margin-left: 30px !important;
 		}
-		.jewelry .left-section .inner-box{
-			padding: 0 34px;
-		}
+		
 		body.cms-index-index.cms-home .footer
 		{
 			padding-top: 60px !important;
+		}
+        .zoom-img.big-popup-image.row {
+			max-height: 100% !important;
 		}
 
 	}
 
 
 	/* ipad landscape */
-	@media (min-width:768px) and (max-width:1024px) and (orientation:landscape){
+	@media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
 		#cross-icon {
 			padding: 10px;
 			top: 0px;
@@ -2228,10 +2229,10 @@ line-height: 42px;
 			z-index: 1032;
 			right: 10px !important;
 		}
-		.menu-common-section .inner-box {
+		/* .menu-common-section .inner-box {
 			justify-content: space-evenly;
 			padding: 0 162px;
-		}
+		} */
 	}
 	@media (max-width: 767px) {
 		#cross-icon {
@@ -2297,8 +2298,9 @@ line-height: 42px;
 		height: auto;
 	}
 	.zoom-opened {
-		z-index: 9999;
+		/*z-index: 9999;*/
 	}
+
 	.zoom-in, .zoom-out, .zoom-reset {
 		width: 2.2rem;
 		cursor: pointer;
