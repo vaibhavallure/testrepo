@@ -1257,8 +1257,8 @@ ul.tabs li{
   .footer {
     padding-top: 0px !important;
     height: auto !important;
-    bottom: -1px;
-    position: fixed;
+    bottom: -3px;
+    /* position: fixed; */
     z-index: 1;
     padding: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
@@ -2704,9 +2704,6 @@ ul.tabs li{
   }
 }
 @media (min-width:992px){
-  .cms-home .homepage-menu.mariatash-header {
-    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
-  }
   .cms-home .homepage-menu.mariatash-header:hover{
   	background: rgba(41, 41, 41, 0.9) !important;
   }
@@ -2760,6 +2757,9 @@ ul.tabs li{
   }
   .navbar-expand-lg .navbar-toggler {
     display: none !important;
+  }
+  .cms-home .homepage-menu.mariatash-header {
+    background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
   }
 }
 @media (min-width:1366px) and (max-width:1390px){
