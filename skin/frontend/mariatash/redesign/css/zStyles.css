@@ -2398,3 +2398,6 @@ line-height: 42px;
 	.insta-loader {
 		margin-top: 0px !important;
 	}
+	.inspiration-loader {
+		left: 50%;
+	}

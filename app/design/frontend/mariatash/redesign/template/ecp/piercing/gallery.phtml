@@ -47,7 +47,9 @@
                         $c++;
                     }
                 endforeach; ?>
+
             </div>
+
         </div>
     </div>
 </div>
@@ -86,6 +88,7 @@
         </div>
     </div>
 </div>
+    <div id="supersized-loader" class="inspiration-loader" style="display: none"></div>
 </div>
 <script>
     jQuery(document).ready(function() {
@@ -99,16 +102,19 @@
                 var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
             }
             if (condition) {
-                setLoader();
+                // setLoader();
+                jQuery('.inspiration-loader').css('display','block');
                 slot++;
 
-              if(jQuery(".slot-"+slot).length)
-              jQuery(".slot-"+slot).removeClass("d-none");
+
 
                 setTimeout(
                     function()
                     {
-                        unsetLoader();
+                        if(jQuery(".slot-"+slot).length)
+                            jQuery(".slot-"+slot).removeClass("d-none");
+                        jQuery('.inspiration-loader').css('display','none');
+                        // unsetLoader();
                     }, 3000);
 
             }
