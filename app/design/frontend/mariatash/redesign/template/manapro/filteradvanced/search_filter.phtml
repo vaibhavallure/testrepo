@@ -23,11 +23,24 @@
  * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
-$layer = $this->getLayer();
-$collection = $layer->getProductCollection();
+$collection = $this->getLayer()->getProductCollection();
 $count = $collection->getSize();
-?>
 
+?>
+<div class="container">
+    <div class="page-title">
+        <?php
+        if($count > 1){
+            $result_word = 'results';
+            if($count == 1) {
+                $result_word = "result";
+            }
+            ?>
+            <h1 ><?php echo $this->__('Showing %d '.$result_word.' for', $collection->getSize()) ?></h1>
+            <h1 class="searchKey"><?php echo $this->__('"%s"', Mage::helper('catalogsearch')->getQuery()->getQueryText()) ?></h1>
+        <?php }?>
+    </div>
+</div>
 <?php
 /**
  * Category layered navigation
@@ -36,23 +49,8 @@ $count = $collection->getSize();
  */
 //debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
 
-
 ?>
 <?php if($this->canShowBlock()): ?>
-    <div class="container">
-        <div class="page-title">
-            <?php
-            if($count > 1):
-                $result_word = 'results';
-                if($count == 1) {
-                    $result_word = "result";
-                }
-                ?>
-                <h1 ><?php echo $this->__('Showing %d '.$result_word.' for', $collection->getSize()) ?></h1>
-                <h1 class="searchKey"><?php echo $this->__('"%s"', Mage::helper('catalogsearch')->getQuery()->getQueryText()) ?></h1>
-            <?php endif;?>
-        </div>
-    </div>
     <?php if($this->getRequest()->getModuleName() == 'catalogsearch') { ?>
         <div class="m-block mb-mana-catalogsearch-leftnav">
     <?php }  else {
@@ -73,7 +71,7 @@ $count = $collection->getSize();
 
                 </div>
 
-                <?php if($this->canShowOptions()): ?>
+                <?php if($this->canShowOptions() && $count > 0 ): ?>
                 <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
                 <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
                 <div class="allure_filter">
