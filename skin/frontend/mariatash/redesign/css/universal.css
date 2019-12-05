@@ -2054,13 +2054,13 @@ li.order-info-tab-back{
     float: left;
 }
 .manage-payment-method .mt-edit-form .radio-continue{
-    display: block;
+    display: none;
     width: 50px!important;
     float: left;
     height: 20px!important;
 }
 .manage-payment-method .mt-edit-form .radio-change{
-    display: block;
+    display: none;
     width: 50px;
     float: left;
     height: 20px!important;
@@ -2202,7 +2202,7 @@ li.buttons-set .btn-cancel-edit{
 .manage-payment-method #new-mt-add-payment-method li.payment-card-type,.payment-card-number,.payment-exp-date,#authnetcim_cc_type_cvv_div,.name-on-card{
     padding: 5px 0 5px 0;
 }
- .manage-payment-method #new-mt-saved-card li.payment-card-type,.payment-card-number,.payment-exp-date,#authnetcim_cc_type_cvv_div{
+ .manage-payment-method #new-mt-saved-card li.payment-card-type,.payment-card-number,.payment-exp-date{
      padding: 5px 0 5px 0;
  }
  /*.my-account .new_address .page-title h1{

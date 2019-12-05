@@ -18,16 +18,16 @@ $i++;
 
 foreach ($results as $res)
 {
-    $query1="SELECT * FROM `catalog_product_entity_text` WHERE `attribute_id` = 413 AND `entity_id` = {$res['entity_id']}";
+    $query1="SELECT * FROM `catalog_product_entity_text` WHERE `attribute_id` = 415 AND `entity_id` = {$res['entity_id']}";
     $results1 = $readConnection->fetchAll($query1);
 
     if(count($results1)) {
         $operation="UPDATE";
-        $setQuery = "UPDATE `catalog_product_entity_text` SET `value`='3' WHERE `attribute_id`= 413 AND `entity_id`={$res['entity_id']}";
+        $setQuery = "UPDATE `catalog_product_entity_text` SET `value`='3' WHERE `attribute_id`= 415 AND `entity_id`={$res['entity_id']}";
     }
     else {
         $operation="INSERT";
-        $setQuery = "INSERT INTO `catalog_product_entity_text`(`entity_type_id`, `attribute_id`, `store_id`, `entity_id`, `value`) VALUES (4,413,0,{$res['entity_id']},'3')";
+        $setQuery = "INSERT INTO `catalog_product_entity_text`(`entity_type_id`, `attribute_id`, `store_id`, `entity_id`, `value`) VALUES (4,415,0,{$res['entity_id']},'3')";
         }
 //var_dump($results1);
     echo $i.":".$res['entity_id']."-".$res['sku']."-".$operation."\n";
