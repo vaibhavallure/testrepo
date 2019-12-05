@@ -492,11 +492,12 @@ target="_blank"><i class="fa fa-link"></i>
     var totalPages = <?php echo $totalPageSize?>;
     jQuery(window).scroll(function(){
         var condition
-        // if(jQuery('body').hasClass('mobile-device'))
-        // {   condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
-        // }else {
+        if(jQuery('body').hasClass('mobile-device'))
+        {
+            condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
+        }else {
              condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
-        // }
+        }
         if(condition){
             jQuery('.insta-loader').css({"display":"block"});
             if(page<=totalPages){
