@@ -135,7 +135,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
         {
 		  	$method = Mage::getModel('shipping/rate_result_method');
 			$method->setCarrier('matrixrate');
-			$method->setCarrierTitle($this->getConfigData('title'));
+			//$method->setCarrierTitle($this->getConfigData('title'));
 			$method->setMethod('matrixrate_free');
 			$method->setPrice('0.00');
 			$method->setMethodTitle($this->getConfigData('free_method_text'));
@@ -145,12 +145,18 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 				return $result;
 			}
 		}
+		
+		//country id
+		$countryId = $request->getDestCountryId();
+		$isDomestic = (strtolower($countryId) == "us") ? 0 :1;
      	
 	   foreach ($ratearray as $rate)
 		{
 		   if (!empty($rate) && $rate['price'] >= 0) {
 			  $method = Mage::getModel('shipping/rate_result_method');
 
+			  if($isDomestic == $rate['is_international']) {
+			    
 				$method->setCarrier('matrixrate');
 				//$method->setCarrierTitle($this->getConfigData('title'));
 
@@ -165,6 +171,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 				$method->setPrice($shippingPrice);
 
 				$result->append($method);
+			  }
 			}
 		}
 
