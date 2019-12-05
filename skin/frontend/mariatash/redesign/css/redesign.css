@@ -2764,6 +2764,7 @@ ul.tabs {
 	border: 1px solid rgba(41,41,41,0.9);
 	border-bottom-width: 3px;
 	transition: .5s;
+	width: 100%;
 }
 .add-to-links {
   margin-top: 14px;
@@ -4859,4 +4860,11 @@ td.cart_col2 {
 .catalog-product-view .main-container{
 	overflow-x: hidden;
 	margin-top: -12px;
+}
+.form-search .search-autocomplete li.selected a {
+  background-color: #fff !important;
+}
+.zoom-link {
+  text-align: center;
+	margin-top: 8px;
 }
