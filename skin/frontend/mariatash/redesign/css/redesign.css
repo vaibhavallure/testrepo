@@ -4858,4 +4858,5 @@ td.cart_col2 {
 }
 .catalog-product-view .main-container{
 	overflow-x: hidden;
+	margin-top: -12px;
 }
