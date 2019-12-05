@@ -339,13 +339,14 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
     protected function _getShippingMethod()
     {
         $return = $this->_order->getShippingMethod();
+        $shippingName = preg_replace('|#.*$|', '', $return);
         /*fix for webshopapps/matrixrate module*/
-        if(stripos($return, 'matrixrate_matrixrate') !== FALSE)
-        {
-            $return = 'matrixrate_matrixrate';
-
-        }
-        return $return;
+//        if(stripos($return, 'matrixrate_matrixrate') !== FALSE)
+//        {
+//            $return = 'matrixrate_matrixrate';
+//
+//        }
+        return $shippingName;
     }
 
     /**

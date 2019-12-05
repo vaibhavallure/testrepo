@@ -92,7 +92,7 @@
 				</ul>
 			</div>
 		</li>
-		
+
 		<li><h4><?php echo $this->__('Credit Card Information'); ?></h4></li>
 		<?php if( $this->isEdit() ): ?>
 			<li>
@@ -168,18 +168,18 @@
 			$('billing-new-address-form').hide();
 		}
 	}); */ ?>
-	
+
 	$('region_id').setAttribute('defaultValue', '<?php echo $this->getCard()->getAddress("region_id"); ?>');
-	
+
 	var dataForm = new VarienForm('form-validate', true);
 	new RegionUpdater('country', 'region', 'region_id', <?php echo Mage::helper('directory')->getRegionJson(); ?>, undefined, '<?php echo $code; ?>_postcode');
-	
+
 	$$('#<?php echo $code; ?>_sameCard_0, #<?php echo $code; ?>_sameCard_1').each(function(el) {
 		$(el).observe( 'change', function(e) {
 			$$('.<?php echo $code; ?>_add').each(function(e){
 				e.toggle();
 			});
-			
+
 			$$('.<?php echo $code; ?>_require').each(function(e){
 				e.toggleClassName('required-entry');
 			});
