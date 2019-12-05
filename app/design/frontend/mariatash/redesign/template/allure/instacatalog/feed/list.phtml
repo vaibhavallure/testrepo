@@ -491,16 +491,16 @@ target="_blank"><i class="fa fa-link"></i>
     var page = 2;
     var totalPages = <?php echo $totalPageSize?>;
     jQuery(window).scroll(function(){
-        if(jQuery('body').hasClass('mobile-device'))
-        {
-            var condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
-        }else {
-            var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
-        }
+        var condition
+        // if(jQuery('body').hasClass('mobile-device'))
+        // {   condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
+        // }else {
+             condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+        // }
         if(condition){
+            jQuery('.insta-loader').css({"display":"block"});
             if(page<=totalPages){
                 // setLoader();
-
                 if( xhr == null ) {
                     //xhr.abort();
                     //xhr = null;
@@ -510,20 +510,18 @@ target="_blank"><i class="fa fa-link"></i>
                         dataType : 'json',
                         type : 'POST',
                         data: {'page':page},
+
                         beforeSend:function(){
-                            jQuery('.insta-loader').css({"display":"block"});
+                            // jQuery('.insta-loader').css({"display":"block"});
                         },
                         success: function(data) {
                             //instagram_posts
-
                             setTimeout(
                                 function()
                                 {
-                                    // unsetLoader();
-                                    // jQuery('.loader').hide();
-                                    jQuery('.insta-loader').css({"display":"none"});
                                     jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
-                                }, 3000);
+                                    jQuery('.insta-loader').css({"display":"none"});
+                                }, 2000);
                         }
                     });
 
