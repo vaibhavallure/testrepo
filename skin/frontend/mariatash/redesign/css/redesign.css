@@ -4868,3 +4868,7 @@ td.cart_col2 {
   text-align: center;
 	margin-top: 8px;
 }
+
+img#search-icon {
+    cursor: pointer;
+}
