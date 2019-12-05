@@ -4855,7 +4855,7 @@ td.cart_col2 {
 	position: absolute;
 	top: 16px;
 	right: 20px;
-	cursor: auto;
+	cursor: pointer;
 }
 .catalog-product-view .main-container{
 	overflow-x: hidden;
@@ -4867,4 +4867,8 @@ td.cart_col2 {
 .zoom-link {
   text-align: center;
 	margin-top: 8px;
+}
+
+img#search-icon {
+    cursor: pointer;
 }
