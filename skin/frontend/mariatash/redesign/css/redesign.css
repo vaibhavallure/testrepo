@@ -2699,7 +2699,7 @@ ul#foo4 {
 }
 .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
   margin-bottom: 16px;
-	max-width: 160px;
+	max-width: 140px;
 }
 .priceCategory {
   max-width: 94px;
@@ -2764,6 +2764,7 @@ ul.tabs {
 	border: 1px solid rgba(41,41,41,0.9);
 	border-bottom-width: 3px;
 	transition: .5s;
+	width: 100%;
 }
 .add-to-links {
   margin-top: 14px;
@@ -4712,6 +4713,7 @@ td.cart_col2 {
 }
 #footer8 .nav-item span {
   letter-spacing: 0;
+	cursor: pointer;
 }
 .contact-us-wrapper h1 {
   font-size: 30px !important;
@@ -4849,10 +4851,24 @@ td.cart_col2 {
 #prev3, #next3 { /*For Cartilage filters*/
   top: 30%;
 }
-
 #signup-exit{
 	position: absolute;
 	top: 16px;
 	right: 20px;
-	cursor: auto;
+	cursor: pointer;
+}
+.catalog-product-view .main-container{
+	overflow-x: hidden;
+	margin-top: -12px;
+}
+.form-search .search-autocomplete li.selected a {
+  background-color: #fff !important;
+}
+.zoom-link {
+  text-align: center;
+	margin-top: 8px;
+}
+
+img#search-icon {
+    cursor: pointer;
 }

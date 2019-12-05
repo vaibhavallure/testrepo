@@ -2394,7 +2394,11 @@ line-height: 42px;
 	    top: 5px;
 	    right: 0px;
 	    margin: 0px;
+	    cursor: pointer;
 	}
 	.insta-loader {
 		margin-top: 0px !important;
+	}
+	.inspiration-loader {
+		left: 50%;
 	}

@@ -1255,7 +1255,7 @@ ul.tabs li{
     background-color: rgba(41,41,41,0.9);
   }
   .footer {
-    padding-top: 0px !important;
+    /* padding-top: 0px !important; */
     height: auto !important;
     bottom: -3px;
     /* position: fixed; */
@@ -1320,6 +1320,9 @@ ul.tabs li{
   #appointments .menu-inner .mt-4 {
     margin-top: 1.5rem !important;
   }
+  .navbar-toggler {
+    top: 11px;
+  }
 }
 
 /* ipad pro landscape */
@@ -1327,7 +1330,7 @@ ul.tabs li{
   .mobile-device #search {
     top: 0 !important;
     background: #292929;
-    width: 100%;
+    width: 360px;
     color:#fff;
   }
   #cross-icon {
@@ -1341,11 +1344,23 @@ ul.tabs li{
   #search-input {
     z-index: 1032;
   }
-  /* #apply-filter-btn{
-    margin-left: 10px;
-    margin-right: 10px;
-  } */
+  .inner-box {
+    justify-content: space-evenly;
+    padding: 0 162px;
+  }
+  .menu-head {
+    margin-bottom: 17px;
+  }
+  .image-text{
+    top: auto;
+    bottom: 10px;
+    background: none;
+  }
+  #top-nav > li{
+    padding-bottom: 31px;
+  }
 }
+
 
 @media (max-width: 1023px) and (orientation: landscape) {
 	#narrow-by-list {
