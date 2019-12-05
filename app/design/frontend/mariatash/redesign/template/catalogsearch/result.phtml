@@ -35,8 +35,8 @@
                 <?php if ($this->helper('rss/catalog')->getTagFeedUrl()): ?>
                     <a href="<?php echo $this->helper('rss/catalog')->getTagFeedUrl() ?>" class="nobr link-rss"><?php echo $this->__('Subscribe to Feed') ?></a>
                 <?php endif; ?>
-                <h1 ><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('Showing %d results for', $this->getResultCount()) ?></h1>
-                <h1 class="searchKey"><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('"%s"', $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+<!--                <h1 >--><?php //echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('Showing %d results for', $this->getResultCount()) ?><!--</h1>-->
+<!--                <h1 class="searchKey">--><?php //echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__('"%s"', $this->helper('catalogsearch')->getEscapedQueryText()) ?><!--</h1>-->
             </div>
         </div>
         <?php if ($messages = $this->getNoteMessages()):?>
@@ -46,7 +46,7 @@
                 <?php endforeach;?>
             </p>
         <?php endif; ?>
-        <?php echo $this->getLayout()->createBlock('mana_filters/search')->setTemplate('manapro/filteradvanced/view.phtml')->toHtml(); ?>
+<!--        --><?php //echo $this->getLayout()->createBlock('mana_filters/search')->setTemplate('manapro/filteradvanced/view.phtml')->toHtml(); ?>
         <?php echo $this->getProductListHtml() ?>
     <?php else: ?>
 
