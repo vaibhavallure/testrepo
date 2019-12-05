@@ -2699,7 +2699,7 @@ ul#foo4 {
 }
 .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
   margin-bottom: 16px;
-	max-width: 160px;
+	max-width: 140px;
 }
 .priceCategory {
   max-width: 94px;
@@ -4712,6 +4712,7 @@ td.cart_col2 {
 }
 #footer8 .nav-item span {
   letter-spacing: 0;
+	cursor: pointer;
 }
 .contact-us-wrapper h1 {
   font-size: 30px !important;
