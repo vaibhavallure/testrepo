@@ -27,8 +27,16 @@
 				
 				<?php if( $this->isEdit() ): ?>
 					<li class="radio-select-option">
-						<input type="radio" class="left radio-continue" name="payment[sameCard]" value="1" id="<?php echo $code; ?>_sameCard_1" checked="checked" /> <label class="para-normal" for="<?php echo $code; ?>_sameCard_1"><?php echo $this->__( 'Continue using payment data %s', $this->getCard()->getLabel() ); ?></label><br />
-						<input type="radio" class="left radio-change" name="payment[sameCard]" value="0" id="<?php echo $code; ?>_sameCard_0" /> <label class="para-normal" for="<?php echo $code; ?>_sameCard_0"><?php echo $this->__('Change payment data'); ?></label>
+
+                        <label class="para-normal custom-radio" for="<?php echo $code; ?>_sameCard_1"><?php echo $this->__( 'Continue using payment data %s', $this->getCard()->getLabel() ); ?>
+                            <input type="radio" class="left radio-continue" name="payment[sameCard]" value="1" id="<?php echo $code; ?>_sameCard_1" checked="checked" />
+                            <span class="radiomark"></span>
+                        </label>
+
+                        <label class="para-normal custom-radio" for="<?php echo $code; ?>_sameCard_0"><?php echo $this->__('Change payment data'); ?>
+                            <input type="radio" class="left radio-change" name="payment[sameCard]" value="0" id="<?php echo $code; ?>_sameCard_0" />
+                            <span class="radiomark"></span>
+                        </label>
 					</li>
 				<?php endif; ?>
 				

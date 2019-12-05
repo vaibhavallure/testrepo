@@ -2054,13 +2054,13 @@ li.order-info-tab-back{
     float: left;
 }
 .manage-payment-method .mt-edit-form .radio-continue{
-    display: block;
+    display: none;
     width: 50px!important;
     float: left;
     height: 20px!important;
 }
 .manage-payment-method .mt-edit-form .radio-change{
-    display: block;
+    display: none;
     width: 50px;
     float: left;
     height: 20px!important;
