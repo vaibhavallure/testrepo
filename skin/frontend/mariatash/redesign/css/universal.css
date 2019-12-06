@@ -2226,3 +2226,12 @@ li.buttons-set .btn-cancel-edit{
     right: 10px;*/
     cursor: pointer;
 }
+.manage-payment-method div.tab button.active{
+    color: #fff;
+    background-color: rgba(41,41,41,0.9);
+}
+.manage-payment-method .tab button{
+
+    background-color: #f1f1f1;
+    color: rgba(41,41,41,0.9);
+}
