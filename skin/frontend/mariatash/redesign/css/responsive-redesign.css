@@ -1096,7 +1096,6 @@ ul.tabs li{
     margin-top: 19px;
   }
   .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    width: 625px;
     margin: 0 auto;
     margin-bottom: 20px;
   }
@@ -1105,6 +1104,9 @@ ul.tabs li{
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu{
     top: 67px;
+  }
+  .allure_filter {
+  	border-width: 1px !important;
   }
 }
 
