@@ -11,12 +11,13 @@
 <div class="data-table col-12" id="multiship-addresses-table">
 	<div class="row">
 	<?php $_index = 0;?>
-	<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
+	<?php $redesignHelper = Mage::helper("allure_multicheckout");?>
+	<?php $giftWrapSku = $redesignHelper->getGiftWrapSku();?>
 	<?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 	<?php $_coreHelper = $this->helper('core');?>
 	
 	<?php foreach ($items as $_item):?>
-		<?php if($_item->getSku() == $redesignHelper::GIFT_WRAP_SKU) continue;?>
+		<?php if($_item->getSku() == $giftWrapSku) continue;?>
 		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
 		<?php 
 		  $qty = $_item->getQty(); 

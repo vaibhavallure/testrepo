@@ -29,6 +29,7 @@
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>charcount.js"></script>
 
 <?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
+<?php $giftWrapSku = $redesignHelper->getGiftWrapSku();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps(); ?>
 <?php $cnt = 1;?>
 <div class="container">
@@ -53,7 +54,7 @@
                         		<div class="col-12 overview-product">
                         	<?php foreach ($this->getShippingAddressItems($_address) as $_item): ?>
                             	<?php if ($_item->getQuoteItem()) :?>
-                            	<?php $isGiftWrap = ($_item->getQuoteItem()->getSku() == $redesignHelper::GIFT_WRAP_SKU) ? true : false; ?>
+                            	<?php $isGiftWrap = ($_item->getQuoteItem()->getSku() == $giftWrapSku) ? true : false; ?>
                             	<div class="row">
                             		<div class="col-lg-2 col-md-2 col-4">
                                 		<?php $_product = $_item->getQuoteItem()->getProduct() ?>
