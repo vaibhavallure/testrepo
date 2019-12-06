@@ -1,4 +1,3 @@
-
 <?php
 $_product = Mage::registry('current_product');
 $collection = $this->getInstagramPostCollection();
@@ -244,7 +243,7 @@ $childProductArr = $this->getChildProductArray();
         jQuery(document).ready(function() {
             var $ =  jQuery;
             $('#instagram-items-slider').owlCarousel({
-                loop:true,
+                loop:false,
                 margin:10,
                 responsiveClass:true,
                 responsive:{
