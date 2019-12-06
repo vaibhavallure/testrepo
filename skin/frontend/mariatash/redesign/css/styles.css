@@ -1256,13 +1256,13 @@ li#billing-new-address-form fieldset ul li.fields div.field label
 }
 /*.customer-account-login .buttons-set p.required,
 .checkout-multishipping-login .buttons-set p.required{ margin-top: 16px; }*/
-.customer-account-login .validation-advice,
+/* .customer-account-login .validation-advice,
 .checkout-multishipping-login .validation-advice {
 	text-align: right;
 	width: 244px;
 	height: auto;
 	float: right;
-}
+} */
 
 .customer-account-edit .validation-advice {
 	margin-right: 0;

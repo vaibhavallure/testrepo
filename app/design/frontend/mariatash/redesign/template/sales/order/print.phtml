@@ -89,6 +89,7 @@ h2.info-text-two {
     </div>
  <?php endif; ?>
 <h2 class="print-padding-left info-text-two"><?php echo $this->__('Items Ordered') ?></h2>
+<div class="table-responsive">
 <table class="data-table" id="my-orders-table">
     <col width="52%"/>
     <col width="24%" />
@@ -118,6 +119,7 @@ h2.info-text-two {
         <?php endforeach; ?>
 
 </table>
+</div>
 
 <script type="text/javascript">decorateTable('my-orders-table', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script>
 <script type="text/javascript">window.print();</script>
