@@ -185,7 +185,6 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     }
     
     public function getGiftWrapSku(){
-        Mage::log("gift sku = ".Mage::getStoreConfig(self::XML_PATH_GIFT_WRAP_SKU),Zend_Log::DEBUG,'abc.log',true);
         return Mage::getStoreConfig(self::XML_PATH_GIFT_WRAP_SKU);
     }
     
