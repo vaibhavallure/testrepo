@@ -11471,24 +11471,10 @@ li.item h2.product-name {text-align: center;}
 	display: none;
 }
 
-#my-orders-table th {
-	padding: 5px 0;
-}
-
-.page-print #my-orders-table th {
-	padding: 5px 0;
-}
-
-.page-print #my-orders-table td {
+/* .page-print #my-orders-table td {
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
-}
-
-.page-print #my-orders-table td.nobr-sku {
-	white-space: nowrap;
-	text-align: left !important;
-	padding-left: 0;
 }
 
 .page-print #my-orders-table .print-sku {
@@ -11512,7 +11498,7 @@ li.item h2.product-name {text-align: center;}
 	font-size: 12px;
 	line-height: 18px;
 	display: inline-block;
-}
+} */
 #wishlist-table td.add-to-cart-alt {
 	margin-left: 10px;
 }
@@ -12589,10 +12575,6 @@ input.giftcard-radio1 {
 	/*margin-left: 138px !important;*/
 }
 
-.mt-review-charge-note{
-	margin-bottom: 0px !important;
-}
-
 .mt-cart-charge-note{
 	display: block;
 	float: right;
@@ -12699,9 +12681,7 @@ input.giftcard-radio1 {
 	border: 1px solid #830000;
 }
 
-.custom-options-univaersal{
-	margin-left: 25px !important;
-}
+
 /* .product-view .product-options .ajax-error-messages{
 	/*left: 0px;
 right: 20px;
