@@ -33,6 +33,14 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Maria Tash">
+<link rel="apple-touch-startup-image" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-512.json', array('_secure' => true));?>">
+<link rel="apple-touch-icon" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-128.json', array('_secure' => true));?>">
+<link rel="apple-touch-icon" sizes="152x152" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-152.json', array('_secure' => true));?>">
+<link rel="apple-touch-icon" sizes="167x167" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-167.json', array('_secure' => true));?>">
+<link rel="apple-touch-icon" sizes="180x180" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-180.json', array('_secure' => true));?>">
+<link rel="apple-touch-icon" sizes="192x192" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-192.json', array('_secure' => true));?>">
+<link rel="apple-touch-icon" sizes="196x196" href="<?php echo $this->getSkinUrl('allure/images/icons/favicon-196.json', array('_secure' => true));?>">
+<link rel="manifest" href="<?php echo $this->getSkinUrl('allure/manifest.json', array('_secure' => true));?>">
 <link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
 <link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
 
@@ -282,7 +290,21 @@ foreach ($metaCollection as $meta){
     <link rel="stylesheet" type="text/css" href="<?php echo $this->getUrl(); ?>skin/frontend/mt/default/css/IE8_styles.css" media="all">
 <![endif]-->
 
-
+<script type="text/javascript">
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', ()=> {
+      navigator
+      .serviceWorker
+      .register('<?php echo $this->getSkinUrl('allure/worker.js');?>')
+      .then(function(registration) {
+		    console.log('ServiceWorker registration successful!');
+	  })
+      .catch(function(err) {
+		    console.log('ServiceWorker registration failed: ', err);
+	  });
+    });
+  }
+</script>
 
 <script type="text/javascript">
 var globalVar = 0;
