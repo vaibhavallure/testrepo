@@ -143,7 +143,7 @@ h4{
 	border-radius: 0 !important;
 }
 
-.dark-button, .checkout-types button{
+.dark-button, .checkout-types button:not(#ApplePayButtonCart) {
 	background: rgba(41,41,41,0.90);
 	font-family: urw-din-bold;
 	font-size: 15px;

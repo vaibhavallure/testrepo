@@ -185,7 +185,11 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
     }
     public function getInformationBlock()
     {
-        return $this->getLayout()->createBlock('cms/block')->setBlockId("important-information")->toHtml();
+        $static_block_code="important-information-".$this->getStoreCode();
+        if($content= $this->getLayout()->createBlock('cms/block')->setBlockId($static_block_code)->toHtml())
+            return $content;
+        else
+            return $this->getLayout()->createBlock('cms/block')->setBlockId("important-information")->toHtml();
     }
     public function storeFound()
     {
