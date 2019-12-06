@@ -8257,8 +8257,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	overflow: visible;
 }
 
-
-
 .customer-account-index .my-account .addresses-list .col-1 {
 	width: 267px;
 }
@@ -8556,9 +8554,9 @@ tr.additional-addresses {
 	color: #fff;
 }
 
-.order-date {
+/* .order-date {
 	margin: 10px 0;
-}
+} */
 
 .order-info-box {
 	margin: 0 0 15px;
@@ -8664,19 +8662,11 @@ tr.additional-addresses {
 }
 
 /* Order Print Pages */
-.page-print {
+/* .page-print {
 	padding: 20px;
-}
+} */
 
-.page-print .print-head {
-	margin: 0 0 15px;
-}
-
-.page-print .print-head .logo {
-	float: left;
-}
-
-.page-print .print-head address {
+/* .page-print .print-head address {
 	float: left;
 	margin-left: 15px;
 }
@@ -8707,7 +8697,7 @@ tr.additional-addresses {
 .page-print .col2-set {
 	margin: 0 0 10px;
 }
-/* Price Rewrites */
+
 .page-print .gift-message-link {
 	display: none;
 }
@@ -8721,7 +8711,7 @@ tr.additional-addresses {
 .page-print .price-excl-tax .price, .page-print .price-incl-tax .price
 {
 	display: inline;
-}
+} */
 
 /* My Wishlist WJZR */
 
@@ -11483,10 +11473,6 @@ li.item h2.product-name {text-align: center;}
 
 #my-orders-table th {
 	padding: 5px 0;
-}
-
-.page-print .print-padding-left {
-	padding-left: 10px;
 }
 
 .page-print #my-orders-table th {
