@@ -85,6 +85,26 @@
 						</multi_log_status>
 					</fields>
 				</multi_log>
+				
+				<gift_wrap_settings translate="label">
+					<label>Gift Wrap Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<sku>
+							<label>Gift Wrap Sku</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>0</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Gift Wrap SKU</comment>
+						</sku>
+					</fields>
+				</gift_wrap_settings>
 
 			</groups>
 		</allure_multicheckout>

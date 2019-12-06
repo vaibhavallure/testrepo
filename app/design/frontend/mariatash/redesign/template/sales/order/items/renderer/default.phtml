@@ -25,16 +25,16 @@
  */
 ?>
 <?php $_item = $this->getItem() ?>
-<tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-    <td style="text-align: left; padding:10px 0;"><h4 class="product-name para-bold"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
+<tr class="border-bottom" id="order-item-row-<?php echo $_item->getId() ?>">
+    <td style="text-align: left; padding:10px 0;"><h1 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h1>
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options custom-options-univaersal">
         <?php $optionslist="";?>
         <?php foreach ($_options as $_option) : ?>
-       <?php 
+       <?php
        if(empty($optionslist))
            $optionslist=$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
-       else 
+       else
            $optionslist=$optionslist.'<br/>'.$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
         ?>
         <?php endforeach; ?>
@@ -46,13 +46,13 @@
             <?php echo $addtInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
         <?php echo $this->htmlEscape($_item->getDescription()) ?>
-        
+
         <?php //@author:allure code start?>
-        <?php 
+        <?php
         $qty = $this->getItem()->getQtyOrdered()*1;
         $storeId = $this->getItem()->getStoreId();
         $stockStatus = Mage::helper("myaccount")
-        ->getProductCurrentStatus($this->getItem(),$this->getSku(),$qty,$storeId); 
+        ->getProductCurrentStatus($this->getItem(),$this->getSku(),$qty,$storeId);
         ?>
         <?php if($stockStatus['is_show']):?>
             <dl class="item-options">
@@ -60,8 +60,8 @@
             </dl>
         <?php endif;?>
         <?php //@author:allure code end?>
-        
-         
+
+
         <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId() && $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)!=''): ?>
             <dl class="item-options custom-options-univaersal">
                 <dt><?php echo $this->escapeHtml('Special Message:  ').$this->helper('giftmessage/message')->getEscapedGiftMessage($_item) ?></dt>
@@ -74,8 +74,8 @@
          </dl>
         <?php endif;?>
     </td>
-    <td class="a-center nobr-sku para-noromal"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
-    <td class="a-center print-price order-item-row-price">
+    <td class="text-left nobr-sku para-noromal"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
+    <td class="text-right print-price order-item-row-price">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -191,13 +191,13 @@
             </span>
         <?php endif; ?>
     </td>
-    <td class="a-center order-item-row-qty">
+    <td class="text-center order-item-row-qty">
         <span class="nobr">
         	<strong class="d-md-none d-lg-none d-xl-none">x &nbsp;&nbsp;</strong>
             <strong><?php echo $this->getItem()->getQtyOrdered()*1 ?></strong><br />
         </span>
     </td>
-    <td class="a-center print-price order-item-row-total">
+    <td class="text-right print-price order-item-row-total">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -316,4 +316,3 @@
         <?php endif; ?>
     </td>
 </tr>
-

@@ -796,6 +796,9 @@ ul.tabs li{
   #signup-exit {
     display: none;
   }
+  .page-print.sales-order-print{
+    padding: 10px 50px;
+  }
 }
 /*qqqq*/
 
@@ -1309,17 +1312,17 @@ ul.tabs li{
 }
 /* ----------- iPad Pro ----------- */
 /* Portrait and Landscape */
-@media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
+@media only screen
+  and (min-width: 1024px)
+  and (max-height: 1366px)
   and (-webkit-min-device-pixel-ratio: 1.5) {
 }
 
 /* iPad Pro - Portrait */
-@media only screen 
-  and (min-device-width: 1024px) 
-  and (max-device-height: 1366px) 
-  and (orientation: portrait) 
+@media only screen
+  and (min-device-width: 1024px)
+  and (max-device-height: 1366px)
+  and (orientation: portrait)
   and (-webkit-min-device-pixel-ratio: 2) {
   .footer {
     padding-top: 0px !important;
@@ -1345,10 +1348,10 @@ ul.tabs li{
 }
 
 /* iPad Pro - Landscape */
-@media only screen 
-  and (min-device-width: 1024px) 
-  and (max-device-height: 1366px) 
-  and (orientation: landscape) 
+@media only screen
+  and (min-device-width: 1024px)
+  and (max-device-height: 1366px)
+  and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 2) {
   .mobile-device #search {
     top: 0 !important;
