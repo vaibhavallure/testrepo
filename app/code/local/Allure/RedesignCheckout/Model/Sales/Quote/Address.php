@@ -15,7 +15,6 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Mage_Sales_Model
      */
     public function addItem(Mage_Sales_Model_Quote_Item_Abstract $item, $qty = null)
     {
-        Mage::log("come into",Zend_Log::DEBUG,'abc.log',true);
         if ($item instanceof Mage_Sales_Model_Quote_Item) {
             if ($item->getParentItemId()) {
                 return $this;
