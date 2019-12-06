@@ -2,11 +2,11 @@
 <config>
     <modules>
         <Teamwork_Universalcustomers>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
-            <depends>
+            <!-- <depends>
       			<Allure_RedesignCheckout />
-      		</depends>
+      		</depends> -->
         </Teamwork_Universalcustomers>
     </modules>
 </config>

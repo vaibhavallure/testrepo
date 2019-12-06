@@ -4,7 +4,7 @@
  * @author allure
  *
  */
-class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Mage_Sales_Model_Quote_Address
+class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Teamwork_Universalcustomers_Model_Sales_Quote_Address
 {
     /**
      * Add item to address
