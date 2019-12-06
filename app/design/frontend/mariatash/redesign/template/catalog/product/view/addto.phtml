@@ -74,6 +74,8 @@ if($_product->isConfigurable()){
 
                                 parent.jQuery("#sign_in_label").trigger('click');
                                 parent.jQuery.fancybox.close();
+                                jQuery('#fancybox-loading').css('display','none');
+                                jQuery('.fancybox-overlay').css('display','none');
 
                             } else {
                                 alert(data.message);

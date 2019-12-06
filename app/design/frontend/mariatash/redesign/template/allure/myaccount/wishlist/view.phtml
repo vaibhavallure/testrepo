@@ -121,9 +121,9 @@
 
 <div class="mt-custom-popup-main mt-custom-popup-overlay">
 	<div class="mt-custom-popup">
-		<h2></h2>
-		<a class="mt-popup-close" href="javascript:jQuery('.mt-custom-popup-main').removeClass('active');">&times;</a>
-		<div class="mt-custom-content">
+		<!--<h2></h2>-->
+		<a class="mt-popup-close" href="javascript:jQuery('.mt-custom-popup-main').removeClass('active');"><img id="share-wishlist-pupup-close" width="16px" src="<?php echo $this->getSkinUrl('images/redesign/thinner-cross.png'); ?>" alt="X" height="14px"></a>
+		<div class="mt-custom-content para-normal">
 		</div>
 	</div>
 </div>
@@ -131,7 +131,7 @@
 
 <script>
 jQuery(document).ready(function(){
-	var wishlistCount =  jQuery("#wishlist-count").val();
+   	var wishlistCount =  jQuery("#wishlist-count").val();
 	jQuery("#myaccount-wishlist-total-item").text(wishlistCount);
 	jQuery("#myaccount-wishlist-total-item").show();
 });
@@ -281,6 +281,7 @@ jQuery(document).ready(function(){
 		        	//jQuery('#mt-wishlist-msg p').text(data.message);
 		        	//jQuery('#mt-wishlist-msg').show();
 		        	hideLoadingFancybox();
+                    jQuery('.fancybox-overlay').hide()
 		        }
 			});
 		}
