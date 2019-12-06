@@ -1356,7 +1356,7 @@ ul.tabs li{
     bottom: 10px;
     background: none;
   }
-  #top-nav > li{
+  .mobile-device #top-nav > li{
     padding-bottom: 31px;
   }
 }

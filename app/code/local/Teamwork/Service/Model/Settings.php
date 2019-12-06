@@ -610,6 +610,29 @@ class Teamwork_Service_Model_Settings extends Mage_Core_Model_Abstract
         {
             $this->_db->insert('service_setting_shipping', $data);
         }
+        
+        $subMethods = array (
+            1 => "Domestic Ground",
+            2 => "Domestic Expedited",
+            3 => "International"
+        );
+        
+        foreach ($subMethods as $index => $name) {
+            $data = array(
+                'name'          => 'matrixrate_matrixrate_'.$index,
+                'channel_id'    => $channelId,
+                'description'   => $name,
+                'active'        => 1
+            );
+            if($this->_db->getOne('service_setting_shipping', array('name' => $data['name'], 'channel_id' => $channelId)))
+            {
+                $this->_db->update('service_setting_shipping', $data, array('name' => $data['name'], 'channel_id' => $channelId));
+            }
+            else
+            {
+                $this->_db->insert('service_setting_shipping', $data);
+            }
+        }
     }
 
     protected function nameToCode($str)
