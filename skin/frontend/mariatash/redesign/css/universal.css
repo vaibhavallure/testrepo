@@ -2238,3 +2238,20 @@ li.buttons-set .btn-cancel-edit{
 .myaccount-payment-option .mt-payment-card-btn {
     padding-left: 1px;
 }
+
+.product-view .containerThumb .thumb{
+    position: relative;
+}
+.product-video-play-icon{
+    background:url('../images/play-icon.png') no-repeat;
+    background-position: center center;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    display: none;
+    background-color: #00000033;
+    bottom: 0;
+}
+a.product-video-link:hover div.product-video-play-icon {
+    display: block;
+}

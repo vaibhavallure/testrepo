@@ -476,6 +476,11 @@ ul.tabs li{
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
+  .product-video-play-icon{
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
   .manage-payment-method .tablinks {
     width: 50%;
   }
@@ -2834,7 +2839,6 @@ ul.tabs li{
   	max-width: 120px;
   }
 }
-
 
 @media (min-width: 1025px) and (max-width: 1254px) {
   .form-search input.input-text{

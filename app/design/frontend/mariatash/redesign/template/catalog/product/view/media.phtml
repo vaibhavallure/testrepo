@@ -403,11 +403,11 @@ if (!$videoUrl && $secondVideoUrl)
                 $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
             if($videoUrl){ ?>
             var id_video = (counterJs > 3) ? 4 : counterJs;
-            jQuery('.thumb').eq(id_video).html('<div class="video-caption d-none" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img  src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 120,120); ?>" /></a>');
+            jQuery('.thumb').eq(id_video).html('<div class="video-caption d-none" onclick="loadVideo(\'first\');">VIDEO</div><a class ="product-video-link";href="javascript:;" onclick="closeVideo();loadVideo(\'first\',this);"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 120,120); ?>" /><div class="product-video-play-icon"></div></a>');
             <?php }
             if($secondVideoUrl){ ?>
             var id_video = (counterJs > 3) ? 4 : counterJs;
-            jQuery('.thumb').eq(id_video+1).html('<div class="video-caption d-none" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 120,120); ?>" /></a>');
+            jQuery('.thumb').eq(id_video+1).html('<div class="video-caption d-none" onclick="loadVideo(\'second\');">VIDEO</div><a class ="product-video-link";href="javascript:;" onclick="closeVideo();loadVideo(\'second\',this);"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 120,120); ?>" /><div class="product-video-play-icon"></div></a>');
             <?php } ?>
             if( urlCounter > 0 ){
                 <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
@@ -486,7 +486,7 @@ if (!$videoUrl && $secondVideoUrl)
         <div class="containerThumb col-lg-2">
             <div class="thumb thumb1"></div>
             <div class="thumb thumb2"></div>
-            <div class="thumb thumb3"></div>
+            <div class="thumb thumb3"> </div>
             <div class="thumb thumb4" style="margin-bottom: 7px;"></div>
             <div class="thumb thumb5"></div>
             <div class="zoom-link">
@@ -510,6 +510,7 @@ if (!$videoUrl && $secondVideoUrl)
         ?>
         <div class="containerVideo containerVideo_first col-lg-10" id="video-<?php echo $_product->getTypeId(); ?>">
             <iframe src="<?php echo $videoUrl;?>" width="392" height="512" frameborder="0" id="video_first" ></iframe>
+
         </div>
         <?php endif;?><!-- end check video -->
         <?php if($secondVideoUrl):?><!-- Check Second video url-->
@@ -712,5 +713,10 @@ if ($isAjaxCall) {
             }
         })
     });
+    /*jQuery(".product-video-link").hover(function() {
+        jQuery('.product-video-play-icon').removeClass('hidden');
+    }, function() {
+        jQuery('.product-video-play-icon').addClass('hidden');
+    });*/
 </script>
 
