@@ -2235,3 +2235,6 @@ li.buttons-set .btn-cancel-edit{
     background-color: #f1f1f1;
     color: rgba(41,41,41,0.9);
 }
+.myaccount-payment-option .mt-payment-card-btn {
+    padding-left: 1px;
+}
