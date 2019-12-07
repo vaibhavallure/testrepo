@@ -15,13 +15,15 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     const MULTI_MAIN_ORDER  = 'Multiple - Main';
     const MULTI_BACK_ORDER  = 'Multiple - Backorder';
     
-    const GIFT_WRAP_SKU = "GIFT_WRAP";
-    
     const XML_PATH_RETAILER_CUSTOMER_PAYMENT_METHODS = 'allure_multicheckout/retail/payment_methods';
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_NOW_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_now';
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
     const XML_PATH_ONEPAGE_LOG = 'allure_multicheckout/multi_log/multi_log_status';
 
+    //gift wrap settings
+    const XML_PATH_GIFT_WRAP_SKU = 'allure_multicheckout/gift_wrap_settings/sku';
+    
+    
     /**
      * get quote object.
      */
@@ -182,6 +184,26 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
         }
     }
     
+    public function getGiftWrapSku(){
+        return Mage::getStoreConfig(self::XML_PATH_GIFT_WRAP_SKU);
+    }
+    
+    /**
+     * Get the gift wrap product details by using sku.
+     */
+    public function getGiftWrap(){
+        try {
+            $giftWrapSku = $this->getGiftWrapSku();
+            $_product = Mage::getModel("catalog/product")->loadByAttribute("sku", $giftWrapSku);
+            if($_product){
+                return $_product;
+            }
+        } catch (Exception $e){
+            //exception handling
+        }
+        return null;
+    }
+    
     /**
      * Check quote contain single product.
      * @return boolean
@@ -195,7 +217,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
             $quoteItems = $quote->getAllVisibleItems();
             $cnt = 0;
             foreach ($quoteItems as $item){
-                if($item->getProduct()->getIsVirtual() || $item->getSku() == self::GIFT_WRAP_SKU){
+                if($item->getProduct()->getIsVirtual() || $item->getSku() == $this->getGiftWrapSku()){
                     continue;
                 }
                 $cnt++;

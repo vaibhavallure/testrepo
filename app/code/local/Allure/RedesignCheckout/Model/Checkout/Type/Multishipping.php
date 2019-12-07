@@ -61,6 +61,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
     private function prepareRequestWithGiftWrap(&$info, &$giftQty, &$giftWrapQtyArr){
         try {
             $helper = Mage::helper("allure_redesigncheckout");
+            $giftWrapSku = $helper->getGiftWrapSku();
             $giftWrapQty = 0;
             foreach ($info as $itemData){
                 foreach ($itemData as $quoteItemId => $data) {
@@ -77,7 +78,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             $quote = $this->getQuote();
             $giftItem = null;
             foreach ($quote->getAllVisibleItems() as $_item){
-                if($_item->getSku() == $helper::GIFT_WRAP_SKU){
+                if($_item->getSku() == $giftWrapSku){
                     $giftItem = $_item;
                     break;
                 }
@@ -116,7 +117,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 }
             }
             foreach ($this->getQuote()->getAllVisibleItems() as $_item){
-                if($_item->getSku() == $helper::GIFT_WRAP_SKU){
+                if($_item->getSku() == $giftWrapSku){
                     $giftItem = $_item;
                     break;
                 }
@@ -183,6 +184,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
     private function createSeparetShipment(){
         try {
             $helper = Mage::helper("allure_redesigncheckout");
+            $giftWrapSku = $helper->getGiftWrapSku();
             $addresses = $this->getQuote()->getAllShippingAddresses();
             foreach ($addresses as $address) {
                 if($address->getIsContainBackorder()){
@@ -200,7 +202,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         foreach($address->getAllItems() as $item){
                             if ($item->getParentItemId()) continue;
                             
-                            if($item->getSku() == $helper::GIFT_WRAP_SKU){
+                            if($item->getSku() == $giftWrapSku){
                                 $giftItem = $item;
                                 continue;
                             }

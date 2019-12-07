@@ -10,13 +10,14 @@ $quote = Mage::getSingleton('checkout/session')->getQuote();
 /** @var Mage_Sales_Model_Quote_Address $shipping*/
 $shipping = $quote->getShippingAddress();
 ?>
-<?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
+<?php $redesignHelper = Mage::helper("allure_multicheckout");?>
+<?php $giftWrapSku = $redesignHelper->getGiftWrapSku();?>
 <?php $items = $quote->getAllVisibleItems();?>
 <form action="" method="post" id="checkout-onepage-review-form">
 	<div class="data-table overview-address-item">
 		<div class="col-12 overview-product">
 			<?php foreach ($items as $_item):?>
-			<?php $isGiftWrap = ($_item->getSku() == $redesignHelper::GIFT_WRAP_SKU) ? true : false; ?>
+			<?php $isGiftWrap = ($_item->getSku() == $giftWrapSku) ? true : false; ?>
 			<div class="row">
 				<div class="col-lg-2 col-md-2 col-4">
                		<?php $_product = $_item->getProduct() ?>

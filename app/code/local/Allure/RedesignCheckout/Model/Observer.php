@@ -14,8 +14,9 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
             $quote = Mage::getSingleton('checkout/cart')->getQuote();
             if($quote->getId()){
                 $helper = Mage::helper("allure_redesigncheckout");
+                $giftWrapSku = $helper->getGiftWrapSku();
                 foreach ($quote->getAllVisibleItems() as $item){
-                    if(strtolower($item->getSku()) == strtolower($helper::GIFT_WRAP_SKU)){
+                    if(strtolower($item->getSku()) == strtolower($giftWrapSku)){
                         $quote->removeItem($item->getId());
                         $quote->setTotalsCollectedFlag(false);
                         $quote->collectTotals();

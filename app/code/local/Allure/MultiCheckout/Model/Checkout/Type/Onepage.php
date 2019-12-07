@@ -1312,11 +1312,12 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
     }
     
     public function addGiftWrap($giftWrapQty = 0){
-        $helper = Mage::helper("allure_redesigncheckout");
+        $helper = Mage::helper("allure_multicheckout");
+        $giftWrapSku = $helper->getGiftWrapSku();
         $quote =  $this->getQuote();
         $giftItem = null;
         foreach ($quote->getAllVisibleItems() as $_item){
-            if($_item->getSku() == $helper::GIFT_WRAP_SKU){
+            if($_item->getSku() == $giftWrapSku){
                 $giftItem = $_item;
                 break;
             }
