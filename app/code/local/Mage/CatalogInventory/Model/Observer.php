@@ -314,9 +314,13 @@ class Mage_CatalogInventory_Model_Observer
         //end
         
         //gift wrap check
-        if($quoteItem->getSku() == "GIFT_WRAP"){
-            return $this;
+        if(Mage::helper('core')->isModuleEnabled("Allure_MultiCheckout")){
+            $giftWrapSku = Mage::helper("allure_multicheckout")->getGiftWrapSku();
+            if($quoteItem->getSku() == $giftWrapSku){
+                return $this;
+            }
         }
+        
         
         /* @var $quoteItem Mage_Sales_Model_Quote_Item */
         if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote() /* || $quoteItem->getQuote()->getIsSuperMode()*/

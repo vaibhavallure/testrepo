@@ -2203,7 +2203,7 @@ li.buttons-set .btn-cancel-edit{
 .manage-payment-method #mt-credit-card-info li #authnetcim_cc_type, .manage-payment-method #mt-credit-card-info li #authnetcim_cc_number {
     margin-bottom: 0px;
 }
-.manage-payment-method #new-mt-add-payment-method li.payment-card-type,.payment-card-number,.payment-exp-date,#authnetcim_cc_type_cvv_div,.name-on-card{
+.manage-payment-method #new-mt-add-payment-method li.payment-card-type,.payment-card-number,.payment-exp-date,.name-on-card{
     padding: 5px 0 5px 0;
 }
  .manage-payment-method #new-mt-saved-card li.payment-card-type,.payment-card-number,.payment-exp-date{
@@ -2234,4 +2234,24 @@ li.buttons-set .btn-cancel-edit{
 
     background-color: #f1f1f1;
     color: rgba(41,41,41,0.9);
+}
+.myaccount-payment-option .mt-payment-card-btn {
+    padding-left: 1px;
+}
+
+.product-view .containerThumb .thumb{
+    position: relative;
+}
+.product-video-play-icon{
+    background:url('../images/play-icon.png') no-repeat;
+    background-position: center center;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    display: none;
+    background-color: #00000033;
+    bottom: 0;
+}
+a.product-video-link:hover div.product-video-play-icon {
+    display: block;
 }
