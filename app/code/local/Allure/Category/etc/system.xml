@@ -23,6 +23,22 @@
                             <comment><![CDATA[Comma-separated ]]></comment>
                             <show_in_default>1</show_in_default>
                         </hide_simple_products>
+                        <!--allure code-->
+                        <first_post_length_option translate="label">
+                            <label>List category id to show 6.5 mm as default post length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>82</sort_order>
+                            <comment><![CDATA[Comma-separated ]]></comment>
+                            <show_in_default>1</show_in_default>
+                        </first_post_length_option>
+
+                        <second_post_length_option translate="label">
+                            <label>List category id to show 5 mm as default post length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>83</sort_order>
+                            <comment><![CDATA[Comma-separated ]]></comment>
+                            <show_in_default>1</show_in_default>
+                        </second_post_length_option>
                     </fields>
                 </options>
             </groups>
