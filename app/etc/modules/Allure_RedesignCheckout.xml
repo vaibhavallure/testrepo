@@ -6,6 +6,7 @@
       <codePool>local</codePool>
       <depends>
       	<N98_CheckoutFilters />
+      	<!-- <Teamwork_Universalcustomers/> -->
       </depends>
     </Allure_RedesignCheckout>
   </modules>

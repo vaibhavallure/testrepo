@@ -6,10 +6,6 @@
  */
 class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
 {   
-    /**
-     *  gift wrap sku 
-     */
-    const GIFT_WRAP_SKU = "GIFT_WRAP";
     
     /**
      * Get quote
@@ -17,6 +13,14 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
      */
     private function getQuote(){
         return Mage::getSingleton("checkout/session")->getQuote();
+    }
+    
+    public function getMulticheckoutHelper(){
+        return Mage::helper("allure_multicheckout");
+    }
+    
+    public function getGiftWrapSku(){
+        return $this->getMulticheckoutHelper()->getGiftWrapSku();
     }
     
     /**
@@ -31,8 +35,9 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
         }else{
             $quoteItems = $quote->getAllVisibleItems();
             $qty = 0;
+            $giftWrapSku = $this->getGiftWrapSku();
             foreach ($quoteItems as $item){
-                if($item->getProduct()->getIsVirtual() || $item->getSku() == self::GIFT_WRAP_SKU){
+                if($item->getProduct()->getIsVirtual() || $item->getSku() == $giftWrapSku){
                     continue;
                 }
                 $qty += $item->getQty();
@@ -60,8 +65,9 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
         }else{
             $quoteItems = $quote->getAllVisibleItems();
             $cnt = 0;
+            $giftWrapSku = $this->getGiftWrapSku();
             foreach ($quoteItems as $item){
-                if($item->getProduct()->getIsVirtual() || $item->getSku() == self::GIFT_WRAP_SKU){
+                if($item->getProduct()->getIsVirtual() || $item->getSku() == $giftWrapSku){
                     continue;
                 }
                 $cnt++;
@@ -81,7 +87,7 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getGiftWrap(){
         try {
-            $giftWrapSku = self::GIFT_WRAP_SKU;
+            $giftWrapSku = $this->getGiftWrapSku();
             $_product = Mage::getModel("catalog/product")->loadByAttribute("sku", $giftWrapSku);
             if($_product){
                 return $_product;
@@ -110,8 +116,9 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
         $items = $this->getShippingAddressItems($address);
         $storeId = Mage::app()->getStore()->getStoreId();
         try {
+            $giftWrapSku = $this->getGiftWrapSku();
             foreach ($items as $item){
-                if($item->getSku() == self::GIFT_WRAP_SKU){
+                if($item->getSku() == $giftWrapSku){
                     continue;
                 }
                 $_product = Mage::getModel('catalog/product')
@@ -139,8 +146,9 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
         try { 
             $items = $this->getShippingAddressItems($address);
             $storeId = Mage::app()->getStore()->getStoreId();
+            $giftWrapSku = $this->getGiftWrapSku();
             foreach ($items as $item){
-                if($item->getSku() == self::GIFT_WRAP_SKU){
+                if($item->getSku() == $giftWrapSku){
                     continue;
                 }
                 $_product = Mage::getModel('catalog/product')

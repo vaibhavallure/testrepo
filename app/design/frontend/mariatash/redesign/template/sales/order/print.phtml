@@ -24,38 +24,58 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+
+<style>
+h4 {
+  font-weight: normal;
+}
+td{
+  font-family: urw-din-light;
+	font-size: 13px;
+	color: rgba(41,41,41,0.90);
+	letter-spacing: 0.5px;
+	line-height: 20px;
+}
+h2.info-text-two {
+  font-size: 22px !important;
+}
+.data-table td{
+  text-align: right;
+}
+</style>
+
 <?php $_order = $this->getOrder() ?>
 <h1 class="print-padding-left"><?php echo $this->__('Order #%s', $_order->getRealOrderId()) ?></h1>
 <p class="order-date print-padding-left"><?php echo $this->__('Order Date: %s', $this->formatDate($_order->getCreatedAtStoreDate(), 'long')) ?></p>
-<div class="col2-set">
+<div class="">
     <?php if (!$_order->getIsVirtual()): ?>
-    <div class="col-1 print-padding-left">
-        <h2><?php echo $this->__('Shipping Address') ?></h2>
+    <div class="print-padding-left">
+        <h4 class="info-text-two"><?php echo $this->__('Shipping Address') ?></h4>
         <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
     </div>
-    <div class="col-2">
+    <div class="">
     <?php else: ?>
-    <div class="col-1 print-padding-left">
+    <div class="print-padding-left">
     <?php endif; ?>
-        <h2><?php echo $this->__('Billing Address') ?></h2>
+        <h4 class="info-text-two"><?php echo $this->__('Billing Address') ?></h4>
         <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
     </div>
 <?php if (!$_order->getIsVirtual()): ?>
 </div>
-<div class="col2-set">
-    <div class="col-1 print-padding-left">
-        <h2><?php echo $this->__('Shipping Method') ?></h2>
+<div class="">
+    <div class="print-padding-left">
+        <h4 class="info-text-two"><?php echo $this->__('Shipping Method') ?></h4>
          <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
     </div>
 <?php endif; ?>
-    <div class="col-2">
-        <h2><?php echo $this->__('Payment Method') ?></h2>
-        <?php echo $this->getPaymentInfoHtml() ?>
+    <div class="">
+        <h4 class="info-text-two"><?php echo $this->__('Payment Method') ?></h4>
+        <span class="class="para-normal"><?php echo $this->getPaymentInfoHtml() ?></span>
     </div>
 </div>
 <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order', $_order) && $_order->getGiftMessageId()): ?>
-    <div class="col2-set">
-    <div class="col-1 print-padding-left">
+    <div class="">
+    <div class="print-padding-left">
     <div class="order-additional order-gift-message">
         <h2 class="sub-title"><?php echo $this->__('Gift Message for This Order') ?></h2>
         <?php $_giftMessage=$this->helper('giftmessage/message')->getGiftMessageForEntity($_order); ?>
@@ -68,7 +88,8 @@
     </div>
     </div>
  <?php endif; ?>
-<h2 class="print-padding-left"><?php echo $this->__('Items Ordered') ?></h2>
+<h2 class="print-padding-left info-text-two"><?php echo $this->__('Items Ordered') ?></h2>
+<div class="table-responsive">
 <table class="data-table" id="my-orders-table">
     <col width="52%"/>
     <col width="24%" />
@@ -77,11 +98,11 @@
     <col width="8%" />
     <thead>
         <tr>
-            <th class="a-left print-product-name"><?php echo $this->__('Product Name') ?></th>
-            <th class="a-left print-sku"><?php echo $this->__('SKU') ?></th>
-            <th class="a-right"><?php echo $this->__('Price') ?></th>
-            <th class="a-right"><?php echo $this->__('Qty') ?></th>
-            <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+            <th class="text-left print-product-name"><?php echo $this->__('Product') ?></th>
+            <th class="text-left print-sku"><?php echo $this->__('SKU') ?></th>
+            <th class="text-right"><?php echo $this->__('Price') ?></th>
+            <th class="text-right"><?php echo $this->__('Quantity') ?></th>
+            <th class="text-right"><?php echo $this->__('Subtotal') ?></th>
         </tr>
     </thead>
     <tfoot>
@@ -93,11 +114,12 @@
     <?php if ($_item->getParentItem()) continue; ?>
     <tbody>
         <?php echo $this->getItemHtml($_item) ?>
-         
+
     </tbody>
         <?php endforeach; ?>
-        
+
 </table>
+</div>
 
 <script type="text/javascript">decorateTable('my-orders-table', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script>
 <script type="text/javascript">window.print();</script>
