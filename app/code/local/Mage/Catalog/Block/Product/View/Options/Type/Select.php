@@ -126,9 +126,9 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                 $firstMatchingOptions=array_intersect($category_for_6point5mm_postLength,$this->getProduct()->getCategoryIds());
                 $secondMatchingOptions=array_intersect($category_for_5mm_postLength,$this->getProduct()->getCategoryIds());
 
-                Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+               /* Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
                 Mage::log($secondMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
-                Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);
+                Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);*/
 
                 $defaultLengthFlag=false;
 
