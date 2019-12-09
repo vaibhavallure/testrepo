@@ -33,6 +33,22 @@
  * @see Mage_Review_Block_Product_View
  */
 
+$categoryUrl = trim(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH),"/");
+
+$rewriteData = Mage::getModel('core/url_rewrite')->setStoreId(Mage::app()->getStore()->getId())->loadByRequestPath($categoryUrl);
+
+if ($rewriteData && $rewriteData->getCategoryId()) {
+    $categoryId = $rewriteData->getCategoryId();
+    
+    if ($categoryId) {
+        $currentCategory = Mage::getModel('catalog/category')->load($categoryId);
+        
+        Mage::unregister('current_category');
+        
+        Mage::register('current_category', $currentCategory);
+    }
+}
+
 $imgArr = array();
 $backOrderArray = array();
 $matches1 = array();
