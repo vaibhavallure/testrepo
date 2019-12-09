@@ -4898,3 +4898,19 @@ address{
 .print-padding-left.info-text-two {
   margin: 20px 0;
 }
+
+.continue-shopping-button{
+	width: 205px;
+	height: 46px;
+	text-transform: uppercase;
+	margin-right: 0;
+	background: rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: #FFFFFF;
+	letter-spacing: 1.5px;
+	text-align: center;
+	outline: none;
+	border: transparent;
+	border-radius: 0;
+}
