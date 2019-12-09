@@ -21,6 +21,7 @@
                 <action method="addJs"><script>varien/configurable.js</script></action>
                 <action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
                 <action method="addJs"><script>jquery/facybox/facybox.js</script></action>
+                <action method="setRobots"><meta>NOINDEX,NOFOLLOW</meta></action>
             </reference>
             <!--<reference name="content">
                 <block type="catalog/product_view" name="product.info" template="catalog/product/view.phtml">
