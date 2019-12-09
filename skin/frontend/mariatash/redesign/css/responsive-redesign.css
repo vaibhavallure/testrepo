@@ -1810,7 +1810,8 @@ ul.tabs li{
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 20px;
+    padding-left: 21px;
+    margin-top: 10px;
   }
   .custom-container {
     max-width: 370px;
@@ -2249,7 +2250,9 @@ ul.tabs li{
     margin: 0.5%;
   }
   .social-media ul {
-    padding-left: 15px;
+    /*padding-left: 15px;*/
+    padding-left: 21px;
+    margin-top: 10px;
   }
   .celeb-img-block, .press-img-block{
     flex: 0 0 50%;
