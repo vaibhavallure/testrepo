@@ -24,16 +24,18 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="" title=""></p>
+<p class="category-image"><img src="<?php echo $this->getSkinUrl('images/redesign/catalog.jpg'); ?>" alt="" title="">
+</p>
 <div class="page-height">
-<div class="page-title mt-4">
-    <h1 class="text-center mb-4 higher-h1"><?php echo $this->__('Shopping Cart is Empty') ?></h1>
-</div>
-<div class="cart-empty">
-    <?php echo $this->getMessagesBlock()->toHtml() ?>
-    <?php echo $this->getChildHtml('checkout_cart_empty_widget'); ?>
-    <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
-    <p><?php echo $this->__('Click <a class="info-text-two" href="%s">here</a> to continue shopping.', Mage::helper('core')->quoteEscape($this->getUrl())) ?></p>
-    <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>
-</div>
+    <div class="page-title mt-4">
+        <h1 class="text-center mb-4 higher-h1"><?php echo $this->__('Shopping Cart is Empty') ?></h1>
+    </div>
+    <div class="cart-empty">
+        <?php echo $this->getMessagesBlock()->toHtml() ?>
+        <?php echo $this->getChildHtml('checkout_cart_empty_widget'); ?>
+        <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+        <!--<p><?php /*echo $this->__('Click <a class="info-text-two" href="%s">here</a> to continue shopping.', Mage::helper('core')->quoteEscape($this->getUrl())) */?></p>-->
+        <p><button class="button continue-shopping-button" type="button" onclick="window.location.href='<?php echo Mage::getBaseUrl()?>'">continue shopping</button></p>
+        <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>
+    </div>
 </div>

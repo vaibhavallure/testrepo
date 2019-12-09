@@ -1256,13 +1256,13 @@ li#billing-new-address-form fieldset ul li.fields div.field label
 }
 /*.customer-account-login .buttons-set p.required,
 .checkout-multishipping-login .buttons-set p.required{ margin-top: 16px; }*/
-.customer-account-login .validation-advice,
+/* .customer-account-login .validation-advice,
 .checkout-multishipping-login .validation-advice {
 	text-align: right;
 	width: 244px;
 	height: auto;
 	float: right;
-}
+} */
 
 .customer-account-edit .validation-advice {
 	margin-right: 0;
@@ -8257,8 +8257,6 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	overflow: visible;
 }
 
-
-
 .customer-account-index .my-account .addresses-list .col-1 {
 	width: 267px;
 }
@@ -8556,9 +8554,9 @@ tr.additional-addresses {
 	color: #fff;
 }
 
-.order-date {
+/* .order-date {
 	margin: 10px 0;
-}
+} */
 
 .order-info-box {
 	margin: 0 0 15px;
@@ -8664,19 +8662,11 @@ tr.additional-addresses {
 }
 
 /* Order Print Pages */
-.page-print {
+/* .page-print {
 	padding: 20px;
-}
+} */
 
-.page-print .print-head {
-	margin: 0 0 15px;
-}
-
-.page-print .print-head .logo {
-	float: left;
-}
-
-.page-print .print-head address {
+/* .page-print .print-head address {
 	float: left;
 	margin-left: 15px;
 }
@@ -8707,7 +8697,7 @@ tr.additional-addresses {
 .page-print .col2-set {
 	margin: 0 0 10px;
 }
-/* Price Rewrites */
+
 .page-print .gift-message-link {
 	display: none;
 }
@@ -8721,7 +8711,7 @@ tr.additional-addresses {
 .page-print .price-excl-tax .price, .page-print .price-incl-tax .price
 {
 	display: inline;
-}
+} */
 
 /* My Wishlist WJZR */
 
@@ -11481,28 +11471,10 @@ li.item h2.product-name {text-align: center;}
 	display: none;
 }
 
-#my-orders-table th {
-	padding: 5px 0;
-}
-
-.page-print .print-padding-left {
-	padding-left: 10px;
-}
-
-.page-print #my-orders-table th {
-	padding: 5px 0;
-}
-
-.page-print #my-orders-table td {
+/* .page-print #my-orders-table td {
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
-}
-
-.page-print #my-orders-table td.nobr-sku {
-	white-space: nowrap;
-	text-align: left !important;
-	padding-left: 0;
 }
 
 .page-print #my-orders-table .print-sku {
@@ -11526,7 +11498,7 @@ li.item h2.product-name {text-align: center;}
 	font-size: 12px;
 	line-height: 18px;
 	display: inline-block;
-}
+} */
 #wishlist-table td.add-to-cart-alt {
 	margin-left: 10px;
 }
@@ -12603,10 +12575,6 @@ input.giftcard-radio1 {
 	/*margin-left: 138px !important;*/
 }
 
-.mt-review-charge-note{
-	margin-bottom: 0px !important;
-}
-
 .mt-cart-charge-note{
 	display: block;
 	float: right;
@@ -12713,9 +12681,7 @@ input.giftcard-radio1 {
 	border: 1px solid #830000;
 }
 
-.custom-options-univaersal{
-	margin-left: 25px !important;
-}
+
 /* .product-view .product-options .ajax-error-messages{
 	/*left: 0px;
 right: 20px;

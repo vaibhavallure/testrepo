@@ -43,7 +43,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
     public function getValuesHtml()
     {
         $_option = $this->getOption();
-      
+
         $category = Mage::registry('current_category');
 
         $temparray = array();
@@ -108,9 +108,74 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     ));
                 }
             } else {
-                $select->addOption('', 'Select Your Post Length', '', $store, false);
 
-                foreach ($_option->getValues() as $_value) {
+
+
+
+
+
+                /*code to set default post length--------------------------*/
+
+                 /*first option*/
+                 $category_for_6point5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/first_post_length_option"));
+
+                 /*second option*/
+                 $category_for_5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/second_post_length_option"));
+
+
+                $firstMatchingOptions=array_intersect($category_for_6point5mm_postLength,$this->getProduct()->getCategoryIds());
+                $secondMatchingOptions=array_intersect($category_for_5mm_postLength,$this->getProduct()->getCategoryIds());
+
+               /* Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+                Mage::log($secondMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+                Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);*/
+
+                $defaultLengthFlag=false;
+
+                if(count($secondMatchingOptions)) {
+                    $defaultTitleTxt = "5mm";
+                    $defaultLengthFlag=true;
+                }
+                else if(count($firstMatchingOptions)){
+                    $defaultTitleTxt = "6.5mm";
+                    $defaultLengthFlag=true;
+                }
+
+
+                if($defaultLengthFlag) {
+                    $count = 2;
+
+                    foreach ($_option->getValues() as $value) {
+                        if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
+                            $temparray[1] = $value;
+                        } else {
+                            $temparray[$count] = $value;
+                            $count++;
+                        }
+                    }
+                    ksort($temparray);
+                    $temparray = array_values($temparray);
+                    $_option->setValues($temparray);
+                }
+                /*-------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+            if (! empty($temparray) && $defaultLengthFlag) {
+                $postLengthValues = $temparray;
+            }
+            else {
+                $select->addOption('', 'Select Your Post Length', '', $store, false);
+                $postLengthValues = $_option->getValues();
+            }
+                foreach ($postLengthValues as $_value) {
                     $priceStr = $this->_formatPrice(array(
                         'is_percent' => ($_value->getPriceType() == 'percent'),
                         'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))

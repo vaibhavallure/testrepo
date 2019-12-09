@@ -33,6 +33,7 @@
  */
 ?>
 <?php $redesignHelper = Mage::helper("allure_redesigncheckout");?>
+<?php $giftWrapSku = $redesignHelper->getGiftWrapSku();?>
 <?php $_productGiftWrap = $redesignHelper->getGiftWrap();?>
 <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();?>
 <?php $cnt = 1;?>
@@ -87,7 +88,7 @@
     						<?php $_coreHelper = $this->helper('core');?>
                         	<?php foreach ($this->getItems() as $_index => $_item): ?>
                             <?php if ($_item->getQuoteItem()) :?>
-                            <?php if($_item->getQuoteItem()->getSku() == $redesignHelper::GIFT_WRAP_SKU) continue;?>
+                            <?php if($_item->getQuoteItem()->getSku() == $giftWrapSku) continue;?>
     							<div class="col-12 product-description-section">
     								<div class="row">
                             			<div class="col-lg-2 col-md-2 col-4 multi-column-1">

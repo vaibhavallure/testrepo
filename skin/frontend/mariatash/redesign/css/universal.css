@@ -1672,13 +1672,17 @@ width: 245px;
 }
 
 .mt-custom-popup {
-  margin: 70px auto;
+  /*margin: 70px auto;*/
   padding: 20px;
   background: #d1d1d1;
   border-radius: 0px;
   width: 30%;
-  position: relative;
-  transition: all 5s ease-in-out;
+  /*position: relative;*/
+  transition: all 1s ease-in-out;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
 }
 
 .mt-custom-popup h2 {
@@ -1687,7 +1691,7 @@ width: 245px;
 }
 .mt-custom-popup .mt-popup-close {
   position: absolute;
-  top: 5px;
+  top: 0px;
   right: 10px;
   transition: all 200ms;
   font-size: 30px;
@@ -2199,7 +2203,7 @@ li.buttons-set .btn-cancel-edit{
 .manage-payment-method #mt-credit-card-info li #authnetcim_cc_type, .manage-payment-method #mt-credit-card-info li #authnetcim_cc_number {
     margin-bottom: 0px;
 }
-.manage-payment-method #new-mt-add-payment-method li.payment-card-type,.payment-card-number,.payment-exp-date,#authnetcim_cc_type_cvv_div,.name-on-card{
+.manage-payment-method #new-mt-add-payment-method li.payment-card-type,.payment-card-number,.payment-exp-date,.name-on-card{
     padding: 5px 0 5px 0;
 }
  .manage-payment-method #new-mt-saved-card li.payment-card-type,.payment-card-number,.payment-exp-date{
@@ -2215,4 +2219,39 @@ li.buttons-set .btn-cancel-edit{
 }
 .customer-paymentinfo-index .messages {
     margin-top: 15px;
+}
+#share-wishlist-pupup-close{
+    /*position: absolute;
+    top: 19px;
+    right: 10px;*/
+    cursor: pointer;
+}
+.manage-payment-method div.tab button.active{
+    color: #fff;
+    background-color: rgba(41,41,41,0.9);
+}
+.manage-payment-method .tab button{
+
+    background-color: #f1f1f1;
+    color: rgba(41,41,41,0.9);
+}
+.myaccount-payment-option .mt-payment-card-btn {
+    padding-left: 1px;
+}
+
+.product-view .containerThumb .thumb{
+    position: relative;
+}
+.product-video-play-icon{
+    background:url('../images/play-icon.png') no-repeat;
+    background-position: center center;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    display: none;
+    background-color: #00000033;
+    bottom: 0;
+}
+a.product-video-link:hover div.product-video-play-icon {
+    display: block;
 }
