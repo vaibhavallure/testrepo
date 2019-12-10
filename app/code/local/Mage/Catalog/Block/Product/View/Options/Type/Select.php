@@ -50,30 +50,31 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
         if ($category) {
             $lengths = $category->getAssignedLengths();
             $lengths = explode(',', $lengths);
-            
+
             $titles = mage::helper('allure_category')->getTitles($lengths);
             $defaultLength = $category->getDefaultLength();
             $defaultTitleTxt = mage::helper('allure_category')->getOptionText($defaultLength);
-            
+
             $enableLength = $category->getEnablePostlengths();
 
 
             $count = 2;
             if ($enableLength) {
-                
-                foreach ($_option->getValues() as $value) {
-                    if (in_array($value->getTitle(), $titles)) {
-                        if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
-                            $temparray[1] = $value;
-                        } else {
-                            $temparray[$count] = $value;
-                            $count ++;
+                if($this->getIsShowPostLength($category)):
+                    foreach ($_option->getValues() as $value) {
+                        if (in_array($value->getTitle(), $titles)) {
+                            if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
+                                $temparray[1] = $value;
+                            } else {
+                                $temparray[$count] = $value;
+                                $count ++;
+                            }
                         }
                     }
-                }
-                ksort($temparray);
-                $temparray = array_values($temparray);
-                $_option->setValues($temparray);
+                    ksort($temparray);
+                    $temparray = array_values($temparray);
+                    $_option->setValues($temparray);
+                endif;
             }
         }
         $configValue = $this->getProduct()->getPreconfiguredValues()->getData('options/' . $_option->getId());
@@ -90,12 +91,12 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                 ));
             if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN) {
                 $select->setName('options['.$_option->getid().']');
-                  
+
             } else {
                 $select->setName('options['.$_option->getid().'][]');
                 $select->setClass('multiselect'.$require.' product-custom-option');
             }
-            
+
             if (! empty($temparray) && $enableLength) {
                 foreach ($temparray as $_value) {
                     $priceStr = $this->_formatPrice(array(
@@ -116,19 +117,19 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
 
                 /*code to set default post length--------------------------*/
 
-                 /*first option*/
-                 $category_for_6point5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/first_post_length_option"));
+                /*first option*/
+                $category_for_6point5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/first_post_length_option"));
 
-                 /*second option*/
-                 $category_for_5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/second_post_length_option"));
+                /*second option*/
+                $category_for_5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/second_post_length_option"));
 
 
                 $firstMatchingOptions=array_intersect($category_for_6point5mm_postLength,$this->getProduct()->getCategoryIds());
                 $secondMatchingOptions=array_intersect($category_for_5mm_postLength,$this->getProduct()->getCategoryIds());
 
-               /* Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
-                Mage::log($secondMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
-                Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);*/
+                /* Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+                 Mage::log($secondMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+                 Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);*/
 
                 $defaultLengthFlag=false;
 
@@ -168,13 +169,13 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
 
 
 
-            if (! empty($temparray) && $defaultLengthFlag) {
-                $postLengthValues = $temparray;
-            }
-            else {
-                $select->addOption('', 'Select Your Post Length', '', $store, false);
-                $postLengthValues = $_option->getValues();
-            }
+                if (! empty($temparray) && $defaultLengthFlag) {
+                    $postLengthValues = $temparray;
+                }
+                else {
+                    $select->addOption('', 'Select Your Post Length', '', $store, false);
+                    $postLengthValues = $_option->getValues();
+                }
                 foreach ($postLengthValues as $_value) {
                     $priceStr = $this->_formatPrice(array(
                         'is_percent' => ($_value->getPriceType() == 'percent'),
@@ -203,7 +204,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
 
         if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO
             || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX
-            ) {
+        ) {
             $selectHtml = '<ul id="options-'.$_option->getId().'-list" class="options-list">';
             $require = ($_option->getIsRequire()) ? ' validate-one-required-by-name' : '';
             $arraySign = '';
@@ -251,9 +252,9 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     . $this->escapeHtml($_value->getTitle()) . ' ' . $priceStr . '</label></span>';
                 if ($_option->getIsRequire()) {
                     $selectHtml .= '<script type="text/javascript">' . '$(\'options_' . $_option->getId() . '_'
-                    . $count . '\').advaiceContainer = \'options-' . $_option->getId() . '-container\';'
-                    . '$(\'options_' . $_option->getId() . '_' . $count
-                    . '\').callbackFunction = \'validateOptionsCallback\';' . '</script>';
+                        . $count . '\').advaiceContainer = \'options-' . $_option->getId() . '-container\';'
+                        . '$(\'options_' . $_option->getId() . '_' . $count
+                        . '\').callbackFunction = \'validateOptionsCallback\';' . '</script>';
                 }
                 $selectHtml .= '</li>';
             }
@@ -261,6 +262,17 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
 
             return $selectHtml;
         }
+    }
+
+    public function getIsShowPostLength($_category){
+        $_compare_cat = array(Mage::getStoreConfig("allure/options/category_to_compare_with"));
+        if($_category->getId() != $_compare_cat):
+            $cat_set = array_intersect($_compare_cat,$this->getProduct()->getCategoryIds());
+            if(count($cat_set) > 0):
+                return false;
+            endif;
+        endif;
+        return true;
     }
 
 }
