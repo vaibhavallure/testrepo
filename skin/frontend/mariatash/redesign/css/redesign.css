@@ -4937,4 +4937,8 @@ address{
 a.product-video-link:hover div.product-video-play-icon {
 	display: block;
 }
+.fs-overlink-text-number{
+	color: rgba(41,41,41,0.9);
+	font-family: urw-din-bold;
+}
 
