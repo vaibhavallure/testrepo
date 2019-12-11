@@ -59,10 +59,11 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
 
             $enableLength = $category->getEnablePostlengths();
 
+            $isShownPostLength = $this->getIsShowPostLength($category);
 
             $count = 0 ;//2;
             if ($enableLength) {
-                if($this->getIsShowPostLength($category)):
+                //if($isShownPostLength){
                     foreach ($_option->getValues() as $value) {
                         if (in_array($value->getTitle(), $titles)) {
                             if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
@@ -77,7 +78,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     ksort($temparray);
                     $temparray = array_values($temparray);
                     $_option->setValues($temparray);
-                endif;
+                //}
             }
         }
         $configValue = $this->getProduct()->getPreconfiguredValues()->getData('options/' . $_option->getId());
@@ -107,7 +108,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                         'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
                     ), false);
                     
-                    if(trim($defaultTitleTxt) == trim($_value->getTitle())){
+                    if(trim($defaultTitleTxt) == trim($_value->getTitle()) && $isShownPostLength){
                         $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
                             'price' => $this->helper('core')
                             ->currencyByStore($_value->getPrice(true), $store, false),
@@ -277,7 +278,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
         }
     }
 
-    public function getIsShowPostLength($_category){
+    private function getIsShowPostLength($_category){
 
         $cat = Mage::getStoreConfig("allure/options/category_to_compare_with");
         $_compare_cat = array();
@@ -304,10 +305,9 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             }
         }
         $cat_set = array_intersect($_compare_cat,$categoryList);
-        if(count($cat_set) > 0 && count($categoryList) > 1):
+        if(count($cat_set) > 0 && count($categoryList) > 1){
             return false;
-        endif;
-//        endif;
+        }
         return true;
     }
 

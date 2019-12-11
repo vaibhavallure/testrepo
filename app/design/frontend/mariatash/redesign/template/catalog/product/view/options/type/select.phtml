@@ -58,7 +58,7 @@
 
             var optioncount=jQuery(this).find('option').length;
 
-            var selectedOptionVal = jQuery(this).val();
+            var selectedOptionVal = jQuery(this).find('option[selected="selected"]').val();
 
             var select_id=jQuery(this).attr("id");
             jQuery(element).each(function (idx, elm) {
