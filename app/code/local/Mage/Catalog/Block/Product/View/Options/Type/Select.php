@@ -43,6 +43,8 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
     public function getValuesHtml()
     {
         $_option = $this->getOption();
+        
+        //Mage::log(json_encode(debug_backtrace()),Zend_Log::DEBUG,'abc.log',true);
 
         $category = Mage::registry('current_category');
 
@@ -58,17 +60,18 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             $enableLength = $category->getEnablePostlengths();
 
 
-            $count = 2;
+            $count = 0 ;//2;
             if ($enableLength) {
                 if($this->getIsShowPostLength($category)):
                     foreach ($_option->getValues() as $value) {
                         if (in_array($value->getTitle(), $titles)) {
                             if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
-                                $temparray[1] = $value;
+                                $temparray[$count] = $value;//$temparray[1] = $value;
                             } else {
                                 $temparray[$count] = $value;
-                                $count ++;
+                                //$count ++;
                             }
+                            $count ++;
                         }
                     }
                     ksort($temparray);
@@ -103,10 +106,20 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                         'is_percent' => ($_value->getPriceType() == 'percent'),
                         'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
                     ), false);
-                    $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                        'price' => $this->helper('core')
+                    
+                    if(trim($defaultTitleTxt) == trim($_value->getTitle())){
+                        $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                            'price' => $this->helper('core')
+                            ->currencyByStore($_value->getPrice(true), $store, false),
+                            "selected" => "selected"
+                        ));
+                    }else{
+                        $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                            'price' => $this->helper('core')
                             ->currencyByStore($_value->getPrice(true), $store, false)
-                    ));
+                        ));
+                    }
+                    
                 }
             } else {
 
