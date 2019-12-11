@@ -36,6 +36,8 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
     protected $_default_condition_name = 'package_weight';
 
     protected $_conditionNames = array();
+    
+    protected $_result = null;
 
     public function __construct()
     {
@@ -115,7 +117,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 			$request->setPackageQty($oldQty - $freeQty);
 		}
         
-        $result = Mage::getModel('shipping/rate_result');
+		$this->_result = Mage::getModel('shipping/rate_result');
      	$ratearray = $this->getRate($request);
 
      	$freeShipping=false;
@@ -131,7 +133,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
         {
          	$freeShipping=true;
         }
-        if ($freeShipping)
+        /* if ($freeShipping)
         {
 		  	$method = Mage::getModel('shipping/rate_result_method');
 			$method->setCarrier('matrixrate');
@@ -144,7 +146,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 			if ($this->getConfigData('show_only_free')) {
 				return $result;
 			}
-		}
+		} */
 		
 		//country id
 		$countryId = $request->getDestCountryId();
@@ -170,12 +172,14 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
         		
 				$method->setPrice($shippingPrice);
 
-				$result->append($method);
+				$this->_result->append($method);
 			  }
 			}
 		}
 
-        return $result;
+		$this->_updateFreeMethodQuote($request);
+		
+		return $this->_result;
     }
 
     public function getRate(Mage_Shipping_Model_Rate_Request $request)
@@ -190,7 +194,16 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
      */
     public function getAllowedMethods()
     {
-        return array('matrixrate'=>$this->getConfigData('name'));
+        //return array('matrixrate'=>$this->getConfigData('name'));
+        
+        $arr  = array();
+        $shippingRates = Mage::getResourceModel('matrixrate_shipping/carrier_matrixrate_collection');
+        foreach ($shippingRates as $rate){
+            $value = $rate->getPk()."#".$rate->getIsSignature()."#".$rate->getIsInternational();
+            $arr[$value] = $rate->getShippingName();
+        }
+        return $arr;
+        
     }
     
 
