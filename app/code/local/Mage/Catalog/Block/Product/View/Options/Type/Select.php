@@ -278,13 +278,36 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
     }
 
     public function getIsShowPostLength($_category){
-        $_compare_cat = array(Mage::getStoreConfig("allure/options/category_to_compare_with"));
-        if($_category->getId() != $_compare_cat):
-            $cat_set = array_intersect($_compare_cat,$this->getProduct()->getCategoryIds());
-            if(count($cat_set) > 0):
-                return false;
-            endif;
+
+        $cat = Mage::getStoreConfig("allure/options/category_to_compare_with");
+        $_compare_cat = array();
+        array_push($_compare_cat,$cat);
+//        if($_category->getId() != $cat):
+        $productCategories = $this->getProduct()->getCategoryIds();
+
+        $categories = Mage::getModel('catalog/category')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addAttributeToSort('path', 'asc')
+            ->addFieldToFilter('is_active', array('eq' => '1'))
+            ->addFieldToFilter('entity_id', array('in' => $productCategories))
+            ->addAttributeToFilter('level', array('eq','4'))
+            ->load()
+            ->toArray();
+
+// Arrange categories in required array
+
+        $categoryList = array();
+        foreach ($categories as $catId => $category) {
+            if (isset($category['name'])) {
+                $categoryList[] = $catId;
+            }
+        }
+        $cat_set = array_intersect($_compare_cat,$categoryList);
+        if(count($cat_set) > 0 && count($categoryList) > 1):
+            return false;
         endif;
+//        endif;
         return true;
     }
 
