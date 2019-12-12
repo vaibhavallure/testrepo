@@ -4898,3 +4898,47 @@ address{
 .print-padding-left.info-text-two {
   margin: 20px 0;
 }
+
+.continue-shopping-button{
+	width: 205px;
+	height: 46px;
+	text-transform: uppercase;
+	margin-right: 0;
+	background: rgba(41,41,41,0.90);
+	font-family: urw-din-bold;
+	font-size: 15px;
+	color: #FFFFFF;
+	letter-spacing: 1.5px;
+	text-align: center;
+	outline: none;
+	border: transparent;
+	border-radius: 0;
+}
+
+.product-view .containerThumb .thumb{
+	position: relative;
+}
+.product-view .containerThumb .thumb a.product-video-link{
+	margin-top: 10px;
+}
+.product-view .containerThumb .thumb a.product-video-link img{
+	margin-top: 0;
+}
+.product-video-play-icon{
+	background:url('../images/play-icon.png') no-repeat;
+	background-position: center center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background-color: #00000033;
+	bottom: 0;
+}
+a.product-video-link:hover div.product-video-play-icon {
+	display: block;
+}
+.fs-overlink-text-number{
+	color: rgba(41,41,41,0.9);
+	font-family: urw-din-bold;
+}
+
