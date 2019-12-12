@@ -9,9 +9,9 @@
    ----------------------------  *}
 {if $produit->prix_remise != ''}<span style="text-decoration: line-through; font-size: 12px;">{$produit->devise}&nbsp;{$produit->prix_ttc}</span>
     <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_remise}</span>{if substr_count($codemessagegeneral, "uiospick") == 0}<br />
-    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span>{/if}{else}
+    <span style="font-size:12px">{$produit->conditionnement}</span>{/if}{else}
     <span style="text-decoration: line-through; font-size: 12px;">{$produit->devise}&nbsp;{$produit->prix_ttc}</strong></span>{if substr_count($codemessagegeneral, "uiospick") == 0}<br />
-    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span>{/if}{/if}
+    <span style="font-size:12px">{$produit->conditionnement}</span>{/if}{/if}
 {* ------ Fin USA ------ *}
 {else}
     <span style="text-decoration: line-through; font-size: 12px;">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_ttc}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ttc}{/if}</span>&nbsp;
