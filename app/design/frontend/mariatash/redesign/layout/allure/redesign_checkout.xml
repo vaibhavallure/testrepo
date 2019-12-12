@@ -1,48 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout version="1.0.0">
 	<sales_email_order_items_multiorder>
-        <block type="sales/order_email_items" name="items" template="allure/redesigncheckout/email/order/multi_order_items.phtml">
-        	<action method="addItemRender"><type>default</type><block>sales/order_email_items_order_default</block><template>amasty/amstockstatus/email/order/items/order/default.phtml</template></action>
-	            <action method="addItemRender"><type>grouped</type><block>sales/order_email_items_order_grouped</block><template>amasty/amstockstatus/email/order/items/order/default.phtml</template></action>
-	            <block type="sales/order_totals" name="order_totals" template="sales/order/totals_email.phtml">
-	                <action method="setLabelProperties"><value>colspan="12" align="right" style="padding:3px 9px"</value></action>
-	                <action method="setValueProperties"><value>colspan="2" align="right" style="padding:3px 9px"</value></action>
-	                <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml">
-	                    <action method="setLabelProperties"><value>colspan="12" align="right" style="padding:3px 9px"</value></action>
-	               		<action method="setValueProperties"><value>colspan="2" align="right" style="padding:3px 9px"</value></action>
-	                    <action method="setIsPlaneMode"><value>1</value></action>
-	                </block>
-	           </block>
-        </block>
-    </sales_email_order_items_multiorder>
+		<block type="sales/order_email_items" name="items" template="allure/redesigncheckout/email/order/multi_order_items.phtml">
+			<action method="addItemRender"><type>default</type><block>sales/order_email_items_order_default</block><template>amasty/amstockstatus/email/order/items/order/default.phtml</template></action>
+			<action method="addItemRender"><type>grouped</type><block>sales/order_email_items_order_grouped</block><template>amasty/amstockstatus/email/order/items/order/default.phtml</template></action>
+			<block type="sales/order_totals" name="order_totals" template="sales/order/totals_email.phtml">
+				<action method="setLabelProperties"><value>colspan="12" align="right" style="padding:3px 9px"</value></action>
+				<action method="setValueProperties"><value>colspan="2" align="right" style="padding:3px 9px"</value></action>
+				<block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml">
+					<action method="setLabelProperties"><value>colspan="12" align="right" style="padding:3px 9px"</value></action>
+					<action method="setValueProperties"><value>colspan="2" align="right" style="padding:3px 9px"</value></action>
+					<action method="setIsPlaneMode"><value>1</value></action>
+				</block>
+			</block>
+		</block>
+	</sales_email_order_items_multiorder>
 
-    <checkout_multishipping_refreshtotals>
-        <block type="checkout/cart_totals" template="checkout/multishipping/totals.phtml" name="root" output="toHtml" >
-            <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
-        </block>
-    </checkout_multishipping_refreshtotals>
+	<checkout_multishipping_refreshtotals>
+		<block type="checkout/cart_totals" template="checkout/multishipping/totals.phtml" name="root" output="toHtml" >
+			<block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
+		</block>
+	</checkout_multishipping_refreshtotals>
 
-    <checkout_multishipping_refreshtotals_handle>
-    	<remove name="right"/>
-        <remove name="left"/>
-        <block type="checkout/cart_totals" template="checkout/multishipping/totals.phtml" name="refresh_totals" output="toHtml" >
-            <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
-        </block>
-    </checkout_multishipping_refreshtotals_handle>
+	<checkout_multishipping_refreshtotals_handle>
+		<remove name="right"/>
+		<remove name="left"/>
+		<block type="checkout/cart_totals" template="checkout/multishipping/totals.phtml" name="refresh_totals" output="toHtml" >
+			<block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
+		</block>
+	</checkout_multishipping_refreshtotals_handle>
 
-    <checkout_multishipping_billing>
-    	<reference name="checkout_billing">
-            <block type="giftcards/coupon" name="onepage.giftcard" as="onepagegiftcard" template="checkout/multishipping/coupon.phtml" />
-        </reference>
-    </checkout_multishipping_billing>
+	<checkout_multishipping_billing>
+		<reference name="checkout_billing">
+			<block type="giftcards/coupon" name="onepage.giftcard" as="onepagegiftcard" template="checkout/multishipping/coupon.phtml" />
+		</reference>
+	</checkout_multishipping_billing>
 
-		<sales_order_print>
-			 <reference name="head">
-				 <action method="addCss"><stylesheet>css/redesign.css</stylesheet></action>
-				 <action method="addCss"><stylesheet>css/responsive-redesign.css</stylesheet></action>
-				 <action method="addCss"><stylesheet>css/fonts/fonts.css</stylesheet></action>
-				 <action method="addCss"><stylesheet>css/bootstrap/bootstrap.min.css</stylesheet></action>
-			 </reference>
-		</sales_order_print>
+	<sales_order_print>
+		<reference name="head">
+			<action method="addCss"><stylesheet>css/redesign.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/responsive-redesign.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/fonts/fonts.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/bootstrap/bootstrap.min.css</stylesheet></action>
+		</reference>
+	</sales_order_print>
+	<sales_email_order_items>
+		<block type="sales/order_email_items" name="items" template="email/order/items.phtml">
+			<action method="addItemRender"><type>default</type><block>sales/order_email_items_order_default</block><template>amasty/amstockstatus/email/order/items/order/default.phtml</template></action>
+			<action method="addItemRender"><type>grouped</type><block>sales/order_email_items_order_grouped</block><template>amasty/amstockstatus/email/order/items/order/default.phtml</template></action>
+			<block type="sales/order_totals" name="order_totals" template="sales/order/totals_email.phtml">
+				<action method="setLabelProperties"><value>colspan="12" align="right" style="padding:3px 9px"</value></action>
+				<action method="setValueProperties"><value>colspan="2" align="right" style="padding:3px 9px"</value></action>
+				<block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml">
+					<action method="setLabelProperties"><value>colspan="12" align="right" style="padding:3px 9px"</value></action>
+					<action method="setValueProperties"><value>colspan="2" align="right" style="padding:3px 9px"</value></action>
+					<action method="setIsPlaneMode"><value>1</value></action>
+				</block>
+			</block>
+		</block>
+		<block type="core/text_list" name="additional.product.info" />
+	</sales_email_order_items>
 
 </layout>
