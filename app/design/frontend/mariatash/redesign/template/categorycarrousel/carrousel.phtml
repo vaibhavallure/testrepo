@@ -220,7 +220,7 @@
 <?php $_collection = $this->getCategories() ?>
 <div class="container cartilage-section position-relative">
     <div class="row" >
-        <div class="caroufredsel_wrapper col-12  p-m-0 p-l-0 p-xl-0" >
+        <div class="caroufredsel_wrapper p-m-0 p-l-0 p-xl-0" >
             <?php if(count($_collection)) { ?>
                 <ul id="cartilage-items-slider" class="owl-carousel owl-theme">
                     <?php $i = 1;?>
@@ -249,7 +249,7 @@
                 },
                 600: {
                     items: 3,
-                    nav: false
+                    nav: true
                 },
                 1000: {
                     items: 5,

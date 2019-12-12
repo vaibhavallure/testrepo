@@ -1903,7 +1903,7 @@ ul.tabs li{
   .caroufredsel_wrapper{
     width: 49%;
   }
-  .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
+  .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel, #cartilage-items-slider .caroufredsel_wrapper{
     width: 100%;
     padding: 0 25px;
   }
