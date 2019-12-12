@@ -2931,11 +2931,9 @@ ul.tabs li{
 }
 
 /*Cartilage CSS*/
-#cartilage-items-slider .owl-item li {
-}
 #cartilage-items-slider li img {
-	/* -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0
- 	filter: grayscale(100%); */
+	/*-webkit-filter: grayscale(100%); !* Safari 6.0 - 9.0*!
+ 	filter: grayscale(100%);*/
 	transition: transform .3s;
 }
 #cartilage-items-slider li img:hover {
@@ -2975,18 +2973,20 @@ ul.tabs li{
 .caroufredsel_wrapper {
 	position: relative;
 }
+
+.cartilage-section {
+	margin-top: 17px;
+	margin-bottom: 8px;
+}
 .breadcrumbs {
-  padding-left: 71px;
+  	padding-left: 71px;
 	margin-top: 13px;
 }
 .catalog-product-name-display {
 	/* margin-top: 14px; */
 	font-size: 30px;
 }
-.cartilage-section {
-	margin-top: 17px;
-  	margin-bottom: 8px;
-}
+
 #total_item_counts_holder {
   	margin-top: 15px !important;
 	margin-left: 5px;
