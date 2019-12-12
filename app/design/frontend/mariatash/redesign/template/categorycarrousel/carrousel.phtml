@@ -218,22 +218,46 @@
     <h1 class="catalog-product-name-display" style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
 </div>
 <?php $_collection = $this->getCategories() ?>
-<div class="cartilage-section w-100 position-relative">
-    <div class="caroufredsel_wrapper" >
-        <?php if(count($_collection)) { ?>
-            <ul id="foo3">
-                <?php $i = 1;?>
-                <?php foreach($_collection as $category): ?>
-                    <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
-                    <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                        <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-        <?php } ?>
+<div class="container cartilage-section position-relative">
+    <div class="row" >
+        <div class="caroufredsel_wrapper col-12  p-m-0 p-l-0 p-xl-0" >
+            <?php if(count($_collection)) { ?>
+                <ul id="cartilage-items-slider" class="owl-carousel owl-theme">
+                    <?php $i = 1;?>
+                    <?php foreach($_collection as $category): ?>
+                        <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
+                        <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
+                            <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white text-center w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php } ?>
+        </div>
     </div>
-    <div class="prev" id="prev3"></div>
-    <div class="next" id="next3"></div>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var $ = jQuery;
+        $('#cartilage-items-slider').owlCarousel({
+            loop: false,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 3,
+                    nav: false
+                },
+                1000: {
+                    items: 6,
+                    nav: true,
+                    loop: false
+                }
+            }
+        });
+    });
+</script>
 
