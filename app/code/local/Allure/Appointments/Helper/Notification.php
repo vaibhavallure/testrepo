@@ -1,6 +1,6 @@
 <?php
 /**
- type mapping
+type mapping
 
 'new'
 'modify'
@@ -12,9 +12,9 @@
 'release_reminder_week'
 'release_reminder_day'
 
- USE only Two Functions
- 1.sendEmailNotification(current_appointment,type,old_appointment,old_appointment_customers);
- 2.sendSmsNotification(current_appointment,type)
+USE only Two Functions
+1.sendEmailNotification(current_appointment,type,old_appointment,old_appointment_customers);
+2.sendSmsNotification(current_appointment,type)
  **/
 class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     const SMS_BASEURL= 'appointments/general/soap_url'; //https://www.smsglobal.com/mobileworks/soapserver.php?wsdl
@@ -25,14 +25,14 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     const NOTIFICATION_LOG = 'appointmentNotfication.log';
 
     var $month=array("fr"=>array(
-    "January"=>"janvier", "February"=>"février", "March"=>"mars", "April"=>"avril", "May"=>"mai",
-    "June"=>"juin",
-    "July"=>"juillet",
-    "August"=>"aout",
-    "September"=>"septembre",
-    "October"=>"octobre",
-    "November"=>"novembre",
-    "December"=>"décembre"
+        "January"=>"janvier", "February"=>"février", "March"=>"mars", "April"=>"avril", "May"=>"mai",
+        "June"=>"juin",
+        "July"=>"juillet",
+        "August"=>"aout",
+        "September"=>"septembre",
+        "October"=>"octobre",
+        "November"=>"novembre",
+        "December"=>"décembre"
     ));
 
     public function sendEmailNotification( $appointment = null,$type = null, $oldAppointment = null, $oldAppointmentCustomers = null)
@@ -85,17 +85,17 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 if($language != 'en') {
                     $listLabelArray = $this->getLanguageMapping($language);
                 }
-                    $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
-                    $oldCustomerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].' #' . $cnt . '</h3>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['special_notes'].': </b>' . $customer['special_notes'] . '</p>';
-                    if(!$isSpecialPopup):
+                $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
+                $oldCustomerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].' #' . $cnt . '</h3>';
+                $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
+                $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
+                $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
+                $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+                $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['special_notes'].': </b>' . $customer['special_notes'] . '</p>';
+                if(!$isSpecialPopup):
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
-                    endif;
-                    $oldCustomerListHtml .= '</td>';
+                endif;
+                $oldCustomerListHtml .= '</td>';
 
                 if($create_rows == 0){
                     $oldCustomerListHtml.='</tr>';
@@ -122,7 +122,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         $cnt = 0;
 
 
-/*To create customers list in appointment to use in email*/
+        /*To create customers list in appointment to use in email*/
 
         foreach ($appointmentCustomers as $customer){
             $listLabelArray = $this->getLanguageMapping('en');
@@ -135,26 +135,27 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             if($language != 'en') {
                 $listLabelArray = $this->getLanguageMapping($language);
             }
-                $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
-                $customerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].'#' . $cnt . '</h3>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+            $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
+            $customerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].'#' . $cnt . '</h3>';
+            $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
+            $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
+            $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
+            $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+            $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['special_notes'].': </b>' . $customer['special_notes'] . '</p>';
             if(!$isSpecialPopup):
                 $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
             endif;
-                $customerListHtml .= '</td>';
+            $customerListHtml .= '</td>';
 
 
             if($create_rows == 0){
-            $customerListHtml.='</tr>';
+                $customerListHtml.='</tr>';
             }
 
         }
 
 
-/*Send email to  every customer separately */
+        /*Send email to  every customer separately */
         $cnt_new_cust = 0;
         foreach ($appointmentCustomers as $appointmentCustomer) {
             $piercing = $appointmentCustomer['piercing'];
@@ -228,15 +229,15 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             $emailVariables['customerlist']=$customerListHtml;
             $emailVariables['oldcustomerlist']=$oldCustomerListHtml;
 
-           if(($type != 'release') && ($type != 'release_reminder_week') && ($type != 'release_reminder_day') ) {
-               $this->sendEmail($templateId, $sender, $email, $customer_name, $emailVariables,$bcc_emails);
-           }else{
-               if(($piercing > 0) && ($release_send) && ($appointmentArray['info_update'] != 1)){
-                   $this->sendEmail($templateId, $sender, $email, $customer_name, $emailVariables,$bcc_emails);
-               }else{
-                   $this->writeLog('Email not send for release : piercing :'.$piercing.'\n checkup : '.$checkup.'\ninfo_update :'.$appointmentArray['info_update']);
-               }
-           }
+            if(($type != 'release') && ($type != 'release_reminder_week') && ($type != 'release_reminder_day') ) {
+                $this->sendEmail($templateId, $sender, $email, $customer_name, $emailVariables,$bcc_emails);
+            }else{
+                if(($piercing > 0) && ($release_send) && ($appointmentArray['info_update'] != 1)){
+                    $this->sendEmail($templateId, $sender, $email, $customer_name, $emailVariables,$bcc_emails);
+                }else{
+                    $this->writeLog('Email not send for release : piercing :'.$piercing.'\n checkup : '.$checkup.'\ninfo_update :'.$appointmentArray['info_update']);
+                }
+            }
             $this->writeLog("**************************************");
         }
     }
@@ -341,7 +342,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     }
 
     public function getSmsTypeMapping(){
-       return array(
+        return array(
             'new'       =>'book_sms_message',
             'modify'    =>'modified_sms_message',
             'cancel'    =>'cancel_sms_message',
@@ -403,16 +404,16 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     public function getModifyLink($apt_customer,$isSpecialPopup = false){
 
         if(!$isSpecialPopup):
-        $apt_url = 'appointments/book/modify';
-        $id =  urlencode(Mage::getModel('core/encryption')->encrypt($apt_customer['appointment_id'].'-'.$apt_customer['id']));
-        $apt_modify_link = Mage::getUrl($apt_url, array(
-            '_secure'   => true,
-            '_query'=>'id='.$id
-        ));
+            $apt_url = 'appointments/book/modify';
+            $id =  urlencode(Mage::getModel('core/encryption')->encrypt($apt_customer['appointment_id'].'-'.$apt_customer['id']));
+            $apt_modify_link = Mage::getUrl($apt_url, array(
+                '_secure'   => true,
+                '_query'=>'id='.$id
+            ));
         else:
             $appointment = Mage::getModel('appointments/appointments')->load($apt_customer['appointment_id']);
             $apt_modify_link = Mage::getBaseUrl().'appointments/index/modify/id/'.$appointment->getId().'/email/'.$appointment->getEmail().'/store/'.$appointment->getStoreId();
-            endif;
+        endif;
         return $apt_modify_link;
 
     }
@@ -440,13 +441,13 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     public function getDateTime($date,$lang='en'){
         $date=date("j F Y H:i", strtotime($date));
         if($lang!='en') {
-        $monthName=date("F", strtotime($date));
+            $monthName=date("F", strtotime($date));
             $date=str_replace($monthName, $this->month[$lang][$monthName],$date);
-       }
+        }
         return $date;
     }
     public function getTime($date){
-       return date('H:i', strtotime($date));
+        return date('H:i', strtotime($date));
     }
     public function getDate($date,$lang='en'){
         $date= date(" j F Y ", strtotime($date));
@@ -479,7 +480,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 'phone'    => 'Tel',
                 'no_of_piercing' => 'No de piercing',
                 'no_of_checkup' => 'No de bilans',
-                'special_notes' => 'Special Note'
+                'special_notes' => 'Special Notes'
 
 
             );
@@ -491,7 +492,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             'phone'    => 'Phone',
             'no_of_piercing' => 'No of Piercing',
             'no_of_checkup' => 'No of Checkup',
-            'special_notes' => 'Special Note'
+            'special_notes' => 'Special Notes'
 
         );
     }
