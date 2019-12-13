@@ -91,6 +91,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['special_notes'].': </b>' . $customer['special_notes'] . '</p>';
                     if(!$isSpecialPopup):
                     $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
                     endif;
@@ -477,7 +478,8 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 'email'    => 'Email',
                 'phone'    => 'Tel',
                 'no_of_piercing' => 'No de piercing',
-                'no_of_checkup' => 'No de bilans'
+                'no_of_checkup' => 'No de bilans',
+                'special_notes' => 'Special Note'
 
 
             );
@@ -488,8 +490,8 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             'email'    => 'Email',
             'phone'    => 'Phone',
             'no_of_piercing' => 'No of Piercing',
-            'no_of_checkup' => 'No of Checkup'
-
+            'no_of_checkup' => 'No of Checkup',
+            'special_notes' => 'Special Note'
 
         );
     }
