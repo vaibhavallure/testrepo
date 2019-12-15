@@ -74,6 +74,40 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                                 </script>
                         </li>
                     <?php endif; ?>
+                    <?php if ($isCustomerLogIn) :?>
+                    <li class="icon-user position-relative account-section-mobile">
+                        <dl>
+                            <dt><a class="my-account-mobile">
+                                    <span>My Account</span>
+                                    <img class="currency-arrow" width="12px" src="<?php echo $this->getSkinUrl('images/redesign/arrow-down-bk.png') ?>">
+                                </a></dt>
+                            <div class="login-dropdown-cover-mobile" style="display: none">
+                                <dd><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></dd>
+                                <dd><a href="<?= $baseUrl;?>customer/account/edit/"><?= $this->__('Login & Security') ?></a></dd>
+                                <dd class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></dd>
+                                <dd><a href="<?= $baseUrl;?>customer/paymentinfo"><?= $this->__('Payment Option')?></a></dd>
+                                <dd class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></dd>
+                            </div>
+                        </dl>
+                    </li>
+                        <script>
+                            jQuery(".my-account-mobile").on("click",function () {
+                                jQuery(".login-dropdown-cover-mobile").slideToggle();
+                                jQuery(".account-section-mobile").css('border-bottom', 'none');
+                            });
+                        </script>
+                    <?php else:?>
+                        <li class="icon-item signin-section-mobile">
+                            <a href="javascript:void(0)" onclick="signin()">
+                                <span>Sign In</span>
+                            </a>
+                        </li>
+                        <script>
+                            var signin= function() {
+                                jQuery("#sign_in_label").trigger('click');
+                            }
+                        </script>
+                    <?php endif;?>
                 </ul>
             </div>
         <?php endif;?>
@@ -103,9 +137,9 @@ if($wishlist):*/?><!--
                       });
                   </script>
           </li>
-      <?php /*endif; */?>
+      <?php /*endif; */?> -->
 
-      <?php /*if ($isCustomerLogIn) :*/?>
+<!--      <?php /*if ($isCustomerLogIn) :*/?>
       <li class="icon-user position-relative account-section-mobile">
           <dl>
               <dt><a class="my-account-mobile">
