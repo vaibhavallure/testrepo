@@ -1,3 +1,4 @@
+
 <?php
 $_optionId = $this->getRequest()->getParam('optionId','');
 $_product    = $this->getProduct();
@@ -348,6 +349,11 @@ if ($_product->getSizeSample() == 1) {
                         echo $processor->filter($sizeChartModel->getBlockContent()); ?>
                     </div>
                     <div id="inline_sample" style="display: none;">
+                        <div class="row no-print" >
+                            <div class="col-12 text-center no-print">
+                                <button type="button" class=" button dark-button print-size-chart no-print">Print</button>
+                            </div>
+                        </div>
                         <?php
                         $helper = Mage::helper('cms');
                         $processor = $helper->getBlockTemplateProcessor();
@@ -384,6 +390,7 @@ if ($_product->getSizeSample() == 1) {
             <?php endif; ?>
         </div>
     <?php endif; ?>
+    <div class="print-div"></div>
     <script type="text/javascript">
         var win=null;
         function printIt(printThis)
@@ -428,4 +435,19 @@ if ($_product->getSizeSample() == 1) {
 
             });
         }
+        jQuery(document).ready(function () {
+            let sty = "<style> .no-print{display: none !important;}  @media print{@page {size: landscape;margin: 0mm;}} body{margin:0px auto} .img-div{ display:flex;justify-content:center; align-items:center; height:100%;} html, body{ height:100%; width:100%; }</style>";
+
+            if(jQuery('.print-size-chart').length){
+                jQuery('.print-size-chart').on('click',function () {
+                    newWin= window.open("");
+                    newWin.document.write(sty);
+                    newWin.document.write('<div class="img-div">');
+                    newWin.document.write(jQuery('#inline_sample').html());
+                    newWin.document.write('</div>');
+                    newWin.print();
+                    newWin.close();
+                })
+            }
+        })
     </script>
