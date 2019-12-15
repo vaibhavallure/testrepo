@@ -646,6 +646,12 @@ ul.tabs li{
     position: relative;
     background: none;
   }
+
+  #link_customer-care-nav .image-text{
+    position: relative;
+    background: none;
+  }
+
   .piercing_options{
     padding: 0 15px;
     width: 100%;
@@ -743,6 +749,15 @@ ul.tabs li{
   	font-family: urw-din-medium;
   	letter-spacing: 0.5px;
   }
+
+  .mobile-sub_menu .form-subscribe-mt p{
+    color: #222;
+    font-size: 12px;
+    font-family: urw-din-medium;
+    letter-spacing: 0.5px;
+  }
+
+
   #tooltip-id-our-jewelry .slide {
   	width: 300px;
   	height: 120px;
@@ -761,6 +776,19 @@ ul.tabs li{
   #newsletter-form .link-button{
   	color: #fff !important;
   }
+
+  .mobile-sub_menu #newsletter-form .link-button{
+    color: #222 !important;
+  }
+
+  .mobile-sub_menu .form-subscribe-mt .checkmark:after{
+    background: #222;
+  }
+
+  .mobile-sub_menu #success p.para-bold.text-white {
+    color: rgba(41,41,41,0.9) !important;
+  }
+
   .form-subscribe-mt .checkmark:after{
   	background: #fff;
   }
@@ -770,6 +798,15 @@ ul.tabs li{
   	color: #fff;
     padding: 10px;
   }
+
+  .mobile-sub_menu #newsletter-form .dark-button {
+    border: 1px solid rgba(41, 41, 41, 0.9);
+    background: transparent;
+    color: rgba(41, 41, 41, 0.9);
+    padding: 10px;
+    width: 80% !important;
+  }
+
   .form-subscribe-mt input, .form-subscribe-mt select {
     width: 100%;
     margin: 0 auto;
