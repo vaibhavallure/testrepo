@@ -260,17 +260,22 @@
         });
         /*Code for mobile only : After swipe navigate to category*/
         <?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );?>
-        <?php if($isMobile):?>
-        var data_count = parseInt(jQuery('.cur_active').attr('data-count'))-2;
+        var minusValue = 2;
+        var data_count = parseInt(jQuery('.cur_active').attr('data-count')) - minusValue;
+        console.log(data_count);
         var owl = jQuery('.owl-carousel');
-        owl.trigger("to.owl.carousel", [data_count, 1])
+        owl.trigger("to.owl.carousel", [data_count, 1,true])
 // Listen to owl events:
-        owl.on('changed.owl.carousel', function(event) {
-            var currentItem = parseInt(event.item.index)+1;
-            jQuery('#li-'+currentItem).click();
-            window.location=jQuery('#a-'+currentItem).attr('href')
+        owl.on('changed.owl.carousel', function (event) {
+            /*Change category if mobile portrait*/
+            var isMobile = window.matchMedia("only screen and (max-width: 767px) and (orientation: portrait)").matches;
+            if(isMobile) {
+                var currentItem = parseInt(event.item.index) + 1;
+                jQuery('#li-' + currentItem).click();
+                window.location = jQuery('#a-' + currentItem).attr('href')
+            }
         });
-        <?php endif;?>
+
     });
 </script>
 
