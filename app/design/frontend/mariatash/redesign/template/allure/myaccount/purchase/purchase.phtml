@@ -102,6 +102,7 @@
 var xhr = null;
 var pageItem = 2;
 var totalPageItem = <?php echo $totalPageSizeItem?>;
+var isMobile = false;
 jQuery(function($){
 	$('#purchase-history .box-content').bind('scroll', function(){
 		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
@@ -134,6 +135,7 @@ jQuery(function($){
 
 
 jQuery(document).ready(function(){
+
 	jQuery(document).on('click','.mt-piercing-photo',function(){
 		return false;
 		var imgSrc = jQuery(this).attr('data-img');
@@ -232,6 +234,7 @@ function openPurchaseWindow(event){
 }
 
 function reorderItem(event){
+    isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 	var item_id = jQuery(event).attr('data-item-id');
 	showLoadingFancybox();
 	jQuery.ajax({
@@ -253,16 +256,19 @@ function reorderItem(event){
                 }, 'fast');
 
             	jQuery('#ajax_cart_content').html(data.top_cart);
-                jQuery('#just_added').slideDown(1000);
-                jQuery('#topcart-popup').addClass('just_added');
-                setTimeout(function() {
-                    jQuery('#just_added').slideUp(1000);
-                    jQuery('#topcart-popup').removeClass('just_added');
-                }, 5000);
+                if(!isMobile) {
+                    jQuery('#just_added').slideDown(1000);
+                    jQuery('#topcart-popup').addClass('just_added');
+                    setTimeout(function () {
+                        jQuery('#just_added').slideUp(1000);
+                        jQuery('#topcart-popup').removeClass('just_added');
+                    }, 5000);
+                }
             }else{
                 alert(data.message);
             }
-        	hideLoadingFancybox();
+            jQuery.fancybox.hideLoading();
+            jQuery('.fancybox-overlay').hide();
         }
     });
 }
