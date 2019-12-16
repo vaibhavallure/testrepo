@@ -34,7 +34,7 @@
 <?php $_menu = $this->getHtml('level-top');
 $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );
 $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
-
+$baseUrl = Mage::getBaseUrl();
 ?>
 
 <?php if($_menu): ?>
@@ -83,7 +83,7 @@ $isCustomerLogIn = Mage::getSingleton('customer/session')->isLoggedIn();
                                 </a></dt>
                             <div class="login-dropdown-cover-mobile" style="display: none">
                                 <dd><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></dd>
-                                <dd><a href="<?= $baseUrl;?>customer/account/edit/"><?= $this->__('Login & Security') ?></a></dd>
+                                <dd><a href="<?= $baseUrl;?>customer/account/edit"><?= $this->__('Login & Security') ?></a></dd>
                                 <dd class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></dd>
                                 <dd><a href="<?= $baseUrl;?>customer/paymentinfo"><?= $this->__('Payment Option')?></a></dd>
                                 <dd class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></dd>
