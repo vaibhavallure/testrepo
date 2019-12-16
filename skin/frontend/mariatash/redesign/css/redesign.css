@@ -156,7 +156,7 @@ h4{
 }
 
 .dark-button:hover {
-    background: rgba(41,41,41,0.9) !important;
+   /* background: rgba(41,41,41,0.9) !important;*/
 }
 
 .input-patern{
