@@ -86,7 +86,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                     $listLabelArray = $this->getLanguageMapping($language);
                 }
                 $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
-                $oldCustomerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].' #' . $cnt . '</h3>';
+                $oldCustomerListHtml .= '<td style="padding: 20px 10px 10px 0px;"><h3>'.$listLabelArray['customer'].' #' . $cnt . '</h3>';
                 $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
                 $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
                 $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
@@ -136,7 +136,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 $listLabelArray = $this->getLanguageMapping($language);
             }
             $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
-            $customerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].'#' . $cnt . '</h3>';
+            $customerListHtml .= '<td style="padding: 20px 10px 10px 0px;"><h3>'.$listLabelArray['customer'].'#' . $cnt . '</h3>';
             $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
             $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
             $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
