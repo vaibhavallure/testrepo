@@ -279,8 +279,11 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
 
 
             jQuery(topNav).append(footlinkLis)
+            let socialIcons = jQuery('.social-media');
+            jQuery(topNav).append(socialIcons);
             jQuery('.mobile-main_menu').children().append(topNav)
 
+            /*UPPEND FOOTER MENU*/
             jQuery('.mobile-main_menu .main_menu').click(function () {
                 var section_id = jQuery(this).attr('data-id');
                 console.log(section_id)
