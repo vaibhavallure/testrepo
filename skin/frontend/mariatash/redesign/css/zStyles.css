@@ -1372,6 +1372,15 @@
 ul#top-nav-3 .nav-1 {
 	margin-top: -15px;
 }
+#top-nav-3 .social-media ul {
+	display: flex;
+	padding-left: 0px;
+}
+#top-nav-3 .social-media li{
+	margin-right:20px !important;
+	border: none !important;
+	margin-top: 0 !important;
+}
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
 		width: 100%!important;
