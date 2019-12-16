@@ -123,7 +123,11 @@ class MageWorx_SeoSuite_Block_Page_Html_Head extends MageWorx_SeoSuite_Block_Pag
         foreach ($noindexPatterns as $pattern) {
             $pattern = str_replace('*', '.*?', $pattern);
             if (preg_match('%' . $pattern . '%', $this->getAction()->getFullActionName()) || preg_match('%' . $pattern . '%', $this->getAction()->getRequest()->getRequestString())) {
-                $this->_data['robots'] = 'NOINDEX, FOLLOW';
+                if (strpos($pattern, 'quickview') !== false) {
+                    $this->_data['robots'] = 'NOINDEX, NOFOLLOW';
+                }else {
+                    $this->_data['robots'] = 'NOINDEX, FOLLOW';
+                }
                 break;
             }
         }
