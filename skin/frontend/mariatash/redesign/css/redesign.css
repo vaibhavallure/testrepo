@@ -75,6 +75,7 @@ h4{
 	height: 50px!important;
 	background: url("../images/vmt_loader.gif") center center no-repeat!important;
 }
+.dark-button{background: url("../images/allure/print.png")}
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
