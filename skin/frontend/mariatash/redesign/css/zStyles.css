@@ -1387,7 +1387,12 @@ ul#top-nav-3 .nav-1 {
 .top-nav-v2 li.account-section-mobile {
 	border-bottom: none;
 }
-
+img.print-size-chart{
+	position: absolute;
+	width: 25px !important;
+	right: 60px;
+	margin-top: 25px !important;
+}
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
 		width: 100%!important;
@@ -1774,6 +1779,12 @@ ul#top-nav-3 .nav-1 {
 	}
 	.checkout-multishipping-address-newshipping .checkout-new-address .buttons-set, .checkout-multishipping-address-editshipping .checkout-new-address .buttons-set{
 		margin-bottom: 70px;
+	}
+	img.print-size-chart{
+		position: absolute;
+		width: 15px !important;
+		right: 40px;
+		margin-top: 13px !important;
 	}
 }
 @media (min-width: 1800px){
