@@ -436,13 +436,14 @@ if ($_product->getSizeSample() == 1) {
             });
         }
         jQuery(document).ready(function () {
-            let sty = "<style> .no-print{display: none !important;}  @media print{@page {size: landscape;margin: 0mm;}} body{margin:0px auto} .img-div{ display:flex;justify-content:center; align-items:center; height:100%;} html, body{ height:100%; width:100%; }</style>";
+            let sty = "<style> .no-print{display: none !important;} .img-div{transform: rotate(270deg) translate(-276mm, 0); transform-origin: 0 0;} .center {margin: auto; width: 50%; padding: 10px; } @media print{@page {margin: 0mm;} .center {margin: auto; width: 50%; padding: 10px; }} </style>";
 
             if(jQuery('.print-size-chart').length){
                 jQuery('.print-size-chart').on('click',function () {
                     newWin= window.open("");
                     newWin.document.write(sty);
-                    newWin.document.write('<div class="img-div">');
+                    newWin.document.write('<title>Size Chart | Maria Tash</title>');
+                    newWin.document.write('<div class="img-div center">');
                     newWin.document.write(jQuery('#inline_sample').html());
                     newWin.document.write('</div>');
                     newWin.print();
