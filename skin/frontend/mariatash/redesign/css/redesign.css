@@ -4799,7 +4799,7 @@ td.cart_col2 {
   border-bottom: 1px solid #292929;
   width: 93%;
   padding: 20px 0px 20px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   position: relative;
 }
 .top-nav-v2{

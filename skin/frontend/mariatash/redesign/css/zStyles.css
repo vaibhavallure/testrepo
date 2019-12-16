@@ -1381,6 +1381,13 @@ ul#top-nav-3 .nav-1 {
 	border: none !important;
 	margin-top: 0 !important;
 }
+.top-nav-v2 .currency-selector-contain-mobile {
+	margin-bottom: -20px;
+}
+.top-nav-v2 li.account-section-mobile {
+	border-bottom: none;
+}
+
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
 		width: 100%!important;
