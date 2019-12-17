@@ -1215,6 +1215,9 @@ ul.swatch .swatch-item a {
 	.product-img-box{
 		width: 100%!important;
 	}
+.cms-page-view .breadcrumbs {
+  	padding-left: 88px; 
+}
   .position-bottom {
     position: absolute;
     bottom: 0;
@@ -2984,6 +2987,7 @@ ul.tabs li{
 	margin-top: 17px;
 	margin-bottom: 8px;
 }
+
 .breadcrumbs {
   	padding-left: 71px;
 	margin-top: 13px;
