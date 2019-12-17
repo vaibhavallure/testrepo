@@ -441,14 +441,20 @@ if ($_product->getSizeSample() == 1) {
             let sty = "<style> .no-print{display: none !important;}  @media print{@page {size: landscape;margin: 0mm;}} body{margin:0px auto} .img-div{ display:flex;justify-content:center; align-items:center; height:100%;} html, body{ height:100%; width:100%; }</style>";
             if(jQuery('.print-size-chart').length){
                 jQuery('.print-size-chart').on('click',function () {
-                    newWin= window.open("");
-                    newWin.document.write(sty);
-                    newWin.document.write('<title>Size Chart | Maria Tash</title>');
-                    newWin.document.write('<div class="img-div center">');
-                    newWin.document.write(jQuery('#inline_sample').html());
-                    newWin.document.write('</div>');
-                    newWin.print();
-                    newWin.close();
+                    printJS({
+                        printable: jQuery('#inline_sample').find('p img').attr('src'),
+                        type: 'image',
+                        style: '@page { size: Letter landscape; }',
+                        imageStyle: 'width:100%;'
+                    })
+                    // newWin= window.open("");
+                    // newWin.document.write(sty);
+                    // newWin.document.write('<title>Size Chart | Maria Tash</title>');
+                    // newWin.document.write('<div class="img-div center">');
+                    // newWin.document.write(jQuery('#inline_sample').html());
+                    // newWin.document.write('</div>');
+                    // newWin.print();
+                    // newWin.close();
                 })
             }
         })
