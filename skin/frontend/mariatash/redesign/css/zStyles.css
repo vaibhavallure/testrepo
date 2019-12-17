@@ -2448,3 +2448,6 @@ img#cross-icon {
 .inspiration-loader {
 	left: 50%;
 }
+img.print-size-chart{
+	cursor: pointer;
+}
