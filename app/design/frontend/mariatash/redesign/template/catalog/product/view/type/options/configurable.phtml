@@ -444,7 +444,7 @@ if ($_product->getSizeSample() == 1) {
                     printJS({
                         printable: jQuery('#inline_sample').find('p img').attr('src'),
                         type: 'image',
-                        style: '@page { size: Letter landscape; }',
+                        style: '@page { size: Letter landscape;margin: 0mm; }',
                         imageStyle: 'width:100%;'
                     })
                     // newWin= window.open("");
