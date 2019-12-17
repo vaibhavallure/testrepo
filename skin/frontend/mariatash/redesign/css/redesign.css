@@ -4931,4 +4931,8 @@ a.product-video-link:hover div.product-video-play-icon {
 	color: rgba(41,41,41,0.9);
 	font-family: urw-din-bold;
 }
-
+.my-account .order-items .product-name {
+	margin-top: 0px;
+	padding-top: 0px;
+	font-size: 18px;
+}
