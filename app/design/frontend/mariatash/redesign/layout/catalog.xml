@@ -49,6 +49,7 @@ Default layout, loads most of the pages
 			<action method="addItem"><type>skin_js</type><name>js/jquery-ui-1.9.2.custom.min.js</name><params/></action>
 			<action method="addItem"><type>skin_js</type><name>js/selectboxit/selectboxit.js</name><params/></action>
             <action method="addItem"><type>skin_js</type><name>js/allure/jquery.panzoom.js</name><params/></action>
+            <action method="addItem"><type>skin_js</type><name>js/print.min.js</name><params/></action>
 			<action method="addCss"><stylesheet>css/selectboxit.css</stylesheet></action>
         </reference>
         <reference name="left">
@@ -197,6 +198,7 @@ Product view
 
             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/facybox.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/print.min.css</stylesheet></action>
            
 			<action method="addItem">
                 <type>js</type>
