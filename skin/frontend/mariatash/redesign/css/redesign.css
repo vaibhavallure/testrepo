@@ -4655,7 +4655,7 @@ td.cart_col2 {
 	margin-bottom: 0;
 }
 .contact-us-wrapper {
-  margin-top: 40px;
+  margin-top: 1.5rem;
 }
 .cms-contact-us h1 {
   font-size: 22px !important;
@@ -4711,7 +4711,7 @@ td.cart_col2 {
 	cursor: pointer;
 }
 .contact-us-wrapper h1 {
-  font-size: 30px !important;
+  font-size: 32px !important;
 }
 .catalog-category-view .celebPopup .product-name {
   margin-bottom: 13px;
@@ -4936,4 +4936,8 @@ a.product-video-link:hover div.product-video-play-icon {
 	color: rgba(41,41,41,0.9);
 	font-family: urw-din-bold;
 }
-
+.my-account .order-items .product-name {
+	margin-top: 0px;
+	padding-top: 0px;
+	font-size: 18px;
+}
