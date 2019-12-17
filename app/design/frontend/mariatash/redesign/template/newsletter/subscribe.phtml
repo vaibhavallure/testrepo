@@ -279,7 +279,7 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
 
 
             jQuery(topNav).append(footlinkLis)
-            let socialIcons = jQuery('.social-media');
+            let socialIcons = jQuery('.social-media').clone();
             jQuery(topNav).append(socialIcons);
             jQuery('.mobile-main_menu').children().append(topNav)
 
