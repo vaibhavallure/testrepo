@@ -740,6 +740,16 @@ if($button == 'Modifier'){
         var dateValidite = new Date(new Date(res[2], res[1]-1,res[0]).getTime() + 14*86400000);
         $(".datepicker[name=validite]").datepicker("setDate", dateValidite);
 
+        var typeBrief = $("#typebrief").val();
+        if (typeBrief != "primeur_us" && typeBrief != "primeur_eu") {
+            var code = $("#code").val();
+            var yearCode = code.split("-");
+            var yearDateenvoi = res[2].substring(2);
+            if (yearCode[0] != yearDateenvoi) {
+                code = yearDateenvoi.concat('-', yearCode[1]);
+                $("#code").val(code);
+            }
+        }
     });
 
     function addContentPopup(){
