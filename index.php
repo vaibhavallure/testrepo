@@ -72,7 +72,7 @@ $app->post('/view/ressource_action','getActionRessource');
 $app->get('/view/ajax/campaign/:message','getInfoMessage');
 $app->get('/view/ajax/message_getlocalhtml/:message','getLocalHtml');
 $app->get('/view/ajax/segment_count/:data','countSegment');
-$app->get('/view/ajax/brief_info/:name','getConfigDataIndex');
+$app->get('/view/ajax/brief_info/:name&:year','getConfigDataIndex');
 $app->get('/view/ajax/message_getBriefInfo/:brief','getBriefInfo');
 $app->post('/view/ajax/verif_brief/','verifBriefExist');
 $app->get('/view/ajax/message_getMessageSaveInfo/:brief','getMessageSaveInfo');
@@ -135,6 +135,9 @@ function getActionBriefView($html = '',$url = '../../', $brief = array(),$button
     } else {
         $bddClass = new Millesima_Bdd();
         $code = $bddClass->selectone("SELECT * FROM config Where name = ?", array('iosliv'),'value');
+        if($code<10){
+            $code = '0'.$code;
+        }
         $code = date('y').'-'.$code;
         $app->view()->appendData(array( 'code' => $code));
     }
@@ -1133,12 +1136,15 @@ function countSegment($data) {
 }
 
 /////////////////////  config  ////////////////////////////////////////
-function getConfigDataIndex($name) {
+function getConfigDataIndex($name, $year) {
     $return = '';
-    if($name != 'undefined'){
+    if($name != 'undefined' && $year != 'undefined'){
         $bddClass = new Millesima_Bdd();
         $return= $bddClass->selectone("SELECT * FROM config Where name = ?", array($name),'value');
-        $return = date('y').'-'.$return;
+        if($return<10){
+            $return = '0'.$return;
+        }
+        $return = $year.'-'.$return;
     }
     echo json_encode($return);
 }

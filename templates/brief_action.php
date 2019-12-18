@@ -651,6 +651,9 @@ if($button == 'Modifier'){
         var name = '';
         var code = $('#code').val();
         var tracking = '';
+        var dateenvoi = $( "#dateenvoi" ).val();
+        var datesplit = dateenvoi.split("/");
+        var yearenvoi = datesplit[2].substring(2);
         if(elmValue == 'livrable_eu'){
             name = 'iosliv';
         }else if(elmValue == 'primeur_eu'){
@@ -667,7 +670,7 @@ if($button == 'Modifier'){
             name = 'iospart';
         }
         $.ajax({
-            url: '/view/ajax/brief_info/'+name,
+            url: '/view/ajax/brief_info/'+name+'&'+yearenvoi,
             type: 'GET',
             dataType: "json",
             success: function(data)
@@ -677,9 +680,6 @@ if($button == 'Modifier'){
                         var year = ((new Date().getFullYear())-1).toString().substr(-2);
                         data = data.split('-');
                         var inc = data[1];
-                        if(parseInt(inc)<10){
-                            var inc = '0' + inc;
-                        }
                         data = year + '-' + inc;
                     }
                     code = data;
@@ -739,17 +739,7 @@ if($button == 'Modifier'){
         var res = dateenvoi.split("/");
         var dateValidite = new Date(new Date(res[2], res[1]-1,res[0]).getTime() + 14*86400000);
         $(".datepicker[name=validite]").datepicker("setDate", dateValidite);
-
-        var typeBrief = $("#typebrief").val();
-        if (typeBrief != "primeur_us" && typeBrief != "primeur_eu") {
-            var code = $("#code").val();
-            var yearCode = code.split("-");
-            var yearDateenvoi = res[2].substring(2);
-            if (yearCode[0] != yearDateenvoi) {
-                code = yearDateenvoi.concat('-', yearCode[1]);
-                $("#code").val(code);
-            }
-        }
+        selectTypeBrief();
     });
 
     function addContentPopup(){
