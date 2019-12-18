@@ -8521,7 +8521,7 @@ tr.additional-addresses {
 	float: left;
 	margin-right: 5px;
 	margin-left: 5px;
-	font-size: 1.1em;
+	font-size: 1em;
 	line-height: 1em;
 }
 
@@ -8589,7 +8589,7 @@ tr.additional-addresses {
 .order-items .product-name {
 	font-weight: normal !important;
 	margin-top: 5px;
-	padding-right: 15px;
+	/*padding-right: 15px;*/
 }
 
 .order-items .item-options {

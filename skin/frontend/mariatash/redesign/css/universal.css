@@ -363,6 +363,7 @@ div.tab button.active {
 
 .myaccount-index-index #my-orders-table th{
 	line-height: 18px;
+    padding: 5px 0px;
 /*	border-bottom: 1px solid #ccc ! important;*/
 }
 

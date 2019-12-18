@@ -777,7 +777,7 @@
 	background: white;
 	border:none;
 	text-align: right;
-	padding-right: 20px;
+	/*padding-right: 20px;*/
 }
 .mt-myaccount-new .order-items table tr{
 	border:none!important;
