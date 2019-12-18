@@ -1019,7 +1019,7 @@ div.account-create div.fieldset ul.form-list li.fields {
 }
 
 .my-account .button[title="Share Wishlist"] {
-	margin-right: 2px;
+	/*margin-right: 2px;*/
 }
 
 .account-create {
@@ -8893,8 +8893,8 @@ tr.additional-addresses {
 
 
 .my-wishlist .buttons-set button.button {
-	float: right;
-	margin: 0 0 0 10px;
+	/*float: right;*/
+	/*margin: 0 0 0 10px;*/
 	padding-left: 15px !important;
 	padding-right: 15px !important;
 }

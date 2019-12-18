@@ -1744,6 +1744,10 @@ ul.tabs li{
 /********************** Mobile Portrait *****************/           /*mobport*/
 @media (max-width:767px) and (orientation:portrait) {
 
+  #share-form-validate button.mt-btn-share-cancel{
+    /*width: 100%;*/
+  }
+
   .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
     margin: 0;
   }
