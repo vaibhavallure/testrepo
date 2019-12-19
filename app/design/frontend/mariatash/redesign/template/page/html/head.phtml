@@ -290,19 +290,20 @@ foreach ($metaCollection as $meta){
 <![endif]-->
 
 <script type="text/javascript">
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', ()=> {
-      navigator
-      .serviceWorker
-      .register('<?php echo $this->getSkinUrl('allure/worker.js');?>')
-      .then(function(registration) {
-		    console.log('ServiceWorker registration successful!');
-	  })
-      .catch(function(err) {
-		    console.log('ServiceWorker registration failed: ', err);
-	  });
-    });
-  }
+document.addEventListener('DOMContentLoaded', initServiceWorker, false);
+function initServiceWorker() {
+	if ('serviceWorker' in navigator) {
+        navigator
+        .serviceWorker
+        .register('<?php echo $this->getSkinUrl('allure/worker.js');?>')
+        .then(function(registration) {
+            console.log('ServiceWorker registration successful!');
+        })
+        .catch(function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+        });
+	}
+}
 </script>
 
 <script type="text/javascript">

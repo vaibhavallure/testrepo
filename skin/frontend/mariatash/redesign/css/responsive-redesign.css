@@ -1,5 +1,11 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
+  .product-view .containerThumb .thumb a{
+    border-bottom: 0px solid transparent;
+  }
+  .product-view .containerThumb .thumb a.product-video-link{
+    margin-top: 0;
+  }
 .menu_overlay {
   z-index: 3;
 }
@@ -476,6 +482,7 @@ ul.tabs li{
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
+
   .product-video-play-icon{
     display: block;
     width: 100%;
@@ -1803,7 +1810,8 @@ ul.tabs li{
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 20px;
+    padding-left: 21px;
+    margin-top: 10px;
   }
   .custom-container {
     max-width: 370px;
@@ -1895,7 +1903,7 @@ ul.tabs li{
   .caroufredsel_wrapper{
     width: 49%;
   }
-  .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel{
+  .insta-main .image_carousel, .recently-view .image_carousel, .you_may_like .image_carousel, #cartilage-items-slider .caroufredsel_wrapper{
     width: 100%;
     padding: 0 25px;
   }
@@ -2242,7 +2250,9 @@ ul.tabs li{
     margin: 0.5%;
   }
   .social-media ul {
-    padding-left: 15px;
+    /*padding-left: 15px;*/
+    padding-left: 21px;
+    margin-top: 10px;
   }
   .celeb-img-block, .press-img-block{
     flex: 0 0 50%;
