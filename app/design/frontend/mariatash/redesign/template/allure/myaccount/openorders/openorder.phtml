@@ -32,13 +32,13 @@
 		</a>
 	</td>
 
-	<td class="a-left">
+	<td class="a-left order-total-data">
 		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
 			<?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
 		</a>
 	</td>
 
-	<td class="a-left">
+	<td class="a-left order-status-data">
 		<a onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
 			<?php //echo $_order->getStatusLabel() ?>
 			 <?php $status = $orderStatusArr[$_order->getState()]?$orderStatusArr[$_order->getState()]:$orderStatusArr1[$_order->getState()]?>

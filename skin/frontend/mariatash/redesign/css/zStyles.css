@@ -1795,7 +1795,7 @@ img.print-size-chart{
 }
 @media(max-width: 576px){
 	.acc-products-wrapper{
-		margin-top: 8px!important;
+		/*margin-top: 8px!important;*/
 	}
 	.add-primary{
 		padding-left: 0;
@@ -1903,7 +1903,7 @@ img.print-size-chart{
         overflow: auto;
     } */
 	.acc-products-wrapper #new-mt-myproduct-openorders table th, .acc-products-wrapper #new-mt-myproduct-openorders table td{
-		width: 80px;
+		/*width: 80px;*/
 	}
 	.dashboard .mt-new-myaccount-dashbord{
 		padding: 0;
