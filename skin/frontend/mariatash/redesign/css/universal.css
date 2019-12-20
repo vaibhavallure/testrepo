@@ -363,6 +363,7 @@ div.tab button.active {
 
 .myaccount-index-index #my-orders-table th{
 	line-height: 18px;
+    padding: 5px 0px;
 /*	border-bottom: 1px solid #ccc ! important;*/
 }
 
@@ -1641,7 +1642,19 @@ width: 245px;
 }
 
 .mt-my-wishlist .mt-wishlist-share-form .fieldset ul li textarea{
-	width: 98.3%!important;
+	width: 100%;
+}
+.my-account .mt-wishlist-share-form .page-title h1 {
+    padding-top: 30px;
+}
+.mt-wishlist-share-form #wishlist-table-overlay form{
+    max-width:350px;
+}
+.mt-wishlist-share-form .mt-share-btn-grp{
+    flex-direction:unset!important;
+}
+.mt-wishlist-share-form .mt-btn-share-cancel{
+    margin-left:auto;
 }
 
 
