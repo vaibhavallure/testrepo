@@ -124,6 +124,9 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
             }
             else{
                 $customer->setDob($requestData['dob']);
+                if(!empty($requestData['gender']) ) {
+                    $customer->setGender($requestData['gender']);
+                }
                 $customer->save();
             }
 
