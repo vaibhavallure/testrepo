@@ -777,7 +777,7 @@
 	background: white;
 	border:none;
 	text-align: right;
-	padding-right: 20px;
+	/*padding-right: 20px;*/
 }
 .mt-myaccount-new .order-items table tr{
 	border:none!important;
@@ -1043,8 +1043,8 @@
 #share-form-validate label{
 	color: rgba(41, 41, 41, 0.6);
 }
-#share-form-validate button{
-	width: 164px;
+.mt-wishlist-share-form #share-form-validate button{
+	width: 164px !important;
 	height: 37px;
 }
 #share-form-validate .textarea-cu{
@@ -1056,7 +1056,8 @@
 	width: 100%;
 }
 #wishlist-table-overlay form{
-	max-width: 323px;
+	/*max-width: 323px;*/
+	max-width: 350px;
 }
 /*=====================*/
 /*SEARCH REULTS*/
@@ -2447,4 +2448,7 @@ img#cross-icon {
 }
 .inspiration-loader {
 	left: 50%;
+}
+img.print-size-chart{
+	cursor: pointer;
 }
