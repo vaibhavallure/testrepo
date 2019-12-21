@@ -210,9 +210,13 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                     <?php endif; ?>
                 </span>
                 <?php endif; ?>
+                
                 <?php if(!Mage::registry('current_category')|| ($this->getRequest()->getModuleName() == 'quickview')):?>
+                    <?php if($_taxHelper->isShowVatMessageForProduct($_product->getSku(),$_product->getTypeId())): ?>
                     <div class="price_tax_text para-normal mt-2"><?php echo (method_exists($_taxHelper, 'getTaxDisplaySummary') ? $_taxHelper->getTaxDisplaySummary() : '')?></div>
+                    <?php endif;?>
                 <?php endif;?>
+                
             <?php endif; ?>
         <?php else: /* if ($_finalPrice == $_price): */ ?>
             <?php $_originalWeeeTaxAmount = $_weeeHelper->getOriginalAmount($_product); ?>

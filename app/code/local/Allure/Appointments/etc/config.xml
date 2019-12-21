@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Allure_Appointments>
-			<version>0.2.7</version>
+			<version>0.2.8</version>
 		</Allure_Appointments>
 	</modules>
 	<frontend>

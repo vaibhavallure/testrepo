@@ -207,5 +207,93 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
             convert(jQuery(this),'lastname',evt);
         });
 
+        if(jQuery('body').hasClass('mobile-device') && jQuery('.top-nav-3').length == 0) {
+            let topNav = jQuery('.mobile-main_menu #top-nav').clone()
+            jQuery(topNav).empty()
+            jQuery(topNav).attr('id','top-nav-3')
+            let footlinks = jQuery('#footer8 .footlinks')
+            let footlinkLis = jQuery(footlinks).children().clone()
+            let topNavLiLength = topNav.children().length
+
+            jQuery(footlinkLis).each((i) => {
+                let currentLi = footlinkLis[i]
+                let firstElem = jQuery(currentLi).children().first()
+                let dataId = jQuery(firstElem).attr('id')
+                jQuery(currentLi).attr('data-id',`${dataId}-nav`)
+                if(jQuery(currentLi).hasClass('data-block')) {
+                    jQuery(currentLi).removeAttr('class');
+                    jQuery(currentLi).addClass(`level0 nav-${i+(topNavLiLength+1)} level-top parent nav-item main_menu`);
+                    let liName = jQuery(currentLi).find('.w-100 span')
+                    let liContentMain = jQuery(currentLi).children().children().eq(1)
+                    let liContent = jQuery(liContentMain).clone()
+                    if(jQuery(currentLi).find('#newsletter-form').length) {
+                        let inputBoxes = liContent.find('.input-box')
+                        jQuery(liContent).css('margin-left','50px')
+                        jQuery(inputBoxes).each((_i)=> {
+                            let cInputBox = inputBoxes[_i]
+                            jQuery(cInputBox).removeClass('col-6')
+                            jQuery(cInputBox).removeClass('col-12')
+                            jQuery(cInputBox).addClass('col-10')
+                        })
+                        jQuery(liContent).find('.mt-terms-condtions-policy').removeClass('col-12')
+                        jQuery(liContent).find('.mt-terms-condtions-policy').addClass('col-10')
+                    }else if(jQuery(currentLi).find('.customer-care-list').length) {
+                        let listLis = jQuery(currentLi).find('.customer-care-list').children();
+                        let html = ""
+                        jQuery(listLis).each((_i) => {
+                            let cLi = listLis[_i]
+                            let span = jQuery(cLi).find('span').eq(1).html()
+                            if(span === undefined) {
+                                span = jQuery(cLi).find('span').eq(0).html()
+                            }
+                            let anchor = jQuery(cLi).find('a').attr('href')
+                            html  += `<div class="col-lg col-12 piercing_options">
+                                                <a href="${anchor}">
+                                                    <div class="image-text text-center">
+                                                        <h6 class="text-uppercase text-white">${span}</h6>
+                                                     </div>
+                                                </a>
+                                            </div>`;
+                        })
+                        liContent = html
+                    }
+                    jQuery(currentLi).find('.w-100').remove();
+                    jQuery(currentLi).append(`<a href="#" class="level-top"><span>${jQuery(liName[0]).html()}</span></a>`)
+                    let lastSectionElement = jQuery('.mobile-sub_menu').children().last().clone();
+                    jQuery(lastSectionElement).attr('id',`${dataId}-nav`)
+                    jQuery(lastSectionElement).find('span').first().text(jQuery(liName[0]).html())
+                    jQuery(lastSectionElement).find('.row.div-row').empty();
+                    jQuery(liContent).show()
+                    jQuery(liContent).attr('id','')
+                    jQuery(lastSectionElement).find('.row.div-row').append(liContent)
+                    //jQuery('#popup_ajax_contain').append(liContentMain)
+                    jQuery('.mobile-sub_menu').append(lastSectionElement)
+                }else {
+                    jQuery(currentLi).removeAttr('class');
+                    jQuery(currentLi).addClass(`level0 nav-${i+(topNavLiLength+1)} level-top noChild`);
+                    let link = jQuery(currentLi).find('a')
+                    jQuery(currentLi).append(link[0])
+                    jQuery(currentLi).find('.w-100').remove();
+                }
+            })
+
+
+            jQuery(topNav).append(footlinkLis)
+            let socialIcons = jQuery('.social-media').clone();
+            jQuery(topNav).append(socialIcons);
+            jQuery('.mobile-main_menu').children().append(topNav)
+
+            /*UPPEND FOOTER MENU*/
+            jQuery('.mobile-main_menu .main_menu').click(function () {
+                var section_id = jQuery(this).attr('data-id');
+                console.log(section_id)
+                jQuery('section.sub-menu').hide();
+                jQuery('.mobile-sub_menu').find(`#${section_id}`).show();
+            });
+
+            jQuery('.close-section').click(function () {
+                jQuery('section.sub-menu').hide();
+            });
+        }
     });
 </script>

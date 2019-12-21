@@ -1019,7 +1019,7 @@ div.account-create div.fieldset ul.form-list li.fields {
 }
 
 .my-account .button[title="Share Wishlist"] {
-	margin-right: 2px;
+	/*margin-right: 2px;*/
 }
 
 .account-create {
@@ -8589,7 +8589,7 @@ tr.additional-addresses {
 .order-items .product-name {
 	font-weight: normal !important;
 	margin-top: 5px;
-	padding-right: 15px;
+	/*padding-right: 15px;*/
 }
 
 .order-items .item-options {
@@ -8893,8 +8893,8 @@ tr.additional-addresses {
 
 
 .my-wishlist .buttons-set button.button {
-	float: right;
-	margin: 0 0 0 10px;
+	/*float: right;*/
+	/*margin: 0 0 0 10px;*/
 	padding-left: 15px !important;
 	padding-right: 15px !important;
 }
@@ -12494,7 +12494,7 @@ input.m-slider {
 	width: auto;
 }
 .sales-order-view .my-account .data-table td {
-	padding: 0 10px;
+	/*padding: 0 10px;*/
 }
 
 .product-info-right-quickview .product-special-instructions{
@@ -12561,7 +12561,6 @@ input.giftcard-radio {
 	padding-right: 12px;
 	overflow: hidden;
 }
-
 
 input.giftcard-radio1 {
 	position: relative;

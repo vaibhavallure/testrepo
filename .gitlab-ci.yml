@@ -105,7 +105,7 @@ beta:
     - master
   script:
     - deploy-magento mariatash
-    - rm -f media && ln -s /var/www/shared/mariatash/media media
+    - rm -f media && ln -s /var/www/shared/media/mt-redesign media
     - rm -f var && ln -s /var/www/shared/mariatash/var var
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/app/etc/local.xml app/etc/local.xml
     - echo 'Deployed on Alpha'
