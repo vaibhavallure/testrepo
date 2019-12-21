@@ -751,7 +751,8 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                 }
                 
                 $service = Mage::getModel('sales/service_quote', $this->getQuote());
-                $service->submitAll();
+                //$service->submitAll();
+                $service->submitOrderForSingleAddress();
                 //$this->getQuote()->save();
                 $order = $service->getOrder();
                 if ($order) {
