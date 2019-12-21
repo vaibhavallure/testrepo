@@ -101,6 +101,9 @@ dt.filter-head.showing:after {
   padding-top: 8px;
   background: white;
 }
+  .my-account .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    padding-top: 5px;
+  }
 .selected-filters{
   width: 100%;
   position: static;
@@ -617,6 +620,9 @@ ul.tabs li{
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
+  }
+  body.customer-paymentinfo-index .homepage-menu.mariatash-header {
+    background: rgb(41, 41, 41)!important;
   }
   .footlinks {
     margin: 20px 0 18px 0;
@@ -1441,6 +1447,15 @@ ul.tabs li{
 
 /* ALl Mobiles */
 @media (max-width:767px) {
+  .order-info li {
+    font-size: 13px;
+    line-height: 1em;
+  }
+
+  #load-open-order-data .page-title h1,
+  #load-complete-order-data .page-title h1{
+    padding-top: 15px;
+  }
   .customer-paymentinfo-index .messages {
     margin-top: 15px;
   }
@@ -1491,7 +1506,8 @@ ul.tabs li{
     padding: 0 36px;
   }
   .for-space-to-bottom{
-    height: 70px !important;
+   /* height: 70px !important;*/
+    height: 50px !important;
   }
   .catalog-product-view .for-space-to-bottom{
     height: 44px !important;
@@ -1743,6 +1759,24 @@ ul.tabs li{
 
 /********************** Mobile Portrait *****************/           /*mobport*/
 @media (max-width:767px) and (orientation:portrait) {
+
+  .mt-new-purchase, .mt-my-wishlist, .mt-my-cart, .mt-my-openorders, .myaccount-index-index .mt-my-orders {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .my-account .receipts .order-info-box {
+    flex-direction: column;
+  }
+  .my-account .receipts .col-wrap {
+    width: 100%;
+  }
+
+  .order-total-th,
+    .order-status-th,
+    .order-total-data,
+    .order-status-data{
+        display: none;
+    }
 
   #share-form-validate button.mt-btn-share-cancel{
     /*width: 100%;*/
@@ -2202,6 +2236,9 @@ ul.tabs li{
 
 /* Mobile landscape */                                      /*allmobland*/
 @media (max-width:767px) and (orientation:landscape) {
+  .my-account #load-open-order-data .order-info {
+    margin-top: 10px;
+  }
   #new-mt-saved-card #billing-new-address-form li.list-even, #new-mt-saved-card #billing-new-address-form li.list-odd, .myaccount-add-payment-form #billing-new-address-form li.list-even, .myaccount-add-payment-form #billing-new-address-form li.list-odd{
     width: 47%;
     margin-left: 0px;
