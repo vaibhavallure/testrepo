@@ -310,7 +310,7 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 'checkout_controller_multishipping_overview_giftmessage_post',
                 array('request'=>$this->getRequest(), 'quote'=>$this->_getCheckout()->getQuote())
                 );
-            
+            $this->_getCheckout()->save();
             if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
                 if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
