@@ -44,6 +44,18 @@
 							<show_in_store>1</show_in_store>
 							<sort_order>13</sort_order>
 						</summary>
+						<contents>
+							<label>Skip vat message for</label>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>14</sort_order>
+							<depends>
+								<status>1</status>
+							</depends>
+							<comment>Skip vat message for sku and product type</comment>
+						</contents>
 						<debug translate="label">
 							<label>Debug</label>
 							<frontend_type>select</frontend_type>
@@ -54,7 +66,7 @@
 							<depends>
 								<status>1</status>
 							</depends>
-							<sort_order>14</sort_order>
+							<sort_order>15</sort_order>
 						</debug>
 					</fields>
 				</skip_catalog_display>

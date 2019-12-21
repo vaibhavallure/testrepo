@@ -113,6 +113,13 @@ var addCustomer = function (srno) {
                    </div>
                  </div>
                  </div>
+                 
+                  <div class="col-12 form-group">
+                  	
+                        	<textarea maxlength="255" id="special-notes-${srno}" class="splnotesTxtarea w-100" name="customer[${srno}][special_notes]" placeholder="${__('Special notes')}" rows="4" ></textarea>
+
+              	 </div>
+                 
                <div id="notify-box" class="col-md-12 form-group">
                <div class="row">
                     <div class="col-12 notify-text-line">

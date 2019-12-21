@@ -226,8 +226,8 @@
                     <?php $i = 1;?>
                     <?php foreach($_collection as $category): ?>
                         <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
-                        <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                            <a <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white text-center w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                        <li id="li-<?= $i?>" onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
+                            <a id="a-<?= $i-1?>" <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white text-center w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -258,6 +258,24 @@
                 }
             }
         });
+        /*Code for mobile only : After swipe navigate to category*/
+        <?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );?>
+        var minusValue = 2;
+        var data_count = parseInt(jQuery('.cur_active').attr('data-count')) - minusValue;
+        console.log(data_count);
+        var owl = jQuery('.owl-carousel');
+        owl.trigger("to.owl.carousel", [data_count, 1,true])
+// Listen to owl events:
+        owl.on('changed.owl.carousel', function (event) {
+            /*Change category if mobile portrait*/
+            var isMobile = window.matchMedia("only screen and (max-width: 767px) and (orientation: portrait)").matches;
+            if(isMobile) {
+                var currentItem = parseInt(event.item.index) + 1;
+                jQuery('#li-' + currentItem).click();
+                window.location = jQuery('#a-' + currentItem).attr('href')
+            }
+        });
+
     });
 </script>
 

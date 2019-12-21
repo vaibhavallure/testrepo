@@ -75,6 +75,7 @@ h4{
 	height: 50px!important;
 	background: url("../images/vmt_loader.gif") center center no-repeat!important;
 }
+.dark-button{background: url("../images/allure/print.png")}
 
 .para-normal,
 .cart-empty p, .gift-messages label, .overview-address-item .box .price,
@@ -156,7 +157,7 @@ h4{
 }
 
 .dark-button:hover {
-    background: rgba(41,41,41,0.9) !important;
+   /* background: rgba(41,41,41,0.9) !important;*/
 }
 
 .input-patern{
@@ -1214,6 +1215,9 @@ ul.swatch .swatch-item a {
 	.product-img-box{
 		width: 100%!important;
 	}
+.cms-page-view .breadcrumbs {
+  	padding-left: 88px; 
+}
   .position-bottom {
     position: absolute;
     bottom: 0;
@@ -1985,7 +1989,10 @@ div#narrow-by-list {
 	box-shadow: none;
 }
 .cms-page-view .top-bar {
-  display: none;
+  display: block !important;
+}
+.cms-page-view .top-bar .breadcrumbs{
+display: block !important;
 }
 /* #narrow-by-list .actions{
 	margin-top: 5px;
@@ -2980,6 +2987,7 @@ ul.tabs li{
 	margin-top: 17px;
 	margin-bottom: 8px;
 }
+
 .breadcrumbs {
   	padding-left: 71px;
 	margin-top: 13px;
@@ -4647,7 +4655,7 @@ td.cart_col2 {
 	margin-bottom: 0;
 }
 .contact-us-wrapper {
-  margin-top: 40px;
+  margin-top: 1.5rem;
 }
 .cms-contact-us h1 {
   font-size: 22px !important;
@@ -4703,7 +4711,7 @@ td.cart_col2 {
 	cursor: pointer;
 }
 .contact-us-wrapper h1 {
-  font-size: 30px !important;
+  font-size: 32px !important;
 }
 .catalog-category-view .celebPopup .product-name {
   margin-bottom: 13px;
@@ -4799,7 +4807,7 @@ td.cart_col2 {
   border-bottom: 1px solid #292929;
   width: 93%;
   padding: 20px 0px 20px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   position: relative;
 }
 .top-nav-v2{
@@ -4927,5 +4935,16 @@ a.product-video-link:hover div.product-video-play-icon {
 .fs-overlink-text-number{
 	color: rgba(41,41,41,0.9);
 	font-family: urw-din-bold;
+}
+.my-account .order-items .product-name {
+	margin-top: 0px;
+	padding-top: 0px;
+	font-size: 18px;
+}
+.my-account .link-print{
+	margin-left:0px;
+}
+.my-account #my-orders-table,#my-openorders-table{
+    margin-top: 0px;
 }
 

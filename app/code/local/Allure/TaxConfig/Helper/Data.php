@@ -75,6 +75,18 @@ class Allure_TaxConfig_Helper_Data extends Mage_Tax_Helper_Data
     {
         return ($this->allowedTaxOnCatalog() ? Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/summary') : NULL);
     }
+    
+    public function isShowVatMessageForProduct($sku, $productType){
+        if (!Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/status')) {
+            return false;
+        }
+        $contents = Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/contents');
+        $contents = explode(",", $contents);
+        if(in_array($sku, $contents) || in_array($productType, $contents)){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get product price display type
