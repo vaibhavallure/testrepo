@@ -363,6 +363,7 @@ div.tab button.active {
 
 .myaccount-index-index #my-orders-table th{
 	line-height: 18px;
+    padding: 5px 0px;
 /*	border-bottom: 1px solid #ccc ! important;*/
 }
 
@@ -1641,7 +1642,19 @@ width: 245px;
 }
 
 .mt-my-wishlist .mt-wishlist-share-form .fieldset ul li textarea{
-	width: 98.3%!important;
+	width: 100%;
+}
+.my-account .mt-wishlist-share-form .page-title h1 {
+    padding-top: 30px;
+}
+.mt-wishlist-share-form #wishlist-table-overlay form{
+    max-width:350px;
+}
+.mt-wishlist-share-form .mt-share-btn-grp{
+    flex-direction:unset!important;
+}
+.mt-wishlist-share-form .mt-btn-share-cancel{
+    margin-left:auto;
 }
 
 
@@ -1838,7 +1851,8 @@ width: 245px;
 #load-complete-order-data .order-info{
 	/* margin-top: -2px;
 	margin-bottom: 20px; */
-	margin-top: 10px;
+	/*margin-top: 10px;*/
+    margin-top: 20px;
 	padding-top: 2px;
     padding-bottom: 2px;
 }
@@ -1950,8 +1964,8 @@ li.order-info-tab-back{
     padding-left: 0;
 }
 .my-account .box .box-title h1{
-    /*padding-top: 20px;
-    margin-bottom: 16px;*/
+    padding-top: 20px;
+   /* margin-bottom: 16px;*/
     font-size: 30px;
     text-transform: capitalize;
 }
@@ -2237,21 +2251,5 @@ li.buttons-set .btn-cancel-edit{
 }
 .myaccount-payment-option .mt-payment-card-btn {
     padding-left: 1px;
-}
-
-.product-view .containerThumb .thumb{
-    position: relative;
-}
-.product-video-play-icon{
-    background:url('../images/play-icon.png') no-repeat;
-    background-position: center center;
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    display: none;
-    background-color: #00000033;
-    bottom: 0;
-}
-a.product-video-link:hover div.product-video-play-icon {
-    display: block;
+    padding-top: 1px;
 }

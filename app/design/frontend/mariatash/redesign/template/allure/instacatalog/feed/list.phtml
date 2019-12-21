@@ -207,7 +207,7 @@ foreach($collection as $date_to) {
                         $points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
                         $points .= ' data-link-id="'.$productId.'" ';
                         $points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/$option->imgH).'%; left:'.(($option->left*100)/$option->imgW).'%;">';
-                        $points .= '<div>'.$numberOfProducts.'</div>';
+                        $points .= '<div class="fs-overlink-text-number">'.$numberOfProducts.'</div>';
                         $points .= '<div class="fs-overlink-text fs-overlink-text-right">';
                         $points .= '<div class="fs-arrow-up"></div>';
                         $points .= '" '.$productName.'</div></div></a>';
@@ -360,15 +360,7 @@ foreach($collection as $date_to) {
 </style>
 
 <div class="insta-loader"></div>
-<div class='loader'><!--DEFAULT INSTA LOADER DISPLAY NONE-->
-    <div class='loader--dot'></div>
-    <div class='loader--dot'></div>
-    <div class='loader--dot'></div>
-    <div class='loader--dot'></div>
-    <div class='loader--dot'></div>
-    <div class='loader--dot'></div>
-    <div class='loader--text'></div>
-</div>
+
 
 
 <div id="instagram-view-container">

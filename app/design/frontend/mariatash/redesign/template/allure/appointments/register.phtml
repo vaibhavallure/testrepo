@@ -80,7 +80,7 @@ if ($model) {
                                                         <input type="checkbox" data-no="<?= $customer_count ?>" class="piercing_select clschk" id="piercing_select_<?= $customer_count ?>"
                                                                onchange="displayPiercing('#piercing-wrapper<?= $customer_count ?>')"
                                                                name="customer[<?= $customer_count ?>][piercing_select]"
-                                                            <?= ($customer->getPiercing() > 0) ? 'checked' : ''; ?>
+                                                               <?= ($customer->getPiercing() > 0) ? 'checked' : ''; ?>
                                                         >
                                                         <span class="checkmark"></span><?php echo $this->__('Piercing') ?>
                                                     </label>
@@ -91,7 +91,7 @@ if ($model) {
                                                     <label class="label translate-popup custom-checkbox" for="checkup_select_<?= $customer_count ?>">
                                                         <input type="checkbox" data-no="<?= $customer_count ?>" class="checkup_select clschk" id="checkup_select_<?= $customer_count ?>"
                                                                value="1" name="customer[<?= $customer_count ?>][checkup]"
-                                                            <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
+                                                               <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
                                                         >                                                        <span class="checkmark"></span>
 
                                                         <?php echo $this->__('Checkup/downsize') ?></label>
@@ -245,6 +245,13 @@ if ($model) {
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-12 form-group">
+
+                                                <textarea maxlength="255" id="special-notes-<?= $customer_count?>" class="splnotesTxtarea w-100" name="customer[<?= $customer_count ?>][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ><?php if($customer->getSpecialNotes()):?><?= trim($customer->getSpecialNotes()) ?><?php endif;?></textarea>
+
+                                            </div>
+
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <div class="row">
                                                     <div class="col-12 notify-text-line">
@@ -323,6 +330,13 @@ if ($model) {
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-12 form-group">
+
+                                                        <textarea  maxlength="255" id="special-notes-1" class="splnotesTxtarea w-100" name="customer[1][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ></textarea>
+
+                                            </div>
+
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <div class="row">
                                                     <div class="col-12 notify-text-line">
@@ -374,10 +388,10 @@ if ($model) {
                     <?php echo $this->getChildHtml("appointments_popup_pickdatetime"); ?>
                     <?php if(empty(Mage::app()->getRequest()->getParam('user'))):?>
                         <?php echo $this->getChildHtml("appointments_popup_price_list");?>
-                    <div class="information-section-desktop">
-                        <?php echo $this->getInformationBlock();?>
-                    </div>
-                        <?php endif;?>
+                        <div class="information-section-desktop">
+                            <?php echo $this->getInformationBlock();?>
+                        </div>
+                    <?php endif;?>
 
                 </div>
                 <div class="information-section-mobile">

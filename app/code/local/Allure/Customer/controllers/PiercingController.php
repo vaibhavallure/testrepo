@@ -88,4 +88,71 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
         }
         return $password;
     }
+    /**
+    Add customer address details to magento which came from release form
+     **/
+    public function addCustomerAddressAction(){
+        header("Access-Control-Allow-Origin:*");
+        header("Access-Control-Allow-Headers:*");
+        $requestData = $this->getRequest()->getParams();
+        Mage::log("--------- Request Paramas Save Address ------",Zend_log::DEBUG,'release_form.log',true);
+        Mage::log($requestData,Zend_log::DEBUG,'release_form.log',true);
+        $response = array("success" => false);
+        try {
+
+            $email = $requestData['email'];
+            $customer = Mage::getModel('customer/customer')
+                ->setWebsiteId(self::MAIN_WEBSITE_ID)
+                ->loadByEmail($email);
+            if(!$customer->getId()) {
+                $password = $this->generatePassword();
+                $customer = Mage::getModel("customer/customer");
+                $customer->setWebsiteId(self::MAIN_WEBSITE_ID)
+                    ->setStoreId(self::STORE_ID)
+                    ->setGroupId(self::GENERAL_CUSTOMER)
+                    ->setFirstname($requestData["firstname"])
+                    ->setLastname($requestData["lastname"])
+                    ->setDob($requestData['dob'])
+                    ->setEmail($email)
+                    ->setPassword($password)
+                    ->setPasswordConfirmation($password)
+                    ->setPasswordCreatedAt(time())
+                    ->setCustomerType(25)   //release-form customer
+                    ->save();
+
+                $customer->sendNewAccountEmail();
+            }
+            else{
+                $customer->setDob($requestData['dob']);
+                if(!empty($requestData['gender']) ) {
+                    $customer->setGender($requestData['gender']);
+                }
+                $customer->save();
+            }
+
+            /*Add Address Details*/
+            if($customer->getId()) {
+                $address = Mage::getModel("customer/address");
+                $address->setCustomerId($customer->getId())
+                    ->setFirstname($customer->getFirstname())
+                    ->setLastname($customer->getLastname())
+                    ->setCountryId($requestData['country_code'])
+                    ->setRegion($requestData['region'])
+                    ->setPostcode($requestData['zip_code'])
+                    ->setCity($requestData['city'])
+                    ->setTelephone($requestData['telephone'])
+                    ->setStreet($requestData['street_address'])
+                    ->setSaveInAddressBook('1');
+                $address->save();
+                $response["success"] = true;
+                $response["message"] = $email . "Address saved successfully";
+            }
+        }
+        catch (Exception $e){
+            Mage::log("Exception : ".$e->getMessage(),Zend_log::DEBUG,'release_form.log',true);
+            $response["message"] = $e->getMessage();
+        }
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
+    }
+
 }
