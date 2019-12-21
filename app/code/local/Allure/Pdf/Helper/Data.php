@@ -46,7 +46,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
      * 
      */
     public function getOrderItemStockStatus($item , $order,$feed = 35){
-        $message   = $this->getOrderSalesProductStockStatus($item , $order);
+        $message   = strip_tags($this->getOrderSalesProductStockStatus($item , $order));
         $flag      = true;
         if(!empty($message)){
             $flag = true;
@@ -62,6 +62,43 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         );
         
         return array("is_show"=>$flag , "line_block" => $lineBlock);
+    }
+
+    public function getOrderItemGiftInfo($item){
+        $flag      = $item->getIsGiftItem();
+        $lineBlock=array();
+
+        if($flag) {
+            $isGiftItemMessage = "Is Gift Item: Yes (Gift Item Count ".$item->getGiftItemQty()." Qty)";
+
+            $lines[][] = array(
+                'text' => $isGiftItemMessage,
+                'feed' => 50
+            );
+
+            if($item->getIsGiftWrap()) {
+                $isGiftWrapMessage = "Is Gift Wrap: Yes (Gift Wrap Count " . $item->getGiftWrapQty() . " Qty)";
+
+                $lines[][] = array(
+                    'text' => $isGiftWrapMessage,
+                    'feed' => 50
+                );
+            }
+
+            $lineBlock = array(
+                'lines' => $lines,
+                'height' => 15
+            );
+        }
+        return array("is_show"=>$flag , "line_block" => $lineBlock);
+    }
+
+    public function isWholesaleOrder($order)
+    {
+            if($order->getCustomerGroupId()==2)
+                 return true;
+
+            return false;
     }
     
     public function getOrderSalesProductStockStatus($item , $order){
