@@ -143,20 +143,40 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
         if($actionName == "pdfdocs" || $actionName == "pdforders"){
             $helper    = Mage::helper("allure_pdf");
             $feed = 35;
+
+
+/*gift and gift wrap info-----------------------------*/
+
+            $giftLineBlockArr = $helper->getOrderItemGiftInfo($item);
+            $isShowGift = $giftLineBlockArr['is_show'];
+
+            if($isShowGift) {
+                $lineBlockGiftMessage = $giftLineBlockArr['line_block'];
+                $page = $pdf->drawLineBlocks($page, array($lineBlockGiftMessage), array('table_header' => true));
+                $this->setPage($page);
+            }
+ /*end----------------------------*/
+
+
             $lineBlockArr = $helper->getOrderItemStockStatus($item , $order ,$feed);
             $isShow = $lineBlockArr['is_show'];
+
+
             if($isShow){
                 $lineBlockStockMessage = $lineBlockArr['line_block'];
                 $page = $pdf->drawLineBlocks($page, array($lineBlockStockMessage), array('table_header' => true));
                 $this->setPage($page);
             }
-            
-            $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed,true);
-            if($salesInstr['is_show']){
-              //  $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
-              //  $this->setPage($page);
-                $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
-                $this->setPage($page);
+
+
+            if($helper->isWholesaleOrder($order)) {
+                $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item, $feed, true);
+                if ($salesInstr['is_show']) {
+                    //  $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
+                    //  $this->setPage($page);
+                    $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
+                    $this->setPage($page);
+                }
             }
             $purchasedFrom = $helper->getSalesOrderItemPurchasedFrom($item,$feed,true);
             if($purchasedFrom['is_show']){
@@ -165,8 +185,30 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                 $page = $pdf->drawLineBlocks($page, array($purchasedFrom['value_block']), array('table_header' => true));
                 $this->setPage($page);
             }
-            
-            
+
+
+
+            /*gift message display start----------------------------*/
+            if(!$helper->isWholesaleOrder($order)) {
+                $giftMessageInfo = $helper->getItemGiftMessage($item);
+                $giftHelper = Mage::helper('giftmessage/message');
+                if ($giftHelper->getIsMessagesAvailable('order_item', $item) && $item->getGiftMessageId()) {
+                    if ($giftMessageInfo['is_show']) {
+                        $page = $pdf->drawLineBlocks($page, array($giftMessageInfo['label']), array('table_header' => true));
+                        $this->setPage($page);
+                        $page = $pdf->drawLineBlocks($page, array($giftMessageInfo['from']), array('table_header' => true));
+                        $this->setPage($page);
+                        $page = $pdf->drawLineBlocks($page, array($giftMessageInfo['to']), array('table_header' => true));
+                        $this->setPage($page);
+                        $page = $pdf->drawLineBlocks($page, array($giftMessageInfo['message']), array('table_header' => true));
+                        $this->setPage($page);
+                    }
+                }
+            }
+
+            /*end-------------------------------------------------------*/
+
+
             $lineSeparator = $helper->getLineSeparator();
             $page = $pdf->drawLineBlocks($page, array($lineSeparator), array('table_header' => true));
             $this->setPage($page);
@@ -174,14 +216,14 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
             if($isLastItem){
                 $orderInfo = $helper->getOrderGiftMessage($order);
                 if($orderInfo['is_show']){
-                    $page = $pdf->drawLineBlocks($page, array($orderInfo['label']), array('table_header' => true));
+                   /* $page = $pdf->drawLineBlocks($page, array($orderInfo['label']), array('table_header' => true));
                     $this->setPage($page);
-                    /* $page = $pdf->drawLineBlocks($page, array($orderInfo['from']), array('table_header' => true));
+                   */ /* $page = $pdf->drawLineBlocks($page, array($orderInfo['from']), array('table_header' => true));
                     $this->setPage($page);
                     $page = $pdf->drawLineBlocks($page, array($orderInfo['to']), array('table_header' => true));
                     $this->setPage($page); */
-                    $page = $pdf->drawLineBlocks($page, array($orderInfo['message']), array('table_header' => true));
-                    $this->setPage($page);
+                    /*$page = $pdf->drawLineBlocks($page, array($orderInfo['message']), array('table_header' => true));
+                    $this->setPage($page);*/
                 }
             }
         }
