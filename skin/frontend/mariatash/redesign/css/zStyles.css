@@ -1787,6 +1787,9 @@ img.print-size-chart{
 		right: 40px;
 		margin-top: 13px !important;
 	}
+	.category-shop-our-instagram .fs-timeline-detail {
+		padding: 20px;
+	}
 }
 @media (min-width: 1800px){
 	#container-cu {

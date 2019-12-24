@@ -485,7 +485,9 @@ ul.tabs li{
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
-
+  .customer-account-login .col1-layout .col-main{
+    width: 100%;
+  }
   .product-video-play-icon{
     display: block;
     width: 100%;
