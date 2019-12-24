@@ -1140,15 +1140,6 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                          */
                         $customer->setPassword($newPass);
                         $customer->setPasswordConfirmation($confPass);
-                        if(!empty($customer->getTwUcGuid())):
-                            $customerData = array
-                            (
-                                'customer_id'   => $customer->getTwUcGuid(),
-                                'password'      => $newPass,
-                            );
-
-                            Mage::getModel('teamwork_universalcustomers/svs')->updateCustomer($customerData,true);
-                        endif;
 
                     } else {
                         $errors[] = $this->__('New password field cannot be empty.');
@@ -1182,6 +1173,15 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
                 }
 
                 $customer->save();
+                if(!empty($customer->getTwUcGuid())):
+                    $customerData = array
+                    (
+                        'customer_id'   => $customer->getTwUcGuid(),
+                        'password'      => $newPass,
+                    );
+
+                    Mage::getModel('teamwork_universalcustomers/svs')->updateCustomer($customerData,true);
+                endif;
                 $this->_getSession()->setCustomer($customer)
                     ->addSuccess($this->__('The account information has been saved.'));
 
