@@ -222,12 +222,12 @@
     <div class="row" >
         <div class="caroufredsel_wrapper p-m-0 p-l-0 p-xl-0" >
             <?php if(count($_collection)) { ?>
-                <ul id="cartilage-items-slider" class="owl-carousel owl-theme">
+                <ul id="cartilage-items-slider" class="owl-carousel owl-theme cat-carosal">
                     <?php $i = 1;?>
                     <?php foreach($_collection as $category): ?>
                         <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="cur_active"' : '' ?>
-                        <li id="li-<?= $i?>" onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
-                            <a id="a-<?= $i-1?>" <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white text-center w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                        <li id="li-<?= $i?>" >
+                            <a class="cat-link" id="a-<?= $i-1?>" onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)" <?= $active ?> data-count="<?= $i ?>" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h4 class="text-white text-center w-100" <?php echo $active; ?>><?php echo $category->getName(); ?></h4><img class="img-cat" data-id="<?=$i?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -275,6 +275,16 @@
                 window.location = jQuery('#a-' + currentItem).attr('href')
             }
         });
+
+        jQuery('.cat-carosal .owl-item').on('click',function (e) {
+            var isMobile = window.matchMedia("only screen and (max-width: 767px) and (orientation: portrait)").matches;
+            if(!isMobile) {
+                var link = jQuery(this).find('a');
+                if (link.length > 0) {
+                    window.location.href = link.attr('href');
+                }
+            }
+        })
 
     });
 </script>
