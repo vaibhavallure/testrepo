@@ -115,28 +115,28 @@ if ($this->getRequest()->getParam('fb', false)) {
         $description = "See the jewelry that ".$celebrity->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
     }
 } elseif ($current_location = Mage::registry('current_piercing_location')) {
-        $categories = $this->getCategoriesArray();
-        $pg = Mage::getModel('catalog/category')->load($current_location);
-        $url = Mage::helper('core/url')->getCurrentUrl();
-        $title = $pg->getName() . " PIERCING STYLES";
-        $image = "";
-        $type = 'product';
-        $description = $pg->getName();
-    } elseif ($celeb = Mage::registry('celebrities')) {
-        $title = $celeb->getCelebrityName()." is wearing Venus by Maria Tash.";
-        $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'celebrities/' . $celeb->getDefaultImage();
-        $url = $this->helper('core/url')->getCurrentUrl();
-        $description = "See the jewelry that ".$celeb->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
+    $categories = $this->getCategoriesArray();
+    $pg = Mage::getModel('catalog/category')->load($current_location);
+    $url = Mage::helper('core/url')->getCurrentUrl();
+    $title = $pg->getName() . " PIERCING STYLES";
+    $image = "";
+    $type = 'product';
+    $description = $pg->getName();
+} elseif ($celeb = Mage::registry('celebrities')) {
+    $title = $celeb->getCelebrityName()." is wearing Venus by Maria Tash.";
+    $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'celebrities/' . $celeb->getDefaultImage();
+    $url = $this->helper('core/url')->getCurrentUrl();
+    $description = "See the jewelry that ".$celeb->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
 
-        if ($celeboutfitid = $this->getRequest()->getParam('celebrityoutfitid', false)) {
-            $celebrityoutfit = Mage::getModel('ecp_celebrities/outfits')->load($celeboutfitid);
-            $celebrity = Mage::getModel('ecp_celebrities/celebrities')->load($celebrityoutfit->getCelebrityId());
-            $title = $celebrity->getCelebrityName()." is wearing Venus by Maria Tash.";
-            $image = ($this->getRequest()->getParam('iscelebrity') == 0)
-                ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrityoutfit->getOutfitImage()
-                : Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrity->getDefaultImage();
-            $url = $this->helper('core/url')->getCurrentUrl();
-            $description = "See the jewelry that ".$celebrity->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
+    if ($celeboutfitid = $this->getRequest()->getParam('celebrityoutfitid', false)) {
+        $celebrityoutfit = Mage::getModel('ecp_celebrities/outfits')->load($celeboutfitid);
+        $celebrity = Mage::getModel('ecp_celebrities/celebrities')->load($celebrityoutfit->getCelebrityId());
+        $title = $celebrity->getCelebrityName()." is wearing Venus by Maria Tash.";
+        $image = ($this->getRequest()->getParam('iscelebrity') == 0)
+            ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrityoutfit->getOutfitImage()
+            : Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrity->getDefaultImage();
+        $url = $this->helper('core/url')->getCurrentUrl();
+        $description = "See the jewelry that ".$celebrity->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
     }
 } elseif ($tattooer = Mage::registry('tattoo_artist')) {
     $url = $this->helper('core/url')->getCurrentUrl();
@@ -266,49 +266,49 @@ foreach ($metaCollection as $meta){
 <![endif]-->
 
 <!--[if gte IE 9]>
-  <style type="text/css">
+<style type="text/css">
     .gradient {
-       filter: none;
+        filter: none;
     }
     .product-shop .product-collateral .product-options div.styled select {
         width:326px;
         padding-right:31px !important;
         padding-left:2px !important;
     }
-  </style>
+</style>
 <![endif]-->
 <!--[if gt IE 9]>
-  <style type="text/css">
+<style type="text/css">
     .product-shop .product-collateral .product-options div.styled select {
         padding-right:37px !important;
         padding-left:3px !important;
     }
-  </style>
+</style>
 <![endif]-->
 <!--[if IE 8]>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->getUrl(); ?>skin/frontend/mt/default/css/IE8_styles.css" media="all">
 <![endif]-->
 
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', initServiceWorker, false);
-function initServiceWorker() {
-	if ('serviceWorker' in navigator) {
-        navigator
-        .serviceWorker
-        .register('<?php echo $this->getSkinUrl('allure/worker.js');?>')
-        .then(function(registration) {
-            console.log('ServiceWorker registration successful!');
-        })
-        .catch(function(err) {
-            console.log('ServiceWorker registration failed: ', err);
-        });
-	}
-}
+    document.addEventListener('DOMContentLoaded', initServiceWorker, false);
+    function initServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            navigator
+                .serviceWorker
+                .register('<?php echo $this->getSkinUrl('allure/worker.js');?>')
+                .then(function(registration) {
+                    console.log('ServiceWorker registration successful!');
+                })
+                .catch(function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        }
+    }
 </script>
 
 <script type="text/javascript">
-var globalVar = 0;
-var sample_already = false;
+    var globalVar = 0;
+    var sample_already = false;
 </script>
 
 <?php echo $this->getCssJsHtml() ?>
@@ -317,32 +317,33 @@ var sample_already = false;
 <?php echo $this->getIncludes() ?>
 
 <script type="text/javascript" >
-function adapt_to_orientation() {
-    window.location.reload(true);
-}
+    function adapt_to_orientation() {
+        window.location.reload(true);
+    }
 
-jQuery(document).ready(function() {
-    jQuery('body').bind('orientationchange', adapt_to_orientation);
-    if (navigator.userAgent.indexOf('Chrome') >= 0){
-        jQuery('body').addClass("chrome");
-    }
-    if (navigator.userAgent.indexOf('Macintosh') >= 0){
-        jQuery('body').addClass("mac");
-    }
-    if (navigator.userAgent.indexOf('MSIE 10') >= 0){
-        jQuery('body').addClass("ie-10");
-    }
-    if (navigator.userAgent.indexOf('rv:11') >= 0 && navigator.userAgent.indexOf('Windows') >= 0){
-        jQuery('body').addClass("ie-11");
-    }
-});
+    jQuery(document).ready(function() {
+        jQuery('body').bind('orientationchange', adapt_to_orientation);
+        if (navigator.userAgent.indexOf('Chrome') >= 0){
+            jQuery('body').addClass("chrome");
+        }
+        if (navigator.userAgent.indexOf('Macintosh') >= 0){
+            jQuery('body').addClass("mac");
+        }
+        if (navigator.userAgent.indexOf('MSIE 10') >= 0){
+            jQuery('body').addClass("ie-10");
+        }
+        if (navigator.userAgent.indexOf('rv:11') >= 0 && navigator.userAgent.indexOf('Windows') >= 0){
+            jQuery('body').addClass("ie-11");
+        }
+    });
 </script>
 <?php
 $wholesale=false;
 $login = Mage::getSingleton( 'customer/session' )->isLoggedIn();
-	//Check if User is Logged In
-    if($login){
-		$_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-		if($_myGroupId==2) $wholesale=true;
-	}
+//Check if User is Logged In
+if($login){
+    $_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+    if($_myGroupId==2) $wholesale=true;
+}
 ?>
+

@@ -133,6 +133,7 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/allure/bootstrap.css</stylesheet></action>
                 <!--BUGFIX CSS ADDED-->
                 <!-- <action method="addCss"><stylesheet>css/design-fix.css</stylesheet></action> -->
+                <block type="page/html_breadcrumbs"  name="head_breadcrumbs"  as="head_breadcrumbs" template="allure/breadcrumb/script.phtml" />
 
             </block>
 
