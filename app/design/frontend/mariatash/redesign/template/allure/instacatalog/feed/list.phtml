@@ -256,8 +256,10 @@ foreach($collection as $date_to) {
 
                 <?php endforeach;?>
             </div>
-        </div>
 
+
+        </div>
+        <div class="insta-loader mt-3 mb-5"></div>
 
     <?php else : ?>
         <?php echo Mage::helper('allure_instacatalog')->__('There are no posts at this moment');?>
@@ -359,7 +361,6 @@ foreach($collection as $date_to) {
 
 </style>
 
-<div class="insta-loader"></div>
 
 
 
@@ -468,14 +469,6 @@ target="_blank"><i class="fa fa-link"></i>
     //]]>
 </script>
 
-<script>
-    //temp
-    jQuery(document).ready(function(){
-        jQuery('.insta-loader').css({"display":"none"});
-    });
-
-</script>
-
 <script type="text/javascript">
     jQuery('.loader').css({"display":"none"});
     jQuery('.insta-loader').css({"display":"none"});
@@ -489,12 +482,14 @@ target="_blank"><i class="fa fa-link"></i>
             condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
         }else {
              condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+            jQuery('.insta-loader').css({"display":"block"});
         }
         if(condition){
-            jQuery('.insta-loader').css({"display":"block"});
+
             if(page<=totalPages){
                 // setLoader();
                 if( xhr == null ) {
+
                     //xhr.abort();
                     //xhr = null;
                     xhr =	jQuery.ajax({
@@ -503,7 +498,6 @@ target="_blank"><i class="fa fa-link"></i>
                         dataType : 'json',
                         type : 'POST',
                         data: {'page':page},
-
                         beforeSend:function(){
                             // jQuery('.insta-loader').css({"display":"block"});
                         },
@@ -512,19 +506,24 @@ target="_blank"><i class="fa fa-link"></i>
                             setTimeout(
                                 function()
                                 {
-                                    jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
                                     jQuery('.insta-loader').css({"display":"none"});
+                                    jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
+                                    var box_width = jQuery('.fs-entry-container').outerWidth();
+                                    jQuery('.fs-entry-container').css('height', box_width);
+                                    xhr = null;
                                 }, 2000);
                         }
                     });
 
-                    xhr = null;
+                    // xhr = null;
                     page ++;
                 }
             }else{
                 // jQuery('.loader').css({"display":"none"});
                 jQuery('.insta-loader').css({"display":"none"});
             }
+        }else{
+            jQuery('.insta-loader').css({"display":"none"});
         }
     });
 </script>
@@ -611,3 +610,8 @@ target="_blank"><i class="fa fa-link"></i>
     });
 
 </script>
+<style>
+    div#shop_our_instagram {
+        margin-bottom: 6rem !important;
+    }
+</style>
