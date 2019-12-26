@@ -470,60 +470,59 @@ target="_blank"><i class="fa fa-link"></i>
 </script>
 
 <script type="text/javascript">
-    jQuery('.loader').css({"display":"none"});
-    jQuery('.insta-loader').css({"display":"none"});
-    var xhr = null;
+    //jQuery('.insta-loader').css({"visibility":"hidden"});
+    jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
+    var isLoadingInstagram = false;
     var page = 2;
     var totalPages = <?php echo $totalPageSize?>;
     jQuery(window).scroll(function(){
-        var condition
-        if(jQuery('body').hasClass('mobile-device'))
+        var condition = 0;
+
+        var $ = jQuery;
+        if(jQuery('body').hasClass('mobile-device')){
+            condition = 300;
+        }
+        $markPos = jQuery("#footer8").offset().top - jQuery(window).height()+condition;
+        $scrollPos = jQuery(window).scrollTop();
+
+        if ($scrollPos >= $markPos) {
+            jQuery('.insta-loader').addClass('loading').css({"display":"block"});
+        } else {
+            jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
+        }
+
+        /*if(jQuery('body').hasClass('mobile-device'))
         {
-            condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
+             condition=((jQuery(this).scrollTop()+500) > jQuery(document).height() - jQuery(window).height());
         }else {
              condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
-            jQuery('.insta-loader').css({"display":"block"});
-        }
-        if(condition){
+        }*/
+        if($scrollPos >= $markPos && page<=totalPages){
+            if( !isLoadingInstagram ) {
+                isLoadingInstagram = jQuery.ajax({
+                    async: true,
+                    url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreAjax';?>',
+                    dataType : 'json',
+                    type : 'POST',
+                    data: {'page':page},
+                    success: function(data) {
+                        //instagram_posts
+                        setTimeout(
+                            function()
+                            {
+                                jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
+                                jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
+                                var box_width = jQuery('.fs-entry-container').outerWidth();
+                                jQuery('.fs-entry-container').css('height', box_width);
+                                isLoadingInstagram = false;
+                            }, 2000);
+                    }
+                });
 
-            if(page<=totalPages){
-                // setLoader();
-                if( xhr == null ) {
-
-                    //xhr.abort();
-                    //xhr = null;
-                    xhr =	jQuery.ajax({
-                        async: false,
-                        url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreAjax';?>',
-                        dataType : 'json',
-                        type : 'POST',
-                        data: {'page':page},
-                        beforeSend:function(){
-                            // jQuery('.insta-loader').css({"display":"block"});
-                        },
-                        success: function(data) {
-                            //instagram_posts
-                            setTimeout(
-                                function()
-                                {
-                                    jQuery('.insta-loader').css({"display":"none"});
-                                    jQuery('.fs-wide-timeline .fs-timeline').append(data.data.html);
-                                    var box_width = jQuery('.fs-entry-container').outerWidth();
-                                    jQuery('.fs-entry-container').css('height', box_width);
-                                    xhr = null;
-                                }, 2000);
-                        }
-                    });
-
-                    // xhr = null;
-                    page ++;
-                }
-            }else{
-                // jQuery('.loader').css({"display":"none"});
-                jQuery('.insta-loader').css({"display":"none"});
+                page ++;
             }
-        }else{
-            jQuery('.insta-loader').css({"display":"none"});
+        } else {
+            jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
         }
     });
 </script>
@@ -610,8 +609,3 @@ target="_blank"><i class="fa fa-link"></i>
     });
 
 </script>
-<style>
-    div#shop_our_instagram {
-        margin-bottom: 6rem !important;
-    }
-</style>
