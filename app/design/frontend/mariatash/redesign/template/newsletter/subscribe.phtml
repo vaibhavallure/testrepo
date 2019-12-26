@@ -296,13 +296,5 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
             });
         }
 
-        /*----------------mobile menu js-----------------------*/
-
-        jQuery('.menu_overlay').on('click', function(e){
-            event.stopPropagation();
-            if (jQuery('body').hasClass('mobile-device')) {
-                jQuery('#menu-btn').click();
-            }
-        });
     });
 </script>

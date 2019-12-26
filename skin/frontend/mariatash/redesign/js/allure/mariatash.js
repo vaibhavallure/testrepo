@@ -280,12 +280,14 @@ jQuery('.link-button').click(function(event) {
         }, 600);
     });
 
-    jQuery('.noChild').mouseover(function () {
-        jQuery(".main_menu").removeClass('active_menu');
-        jQuery('section.sub-menu').slideUp();
-        jQuery(".menu_overlay").addClass("d-none");
-        scrollBody();
-    });
+    if(!jQuery('body').hasClass('mobile-device')) {
+        jQuery('.noChild').mouseover(function () {
+            jQuery(".main_menu").removeClass('active_menu');
+            jQuery('section.sub-menu').slideUp();
+            jQuery(".menu_overlay").addClass("d-none");
+            scrollBody();
+        });
+    }
 
 
 
@@ -314,6 +316,14 @@ jQuery('.link-button').click(function(event) {
     });
 
 
+    /*----------------mobile menu js-----------------------*/
+
+    jQuery(document).on('click','.menu_overlay', function(e){
+    	event.stopPropagation();
+        if (jQuery(window).width() <= 1024 || jQuery('body').hasClass('mobile-device')) {
+            jQuery('#menu-btn').click()
+        }
+    });
 
     jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head,.select-currency-mobile,.wishlist,.my-account-mobile').click(function(event){
         event.stopPropagation();
@@ -326,7 +336,11 @@ jQuery('.link-button').click(function(event) {
             jQuery('section.sub-menu').hide();
         }
         jQuery('body').toggleClass("fancybox-lock");
-        jQuery(".menu_overlay").toggleClass("d-none");
+        if(jQuery(".menu_overlay").hasClass("d-none")){
+            jQuery(".menu_overlay").removeClass("d-none")
+        }else{
+            jQuery(".menu_overlay").addClass("d-none")
+        }
 
         jQuery('.mobile-main_menu').toggleClass('active');
         jQuery(this).toggleClass("change");
