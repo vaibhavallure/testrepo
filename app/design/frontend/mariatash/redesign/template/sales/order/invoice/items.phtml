@@ -31,8 +31,8 @@
 <p class="order-links"><a href="<?php echo $_allInvoicePrintUrl;//$this->getPrintAllInvoicesUrl($_order) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print All Invoices') ?></a></p>
 <?php foreach ($_order->getInvoiceCollection() as $_invoice): ?>
 <?php $_invoicePrintUrl = Mage::getUrl('sales/order/printInvoice', array('invoice_id' => $_invoice->getId()));?>
-<h2 class="sub-title"><?php echo $this->__('Invoice #') ?><?php echo $_invoice->getIncrementId(); ?> <span class="separator">|</span> <a href="<?php echo $_invoicePrintUrl;//$this->getPrintInvoiceUrl($_invoice) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Invoice') ?></a></h2>
-<h2 class="table-caption"><?php echo $this->__('Items Invoiced') ?></h2>
+<h1 class="sub-title"><?php echo $this->__('Invoice #') ?><?php echo $_invoice->getIncrementId(); ?> <span class="separator">|</span> <a href="<?php echo $_invoicePrintUrl;//$this->getPrintInvoiceUrl($_invoice) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Invoice') ?></a></h1>
+<h2 class="text-uppercase para-bold mb-4 mt-4"><?php echo $this->__('Items Invoiced') ?></h2>
 <table class="data-table" id="my-invoice-table-<?php echo $_invoice->getId(); ?>">
     <col />
     <col width="1" />
@@ -41,11 +41,11 @@
     <col width="1" />
     <thead>
         <tr>
-            <th bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Product Name') ?></th>
-            <th class="mt-header-sku" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('SKU') ?></th>
-            <th bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px" class="a-right"><?php echo $this->__('Price') ?></th>
-            <th bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px" class="a-center"><span class="nobr"><?php echo $this->__('Qty Invoiced') ?></span></th>
-            <th bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px" class="a-right"><?php echo $this->__('Subtotal') ?></th>
+            <th bgcolor="#EAEAEA" style="font-size:13px; padding-left: 0px; width: auto;text-align: left"><?php echo $this->__('Product Name') ?></th>
+            <th class="mt-header-sku" bgcolor="#EAEAEA" style="font-size:13px; width: auto;text-align: left;"><?php echo $this->__('SKU') ?></th>
+            <th bgcolor="#EAEAEA" style="font-size:13px; text-align: left " class="a-right"><?php echo $this->__('Price') ?></th>
+            <th bgcolor="#EAEAEA" style="font-size:13px; text-align: left" class="a-center"><span class="nobr"><?php echo $this->__('Qty Invoiced') ?></span></th>
+            <th bgcolor="#EAEAEA" style="font-size:13px;text-align: left " class="a-right"><?php echo $this->__('Subtotal') ?></th>
         </tr>
     </thead>
     <tfoot>
