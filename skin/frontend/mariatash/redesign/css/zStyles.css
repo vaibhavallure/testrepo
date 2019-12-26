@@ -1400,6 +1400,9 @@ img.print-size-chart{
 		margin:0 auto;
 	}
 }
+.mobile-device .menu_overlay {
+	z-index: 1;
+}
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
 		width: 100%!important;
@@ -2044,6 +2047,9 @@ img.print-size-chart{
 	}
 	.acc-products-wrapper .optionfilter{
 		padding: 5px;
+	}
+	.category-shop-our-instagram .insta-loader{
+		z-index: 1 !important;
 	}
 }
 
