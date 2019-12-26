@@ -397,6 +397,11 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             $orderQuote = Mage::getModel('sales/quote')->load($quoteMain->getId());
             $backorderQuote->setId(null)->save();
             $orderQuote->setId(null)->save();
+
+            $orderQuote->setAppliedRuleIds(null)->save();
+            $backorderQuote->setAppliedRuleIds(null)->save();
+
+
             $count = 1;
             foreach ($quoteItems as $item) {
                 if(!$item->getParentItemId())
@@ -589,6 +594,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     ->getShippingAddress()
                     ->setCollectShippingRates(true);
                 $this->getQuoteBackordered()
+                    ->setTotalsCollectedFlag(false)
                     ->collectTotals()
                     ->save();
             }
@@ -656,6 +662,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     ->getShippingAddress()
                     ->setCollectShippingRates(true);
                 $this->getQuoteOrdered()
+                    ->setTotalsCollectedFlag(false)
                     ->collectTotals()
                     ->save();
             }
