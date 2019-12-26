@@ -295,5 +295,14 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
                 jQuery('section.sub-menu').hide();
             });
         }
+
+        /*----------------mobile menu js-----------------------*/
+
+        jQuery('.menu_overlay').on('click', function(e){
+            event.stopPropagation();
+            if (jQuery('body').hasClass('mobile-device')) {
+                jQuery('#menu-btn').click();
+            }
+        });
     });
 </script>

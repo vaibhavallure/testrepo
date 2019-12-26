@@ -314,14 +314,6 @@ jQuery('.link-button').click(function(event) {
     });
 
 
-    /*----------------mobile menu js-----------------------*/
-
-    jQuery(document).on('click','.menu_overlay', function(e){
-    	event.stopPropagation();
-        if (jQuery(window).width() <= 1024) {
-            jQuery('#menu-btn').click()
-        }
-    });
 
     jQuery('#menu-btn ,.mobile-main_menu .main_menu,.close-section,.mobile-sub_menu .menu-head,.select-currency-mobile,.wishlist,.my-account-mobile').click(function(event){
         event.stopPropagation();
