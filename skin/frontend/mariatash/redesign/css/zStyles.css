@@ -1394,6 +1394,12 @@ img.print-size-chart{
 	right: 60px;
 	margin-top: 25px !important;
 }
+@supports (-ms-ime-align:auto)
+{
+	.navbar .jewelry .common-option-div  {
+		margin:0 auto;
+	}
+}
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
 		width: 100%!important;
@@ -2429,10 +2435,10 @@ input[name="mail_from_email"]::placeholder,
 	z-index: 9999;
 }
 /*Border Throughout site for tooltip*/
-									  .t_ContentContainer.t_clearfix.t_Content_allure_footer,
-									  .icon-user .login-dropdown{
-										  border: 0.5px solid;
-									  }
+.t_ContentContainer.t_clearfix.t_Content_allure_footer,
+.icon-user .login-dropdown{
+	border: 0.5px solid;
+}
 
 .category-celebrity-clientele .celebPopup .product-info{
 	position: relative;
