@@ -231,4 +231,19 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
         }
         return $flag;
     }
+
+
+    /*
+     * function to check if item allowed as gift
+     *  */
+
+    public function canNotOrderAsGift($sku)
+    {
+        $skuArray=explode(",",Mage::getStoreConfig('allure_multicheckout/not_allowed_as_gift_products/sku'));
+
+        if(in_array($sku,$skuArray))
+          return true;
+
+        return false;
+    }
 }
