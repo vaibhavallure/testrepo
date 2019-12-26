@@ -318,7 +318,7 @@ jQuery('.link-button').click(function(event) {
 
     /*----------------mobile menu js-----------------------*/
 
-    jQuery(document).on('click','.menu_overlay', function(e){
+    jQuery('.menu_overlay').on('click',function(e){
     	event.stopPropagation();
         if (jQuery(window).width() <= 1024 || jQuery('body').hasClass('mobile-device')) {
             jQuery('#menu-btn').click()
