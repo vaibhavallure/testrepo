@@ -259,7 +259,7 @@ foreach($collection as $date_to) {
 
 
         </div>
-        <div class="insta-loader mt-3 mb-5"></div>
+        <div class="insta-loader "></div>
 
     <?php else : ?>
         <?php echo Mage::helper('allure_instacatalog')->__('There are no posts at this moment');?>
@@ -488,7 +488,7 @@ target="_blank"><i class="fa fa-link"></i>
         if ($scrollPos >= $markPos) {
             jQuery('.insta-loader').addClass('loading').css({"display":"block"});
         } else {
-            jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
+            // jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
         }
 
         /*if(jQuery('body').hasClass('mobile-device'))
@@ -522,7 +522,7 @@ target="_blank"><i class="fa fa-link"></i>
                 page ++;
             }
         } else {
-            jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
+            // jQuery('.insta-loader').removeClass('loading').css({"display":"none"});
         }
     });
 </script>
