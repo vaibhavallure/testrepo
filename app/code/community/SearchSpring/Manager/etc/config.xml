@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<SearchSpring_Manager>
+			<version>2.3.8</version>
+		</SearchSpring_Manager>
+	</modules>
+	<global>
+		<models>
+			<searchspring_manager>
+				<class>SearchSpring_Manager_Model</class>
+			</searchspring_manager>
+		</models>
+		<blocks>
+			<searchspring_manager>
+				<class>SearchSpring_Manager_Block</class>
+			</searchspring_manager>
+			<!-- Add back in for Category Page Management -->
+			<!-- <catalog> -->
+			<!-- 	<rewrite> -->
+			<!-- 		<layer_view>SearchSpring_Manager_Block_Layer_View</layer_view> -->
+			<!-- 	</rewrite> -->
+			<!-- </catalog> -->
+		</blocks>
+		<helpers>
+			<searchspring_manager>
+				<class>SearchSpring_Manager_Helper</class>
+			</searchspring_manager>
+		</helpers>
+		<events>
+			<!-- use catalog_product_save_commit_after otherwise we can get stale product data if our request runs before commit -->
+			<!-- TODO ?? should can we indicate singleton, or single instances of each observer should be re-used ?? -->
+			<catalog_product_save_commit_after>
+				<observers>
+					<searchspring_manager_after_save_push_product>
+						<class>searchspring_manager/observer_productSaveObserver</class>
+						<method>afterSavePushProduct</method>
+					</searchspring_manager_after_save_push_product>
+				</observers>
+			</catalog_product_save_commit_after>
+			<catalog_product_delete_before>
+				<observers>
+					<searchspring_manager_before_delete_push_product>
+						<class>searchspring_manager/observer_productSaveObserver</class>
+						<method>beforeDeletePushProduct</method>
+					</searchspring_manager_before_delete_push_product>
+				</observers>
+			</catalog_product_delete_before>
+			<catalog_product_delete_after_done>
+				<observers>
+					<searchspring_manager_after_delete_push_product>
+						<class>searchspring_manager/observer_productSaveObserver</class>
+						<method>afterDeletePushProduct</method>
+					</searchspring_manager_after_delete_push_product>
+				</observers>
+			</catalog_product_delete_after_done>
+			<catalog_category_save_commit_after>
+				<observers>
+					<searchspring_manager_after_save_update_product_category>
+						<class>searchspring_manager/observer_categorySaveObserver</class>
+						<method>afterSaveUpdateProductCategory</method>
+					</searchspring_manager_after_save_update_product_category>
+				</observers>
+			</catalog_category_save_commit_after>
+			<category_move>
+				<observers>
+					<searchspring_manager_after_move_update_product_category>
+						<class>searchspring_manager/observer_categorySaveObserver</class>
+						<method>afterMoveUpdateProductCategory</method>
+					</searchspring_manager_after_move_update_product_category>
+				</observers>
+			</category_move>
+			<catalog_category_change_products>
+				<observers>
+					<searchspring_manager_after_product_change_update_product_category>
+						<class>searchspring_manager/observer_categorySaveObserver</class>
+						<method>afterProductChangeUpdateProductCategory</method>
+					</searchspring_manager_after_product_change_update_product_category>
+				</observers>
+			</catalog_category_change_products>
+			<catalog_controller_category_delete>
+				<observers>
+					<searchspring_manager_before_delete_update_product_category>
+						<class>searchspring_manager/observer_categorySaveObserver</class>
+						<method>beforeDeleteUpdateProductCategory</method>
+					</searchspring_manager_before_delete_update_product_category>
+				</observers>
+			</catalog_controller_category_delete>
+		</events>
+		<template>
+			<email>
+				<api_error module="searchspring_manager">
+					<label>API Error Template</label>
+					<file>searchspring_api_error.html</file>
+					<type>html</type>
+				</api_error>
+			</email>
+		</template>
+		<resources>
+			<searchspring_manager>
+				<setup>
+					<module>SearchSpring_Manager</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</searchspring_manager>
+		</resources>
+		<searchspring>
+			<api_host>https://api-beta.searchspring.net</api_host>
+			<api_auth>
+				<consumer>
+					<label>SearchSpring</label>
+				</consumer>
+				<role>
+					<label>SearchSpring</label>
+				</role>
+				<admin_user>
+					<username>searchspring_api</username>
+					<firstname>SearchSpring</firstname>
+					<lastname>SearchSpring</lastname>
+					<email>dev+magentoapi@searchspring.com</email>
+				</admin_user>
+			</api_auth>
+		</searchspring>
+		<api2>
+			<auth_adapters>
+				<oauth_zero_legged>
+					<model>searchspring_manager/api2_auth_adapter</model>
+					<label>oAuth Zero Legged</label>
+					<enabled>1</enabled>
+					<order>5</order>
+				</oauth_zero_legged>
+			</auth_adapters>
+		</api2>
+	</global>
+	<frontend>
+		<routers>
+			<searchspring>
+				<use>standard</use>
+				<args>
+					<module>SearchSpring_Manager</module>
+					<frontName>searchspring</frontName>
+				</args>
+			</searchspring>
+		</routers>
+		<!-- Add back in for Category Page Management -->
+		<!-- <layout> -->
+		<!-- 	<updates> -->
+		<!-- 		<searchspring_manager module="SearchSpring_Manager"> -->
+		<!-- 			<file>searchspring_manager.xml</file> -->
+		<!-- 		</searchspring_manager> -->
+		<!-- 	</updates> -->
+		<!-- </layout> -->
+	</frontend>
+	<adminhtml>
+		<events>
+			<admin_system_config_changed_section_ssmanager>
+				<observers>
+					<searchspring_manager_after_config_section_changed>
+						<class>searchspring_manager/observer_configObserver</class>
+						<method>afterSystemConfigSectionChanged</method>
+					</searchspring_manager_after_config_section_changed>
+				</observers>
+			</admin_system_config_changed_section_ssmanager>
+		</events>
+	</adminhtml>
+	<default>
+		<ssmanager>
+			<ssmanager_general>
+				<live_indexing>0</live_indexing>
+			</ssmanager_general>
+			<ssmanager_catalog>
+				<enable_categories>0</enable_categories>
+			</ssmanager_catalog>
+			<ssmanager_images>
+				<generate_cache_images>1</generate_cache_images>
+			</ssmanager_images>
+			<ssmanager_feed>
+				<feed_path>media/searchspring/feed/</feed_path>
+			</ssmanager_feed>
+			<ssmanager_sales_rank>
+				<timespan>6,month</timespan>
+			</ssmanager_sales_rank>
+			<ssmanager_api>
+				<authentication_method>simple</authentication_method>
+			</ssmanager_api>
+		</ssmanager>
+	</default>
+
+	<global>
+		<searchspring>
+			<operation>
+				<third_party>
+
+					<!-- Feed Operations for Third Party Modules -->
+
+					<TBT_Rewards>
+						<loyalty>
+							<class>SearchSpring_Manager_ThirdParty_TBT_RewardsOperation</class>
+						</loyalty>
+					</TBT_Rewards>
+
+					<Amasty_Label>
+						<labels>
+							<class>SearchSpring_Manager_ThirdParty_Amasty_LabelsOperation</class>
+						</labels>
+					</Amasty_Label>
+
+				</third_party>
+			</operation>
+		</searchspring>
+	</global>
+
+	<phpunit>
+		<suite>
+			<modules>
+				<SearchSpring_Manager />
+			</modules>
+		</suite>
+	</phpunit>
+
+</config>
