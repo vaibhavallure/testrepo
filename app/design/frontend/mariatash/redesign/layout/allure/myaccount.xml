@@ -16,6 +16,20 @@
                 <crumbInfo><label>My Products</label><title>My Products</title></crumbInfo>
             </action>
         </reference>
+        <reference name="head_breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>Home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>My Account</crumbName>
+                <crumbInfo><label>My Account</label><title>My Account</title><link>/customer/account/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>My Products</crumbName>
+                <crumbInfo><label>My Products</label><title>My Products</title></crumbInfo>
+            </action>
+        </reference>
 	    <reference name="my.account.wrapper">   
 	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
 	      	<block type="myaccount/filter" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />

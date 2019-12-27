@@ -2051,10 +2051,9 @@ img.print-size-chart{
 	.category-shop-our-instagram .insta-loader{
 		z-index: 1 !important;
 	}
-	.products-grid li.item .list-mt-w{
+	/*.products-grid li.item .list-mt-w{
 		background-color: rgba(255,255,255,0.5);
-		bottom: auto;
-	}
+	}*/
 }
 
 @media (min-width:767px) and (max-width:1024px) {
