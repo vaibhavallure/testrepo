@@ -240,8 +240,8 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     public function canNotOrderAsGift($sku)
     {
         $skuArray=explode(",",Mage::getStoreConfig('allure_multicheckout/not_allowed_as_gift_products/sku'));
-
-        if(in_array($sku,$skuArray))
+        $parentSku=trim(explode("|",$sku)[0]);
+        if(in_array($parentSku,$skuArray))
           return true;
 
         return false;
