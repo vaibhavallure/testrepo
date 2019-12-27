@@ -1401,7 +1401,7 @@ img.print-size-chart{
 	}
 }
 .mobile-device .menu_overlay {
-	z-index: 1;
+	z-index: 4;
 }
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
