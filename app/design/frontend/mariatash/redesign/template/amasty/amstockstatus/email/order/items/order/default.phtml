@@ -40,10 +40,10 @@ $customerGroupId = $customer->getGroupId() ?>
                 <?php $_totalOptions = count($this->getItemOptions())+1;?>
                 <?php $_counter = 1;?>
                 <?php foreach ($this->getItemOptions() as $option): ?>
-                    <dt><?php echo ucwords($option['label']) ?> :</dt>
-                    <dd style="margin:0; padding:0 5px 0 1px;">
+                    <span><?php echo ucwords($option['label']) ?> :</span>
+                    <span style="margin:0; padding:0 5px 0 1px;">
                         <?php echo(isset($option['print_value']) ? ucwords($option['print_value']) : ($this->escapeHtml(ucwords($option['value'])))) ?>
-                    </dd>
+                    </span>
                     <?php $_counter++ ;?>
                     <?php if($_counter > 1 && $_counter < $_totalOptions):?>
                         <?= ' | '?>
