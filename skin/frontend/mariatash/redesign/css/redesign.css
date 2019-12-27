@@ -4950,4 +4950,31 @@ a.product-video-link:hover div.product-video-play-icon {
 .my-account #my-orders-table,#my-openorders-table{
     margin-top: 0px;
 }
-
+#complete-order-shipment table tbody td,
+#complete-order-invoice table tbody td{
+	width: auto!important;
+	text-align: left;
+}
+#complete-order-shipment table tbody td h1,
+#complete-order-invoice table tbody td h1{
+	margin-bottom: 16px;
+}
+#complete-order-shipment table th,td,
+#complete-order-invoice table th,td{
+	padding: .75rem;
+}
+#complete-order-shipment table td,
+#complete-order-invoice table td{
+	padding: .75rem;
+	vertical-align: top;
+	font-family: urw-din-regular;
+}
+#complete-order-shipment table tr,
+#complete-order-invoice table tr{
+	display: table-row;
+}
+#complete-order-shipment .order-items .order-links .link-print,
+#complete-order-invoice .order-items .order-links .link-print{
+	text-decoration: underline;
+	font-weight: 300;
+}
