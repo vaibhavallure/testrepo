@@ -27,7 +27,7 @@
 <?php $_item = $this->getItem() ?>
 <?php $_order = $this->getItem()->getOrderItem()->getOrder() ?>
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-    <td><h4 class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></h4>
+    <td style="text-align: left; padding:10px 0;"><h1 class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></h1>
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">
         <?php foreach ($_options as $_option) : ?>
@@ -62,6 +62,6 @@
             <a href="#" id="order-item-gift-message-link-<?php echo $_item->getId() ?>" class="gift-message-link" onclick="return giftMessageToogle('<?php echo $_item->getId() ?>')"><?php echo $this->__('Gift Message') ?></a>
         <?php endif; ?>
     </td>
-    <td><?php echo $this->escapeHtml(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
-    <td class="a-center"><?php echo $_item->getQty()*1 ?></td>
+    <td class="text-left para-normal"><?php echo $this->escapeHtml(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
+    <td class="a-center text-left"><?php echo $_item->getQty()*1 ?></td>
 </tr>

@@ -347,6 +347,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
     					 */
     					$customer->setPassword($newPass);
     					$customer->setPasswordConfirmation($confPass);
+
     				} else {
     					$errors[] = $this->__('New password field cannot be empty.');
     				}
@@ -373,6 +374,15 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
 	    			}
 
 	    			$customer->save();
+                    if(!empty($customer->getTwUcGuid())):
+                        $customerData = array
+                        (
+                            'customer_id'   => $customer->getTwUcGuid(),
+                            'password'      => $newPass,
+                        );
+
+                        Mage::getModel('teamwork_universalcustomers/svs')->updateCustomer($customerData,true);
+                    endif;
 	    			$result['success'] = 1;
 	    			$result['message'] =  $this->__('The account information has been saved.');
 

@@ -1,0 +1,57 @@
+
+<?php
+$breadcrub_array = array (
+    '@context' => 'http://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => array()
+);
+$item_array = array();
+$crumbs = $this->getBreadcrumbs();
+if ($crumbs):?>
+    <script type="application/ld+json">
+<?php
+        $cnt = 1;
+        foreach($crumbs as $_crumbName=>$_crumbInfo):
+
+            if($_crumbInfo['link'] && strlen(strstr($_crumbInfo['link'],"/piercing.html")))
+                continue;
+
+            if($_crumbInfo['link'] && strlen(strstr($_crumbInfo['link'],"/jewelry.html")))
+                continue;
+
+
+            if($_crumbInfo['link'] && !strlen(strstr($_crumbInfo['link'],"/jewelry.html"))):
+                $item = array(
+                    '@type' => 'ListItem',
+                    'position' => $cnt,
+                    'item' =>
+                        array (
+                            '@id' => $_crumbInfo['link'],
+                            'name' => $_crumbInfo['label'],
+                        ),
+                );
+                array_push($breadcrub_array['itemListElement'], $item);
+                $cnt++;
+            elseif ($_crumbInfo['last']):
+                $item = array(
+                    '@type' => 'ListItem',
+                    'position' => $cnt,
+                    'item' =>
+                        array (
+                            '@id' => Mage::helper('core/url')->getCurrentUrl(),
+                            'name' => $_crumbInfo['label'],
+                        ),
+                );
+                array_push($breadcrub_array['itemListElement'], $item);
+                $cnt++;
+            endif;
+            ;
+        endforeach;
+        echo json_encode($breadcrub_array,JSON_UNESCAPED_SLASHES);?>
+        </script>
+<?php    endif;
+?>
+
+
+
+

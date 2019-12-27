@@ -791,7 +791,7 @@
 
 }
 .mt-myaccount-new .order-details .odd td{
-	font-family: urw-din-bold!important;
+	font-family: urw-din-bold;
 	font-size: 13px;
 	line-height: 1.54;
 	letter-spacing: 0.5px;
@@ -1393,6 +1393,15 @@ img.print-size-chart{
 	width: 25px !important;
 	right: 60px;
 	margin-top: 25px !important;
+}
+@supports (-ms-ime-align:auto)
+{
+	.navbar .jewelry .common-option-div  {
+		margin:0 auto;
+	}
+}
+.mobile-device .menu_overlay {
+	z-index: 1;
 }
 @media(max-width: 830px){
 	.cms-store-locations-html  .fancybox-skin{
@@ -2039,6 +2048,12 @@ img.print-size-chart{
 	.acc-products-wrapper .optionfilter{
 		padding: 5px;
 	}
+	.category-shop-our-instagram .insta-loader{
+		z-index: 1 !important;
+	}
+	/*.products-grid li.item .list-mt-w{
+		background-color: rgba(255,255,255,0.5);
+	}*/
 }
 
 @media (min-width:767px) and (max-width:1024px) {
@@ -2429,10 +2444,10 @@ input[name="mail_from_email"]::placeholder,
 	z-index: 9999;
 }
 /*Border Throughout site for tooltip*/
-									  .t_ContentContainer.t_clearfix.t_Content_allure_footer,
-									  .icon-user .login-dropdown{
-										  border: 0.5px solid;
-									  }
+.t_ContentContainer.t_clearfix.t_Content_allure_footer,
+.icon-user .login-dropdown{
+	border: 0.5px solid;
+}
 
 .category-celebrity-clientele .celebPopup .product-info{
 	position: relative;
