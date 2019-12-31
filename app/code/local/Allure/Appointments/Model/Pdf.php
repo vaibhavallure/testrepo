@@ -159,9 +159,10 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
         {
             $customers=$this->getCustomers($appointment->getId());
             $i=1;
+            $j=1;
             foreach($customers as $customer) {
                 $lines[$i][] = array(
-                    'text' => Mage::helper('core/string')->str_split($i.") Name: " . $customer->getFirstname() . ' ' .$customer->getLastname(), 35),
+                    'text' => Mage::helper('core/string')->str_split($j.") Name: " . $customer->getFirstname() . ' ' .$customer->getLastname(), 35),
                     'feed' => 55,
                     'align' => 'left'
                 );
@@ -187,6 +188,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                         );
 
                         $i++;
+                        $j++;
                     }
                 }else
                 {
