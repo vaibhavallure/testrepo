@@ -63,19 +63,19 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             'feed' => 80
         );
         
-       /* $lines[0][] = array(
-            'text'  => Mage::helper('sales')->__('Name'),
-            'feed'  => 175,
-            'align' => 'right'
+        $lines[0][] = array(
+            'text'  => Mage::helper('sales')->__('Piercer'),
+            'feed'  => 180,
+            'align' => 'left'
         );
         
         $lines[0][] = array(
-            'text'  => Mage::helper('sales')->__('Piercer Name'),
+            'text'  => Mage::helper('sales')->__('Number Of People'),
             'feed'  => 350,
-            'align' => 'right'
+            'align' => 'left'
         );
-        
-        $lines[0][] = array(
+
+        /*$lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Note'),
             'feed'  => 450,
             'align' => 'right'
@@ -139,18 +139,20 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
         );
         $lines[0][] = array(
             'text' => date("F j, Y H:i", strtotime($appointment->getAppointmentStart())),
-            'font' => 'italic',
+            'font' => 'bold',
             'feed' => 55
         );
 
         $lines[0][] = array(
             'text'  => Mage::helper('core/string')->str_split("Piercer: ".$appointment->getFname().' '.$appointment->getLname(), 35),
             'feed'  => 180,
+            'font' => 'bold',
             'align' => 'left'
         );
         $lines[0][] = array(
             'text'  => 'Number Of People: '.$appointment->getPiercingQty(),
             'feed'  => 350,
+            'font' => 'bold',
             'align' => 'left'
         );
 
@@ -164,7 +166,8 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                 $lines[$i][] = array(
                     'text' => Mage::helper('core/string')->str_split($j.") Name: " . $customer->getFirstname() . ' ' .$customer->getLastname(), 35),
                     'feed' => 55,
-                    'align' => 'left'
+                    'align' => 'left'/*,
+                    'font' => 'italic'*/
                 );
                 $lines[$i][] = array(
                     'text' => 'Downsize/Checkup: ' . $customer->getCheckup().' Piercing: ' . $customer->getPiercing(),
@@ -188,7 +191,6 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                         );
 
                         $i++;
-                        $j++;
                     }
                 }else
                 {
@@ -199,6 +201,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     );
                 }
                 $i++;
+                $j++;
             }
         }else{
             $lines[1][] = array(
@@ -208,9 +211,9 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             );
             $lines[1][] = array(
                 'text' => '(old system appointment)',
-                'feed' => 210,
-                'align' => 'left',
-                'font' => 'italic'
+                'feed' => 180,
+                'align' => 'left'/*,
+                'font' => 'italic'*/
             );
 
 
@@ -248,9 +251,10 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             'lines'  => $lines,
             'height' => 20
         );
-        
+
         $page = $this->drawLineBlocks($page, array($lineBlock), array('table_header' => true));
-       $this->setPage($page);
+        $this->setPage($page);
+        $this->y -= 10;
     }
     
     
