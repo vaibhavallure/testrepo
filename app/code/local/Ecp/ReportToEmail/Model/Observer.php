@@ -702,7 +702,7 @@ class Ecp_ReportToEmail_Model_Observer
             if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                 $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
                 $data['total_qty_ordered'] = $collection->getFirstItem()->getTotalQtyOrdered();
-//                $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
+                $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
 //                $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
 //                $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
 //                $data['total_refunded_amount'] = $collection->getFirstItem()->getTotalRefundedAmount();
@@ -750,19 +750,19 @@ class Ecp_ReportToEmail_Model_Observer
 
         $helper = Mage::helper('ecp_reporttoemail');
 
-        if(!$helper->getComparisonReportStatus()) {
-            $this->add_log("Comparison Report: Disabled");
-            return;
-        }
+//        if(!$helper->getComparisonReportStatus()) {
+//            $this->add_log("Comparison Report: Disabled");
+//            return;
+//        }
 
-        if($emails == null ){
-            $emails = $helper->getComparisonReportEmails();
-        }
+//        if($emails == null ){
+//            $emails = $helper->getComparisonReportEmails();
+//        }
 
-        if(empty($emails)) {
-            $this->add_log("Comparison Report: List Emails Empty");
-            return;
-        }
+//        if(empty($emails)) {
+//            $this->add_log("Comparison Report: List Emails Empty");
+//            return;
+//        }
 
         if($date == null) {
             $yesterday=date('Y-m-d');
@@ -778,8 +778,8 @@ class Ecp_ReportToEmail_Model_Observer
 
         $twHelper = Mage::helper("allure_teamwork/teamworkClient");
 
-        $count = $twHelper->syncTmOrders($date,$yesterday);
-        $this->add_log("Comparison Report: TW-MAG Sync count - {$count}");
+        //$count = $twHelper->syncTmOrders($date,$yesterday);
+        //$this->add_log("Comparison Report: TW-MAG Sync count - {$count}");
 
         $teamworkData = $this->getTeamworkData($from,$to);
 
@@ -850,7 +850,7 @@ class Ecp_ReportToEmail_Model_Observer
                             <tr>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
                                                     style="font-size:14px"><strong>Net Sales Amount</strong></span></span></span></td>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$data['total_profit']}</span></span>
+                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$data['total_income_amount']}</span></span>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$twNetSales}</span></span>
                                 </td>
                             </tr>
@@ -862,7 +862,7 @@ EOT;
                 $allmailbody .= $mailbody;
             }
             //$emailBody = '<div style="float: left;">'.$allmailbody."</div>";
-//print_r($allmailbody);die;
+echo $allmailbody;die;
 //            if($runFrom=="manual" && $ismail==null)
 //                echo $allmailbody;
 
