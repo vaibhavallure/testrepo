@@ -1660,7 +1660,7 @@ input[type="checkbox"]:checked+label:before {
 	top: 0;
 	bottom: 0;
 	background: rgb(255,255,255,0);
-	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
+	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 107%);
 }
 .desktop-device .image-text h6 {
 	position: absolute;
