@@ -164,7 +164,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             $j=1;
             foreach($customers as $customer) {
                 $lines[$i][] = array(
-                    'text' => Mage::helper('core/string')->str_split($j.") Name: " . $customer->getFirstname() . ' ' .$customer->getLastname(), 35),
+                    'text' => Mage::helper('core/string')->str_split($j.") Name: " . $customer->getFirstname() . ' ' .$customer->getLastname(), 24),
                     'feed' => 55,
                     'align' => 'left'/*,
                     'font' => 'italic'*/
@@ -205,7 +205,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             }
         }else{
             $lines[1][] = array(
-                'text' => Mage::helper('core/string')->str_split("1) Name: " . $appointment->getFirstname() . ' ' .$appointment->getLastname(), 35),
+                'text' => Mage::helper('core/string')->str_split("1) Name: " . $appointment->getFirstname() . ' ' .$appointment->getLastname(), 24),
                 'feed' => 55,
                 'align' => 'left'
             );
