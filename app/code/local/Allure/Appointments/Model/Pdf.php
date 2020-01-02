@@ -48,17 +48,22 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
         $page->setLineColor(new Zend_Pdf_Color_GrayScale(0.5));
         $page->setLineWidth(0.5);
-        $page->drawRectangle(25, $this->y, 570, $this->y -15);
+        $page->drawRectangle(1, $this->y, 594, $this->y -15);
         $this->y -= 10;
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
         
         //columns headers
         $lines[0][] = array(
+            'text' => Mage::helper('sales')->__('App Id'),
+            'feed' => 5
+        );
+
+        $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Time'),
-            'feed' => 35
+            'feed' => 80
         );
         
-        $lines[0][] = array(
+       /* $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Name'),
             'feed'  => 175,
             'align' => 'right'
@@ -74,7 +79,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             'text'  => Mage::helper('sales')->__('Note'),
             'feed'  => 450,
             'align' => 'right'
-        );
+        );*/
         
         $lineBlock = array(
             'lines'  => $lines,
@@ -126,28 +131,117 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
         $lines  = array();
         $pdf    = $this->_getPdf();
         // draw Product name
-        $lines[][] = array(
+        $lines[0][] = array(
+            'text' => $appointment->getId(),
+            'font' => 'bold',
+            'align' => 'left',
+            'feed' => 5
+        );
+        $lines[0][] = array(
             'text' => date("F j, Y H:i", strtotime($appointment->getAppointmentStart())),
             'font' => 'italic',
-            'feed' => 35
+            'feed' => 55
         );
-       
+
         $lines[0][] = array(
-            'text'  => Mage::helper('core/string')->str_split($appointment->getFirstname().' '.$appointment->getLastname(), 35),
-            'feed'  => 150,
+            'text'  => Mage::helper('core/string')->str_split("Piercer: ".$appointment->getFname().' '.$appointment->getLname(), 35),
+            'feed'  => 180,
             'align' => 'left'
         );
         $lines[0][] = array(
-            'text'  => Mage::helper('core/string')->str_split($appointment->getFname().' '.$appointment->getLname(), 35),
-            'feed'  => 300,
+            'text'  => 'Number Of People: '.$appointment->getPiercingQty(),
+            'feed'  => 350,
             'align' => 'left'
         );
-        
-        $lines[0][] = array(
-            'text'  => Mage::helper('core/string')->str_split($appointment->getSpecialNotes(), 35),
-            'feed'  => 435,
-            'align' => 'left'
-        );
+
+
+        if($appointment->getSpecialStore())
+        {
+            $customers=$this->getCustomers($appointment->getId());
+            $i=1;
+            $j=1;
+            foreach($customers as $customer) {
+                $lines[$i][] = array(
+                    'text' => Mage::helper('core/string')->str_split($j.") Name: " . $customer->getFirstname() . ' ' .$customer->getLastname(), 35),
+                    'feed' => 55,
+                    'align' => 'left'
+                );
+                $lines[$i][] = array(
+                    'text' => 'Downsize/Checkup: ' . $customer->getCheckup().' Piercing: ' . $customer->getPiercing(),
+                    'feed' => 180,
+                    'align' => 'left'
+                );
+
+
+                if(strlen($customer->getSpecialNotes())>50)
+                {
+
+                    foreach (str_split($customer->getSpecialNotes(),50) as $string)
+                    {
+                        $notelabel=($i==1)? "Notes:" : "";
+                        $fd=($i==1)? 350 : 375;
+
+                        $lines[$i][] = array(
+                            'text' => $notelabel.' ' . $string,
+                            'feed' => $fd,
+                            'align' => 'left'
+                        );
+
+                        $i++;
+                        $j++;
+                    }
+                }else
+                {
+                    $lines[$i][] = array(
+                        'text' => 'Notes: ' . $customer->getSpecialNotes(),
+                        'feed' => 350,
+                        'align' => 'left'
+                    );
+                }
+                $i++;
+            }
+        }else{
+            $lines[1][] = array(
+                'text' => Mage::helper('core/string')->str_split("1) Name: " . $appointment->getFirstname() . ' ' .$appointment->getLastname(), 35),
+                'feed' => 55,
+                'align' => 'left'
+            );
+            $lines[1][] = array(
+                'text' => '(old system appointment)',
+                'feed' => 210,
+                'align' => 'left',
+                'font' => 'italic'
+            );
+
+
+            if(strlen($appointment->getSpecialNotes())>50)
+            {
+
+                $i=1;
+                foreach (str_split($appointment->getSpecialNotes(),50) as $string)
+                {
+                    $notelabel=($i==1)? "Notes:" : "";
+                    $fd=($i==1)? 350 : 375;
+
+                    $lines[$i][] = array(
+                        'text' => $notelabel.' ' . $string,
+                        'feed' => $fd,
+                        'align' => 'left'
+                    );
+
+                    $i++;
+                }
+            }else
+            {
+                $lines[1][] = array(
+                    'text' => 'Notes: ' . $appointment->getSpecialNotes(),
+                    'feed' => 350,
+                    'align' => 'left'
+                );
+            }
+
+        }
+
         
         
         $lineBlock = array(
@@ -275,5 +369,12 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             $this->_drawHeader($page);
         }
         return $page;
+    }
+
+
+    public function getCustomers($appointment_id)
+    {
+        $appointments =  Mage::getModel('appointments/customers')->getCollection();
+        return $appointments->addFieldToFilter('appointment_id', $appointment_id); //Only assigned Appointments
     }
 }
