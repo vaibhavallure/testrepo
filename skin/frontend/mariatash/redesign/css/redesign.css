@@ -1653,7 +1653,7 @@ input[type="checkbox"]:checked+label:before {
 	max-width: 100%;
 	flex:0 0 100%;
 }
-.image-text {
+.desktop-device .image-text {
 	position: absolute;
 	left: 0;
 	right: 0;
