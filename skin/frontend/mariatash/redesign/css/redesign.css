@@ -1657,10 +1657,10 @@ input[type="checkbox"]:checked+label:before {
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 0;
+	top: 160px;
 	bottom: 0;
 	background: rgb(255,255,255,0);
-	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
+	background: linear-gradient(to top, #25211E 0, rgba(37, 33, 30, 0) 100%);
 }
 .desktop-device .image-text h6 {
 	position: absolute;
@@ -4991,9 +4991,9 @@ a.product-video-link:hover div.product-video-play-icon {
 	position: absolute;
   left: 0;
   right: 0;
-  top: 0;
+  top: 194px;
   bottom: 0;
   background: rgb(255,255,255,0);
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
+  background: linear-gradient(to top, #25211E 0, rgba(37, 33, 30, 0) 100%);
 	margin-bottom: 0 !important;
 }
