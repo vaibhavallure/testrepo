@@ -19,4 +19,18 @@
  */
 class Ecp_ReportToEmail_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const XML_COMPARISON_REPORT_STATUS               = "report/comparsion_report/status";
+    const XML_COMPARISON_REPORT_EMAIL_LIST               = "report/comparsion_report/emails";
+
+
+    public function getComparisonReportStatus(){
+        return Mage::getStoreConfig(self::XML_COMPARISON_REPORT_STATUS);
+    }
+
+    public function getComparisonReportEmails(){
+        $concatedEmails =  Mage::getStoreConfig(self::XML_COMPARISON_REPORT_EMAIL_LIST);
+        $emails = explode(",",$concatedEmails);
+        return !empty($emails)?$emails:null;
+    }
+    
 }

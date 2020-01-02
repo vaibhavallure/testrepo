@@ -1168,6 +1168,12 @@ ul.tabs li{
   .allure_filter {
   	border-width: 1px !important;
   }
+  .dashboard .flex-row .flex-item .text-wrap{
+    top: 250px;
+  }
+  .dashboard .mt-new-myaccount-dashbord{
+    padding: 0 !important;
+  }
 }
 
 
@@ -1183,9 +1189,6 @@ ul.tabs li{
   .mobile-device .about-designer h1{
     margin-bottom: 20px;
   }
-  /* .categorypath-celebrity-clientele-html .for-space-to-bottom, .category-piercing-gallery .for-space-to-bottom {
-    height: 170px !important;
-  } */
   .about-jewelry{
     padding: 0 26px;
   }
@@ -1210,9 +1213,6 @@ ul.tabs li{
   .desktop-device #narrow-by-list li div dt {
     width: 100%
   }
-  /* #narrow-by-list li div dd{
-    width: 100%;
-  } */
   .mobile-device .form-search input.input-text{
     width: 200px;
     height: 60px !important;
@@ -1220,9 +1220,6 @@ ul.tabs li{
   .container.celebrities, .container.press {
     padding: 0 20px 60px;
   }
-  /* .ecp-celebrities-index-index .for-space-to-bottom {
-    height: 240px;
-  } */
   .desktop-device .product-shop {
     margin-top: 71px;
     width: 100%;
@@ -1232,20 +1229,6 @@ ul.tabs li{
   .btn-quickview {
     display: none !important;
   }
-  /* .block-layered-nav dd a, .block-layered-nav label{
-    font-size: 10px !important;
-  } */
-  /* .common-redesign-checkout .for-space-to-bottom{
-    height: 252px !important;
-  } */
-  /* .checkout-cart-index .for-space-to-bottom,
-  .checkout-multishipping-addresses .for-space-to-bottom,
-  .checkout-multishipping-shipping .for-space-to-bottom,
-  .checkout-multishipping-delivery .for-space-to-bottom,
-  .checkout-multishipping-billing .for-space-to-bottom,
-  .checkout-multishipping-overview .for-space-to-bottom {
-    height: 265px !important;
-  } */
   .checkout-multishipping-addresses .col-main,
   .checkout-multishipping-shipping .col-main,
   .checkout-multishipping-delivery .col-main,
@@ -1286,9 +1269,6 @@ ul.tabs li{
   .pressPopup .big-popup-body{
     height: 708px;
   }
-  /* .catalog-category-view.category-press .for-space-to-bottom{
-    height: 220px !important;
-  } */
   .gift-card-main .faq-image-section img {
     padding: 10px;
     width: 100%;
@@ -1360,6 +1340,9 @@ ul.tabs li{
   .quick_link{
     display: block !important;
     margin-bottom: 0;
+  }
+  .dashboard .flex-row .flex-item .text-wrap{
+    top: 164px;
   }
 }
 /* ----------- iPad Pro ----------- */
@@ -1508,7 +1491,6 @@ ul.tabs li{
     padding: 0 36px;
   }
   .for-space-to-bottom{
-   /* height: 70px !important;*/
     height: 50px !important;
   }
   .catalog-product-view .for-space-to-bottom{
@@ -1605,9 +1587,6 @@ ul.tabs li{
   }
   .cartilage-section {
     margin-top: 28px;
-  }
-  .filter-common-div{
-    /*display: none;*/
   }
   .filterPopup .pop-up-cover {
     margin-top: 5%;
@@ -1711,9 +1690,6 @@ ul.tabs li{
   .gift-card-main .content-customer{
     margin-bottom: 50px;
   }
-  .jewelry-container{
-    /*margin-top: 20px !important;*/
-  }
   .fancybox-lock .fancybox-sample-size .fancybox-close, .fancybox-item.fancybox-close{
     background-image: url(../images/redesign/thinner-cross.png);
     background-repeat: no-repeat;
@@ -1774,11 +1750,11 @@ ul.tabs li{
   }
 
   .order-total-th,
-    .order-status-th,
-    .order-total-data,
-    .order-status-data{
-        display: none;
-    }
+  .order-status-th,
+  .order-total-data,
+  .order-status-data{
+      display: none;
+  }
 
   #share-form-validate button.mt-btn-share-cancel{
     /*width: 100%;*/
@@ -2234,6 +2210,9 @@ ul.tabs li{
   .mobile-device .products-grid li.item{
     height: 256px;
   }
+  .dashboard .flex-row .flex-item .text-wrap{
+    top:363px;
+  }
 }
 
 /* Mobile landscape */                                      /*allmobland*/
@@ -2257,9 +2236,6 @@ ul.tabs li{
   .manage-payment-method .mt-edit-form .country-select-payment select{
     width: 100%;
   }
-  /*#mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
-    width: 48%;
-  }*/
   .manage-payment-method #mt-credit-card-info .mt-card-info{
     width: 47%;
     float: left;
@@ -2268,7 +2244,6 @@ ul.tabs li{
   .manage-payment-method .mt-edit-form .exp-year{
     width: 47.4%;
     float: right;
-   /* margin-left:10px;*/
   }
   .manage-payment-method #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
     width: 100%;

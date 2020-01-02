@@ -93,29 +93,35 @@
 <script>
     jQuery(document).ready(function() {
          var slot=1;
+         var isLoadingInpiration = false;
         jQuery(window).scroll(function() {
 
-            if(jQuery('body').hasClass('mobile-device'))
-            {
-                var condition=((jQuery(this).scrollTop()+150) > jQuery(document).height() - jQuery(window).height());
-            }else {
-                var condition=(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height())
+            if(jQuery('body').hasClass('mobile-device')){
+                condition = 300;
             }
-            if (condition) {
-                // setLoader();
-                jQuery('.inspiration-loader').css('display','block');
-                slot++;
+            $markPos = jQuery("#footer8").offset().top - jQuery(window).height()+condition;
+            $scrollPos = jQuery(window).scrollTop();
 
-
-
-                setTimeout(
-                    function()
-                    {
-                        if(jQuery(".slot-"+slot).length)
-                            jQuery(".slot-"+slot).removeClass("d-none");
-                        jQuery('.inspiration-loader').css('display','none');
-                        // unsetLoader();
-                    }, 3000);
+            if($scrollPos >= $markPos){
+                if( !isLoadingInpiration) {
+                    isLoadingInpiration = true;
+                    // setLoader();
+                    slot++;
+                    if(jQuery(".slot-" + slot).length) {
+                        jQuery('.inspiration-loader').css('display', 'block');
+                    }
+                    console.log('----Loading Slot---')
+                    console.log(slot)
+                    setTimeout(
+                        function () {
+                            if (jQuery(".slot-" + slot).length) {
+                                jQuery(".slot-" + slot).removeClass("d-none");
+                            }
+                            jQuery('.inspiration-loader').css('display', 'none');
+                            isLoadingInpiration = false;
+                            // unsetLoader();
+                        }, 3000);
+                }
 
             }
         });
