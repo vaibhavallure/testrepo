@@ -28,7 +28,6 @@ class Webgility_Ecc_Model_Storesinfo
     }
     public function getStoresInfo()
     {
-        Mage::log('In SotreInfo.php',Zend_Log::DEBUG,'ind.log',true);
         $this->responseArray['Stores'] = $this->stores?$this->stores:'';
         return $this->responseArray;
     }
