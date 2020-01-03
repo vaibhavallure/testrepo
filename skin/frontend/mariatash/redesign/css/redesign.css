@@ -4997,3 +4997,6 @@ a.product-video-link:hover div.product-video-play-icon {
   background: linear-gradient(to top, #25211E 0, rgba(37, 33, 30, 0) 100%);
 	margin-bottom: 0 !important;
 }
+.desktop-device #narrow-by-list li div dd ol li{
+	margin-bottom: 10px;
+}

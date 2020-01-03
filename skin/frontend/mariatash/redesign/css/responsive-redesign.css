@@ -148,9 +148,6 @@ dt.filter-head.showing:after {
  #narrow-by-list li div dd, .optionfilter, .filterPopup #narrow-by-list .filtru-style_of_jewelry-dtn dd{
   width: 100%;
 }
- .pop-up-cover {
- /* width: 100%;*/
-}
  #narrow-by-list li div dd ol {
   margin: 15px 0 0;
   display: flex;
@@ -158,7 +155,6 @@ dt.filter-head.showing:after {
   padding: 0;
 }
  #narrow-by-list li div dd {
-	/*display: block!important;*/
 	position: relative;
 	top:auto;
 	left: auto;
@@ -319,7 +315,6 @@ dt.filter-head.showing:after {
   margin: 0 auto;
 }
 #narrow-by-list {
-  /*max-height: 400px;*/
   max-height: 350px;
   overflow-y: scroll;
 }
@@ -368,7 +363,6 @@ dt.filter-head.showing:after {
   margin-bottom: 10px;
 }
 .celebPopup .product-info {
-  /*position: relative;*/
   bottom: 0;
 }
 .big-popup-body{
@@ -477,8 +471,6 @@ ul.tabs li{
   padding: 0 30px;
 }
 .mobile-device .navigation-parent{
-	/* height: 100vh;
-	overflow-y: auto; */
   padding-bottom: 60px;
 }
 }
@@ -1849,7 +1841,7 @@ ul.tabs li{
     font-size: 15px;
   }
   .main-nav-link li{
-    margin-right: 14px;
+    margin-right: 15px;
   }
   .navbar-toggler{
     left:0;
@@ -2205,7 +2197,7 @@ ul.tabs li{
     background: #eee;
   }
   .catalog-common-grid .product-image img{
-    margin-top: 20px;
+    margin-top: 40px;
   }
   .mobile-device .products-grid li.item{
     height: 256px;
@@ -2464,7 +2456,6 @@ ul.tabs li{
     z-index: 1;
     position: fixed;
     bottom: 0px;
-    /*opacity: 0;*/
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
   }
   .pdp-image-section{
@@ -2481,7 +2472,6 @@ ul.tabs li{
   }
   .container-footlinks {
     transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
-    /*height: 0px;*/
   }
   .main-container {
     padding-bottom: 60px;
@@ -2595,6 +2585,12 @@ ul.tabs li{
     padding:48px 30px 20px;
   }
 }
+/*********************i phone x*********************/
+@media (min-width:325px) and (max-width:812px){
+  .dashboard .flex-row .flex-item .text-wrap{
+    top: 300px;
+  }
+}
 /*********************Very Small Mobile*********************/
 @media (max-width:325px) {
   #shopping-cart-table td.cart_col1{
@@ -2634,11 +2630,7 @@ ul.tabs li{
     width: 32.5%;
   }
 }
-@media (min-width:1200px) and (max-width:1430px) {
-  /* .inner-box{
-    margin-left: 57px;
-  } */
-}
+
 @media (min-width:1318px) and (max-width:1432px) {
   .div-row {
     width: 100%;
@@ -2795,9 +2787,6 @@ ul.tabs li{
   .piercing_options .image-text{
     margin-bottom: 40px;
   }
-  /*#search{*/
-  /*  top: 80px;*/
-  /*}*/
 }
 @media (max-width:749px){
   .desktop-device .product-shop > .row{
@@ -2816,9 +2805,6 @@ ul.tabs li{
     }
 }
 @media (min-width:768px) and (max-width:1023px) {
-  /* .desktop-device .homepage-menu.mariatash-header{
-    background: no-repeat;
-  } */
   .desktop-device .allure_filter{
     margin-left: 109px;
     width: 660px;
