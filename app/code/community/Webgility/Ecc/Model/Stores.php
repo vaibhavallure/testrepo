@@ -28,6 +28,7 @@ class Webgility_Ecc_Model_Stores
     }
     public function getStoresInfo()
     {
+        return array();
         $this->responseArray['Stores'] = $this->stores?$this->stores:'';
         return $this->responseArray;
     }

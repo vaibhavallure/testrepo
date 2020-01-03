@@ -38,6 +38,7 @@ class Webgility_Ecc_Model_Store
     }
     public function getStore()
     {
+        return array();
         return $this->Store;
     }
 }
