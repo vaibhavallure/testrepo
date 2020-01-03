@@ -58,14 +58,14 @@
                 </run>
             </ecp_refundreporttoemail_cron>
 
-            <ecp_reporttoemail_comparisonreport_cron>
-                <schedule>
-                    <cron_expr>report/comparsion_report/comparison_report_cron_time</cron_expr>
-                </schedule>
-                <run>
-                    <model>ecp_reporttoemail/observer::</model>
-                </run>
-            </ecp_reporttoemail_comparisonreport_cron>
+<!--            <ecp_reporttoemail_comparisonreport_cron>-->
+<!--                <schedule>-->
+<!--                    <cron_expr>report/comparsion_report/comparison_report_cron_time</cron_expr>-->
+<!--                </schedule>-->
+<!--                <run>-->
+<!--                    <model>ecp_reporttoemail/observer::</model>-->
+<!--                </run>-->
+<!--            </ecp_reporttoemail_comparisonreport_cron>-->
         </jobs>
     </crontab>
 </config>
