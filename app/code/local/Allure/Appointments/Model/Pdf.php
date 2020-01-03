@@ -167,17 +167,17 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     $row = 1;
                     foreach ($nameArray as $string) {
                         if ($row == 1){
-                            $namelabel = ($row == 1) ? $j.'")"'.'Name: ' : "    ";
+                            $namelabel = ($row == 1) ? $j.')'.' Name: ' : "    ";
                             $texts[0] = $namelabel.$fName;
                             $row++;
                         }
-                        $namelabel = ($row == 1) ? $j.'")"'.'Name: ' : "    ";
+                        $namelabel = ($row == 1) ? $j.')'.' Name: ' : "    ";
                         $texts[1] = $namelabel.$lName;
 
                     }
 
                 } else {
-                    $texts = $j.'")"'.'Name: ' . $customer->getFirstname() . ' ' . $customer->getLastname();
+                    $texts = $j.')'.' Name: ' . $customer->getFirstname() . ' ' . $customer->getLastname();
                 }
                /* $texts = array();
                 $name = str_split( $customer->getFirstname() . ' ' . $customer->getLastname(), 20);
