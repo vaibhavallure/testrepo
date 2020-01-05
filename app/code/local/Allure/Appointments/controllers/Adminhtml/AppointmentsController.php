@@ -463,9 +463,27 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
         $this->renderLayout();
     }
-    
-    public function pdfdocsAction(){
+    public function getFileName()
+    {
         $post_data = $this->getRequest()->getPost();
+        if($post_data['store_id']==0)
+            $store_code="all";
+        else
+            $store_code=Mage::helper('allure_virtualstore')->getStoreCode($post_data['store_id']);
+
+        $from_date=str_replace("/","_",$post_data['from_date']);
+        $to_date=str_replace("/","_",$post_data['to_date']);
+
+        if($from_date==$to_date)
+            $date=$from_date;
+        else
+            $date=$from_date."-".$to_date;
+
+        $fileName="appointment-".$store_code."-".$date.".pdf";
+
+        return $fileName;
+    }
+    public function pdfdocsAction(){
         $appointments =  Mage::getModel('appointments/appointments')->getCollection();
         $appointments->getSelect()->joinLeft('allure_appointment_piercers', 'allure_appointment_piercers.id = main_table.piercer_id', array('firstname as fname','lastname as lname'));
         $appointments->addFieldToFilter('app_status', '2'); //Only assigned Appointments
@@ -494,7 +512,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         }
         if ($flag) {
             return $this->_prepareDownloadResponse(
-                'docs'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf',
+                $this->getFileName(),
                 $pdf->render(), 'application/pdf'
                 );
         } else {
