@@ -163,7 +163,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                 $nameArray = explode(' ',$fullName);
                 $nameLenght = strlen($fullName);
                 //echo "<pre>";
-                if ($nameLenght > 18){
+                if ($nameLenght > 14){
                     $row = 1;
                     foreach ($nameArray as $string) {
                         if ($row == 1){
@@ -244,7 +244,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             $nameLenght = strlen($fullName);
             //echo "<pre>";
 
-            if ($nameLenght > 18){
+            if ($nameLenght > 14){
                 $row = 1;
                 foreach ($nameArray as $string) {
                     if ($row == 1){
