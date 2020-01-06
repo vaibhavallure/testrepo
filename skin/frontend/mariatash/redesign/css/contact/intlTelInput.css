@@ -92,6 +92,7 @@
 	max-height: 200px;
 	overflow-y: scroll;
 	width: 322px;
+	overflow-x: hidden;
 }
 
 .intl-tel-input .country-list.dropup {

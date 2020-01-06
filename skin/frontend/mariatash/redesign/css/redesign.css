@@ -4270,6 +4270,12 @@ div#uniform-shipping-address-select>span{
 .color .chooseList ul li.option, .c_length .chooseList ul li.option{
 	margin-top: 17px;
 }
+.c_length .chooseList ul li.option{
+	min-width: 30%;
+}
+.c_length ul{
+	justify-content: flex-start;
+}
 .custom-options .ajax-error-messages{
 	top: 25px;
 }
@@ -5000,4 +5006,8 @@ a.product-video-link:hover div.product-video-play-icon {
 }
 .desktop-device #narrow-by-list li div dd ol li{
 	margin-bottom: 10px;
+}
+
+.popupSignUpConfirmationModel p {
+	text-align: center;
 }
