@@ -698,7 +698,7 @@ ul.tabs li{
   .newsletter-mt {
     display: none;
   }
-  .popbox, #link_about-maria-tash > div, .popbox_ajax, #link_about-our-jewelry > div, #link_accessibility > div, #link_contact-us > div{
+  .footlinks li > div:first-child{
     border-bottom: 1px solid #fff;
     padding-bottom: 10px;
     text-transform: uppercase;
