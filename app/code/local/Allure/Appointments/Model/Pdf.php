@@ -61,7 +61,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
 
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Time'),
-            'feed' => 90
+            'feed' => 65
         );
 
         $lines[0][] = array(
