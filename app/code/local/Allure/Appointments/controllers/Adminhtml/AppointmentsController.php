@@ -484,6 +484,8 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         return $fileName;
     }
     public function pdfdocsAction(){
+        $post_data = $this->getRequest()->getPost();
+
         $appointments =  Mage::getModel('appointments/appointments')->getCollection();
         $appointments->getSelect()->joinLeft('allure_appointment_piercers', 'allure_appointment_piercers.id = main_table.piercer_id', array('firstname as fname','lastname as lname'));
         $appointments->addFieldToFilter('app_status', '2'); //Only assigned Appointments
