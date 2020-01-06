@@ -116,7 +116,7 @@ var addCustomer = function (srno) {
                  
                   <div class="col-12 form-group">
                   	
-                        	<textarea maxlength="255" id="special-notes-${srno}" class="splnotesTxtarea w-100" name="customer[${srno}][special_notes]" placeholder="${__('Special notes')}" rows="4" ></textarea>
+                        	<textarea maxlength="100" id="special-notes-${srno}" class="splnotesTxtarea w-100" name="customer[${srno}][special_notes]" placeholder="${__('Special notes')}" rows="4" ></textarea>
 
               	 </div>
                  
