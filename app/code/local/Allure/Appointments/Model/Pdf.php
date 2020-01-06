@@ -208,15 +208,16 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     if (strlen($customer->getSpecialNotes()) > 50) {
                         $texts = array();
                         $notes = str_split($customer->getSpecialNotes(), 45);
+
                         if (count($notes) > 1) {
                             $row = 1;
                             foreach ($notes as $string) {
                                 $notelabel = ($row == 1) ? "Notes: " : "           ";
-                                $texts[] = $notelabel . $string;
+                                $texts[] = $notelabel . trim(preg_replace('/\s\s+/', ' ', $string));
                                 $row++;
                             }
                         } else {
-                            $texts = 'Notes: ' . $customer->getSpecialNotes();
+                            $texts = 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $customer->getSpecialNotes()));
                         }
 
                         $lines[$i][] = array(
@@ -226,7 +227,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                         );
                     } else {
                         $lines[$i][] = array(
-                            'text' => 'Notes: ' . $customer->getSpecialNotes(),
+                            'text' => 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $customer->getSpecialNotes())),
                             'feed' => 350,
                             'align' => 'left'
                         );
@@ -293,11 +294,11 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                         $row = 1;
                         foreach ($notes as $string) {
                             $notelabel = ($row == 1) ? "Notes: " : "           ";
-                            $texts[] = $notelabel . $string;
+                            $texts[] = $notelabel . trim(preg_replace('/\s\s+/', ' ', $string));
                             $row++;
                         }
                     } else {
-                        $texts = 'Notes: ' . $appointment->getSpecialNotes();
+                        $texts = 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $appointment->getSpecialNotes()));
                     }
 
                     $lines[$i][] = array(
@@ -307,7 +308,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     );
                 } else {
                     $lines[1][] = array(
-                        'text' => 'Notes: ' . $appointment->getSpecialNotes(),
+                        'text' => 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $appointment->getSpecialNotes())),
                         'feed' => 350,
                         'align' => 'left'
                     );
