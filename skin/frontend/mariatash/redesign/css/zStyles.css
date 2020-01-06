@@ -844,7 +844,11 @@
 	margin-bottom: 0!important;
 }
 #open-order-info .order-details .item-options dt{
-	font-size: 12px;
+	font-size: 15px;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  font-family: urw-din-xlight;
+  font-weight: normal;
 }
 #open-order-info .order-details .item-options dd{
 	margin-bottom: 0;
