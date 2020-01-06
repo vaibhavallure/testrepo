@@ -166,7 +166,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                 if ($nameLenght > 14){
 
                     $texts = array();
-                    $splited_name = str_split($fullName, 13);
+                    $splited_name = str_split($fullName, 14);
 
                     if (count($splited_name) > 1) {
                         $row = 1;
@@ -253,7 +253,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             if ($nameLenght > 14){
 
                 $texts = array();
-                $splited_name = str_split($fullName, 13);
+                $splited_name = str_split($fullName, 14);
 
                 if (count($splited_name) > 1) {
                     $row = 1;
