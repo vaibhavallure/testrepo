@@ -162,19 +162,24 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                 $fullName = $fName.' '.$lName;
                 $nameArray = explode(' ',$fullName);
                 $nameLenght = strlen($fullName);
-                //echo "<pre>";
+
                 if ($nameLenght > 14){
-                    $row = 1;
-                    foreach ($nameArray as $string) {
-                        if ($row == 1){
-                            $namelabel = ($row == 1) ? $j.')'.' Name: ' : "    ";
-                            $texts[0] = $namelabel.$fName;
+
+                    $texts = array();
+                    $splited_name = str_split($fullName, 14);
+
+                    if (count($splited_name) > 1) {
+                        $row = 1;
+                        foreach ($splited_name as $nm) {
+                            $notelabel = ($row == 1) ? "Name: " : "           ";
+                            $texts[] = $notelabel .$nm;
                             $row++;
                         }
-                        $namelabel = ($row == 1) ? $j.')'.' Name: ' : "    ";
-                        $texts[1] = $namelabel.$lName;
-
+                    } else {
+                        $texts = 'Name: ' . $fullName;
                     }
+
+
 
                 } else {
                     $texts = $j.')'.' Name: ' . $customer->getFirstname() . ' ' . $customer->getLastname();
@@ -246,16 +251,19 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             //echo "<pre>";
 
             if ($nameLenght > 14){
-                $row = 1;
-                foreach ($nameArray as $string) {
-                    if ($row == 1){
-                        $namelabel = ($row == 1) ? "1) Name: " : "    ";
-                        $texts[0] = $namelabel.$fName;
+
+                $texts = array();
+                $splited_name = str_split($fullName, 14);
+
+                if (count($splited_name) > 1) {
+                    $row = 1;
+                    foreach ($splited_name as $nm) {
+                        $notelabel = ($row == 1) ? "Name: " : "           ";
+                        $texts[] = $notelabel .$nm;
                         $row++;
                     }
-                    $namelabel = ($row == 1) ? "1) Name: " : "    ";
-                    $texts[1] = $namelabel.$lName;
-
+                } else {
+                    $texts = 'Name: ' . $fullName;
                 }
 
             } else {
