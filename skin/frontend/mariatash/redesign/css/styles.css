@@ -5768,10 +5768,10 @@ ul.crosssell-products-list {
 }
 
 /* Options Tool Tip */
-.item-options dt {
+/* .item-options dt {
 	font-weight: normal;
 	font-style: normal;
-}
+} */
 
 .truncated {
 	cursor: help;
