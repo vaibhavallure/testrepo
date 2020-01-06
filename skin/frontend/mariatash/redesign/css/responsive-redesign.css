@@ -1166,6 +1166,9 @@ ul.tabs li{
   .dashboard .mt-new-myaccount-dashbord{
     padding: 0 !important;
   }
+  #booking-wrapper .intl-tel-input .country-list{
+    width: 299px;
+  }
 }
 
 
