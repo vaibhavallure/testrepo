@@ -49,24 +49,24 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
         $page->setLineColor(new Zend_Pdf_Color_GrayScale(0.5));
         $page->setLineWidth(0.5);
-        $page->drawRectangle(1, $this->y, 594, $this->y - 15);
+        $page->drawRectangle(10, $this->y, 584, $this->y - 15);
         $this->y -= 10;
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 
         //columns headers
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('App Id'),
-            'feed' => 5
+            'feed' => 15
         );
 
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Time'),
-            'feed' => 80
+            'feed' => 90
         );
 
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Piercer'),
-            'feed' => 180,
+            'feed' => 190,
             'align' => 'left'
         );
 
@@ -130,17 +130,17 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             'text' => $appointment->getId(),
             'font' => 'bold',
             'align' => 'left',
-            'feed' => 5
+            'feed' => 15
         );
         $lines[0][] = array(
             'text' => date("F j, Y H:i", strtotime($appointment->getAppointmentStart())),
             'font' => 'bold',
-            'feed' => 55
+            'feed' => 65
         );
 
         $lines[0][] = array(
             'text' => Mage::helper('core/string')->str_split("Piercer: " . $appointment->getFname() . ' ' . $appointment->getLname(), 35),
-            'feed' => 180,
+            'feed' => 190,
             'font' => 'bold',
             'align' => 'left'
         );
@@ -163,7 +163,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                 $nameArray = explode(' ',$fullName);
                 $nameLenght = strlen($fullName);
                 //echo "<pre>";
-                if ($nameLenght > 18){
+                if ($nameLenght > 14){
                     $row = 1;
                     foreach ($nameArray as $string) {
                         if ($row == 1){
@@ -194,13 +194,13 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
 
                 $lines[$i][] = array(
                     'text' => $texts,
-                    'feed' => 55,
+                    'feed' => 65,
                     'align' => 'left'/*,
                     'font' => 'italic'*/
                 );
                 $lines[$i][] = array(
                     'text' => 'Downsize/Checkup: ' . $customer->getCheckup() . ' Piercing: ' . $customer->getPiercing(),
-                    'feed' => 180,
+                    'feed' => 190,
                     'align' => 'left'
                 );
 
@@ -208,15 +208,16 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     if (strlen($customer->getSpecialNotes()) > 50) {
                         $texts = array();
                         $notes = str_split($customer->getSpecialNotes(), 45);
+
                         if (count($notes) > 1) {
                             $row = 1;
                             foreach ($notes as $string) {
                                 $notelabel = ($row == 1) ? "Notes: " : "           ";
-                                $texts[] = $notelabel . $string;
+                                $texts[] = $notelabel . trim(preg_replace('/\s\s+/', ' ', $string));
                                 $row++;
                             }
                         } else {
-                            $texts = 'Notes: ' . $customer->getSpecialNotes();
+                            $texts = 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $customer->getSpecialNotes()));
                         }
 
                         $lines[$i][] = array(
@@ -226,7 +227,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                         );
                     } else {
                         $lines[$i][] = array(
-                            'text' => 'Notes: ' . $customer->getSpecialNotes(),
+                            'text' => 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $customer->getSpecialNotes())),
                             'feed' => 350,
                             'align' => 'left'
                         );
@@ -244,7 +245,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             $nameLenght = strlen($fullName);
             //echo "<pre>";
 
-            if ($nameLenght > 18){
+            if ($nameLenght > 14){
                 $row = 1;
                 foreach ($nameArray as $string) {
                     if ($row == 1){
@@ -273,12 +274,12 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             }*/
             $lines[1][] = array(
                 'text' => $texts,
-                'feed' => 55,
+                'feed' => 65,
                 'align' => 'left'
             );
             $lines[1][] = array(
                 'text' => '(old system appointment)',
-                'feed' => 180,
+                'feed' => 190,
                 'align' => 'left'/*,
                 'font' => 'italic'*/
             );
@@ -293,11 +294,11 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                         $row = 1;
                         foreach ($notes as $string) {
                             $notelabel = ($row == 1) ? "Notes: " : "           ";
-                            $texts[] = $notelabel . $string;
+                            $texts[] = $notelabel . trim(preg_replace('/\s\s+/', ' ', $string));
                             $row++;
                         }
                     } else {
-                        $texts = 'Notes: ' . $appointment->getSpecialNotes();
+                        $texts = 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $appointment->getSpecialNotes()));
                     }
 
                     $lines[$i][] = array(
@@ -307,7 +308,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     );
                 } else {
                     $lines[1][] = array(
-                        'text' => 'Notes: ' . $appointment->getSpecialNotes(),
+                        'text' => 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $appointment->getSpecialNotes())),
                         'feed' => 350,
                         'align' => 'left'
                     );
