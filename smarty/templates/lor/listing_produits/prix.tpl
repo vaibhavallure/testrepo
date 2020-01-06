@@ -19,7 +19,7 @@
     <span style="font-size:12px">{$ttc}</span>{/if}<br />
 {if $produit->pays == 'D' OR $produit->pays == 'O'}
     <span style="color:#000000; font-size:11px;">({if $produit->pays == 'D'}{$produit->prixlitrettc}{$produit->devise}{else}{$produit->devise}{$produit->prixlitrettc}{/if}/L)</span><br />{/if}
-    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|lower|replace:' (':'<br />('}{else}{$produit->conditionnement|lower}{/if}</span><br />
+    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|replace:' (':'<br />('}{else}{$produit->conditionnement}{/if}</span><br />
 {if isset($promos.$promo.nbcaisses) and $promos.$promo.nbcaisses != ''}
     <span style="font-size:12px">{$promos.$promo.nbcaisses} {$produit->Packaging}</span>{/if}
 {/if}
@@ -42,7 +42,7 @@
     <span style="font-size:12px">{$ttc}</span>{/if}&nbsp;<br />
 {if $produit->pays == 'D' OR $produit->pays == 'O'}
     <span style="color:#000000; font-size:11px;">({if $produit->pays == 'D'}{$produit->prixlitrettc}{$produit->devise}{else}{$produit->devise}{$produit->prixlitrettc}{/if}/L)</span><br />{/if}
-    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|lower|replace:' (':'<br />('}{else}{$produit->conditionnement|lower}{/if}</span><br /><br />
+    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|replace:' (':'<br />('}{else}{$produit->conditionnement}{/if}</span><br /><br />
 {/if}
 </td></tr>
 
@@ -71,7 +71,7 @@
     Bouteille  HT (non marqué)
    ----------------------------  *}
     <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_ht}</span><br />
-    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement|lower}</span><br />
+    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span><br />
     <span style="font-size:12px">{$produit->devise}&nbsp;{$produit->prixhtblle} {$fnpx1btlleht}</span>
 {* ------ Fin Hong Kong ------ *}
 {elseif $produit->pays == 'U'}
@@ -93,7 +93,7 @@
    ----------------------------  *}
     <span style="font-weight: bold">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_ht}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ht}{/if}</span>
     &nbsp;<span style="font-size:12px">{$ht}</span><br />
-    <span style="font-size:11px">{if $produit->pays == 'F'}{$produit->boiscarton}{else}{$produit->boiscarton}{/if} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|lower|replace:' (':'<br />('}{else}{$produit->conditionnement|lower}{/if}</span><br />
+    <span style="font-size:11px">{if $produit->pays == 'F'}{$produit->boiscarton}{else}{$produit->boiscarton}{/if} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|replace:' (':'<br />('}{else}{$produit->conditionnement}{/if}</span><br />
     <span style="font-size:11px">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prixhtblle}{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prixhtblle}{/if}{$fnpx1btlleht}<br />{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_ttc}{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ttc}{/if}{$fnpxcaissettc}</span><br />
 
 {* ------ Fin autres pays ------ *}

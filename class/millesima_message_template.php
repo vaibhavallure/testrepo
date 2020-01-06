@@ -771,6 +771,10 @@ class Millesima_Message_Template extends Millesima_Abstract
             $article->conditionnement = $article->conditionnementpluriel;
         }
 
+        if($article->pays != 'D' && $article->pays != 'O' && $article->pays != 'SA' ){
+                $article->conditionnement = strtolower($article->conditionnement);
+         }
+
         $article->Packaging=$this->encodeVar(utf8_encode($data["Packaging"]));
         $article->refcond=substr($data["Code_article"],10,2);
 
@@ -865,6 +869,7 @@ class Millesima_Message_Template extends Millesima_Abstract
                 case "703" /* Champagnes à prix légers */:
                 case "704" /* Rosés à prix légers */:
                 case "709" /* Instant Millésima */:
+				case "705" /* Up to 20% off on 2010 */:
                     $article->prix_promo = $article->prix_remise;
                     break;
                 default:
