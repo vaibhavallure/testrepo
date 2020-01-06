@@ -295,6 +295,7 @@
 .iti-mobile .intl-tel-input .country-list {
 	max-height: 100%;
 	width: 100%
+	overflow-x :hidden;
 }
 
 .iti-mobile .intl-tel-input .country-list .country {
