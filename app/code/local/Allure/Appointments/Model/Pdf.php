@@ -61,7 +61,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
 
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Time'),
-            'feed' => 90
+            'feed' => 65
         );
 
         $lines[0][] = array(
@@ -171,7 +171,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                     if (count($splited_name) > 1) {
                         $row = 1;
                         foreach ($splited_name as $nm) {
-                            $notelabel = ($row == 1) ? "Name: " : "           ";
+                            $notelabel = ($row == 1) ? $j.") Name: " : "           ";
                             $texts[] = $notelabel .$nm;
                             $row++;
                         }
@@ -258,7 +258,7 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
                 if (count($splited_name) > 1) {
                     $row = 1;
                     foreach ($splited_name as $nm) {
-                        $notelabel = ($row == 1) ? "Name: " : "           ";
+                        $notelabel = ($row == 1) ? "1) Name: " : "           ";
                         $texts[] = $notelabel .$nm;
                         $row++;
                     }
