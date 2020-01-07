@@ -1683,8 +1683,16 @@ class Webgility_Ecc_Model_Desktop
 
     function getOrders($username, $password, $datefrom, $start_order_no, $ecc_excl_list, $order_per_response = "25", $storeid = 1, $others,$ccdetails, $do_not_download_configurable_product_as_line_item, $do_not_download_bundle_product_as_line_item, $discount_as_line_item, $download_option_as_item, $donwload_state_code, $LastModifiedDate, $ProductType)
     {
+        /*Allure Custom Code*/
+        $store_name = strtolower(Mage::helper('allure_virtualstore')->getStoreName($storeid));
+        Mage::log($store_name,Zend_Log::DEBUG,'my.log',true);
+        $all = false;
+        if (strpos($store_name, 'broadway') !== false) {
+            $all =true;
+            Mage::log('All is true',Zend_Log::DEBUG,'my.log',true);
+        }
+        /***************/
         Mage::log('In Get Order 1',Zend_Log::DEBUG,'my.log',true);
-
         $discount_as_line_item = Mage::getStoreConfig('ecc_options/messages/discount_as_line_item', 1);
         $download_option_as_item = Mage::getStoreConfig('ecc_options/messages/download_bundle_option_as_item',1);
         $RewardsPoints_Name = Mage::getStoreConfig('ecc_options/messages/RewardsPoints_Name', 1);
@@ -1926,7 +1934,11 @@ class Webgility_Ecc_Model_Desktop
             $Order->setStoreID($orders['old_store_id']);
             $store_name = Mage::helper('allure_virtualstore')->getStoreName($orders['old_store_id']);
             $Order->setStoreName($store_name);
-            $Order->setCurrency($orders['order_currency_code']);
+            if($all) {
+                $Order->setCurrency($orders['base_currency_code']);
+            }else{
+                $Order->setCurrency($orders['order_currency_code']);
+            }
             $Order->setWeight_Symbol('lbs');
             $Order->setWeight_Symbol_Grams('453.6');
             $Order->setCustomerId($orders['customer_id']);
@@ -1954,7 +1966,11 @@ class Webgility_Ecc_Model_Desktop
 
                     $CreditMemo->setCreditMemoID($CreditMemo1->increment_id);
                     $CreditMemo->setCreditMemoDate($CreditMemo1->created_at);
-                    $CreditMemo->setSubtotal($CreditMemo1->grand_total);
+                    if($all) {
+                        $CreditMemo->setSubtotal($CreditMemo1->base_grand_total);
+                    }else{
+                        $CreditMemo->setSubtotal($CreditMemo1->grand_total);
+                    }
 
 
 
@@ -1968,7 +1984,12 @@ class Webgility_Ecc_Model_Desktop
 
                         $itemInOrder = Mage::getModel('sales/order_item')->load($CreditMemoItem->order_item_id);
                         $OrderQty = $itemInOrder->getQtyOrdered ();
-                        $ItemPrice = $itemInOrder->getPrice();
+                        if($all) {
+                            $ItemPrice = $itemInOrder->getBasePrice();
+                        }
+                        else{
+                            $ItemPrice = $itemInOrder->getPrice();
+                        }
 
                         $CancelItemDetail = Mage::getModel('ecc/CancelItemDetail');
 
@@ -1977,7 +1998,12 @@ class Webgility_Ecc_Model_Desktop
                         $CancelItemDetail->setItemName($CreditMemoItem->name);
                         $CancelItemDetail->setQtyCancel($CreditMemoItem->qty);
                         $CancelItemDetail->setQtyInOrder($OrderQty);
-                        $CancelItemDetail->setPriceCancel($CreditMemoItem->price);
+                        if($all) {
+                            $CancelItemDetail->setPriceCancel($CreditMemoItem->base_price);
+                        }
+                        else {
+                            $CancelItemDetail->setPriceCancel($CreditMemoItem->price);
+                        }
                         $CancelItemDetail->setItemPrice($ItemPrice);
                         $CreditMemo->setCancelItemDetail($CancelItemDetail->getCancelItemDetail());
 
@@ -2000,6 +2026,10 @@ class Webgility_Ecc_Model_Desktop
                 {
                     $Order->setIsCreditMemoCreated("1");
 
+                    $grand_t = $CreditMemo1->grand_total;
+                    if($all){
+                        $grand_t = $CreditMemo1->base_grand_total;
+                    }
                     $totalccgrandtotal = $totalccgrandtotal+$CreditMemo1->grand_total;
 
                     foreach ($CreditMemo1->getAllItems() as $CreditMemoItem)
@@ -2274,6 +2304,9 @@ class Webgility_Ecc_Model_Desktop
 
                     if(isset($attributeValue) && $attributeValue=='Yes' && $iInfo["weight"]>0 )
                     {
+                        if($all){
+                            $iInfo['price'] = $iInfo['base_price'];
+                        }
                         $iInfo["qty_ordered"] = $iInfo["qty_ordered"]*$iInfo["weight"];
                         $iInfo["price"] = $iInfo["price"]/$iInfo["qty_ordered"];
                         $iInfo["weight"] = $iInfo["weight"]/$iInfo["qty_ordered"];
@@ -2282,7 +2315,9 @@ class Webgility_Ecc_Model_Desktop
                     $Item->setQuantity($iInfo["qty_ordered"]);
                     $Item->setShippedQuantity($iInfo["qty_shipped"]);
 
-
+                    if($all){
+                        $iInfo["price"] = $iInfo['base_price'];
+                    }
                     $Item->setUnitPrice($iInfo["price"]);
                     $Item->setCostPrice($onlineInfo["cost"]);
                     $Item->setWeight($iInfo["weight"]);
@@ -2315,7 +2350,9 @@ class Webgility_Ecc_Model_Desktop
                                 $item_option1234='';
                                 foreach($item_option12['value'] as $item_option123)
                                 {
-
+                                    if($all){
+                                        $item_option123['price'] = $item_option123['base_price'];
+                                    }
                                     $item_option1234 = " ".$item_option123['qty']." x ".$item_option123['title']." $".$item_option123['price'];
                                     $Itemoption->setOptionValue($item_option1234);
                                     $Itemoption->setOptionName($item_option12['label']);
@@ -2359,11 +2396,17 @@ class Webgility_Ecc_Model_Desktop
             $discountadd =true;
             #Discount Coupon as line item
             $orders["discount_amount"] = $orders["discount_amount"]?$orders["discount_amount"]:$orders["base_discount_amount"];
+            if($all){
+                $orders["discount_amount"] = $orders["base_discount_amount"]?$orders["base_discount_amount"]:$orders["base_discount_amount"];
+            }
 
             if(($orders['coupon_code']!='' || $orders['discount_description']!='') && $discount_as_line_item==true)
             {
                 $discountadd =false;
                 $orders["discount_amount"] = $orders["discount_amount"]?$orders["discount_amount"]:$orders["base_discount_amount"];
+                if($all) {
+                    $orders["discount_amount"] = $orders["base_discount_amount"] ? $orders["base_discount_amount"] : $orders["base_discount_amount"];
+                }
                 if($display_discount_desc){ $DESCR1 = $orders['discount_description'];  }else{ $DESCR1 = $orders['coupon_code']; }
                 //$DESCR1 = $orders['coupon_code']?$orders['coupon_code']:$orders['discount_description'];
                 $itemI++;
@@ -2527,6 +2570,9 @@ class Webgility_Ecc_Model_Desktop
                     $CreditCard->setCreditCardType($this->getCcTypeName($payment['cc_type']));
                     if (isset($payment['amount_paid']))
                     {
+                        if($all){
+                            $payment['amount_paid'] = $payment['base_amount_paid'];
+                        }
                         $CreditCard->setCreditCardCharge($payment['amount_paid']);
 
                     }else{
@@ -2579,6 +2625,9 @@ class Webgility_Ecc_Model_Desktop
                 if($ccdetails!=='DONOTSEND')
                 {
                     $CreditCard->setCreditCardType($this->getCcTypeName($payment['cc_type']));
+                    if($all){
+                        $payment['amount_paid'] = $payment['base_amount_paid'];
+                    }
                     $CreditCard->setCreditCardCharge($payment['amount_paid']);
                     $CreditCard->setExpirationDate(sprintf('%02d',$payment['cc_exp_month']).substr($payment['cc_exp_year'],-2,2));
                     $CreditCard->setCreditCardName($CreditCardName);
@@ -2764,6 +2813,11 @@ class Webgility_Ecc_Model_Desktop
 
             $charges->setDiscount($discountadd?abs($orders["discount_amount"]):'');
             $charges->setStoreCredit($orders["customer_balance_amount"]?$orders["customer_balance_amount"]:0.00);
+            if($all){
+                $orders["tax_amount"] = $orders['base_tax_amount'];
+                $orders["shipping_amount"] = $orders["base_shipping_amount"];
+                $orders["grand_total"] = $orders["base_grand_total"];
+            }
             $charges->setTax($orders["tax_amount"]);
             $charges->setShipping($orders["shipping_amount"]);
             $charges->setTotal( $orders["grand_total"]);
