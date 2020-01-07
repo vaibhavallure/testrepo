@@ -1703,7 +1703,6 @@ ul.tabs li{
     max-width: 100%;
     width: 100%;
   }
-
   .form-search input.input-text{
     height: 60px !important;
   }
@@ -1727,6 +1726,9 @@ ul.tabs li{
   }
   .zoom-prev {
     right: 0;
+  }
+  .amazon-payments-customer-verify .col-main{
+    padding: 10px;
   }
 }
 
