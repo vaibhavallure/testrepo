@@ -4965,10 +4965,10 @@ a.product-video-link:hover div.product-video-play-icon {
 #complete-order-invoice table tbody td h1{
 	margin-bottom: 16px;
 }
-#complete-order-shipment table th,td,
+/* #complete-order-shipment table th,td,
 #complete-order-invoice table th,td{
 	padding: .75rem;
-}
+} */
 #complete-order-shipment table td,
 #complete-order-invoice table td{
 	padding: .75rem;
@@ -5017,7 +5017,7 @@ a.product-video-link:hover div.product-video-play-icon {
 .amazon-payments-customer-verify .col-main {
   padding-left: 150px;
 }
-.verification-form {
+.verification-form {©
   margin-bottom: 60px;
 }
 .customer-account-forgotpassword .chooseNewPassword{
