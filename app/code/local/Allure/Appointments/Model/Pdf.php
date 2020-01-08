@@ -49,24 +49,24 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
         $page->setLineColor(new Zend_Pdf_Color_GrayScale(0.5));
         $page->setLineWidth(0.5);
-        $page->drawRectangle(1, $this->y, 594, $this->y - 15);
+        $page->drawRectangle(10, $this->y, 584, $this->y - 15);
         $this->y -= 10;
         $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0));
 
         //columns headers
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('App Id'),
-            'feed' => 5
+            'feed' => 15
         );
 
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Time'),
-            'feed' => 80
+            'feed' => 65
         );
 
         $lines[0][] = array(
             'text' => Mage::helper('sales')->__('Piercer'),
-            'feed' => 180,
+            'feed' => 190,
             'align' => 'left'
         );
 
@@ -130,17 +130,17 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             'text' => $appointment->getId(),
             'font' => 'bold',
             'align' => 'left',
-            'feed' => 5
+            'feed' => 15
         );
         $lines[0][] = array(
             'text' => date("F j, Y H:i", strtotime($appointment->getAppointmentStart())),
             'font' => 'bold',
-            'feed' => 55
+            'feed' => 65
         );
 
         $lines[0][] = array(
             'text' => Mage::helper('core/string')->str_split("Piercer: " . $appointment->getFname() . ' ' . $appointment->getLname(), 35),
-            'feed' => 180,
+            'feed' => 190,
             'font' => 'bold',
             'align' => 'left'
         );
@@ -156,73 +156,171 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             $i = 1;
             $j = 1;
             foreach ($customers as $customer) {
+                $texts = array();
+                $fName = $customer->getFirstname();
+                $lName = $customer->getLastname();
+                $fullName = $fName.' '.$lName;
+                $nameArray = explode(' ',$fullName);
+                $nameLenght = strlen($fullName);
+
+                if ($nameLenght > 14){
+
+                    $texts = array();
+                    $splited_name = str_split($fullName, 14);
+
+                    if (count($splited_name) > 1) {
+                        $row = 1;
+                        foreach ($splited_name as $nm) {
+                            $notelabel = ($row == 1) ? $j.") Name: " : "           ";
+                            $texts[] = $notelabel .$nm;
+                            $row++;
+                        }
+                    } else {
+                        $texts = 'Name: ' . $fullName;
+                    }
+
+
+
+                } else {
+                    $texts = $j.')'.' Name: ' . $customer->getFirstname() . ' ' . $customer->getLastname();
+                }
+               /* $texts = array();
+                $name = str_split( $customer->getFirstname() . ' ' . $customer->getLastname(), 20);
+                if (count($name) > 1) {
+                    $row = 1;
+                    foreach ($name as $string) {
+                        $namelabel = ($row == 1) ? " $j.')'.Name: " : "   ";
+                        $texts[] = $namelabel . $string;
+                        $row++;
+                    }
+                } else {
+                    $texts =  $j.'")".Name: ' . $customer->getFirstname() . ' ' . $customer->getLastname();
+                }*/
+
                 $lines[$i][] = array(
-                    'text' => Mage::helper('core/string')->str_split($j . ") Name: " . $customer->getFirstname() . ' ' . $customer->getLastname(), 24),
-                    'feed' => 55,
+                    'text' => $texts,
+                    'feed' => 65,
                     'align' => 'left'/*,
                     'font' => 'italic'*/
                 );
                 $lines[$i][] = array(
                     'text' => 'Downsize/Checkup: ' . $customer->getCheckup() . ' Piercing: ' . $customer->getPiercing(),
-                    'feed' => 180,
+                    'feed' => 190,
                     'align' => 'left'
                 );
 
-                if (strlen($customer->getSpecialNotes()) > 50) {
+                if (strlen($customer->getSpecialNotes()) > 0) {
+                    if (strlen($customer->getSpecialNotes()) > 50) {
+                        $texts = array();
+                        $notes = str_split($customer->getSpecialNotes(), 45);
 
-                    foreach (str_split($customer->getSpecialNotes(), 50) as $string) {
-                        $notelabel = ($i == 1) ? "Notes:" : "";
-                        $fd = ($i == 1) ? 350 : 375;
+                        if (count($notes) > 1) {
+                            $row = 1;
+                            foreach ($notes as $string) {
+                                $notelabel = ($row == 1) ? "Notes: " : "           ";
+                                $texts[] = $notelabel . trim(preg_replace('/\s\s+/', ' ', $string));
+                                $row++;
+                            }
+                        } else {
+                            $texts = 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $customer->getSpecialNotes()));
+                        }
+
                         $lines[$i][] = array(
-                            'text' => $notelabel . ' ' . $string,
-                            'feed' => $fd,
+                            'text' => $texts,
+                            'feed' => 350,
                             'align' => 'left'
                         );
-                        $i++;
+                    } else {
+                        $lines[$i][] = array(
+                            'text' => 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $customer->getSpecialNotes())),
+                            'feed' => 350,
+                            'align' => 'left'
+                        );
                     }
-                } else {
-                    $lines[$i][] = array(
-                        'text' => 'Notes: ' . $customer->getSpecialNotes(),
-                        'feed' => 350,
-                        'align' => 'left'
-                    );
                 }
                 $i++;
                 $j++;
             }
         } else {
+            $texts = array();
+            $fName = $appointment->getFirstname();
+            $lName = $appointment->getLastname();
+            $fullName = $fName.' '.$lName;
+            $nameArray = explode(' ',$fullName);
+            $nameLenght = strlen($fullName);
+            //echo "<pre>";
+
+            if ($nameLenght > 14){
+
+                $texts = array();
+                $splited_name = str_split($fullName, 14);
+
+                if (count($splited_name) > 1) {
+                    $row = 1;
+                    foreach ($splited_name as $nm) {
+                        $notelabel = ($row == 1) ? "1) Name: " : "           ";
+                        $texts[] = $notelabel .$nm;
+                        $row++;
+                    }
+                } else {
+                    $texts = 'Name: ' . $fullName;
+                }
+
+            } else {
+                $texts = '1) Name:' . $appointment->getFirstname() . ' ' . $appointment->getLastname();
+            }
+            /*$name =str_split( $appointment->getFirstname() . ' ' . $appointment->getLastname(), 20);
+            if (count($name) > 1) {
+                $row = 1;
+                foreach ($name as $string) {
+                    $namelabel = ($row == 1) ? "1) Name: " : "    ";
+                    $texts[] = $namelabel . $string;
+                    $row++;
+                }
+            } else {
+                $texts = '1) Name:' . $appointment->getFirstname() . ' ' . $appointment->getLastname();
+            }*/
             $lines[1][] = array(
-                'text' => Mage::helper('core/string')->str_split("1) Name: " . $appointment->getFirstname() . ' ' . $appointment->getLastname(), 24),
-                'feed' => 55,
+                'text' => $texts,
+                'feed' => 65,
                 'align' => 'left'
             );
             $lines[1][] = array(
                 'text' => '(old system appointment)',
-                'feed' => 180,
+                'feed' => 190,
                 'align' => 'left'/*,
                 'font' => 'italic'*/
             );
 
-            if (strlen($appointment->getSpecialNotes()) > 50) {
-                $i = 1;
-                foreach (str_split($appointment->getSpecialNotes(), 50) as $string) {
-                    $notelabel = ($i == 1) ? "Notes:" : "";
-                    $fd = ($i == 1) ? 350 : 375;
+            if (strlen($appointment->getSpecialNotes()) > 0) {
+
+                if (strlen($appointment->getSpecialNotes()) > 50) {
+                    $i = 1;
+                    $texts = array();
+                    $notes = str_split($appointment->getSpecialNotes(), 45);
+                    if (count($notes) > 1) {
+                        $row = 1;
+                        foreach ($notes as $string) {
+                            $notelabel = ($row == 1) ? "Notes: " : "           ";
+                            $texts[] = $notelabel . trim(preg_replace('/\s\s+/', ' ', $string));
+                            $row++;
+                        }
+                    } else {
+                        $texts = 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $appointment->getSpecialNotes()));
+                    }
 
                     $lines[$i][] = array(
-                        'text' => $notelabel . ' ' . $string,
-                        'feed' => $fd,
+                        'text' => $texts,
+                        'feed' => 350,
                         'align' => 'left'
                     );
-
-                    $i++;
+                } else {
+                    $lines[1][] = array(
+                        'text' => 'Notes: ' . trim(preg_replace('/\s\s+/', ' ', $appointment->getSpecialNotes())),
+                        'feed' => 350,
+                        'align' => 'left'
+                    );
                 }
-            } else {
-                $lines[1][] = array(
-                    'text' => 'Notes: ' . $appointment->getSpecialNotes(),
-                    'feed' => 350,
-                    'align' => 'left'
-                );
             }
 
         }
@@ -231,6 +329,9 @@ class Allure_Appointments_Model_Pdf extends Mage_Sales_Model_Order_Pdf_Abstract
             'lines' => $lines,
             'height' => 20
         );
+
+        //echo "<pre>"; print_r($lines);
+
         $page = $this->drawLineBlocks($page, array($lineBlock), array('table_header' => true));
         $this->setPage($page);
         $this->y -= 10;

@@ -405,10 +405,19 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
             ->addFieldToFilter('mail_delivery_date', array('eq' => $currentDate))
             ->addFieldToFilter('card_status', 1)
             ->addFieldToFilter('mail_delivery_option', 1); //If selected first as delivery option
-        
+
+        Mage::log("--------------------------------------------------------------------------------",Zend_Log::DEBUG,'gift_card_email.log','true');
+
+        Mage::log("scheduled gift card-----sentEmail currentDate".$currentDate,Zend_Log::DEBUG,"gift_card_email.log",true);
+
         foreach ($oGiftCards as $oGiftCard) {
+            /*log added---------------------------------------*/
+            Mage::log("order_id".$oGiftCard->getOrderId(),Zend_Log::DEBUG,'gift_card_email.log','true');
             $oGiftCard->send();
         }
+
+        Mage::log("--------------------------------------------------------------------------------",Zend_Log::DEBUG,'gift_card_email.log','true');
+
     }
     public function sendEmailImmediately()
     {

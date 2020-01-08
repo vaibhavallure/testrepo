@@ -156,15 +156,19 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             /** gift item */
             $giftItems = $this->getRequest()->getParam("ship");
             $this->getOnepage()->saveGiftItem($giftItems);
-            
+
+
+
+
+            $data = $this->getRequest()->getPost('shipping', array());
+            $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
+            $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
+
             /** Save customer billing address. */
             $dataBilling = $this->getRequest()->getPost('billing', array());
             $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
             $this->getOnepage()->saveBilling($dataBilling, $customerBillingAddressId);
             
-            $data = $this->getRequest()->getPost('shipping', array());
-            $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
-            $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
 
             if (! isset($result['error'])) {
                 if ($this->getOnepage()->getQuote()->isVirtual()) 
