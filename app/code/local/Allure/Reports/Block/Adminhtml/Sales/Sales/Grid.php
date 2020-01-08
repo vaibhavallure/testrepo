@@ -294,6 +294,14 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $createOrderMethodsStr = $filterData['create_order_method'][0];
         if($createOrderMethodsStr != null && $createOrderMethodsStr != ""){
             $createOrderMethods = explode(",", $createOrderMethodsStr);
+            if(in_array(2,$createOrderMethods) && ($filterData->getData('from') == $filterData->getData('to'))) {
+                $timezone = timezone_open("America/New_York");
+
+                $datetime_eur = date_create($from, timezone_open("UTC"));
+                $offset = -timezone_offset_get($timezone, $datetime_eur)/3600;
+                $condition = "DATE_SUB(created_at, INTERVAL {$offset} HOUR) >='{$from}' and DATE_SUB(created_at, INTERVAL {$offset} HOUR) <='{$to}'";
+            }
+
     		if(count($createOrderMethods) > 0){
     		  $collection->addFieldToFilter("create_order_method",array("in" => $createOrderMethods));
     		}
@@ -653,6 +661,16 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             'rate'          => $rate,
             'total'         => 'sum',
             'sortable'      => false,
+        ));
+
+        $this->addColumn('total_revenue_amount', array(
+            'header'        => Mage::helper('sales')->__('Net Revenue'),
+            'index'         => 'total_revenue_amount',
+            'total'         => 'sum',
+            'type'          => 'currency',
+            'currency_code' => $currencyCode,
+            'sortable'      => false,
+            'rate'          => $rate,
         ));
 
         $this->addColumn('total_profit_amount_only_product', array(
