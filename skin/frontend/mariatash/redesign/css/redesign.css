@@ -4270,6 +4270,12 @@ div#uniform-shipping-address-select>span{
 .color .chooseList ul li.option, .c_length .chooseList ul li.option{
 	margin-top: 17px;
 }
+.c_length .chooseList ul li.option{
+	min-width: 30%;
+}
+.c_length ul{
+	justify-content: flex-start;
+}
 .custom-options .ajax-error-messages{
 	top: 25px;
 }
@@ -4959,10 +4965,10 @@ a.product-video-link:hover div.product-video-play-icon {
 #complete-order-invoice table tbody td h1{
 	margin-bottom: 16px;
 }
-#complete-order-shipment table th,td,
+/* #complete-order-shipment table th,td,
 #complete-order-invoice table th,td{
 	padding: .75rem;
-}
+} */
 #complete-order-shipment table td,
 #complete-order-invoice table td{
 	padding: .75rem;
@@ -5000,4 +5006,28 @@ a.product-video-link:hover div.product-video-play-icon {
 }
 .desktop-device #narrow-by-list li div dd ol li{
 	margin-bottom: 10px;
+}
+.popupSignUpConfirmationModel p {
+	text-align: center;
+}
+/*Amazon account verification page*/
+.amazon-payments-customer-verify h1 {
+  font-size: 30px;
+}
+.amazon-payments-customer-verify .col-main {
+  padding-left: 150px;
+}
+.verification-form {©
+  margin-bottom: 60px;
+}
+.customer-account-forgotpassword .chooseNewPassword{
+	text-align: center;
+}
+.customer-account-forgotpassword h1{
+	text-align: center;
+}
+.customer-account-forgotpassword .dark-button{
+	width: 149px;
+  text-transform: uppercase;
+  height: 42px;
 }
