@@ -35,7 +35,7 @@
     + phrase minimum
    ----------------------------  *}
     <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_ht}</span><br />
-    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span>
+    <span style="font-size:12px">{$produit->quantite} {$produit->conditionnement}</span>
 {* ------ Fin USA ------ *}
 {else}
     <span style="font-weight: bold">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_ttc}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ttc}{/if}</span>&nbsp;{if $produit->pays != 'H' && $produit->pays != 'SG' && $produit->pays != 'SF' && $produit->pays != 'SA'}
