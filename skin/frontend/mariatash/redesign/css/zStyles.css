@@ -2355,4 +2355,5 @@ img.print-size-chart{
 }
 .custom-options-univaersal dt{
 	font-weight: normal;
+	text-transform: capitalize;
 }

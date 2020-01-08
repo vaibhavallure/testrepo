@@ -115,7 +115,12 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
         $itemPositionClassPrefix = $parentPositionClass ? $parentPositionClass . '-' : 'nav-';
 
         foreach ($children as $child) {
-
+            if($this->isWholeSaleCustomer()) {
+                if (trim(strtolower($child->getName())) == "gift cards")
+                {
+                    continue;
+                }
+            }
             $child->setLevel($childLevel);
             $child->setIsFirst($counter == 1);
             $child->setIsLast($counter == $childrenCount);
@@ -205,13 +210,6 @@ class Mage_Page_Block_Html_Topmenu extends Mage_Core_Block_Template
             $classes[] = $item->getClass();
         }
 
-
-        if($this->isWholeSaleCustomer()) {
-            if (trim(strtolower($item->getName())) == "gift cards")
-            {
-                $classes[]='d-none';
-            }
-        }
 
         if ($item->hasChildren()) {
             $classes[] = 'parent';
