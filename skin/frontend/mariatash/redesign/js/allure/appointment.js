@@ -471,6 +471,19 @@ var validateForm = function () {
             }
         });
     });
+
+
+    jQuery('.phonenumber').each(function() {
+        jQuery(this).rules('add', {
+            minlength: 10,
+            messages: {
+                minlength: __("Please enter valid phone number.")
+            }
+        });
+    });
+
+
+    
 /*validation using hidden inputs*/
     jQuery('.customer_select').each(function() {
         jQuery(this).rules('add', {
