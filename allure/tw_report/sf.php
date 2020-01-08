@@ -10,6 +10,33 @@ umask(0);
 Mage::app();
 echo "<pre>";
 
+$from = $_GET['from'];
+$to = $_GET['to'];
+if(empty($from) || empty($to)) {
+    echo 'Enter date';
+}else {
+    $twClient = Mage::helper('allure_teamwork/teamworkClient');
+    $twClient->syncTmOrders($from,$to);
+    die;
+}
+
+die;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+die;
 $helper = Mage::helper("allure_salesforce/salesforceClient");
 $emailFormatterHelper = Mage::helper('allure_salesforce/emailFormatter');
 $customerCollection = Mage::getModel('customer/customer')->getCollection()

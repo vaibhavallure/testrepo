@@ -1664,8 +1664,3 @@ class Allure_Teamwork_Model_Tmobserver{
     }
     
 }
-
-    
-    
-    
-    
