@@ -76,7 +76,7 @@ class Allure_Teamwork_Helper_TeamworkClient extends Mage_Core_Helper_Data
         $helper = Mage::helper("allure_teamwork");
         $urlPath = $helper->getTeamworkSyncDataUrl();
         $requestURL = $urlPath . $TM_URL;//."?start=".$start."&end=".$end;
-        var_dump($requestURL);
+        //var_dump($requestURL);
         $token = trim($helper->getTeamworkSyncDataToken());
         $sendRequest = curl_init($requestURL);
         curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
