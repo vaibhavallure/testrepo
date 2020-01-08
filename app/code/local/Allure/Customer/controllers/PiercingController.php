@@ -132,6 +132,8 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
 
             /*Add Address Details*/
             if($customer->getId()) {
+                $region = Mage::getModel('directory/region')->loadByName($requestData['region'],$requestData['country_code']);
+                $state_id = $region->getId();
                 $address = Mage::getModel("customer/address");
                 $address->setCustomerId($customer->getId())
                     ->setFirstname($customer->getFirstname())
@@ -143,6 +145,9 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
                     ->setTelephone($requestData['telephone'])
                     ->setStreet($requestData['street_address'])
                     ->setSaveInAddressBook('1');
+                if(!empty($state_id)){
+                    $address->setRegionId($state_id);
+                }
                 $address->save();
                 $response["success"] = true;
                 $response["message"] = $email . "Address saved successfully";
