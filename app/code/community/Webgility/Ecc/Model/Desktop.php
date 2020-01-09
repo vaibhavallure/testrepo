@@ -2791,7 +2791,7 @@ Custamization for XPU-623-53661 Ends.
 		{
 		
 			$order_status = array();
-			$orderStatus1 = $this->_getorderstatuses($storeId);
+			$orderStatus1 = $this->_getorderstatuses(1);
 			foreach ($orderStatus1 as $sk=>$sv)
 			{
 				$order_status[]= $sk;
@@ -2842,7 +2842,7 @@ Custamization for XPU-623-53661 Ends.
 				->joinAttribute('shipping_telephone', 'order_address/telephone', 'shipping_address_id', null, 'left')
 				->joinAttribute('shipping_fax', 'order_address/fax', 'shipping_address_id', null, 'left')
 				->addAttributeToFilter('updated_at', array('gt' => $LastModifiedDate,'datetime' => true))
-				->addAttributeToFilter('old_store_id', $storeId)
+				->addFieldToFilter('old_store_id', $storeId)
 			//	->addAttributeToFilter('entity_id', array('gt' => $start_order_no))
 				->addAttributeToFilter('status', array('in' => $order_status))
 				->addAttributeToSort('updated_at', 'asc')
@@ -2874,7 +2874,7 @@ Custamization for XPU-623-53661 Ends.
 				->joinAttribute('shipping_telephone', 'order_address/telephone', 'shipping_address_id', null, 'left')
 				->joinAttribute('shipping_fax', 'order_address/fax', 'shipping_address_id', null, 'left')
 				->addAttributeToFilter('created_at', array('from' => $datefrom,'datetime' => true))
-				->addAttributeToFilter('old_store_id', $storeId)
+				->addFieldToFilter('old_store_id', $storeId)
 				->addAttributeToFilter('entity_id', array('gt' => $start_order_no))
 				->addAttributeToFilter('status', array('in' => $order_status))
 				->addAttributeToSort('entity_id', 'asc')
@@ -2906,7 +2906,7 @@ Custamization for XPU-623-53661 Ends.
 				->joinAttribute('shipping_postcode', 'order_address/postcode', 'shipping_address_id', null, 'left')
 				->joinAttribute('shipping_telephone', 'order_address/telephone', 'shipping_address_id', null, 'left')
 				->joinAttribute('shipping_fax', 'order_address/fax', 'shipping_address_id', null, 'left')		
-				->addAttributeToFilter('old_store_id', $storeId)
+				->addFieldToFilter('old_store_id', $storeId)
 				->addAttributeToFilter('increment_id', array('in' => $orderlist))		
 				->addAttributeToSort('entity_id', 'asc')		
 				->load();		
@@ -3431,7 +3431,7 @@ Custamization for XPU-623-53661 Ends.
 		$orders = Mage::getResourceModel('sales/order_collection')
 					->addAttributeToSelect('*')
 					->addFieldToFilter('increment_id', $orderId)
-					->addAttributeToFilter('old_store_id', $storeId)
+					->addFieldToFilter('old_store_id', $storeId)
 					->load();
 		return $orders;
 	}
