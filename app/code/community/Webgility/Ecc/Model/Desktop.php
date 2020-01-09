@@ -2030,7 +2030,7 @@ class Webgility_Ecc_Model_Desktop
                     if($all){
                         $grand_t = $CreditMemo1->base_grand_total;
                     }
-                    $totalccgrandtotal = $totalccgrandtotal+$CreditMemo1->grand_total;
+                    $totalccgrandtotal = $totalccgrandtotal+$grand_t;
 
                     foreach ($CreditMemo1->getAllItems() as $CreditMemoItem)
                     {
