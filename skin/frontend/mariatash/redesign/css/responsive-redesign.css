@@ -839,6 +839,8 @@ ul.tabs li{
   #newsletter-form-menu .validation-advice{
     position: relative;
     top:0;
+    left: 0;
+    text-transform: initial;
   }
   .form-subscribe-mt .input-box,
   .form-subscribe-mt-menu .input-box{
