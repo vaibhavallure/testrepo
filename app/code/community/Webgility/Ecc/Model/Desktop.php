@@ -1,5 +1,5 @@
 <?php
-/*© Copyright 2019 Webgility Inc
+/*ï¿½ Copyright 2019 Webgility Inc
     ----------------------------------------
  All materials contained in these files are protected by United States copyright
  law and may not be reproduced, distributed, transmitted, displayed, published or
