@@ -5032,3 +5032,6 @@ a.product-video-link:hover div.product-video-play-icon {
   text-transform: uppercase;
   height: 42px;
 }
+.store-switcher { /*Dropdown of select store*/
+  display: none;
+}
