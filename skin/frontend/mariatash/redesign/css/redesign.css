@@ -3777,6 +3777,7 @@ table thead {
 .collat-wrap .input-text {
   width: 208px;
   height: 30px !important;
+	-webkit-appearance: none;
 }
 .collat-wrap .coupons {
   margin-top: 49px;
