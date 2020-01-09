@@ -32,8 +32,8 @@ if($this->getCurrencyCount()>0): ?>
                     $file = Mage::getBaseUrl('media').'wysiwyg/flags/'.$_code.'.png';
                     if($this->helper('ecp_category')->checkRemoteFile($file)) { ?><img src="<?php echo $file ?>"/>
                   <?php } ?><span><?= $tmpSymbol[$tmpCurrenciesnew[$_code]];?></span>
-                    <?php //echo Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code) ?>
-                    <?php echo $_code ?>
+                    <?php echo Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code) ?>
+                    <?php //echo $_code ?>
                     </span>
                   <img width="12px" src="<?php echo $this->getSkinUrl('images/redesign/arrow-down-bk.png') ?>">
                 </div>
@@ -56,8 +56,8 @@ if($this->getCurrencyCount()>0): ?>
             <?php foreach ($_arrayCurrencies as $_code => $_name): ?>
                 <dd>
                     <a href="<?php echo $this->getUrl('currencymanager/currency/switch/to/'.$_code."/".$categoryPara); ?>" >
-                    <?php //echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code).'</span>' ?>
-                    <?php echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.$_code.'</span>' ?>
+                    <?php echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.Mage::helper("allure_geocurrency")->getCountryNameByCurrencyCode($_code).'</span>' ?>
+                    <?php //echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.$_code.'</span>' ?>
                 </a>
                 </dd>
             <?php endforeach; ?>
