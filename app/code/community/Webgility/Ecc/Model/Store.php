@@ -37,7 +37,7 @@ class Webgility_Ecc_Model_Store
         $this->Store['StoreDefaultStoreId'] = $StoreDefaultStoreId ? $StoreDefaultStoreId : '';
     }
     public function getStore()
-    {Mage::log('In Store.php',Zend_Log::DEBUG,'ind.log',true);
+    {
         return $this->Store;
     }
 }
