@@ -1942,10 +1942,10 @@ li.order-info-tab-back{
 
 #open-order-invoice .mt-header-sku,
 #open-order-shipment .mt-header-sku,
-#open-order-creditmemo .mt-header-sku,
+#open-order-creditmemo .mt-header-sku/*,
 #complete-order-invoice .mt-header-sku,
 #complete-order-shipment .mt-header-sku,
-#complete-order-creditmemo .mt-header-sku{
+#complete-order-creditmemo .mt-header-sku*/{
 	padding-left: 40px ! important;
 }
 

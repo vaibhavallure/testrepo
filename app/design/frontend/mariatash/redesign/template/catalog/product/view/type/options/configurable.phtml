@@ -1,4 +1,3 @@
-
 <?php
 $_optionId = $this->getRequest()->getParam('optionId','');
 $_product    = $this->getProduct();
@@ -442,9 +441,9 @@ if ($_product->getSizeSample() == 1) {
             if(jQuery('.print-size-chart').length){
                 jQuery('.print-size-chart').on('click',function () {
                     printJS({
-                        printable: jQuery('#inline_sample').find('p img').attr('src'),
+                        printable: jQuery('#inline_sample').find('img').eq(1).attr('src'),
                         type: 'image',
-                        style: '@page { size: Letter landscape;margin: 0mm; }',
+                        style: '@page { size: A4 portrait;margin: 0mm; }',
                         imageStyle: 'width:100%;'
                     })
                     // newWin= window.open("");

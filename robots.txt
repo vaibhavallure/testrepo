@@ -41,6 +41,7 @@ Disallow: /catalogsearch/
 Disallow: /catalog/product_compare/
 Disallow: /catalog/category/view/
 Disallow: /catalog/product/view/
+Disallow: /quickview/*
 Disallow: /wishlist/
 Disallow: /cgi-bin/
 Disallow: /cleanup.php

@@ -286,6 +286,20 @@ New customer registration
                 <crumbInfo><label>Login And Security</label><title>Login And Security</title></crumbInfo>
             </action>
         </reference>
+        <reference name="head_breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>Home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>My Account</crumbName>
+                <crumbInfo><label>My Account</label><title>My Account</title><link>/customer/account/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>Login And Security</crumbName>
+                <crumbInfo><label>Login And Security</label><title>Login And Security</title></crumbInfo>
+            </action>
+        </reference>
         <reference name="root">
             <action method="setHeaderTitle" translate="title" module="customer"><title>Edit Account Info</title></action>
         </reference>
@@ -389,6 +403,16 @@ Customer account home dashboard layout
                 <crumbInfo><label>My Account</label><title>My Account</title></crumbInfo>
             </action>
         </reference>
+        <reference name="head_breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>Home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>My Account</crumbName>
+                <crumbInfo><label>My Account</label><title>My Account</title></crumbInfo>
+            </action>
+        </reference>
     	<reference name="root">
             <action method="setTemplate"><template>allure/myaccount/page/2columns-left-dashboard.phtml</template></action>
         </reference>
@@ -412,6 +436,20 @@ Customer account address book
         <!-- Mage_Customer -->
         <update handle="customer_account"/>
         <reference name="breadcrumbs">
+            <action method="addCrumb">
+                <crumbName>Home</crumbName>
+                <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>My Account</crumbName>
+                <crumbInfo><label>My Account</label><title>My Account</title><link>/customer/account/</link></crumbInfo>
+            </action>
+            <action method="addCrumb">
+                <crumbName>My Addresses</crumbName>
+                <crumbInfo><label>My Addresses</label><title>My Addresses</title></crumbInfo>
+            </action>
+        </reference>
+        <reference name="head_breadcrumbs">
             <action method="addCrumb">
                 <crumbName>Home</crumbName>
                 <crumbInfo><label>Home</label><title>Home</title><link>/</link></crumbInfo>

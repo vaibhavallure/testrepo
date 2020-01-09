@@ -316,8 +316,12 @@ class Ecp_ReportToEmail_Model_Observer
             $from2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($from1)));
             $to2 = date("Y-m-d H:i:s",strtotime("-2 day".$diffZone,strtotime($to1)));
         }else {
-            $from = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($from1)));
-            $to = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($to1)));
+            if($date==null){
+                $from1 = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($from1)));
+                $to1 = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($to1)));
+            }
+            $from = date("Y-m-d H:i:s",strtotime($from1));
+            $to = date("Y-m-d H:i:s",strtotime($to1));
         }
 
 
@@ -534,9 +538,14 @@ class Ecp_ReportToEmail_Model_Observer
     public function getSalesCollection($storeId,$from,$to,$isComparisonReport=false)
     {
         $data='';
+        $timezone = timezone_open("America/New_York");
+
+        $datetime_eur = date_create($from, timezone_open("UTC"));
+        $offset = -timezone_offset_get($timezone, $datetime_eur)/3600;
 
         $whr="old_store_id IN('$storeId')  AND (created_at >='$from' AND created_at <='$to')";
-        $condition = "created_at >='{$from}' and created_at <='{$to}'";
+        $condition = "DATE_SUB(created_at, INTERVAL {$offset} HOUR) >='{$from}' and DATE_SUB(created_at, INTERVAL {$offset} HOUR) <='{$to}'";
+
 
         if(!$isComparisonReport){
             $collection = Mage::getModel('sales/order')->getCollection();
@@ -693,7 +702,7 @@ class Ecp_ReportToEmail_Model_Observer
             if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                 $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
                 $data['total_qty_ordered'] = $collection->getFirstItem()->getTotalQtyOrdered();
-//                $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
+                $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
 //                $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
 //                $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
 //                $data['total_refunded_amount'] = $collection->getFirstItem()->getTotalRefundedAmount();
@@ -736,20 +745,50 @@ class Ecp_ReportToEmail_Model_Observer
 
     }
 
-    public function integrationEmail($date,$emails,$runFrom="manual",$ismail) {
+    public function integrationEmail($date=null,$emails=null,$runFrom="manual",$ismail=null) {
         $this->add_log("--------- integrationEmail START ----------");
-        $stores = Mage::getStoreConfig('report/general/enable_stores');
-        $stores = explode(",", $stores);
+
+        $helper = Mage::helper('ecp_reporttoemail');
+
+//        if(!$helper->getComparisonReportStatus()) {
+//            $this->add_log("Comparison Report: Disabled");
+//            return;
+//        }
+
+//        if($emails == null ){
+//            $emails = $helper->getComparisonReportEmails();
+//        }
+
+//        if(empty($emails)) {
+//            $this->add_log("Comparison Report: List Emails Empty");
+//            return;
+//        }
+
+        if($date == null) {
+            $yesterday=date('Y-m-d');
+
+            $from1 = $yesterday." 00:00:00";
+            $to1 = $yesterday." 23:59:59";
+
+            $date = date("Y-m-d",strtotime("-1 day",strtotime($from1)));
+        }
 
         $from = $date;
         $to = $date;
+
+        $twHelper = Mage::helper("allure_teamwork/teamworkClient");
+
+        //$count = $twHelper->syncTmOrders($date,$yesterday);
+        //$this->add_log("Comparison Report: TW-MAG Sync count - {$count}");
+
         $teamworkData = $this->getTeamworkData($from,$to);
+
         //var_dump($teamworkData);die;
         $allmailbody = "";
         if (! empty($teamworkData['data'])) {
             foreach ($teamworkData['data'] as $locationCode => $locationData) {
                 //$storeId=$storesId;
-                $emails = trim(Mage::getStoreConfig('report/scheduled_reports/emails'));
+                //$emails = trim(Mage::getStoreConfig('report/scheduled_reports/emails'));
                 if($locationCode === 1){
                     $storeObj = Mage::getSingleton("allure_virtualstore/store")->load('653 Broadway','name');
                 }else {
@@ -757,9 +796,6 @@ class Ecp_ReportToEmail_Model_Observer
                 }
 
                 $storesId = $storeObj->getData('store_id');
-                if (! $emails)
-                    return;
-                $emails = explode(',', $emails);
                 // Mage::log($emails);
 
                 $twSymbol = $locationData['symbol'];
@@ -814,7 +850,7 @@ class Ecp_ReportToEmail_Model_Observer
                             <tr>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><span
                                                     style="font-size:14px"><strong>Net Sales Amount</strong></span></span></span></td>
-                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$data['total_profit']}</span></span>
+                                <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$data['total_income_amount']}</span></span>
                                 <td style="text-align:left"><span style="color:#ffffff"><span style="font-size:16px"><label>{$twSymbol}</label>{$twNetSales}</span></span>
                                 </td>
                             </tr>
@@ -826,7 +862,7 @@ EOT;
                 $allmailbody .= $mailbody;
             }
             //$emailBody = '<div style="float: left;">'.$allmailbody."</div>";
-print_r($allmailbody);die;
+echo $allmailbody;die;
 //            if($runFrom=="manual" && $ismail==null)
 //                echo $allmailbody;
 

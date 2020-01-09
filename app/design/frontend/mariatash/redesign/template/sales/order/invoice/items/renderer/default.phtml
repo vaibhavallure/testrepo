@@ -27,16 +27,16 @@
 <?php $_item = $this->getItem() ?>
 <?php $_order = $this->getItem()->getOrderItem()->getOrder() ?>
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-<td style="min-width:300px"><h4 class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></h4>
+<td style="text-align: left; padding:10px 0;"><h1 class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></h1>
     <?php if ($_options = $this->getItemOptions()): ?>
-    
+
         <dl class="item-options">
           <?php $optionslist="";?>
             <?php foreach ($_options as $_option) : ?>
-            <?php 
+            <?php
        if(empty($optionslist))
            $optionslist=$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
-       else 
+       else
            $optionslist=$optionslist.str_repeat("&nbsp;", 10).$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
         ?>
                 <?php if (0 && !$this->getPrintStatus()): //allure 0?>
@@ -71,8 +71,8 @@
            onclick="return giftMessageToogle('<?php echo $_item->getId() ?>')"><?php echo $this->__('Gift Message') ?></a>
     <?php endif; ?>
 </td>
-<td><?php echo $this->escapeHtml(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
-<td class="a-right">
+<td class="text-left nobr-sku para-noromal"><?php echo $this->escapeHtml(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
+<td class="a-right text-left">
     <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
     <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -202,8 +202,8 @@
             </span>
             <?php endif; ?>
 </td>
-<td class="a-center"><?php echo $_item->getQty() * 1 ?> </td>
-<td class="a-right">
+<td class="a-center text-left"><?php echo $_item->getQty() * 1 ?> </td>
+<td class="a-right text-left">
     <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
     <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>

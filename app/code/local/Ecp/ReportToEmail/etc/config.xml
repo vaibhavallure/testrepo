@@ -48,6 +48,7 @@
                     <model>ecp_reporttoemail/observer::sendReport</model>
                 </run>
             </ecp_reporttoemail_cron>
+
             <ecp_refundreporttoemail_cron>
                 <schedule>
                     <cron_expr>0 7 * * *</cron_expr>
@@ -56,6 +57,15 @@
                     <model>ecp_reporttoemail/refund::sendReport</model>
                 </run>
             </ecp_refundreporttoemail_cron>
+
+<!--            <ecp_reporttoemail_comparisonreport_cron>-->
+<!--                <schedule>-->
+<!--                    <cron_expr>report/comparsion_report/comparison_report_cron_time</cron_expr>-->
+<!--                </schedule>-->
+<!--                <run>-->
+<!--                    <model>ecp_reporttoemail/observer::</model>-->
+<!--                </run>-->
+<!--            </ecp_reporttoemail_comparisonreport_cron>-->
         </jobs>
     </crontab>
 </config>

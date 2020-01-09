@@ -41,7 +41,7 @@ if(!is_null($parentId)){
 }
 ?>
 
-<?php 
+<?php
     $hasProductUrl = $this->hasProductUrl();
     $productName = $this->escapeHtml($this->getProductName());
     $customerGroupId = $_item->getQuote()->getCustomerGroupId();
@@ -89,12 +89,12 @@ if(!is_null($parentId)){
             <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
         <?php endif;?>
     </td>
-    
+
     <td class="cart_col3 text-right" data-th="Price">
     	<span class='price_multi'>Price</span>
     	<?=$this->helper('checkout')->formatPrice($_item->getCalculationPrice());?>
     </td>
-    
+
     <td class="cart_col4" data-th="Quantity">
     	<div class="minus_icon minus_qty col-1" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
             <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="minus para-bold" title="<?= $this->__('Update Shopping Cart')?>" value="update_qty" name="update_cart_action" type="button">-</button>
@@ -108,7 +108,7 @@ if(!is_null($parentId)){
             <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="plus para-bold" title="<?= $this->__('Update Shopping Cart')?>" value="update_qty" name="update_cart_action" type="button">+</button>
         </div>
     </td>
-    
+
     <td class="cart_col5 text-right" data-th="Subtotal">
         <div class="cart-price-box">
        	<?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
@@ -129,8 +129,8 @@ if(!is_null($parentId)){
                 <?php endif; ?>
                 </span>
           	<?php endif; ?>
-           
-           
+
+
           	<?php if (Mage::helper('weee')->getApplied($_item)): ?>
     			<div class="cart-tax-info" id="esubtotal-item-tax-details<?php echo $_item->getId(); ?>" style="display:none;">
                 	<?php if (Mage::helper('weee')->typeOfDisplay($_item, 1, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
@@ -199,9 +199,9 @@ if(!is_null($parentId)){
                 	<span class="weee"><?php echo Mage::helper('weee')->__('Total incl. tax'); ?>: <?php echo $this->helper('checkout')->formatPrice($_incl+$_item->getWeeeTaxAppliedRowAmount()); ?></span>
                 </div>
             	<?php endif; ?>
-            	
+
         	<?php endif; ?>
-        	
+
         <?php endif; ?>
         </div>
     </td>
@@ -211,36 +211,36 @@ if(!is_null($parentId)){
 <tr class="messages <?php if($isWholesaleCustomer):?>wholesale-avail-row<?php endif;?>">
 	<td></td>
     <td colspan="<?= ($isWholesaleCustomer) ? 5 : 6 ?>">
-    	<?php if(!empty($message)): ?> 
+    	<?php if(!empty($message)): ?>
     	<div class="item-msg float-left">
         	<p class="info-text-three">
         		<span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?>
         	</p>
         </div>
         <?php endif; ?>
-        
+
         <?php if($isWholesaleCustomer):?>
        	<div class="w-remove float-right">
-        	<a href="javascript:void(0);" onclick="processCartItem(this);" 
-        		data-url="<?php echo $this->getDeleteUrl()?>" 
-        		title="<?php echo $this->__('Remove Item') ?>" 
+        	<a href="javascript:void(0);" onclick="processCartItem(this);"
+        		data-url="<?php echo $this->getDeleteUrl()?>"
+        		title="<?php echo $this->__('Remove Item') ?>"
         		class="remov info-text-three"><?php echo $this->__('Remove ');?>
         	</a>
       	</div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
-       	<?php 
+       	<?php
             $wishlist = Mage::helper("wishlist");
             if(!$wishlist->alreadyInWishlist($productId)):
         ?>
       	<div class="ad-to-fav float-right">
-         	<a href="javascript:void(0);" onclick="processCartItem(this);" 
-         		class="info-text-three" id="saveToFave" 
+         	<a href="javascript:void(0);" onclick="processCartItem(this);"
+         		class="info-text-three" id="saveToFave"
          		data-url="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>"><?= $this->__('Move to Wishlist')?>
          	</a>
        	</div>
        	<?php endif; ?>
        	<?php endif; ?>
-       	
+
         <?php endif;?>
 	</td>
 </tr>
@@ -251,27 +251,27 @@ if(!is_null($parentId)){
 	<td></td>
     <td colspan="5">
     	<div class="gift-messages float-left">
-        	<label for="is_gift_<?= $_item->getId() ?>" class="custom-checkbox custom-checkbox-two">
-                <input type="checkbox" name="is_gift_item" id="is_gift_<?= $_item->getId() ?>" value="1" class="checkbox">
+        	<label for="is_gift_<?= $_item->getId() ?>" class="custom-checkbox custom-checkbox-two"><!--
+                <input type="checkbox" name="is_gift_item" id="is_gift_<?/*= $_item->getId() */?>" value="1" class="checkbox">
                 <span class="checkmark"></span>
-                <span class="para-normal"><?= $this->__('This item is a gift.')?></span>
+                <span class="para-normal"><?/*= $this->__('This item is a gift.')*/?></span>-->
             </label>
         </div>
-        
+
         <div class="w-remove float-right">
-            <a href="javascript:void(0);" onclick="processCartItem(this);" 
-            	data-url="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" 
+            <a href="javascript:void(0);" onclick="processCartItem(this);"
+            	data-url="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>"
             	class="remov info-text-three"><?php echo $this->__('Remove ');?>
           	</a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>
-        <?php 
+        <?php
             $wishlist = Mage::helper("wishlist");
             if(!$wishlist->alreadyInWishlist($productId)):
         ?>
         <div class="ad-to-fav float-right">
-        	<a href="javascript:void(0);" onclick="processCartItem(this);" 
-        		class="info-text-three" id="saveToFave" 
+        	<a href="javascript:void(0);" onclick="processCartItem(this);"
+        		class="info-text-three" id="saveToFave"
         		data-url="<?= $wishlist->getMoveFromCartUrl($_item->getId()); ?>"><?= $this->__('Move to Wishlist')?>
         	</a>
        	</div>

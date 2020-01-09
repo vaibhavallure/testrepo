@@ -118,7 +118,10 @@
                                              </div>
     										<?php endif;?>
 											
-											<?php if(!$_item->getProduct()->getIsVirtual()):?>
+											<?php
+                                            $notAllowedAsGift=$redesignHelper->canNotOrderAsGift($_item->getSku());
+
+                                            if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift):?>
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">

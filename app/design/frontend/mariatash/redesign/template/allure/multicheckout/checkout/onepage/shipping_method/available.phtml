@@ -4,11 +4,12 @@
  *
  */
 ?>
-<?php $_shippingRateGroups = $this->getShippingRates(); ?>
-<?php if (!$_shippingRateGroups): ?>
+<?php $_shippingRateGroups = $this->getShippingRatesForTwoShipInStockProducts(); ?>
+<?php $_shippingRateGroupsBackorder = $this->getShippingRatesForTwoShipOutOfStockProducts(); ?>
+
+<?php if (!$_shippingRateGroups || !$_shippingRateGroupsBackorder): ?>
     <p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
 <?php else: ?>
-	<?php $_sole = count($_shippingRateGroups) == 1;?>
 	<?php $_address = $this->getAddress();?>
 	<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
 	<div class="gift-messages">
@@ -19,10 +20,12 @@
               <span class="checkmark"></span>
               Require signature upon delivery.</label>
         </p>
+        <p class="info-text-three"><?=$this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.')?></p>
     </div>
     <div class="row">
 	<div class="col-lg-6 col-md-6 col-12 first-shipment-method">
-		<?php $shippingMethodHtml = "";?>
+        <?php $_sole = count($_shippingRateGroups) == 1;?>
+        <?php $shippingMethodHtml = "";?>
 		<div>
 			<p class="info-text-two">For 1st Shipment:
 				<br><span>(Ready to ship now)</span>
@@ -52,7 +55,10 @@
                 ?>
                 <?php if($code == "matrixrate"){
                     $shipCodeArr = explode("#",$_rate->getCode());
+
+
                     if(count($shipCodeArr) == 3){
+
                         if($shipCodeArr[1] == 1){
                             if($shipCodeArr[2] == 1){
                                 $ship_sign_national[$_rate->getCode()] = $shipDataArr;
@@ -65,6 +71,7 @@
                                 $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
                             } else {
                                 $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+
                             } ?>
 
 						<?php } ?>
@@ -130,18 +137,125 @@
             </select>
     	</div>
 
-    	<div class="col-lg-6 col-md-6 col-12 second-shipment-method">
-    		<div>
-    			<p class="info-text-two">For 2nd Shipment:
-    				<br><span>(Shipped when items available)</span>
-    			</p>
-			</div>
-    		<select class="select-shipping-method select-type-one validate-select" name="mt_shipping_method"  >
-				<option value="">Select Method</option>
-				<?= $shippingMethodHtml;?>
-			</select>
-    	</div>
+        <div class="col-lg-6 col-md-6 col-12 second-shipment-method">
+            <?php $_soleBackorder = count($_shippingRateGroupsBackorder) == 1;?>
+
+            <?php $shippingMethodHtml = "";?>
+            <div>
+                <p class="info-text-two">For 2nd Shipment:
+                    <br><span>(Shipped when items available)</span>
+                </p>
+            </div>
+            <select class="select-shipping-method select-type-one validate-select" name="mt_shipping_method"  >
+                <option value="">Select Method</option>
+                <?php $ship_sign_national = array();?>
+                <?php $ship_sign_without_national = array();?>
+                <?php $ship_withoutsign_national = array();?>
+                <?php $ship_withoutsign_without_national = array();?>
+
+                <?php foreach ($_shippingRateGroupsBackorder as $code => $_rates): ?>
+                    <?php $_sole = $_soleBackorder && count($_rates) == 1;?>
+                    <?php foreach ($_rates as $_rate): ?>
+
+                        <?php if ($_rate->getErrorMessage()): ?>
+                            <?php echo $this->escapeHtml($_rate->getErrorMessage()) ?>
+                        <?php else: ?>
+                            <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                            <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+
+                            <?php
+                            $shipDataArr =  $_rate->getData();
+                            $shipDataArr["excl"] = $_excl;
+                            $shipDataArr["incl"] = $_incl;
+                            ?>
+                            <?php if($code == "matrixrate"){
+                                $shipCodeArr = explode("#",$_rate->getCode());
+
+
+                                if(count($shipCodeArr) == 3){
+
+                                    if($shipCodeArr[1] == 1){
+                                        if($shipCodeArr[2] == 1){
+                                            $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                                        } else {
+                                            $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                                        }
+                                        ?>
+                                    <?php } else {
+                                        if($shipCodeArr[2] == 1){
+                                            $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                                        } else {
+                                            $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+
+                                        } ?>
+
+                                    <?php } ?>
+
+                                    <?php if($isIternational == $shipCodeArr[2]):?>
+                                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
+                                            <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                            <?php echo $_excl; ?>
+                                            <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                                (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                            <?php endif; ?>
+                                        </option>
+
+                                        <?php
+                                        $shippingMethodHtml .= '<option ';
+                                        $shippingMethodHtml .= 'value="'.$this->htmlEscape($_rate->getCode()) .'"';
+                                        if(($_rate->getCode()===$this->getAddressShippingMethod())){
+                                            $shippingMethodHtml .= 'selected="selected"';
+                                        }
+                                        $shippingMethodHtml .= '>';
+                                        $shippingMethodHtml .= $this->escapeHtml($_rate->getMethodTitle()).$_excl;
+                                        if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl){
+                                            $shippingMethodHtml .= $this->__('Incl. Tax')." ".$_incl;
+                                        }
+                                        $shippingMethodHtml .= '</option>';
+                                        ?>
+
+                                    <?php endif;?>
+
+                                <?php    }
+                            } else {
+                                $ship_sign_national[$_rate->getCode()] = $shipDataArr;
+                                $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
+                                $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
+                                $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
+                                ?>
+                                <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
+                                    <?= $this->escapeHtml($this->getCarrierName($code))?>-<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                    <?php echo $_excl; ?>
+                                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                        (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                    <?php endif; ?>
+                                </option>
+
+                                <?php
+                                $shippingMethodHtml .= '<option ';
+                                $shippingMethodHtml .= 'value="'.$this->htmlEscape($_rate->getCode()) .'"';
+                                if(($_rate->getCode()===$this->getAddressShippingMethod())){
+                                    $shippingMethodHtml .= 'selected="selected"';
+                                }
+                                $shippingMethodHtml .= '>';
+                                $shippingMethodHtml .= $this->escapeHtml($_rate->getMethodTitle()).$_excl;
+                                if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl){
+                                    $shippingMethodHtml .= $this->__('Incl. Tax')." ".$_incl;
+                                }
+                                $shippingMethodHtml .= '</option>';
+                                ?>
+
+                            <?php } ?>
+                        <?php endif ?>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+
 </div>
+
+
     	<?php
             $shippingConfig = array(
                 '1_1' => $ship_sign_national,
@@ -163,7 +277,7 @@
 		if (typeof Allure == "undefined") {
 	        var Allure = {};
 	    }
-	   	Allure.shippingConfig = <?php //echo json_encode($shippingConfig,true)?>;
+	   	Allure.shippingConfig = <//?php //echo json_encode($shippingConfig,true)?>;
 		jQuery('.shipping-signature').on('change',function(){
 			var selector = jQuery(this);
 			var isInternational = selector.data("is_international");

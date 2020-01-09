@@ -6,34 +6,53 @@ umask(0);
 $password = $_GET['pass'];*/
 Mage::app('admin');
 
-require 'gapi.class.php';
-define('ga_email','farooqbellard@allureinc.co');
-define('ga_password','farooq123');
-define('ga_profile_id','118301941875');
+$num_quotes = 5;
 
+define('ALLURE_TEST', true);
 
- 
-$ga = new gapi(ga_email,ga_password);
- 
-/* We are using the 'source' dimension and the 'visits' metrics */
-$dimensions = array('source');
-$metrics    = array('visits');
- 
-/* We will sort the result be desending order of visits, 
-    and hence the '-' sign before the 'visits' string */
-$ga->requestReportData(ga_profile_id, $dimensions, $metrics,'-visits');
- 
-$gaResults = $ga->getResults();
- 
-$i=1;
- 
-foreach($gaResults as $result)
-{
-    printf("%-4d %-40s %5d\n",
-           $i++,
-           $result->getSource(),
-           $result->getVisits());
+defined('ALLURE_TEST');
+
+$query = Mage::getResourceModel('sales/quote_collection')
+->addFieldToFilter('converted_at', array('null' => true))
+->addFieldToFilter('create_order_method', '0')
+->addOrder('updated_at', 'desc')
+->setPageSize($num_quotes)
+->setCurPage(1);
+
+$quotes = array();
+foreach ($query as $quote) {
+	$email = $quote->getCustomerEmail();
+	
+	if ($email) {
+		$pieces = explode('@', $email, 2);
+		
+		// Obfuscates the email address from `someone@example.com` to `so******@example.com`.
+		$email = substr($pieces[0], 0, 2) . str_repeat('*', 6) . '@' . $pieces[1];
+	}
+	
+	$quotes[] = array(
+		'id'             => $quote->getEntityId(),
+		'store_id'       => $quote->getStoreId(),
+		'gmt_created_at'     => Mage::getSingleton('core/date')->gmtDate($quote->getCreatedAt()),
+		'gmt_updated_at'     => Mage::getSingleton('core/date')->gmtDate($quote->getUpdatedAt()),
+		'customer_email' => $email,
+		'remote_ip'      => $quote->getRemoteIp(),
+		'num_items'      => count($quote->getItemsCollection()),
+		'is_active'      => $quote->getIsActive()
+	);
 }
- 
-echo "\n-----------------------------------------\n";
-echo "Total Results : {$ga->getTotalResults()}";    
+
+print_r($quotes);
+
+$ruleId = 483;
+
+$rule = Mage::getModel('salesrule/rule')->load($ruleId);
+
+$couponCollection = Mage::getResourceModel('salesrule/coupon_collection');
+$couponCollection->addRuleToFilter($rule);
+
+$coupons = $couponCollection->load()->toArray();
+
+print_r($coupons);
+die;
+

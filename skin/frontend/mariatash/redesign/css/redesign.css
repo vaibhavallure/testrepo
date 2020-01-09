@@ -1216,7 +1216,7 @@ ul.swatch .swatch-item a {
 		width: 100%!important;
 	}
 .cms-page-view .breadcrumbs {
-  	padding-left: 88px; 
+  	padding-left: 88px;
 }
   .position-bottom {
     position: absolute;
@@ -1653,14 +1653,14 @@ input[type="checkbox"]:checked+label:before {
 	max-width: 100%;
 	flex:0 0 100%;
 }
-.image-text {
+.desktop-device .image-text {
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 0;
+	top: 160px;
 	bottom: 0;
 	background: rgb(255,255,255,0);
-	background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgb(0,0,0,0.95) 157%);
+	background: linear-gradient(to top, #25211E 0, rgba(37, 33, 30, 0) 100%);
 }
 .desktop-device .image-text h6 {
 	position: absolute;
@@ -3777,6 +3777,7 @@ table thead {
 .collat-wrap .input-text {
   width: 208px;
   height: 30px !important;
+	-webkit-appearance: none;
 }
 .collat-wrap .coupons {
   margin-top: 49px;
@@ -3976,7 +3977,7 @@ table thead {
 	position: absolute;
 	top: 21px;
 	z-index: 99999;
-	width: 222px;
+	width: 222px;/*90px*/
 	height: auto;
 	background: #fff;
 	/* height: 253px;
@@ -4022,6 +4023,9 @@ table thead {
 .select-currency.main-nav-link-dropdown span span {
   margin-right: 15px;
 }
+/*.block-content-currency{
+	margin-left: 15px;
+}*/
 .block-currency .block-title {
 	border: 0;
 	background: none;
@@ -4266,6 +4270,12 @@ div#uniform-shipping-address-select>span{
 }
 .color .chooseList ul li.option, .c_length .chooseList ul li.option{
 	margin-top: 17px;
+}
+.c_length .chooseList ul li.option{
+	min-width: 30%;
+}
+.c_length ul{
+	justify-content: flex-start;
 }
 .custom-options .ajax-error-messages{
 	top: 25px;
@@ -4947,4 +4957,81 @@ a.product-video-link:hover div.product-video-play-icon {
 .my-account #my-orders-table,#my-openorders-table{
     margin-top: 0px;
 }
+#complete-order-shipment table tbody td,
+#complete-order-invoice table tbody td{
+	width: auto!important;
+	text-align: left;
+}
+#complete-order-shipment table tbody td h1,
+#complete-order-invoice table tbody td h1{
+	margin-bottom: 16px;
+}
+/* #complete-order-shipment table th,td,
+#complete-order-invoice table th,td{
+	padding: .75rem;
+} */
+#complete-order-shipment table td,
+#complete-order-invoice table td{
+	padding: .75rem;
+	vertical-align: top;
+	font-family: urw-din-regular;
+}
+#complete-order-shipment table tr,
+#complete-order-invoice table tr{
+	display: table-row;
+}
+#complete-order-shipment .order-items .order-links .link-print,
+#complete-order-invoice .order-items .order-links .link-print{
+	text-decoration: underline;
+	font-weight: 300;
+}
 
+
+/*For account gradient*/
+.account-titles{
+	position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+	font-size: 13px;
+}
+.dashboard .flex-row .flex-item .text-wrap{
+	position: absolute;
+  left: 0;
+  right: 0;
+  top: 194px;
+  bottom: 0;
+  background: rgb(255,255,255,0);
+  background: linear-gradient(to top, #25211E 0, rgba(37, 33, 30, 0) 100%);
+	margin-bottom: 0 !important;
+}
+.desktop-device #narrow-by-list li div dd ol li{
+	margin-bottom: 10px;
+}
+.popupSignUpConfirmationModel p {
+	text-align: center;
+}
+/*Amazon account verification page*/
+.amazon-payments-customer-verify h1 {
+  font-size: 30px;
+}
+.amazon-payments-customer-verify .col-main {
+  padding-left: 150px;
+}
+.verification-form {©
+  margin-bottom: 60px;
+}
+.customer-account-forgotpassword .chooseNewPassword{
+	text-align: center;
+}
+.customer-account-forgotpassword h1{
+	text-align: center;
+}
+.customer-account-forgotpassword .dark-button{
+	width: 149px;
+  text-transform: uppercase;
+  height: 42px;
+}
+.store-switcher { /*Dropdown of select store*/
+  display: none;
+}

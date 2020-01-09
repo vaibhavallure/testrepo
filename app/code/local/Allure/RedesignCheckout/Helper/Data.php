@@ -22,7 +22,11 @@ class Allure_RedesignCheckout_Helper_Data extends Mage_Core_Helper_Abstract
     public function getGiftWrapSku(){
         return $this->getMulticheckoutHelper()->getGiftWrapSku();
     }
-    
+
+    public function canNotOrderAsGift($sku)
+    {
+        return $this->getMulticheckoutHelper()->canNotOrderAsGift($sku);
+    }
     /**
      * Check quote contain single qty or not
      * @return boolean

@@ -248,7 +248,7 @@ if ($model) {
 
                                             <div class="col-12 form-group">
 
-                                                <textarea maxlength="255" id="special-notes-<?= $customer_count?>" class="splnotesTxtarea w-100" name="customer[<?= $customer_count ?>][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ><?php if($customer->getSpecialNotes()):?><?= trim($customer->getSpecialNotes()) ?><?php endif;?></textarea>
+                                                <textarea maxlength="100" id="special-notes-<?= $customer_count?>" class="splnotesTxtarea w-100" name="customer[<?= $customer_count ?>][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ><?php if($customer->getSpecialNotes()):?><?= trim($customer->getSpecialNotes()) ?><?php endif;?></textarea>
 
                                             </div>
 
@@ -333,7 +333,7 @@ if ($model) {
 
                                             <div class="col-12 form-group">
 
-                                                        <textarea  maxlength="255" id="special-notes-1" class="splnotesTxtarea w-100" name="customer[1][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ></textarea>
+                                                        <textarea  maxlength="100" id="special-notes-1" class="splnotesTxtarea w-100" name="customer[1][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ></textarea>
 
                                             </div>
 
