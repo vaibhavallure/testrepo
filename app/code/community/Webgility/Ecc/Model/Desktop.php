@@ -403,6 +403,59 @@ class Webgility_Ecc_Model_Desktop
         $Storesinfo->setStatusCode('0');
         $Storesinfo->setStatusMessage('All Ok');
         $stores = $this->getStoresData();
+
+        /*Allure : Custom Code*/
+        $websites = Mage::getSingleton("allure_virtualstore/website")
+            ->getCollection();
+        $websites->addFieldToFilter('code', 'teamwork');
+        $websites->setOrder('website_id', 'asc');
+        foreach ($websites as $website) {
+            if ($website->getId() == 0) {
+                continue;
+            }
+            $_website[] = $website->toArray();
+        }
+        if(isset($_website[0]['code'])) {
+            if ($_website[0]['code'] == 'teamwork') {
+                $stores = Mage::getSingleton("allure_virtualstore/store")->getCollection();
+                $stores->addFieldToFilter('website_id',$_website[0]['website_id']);
+                $stores->addFieldToFilter('is_active','1');
+                $stores->setOrder('sort_order', 'asc');
+                $stores->setOrder('store_id', 'asc');
+                $_storeCollection = array();
+                foreach ($stores as $store) {
+                    if ($store->getId() == 0) {
+                        continue;
+                    }
+                    $_storeCollection[] = $store->toArray();
+                }
+
+                foreach($_storeCollection as $view) {
+                    $Store = Mage::getModel('ecc/Store');
+                    $Store->setStoreID($view['store_id']);
+                    $Store->setStoreName($_website[0]['name']." -> ".$view['name']);
+                    $Store->setStoreWebsiteId($_website[0]['website_id']);
+                    $Store->setStoreWebsiteName($_website[0]['name']);
+                    $Store->setStoreRootCategoryId($_website[0]['default_group_id']);
+                    $Store->setStoreDefaultStoreId('1');
+                    $Storesinfo->setstores($Store->getStore());
+                }
+            }
+        }
+
+        return $this->WgResponse($Storesinfo->getStoresInfo());
+    }
+    function Old_getStores($username, $password, $others)
+    {
+        $responseArray = array();
+        $status =  $this->CheckUser($username,$password);
+        if($status != "0") {
+            return $status;
+        }
+        $Storesinfo = Mage::getModel('ecc/Stores');
+        $Storesinfo->setStatusCode('0');
+        $Storesinfo->setStatusMessage('All Ok');
+        $stores = $this->getStoresData();
         if(count($stores)>0) {
             $s = 0;
             for($i = 0; $i < count($stores['items']); $i++) {
