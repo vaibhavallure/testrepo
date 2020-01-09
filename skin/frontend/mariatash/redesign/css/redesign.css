@@ -5044,3 +5044,6 @@ a.product-video-link:hover div.product-video-play-icon {
 .mt-myaccount-new.sales-order-view .mt-header-sku, .mt-myaccount-new.sales-order-view td.nobr-sku {
   text-align: center !important;
 }
+.apple-pay-button-with-text.apple-pay-button-black-with-text > .logo{
+	background-color: transparent;
+}
