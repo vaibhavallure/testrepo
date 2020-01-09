@@ -781,7 +781,7 @@
 
 }
 .mt-myaccount-new .order-details .odd td{
-	font-family: urw-din-bold;
+	/* font-family: urw-din-bold; */
 	font-size: 13px;
 	line-height: 1.54;
 	letter-spacing: 0.5px;
@@ -2144,7 +2144,7 @@ tr.tr-piercing td {
 	.zoom-img.big-popup-image.row {
 		max-height: 100% !important;
 	}
-	.mobile-sub_menu .sub-menu div#newsletter-form button.button.dark-button {
+	.mobile-sub_menu .sub-menu button.button.dark-button {
 		position: absolute;
 	}
 }
@@ -2158,7 +2158,7 @@ tr.tr-piercing td {
 		z-index: 1032;
 		right: 10px !important;
 	}
-	.mobile-sub_menu .sub-menu div#newsletter-form button.button.dark-button {
+	.mobile-sub_menu .sub-menu  button.button.dark-button {
 		position: absolute;
 	}
 }
@@ -2209,7 +2209,7 @@ tr.tr-piercing td {
 		top:30%;
 		left:40%;
 	}
-	.mobile-sub_menu .sub-menu div#newsletter-form button.button.dark-button {
+	.mobile-sub_menu .sub-menu  button.button.dark-button {
 		position: absolute;
 	}
 
@@ -2352,4 +2352,8 @@ img#cross-icon {
 }
 img.print-size-chart{
 	cursor: pointer;
+}
+.custom-options-univaersal dt{
+	font-weight: normal;
+	text-transform: capitalize;
 }
