@@ -636,11 +636,17 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $oldStoreArr[0] = "Admin";
 
         $formattedEmail = $emailFormatterHelper->startMailFormating($customerEmail,$fullName,null);
+        $timezone = timezone_open("America/New_York");
+        $datetime_eur = date_create($createdAt, timezone_open("UTC"));
+        $offset = timezone_offset_get($timezone, $datetime_eur)/3600;
+
+        $twCreatedAt = date('Y-m-d H:i:s',strtotime("{$offset} hour",strtotime($createdAt)));
 
         $request= array(
             "attributes" => array("type" => "Order", "referenceId" => "orders-" . $order->getData("entity_id")),
             "EffectiveDate" => date("Y-m-d", strtotime($createdAt)),
             "Created_At__c" => date("Y-m-d", strtotime($createdAt)) . "T" . date("H:i:s", strtotime($createdAt)) . "+00:00",//date("Y-m-d H:i:s",strtotime($createdAt)),
+            "TW_Created_At__c" => date("Y-m-d", strtotime($twCreatedAt)) . "T" . date("H:i:s", strtotime($twCreatedAt)) . "+00:00",
             "Status" => $status,
             "accountId" => $salesforceAccountId,    //"0012900000Ls44hAAB",
             "Pricebook2Id" => $pricebookId,    //"01s290000001ivyAAA",//$pricebookId,
