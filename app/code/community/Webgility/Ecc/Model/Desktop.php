@@ -55,7 +55,7 @@ class Webgility_Ecc_Model_Desktop
         $others = isset($others) ? $others : "";
         $itemid = isset($itemid) ? $itemid : "";
         if(!empty($method)) {
-
+            Mage::log('Method'.$method,Zend_Log::DEBUG,'my.log',true);
             switch ($method)
             {
 				
@@ -1683,14 +1683,17 @@ getBaseMediaPath());
 
     function getOrders($username, $password, $datefrom, $start_order_no, $ecc_excl_list, $order_per_response = "25", $storeid = 1, $others,$ccdetails, $do_not_download_configurable_product_as_line_item, $do_not_download_bundle_product_as_line_item, $discount_as_line_item, $download_option_as_item, $donwload_state_code, $LastModifiedDate, $ProductType)
     {
-        $discount_as_line_item = Mage::getStoreConfig('ecc_options/messages/discount_as_line_item', $storeid);
-        $download_option_as_item = Mage::getStoreConfig('ecc_options/messages/download_bundle_option_as_item',$storeid);
-        $RewardsPoints_Name = Mage::getStoreConfig('ecc_options/messages/RewardsPoints_Name', $storeid);
+        Mage::log('In Get Order 1',Zend_Log::DEBUG,'my.log',true);
+
+        $discount_as_line_item = Mage::getStoreConfig('ecc_options/messages/discount_as_line_item', 1);
+        $download_option_as_item = Mage::getStoreConfig('ecc_options/messages/download_bundle_option_as_item',1);
+        $RewardsPoints_Name = Mage::getStoreConfig('ecc_options/messages/RewardsPoints_Name', 1);
         $discount_as_line_item = !empty($discount_as_line_item) ? true : false;
         $download_option_as_item = !empty($download_option_as_item)?true:false;
         $RewardsPoints_Name = !empty($RewardsPoints_Name) ? $RewardsPoints_Name : 'RewardsPoints';
         $display_discount_desc = Webgility_Ecc_Helper_Data::DISPLAY_DISCOUNT_DESC;
         $get_Active_Carriers = Webgility_Ecc_Helper_Data::GET_ACTIVE_CARRIER;
+        Mage::log('Getting Modal',Zend_Log::DEBUG,'my.log',true);
         $Orders = Mage::getModel('ecc/Orders');
         $orderlist=array();
         if(is_array($others))	
@@ -1725,7 +1728,8 @@ getBaseMediaPath());
 		}
 
 		#$start_order_no=3;
-		$storeId=$this->getDefaultStore($storeid);
+        $storeId = $storeid ; /*Virtual Store Id*/
+//		$storeId=$this->getDefaultStore($storeid);
 		if(!isset($datefrom) or empty($datefrom)) $datefrom=date('m-d-Y');
 		if(!isset($dateto) or empty($dateto)) $dateto=date('m-d-Y');
 		$status=$this->CheckUser($username,$password);
@@ -1741,7 +1745,9 @@ getBaseMediaPath());
         	$by_updated_date ='updated_at';
         }
 
+
 		$_countorders = $_orders = $this->_GetOrders($datefrom,$start_order_no,$ecc_excl_list,$storeId,$order_per_response,$by_updated_date,$orderlist,$LastModifiedDate);
+
 		$countorders_array = $_countorders->toArray();
 		$country = array();
 		$country_data = Mage::getResourceModel('directory/country_collection')->load()->toOptionArray();
@@ -1767,1004 +1773,1016 @@ getBaseMediaPath());
 		}
 		$Orders->setStatusCode($no_orders?"9999":"0");
 		#$Orders->setStatusMessage($no_orders?"No Orders returned":"Total Orders:".$_orders->getSize());
-
+        Mage::log($_orders->getSize(),Zend_Log::DEBUG,'my.log',true);
 		$Orders->setStatusMessage($no_orders?"No Orders returned":"Total Orders:".$_orders->getSize());
 		$Orders->setTotalRecordFound($_orders->getSize()?$_orders->getSize():"0");
 		$Orders->setTotalRecordSent(count($countorders_array)?count($countorders_array):"0");
 
 		if ($no_orders)
 		{
+		    Mage::log('No Orders',Zend_Log::DEBUG,'my.log',true);
 			return $this->WgResponse($Orders->getOrders());
 			
 		}
 			$obj = new Mage_Sales_Model_Order();
 			$ord = 0;
-			foreach ($_orders as $_order)
-			{
+        Mage::log('Before Order Return',Zend_Log::DEBUG,'my.log',true);
+        foreach ($_orders as $_order)
+        {
+            Mage::log($_order->getId(),Zend_Log::DEBUG,'my.log',true);
+
+            $Order = Mage::getModel('ecc/Order');
+            $customer_comment = "";
+            if($_order->getBiebersdorfCustomerordercomment())
+            {
+                $customer_comment = $_order->getBiebersdorfCustomerordercomment();
+            }
+            foreach ($_order->getStatusHistoryCollection(true) as $_comment)
+            {
+                if($_comment->getComment())
+                {
+                    $customer_comment = $customer_comment." \r\n ".$_comment->getComment();
+                }
+            }
+            $shipments = $_order->getShipmentsCollection();
+            $shippedOn='';
+            foreach ($shipments as $shipment)
+            {
+                $increment_id = $shipment->getIncrementId();
+                $shippedOn = $shipment->getCreated_at();
+                $shippedOn =$this->convertdateformate($shippedOn);
 
 
-				$Order = Mage::getModel('ecc/Order');
+            }
+            $orders=$_order->toArray();
 
-				$customer_comment = "";
-				if($_order->getBiebersdorfCustomerordercomment())
-				{
-					$customer_comment = $_order->getBiebersdorfCustomerordercomment();
-				}
-				foreach ($_order->getStatusHistoryCollection(true) as $_comment)
-				{
-					if($_comment->getComment())
-					{
-						$customer_comment = $customer_comment." \r\n ".$_comment->getComment();
-					}
-				}
-				$shipments = $_order->getShipmentsCollection();
-				$shippedOn='';
-				foreach ($shipments as $shipment)
-				{
-					$increment_id = $shipment->getIncrementId();
-					$shippedOn = $shipment->getCreated_at();
-					$shippedOn =$this->convertdateformate($shippedOn);
-				
+            if(!$_order->getGiftMessage())
+            {
+                $_order->setGiftMessage( Mage::helper('giftmessage/message')->getGiftMessage($_order->getGiftMessageId()));
+            }
+            $giftMessage = $_order->getGiftMessage()->toArray();
 
-				}
-				$orders=$_order->toArray();
-
-				if(!$_order->getGiftMessage())
-				{
-					$_order->setGiftMessage( Mage::helper('giftmessage/message')->getGiftMessage($_order->getGiftMessageId()));
-				}
-				$giftMessage = $_order->getGiftMessage()->toArray();
-
-				$_payment=$_order->getPayment();
-				$payment=$_payment->toArray();
-				# Latest code modififed date for  all country
-				if(strtotime(Mage::app()->getLocale()->date($orders["created_at"],  Varien_Date::DATETIME_INTERNAL_FORMAT)))
-				{
-				# Latest code modififed date for all country
-				$fdate = date("m-d-Y | h:i:s A",strtotime(Mage::app()->getLocale()->date($orders["created_at"], Varien_Date::DATETIME_INTERNAL_FORMAT)));
-				$fdate = explode("|",$fdate);
-				$dateCreateOrder= trim($fdate[0]);
-				$timeCreateOrder= trim($fdate[1]);
-				#changed on request of nilesh sir
-				}else{
-				#Code is custamize for this customer
-				$dateObj=Mage::app()->getLocale()->date($orders["created_at"]);
-				$dateStrToTime=$dateObj->getTimestamp();
-				$fdate = date("m-d-Y | h:i:s A",$dateStrToTime);
-				$fdate = explode("|",$fdate);
-				$dateCreateOrder= trim($fdate[0]);
-				$timeCreateOrder= trim($fdate[1]);
-				}
-				if(!array_key_exists('billing_firstname',$orders) && !array_key_exists('billing_lastname',$orders) )
-				{
-					$billingAddressArray = $_order->getBillingAddress()->toArray();
-					$orders["billing_firstname"]=	$billingAddressArray["firstname"];
-					$orders["billing_lastname"]	=	$billingAddressArray["lastname"];
-					$orders["billing_company"]	=	$billingAddressArray["company"];
-					$orders["billing_street"]	=	$billingAddressArray["street"];
-					$orders["billing_city"]		=	$billingAddressArray["city"];
-					$orders["billing_region"]	=	$billingAddressArray["region"];
-					$orders["billing_region_id"]	=	$billingAddressArray["region_id"];
-					$orders["billing_postcode"]	=	$billingAddressArray["postcode"];
-					$orders["billing_country"]	=	$billingAddressArray["country_id"];
-					$orders["customer_email"]	=	isset($billingAddressArray["customer_email"])?$billingAddressArray["customer_email"]:$orders["customer_email"];
-					$orders["billing_telephone"]=	$billingAddressArray["telephone"];
-				}
-				$Order = Mage::getModel('ecc/Order');
+            $_payment=$_order->getPayment();
+            $payment=$_payment->toArray();
+            # Latest code modififed date for  all country
+            if(strtotime(Mage::app()->getLocale()->date($orders["created_at"],  Varien_Date::DATETIME_INTERNAL_FORMAT)))
+            {
+                # Latest code modififed date for all country
+                $fdate = date("m-d-Y | h:i:s A",strtotime(Mage::app()->getLocale()->date($orders["created_at"], Varien_Date::DATETIME_INTERNAL_FORMAT)));
+                $fdate = explode("|",$fdate);
+                $dateCreateOrder= trim($fdate[0]);
+                $timeCreateOrder= trim($fdate[1]);
+                #changed on request of nilesh sir
+            }else{
+                #Code is custamize for this customer
+                $dateObj=Mage::app()->getLocale()->date($orders["created_at"]);
+                $dateStrToTime=$dateObj->getTimestamp();
+                $fdate = date("m-d-Y | h:i:s A",$dateStrToTime);
+                $fdate = explode("|",$fdate);
+                $dateCreateOrder= trim($fdate[0]);
+                $timeCreateOrder= trim($fdate[1]);
+            }
+            if(!array_key_exists('billing_firstname',$orders) && !array_key_exists('billing_lastname',$orders) )
+            {
+                $billingAddressArray = $_order->getBillingAddress()->toArray();
+                $orders["billing_firstname"]=	$billingAddressArray["firstname"];
+                $orders["billing_lastname"]	=	$billingAddressArray["lastname"];
+                $orders["billing_company"]	=	$billingAddressArray["company"];
+                $orders["billing_street"]	=	$billingAddressArray["street"];
+                $orders["billing_city"]		=	$billingAddressArray["city"];
+                $orders["billing_region"]	=	$billingAddressArray["region"];
+                $orders["billing_region_id"]	=	$billingAddressArray["region_id"];
+                $orders["billing_postcode"]	=	$billingAddressArray["postcode"];
+                $orders["billing_country"]	=	$billingAddressArray["country_id"];
+                $orders["customer_email"]	=	isset($billingAddressArray["customer_email"])?$billingAddressArray["customer_email"]:$orders["customer_email"];
+                $orders["billing_telephone"]=	$billingAddressArray["telephone"];
+            }
+            $Order = Mage::getModel('ecc/Order');
 ########################################### custamization QRD-801-69772 to get Referral Source ###########################################################
 
-				$attributeInfoRS = Mage::getResourceModel('eav/entity_attribute_collection')->setCodeFilter('referral_source')->getFirstItem();
-				$attributeInfoRS = $attributeInfoRS->getData();	
-				if(isset($attributeInfoRS)&&!empty($attributeInfoRS))
-				{
-					$orderAttributes = Mage::getModel('amorderattr/attribute')->load($orders['entity_id'], 'order_id');
-					$OAarray=$orderAttributes->toArray();		
-					if(isset($OAarray)&&!empty($OAarray))										
-					  {
-						$list = array();
-						$collection = Mage::getModel('eav/entity_attribute')->getCollection();
-						$collection->addFieldToFilter('is_visible_on_front', 1);
-						$collection->addFieldToFilter('entity_type_id', Mage::getModel('eav/entity')->setType('order')->getTypeId());
-						$collection->getSelect()->order('checkout_step');
-						$attributes = $collection->load();
-						if ($attributes->getSize())
-						{
-							foreach ($attributes as $attribute)
-							{
-								$currentStore = $storeId;
-								$storeIds = explode(',', $attribute->getData('store_ids'));
-								if (!in_array($currentStore, $storeIds) && !in_array(0, $storeIds))
-								{
-									continue;
-								}
-								$value = '';
-								switch ($attribute->getFrontendInput())
-								{
-									case 'select':
-										$options = $attribute->getSource()->getAllOptions(true, true);
-										foreach ($options as $option)
-										{
-											if ($option['value'] == $orderAttributes->getData($attribute->getAttributeCode()))
-											{
-												$value = $option['label'];
-												break;
-											}
-										}
-										break;
-									default:
-										$value = $orderAttributes->getData($attribute->getAttributeCode());
-										break;
-								}
-								$list[$attribute->getFrontendLabel()] = str_replace('$', '\$', $value);
-							}
-						}
-						$setSalesRep=$list['Referral Source'];	
-					}//end if
-				
-			    }else{
-			 	    $setSalesRep='';
-			    }
-	
+            $attributeInfoRS = Mage::getResourceModel('eav/entity_attribute_collection')->setCodeFilter('referral_source')->getFirstItem();
+            $attributeInfoRS = $attributeInfoRS->getData();
+            if(isset($attributeInfoRS)&&!empty($attributeInfoRS))
+            {
+                $orderAttributes = Mage::getModel('amorderattr/attribute')->load($orders['entity_id'], 'order_id');
+                $OAarray=$orderAttributes->toArray();
+                if(isset($OAarray)&&!empty($OAarray))
+                {
+                    $list = array();
+                    $collection = Mage::getModel('eav/entity_attribute')->getCollection();
+                    $collection->addFieldToFilter('is_visible_on_front', 1);
+                    $collection->addFieldToFilter('entity_type_id', Mage::getModel('eav/entity')->setType('order')->getTypeId());
+                    $collection->getSelect()->order('checkout_step');
+                    $attributes = $collection->load();
+                    if ($attributes->getSize())
+                    {
+                        foreach ($attributes as $attribute)
+                        {
+                            $currentStore = $storeId;
+                            $storeIds = explode(',', $attribute->getData('store_ids'));
+                            if (!in_array($currentStore, $storeIds) && !in_array(0, $storeIds))
+                            {
+                                continue;
+                            }
+                            $value = '';
+                            switch ($attribute->getFrontendInput())
+                            {
+                                case 'select':
+                                    $options = $attribute->getSource()->getAllOptions(true, true);
+                                    foreach ($options as $option)
+                                    {
+                                        if ($option['value'] == $orderAttributes->getData($attribute->getAttributeCode()))
+                                        {
+                                            $value = $option['label'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    $value = $orderAttributes->getData($attribute->getAttributeCode());
+                                    break;
+                            }
+                            $list[$attribute->getFrontendLabel()] = str_replace('$', '\$', $value);
+                        }
+                    }
+                    $setSalesRep=$list['Referral Source'];
+                }//end if
 
-	
-########################################### custamization ###########################################################			  
-				$Order->setOrderId($orders['increment_id']);
-				$Order->setTitle('');
-				$Order->setFirstName($orders["billing_firstname"]);
-				$Order->setLastName($orders["billing_lastname"]);
-				$Order->setDate($dateCreateOrder);
-				$Order->setTime($timeCreateOrder);
-				$Order->setLastModifiedDate($this->_dateformat_wg($orders["updated_at"]));
-				
-				$Order->setStoreID($orders['store_id']);
-				$Order->setStoreName('');
-				$Order->setCurrency($orders['order_currency_code']);
-				$Order->setWeight_Symbol('lbs');
-				$Order->setWeight_Symbol_Grams('453.6');
-				$Order->setCustomerId($orders['customer_id']);
-				if($shippedOn=='' || empty($shippedOn))
-				{
-				$shippedOn=$dateCreateOrder;				
-				}
-
-				if($ProductType=='UNIFY')
-				{
-				
-			 	#Credit Memo
-				$CreditMemoCollection = Mage::getResourceModel('sales/order_creditmemo_collection')->addFieldToFilter('order_id', $orders['entity_id']);
-				
-				$Order->setIsCreditMemoCreated("0");
-			
-		
-				foreach($CreditMemoCollection as $CreditMemo1)
-				{
-					$Order->setIsCreditMemoCreated("1");
-					
-					$CreditMemo = Mage::getModel('ecc/CreditMemo');
-			
-					$CreditMemo->setCreditMemoID($CreditMemo1->increment_id);
-					$CreditMemo->setCreditMemoDate($CreditMemo1->created_at);
-					$CreditMemo->setSubtotal($CreditMemo1->grand_total);
-					
-					
-					
-					foreach ($CreditMemo1->getAllItems() as $CreditMemoItem) 
-					{
-						if(trim($CreditMemoItem->sku)=='')
-						{
-							continue;
-						}
-				
-
-						$itemInOrder = Mage::getModel('sales/order_item')->load($CreditMemoItem->order_item_id);
-						$OrderQty = $itemInOrder->getQtyOrdered ();
-						$ItemPrice = $itemInOrder->getPrice();
-					
-						$CancelItemDetail = Mage::getModel('ecc/CancelItemDetail');
-						
-						$CancelItemDetail->setItemID($CreditMemoItem->product_id);
-						$CancelItemDetail->setItemSku($CreditMemoItem->sku);
-						$CancelItemDetail->setItemName($CreditMemoItem->name);
-						$CancelItemDetail->setQtyCancel($CreditMemoItem->qty);
-						$CancelItemDetail->setQtyInOrder($OrderQty);
-						$CancelItemDetail->setPriceCancel($CreditMemoItem->price);
-						$CancelItemDetail->setItemPrice($ItemPrice);						
-						$CreditMemo->setCancelItemDetail($CancelItemDetail->getCancelItemDetail()); 
-					
-					}
-					
-					$Order->setCreditMemos($CreditMemo->getCreditMemo());
-					
-				}
-				}else {
-				
-					#Credit Memo
-					$CreditMemoCollection = Mage::getResourceModel('sales/order_creditmemo_collection')->addFieldToFilter('order_id', $orders['entity_id']);
-				
-					$Order->setIsCreditMemoCreated("0");
-					$totalccgrandtotal=0;
-					$ccitemArray =  array();
-					$totalccitemqty =0;
-		
-					foreach($CreditMemoCollection as $CreditMemo1)
-					{
-						$Order->setIsCreditMemoCreated("1");
-					
-						$totalccgrandtotal = $totalccgrandtotal+$CreditMemo1->grand_total;
-					
-						foreach ($CreditMemo1->getAllItems() as $CreditMemoItem) 
-						{
-							if(trim($CreditMemoItem->sku)=='')
-							{
-								continue;
-							}
-						
-							$totalccitemqty = $totalccitemqty+$CreditMemoItem->qty;
-							if(array_key_exists($CreditMemoItem->sku,$ccitemArray))
-							{
-								$ccitemArray[$CreditMemoItem->sku]["qty"] = $ccitemArray[$CreditMemoItem->sku]["qty"]+$CreditMemoItem->qty;
-							
-							}else
-							{
-								$ccitemArray[$CreditMemoItem->sku]["qty"] =$CreditMemoItem->qty;
-								$ccitemArray[$CreditMemoItem->sku]["name"] =$CreditMemoItem->name;
-								$ccitemArray[$CreditMemoItem->sku]["ID"] =$CreditMemoItem->product_id;
-								$ccitemArray[$CreditMemoItem->sku]["orderItemId"] =$CreditMemoItem->order_item_id;
-							
-							}	
-						}
-					
-					
-					}
-					if($totalccgrandtotal!=0) {
-					$CreditMemo = Mage::getModel('ecc/CreditMemo');
-					$CreditMemo->setSubtotal($totalccgrandtotal);
-					$CreditMemo->setCreditMemoDate($CreditMemo1->created_at);
-					foreach($ccitemArray as $cckey=>$ccval)
-					{
-						$itemInOrder = Mage::getModel('sales/order_item')->load($ccval["orderItemId"]);
-						$OrderQty = $itemInOrder->getQtyOrdered ();
-					
-						$CancelItemDetail = Mage::getModel('ecc/CancelItemDetail');
-						$CancelItemDetail->setItemID($ccval["ID"]);
-						$CancelItemDetail->setItemSku($cckey);
-						$CancelItemDetail->setItemName($ccval["name"]);
-						$CancelItemDetail->setQtyCancel($ccval["qty"]);
-						$CancelItemDetail->setQtyInOrder($OrderQty);
-						$CancelItemDetail->setPriceCancel(round(($totalccgrandtotal/$totalccitemqty),3));
-						$CancelItemDetail->setItemPrice(round(($totalccgrandtotal/$totalccitemqty),3));						
-						$CreditMemo->setCancelItemDetail($CancelItemDetail->getCancelItemDetail()); 
-					}
-
-					$Order->setCreditMemos($CreditMemo->getCreditMemo());
-				
-					}
-				
-				}
-				
-				
-
-				$orderStatus = $this->_getorderstatuses($storeId);
-				if(array_key_exists($orders['status'],$orderStatus ))
-					$Order->setStatus($orderStatus[$orders['status']]);
-				else
-					$Order->setStatus($orders['status']);
-
-				if($payment['method']=='purchaseorder')
-				{
-					$orders['customer_note'] = $orders['customer_note'] ." Purchase Order Number: ".$payment['po_number'];
-				}
-
-				/*$Order->setNotes(isset($orders['customer_note'])?$orders['customer_note']:"");
-				$giftMessage['message'] = isset($giftMessage['message'])?$giftMessage['message']:"";
-				$Order->setComment($customer_comment.$giftMessage['message']);*/
-				$order_comment='';
-				foreach ($_order->getStatusHistoryCollection(true) as $_comment)
-				{
-					if($_comment->getComment())
-					{
-						$cust_comment = $_comment->getComment();
-					}
-				}
-				
-				foreach ($_order->getStatusHistoryCollection(true) as $_comment)
-				{
-					if($_comment->getComment())
-					{
-						$order_comment = $_comment->getComment();
-						break;
-					}
-				}
-				$Order->setNotes(isset($order_comment)?$order_comment:"");
-				$giftMessage['message'] = isset($giftMessage['message'])?$giftMessage['message']:"";
-				$Order->setComment($cust_comment);
-				$Order->setFax('');
-				#assign order info to order object
-				//$Order->setOrderInfo($OrderInfo->getOrderInfo());
+            }else{
+                $setSalesRep='';
+            }
 
 
-/***************************************************************************************************
-Custamization for XPU-623-53661 Start: We create a config variable to manage this.
-****************************************************************************************************/
-if($set_field_Q_CIM_and_Q_Authorization)
-{
-				$po_number_str=$payment['po_number'];
-				$po_number=explode("-",$po_number_str);
-				if(!empty($po_number['0']))
-				{
-				$q_cim=$po_number['0'];
-				}
-				
-				if($q_cim!="" || $payment['last_trans_id']!="")
-				{
-					// code for custom fields  
-						$WG_OtherInfo = new WG_OtherInfo();
-						$WG_Other = new WG_Other();
-						$other_field= array('Q_CIM'=>$q_cim);
-						foreach($other_field as $key=>$value)
-						{
-			
-							$WG_OtherInfo->setFieldName($key);
-							$WG_OtherInfo->setFieldValue(html_entity_decode($value));
-								
-			
-							$WG_Other->setCustomFeilds($WG_OtherInfo->getOtherinfo());
-									
-						}		
-							
-						$Order->setOrderOtherInfo($WG_Other->getOther());	
-					//code for custom fields 
-			     }	
-}
-/***************************************************************************************************
-Custamization for XPU-623-53661 Ends.
-****************************************************************************************************/
-				$item_array = $this->getorderitems($orders["entity_id"],$orders["increment_id"],$download_option_as_item);
-				$item_array = $item_array['items'];
-				$onlineInfo = array();
-				
-				if($do_not_download_configurable_product_as_line_item==true && $download_option_as_item==true)
-				{
-					unset($orderConfigItems);
-					$orderConfigItems = array();
-				}
-				
-				if($do_not_download_bundle_product_as_line_item==true && $download_option_as_item==true)
-				{
-					unset($orderBundalItems);
-					$orderBundalItems = array();
-				}
-				
-				
-				
-				$itemI = 0;
-				foreach($item_array as $iInfo)
-				{
-					
-						
-						if(is_object($iInfo['product']))
-						$onlineInfo =  $iInfo['product']->toArray();
 
-					if(intval($iInfo["qty_ordered"])>0 && is_numeric($iInfo["price"]))
-					{
-						unset($productoptions);
-						$productoptions = array();
-					
-						if(isset($iInfo['product_options']))
-						$productoptions = unserialize($iInfo['product_options']);
-						
-						if(isset($productoptions['options']) && is_array($productoptions['options']))
-						{
-							if($productoptions['options'])
-							{
-								if(is_array($productoptions['options']) && !empty($productoptions['options']))
-								{
-									if(is_array($productoptions['attributes_info']))
-									{
-										$productoptions['attributes_info']     =    array_merge($productoptions['attributes_info'],$productoptions['options']);
-									}else{
-										$productoptions['attributes_info']     =    $productoptions['options'];
-									}
-								}
-								unset($productoptions['options']);
-							}
-						}
-						if(!empty($productoptions['bundle_options']) && is_array($productoptions['bundle_options']))
-						{
+########################################### custamization ###########################################################
+            $Order->setOrderId($orders['increment_id']);
+            $Order->setTitle('');
+            $Order->setFirstName($orders["billing_firstname"]);
+            $Order->setLastName($orders["billing_lastname"]);
+            $Order->setDate($dateCreateOrder);
+            $Order->setTime($timeCreateOrder);
+            $Order->setLastModifiedDate($this->_dateformat_wg($orders["updated_at"]));
 
-							if(array_key_exists('attributes_info', $productoptions))
-							{
-								$productoptions['attributes_info'] = array_merge($productoptions['attributes_info'],$productoptions['bundle_options']);
-														
-							}else{
-								$productoptions['attributes_info'] = $productoptions['bundle_options'];
-							}							
-							unset($productoptions['bundle_options']);
-						}						
-						if(isset($iInfo['product']))
-						{
-							$product = $iInfo;
-							$product['type_id'] = $iInfo['product_type'];
-							$product_base = $iInfo['product']->toArray();
-							$product['tax_class_id'] = $product_base['tax_class_id'];
-						}else{
-							$product = $iInfo;
-							$product['type_id'] = $iInfo['product_type'];
-							//$product['tax_class_id'] = 'no';
-							$currentProduct = Mage::getModel("catalog/product")->load($iInfo['product_id']);
-						 	$product_base = $currentProduct->toArray();
-							$product['tax_class_id'] = $product_base['tax_class_id'];
-							$productoptions['simple_sku'] = $iInfo['sku'];
-						}
-						
-						if($do_not_download_configurable_product_as_line_item==true && $download_option_as_item==true)
-						{
-							if(in_array($iInfo['parent_item_id'],$orderConfigItems))		
-		  					{
-						  		continue;
-		  					}
-						}
-						
-						
-							if($do_not_download_bundle_product_as_line_item==true && $download_option_as_item==true)
-						{
-							if(in_array($iInfo['parent_item_id'],$orderBundalItems))		
-		  					{
-						  		continue;
-		  					}
-						}
-						
-						if($product['type_id']=='bundle')
-						{
-							#$download_option_as_item =false;
-							#PriceType == 0  means Dynamic price product
-							if($download_option_as_item  == true && $iInfo['product']->getPriceType()==0)
-							{
-							$iInfo["qty_ordered"] =0;
-							continue;
-							}
-						}
-						$Item = Mage::getModel('ecc/Item');					
-						if($product['type_id']!='configurable')
-						{
-							if($do_not_download_bundle_product_as_line_item==true && $download_option_as_item==true)
-							{
-						    	$orderBundalItems[] = $iInfo['item_id'];
-						    }
-							//$responseArray['Orders'][$ord]['Items'][$itemI]['ItemCode'] = htmlentities($product['sku'],ENT_QUOTES);
-							$Item->setItemCode($product['sku']);
-							//$Item->setItemAlu('WG_ALU');
-						}else{
-						    
-							if($do_not_download_configurable_product_as_line_item==true && $download_option_as_item==true)
-							{
-						    	$orderConfigItems[] = $iInfo['item_id'];
-						    }
-							$Item->setItemCode($productoptions['simple_sku']);
-							//$responseArray['Orders'][$ord]['Items'][$itemI]['ItemCode'] = htmlentities($productoptions['simple_sku'],ENT_QUOTES);
-						}
-						
-						$Item->setItemDescription($product['name']);
-						
-						if($set_Short_Description)
-						{
-						$Item->setItemShortDescr(empty($onlineInfo['short_description'])?substr($product['short_description'],0,2000):substr($onlineInfo['short_description'],0,2000));
-						}else{
-						
-					    $Item->setItemShortDescr(empty($onlineInfo['description'])?substr($product['description'],0,2000):substr($onlineInfo['description'],0,2000));
-						}
-						$attributeInfo = Mage::getResourceModel('eav/entity_attribute_collection')
-												->setCodeFilter('ecc')
-												->getFirstItem();
-						$attributeInfo = $attributeInfo->getData();	
-										
-						if(isset($attributeInfo) && !empty($attributeInfo))
-						$attributeValue = Mage::getModel('catalog/product')
-                            ->load($iInfo["product_id"])->getAttributeText('ecc');
-						
-						if(isset($attributeValue) && $attributeValue=='Yes' && $iInfo["weight"]>0 )
-						{
-							$iInfo["qty_ordered"] = $iInfo["qty_ordered"]*$iInfo["weight"];
-							$iInfo["price"] = $iInfo["price"]/$iInfo["qty_ordered"];
-							$iInfo["weight"] = $iInfo["weight"]/$iInfo["qty_ordered"];
-						}
-						$Item->setItemID($iInfo['item_id']);
-						$Item->setQuantity($iInfo["qty_ordered"]);
-						$Item->setShippedQuantity($iInfo["qty_shipped"]);
-						
-					
-						$Item->setUnitPrice($iInfo["price"]);
-						$Item->setCostPrice($onlineInfo["cost"]);
-						$Item->setWeight($iInfo["weight"]);
-						$Item->setFreeShipping("N");
-						$Item->setDiscounted("N");
-						$Item->setshippingFreight("0.00");
-						$Item->setWeight_Symbol("lbs");
-						$Item->setWeight_Symbol_Grams("453.6");
+            $Order->setStoreID($orders['old_store_id']);
+            $store_name = Mage::helper('allure_virtualstore')->getStoreName($orders['old_store_id']);
+            $Order->setStoreName($store_name);
+            $Order->setCurrency($orders['order_currency_code']);
+            $Order->setWeight_Symbol('lbs');
+            $Order->setWeight_Symbol_Grams('453.6');
+            $Order->setCustomerId($orders['customer_id']);
+            Mage::log('Initial Data',Zend_Log::DEBUG,'my.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            if($shippedOn=='' || empty($shippedOn))
+            {
+                $shippedOn=$dateCreateOrder;
+            }
 
-						if($product['tax_class_id']<=0 || $product['tax_class_id']="")
-						{
-							$Item->setTaxExempt("Y");
+            if($ProductType=='UNIFY')
+            {
 
-						}else{
-							$Item->setTaxExempt("N");
-						}
-						$iInfo['onetime_charges']="0.00";
-						$Item->setOneTimeCharge(number_format($iInfo['onetime_charges'],2,'.',''));
-						$Item->setItemTaxAmount("");
-						//$responseArray['ItemOptions'] = array();
-						if(array_key_exists("attributes_info",$productoptions))
-						{
-							$optionI = 0;
-							foreach($productoptions['attributes_info'] as $item_option12)
-							{
-								$Itemoption = Mage::getModel('ecc/Itemoption');
-								//$Itemoption = new Itemoption();
-								if(is_array($item_option12['value']))
-								{
-								    $item_option1234='';
-									foreach($item_option12['value'] as $item_option123)
-									{
-									
-									$item_option1234 = " ".$item_option123['qty']." x ".$item_option123['title']." $".$item_option123['price'];
-									$Itemoption->setOptionValue($item_option1234);
-									$Itemoption->setOptionName($item_option12['label']);
-									$Itemoption->setOptionPrice($item_option123['price']);
-									
-									$Item->setItemOptions($Itemoption->getItemoption());									
-									
-									}
-									//$responseArray['ItemOptions'][$optionI]['Name'] = htmlentities($item_option12['label']);
-									//$responseArray['ItemOptions'][$optionI]['Value'] = htmlentities($item_option1234);
-									unset($item_option1234);
-								}else{
-									$Itemoption->setOptionValue($item_option12['value']);
-									$Itemoption->setOptionName($item_option12['label']);
-									$Item->setItemOptions($Itemoption->getItemoption());
-									//$responseArray['ItemOptions'][$optionI]['Name'] = htmlentities($item_option12['label']);
-									//$responseArray['ItemOptions'][$optionI]['Value'] = htmlentities($item_option12['value']);
-								}								
-								$optionI++;
-							}
-						}
-						#custamization for client date: 08 may 2012
-						if($iInfo['nonreturnable']=="Yes" && isset($iInfo['nonreturnable']))
-						{
-									//$Itemoption = new Itemoption();
-									$Itemoption = Mage::getModel('ecc/Itemoption');
-									$Itemoption->setOptionValue("Non-returnable");
-									$Itemoption->setOptionName("Clearance");
-									$Item->setItemOptions($Itemoption->getItemoption());
-						
-						}
-					
-					}
-					$itemI++;
-					$Order->setOrderItems($Item->getItem());
-				
-				}
+                #Credit Memo
+                $CreditMemoCollection = Mage::getResourceModel('sales/order_creditmemo_collection')->addFieldToFilter('order_id', $orders['entity_id']);
+
+                $Order->setIsCreditMemoCreated("0");
 
 
-				$discountadd =true;
-				#Discount Coupon as line item
-				$orders["discount_amount"] = $orders["discount_amount"]?$orders["discount_amount"]:$orders["base_discount_amount"];
+                foreach($CreditMemoCollection as $CreditMemo1)
+                {
+                    $Order->setIsCreditMemoCreated("1");
 
-				if(($orders['coupon_code']!='' || $orders['discount_description']!='') && $discount_as_line_item==true)
-				{
-					$discountadd =false;
-					$orders["discount_amount"] = $orders["discount_amount"]?$orders["discount_amount"]:$orders["base_discount_amount"];
-					if($display_discount_desc){ $DESCR1 = $orders['discount_description'];  }else{ $DESCR1 = $orders['coupon_code']; }
-					//$DESCR1 = $orders['coupon_code']?$orders['coupon_code']:$orders['discount_description'];
-					$itemI++;
-					$Item = Mage::getModel('ecc/Item');
+                    $CreditMemo = Mage::getModel('ecc/CreditMemo');
 
-					$Item->setItemCode("Discount Coupon");
-					$Item->setItemDescription(substr($DESCR1,0,50));
-					$Item->setItemShortDescr("Coupon code ".htmlentities(substr($DESCR1,0,50),ENT_QUOTES));
-					$Item->setQuantity(intval(1));
-					$discount_amount=$orders["discount_amount"];
-					if($discount_amount< 0)
-					{
-					$Item->setUnitPrice($orders["discount_amount"]);
-					}else{
-					$Item->setUnitPrice("-".$orders["discount_amount"]);
-					}
-					$Item->setWeight('');
-					$Item->setFreeShipping("N");
-					$Item->setshippingFreight("0.00");
-					$Item->setWeight_Symbol("lbs");
-					$Item->setWeight_Symbol_Grams("453.6");
-					$Item->setDiscounted("Y");
-					$Order->setOrderItems($Item->getItem());
-				}
-				#Reward Points as line item
-				if($orders["reward_points_balance"])
-				{
-					$itemI++;
-					$Item = Mage::getModel('ecc/Item');
-					$Item->setItemCode($RewardsPoints_Name);
-					$Item->setItemDescription($orders["reward_points_balance"].'reward points');
-					$Item->setItemShortDescr($orders["reward_points_balance"].'reward points');
-					$Item->setQuantity(intval(1));
-					$Item->setUnitPrice("-".$orders["base_reward_currency_amount"]);
-					$Item->setWeight('');
-					$Item->setFreeShipping("N");
-					$Item->setshippingFreight("0.00");
-					$Item->setWeight_Symbol("lbs");
-					$Item->setWeight_Symbol_Grams("453.6");
-					$Item->setDiscounted("Y");
-					$Order->setOrderItems($Item->getItem());
-
-				}
-
-				if($orders["customer_credit_amount"]>0)
-				{
-					$itemI++;
-					$Item = Mage::getModel('ecc/Item');
-
-					$Item->setItemCode("InternalCredit");
-					$Item->setItemDescription('Internal Credit');
-					$Item->setItemShortDescr('Internal Credit');
-					$Item->setQuantity(intval(1));
-					$Item->setUnitPrice("-".$orders["customer_credit_amount"]);
-					$Item->setWeight('');
-					$Item->setFreeShipping("N");
-					$Item->setshippingFreight("0.00");
-					$Item->setWeight_Symbol("lbs");
-					$Item->setWeight_Symbol_Grams("453.6");
-					$Item->setDiscounted("Y");
-					$Order->setOrderItems($Item->getItem());
-
-				}
+                    $CreditMemo->setCreditMemoID($CreditMemo1->increment_id);
+                    $CreditMemo->setCreditMemoDate($CreditMemo1->created_at);
+                    $CreditMemo->setSubtotal($CreditMemo1->grand_total);
 
 
-				if($orders["gift_cards"])
-				{
-					$gift_cards = unserialize($orders["gift_cards"]);
-					foreach($gift_cards as $gift_card)
-					{
-						$itemI++;
 
-						$Item = Mage::getModel('ecc/Item');
-						$Item->setItemCode("GiftCard");
-						$Item->setItemDescription(substr("GiftCard #.".$gift_card['c'],0,50));
-						$Item->setItemShortDescr(substr($gift_card['c'],0,50));
-						$Item->setQuantity(intval(1));
-						$Item->setUnitPrice("-".$gift_card['a']);
-						$Item->setWeight('');
-						$Item->setFreeShipping("N");
-						$Item->setshippingFreight("0.00");
-						$Item->setWeight_Symbol("lbs");
-						$Item->setWeight_Symbol_Grams("453.6");
-						$Item->setDiscounted("Y");
-						$Order->setOrderItems($Item->getItem());
+                    foreach ($CreditMemo1->getAllItems() as $CreditMemoItem)
+                    {
+                        if(trim($CreditMemoItem->sku)=='')
+                        {
+                            continue;
+                        }
 
-					}
-				}
-				if($orders["giftcert_code"])
-				{
-			
-						$Item = Mage::getModel('ecc/Item');
-						$Item->setItemCode("Gift Certificate" );
-						$Item->setItemDescription($orders["giftcert_code"]);
-						$Item->setItemShortDescr("Gift Certificate");
-						$Item->setQuantity(intval(1));
-						$Item->setUnitPrice("-".$orders['giftcert_amount']);
-						$Item->setWeight('');
-						$Item->setFreeShipping("N");
-						$Item->setshippingFreight("0.00");
-						$Item->setWeight_Symbol("lbs");
-						$Item->setWeight_Symbol_Grams("453.6");
-						$Item->setDiscounted("Y");
-						$Order->setOrderItems($Item->getItem());
-				
-					
-				}
-				
-				
-								if($orders["gw_price"]!="0.0" && $orders["gw_price"]>"0.0")
-				{
-			
-						$Item = Mage::getModel('ecc/Item');
-						$Item->setItemCode("Gift Wrapping for Order");
-						$Item->setItemDescription("Gift Wrapping for Order");
-						$Item->setItemShortDescr("Gift Wrapping for Order");
-						$Item->setQuantity(intval(1));
-						$Item->setUnitPrice($orders['gw_price']);
-						$Item->setWeight('');
-						$Item->setFreeShipping("N");
-						$Item->setshippingFreight("0.00");
-						$Item->setWeight_Symbol("lbs");
-						$Item->setWeight_Symbol_Grams("453.6");
-						$Item->setDiscounted("Y");
-						$Order->setOrderItems($Item->getItem());
-				
-					
-				}
-				
-				
-				if($orders["gw_items_price"]!="0.0" && $orders["gw_items_price"]>"0.0")
-				{
-			
-						$Item = Mage::getModel('ecc/Item');
-						$Item->setItemCode("Gift Wrapping for Items");
-						$Item->setItemDescription("Gift Wrapping for Items");
-						$Item->setItemShortDescr("Gift Wrapping for Items");
-						$Item->setQuantity(intval(1));
-						$Item->setUnitPrice($orders['gw_items_price']);
-						$Item->setWeight('');
-						$Item->setFreeShipping("N");
-						$Item->setshippingFreight("0.00");
-						$Item->setWeight_Symbol("lbs");
-						$Item->setWeight_Symbol_Grams("453.6");
-						$Item->setDiscounted("Y");
-						$Order->setOrderItems($Item->getItem());
-				
-					
-				}
-				/////////////////////////////////////
-				//   billing info
-				/////////////////////////////////////
-				$Bill = Mage::getModel('ecc/Bill');
-				$CreditCard = Mage::getModel('ecc/CreditCard');
 
-				$PayStatus = "Cleared";
-				if ($payment['cc_type']!="")
-				{
-					if($ccdetails!=='DONOTSEND')
-					{				
-					$CreditCard->setCreditCardType($this->getCcTypeName($payment['cc_type']));
-					if (isset($payment['amount_paid']))
-					{
-						$CreditCard->setCreditCardCharge($payment['amount_paid']);
+                        $itemInOrder = Mage::getModel('sales/order_item')->load($CreditMemoItem->order_item_id);
+                        $OrderQty = $itemInOrder->getQtyOrdered ();
+                        $ItemPrice = $itemInOrder->getPrice();
 
-					}else{
-						$CreditCard->setCreditCardCharge('0.00');
+                        $CancelItemDetail = Mage::getModel('ecc/CancelItemDetail');
 
-					}
-					if (isset($payment['cc_exp_month'])&&isset($payment['cc_exp_year'])){
-						$CreditCard->setExpirationDate(sprintf('%02d',$payment['cc_exp_month']).substr($payment['cc_exp_year'],-2,2));
-					}else{
-						$CreditCard->setExpirationDate("");
-					}
+                        $CancelItemDetail->setItemID($CreditMemoItem->product_id);
+                        $CancelItemDetail->setItemSku($CreditMemoItem->sku);
+                        $CancelItemDetail->setItemName($CreditMemoItem->name);
+                        $CancelItemDetail->setQtyCancel($CreditMemoItem->qty);
+                        $CancelItemDetail->setQtyInOrder($OrderQty);
+                        $CancelItemDetail->setPriceCancel($CreditMemoItem->price);
+                        $CancelItemDetail->setItemPrice($ItemPrice);
+                        $CreditMemo->setCancelItemDetail($CancelItemDetail->getCancelItemDetail());
 
-					$CreditCardName = $payment['cc_owner']?($payment['cc_owner']):"";
-					$CreditCard->setCreditCardName($CreditCardName);
-					$payment['cc_number_enc'] = Mage::helper('core')->decrypt($payment['cc_number_enc']);
-					$CreditCardNumber = $payment['cc_number_enc']?$payment['cc_number_enc']:$payment['cc_last4'];
-					$CreditCard->setCreditCardNumber(utf8_encode($CreditCardNumber));
-					if(!empty($orders['quote_id']))
-					{
-					$getQuote=Mage::getModel('sales/quote_payment')->getCollection()->setQuoteFilter($orders['quote_id']);
-					$getQuote_val=$getQuote->toArray();
-					
-					$cc_cid = Mage::helper('core')->decrypt($getQuote_val['items']['0']['cc_cid_enc']);   
-					$CreditCard->setCVV2($cc_cid);
-					}
-					else
-					{
-					$CreditCard->setCVV2('');
-					}
-					$CreditCard->setAdvanceInfo('');
-					$transcationId ="";
-					$transcationId = (isset($payment['cc_trans_id'])?($payment['cc_trans_id']):"");
-					$transcationId  = $transcationId ? $transcationId : $payment['last_trans_id'];
-					}					
-					$CreditCard->setTransactionId($transcationId);															
-					$CreditCard->getCreditCard();					
-					$Bill->setCreditCardInfo($CreditCard->getCreditCard());					
-				}else{
-					$transcationId ="";
-					$additional_information_authorize_cards=$payment['additional_information']['authorize_cards'];
-					if(is_array($additional_information_authorize_cards))
-					foreach($additional_information_authorize_cards as $key =>$value)
-					{
-						$payment['last_trans_id'] = $value['last_trans_id'];
-						$payment['cc_type']= $value['cc_type'];
-						$payment['cc_exp_month'] = $value['cc_exp_month'];
-						$payment['cc_exp_year'] = $value['cc_exp_year'];
-						$payment['cc_last4'] = $value['cc_last4'];
-					}
-				  if($ccdetails!=='DONOTSEND')
-				  {			
-					$CreditCard->setCreditCardType($this->getCcTypeName($payment['cc_type']));
-					$CreditCard->setCreditCardCharge($payment['amount_paid']);
-					$CreditCard->setExpirationDate(sprintf('%02d',$payment['cc_exp_month']).substr($payment['cc_exp_year'],-2,2));
-					$CreditCard->setCreditCardName($CreditCardName);
-					$CreditCardNumber = $payment['cc_number_enc']?$payment['cc_number_enc']:$payment['cc_last4'];
-					$CreditCard->setCreditCardNumber(utf8_encode($CreditCardNumber));
-					if(!empty($orders['quote_id']))
-					{
-						$getQuote=Mage::getModel('sales/quote_payment')->getCollection()->setQuoteFilter($orders['quote_id']);
-					   $getQuote_val=$getQuote->toArray();
-					   
-					   $cc_cid = Mage::helper('core')->decrypt($getQuote_val['items']['0']['cc_cid_enc']);   
-					   $CreditCard->setCVV2($cc_cid);
-					}
-					else
-					{
-						$CreditCard->setCVV2('');
-					}
-					$CreditCard->setAdvanceInfo('');	
-					}					
-					$transcationId  = $transcationId ? $transcationId : $payment['last_trans_id'];
-					$CreditCard->setTransactionId($transcationId);
-					$CreditCard->getCreditCard();
-					$Bill->setCreditCardInfo($CreditCard->getCreditCard());
                     }
 
-				if (isset($payment['amount_ordered'])&&isset($payment['amount_paid']))
-				{
-					if (($payment['amount_paid']==$payment['amount_ordered']))
-						$PayStatus = "Pending";
-				}
-				# for version 1.4.1.0
-				$Bill->setPayMethod($this->getPaymentlabel($payment['method']));
-				$Bill->setTitle("");
-				$Bill->setFirstName($orders["billing_firstname"]);
-				$Bill->setLastName($orders["billing_lastname"]);
+                    $Order->setCreditMemos($CreditMemo->getCreditMemo());
 
-				if (!empty($orders["billing_company"]))
-				{
-					$Bill->setCompanyName($orders["billing_company"]);
-				}else{
-					$Bill->setCompanyName("");
-				}
+                }
+            }else {
 
-				$orders["billing_street"] = explode("\n",$orders["billing_street"]);
-				$Bill->setAddress1($orders["billing_street"][0]);
-				$Bill->setAddress2(isset($orders["billing_street"][1])?$orders["billing_street"][1]:"");
-				$Bill->setCity($orders["billing_city"]);
-				
-				$region = Mage::getModel('directory/region')->load($orders['billing_region_id']);
-				$state_code = $region->getCode(); //12
-				if($donwload_state_code=='True') {
-				
-					$Bill->setState($state_code);
-				}else {
-					$Bill->setState($orders["billing_region"]);
-				}
-				
-				$Bill->setZip($orders["billing_postcode"]);
-				$Bill->setCountry(trim($country[$orders["billing_country"]]));
-				$Bill->setEmail($orders["customer_email"]);
-				$Bill->setPhone($orders["billing_telephone"]);
+                #Credit Memo
+                $CreditMemoCollection = Mage::getResourceModel('sales/order_creditmemo_collection')->addFieldToFilter('order_id', $orders['entity_id']);
 
-				$Bill->setPONumber($payment['po_number']);
-				$customer = Mage::getModel('customer/customer')->load($orders["customer_id"]);
-				$customerGroupId = $customer->getGroupId();
-				$group = Mage::getModel('customer/group')->load($customerGroupId);
-				$group_nam=$group->getCode();
-				
-				$Bill->setGroupName($group_nam);
-				$Order->setOrderBillInfo($Bill->getBill());
+                $Order->setIsCreditMemoCreated("0");
+                $totalccgrandtotal=0;
+                $ccitemArray =  array();
+                $totalccitemqty =0;
 
-				/////////////////////////////////////
-				//   CreditCard info
-				/////////////////////////////////////
-				$Ship = Mage::getModel('ecc/Ship');
+                foreach($CreditMemoCollection as $CreditMemo1)
+                {
+                    $Order->setIsCreditMemoCreated("1");
+
+                    $totalccgrandtotal = $totalccgrandtotal+$CreditMemo1->grand_total;
+
+                    foreach ($CreditMemo1->getAllItems() as $CreditMemoItem)
+                    {
+                        if(trim($CreditMemoItem->sku)=='')
+                        {
+                            continue;
+                        }
+
+                        $totalccitemqty = $totalccitemqty+$CreditMemoItem->qty;
+                        if(array_key_exists($CreditMemoItem->sku,$ccitemArray))
+                        {
+                            $ccitemArray[$CreditMemoItem->sku]["qty"] = $ccitemArray[$CreditMemoItem->sku]["qty"]+$CreditMemoItem->qty;
+
+                        }else
+                        {
+                            $ccitemArray[$CreditMemoItem->sku]["qty"] =$CreditMemoItem->qty;
+                            $ccitemArray[$CreditMemoItem->sku]["name"] =$CreditMemoItem->name;
+                            $ccitemArray[$CreditMemoItem->sku]["ID"] =$CreditMemoItem->product_id;
+                            $ccitemArray[$CreditMemoItem->sku]["orderItemId"] =$CreditMemoItem->order_item_id;
+
+                        }
+                    }
 
 
-				$shipmentCollection = Mage::getResourceModel('sales/order_shipment_collection')->setOrderFilter($_order)->load();
-			
-				foreach ($shipmentCollection as $shipment){
-				
-				  foreach($shipment->getAllTracks() as $ship_data)
-					{
-				    $Req_ship_detail_arry=$ship_data->toArray();
-					$ShipMethod=$Req_ship_detail_arry['title'];
-					$carrier_code=$Req_ship_detail_arry['carrier_code'];
-					$shipTrack1=$Req_ship_detail_arry['track_number'];
-				
-				
-					} 
-					
-				}
-				
-						
-				if($get_Active_Carriers)
-				{
-					$carrierInstances = Mage::getSingleton('shipping/config')->getActiveCarriers($storeid);
-				}else{
-				$carrierInstances = Mage::getSingleton('shipping/config')->getAllCarriers($storeId);
-				}
+                }
+                if($totalccgrandtotal!=0) {
+                    $CreditMemo = Mage::getModel('ecc/CreditMemo');
+                    $CreditMemo->setSubtotal($totalccgrandtotal);
+                    $CreditMemo->setCreditMemoDate($CreditMemo1->created_at);
+                    foreach($ccitemArray as $cckey=>$ccval)
+                    {
+                        $itemInOrder = Mage::getModel('sales/order_item')->load($ccval["orderItemId"]);
+                        $OrderQty = $itemInOrder->getQtyOrdered ();
+
+                        $CancelItemDetail = Mage::getModel('ecc/CancelItemDetail');
+                        $CancelItemDetail->setItemID($ccval["ID"]);
+                        $CancelItemDetail->setItemSku($cckey);
+                        $CancelItemDetail->setItemName($ccval["name"]);
+                        $CancelItemDetail->setQtyCancel($ccval["qty"]);
+                        $CancelItemDetail->setQtyInOrder($OrderQty);
+                        $CancelItemDetail->setPriceCancel(round(($totalccgrandtotal/$totalccitemqty),3));
+                        $CancelItemDetail->setItemPrice(round(($totalccgrandtotal/$totalccitemqty),3));
+                        $CreditMemo->setCancelItemDetail($CancelItemDetail->getCancelItemDetail());
+                    }
+
+                    $Order->setCreditMemos($CreditMemo->getCreditMemo());
+
+                }
+
+            }
 
 
-				
-				$carriers['custom'] = Mage::helper('sales')->__('Custom Value');
-				foreach ($carrierInstances as $code => $carrier) {
-					if ($carrier->isTrackingAvailable()) {
-						$carriers[$code] = $carrier->getConfigData('title');
-					}
-				}
-				$c_code='';	
-				foreach($carriers as $c_key=>$c_val)
-				{
-					if($carrier_code==$c_key)
-					{
-						$Carrier=$c_val;
-						break;
-					}
-				}
-				unset($carrier_code);
-				$Carrier=strtolower($Carrier);
-				$ship_career = explode("-",$orders["shipping_description"],2);
-				$Ship->setShipMethod(empty($ShipMethod)?$ship_career[1]:$ShipMethod);
-				$Ship->setCarrier(empty($Carrier)?$ship_career[0]:$Carrier);
-				$Ship->setTrackingNumber(!empty($shipTrack1)?$shipTrack1:'');
-				#End
-				
-			    unset($shipTrack);
-				$Ship->setTitle("");
 
-				if(!array_key_exists('shipping_firstname',$orders) && !array_key_exists('shipping_lastname',$orders) )
-				{
-					$shippingAddressArray = $_order->getShippingAddress();
-					if(is_array($shippingAddressArray))
-					$shippingAddressArray = $shippingAddressArray->toArray();
-					$orders["shipping_firstname"]=$shippingAddressArray["firstname"];
-					$orders["shipping_lastname"]=$shippingAddressArray["lastname"];
-					$orders["shipping_company"]=$shippingAddressArray["company"];
-					$orders["shipping_street"]=$shippingAddressArray["street"];
-					$orders["shipping_city"]=$shippingAddressArray["city"];
-					$orders["shipping_region"]=$shippingAddressArray["region"];
-					$orders["shipping_region_id"]=$shippingAddressArray["region_id"];
-					$orders["shipping_postcode"]=$shippingAddressArray["postcode"];
-					$orders["shipping_country"]=$shippingAddressArray["country_id"];
-					$orders["customer_email"]=$shippingAddressArray["customer_email"]?$shippingAddressArray["customer_email"]:$orders["customer_email"];
-					$orders["shipping_telephone"]=$shippingAddressArray["telephone"];
-				}
-				$Ship->setFirstName($orders["shipping_firstname"]);
-				$Ship->setLastName($orders["shipping_lastname"]);
-				if (!empty($orders["shipping_company"]))
-				{
-					$Ship->setCompanyName($orders["shipping_company"]);
-				}else{
-					$Ship->setCompanyName("");
-				}
+            $orderStatus = $this->_getorderstatuses(1);//$storeId);
+            if(array_key_exists($orders['status'],$orderStatus ))
+                $Order->setStatus($orderStatus[$orders['status']]);
+            else
+                $Order->setStatus($orders['status']);
 
-				$orders["shipping_street"] = explode("\n",$orders["shipping_street"]);
+            if($payment['method']=='purchaseorder')
+            {
+                $orders['customer_note'] = $orders['customer_note'] ." Purchase Order Number: ".$payment['po_number'];
+            }
 
-				$Ship->setAddress1($orders["shipping_street"][0]);
-				$Ship->setAddress2(isset($orders["shipping_street"][1])?$orders["shipping_street"][1]:"");
-				$Ship->setCity($orders["shipping_city"]);
-				
-				
-				$region_shipping = Mage::getModel('directory/region')->load($orders["shipping_region_id"]);
-				$shipping_state_code = $region_shipping->getCode(); //12
-				
-				if($donwload_state_code=='True') {
-				
-					$Ship->setState($shipping_state_code);
-				}else {
-					$Ship->setState($orders["shipping_region"]);
-				}
-				
-				$Ship->setZip($orders["shipping_postcode"]);
-				$Ship->setCountry(trim($country[$orders["shipping_country"]]));
-				$Ship->setEmail($orders["customer_email"]);
-				$Ship->setPhone($orders["shipping_telephone"]);
+            /*$Order->setNotes(isset($orders['customer_note'])?$orders['customer_note']:"");
+                $giftMessage['message'] = isset($giftMessage['message'])?$giftMessage['message']:"";
+                $Order->setComment($customer_comment.$giftMessage['message']);*/
+            $order_comment='';
+            foreach ($_order->getStatusHistoryCollection(true) as $_comment)
+            {
+                if($_comment->getComment())
+                {
+                    $cust_comment = $_comment->getComment();
+                }
+            }
 
-				$Order->setOrderShipInfo($Ship->getShip());
+            foreach ($_order->getStatusHistoryCollection(true) as $_comment)
+            {
+                if($_comment->getComment())
+                {
+                    $order_comment = $_comment->getComment();
+                    break;
+                }
+            }
+            $Order->setNotes(isset($order_comment)?$order_comment:"");
+            $giftMessage['message'] = isset($giftMessage['message'])?$giftMessage['message']:"";
+            $Order->setComment($cust_comment);
+            $Order->setFax('');
+            #assign order info to order object
+            //$Order->setOrderInfo($OrderInfo->getOrderInfo());
 
-				$charges = Mage::getModel('ecc/Charges');
 
-				$charges->setDiscount($discountadd?abs($orders["discount_amount"]):'');
-				$charges->setStoreCredit($orders["customer_balance_amount"]?$orders["customer_balance_amount"]:0.00);
-				$charges->setTax($orders["tax_amount"]);
-				$charges->setShipping($orders["shipping_amount"]);
-				$charges->setTotal( $orders["grand_total"]);
-				$charges->setSubTotal();
-				$Order->setOrderChargeInfo($charges->getCharges());
+            /***************************************************************************************************
+            Custamization for XPU-623-53661 Start: We create a config variable to manage this.
+             ****************************************************************************************************/
+            if($set_field_Q_CIM_and_Q_Authorization)
+            {
+                $po_number_str=$payment['po_number'];
+                $po_number=explode("-",$po_number_str);
+                if(!empty($po_number['0']))
+                {
+                    $q_cim=$po_number['0'];
+                }
 
-				$Order->setShippedOn($shippedOn);
-				$Order->setShippedVia(empty($Carrier)?$ship_career[0]:$Carrier);
-					 unset($Carrier,$shipTrack1,$ShipMethod);
-				$Order->setSalesRep($setSalesRep);
-				$Orders->setOrders($Order->getOrder());
-				$ord++;
-				unset($Order);
-			}
+                if($q_cim!="" || $payment['last_trans_id']!="")
+                {
+                    // code for custom fields
+                    $WG_OtherInfo = new WG_OtherInfo();
+                    $WG_Other = new WG_Other();
+                    $other_field= array('Q_CIM'=>$q_cim);
+                    foreach($other_field as $key=>$value)
+                    {
+
+                        $WG_OtherInfo->setFieldName($key);
+                        $WG_OtherInfo->setFieldValue(html_entity_decode($value));
+
+
+                        $WG_Other->setCustomFeilds($WG_OtherInfo->getOtherinfo());
+
+                    }
+
+                    $Order->setOrderOtherInfo($WG_Other->getOther());
+                    //code for custom fields
+                }
+            }
+            /***************************************************************************************************
+            Custamization for XPU-623-53661 Ends.
+             ****************************************************************************************************/
+            $item_array = $this->getorderitems($orders["entity_id"],$orders["increment_id"],$download_option_as_item);
+            $item_array = $item_array['items'];
+            $onlineInfo = array();
+
+            if($do_not_download_configurable_product_as_line_item==true && $download_option_as_item==true)
+            {
+                unset($orderConfigItems);
+                $orderConfigItems = array();
+            }
+
+            if($do_not_download_bundle_product_as_line_item==true && $download_option_as_item==true)
+            {
+                unset($orderBundalItems);
+                $orderBundalItems = array();
+            }
+
+
+
+            $itemI = 0;
+            foreach($item_array as $iInfo)
+            {
+
+
+                if(is_object($iInfo['product']))
+                    $onlineInfo =  $iInfo['product']->toArray();
+
+                if(intval($iInfo["qty_ordered"])>0 && is_numeric($iInfo["price"]))
+                {
+                    unset($productoptions);
+                    $productoptions = array();
+
+                    if(isset($iInfo['product_options']))
+                        $productoptions = unserialize($iInfo['product_options']);
+
+                    if(isset($productoptions['options']) && is_array($productoptions['options']))
+                    {
+                        if($productoptions['options'])
+                        {
+                            if(is_array($productoptions['options']) && !empty($productoptions['options']))
+                            {
+                                if(is_array($productoptions['attributes_info']))
+                                {
+                                    $productoptions['attributes_info']     =    array_merge($productoptions['attributes_info'],$productoptions['options']);
+                                }else{
+                                    $productoptions['attributes_info']     =    $productoptions['options'];
+                                }
+                            }
+                            unset($productoptions['options']);
+                        }
+                    }
+                    if(!empty($productoptions['bundle_options']) && is_array($productoptions['bundle_options']))
+                    {
+
+                        if(array_key_exists('attributes_info', $productoptions))
+                        {
+                            $productoptions['attributes_info'] = array_merge($productoptions['attributes_info'],$productoptions['bundle_options']);
+
+                        }else{
+                            $productoptions['attributes_info'] = $productoptions['bundle_options'];
+                        }
+                        unset($productoptions['bundle_options']);
+                    }
+                    if(isset($iInfo['product']))
+                    {
+                        $product = $iInfo;
+                        $product['type_id'] = $iInfo['product_type'];
+                        $product_base = $iInfo['product']->toArray();
+                        $product['tax_class_id'] = $product_base['tax_class_id'];
+                    }else{
+                        $product = $iInfo;
+                        $product['type_id'] = $iInfo['product_type'];
+                        //$product['tax_class_id'] = 'no';
+                        $currentProduct = Mage::getModel("catalog/product")->load($iInfo['product_id']);
+                        $product_base = $currentProduct->toArray();
+                        $product['tax_class_id'] = $product_base['tax_class_id'];
+                        $productoptions['simple_sku'] = $iInfo['sku'];
+                    }
+
+                    if($do_not_download_configurable_product_as_line_item==true && $download_option_as_item==true)
+                    {
+                        if(in_array($iInfo['parent_item_id'],$orderConfigItems))
+                        {
+                            continue;
+                        }
+                    }
+
+
+                    if($do_not_download_bundle_product_as_line_item==true && $download_option_as_item==true)
+                    {
+                        if(in_array($iInfo['parent_item_id'],$orderBundalItems))
+                        {
+                            continue;
+                        }
+                    }
+
+                    if($product['type_id']=='bundle')
+                    {
+                        #$download_option_as_item =false;
+                        #PriceType == 0  means Dynamic price product
+                        if($download_option_as_item  == true && $iInfo['product']->getPriceType()==0)
+                        {
+                            $iInfo["qty_ordered"] =0;
+                            continue;
+                        }
+                    }
+                    $Item = Mage::getModel('ecc/Item');
+                    if($product['type_id']!='configurable')
+                    {
+                        if($do_not_download_bundle_product_as_line_item==true && $download_option_as_item==true)
+                        {
+                            $orderBundalItems[] = $iInfo['item_id'];
+                        }
+                        //$responseArray['Orders'][$ord]['Items'][$itemI]['ItemCode'] = htmlentities($product['sku'],ENT_QUOTES);
+                        $Item->setItemCode($product['sku']);
+                        //$Item->setItemAlu('WG_ALU');
+                    }else{
+
+                        if($do_not_download_configurable_product_as_line_item==true && $download_option_as_item==true)
+                        {
+                            $orderConfigItems[] = $iInfo['item_id'];
+                        }
+                        $Item->setItemCode($productoptions['simple_sku']);
+                        //$responseArray['Orders'][$ord]['Items'][$itemI]['ItemCode'] = htmlentities($productoptions['simple_sku'],ENT_QUOTES);
+                    }
+
+                    $Item->setItemDescription($product['name']);
+
+                    if($set_Short_Description)
+                    {
+                        $Item->setItemShortDescr(empty($onlineInfo['short_description'])?substr($product['short_description'],0,2000):substr($onlineInfo['short_description'],0,2000));
+                    }else{
+
+                        $Item->setItemShortDescr(empty($onlineInfo['description'])?substr($product['description'],0,2000):substr($onlineInfo['description'],0,2000));
+                    }
+                    $attributeInfo = Mage::getResourceModel('eav/entity_attribute_collection')
+                        ->setCodeFilter('ecc')
+                        ->getFirstItem();
+                    $attributeInfo = $attributeInfo->getData();
+
+                    if(isset($attributeInfo) && !empty($attributeInfo))
+                        $attributeValue = Mage::getModel('catalog/product')
+                            ->load($iInfo["product_id"])->getAttributeText('ecc');
+
+                    if(isset($attributeValue) && $attributeValue=='Yes' && $iInfo["weight"]>0 )
+                    {
+                        $iInfo["qty_ordered"] = $iInfo["qty_ordered"]*$iInfo["weight"];
+                        $iInfo["price"] = $iInfo["price"]/$iInfo["qty_ordered"];
+                        $iInfo["weight"] = $iInfo["weight"]/$iInfo["qty_ordered"];
+                    }
+                    $Item->setItemID($iInfo['item_id']);
+                    $Item->setQuantity($iInfo["qty_ordered"]);
+                    $Item->setShippedQuantity($iInfo["qty_shipped"]);
+
+
+                    $Item->setUnitPrice($iInfo["price"]);
+                    $Item->setCostPrice($onlineInfo["cost"]);
+                    $Item->setWeight($iInfo["weight"]);
+                    $Item->setFreeShipping("N");
+                    $Item->setDiscounted("N");
+                    $Item->setshippingFreight("0.00");
+                    $Item->setWeight_Symbol("lbs");
+                    $Item->setWeight_Symbol_Grams("453.6");
+
+                    if($product['tax_class_id']<=0 || $product['tax_class_id']="")
+                    {
+                        $Item->setTaxExempt("Y");
+
+                    }else{
+                        $Item->setTaxExempt("N");
+                    }
+                    $iInfo['onetime_charges']="0.00";
+                    $Item->setOneTimeCharge(number_format($iInfo['onetime_charges'],2,'.',''));
+                    $Item->setItemTaxAmount("");
+                    //$responseArray['ItemOptions'] = array();
+                    if(array_key_exists("attributes_info",$productoptions))
+                    {
+                        $optionI = 0;
+                        foreach($productoptions['attributes_info'] as $item_option12)
+                        {
+                            $Itemoption = Mage::getModel('ecc/Itemoption');
+                            //$Itemoption = new Itemoption();
+                            if(is_array($item_option12['value']))
+                            {
+                                $item_option1234='';
+                                foreach($item_option12['value'] as $item_option123)
+                                {
+
+                                    $item_option1234 = " ".$item_option123['qty']." x ".$item_option123['title']." $".$item_option123['price'];
+                                    $Itemoption->setOptionValue($item_option1234);
+                                    $Itemoption->setOptionName($item_option12['label']);
+                                    $Itemoption->setOptionPrice($item_option123['price']);
+
+                                    $Item->setItemOptions($Itemoption->getItemoption());
+
+                                }
+                                //$responseArray['ItemOptions'][$optionI]['Name'] = htmlentities($item_option12['label']);
+                                //$responseArray['ItemOptions'][$optionI]['Value'] = htmlentities($item_option1234);
+                                unset($item_option1234);
+                            }else{
+                                $Itemoption->setOptionValue($item_option12['value']);
+                                $Itemoption->setOptionName($item_option12['label']);
+                                $Item->setItemOptions($Itemoption->getItemoption());
+                                //$responseArray['ItemOptions'][$optionI]['Name'] = htmlentities($item_option12['label']);
+                                //$responseArray['ItemOptions'][$optionI]['Value'] = htmlentities($item_option12['value']);
+                            }
+                            $optionI++;
+                        }
+                    }
+                    #custamization for client date: 08 may 2012
+                    if($iInfo['nonreturnable']=="Yes" && isset($iInfo['nonreturnable']))
+                    {
+                        //$Itemoption = new Itemoption();
+                        $Itemoption = Mage::getModel('ecc/Itemoption');
+                        $Itemoption->setOptionValue("Non-returnable");
+                        $Itemoption->setOptionName("Clearance");
+                        $Item->setItemOptions($Itemoption->getItemoption());
+
+                    }
+
+                }
+                $itemI++;
+                $Order->setOrderItems($Item->getItem());
+
+            }
+            Mage::log('Before Discount Coupon',Zend_Log::DEBUG,'my.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+
+            $discountadd =true;
+            #Discount Coupon as line item
+            $orders["discount_amount"] = $orders["discount_amount"]?$orders["discount_amount"]:$orders["base_discount_amount"];
+
+            if(($orders['coupon_code']!='' || $orders['discount_description']!='') && $discount_as_line_item==true)
+            {
+                $discountadd =false;
+                $orders["discount_amount"] = $orders["discount_amount"]?$orders["discount_amount"]:$orders["base_discount_amount"];
+                if($display_discount_desc){ $DESCR1 = $orders['discount_description'];  }else{ $DESCR1 = $orders['coupon_code']; }
+                //$DESCR1 = $orders['coupon_code']?$orders['coupon_code']:$orders['discount_description'];
+                $itemI++;
+                $Item = Mage::getModel('ecc/Item');
+
+                $Item->setItemCode("Discount Coupon");
+                $Item->setItemDescription(substr($DESCR1,0,50));
+                $Item->setItemShortDescr("Coupon code ".htmlentities(substr($DESCR1,0,50),ENT_QUOTES));
+                $Item->setQuantity(intval(1));
+                $discount_amount=$orders["discount_amount"];
+                if($discount_amount< 0)
+                {
+                    $Item->setUnitPrice($orders["discount_amount"]);
+                }else{
+                    $Item->setUnitPrice("-".$orders["discount_amount"]);
+                }
+                $Item->setWeight('');
+                $Item->setFreeShipping("N");
+                $Item->setshippingFreight("0.00");
+                $Item->setWeight_Symbol("lbs");
+                $Item->setWeight_Symbol_Grams("453.6");
+                $Item->setDiscounted("Y");
+                $Order->setOrderItems($Item->getItem());
+            }
+            #Reward Points as line item
+            if($orders["reward_points_balance"])
+            {
+                $itemI++;
+                $Item = Mage::getModel('ecc/Item');
+                $Item->setItemCode($RewardsPoints_Name);
+                $Item->setItemDescription($orders["reward_points_balance"].'reward points');
+                $Item->setItemShortDescr($orders["reward_points_balance"].'reward points');
+                $Item->setQuantity(intval(1));
+                $Item->setUnitPrice("-".$orders["base_reward_currency_amount"]);
+                $Item->setWeight('');
+                $Item->setFreeShipping("N");
+                $Item->setshippingFreight("0.00");
+                $Item->setWeight_Symbol("lbs");
+                $Item->setWeight_Symbol_Grams("453.6");
+                $Item->setDiscounted("Y");
+                $Order->setOrderItems($Item->getItem());
+
+            }
+
+            if($orders["customer_credit_amount"]>0)
+            {
+                $itemI++;
+                $Item = Mage::getModel('ecc/Item');
+
+                $Item->setItemCode("InternalCredit");
+                $Item->setItemDescription('Internal Credit');
+                $Item->setItemShortDescr('Internal Credit');
+                $Item->setQuantity(intval(1));
+                $Item->setUnitPrice("-".$orders["customer_credit_amount"]);
+                $Item->setWeight('');
+                $Item->setFreeShipping("N");
+                $Item->setshippingFreight("0.00");
+                $Item->setWeight_Symbol("lbs");
+                $Item->setWeight_Symbol_Grams("453.6");
+                $Item->setDiscounted("Y");
+                $Order->setOrderItems($Item->getItem());
+
+            }
+
+
+            if($orders["gift_cards"])
+            {
+                $gift_cards = unserialize($orders["gift_cards"]);
+                foreach($gift_cards as $gift_card)
+                {
+                    $itemI++;
+
+                    $Item = Mage::getModel('ecc/Item');
+                    $Item->setItemCode("GiftCard");
+                    $Item->setItemDescription(substr("GiftCard #.".$gift_card['c'],0,50));
+                    $Item->setItemShortDescr(substr($gift_card['c'],0,50));
+                    $Item->setQuantity(intval(1));
+                    $Item->setUnitPrice("-".$gift_card['a']);
+                    $Item->setWeight('');
+                    $Item->setFreeShipping("N");
+                    $Item->setshippingFreight("0.00");
+                    $Item->setWeight_Symbol("lbs");
+                    $Item->setWeight_Symbol_Grams("453.6");
+                    $Item->setDiscounted("Y");
+                    $Order->setOrderItems($Item->getItem());
+
+                }
+            }
+            if($orders["giftcert_code"])
+            {
+
+                $Item = Mage::getModel('ecc/Item');
+                $Item->setItemCode("Gift Certificate" );
+                $Item->setItemDescription($orders["giftcert_code"]);
+                $Item->setItemShortDescr("Gift Certificate");
+                $Item->setQuantity(intval(1));
+                $Item->setUnitPrice("-".$orders['giftcert_amount']);
+                $Item->setWeight('');
+                $Item->setFreeShipping("N");
+                $Item->setshippingFreight("0.00");
+                $Item->setWeight_Symbol("lbs");
+                $Item->setWeight_Symbol_Grams("453.6");
+                $Item->setDiscounted("Y");
+                $Order->setOrderItems($Item->getItem());
+
+
+            }
+
+
+            if($orders["gw_price"]!="0.0" && $orders["gw_price"]>"0.0")
+            {
+
+                $Item = Mage::getModel('ecc/Item');
+                $Item->setItemCode("Gift Wrapping for Order");
+                $Item->setItemDescription("Gift Wrapping for Order");
+                $Item->setItemShortDescr("Gift Wrapping for Order");
+                $Item->setQuantity(intval(1));
+                $Item->setUnitPrice($orders['gw_price']);
+                $Item->setWeight('');
+                $Item->setFreeShipping("N");
+                $Item->setshippingFreight("0.00");
+                $Item->setWeight_Symbol("lbs");
+                $Item->setWeight_Symbol_Grams("453.6");
+                $Item->setDiscounted("Y");
+                $Order->setOrderItems($Item->getItem());
+
+
+            }
+
+
+            if($orders["gw_items_price"]!="0.0" && $orders["gw_items_price"]>"0.0")
+            {
+
+                $Item = Mage::getModel('ecc/Item');
+                $Item->setItemCode("Gift Wrapping for Items");
+                $Item->setItemDescription("Gift Wrapping for Items");
+                $Item->setItemShortDescr("Gift Wrapping for Items");
+                $Item->setQuantity(intval(1));
+                $Item->setUnitPrice($orders['gw_items_price']);
+                $Item->setWeight('');
+                $Item->setFreeShipping("N");
+                $Item->setshippingFreight("0.00");
+                $Item->setWeight_Symbol("lbs");
+                $Item->setWeight_Symbol_Grams("453.6");
+                $Item->setDiscounted("Y");
+                $Order->setOrderItems($Item->getItem());
+
+
+            }
+            /////////////////////////////////////
+            //   billing info
+            /////////////////////////////////////
+            $Bill = Mage::getModel('ecc/Bill');
+            $CreditCard = Mage::getModel('ecc/CreditCard');
+
+            $PayStatus = "Cleared";
+            if ($payment['cc_type']!="")
+            {
+                if($ccdetails!=='DONOTSEND')
+                {
+                    $CreditCard->setCreditCardType($this->getCcTypeName($payment['cc_type']));
+                    if (isset($payment['amount_paid']))
+                    {
+                        $CreditCard->setCreditCardCharge($payment['amount_paid']);
+
+                    }else{
+                        $CreditCard->setCreditCardCharge('0.00');
+
+                    }
+                    if (isset($payment['cc_exp_month'])&&isset($payment['cc_exp_year'])){
+                        $CreditCard->setExpirationDate(sprintf('%02d',$payment['cc_exp_month']).substr($payment['cc_exp_year'],-2,2));
+                    }else{
+                        $CreditCard->setExpirationDate("");
+                    }
+
+                    $CreditCardName = $payment['cc_owner']?($payment['cc_owner']):"";
+                    $CreditCard->setCreditCardName($CreditCardName);
+                    $payment['cc_number_enc'] = Mage::helper('core')->decrypt($payment['cc_number_enc']);
+                    $CreditCardNumber = $payment['cc_number_enc']?$payment['cc_number_enc']:$payment['cc_last4'];
+                    $CreditCard->setCreditCardNumber(utf8_encode($CreditCardNumber));
+                    if(!empty($orders['quote_id']))
+                    {
+                        $getQuote=Mage::getModel('sales/quote_payment')->getCollection()->setQuoteFilter($orders['quote_id']);
+                        $getQuote_val=$getQuote->toArray();
+
+                        $cc_cid = Mage::helper('core')->decrypt($getQuote_val['items']['0']['cc_cid_enc']);
+                        $CreditCard->setCVV2($cc_cid);
+                    }
+                    else
+                    {
+                        $CreditCard->setCVV2('');
+                    }
+                    $CreditCard->setAdvanceInfo('');
+                    $transcationId ="";
+                    $transcationId = (isset($payment['cc_trans_id'])?($payment['cc_trans_id']):"");
+                    $transcationId  = $transcationId ? $transcationId : $payment['last_trans_id'];
+                }
+                $CreditCard->setTransactionId($transcationId);
+                $CreditCard->getCreditCard();
+                $Bill->setCreditCardInfo($CreditCard->getCreditCard());
+            }else{
+                $transcationId ="";
+                $additional_information_authorize_cards=$payment['additional_information']['authorize_cards'];
+                if(is_array($additional_information_authorize_cards))
+                    foreach($additional_information_authorize_cards as $key =>$value)
+                    {
+                        $payment['last_trans_id'] = $value['last_trans_id'];
+                        $payment['cc_type']= $value['cc_type'];
+                        $payment['cc_exp_month'] = $value['cc_exp_month'];
+                        $payment['cc_exp_year'] = $value['cc_exp_year'];
+                        $payment['cc_last4'] = $value['cc_last4'];
+                    }
+                if($ccdetails!=='DONOTSEND')
+                {
+                    $CreditCard->setCreditCardType($this->getCcTypeName($payment['cc_type']));
+                    $CreditCard->setCreditCardCharge($payment['amount_paid']);
+                    $CreditCard->setExpirationDate(sprintf('%02d',$payment['cc_exp_month']).substr($payment['cc_exp_year'],-2,2));
+                    $CreditCard->setCreditCardName($CreditCardName);
+                    $CreditCardNumber = $payment['cc_number_enc']?$payment['cc_number_enc']:$payment['cc_last4'];
+                    $CreditCard->setCreditCardNumber(utf8_encode($CreditCardNumber));
+                    if(!empty($orders['quote_id']))
+                    {
+                        $getQuote=Mage::getModel('sales/quote_payment')->getCollection()->setQuoteFilter($orders['quote_id']);
+                        $getQuote_val=$getQuote->toArray();
+
+                        $cc_cid = Mage::helper('core')->decrypt($getQuote_val['items']['0']['cc_cid_enc']);
+                        $CreditCard->setCVV2($cc_cid);
+                    }
+                    else
+                    {
+                        $CreditCard->setCVV2('');
+                    }
+                    $CreditCard->setAdvanceInfo('');
+                }
+                $transcationId  = $transcationId ? $transcationId : $payment['last_trans_id'];
+                $CreditCard->setTransactionId($transcationId);
+                $CreditCard->getCreditCard();
+                $Bill->setCreditCardInfo($CreditCard->getCreditCard());
+            }
+
+            if (isset($payment['amount_ordered'])&&isset($payment['amount_paid']))
+            {
+                if (($payment['amount_paid']==$payment['amount_ordered']))
+                    $PayStatus = "Pending";
+            }
+            # for version 1.4.1.0
+            $Bill->setPayMethod($this->getPaymentlabel($payment['method']));
+            $Bill->setTitle("");
+            $Bill->setFirstName($orders["billing_firstname"]);
+            $Bill->setLastName($orders["billing_lastname"]);
+
+            if (!empty($orders["billing_company"]))
+            {
+                $Bill->setCompanyName($orders["billing_company"]);
+            }else{
+                $Bill->setCompanyName("");
+            }
+
+            $orders["billing_street"] = explode("\n",$orders["billing_street"]);
+            $Bill->setAddress1($orders["billing_street"][0]);
+            $Bill->setAddress2(isset($orders["billing_street"][1])?$orders["billing_street"][1]:"");
+            $Bill->setCity($orders["billing_city"]);
+
+            $region = Mage::getModel('directory/region')->load($orders['billing_region_id']);
+            $state_code = $region->getCode(); //12
+            if($donwload_state_code=='True') {
+
+                $Bill->setState($state_code);
+            }else {
+                $Bill->setState($orders["billing_region"]);
+            }
+
+            $Bill->setZip($orders["billing_postcode"]);
+            $Bill->setCountry(trim($country[$orders["billing_country"]]));
+            $Bill->setEmail($orders["customer_email"]);
+            $Bill->setPhone($orders["billing_telephone"]);
+
+            $Bill->setPONumber($payment['po_number']);
+            $customer = Mage::getModel('customer/customer')->load($orders["customer_id"]);
+            $customerGroupId = $customer->getGroupId();
+            $group = Mage::getModel('customer/group')->load($customerGroupId);
+            $group_nam=$group->getCode();
+
+            $Bill->setGroupName($group_nam);
+            $Order->setOrderBillInfo($Bill->getBill());
+            Mage::log('After Bill Set',Zend_Log::DEBUG,'my.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            /////////////////////////////////////
+            //   CreditCard info
+            /////////////////////////////////////
+            $Ship = Mage::getModel('ecc/Ship');
+
+
+            $shipmentCollection = Mage::getResourceModel('sales/order_shipment_collection')->setOrderFilter($_order)->load();
+
+            foreach ($shipmentCollection as $shipment){
+
+                foreach($shipment->getAllTracks() as $ship_data)
+                {
+                    $Req_ship_detail_arry=$ship_data->toArray();
+                    $ShipMethod=isset($Req_ship_detail_arry['title'])?$Req_ship_detail_arry['title']:'';
+                    $carrier_code=isset($Req_ship_detail_arry['carrier_code'])?$Req_ship_detail_arry['carrier_code']:'';
+                    $shipTrack1=isset($Req_ship_detail_arry['track_number'])?$Req_ship_detail_arry['track_number']:'';
+
+                }
+
+            }
+
+
+            if($get_Active_Carriers)
+            {
+                $carrierInstances = Mage::getSingleton('shipping/config')->getActiveCarriers(1);//$storeid);
+            }else{
+                $carrierInstances = Mage::getSingleton('shipping/config')->getAllCarriers(1);//$storeId);
+            }
+
+
+
+            $carriers['custom'] = Mage::helper('sales')->__('Custom Value');
+            foreach ($carrierInstances as $code => $carrier) {
+                if ($carrier->isTrackingAvailable()) {
+                    $carriers[$code] = $carrier->getConfigData('title');
+                }
+            }
+            $c_code='';
+            foreach($carriers as $c_key=>$c_val)
+            {
+                if($carrier_code==$c_key)
+                {
+                    $Carrier=$c_val;
+                    break;
+                }
+            }
+            unset($carrier_code);
+            $Carrier=strtolower($Carrier);
+            $ship_career = explode("-",$orders["shipping_description"],2);
+            $Ship->setShipMethod(empty($ShipMethod)?$ship_career[1]:$ShipMethod);
+            $Ship->setCarrier(empty($Carrier)?$ship_career[0]:$Carrier);
+            $Ship->setTrackingNumber(!empty($shipTrack1)?$shipTrack1:'');
+            #End
+
+            unset($shipTrack);
+            $Ship->setTitle("");
+
+            if(!array_key_exists('shipping_firstname',$orders) && !array_key_exists('shipping_lastname',$orders) )
+            {
+                $shippingAddressArray = $_order->getShippingAddress();
+                if(is_array($shippingAddressArray))
+                    $shippingAddressArray = $shippingAddressArray->toArray();
+                $orders["shipping_firstname"]=$shippingAddressArray["firstname"];
+                $orders["shipping_lastname"]=$shippingAddressArray["lastname"];
+                $orders["shipping_company"]=$shippingAddressArray["company"];
+                $orders["shipping_street"]=$shippingAddressArray["street"];
+                $orders["shipping_city"]=$shippingAddressArray["city"];
+                $orders["shipping_region"]=$shippingAddressArray["region"];
+                $orders["shipping_region_id"]=$shippingAddressArray["region_id"];
+                $orders["shipping_postcode"]=$shippingAddressArray["postcode"];
+                $orders["shipping_country"]=$shippingAddressArray["country_id"];
+                $orders["customer_email"]=$shippingAddressArray["customer_email"]?$shippingAddressArray["customer_email"]:$orders["customer_email"];
+                $orders["shipping_telephone"]=$shippingAddressArray["telephone"];
+            }
+            $Ship->setFirstName($orders["shipping_firstname"]);
+            $Ship->setLastName($orders["shipping_lastname"]);
+            if (!empty($orders["shipping_company"]))
+            {
+                $Ship->setCompanyName($orders["shipping_company"]);
+            }else{
+                $Ship->setCompanyName("");
+            }
+
+            $orders["shipping_street"] = explode("\n",$orders["shipping_street"]);
+
+            $Ship->setAddress1($orders["shipping_street"][0]);
+            $Ship->setAddress2(isset($orders["shipping_street"][1])?$orders["shipping_street"][1]:"");
+            $Ship->setCity($orders["shipping_city"]);
+
+
+            $region_shipping = Mage::getModel('directory/region')->load($orders["shipping_region_id"]);
+            $shipping_state_code = $region_shipping->getCode(); //12
+
+            if($donwload_state_code=='True') {
+
+                $Ship->setState($shipping_state_code);
+            }else {
+                $Ship->setState($orders["shipping_region"]);
+            }
+
+            $Ship->setZip($orders["shipping_postcode"]);
+            $Ship->setCountry(trim($country[$orders["shipping_country"]]));
+            $Ship->setEmail($orders["customer_email"]);
+            $Ship->setPhone($orders["shipping_telephone"]);
+
+            $Order->setOrderShipInfo($Ship->getShip());
+
+            Mage::log('After  Set',Zend_Log::DEBUG,'my.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            $charges = Mage::getModel('ecc/Charges');
+
+            $charges->setDiscount($discountadd?abs($orders["discount_amount"]):'');
+            $charges->setStoreCredit($orders["customer_balance_amount"]?$orders["customer_balance_amount"]:0.00);
+            $charges->setTax($orders["tax_amount"]);
+            $charges->setShipping($orders["shipping_amount"]);
+            $charges->setTotal( $orders["grand_total"]);
+            $charges->setSubTotal();
+            $Order->setOrderChargeInfo($charges->getCharges());
+
+            $Order->setShippedOn($shippedOn);
+            $Order->setShippedVia(empty($Carrier)?$ship_career[0]:$Carrier);
+
+            unset($Carrier,$shipTrack1,$ShipMethod);
+            $Order->setSalesRep($setSalesRep);
+            Mage::log('==== Order ====',Zend_Log::DEBUG,'my.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            $Orders->setOrders($Order->getOrder());
+            $ord++;
+            unset($Order);
+        }
+			Mage::log('------------Orders------',Zend_Log::DEBUG,'my.log',true);
+			Mage::log(json_encode($Orders->getOrders(),true),Zend_Log::DEBUG,'my.log',true);
 		return $this->WgResponse($Orders->getOrders());
 	}
         
@@ -2787,6 +2805,7 @@ Custamization for XPU-623-53661 Ends.
         
 	public  function _GetOrders($datefrom,$start_order_no=0,$order_status_list='',$storeId=1,$no_of_orders=20,$by_updated_date='',$orderlist,$LastModifiedDate)
 	{
+	    Mage::log('In Get Order 2',Zend_Log::DEBUG,'my.log',true);
 		if(strtolower($order_status_list)=='all' || strtolower($order_status_list)=="'all'")
 		{
 		
@@ -2818,7 +2837,7 @@ Custamization for XPU-623-53661 Ends.
 			}
 			if(!$orderlist && $LastModifiedDate)
 			{
-				
+				Mage::log('In first condition',Zend_Log::DEBUG,'my.log',true);
 				$this->_orders = Mage::getResourceModel('sales/order_collection')
 				->addAttributeToSelect('*')
 				->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
@@ -2847,10 +2866,11 @@ Custamization for XPU-623-53661 Ends.
 				->addAttributeToFilter('status', array('in' => $order_status))
 				->addAttributeToSort('updated_at', 'asc')
 				->setPageSize($no_of_orders)
-				->load();	
+				->load();
+                Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'my.log',true);
 			}elseif(!$orderlist && $datefrom)
 			{
-				
+                Mage::log('In second condition',Zend_Log::DEBUG,'my.log',true);
 				$this->_orders = Mage::getResourceModel('sales/order_collection')
 				->addAttributeToSelect('*')
 				->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
@@ -2880,10 +2900,12 @@ Custamization for XPU-623-53661 Ends.
 				->addAttributeToSort('entity_id', 'asc')
 				->setPageSize($no_of_orders)
 				->load();
+                Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'my.log',true);
 			
 			}else
 			
 			{
+                Mage::log('In third condition',Zend_Log::DEBUG,'my.log',true);
 				$this->_orders = Mage::getResourceModel('sales/order_collection')
 				->addAttributeToSelect('*')
 				->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
@@ -2909,7 +2931,8 @@ Custamization for XPU-623-53661 Ends.
 				->addFieldToFilter('old_store_id', $storeId)
 				->addAttributeToFilter('increment_id', array('in' => $orderlist))		
 				->addAttributeToSort('entity_id', 'asc')		
-				->load();		
+				->load();
+                Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'my.log',true);
 			
 			}	
 					
@@ -3048,7 +3071,7 @@ Custamization for XPU-623-53661 Ends.
 
                 $set_capture_case = Webgility_Ecc_Helper_Data::SET_CAPTURE_CASE;
 
-		$storeId=$this->getDefaultStore($storeid);		
+		$storeId=$this->getDefaultStore($storeid);
 		$status = $this->CheckUser($username,$password);
 		if($status!="0")
 		{
@@ -3479,7 +3502,7 @@ Custamization for XPU-623-53661 Ends.
 		if ($no_orders){
 			return json_encode($response_array);
 		}
-		$storeId=$this->getDefaultStore($storeid);	
+		$storeId=$this->getDefaultStore($storeid);
 				
 		foreach($response_array as $k=>$v)//request
 		{
