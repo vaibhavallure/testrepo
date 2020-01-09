@@ -471,6 +471,19 @@ var validateForm = function () {
             }
         });
     });
+
+
+    jQuery('.phonenumber').each(function() {
+        jQuery(this).rules('add', {
+            minlength: 10,
+            messages: {
+                minlength: __("Please enter valid phone number.")
+            }
+        });
+    });
+
+
+
 /*validation using hidden inputs*/
     jQuery('.customer_select').each(function() {
         jQuery(this).rules('add', {
@@ -498,7 +511,7 @@ var validateForm = function () {
         });
     });
 
-    jQuery(".noti_sms").change(function() {
+    /*jQuery(".noti_sms").change(function() {
         if(this.checked) {
             jQuery("#phonenumber" + jQuery(this).attr("data-section_id")).rules('add', {
                 minlength: 10,
@@ -512,7 +525,7 @@ var validateForm = function () {
                 minlength: false
             });
         }
-    });
+    });*/
 
 
 };

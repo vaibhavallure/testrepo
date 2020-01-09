@@ -769,37 +769,45 @@ ul.tabs li{
   #tooltip-id-our-jewelry a.next-content-block-seo{
     margin-right: -15px;
   }
-  .form-subscribe-mt{
+  .form-subscribe-mt,
+  .form-subscribe-mt-menu{
     margin-top: 10px;
     width: auto;
   }
-  #newsletter-form .link-button{
+  #newsletter-form .link-button,
+  #newsletter-form-menu .link-button{
   	color: #fff !important;
   }
 
-  .mobile-sub_menu #newsletter-form .link-button{
+  .mobile-sub_menu #newsletter-form .link-button,
+  .mobile-sub_menu #newsletter-form-menu .link-button{
     color: #222 !important;
   }
 
-  .mobile-sub_menu .form-subscribe-mt .checkmark:after{
+  .mobile-sub_menu .form-subscribe-mt .checkmark:after,
+  .mobile-sub_menu .form-subscribe-mt-menu .checkmark:after{
     background: #222;
   }
 
-  .mobile-sub_menu #success p.para-bold.text-white {
+  .mobile-sub_menu #success p.para-bold.text-white,
+  .mobile-sub_menu #success-menu p.para-bold.text-white{
     color: rgba(41,41,41,0.9) !important;
   }
 
-  .form-subscribe-mt .checkmark:after{
+  .form-subscribe-mt .checkmark:after,
+  .form-subscribe-mt-menu .checkmark:after{
   	background: #fff;
   }
-  #newsletter-form .dark-button{
+  #newsletter-form .dark-button,
+  #newsletter-form-menu .dark-button{
     border: 1px solid #fff;
   	background: transparent;
   	color: #fff;
     padding: 10px;
   }
 
-  .mobile-sub_menu #newsletter-form .dark-button {
+  .mobile-sub_menu #newsletter-form .dark-button,
+  .mobile-sub_menu #newsletter-form-menu .dark-button{
     border: 1px solid rgba(41, 41, 41, 0.9);
     background: transparent;
     color: rgba(41, 41, 41, 0.9);
@@ -807,7 +815,8 @@ ul.tabs li{
     width: 80% !important;
   }
 
-  .form-subscribe-mt input, .form-subscribe-mt select {
+  .form-subscribe-mt input, .form-subscribe-mt select,
+  .form-subscribe-mt-menu input, .form-subscribe-mt-menu select{
     width: 100%;
     margin: 0 auto;
     margin-top: 10px;
@@ -822,14 +831,17 @@ ul.tabs li{
     font-size: 13px;
     letter-spacing: 0.5px;
   }
-  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice{
+  #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice,
+  #newsletter-form-menu .label-error-validate p, #newsletter-form-menu .label-error-validate .link-button, #newsletter-form-menu .validation-advice{
   	color: red !important;
   }
-  #newsletter-form .validation-advice{
+  #newsletter-form .validation-advice,
+  #newsletter-form-menu .validation-advice{
     position: relative;
     top:0;
   }
-  .form-subscribe-mt .input-box{
+  .form-subscribe-mt .input-box,
+  .form-subscribe-mt-menu .input-box{
     margin-bottom: 10px;
   }
   .for-space-to-bottom.cat-img-space {
