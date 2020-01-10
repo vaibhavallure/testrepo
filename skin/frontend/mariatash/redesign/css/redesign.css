@@ -3777,6 +3777,7 @@ table thead {
 .collat-wrap .input-text {
   width: 208px;
   height: 30px !important;
+	-webkit-appearance: none;
 }
 .collat-wrap .coupons {
   margin-top: 49px;
@@ -3976,7 +3977,7 @@ table thead {
 	position: absolute;
 	top: 21px;
 	z-index: 99999;
-	width: 90px;/*222px*/
+	width: 222px;/*90px*/
 	height: auto;
 	background: #fff;
 	/* height: 253px;
@@ -4020,11 +4021,11 @@ table thead {
 	color: rgba(41,41,41,0.9);
 }
 .select-currency.main-nav-link-dropdown span span {
-  /*margin-right: 15px;*/
+  margin-right: 15px;
 }
-.block-content-currency{
+/*.block-content-currency{
 	margin-left: 15px;
-}
+}*/
 .block-currency .block-title {
 	border: 0;
 	background: none;
@@ -4889,7 +4890,7 @@ address{
 }
 .page-print .buttons-set {
 	float: right;
-	margin: 20px 0;
+	margin: 20px 9% 40px 0;
 }
 .page-print .buttons-set button{
 	height: 42px;
@@ -4901,6 +4902,9 @@ address{
 }
 .print-padding-left.info-text-two {
   margin: 20px 0;
+}
+.page-print.sales-order-print dt {
+	font-weight: normal;
 }
 
 .continue-shopping-button{
@@ -5030,4 +5034,20 @@ a.product-video-link:hover div.product-video-play-icon {
 	width: 149px;
   text-transform: uppercase;
   height: 42px;
+}
+.store-switcher { /*Dropdown of select store*/
+  display: none;
+}
+.mt-myaccount-new.sales-order-view .page-title {
+  margin-top: 40px;
+}
+.mt-myaccount-new.sales-order-view .mt-header-sku, .mt-myaccount-new.sales-order-view td.nobr-sku {
+  text-align: center !important;
+}
+.apple-pay-button-with-text.apple-pay-button-black-with-text > .logo{
+	background-color: transparent !important;
+}
+.other-product-quantity{
+	margin-top: 26px;
+  display: inline-block;
 }

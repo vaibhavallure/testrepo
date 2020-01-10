@@ -839,6 +839,8 @@ ul.tabs li{
   #newsletter-form-menu .validation-advice{
     position: relative;
     top:0;
+    left: 0;
+    text-transform: initial;
   }
   .form-subscribe-mt .input-box,
   .form-subscribe-mt-menu .input-box{
@@ -2033,7 +2035,7 @@ ul.tabs li{
   }
   .containerThumb {
     /* width: 340px; */
-     overflow-y: scroll;
+    overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
   }
@@ -2221,6 +2223,12 @@ ul.tabs li{
   }
   .dashboard .flex-row .flex-item .text-wrap{
     top:363px;
+  }
+  .giftcards .div_selector_day{
+    width: 20%;
+  }
+  .giftcards .div_selector_year{
+    width: 30%;
   }
 }
 

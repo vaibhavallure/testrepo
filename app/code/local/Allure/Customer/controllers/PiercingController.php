@@ -1,19 +1,19 @@
 <?php
 /**
- * 
+ *
  * @author aws02
  *
  */
 class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Action{
-    
+
     const GENERAL_CUSTOMER = 1;
     const MAIN_WEBSITE_ID = 1;
     const STORE_ID = 1;
-    
+
     public function indexAction(){
         die("Hiii");
     }
-    
+
     /**
      * add customer into magento through
      * piercing release-form interface
@@ -45,9 +45,9 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
                         ->setPasswordCreatedAt(time())
                         ->setCustomerType(25)   //release-form customer
                         ->save();
-                    
-                        $customer->sendNewAccountEmail();
-                    
+
+                    $customer->sendNewAccountEmail();
+
                     $response["success"] = true;
                     $response["message"] = $email . " has account created successfully.";
                     Mage::log($email . " has account created successfully.",Zend_log::DEBUG,'release_form.log',true);
@@ -55,9 +55,9 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
                     $response["success"] = true;
                     $response["message"] = $email . " customer already exists.";
                     Mage::log($email . " customer already exists.",Zend_log::DEBUG,'release_form.log',true);
-                    
+
                 }
-                
+
                 $response["customer_id"] = $customer->getId();
             }else{
                 $response["message"] = "Customer request body empty.";
@@ -66,12 +66,12 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
             Mage::log("Exception : ".$e->getMessage(),Zend_log::DEBUG,'release_form.log',true);
             $response["message"] = $e->getMessage();
         }
-       
+
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
-    
+
     /**
-     *  generate dynamic password for new customer's 
+     *  generate dynamic password for new customer's
      *  that created from release-form
      *  @return string
      */
@@ -104,6 +104,8 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
             $customer = Mage::getModel('customer/customer')
                 ->setWebsiteId(self::MAIN_WEBSITE_ID)
                 ->loadByEmail($email);
+            $defaultBilling = '';
+
             if(!$customer->getId()) {
                 $password = $this->generatePassword();
                 $customer = Mage::getModel("customer/customer");
@@ -122,35 +124,51 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
 
                 $customer->sendNewAccountEmail();
             }
-            else{
-                $customer->setDob($requestData['dob']);
-                if(!empty($requestData['gender']) ) {
-                    $customer->setGender($requestData['gender']);
+            else {
+                $defaultBilling = $customer->getDefaultBilling();
+                if (empty($defaultBilling)){
+                    $customer->setDob($requestData['dob']);
+                    if (!empty($requestData['gender'])) {
+                        $customer->setGender($requestData['gender']);
+                    }
+                    $customer->save();
                 }
-                $customer->save();
             }
 
             /*Add Address Details*/
             if($customer->getId()) {
-                $region = Mage::getModel('directory/region')->loadByName($requestData['region'],$requestData['country_code']);
-                $state_id = $region->getId();
-                $address = Mage::getModel("customer/address");
-                $address->setCustomerId($customer->getId())
-                    ->setFirstname($customer->getFirstname())
-                    ->setLastname($customer->getLastname())
-                    ->setCountryId($requestData['country_code'])
-                    ->setRegion($requestData['region'])
-                    ->setPostcode($requestData['zip_code'])
-                    ->setCity($requestData['city'])
-                    ->setTelephone($requestData['telephone'])
-                    ->setStreet($requestData['street_address'])
-                    ->setSaveInAddressBook('1');
-                if(!empty($state_id)){
-                    $address->setRegionId($state_id);
+                /*Check Default Address Present or not if not then  set it default*/
+
+                if(empty($defaultBilling)){
+                    $region = Mage::getModel('directory/region')->loadByName($requestData['region'],$requestData['country_code']);
+                    $state_id = $region->getId();
+                    $address = Mage::getModel("customer/address");
+                    $address->setCustomerId($customer->getId())
+                        ->setFirstname($customer->getFirstname())
+                        ->setLastname($customer->getLastname())
+                        ->setCountryId($requestData['country_code'])
+                        ->setRegion($requestData['region'])
+                        ->setPostcode($requestData['zip_code'])
+                        ->setCity($requestData['city'])
+                        ->setTelephone($requestData['telephone'])
+                        ->setStreet($requestData['street_address'])
+                        ->setSaveInAddressBook('1');
+                    if(!empty($state_id)){
+                        $address->setRegionId($state_id);
+                    }
+
+                    $address->setIsDefaultBilling('1');
+                    $address->setIsDefaultShipping('1');
+
+                    $address->save();
+
+                    $message = $email . "Address saved successfully";
                 }
-                $address->save();
+                else{
+                    $message = 'Customer Already Has Address';
+                }
+                $response["message"] = $message;
                 $response["success"] = true;
-                $response["message"] = $email . "Address saved successfully";
             }
         }
         catch (Exception $e){

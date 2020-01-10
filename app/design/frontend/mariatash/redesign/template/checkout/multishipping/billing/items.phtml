@@ -43,7 +43,7 @@
                 <?php foreach ($this->getVirtualQuoteItems() as $_item): ?>
                     <tr>
                         <td class="checkout-other-product-name"><?php echo $this->getItemHtml($_item) ?></td>
-                        <td class="text-center para-bold"><?php echo $_item->getQty() ?></td>
+                        <td class="text-center para-bold other-product-quantity"><?php echo $_item->getQty() ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

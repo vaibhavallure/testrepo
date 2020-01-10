@@ -147,7 +147,7 @@ class Klaviyo_Reclaim_IndexController extends Mage_Core_Controller_Front_Action
     $query = $this->_getKlaviyoCronScheduleBaseQuery()
       ->addFieldToFilter('status', Mage_Cron_Model_Schedule::STATUS_SUCCESS)
       ->addFieldToFilter('finished_at', array('gteq' => $since))
-      ->addOrder('finished_at', $direction='desc');
+      ->addOrder('finished_at', 'desc');
 
     $has_suceeded = $query->count() > 0;
     $last_success = array();
@@ -168,7 +168,7 @@ class Klaviyo_Reclaim_IndexController extends Mage_Core_Controller_Front_Action
         Mage_Cron_Model_Schedule::STATUS_ERROR
       )))
       ->addFieldToFilter('created_at', array('gteq' => $since))
-      ->addOrder('finished_at', $direction='desc');
+      ->addOrder('finished_at', 'desc');
 
     $has_failed = $query->count() > 0;
     $failures = array();
@@ -195,19 +195,18 @@ class Klaviyo_Reclaim_IndexController extends Mage_Core_Controller_Front_Action
   }
 
   protected function _getQuoteDetails ($num_quotes) {
-    $helper = Mage::helper('klaviyo_reclaim');
 
     $has_checkout_ids = Mage::getModel('klaviyo_reclaim/checkout')->getCollection()->count() > 0;
 
     $query = Mage::getResourceModel('sales/quote_collection')
       ->addFieldToFilter('converted_at', array('null' => true))
-      ->addOrder('updated_at', $direction='desc')
+      ->addFieldToFilter('create_order_method', '0')
+      ->addOrder('updated_at', 'desc')
       ->setPageSize($num_quotes)
       ->setCurPage(1);
 
     $quotes = array();
     foreach ($query as $quote) {
-      $store = $quote->getStore();
       $email = $quote->getCustomerEmail();
 
       if ($email) {
