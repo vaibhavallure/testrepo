@@ -1432,7 +1432,7 @@ tr.tr-piercing td span, tr.tr-piercing td {
 		width: 100%;
 	}
 	.modal-confirm-appointment.appointment-set .modal-body {
-    padding: 38px;
+    padding: 38px 10px;
 	}
 }
 @media (min-width:991px){
