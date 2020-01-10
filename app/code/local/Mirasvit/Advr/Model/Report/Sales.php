@@ -340,7 +340,40 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 'expression' => 'AVG(sales_order_table.base_grand_total)',
                 'table' => 'sales/order',
             )
+        )
+            ->addColumn(
+                'net_sales',
+                array(
+                    'table' => 'sales/order',
+                    'label' => 'Net Sales',
+                    'type' => 'currency',
+                    'expression' => '(sum((IFNULL(sales_order_table.base_total_invoiced,0) *IF(sales_order_table.base_to_global_rate != 0, sales_order_table.base_to_global_rate, 1)) -    IFNULL(sales_order_table.teamwork_gift_amount,0)-IFNULL(sales_order_table.teamwork_deposit_amount,0)))-(sum(IFNULL(sales_order_table.base_total_refunded,0)))',
+                )
+            )
+            ->addColumn(
+            'net_revenue',
+            array(
+                'table' => 'sales/order',
+                'label' => 'Net Revenue',
+                'type' => 'currency',
+                'expression' => 'sum(
+                       (IFNULL(sales_order_table.base_total_invoiced,0)-IFNULL(sales_order_table.base_tax_invoiced,0)-IFNULL(base_shipping_invoiced,0)
+                      -(IFNULL(sales_order_table.base_total_refunded,0)-IFNULL(sales_order_table.base_tax_refunded,0)-IFNULL(sales_order_table.base_shipping_refunded,0))
+                      )
+                        -IFNULL(sales_order_table.teamwork_gift_amount,0)-IFNULL(sales_order_table.teamwork_deposit_amount,0)
+                        )',
+            )
         )->addColumn(
+                'net_revenue_from_products',
+                array(
+                    'table' => 'sales/order',
+                    'label' => 'Net Revenue From Products',
+                    'type' => 'currency',
+                    'expression' => 'sum(
+                         (IFNULL(sales_order_table.base_subtotal,0)-IFNULL(sales_order_table.base_subtotal_canceled,0)-IFNULL(sales_order_table.base_subtotal_refunded,0))+
+                         (IFNULL(sales_order_table.base_discount_amount,0)+IFNULL(sales_order_table.base_discount_canceled,0)-IFNULL(sales_order_table.base_discount_refunded,0)) )',
+                )
+            )->addColumn(
             'invoice_quantity',
             array(
                 'label' => 'Number of invoices',
