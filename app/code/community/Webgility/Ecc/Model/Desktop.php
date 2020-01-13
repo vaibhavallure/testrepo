@@ -55,7 +55,7 @@ class Webgility_Ecc_Model_Desktop
         $others = isset($others) ? $others : "";
         $itemid = isset($itemid) ? $itemid : "";
         if(!empty($method)) {
-            Mage::log('Method'.$method,Zend_Log::DEBUG,'my.log',true);
+            Mage::log('Method'.$method,Zend_Log::DEBUG,'webgility.log',true);
             switch ($method)
             {
 
@@ -430,13 +430,32 @@ class Webgility_Ecc_Model_Desktop
                     $_storeCollection[] = $store->toArray();
                 }
 
+                $website_name = $_website[0]['name'];
+                $website_id = $_website[0]['website_id'];
+                $default_group_id = $_website[0]['default_group_id'];
+                $allure_custom_stores = array(
+                    array('store_id'=>'2020','name'=>'Wholesale'),
+                    array('store_id'=>'2021','name'=>'General US'),
+                    array('store_id'=>'2022','name'=>'General Non US')
+                );
+
                 foreach($_storeCollection as $view) {
                     $Store = Mage::getModel('ecc/Store');
                     $Store->setStoreID($view['store_id']);
-                    $Store->setStoreName($_website[0]['name']." -> ".$view['name']);
+                    $Store->setStoreName("Maria Tash -> ".$view['name']);
                     $Store->setStoreWebsiteId($_website[0]['website_id']);
-                    $Store->setStoreWebsiteName($_website[0]['name']);
+                    $Store->setStoreWebsiteName("Maria Tash");
                     $Store->setStoreRootCategoryId($_website[0]['default_group_id']);
+                    $Store->setStoreDefaultStoreId('1');
+                    $Storesinfo->setstores($Store->getStore());
+                }
+                foreach($allure_custom_stores as $view){
+                    $Store = Mage::getModel('ecc/Store');
+                    $Store->setStoreID($view['store_id']);
+                    $Store->setStoreName("Maria Tash -> ".$view['name']);
+                    $Store->setStoreWebsiteId($website_id);
+                    $Store->setStoreWebsiteName("Maria Tash");
+                    $Store->setStoreRootCategoryId($default_group_id);
                     $Store->setStoreDefaultStoreId('1');
                     $Storesinfo->setstores($Store->getStore());
                 }
@@ -1235,14 +1254,14 @@ class Webgility_Ecc_Model_Desktop
                 $data['stock_data']['use_config_manage_stock'] = 1;
                 $data['stock_data']['is_in_stock'] = 1;
 
-###########################################################################################################################################################################									
-######################### Below custamization to insert Reorder Point from pos and add in to magnto  Ticket ID # KBE-163-87926 ############################################							
+###########################################################################################################################################################################
+######################### Below custamization to insert Reorder Point from pos and add in to magnto  Ticket ID # KBE-163-87926 ############################################
 
                 if($Set_ReorderPoint) {
                     $data['stock_data']['min_qty'] = $ReorderPoint;
                 }
-######################### Above custamization to insert Reorder Point from pos and add in to magnto  Ticket ID # KBE-163-87926 ############################################	
-###########################################################################################################################################################################									
+######################### Above custamization to insert Reorder Point from pos and add in to magnto  Ticket ID # KBE-163-87926 ############################################
+###########################################################################################################################################################################
                 $data['status'] = $ItemStatus;
                 $data['website_id'] = $website_id;
                 $entityType = Mage::getModel('eav/config')->getEntityType('catalog_product');
@@ -1257,7 +1276,7 @@ class Webgility_Ecc_Model_Desktop
                 else
                     $data['visibility'] = '1';
 
-#######################################################################################################################################################									
+#######################################################################################################################################################
 ######################### custamization for client inserting some new attributes Ticket ID # RMO-576-72514 ############################################
                 $attributeNameIdArray=array();
                 if((is_array($vItem['Others']['CustomFields'])) && (!empty($vItem['Others']['CustomFields']))) {
@@ -1279,7 +1298,7 @@ class Webgility_Ecc_Model_Desktop
 
                 }
 
-#######################################################################################################################################################	#######################################################################################################################################################		
+#######################################################################################################################################################	#######################################################################################################################################################
 
                 $Product->addData($data);
                 $Product->save();
@@ -1685,14 +1704,17 @@ class Webgility_Ecc_Model_Desktop
     {
         /*Allure Custom Code*/
         $store_name = strtolower(Mage::helper('allure_virtualstore')->getStoreName($storeid));
-        Mage::log($store_name,Zend_Log::DEBUG,'my.log',true);
+        Mage::log($store_name,Zend_Log::DEBUG,'webgility.log',true);
         $all = false;
         if (strpos($store_name, 'broadway') !== false) {
             $all =true;
-            Mage::log('All is true',Zend_Log::DEBUG,'my.log',true);
-        }
+            Mage::log('All is true',Zend_Log::DEBUG,'webgility.log',true);
+        }if($storeid == '2020' || $storeid == '2021' || $storeid == '2022'){
+        $all= true;
+    }
+
         /***************/
-        Mage::log('In Get Order 1',Zend_Log::DEBUG,'my.log',true);
+        Mage::log('In Get Order 1',Zend_Log::DEBUG,'webgility.log',true);
         $discount_as_line_item = Mage::getStoreConfig('ecc_options/messages/discount_as_line_item', 1);
         $download_option_as_item = Mage::getStoreConfig('ecc_options/messages/download_bundle_option_as_item',1);
         $RewardsPoints_Name = Mage::getStoreConfig('ecc_options/messages/RewardsPoints_Name', 1);
@@ -1701,7 +1723,7 @@ class Webgility_Ecc_Model_Desktop
         $RewardsPoints_Name = !empty($RewardsPoints_Name) ? $RewardsPoints_Name : 'RewardsPoints';
         $display_discount_desc = Webgility_Ecc_Helper_Data::DISPLAY_DISCOUNT_DESC;
         $get_Active_Carriers = Webgility_Ecc_Helper_Data::GET_ACTIVE_CARRIER;
-        Mage::log('Getting Modal',Zend_Log::DEBUG,'my.log',true);
+        Mage::log('Getting Modal',Zend_Log::DEBUG,'webgility.log',true);
         $Orders = Mage::getModel('ecc/Orders');
         $orderlist=array();
         if(is_array($others))
@@ -1781,23 +1803,23 @@ class Webgility_Ecc_Model_Desktop
         }
         $Orders->setStatusCode($no_orders?"9999":"0");
         #$Orders->setStatusMessage($no_orders?"No Orders returned":"Total Orders:".$_orders->getSize());
-        Mage::log($_orders->getSize(),Zend_Log::DEBUG,'my.log',true);
+        Mage::log($_orders->getSize(),Zend_Log::DEBUG,'webgility.log',true);
         $Orders->setStatusMessage($no_orders?"No Orders returned":"Total Orders:".$_orders->getSize());
         $Orders->setTotalRecordFound($_orders->getSize()?$_orders->getSize():"0");
         $Orders->setTotalRecordSent(count($countorders_array)?count($countorders_array):"0");
 
         if ($no_orders)
         {
-            Mage::log('No Orders',Zend_Log::DEBUG,'my.log',true);
+            Mage::log('No Orders',Zend_Log::DEBUG,'webgility.log',true);
             return $this->WgResponse($Orders->getOrders());
 
         }
         $obj = new Mage_Sales_Model_Order();
         $ord = 0;
-        Mage::log('Before Order Return',Zend_Log::DEBUG,'my.log',true);
+        Mage::log('Before Order Return',Zend_Log::DEBUG,'webgility.log',true);
         foreach ($_orders as $_order)
         {
-            Mage::log($_order->getId(),Zend_Log::DEBUG,'my.log',true);
+            Mage::log($_order->getId(),Zend_Log::DEBUG,'webgility.log',true);
 
             $Order = Mage::getModel('ecc/Order');
             $customer_comment = "";
@@ -1942,8 +1964,8 @@ class Webgility_Ecc_Model_Desktop
             $Order->setWeight_Symbol('lbs');
             $Order->setWeight_Symbol_Grams('453.6');
             $Order->setCustomerId($orders['customer_id']);
-            Mage::log('Initial Data',Zend_Log::DEBUG,'my.log',true);
-            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            Mage::log('Initial Data',Zend_Log::DEBUG,'webgility.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'webgility.log',true);
             if($shippedOn=='' || empty($shippedOn))
             {
                 $shippedOn=$dateCreateOrder;
@@ -2390,8 +2412,8 @@ class Webgility_Ecc_Model_Desktop
                 $Order->setOrderItems($Item->getItem());
 
             }
-            Mage::log('Before Discount Coupon',Zend_Log::DEBUG,'my.log',true);
-            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            Mage::log('Before Discount Coupon',Zend_Log::DEBUG,'webgility.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'webgility.log',true);
 
             $discountadd =true;
             #Discount Coupon as line item
@@ -2698,8 +2720,8 @@ class Webgility_Ecc_Model_Desktop
 
             $Bill->setGroupName($group_nam);
             $Order->setOrderBillInfo($Bill->getBill());
-            Mage::log('After Bill Set',Zend_Log::DEBUG,'my.log',true);
-            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+//            Mage::log('After Bill Set',Zend_Log::DEBUG,'webgility.log',true);
+//            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'webgility.log',true);
             /////////////////////////////////////
             //   CreditCard info
             /////////////////////////////////////
@@ -2807,8 +2829,8 @@ class Webgility_Ecc_Model_Desktop
 
             $Order->setOrderShipInfo($Ship->getShip());
 
-            Mage::log('After  Set',Zend_Log::DEBUG,'my.log',true);
-            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            // Mage::log('After  Set',Zend_Log::DEBUG,'webgility.log',true);
+            // Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'webgility.log',true);
             $charges = Mage::getModel('ecc/Charges');
 
             $charges->setDiscount($discountadd?abs($orders["discount_amount"]):'');
@@ -2829,14 +2851,14 @@ class Webgility_Ecc_Model_Desktop
 
             unset($Carrier,$shipTrack1,$ShipMethod);
             $Order->setSalesRep($setSalesRep);
-            Mage::log('==== Order ====',Zend_Log::DEBUG,'my.log',true);
-            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'my.log',true);
+            Mage::log('==== Order ====',Zend_Log::DEBUG,'webgility.log',true);
+            Mage::log(json_encode($Order->getOrder()),Zend_Log::DEBUG,'webgility.log',true);
             $Orders->setOrders($Order->getOrder());
             $ord++;
             unset($Order);
         }
-        Mage::log('------------Orders------',Zend_Log::DEBUG,'my.log',true);
-        Mage::log(json_encode($Orders->getOrders(),true),Zend_Log::DEBUG,'my.log',true);
+        Mage::log('------------Orders------',Zend_Log::DEBUG,'webgility.log',true);
+        Mage::log(json_encode($Orders->getOrders(),true),Zend_Log::DEBUG,'webgility.log',true);
         return $this->WgResponse($Orders->getOrders());
     }
 
@@ -2859,8 +2881,30 @@ class Webgility_Ecc_Model_Desktop
 
     public  function _GetOrders($datefrom,$start_order_no=0,$order_status_list='',$storeId=1,$no_of_orders=20,$by_updated_date='',$orderlist,$LastModifiedDate)
     {
-        Mage::log('In Get Order 2',Zend_Log::DEBUG,'my.log',true);
+        Mage::log('In Get Order 2',Zend_Log::DEBUG,'webgility.log',true);
         /*Allure Custom Code to Check Broadway or not if yes then send All orders*/
+
+        $originalId = $storeId;
+        $allure_filter = false;
+        if($storeId == '2020' || $storeId == '2021' || $storeId == '2022'){
+            $storeId = Mage::helper('allure_virtualstore')->getStoreId('653broadway');
+            if($originalId == '2020'){
+                $allure_filter = 'wholesale';
+            }elseif( $originalId == '2021'){
+                $allure_filter = 'us';
+            }
+            elseif( $originalId == '2022'){
+                $allure_filter = 'non_us';
+            }
+        }
+        $groups_detail = Mage::getModel('customer/group')->getCollection();
+        $groups_detail->addFieldToFilter('customer_group_code','Wholesale');
+        $groups = $groups_detail->getData();
+
+        Mage::log('-----------Filters------------',Zend_Log::DEBUG,'webgility.log',true);
+        Mage::log(json_encode($allure_filter),Zend_Log::DEBUG,'webgility.log',true);
+
+
         $is_send_both_orders = false;
         $storeIds = array();
         $storeIds[] = $storeId;
@@ -2868,7 +2912,9 @@ class Webgility_Ecc_Model_Desktop
         if (strpos($store_name, 'broadway') !== false) {
             $storeIds  = array($storeId,1);
         }
-        Mage::log(json_encode($storeId),Zend_Log::DEBUG,'my.log',true);
+
+        Mage::log('Store Id:'.$storeId,Zend_Log::DEBUG,'webgility.log',true);
+
         if(strtolower($order_status_list)=='all' || strtolower($order_status_list)=="'all'")
         {
 
@@ -2900,7 +2946,7 @@ class Webgility_Ecc_Model_Desktop
         }
         if(!$orderlist && $LastModifiedDate)
         {
-            Mage::log('In first condition',Zend_Log::DEBUG,'my.log',true);
+            Mage::log('In first condition',Zend_Log::DEBUG,'webgility.log',true);
             $this->_orders = Mage::getResourceModel('sales/order_collection')
                 ->addAttributeToSelect('*')
                 ->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
@@ -2926,14 +2972,39 @@ class Webgility_Ecc_Model_Desktop
                 ->addAttributeToFilter('updated_at', array('gt' => $LastModifiedDate,'datetime' => true))
                 ->addFieldToFilter('old_store_id', array('in'=>$storeIds))
                 //	->addAttributeToFilter('entity_id', array('gt' => $start_order_no))
-                ->addAttributeToFilter('status', array('in' => $order_status))
-                ->addAttributeToSort('updated_at', 'asc')
+                ->addAttributeToFilter('status', array('in' => $order_status));
+
+            if($allure_filter=='us'){
+                $this->_orders->join('order_address',
+                    'main_table.entity_id=order_address.parent_id',
+                    ['address_type', 'country_id']);
+                $this->_orders->getSelect()->where(new Zend_Db_Expr("(order_address.address_type = 'shipping' AND order_address.country_id = 'US') OR main_table.create_order_method = 2"));
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                }
+            }elseif($allure_filter =='non_us'){
+                $this->_orders->join('order_address',
+                    'main_table.entity_id=order_address.parent_id',
+                    ['address_type', 'country_id']);
+                $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
+                $this->_orders->addAttributeToFilter('order_address.country_id', array('neq'=>'US'));
+                $this->_orders->addAttributeToFilter('create_order_method', array('neq'=>'2'));
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                }
+            }elseif($allure_filter =='wholesale'){
+
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                }
+            }
+            $this->_orders->addAttributeToSort('updated_at', 'asc')
                 ->setPageSize($no_of_orders)
                 ->load();
-            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'my.log',true);
+            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'webgility.log',true);
         }elseif(!$orderlist && $datefrom)
         {
-            Mage::log('In second condition',Zend_Log::DEBUG,'my.log',true);
+            Mage::log('In second condition',Zend_Log::DEBUG,'webgility.log',true);
             $this->_orders = Mage::getResourceModel('sales/order_collection')
                 ->addAttributeToSelect('*')
                 ->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
@@ -2959,16 +3030,40 @@ class Webgility_Ecc_Model_Desktop
                 ->addAttributeToFilter('created_at', array('from' => $datefrom,'datetime' => true))
                 ->addFieldToFilter('old_store_id', array('in'=>$storeIds))
                 ->addAttributeToFilter('entity_id', array('gt' => $start_order_no))
-                ->addAttributeToFilter('status', array('in' => $order_status))
-                ->addAttributeToSort('entity_id', 'asc')
+                ->addAttributeToFilter('status', array('in' => $order_status));
+            if($allure_filter=='us'){
+                $this->_orders->join('order_address',
+                    'main_table.entity_id=order_address.parent_id',
+                    ['address_type', 'country_id']);
+                $this->_orders->getSelect()->where(new Zend_Db_Expr("(order_address.address_type = 'shipping' AND order_address.country_id = 'US') OR main_table.create_order_method = 2"));
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                }
+            }elseif($allure_filter =='non_us'){
+                $this->_orders->join('order_address',
+                    'main_table.entity_id=order_address.parent_id',
+                    ['address_type', 'country_id']);
+                $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
+                $this->_orders->addAttributeToFilter('order_address.country_id', array('neq'=>'US'));
+                $this->_orders->addAttributeToFilter('create_order_method', array('neq'=>'2'));
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                }
+            }elseif($allure_filter =='wholesale'){
+
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                }
+            }
+            $this->_orders->addAttributeToSort('entity_id', 'asc')
                 ->setPageSize($no_of_orders)
                 ->load();
-            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'my.log',true);
+            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'webgility.log',true);
 
         }else
 
         {
-            Mage::log('In third condition',Zend_Log::DEBUG,'my.log',true);
+            Mage::log('In third condition',Zend_Log::DEBUG,'webgility.log',true);
             $this->_orders = Mage::getResourceModel('sales/order_collection')
                 ->addAttributeToSelect('*')
                 ->joinAttribute('billing_firstname', 'order_address/firstname', 'billing_address_id', null, 'left')
@@ -2992,10 +3087,34 @@ class Webgility_Ecc_Model_Desktop
                 ->joinAttribute('shipping_telephone', 'order_address/telephone', 'shipping_address_id', null, 'left')
                 ->joinAttribute('shipping_fax', 'order_address/fax', 'shipping_address_id', null, 'left')
                 ->addFieldToFilter('old_store_id', array('in'=>$storeIds))
-                ->addAttributeToFilter('increment_id', array('in' => $orderlist))
-                ->addAttributeToSort('entity_id', 'asc')
+                ->addAttributeToFilter('increment_id', array('in' => $orderlist));
+            if($allure_filter=='us'){
+                $this->_orders->join('order_address',
+                    'main_table.entity_id=order_address.parent_id',
+                    ['address_type', 'country_id']);
+                $this->_orders->getSelect()->where(new Zend_Db_Expr("(order_address.address_type = 'shipping' AND order_address.country_id = 'US') OR main_table.create_order_method = 2"));
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                }
+            }elseif($allure_filter =='non_us'){
+                $this->_orders->join('order_address',
+                    'main_table.entity_id=order_address.parent_id',
+                    ['address_type', 'country_id']);
+                $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
+                $this->_orders->addAttributeToFilter('order_address.country_id', array('neq'=>'US'));
+                $this->_orders->addAttributeToFilter('create_order_method', array('neq'=>'2'));
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                }
+            }elseif($allure_filter =='wholesale'){
+
+                if(isset($groups[0]['customer_group_id'])) {
+                    $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                }
+            }
+            $this->_orders->addAttributeToSort('entity_id', 'asc')
                 ->load();
-            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'my.log',true);
+            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'webgility.log',true);
 
         }
 

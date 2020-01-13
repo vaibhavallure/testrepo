@@ -219,8 +219,11 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 if ($requestArgs != null) {
                     $json_arguments = json_encode($requestArgs);
                     $json_arguments = str_replace('\n',' ',$json_arguments);
-                    $this->salesforceLog("sendRequest Data -".utf8_encode($json_arguments));
-                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, stripslashes($json_arguments));
+                    $json_arguments = str_replace('null','""',$json_arguments);
+                    $json_arguments = str_replace('\?','',$json_arguments);
+                    //$json_arguments = str_replace('\\','',$json_arguments);
+                    $this->salesforceLog("sendRequest Data -".$json_arguments);
+                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
                 }
             }
 
@@ -608,22 +611,33 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 $reasonText = "Return";
             }
             $salesforceItemId = $item->getSalesforceItemId();
-            $itemArray = array(
-                "attributes" => array("type" => "OrderItem", "referenceId" => "order_items-" . $item->getItemId()),
-                "PricebookEntryId" => $salesforcePricebkEntryId,//"01u290000037WAR",
-                "quantity" => ($isTeamworkOrder) ? ($item->getOtherSysQty() ? $item->getOtherSysQty() : 1) : $item->getQtyOrdered(),
-                "UnitPrice" => $unitPrice,
-                "Post_Length__c" => $postLength,
-                "Magento_Order_Item_Id__c" => $item->getItemId(),
-                "SKU__c" => $item->getSku(),
-                "reason__c" => $reasonText
-            );
+            $validOrderItem = true;
+            if($item->getQtyOrdered() !=0 ) {
+                $itemArray = array(
+                    "attributes" => array("type" => "OrderItem", "referenceId" => "order_items-" . $item->getItemId()),
+                    "PricebookEntryId" => $salesforcePricebkEntryId,//"01u290000037WAR",
+                    "quantity" => ($isTeamworkOrder) ? ($item->getOtherSysQty() ? $item->getOtherSysQty() : 1) : $item->getQtyOrdered(),
+                    "UnitPrice" => $unitPrice,
+                    "Post_Length__c" => $postLength,
+                    "Magento_Order_Item_Id__c" => $item->getItemId(),
+                    "SKU__c" => str_replace('"','\"',$item->getSku()) ,
+                    "reason__c" => $reasonText
+                );
+            }else {
+                $validOrderItem = false;
+                $this->salesforceLog("OrderItem not added with Magento Item Id = {$item->getItemId()} because of quantity 0 with SKU = {$item->getSku()}");
+            }
+
             if (!$create) {
                 $this->salesforceLog("Splitting Orders and OrderItems for BULK Update");
-                $itemArray["Id"] = $salesforceItemId;
-                array_push($orderItemList, $itemArray);
+                if($validOrderItem) {
+                    $itemArray["Id"] = $salesforceItemId;
+                    array_push($orderItemList, $itemArray);
+                }
             } else {
-                array_push($orderItem["records"], $itemArray);
+                if($validOrderItem) {
+                    array_push($orderItem["records"], $itemArray);
+                }
             }
         }
 
@@ -1634,7 +1648,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                             array(
                                 "attributes" => array("type" => "PricebookEntry"),
                                 "id" => $standardPriceBkId,
-                                "UnitPrice" => $retailerPrice
+                                "UnitPrice" => $retailerPrice?$retailerPrice:0
                             )
                         );
 
@@ -1642,7 +1656,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                             $sTemp = array(
                                 "attributes" => array("type" => "PricebookEntry"),
                                 "id" => $wholesalePriceBkId,
-                                "UnitPrice" => $wholesalePrice
+                                "UnitPrice" => $wholesalePrice?$wholesalePrice:0
                             );
                             //array_push($sRequest["records"], $sTemp);
                             $sRequest["records"][] = $sTemp;
@@ -1656,7 +1670,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                                 ),
                                 "Pricebook2Id" => Mage::helper('allure_salesforce')->getGeneralPricebook(),//$this::RETAILER_PRICEBOOK_ID,
                                 //"Product2Id" => $salesforceProductId,
-                                "UnitPrice" => $retailerPrice
+                                "UnitPrice" => $retailerPrice?$retailerPrice:0
                             )
                         );
 
@@ -1668,15 +1682,15 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                                 ),
                                 "Pricebook2Id" => Mage::helper('allure_salesforce')->getWholesalePricebook(),//$this::WHOLESELLER_PRICEBOOK_ID,
                                 //"Product2Id" => $salesforceProductId,
-                                "UnitPrice" => $wholesalePrice
+                                "UnitPrice" => $wholesalePrice?$wholesalePrice:0
                             );
                             array_push($sRequest["records"], $sTemp);
                         }
                     }
 
                     if($create){
-                        $this->salesforceLog("PRODUCT: Adding PriceBookEntries for CREATE");
-                        if($sRequest['StockKeepingUnit'] != null){
+                        $this->salesforceLog("PRODUCT: Adding PriceBookEntries for CREATE = ".json_encode($sRequest));
+                        if($request['StockKeepingUnit'] != null){
                             $request["PriceBookEntries"] = $sRequest;
                             return $request;
                         }else {
