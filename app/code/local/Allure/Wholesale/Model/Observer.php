@@ -13,29 +13,35 @@ class Allure_Wholesale_Model_Observer
      if(!$this->helper()->getStatus())
          return;
 
-//     Mage::log($this->isWholeSaleLoginPage(),Zend_Log::DEBUG,"adi.log",true);
 
+     /*if wholesale customer logged in and store is not equal to wholesale store
+     * redirect to wholesale store
+     */
      if($this->isWholesaleCustomer() &&  $this->getCurrentStoreId()!=$this->helper()->getStoreId())
     {
         Mage::getSingleton('customer/session')->logout();
-//        Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId()));
+        Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId()));
         return;
     }
 
+     /*if customer not logged in and store equal to wholesale store
+     * redirect wholesale store to login page
+     */
      if(!Mage::getSingleton('customer/session')->isLoggedIn() &&  $this->getCurrentStoreId()==$this->helper()->getStoreId())
      {
         if(!$this->isWholeSaleLoginPage())
-            Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."customer/account/login/");
+            Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."customer/account");
 
          return;
      }
 
-     if(!$this->isWholeSaleLoginPage() &&  $this->getCurrentStoreId()==$this->helper()->getStoreId())
+     /*if retail customer logged in and store is equal to wholesale store
+     * redirect to wholesale store login page
+     */
+     if(Mage::getSingleton('customer/session')->isLoggedIn() && !$this->isWholesaleCustomer() && !$this->isWholeSaleLoginPage() &&  $this->getCurrentStoreId()==$this->helper()->getStoreId())
      {
-         if(!$this->isWholeSaleLoginPage()) {
-             Mage::getSingleton('customer/session')->logout();
-             Mage::app()->getResponse()->setRedirect($this->getStoreUrl(1));
-         }
+         Mage::getSingleton('customer/session')->logout();
+         Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."customer/account");
          return;
      }
 
@@ -44,15 +50,10 @@ class Allure_Wholesale_Model_Observer
      Mage::log($this->helper()->getStoreId(),Zend_Log::DEBUG,"adi.log",true);
 
 
-     // Mage::app()->getResponse()->setRedirect(Mage::getUrl("checkout/cart"));
+ }
 
-//     Mage::log(Mage::app()->getStore($store->getId())->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK),Zend_Log::DEBUG,"adi.log",true);
-
-     if($this->isWholesaleCustomer())
-    {
-    // ;
-    }
-
+ public function afterLoginCheckUser($observer)
+ {
  }
  public function isWholesaleCustomer()
  {
