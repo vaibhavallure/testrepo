@@ -32,7 +32,7 @@ class Allure_Wholesale_Model_Observer
         if(!Mage::getSingleton('customer/session')->isLoggedIn() &&  $this->getCurrentStoreId()==$this->helper()->getStoreId())
         {
             if(!$this->isWholeSaleLoginPage())
-                Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."customer/account");
+                Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."wholesale-customer/wholesale/login");
 
             return;
         }
@@ -110,7 +110,7 @@ class Allure_Wholesale_Model_Observer
 
     private function isWholeSaleLoginPage()
     {
-        if(Mage::app()->getRequest()->getControllerName()=="account" && Mage::app()->getRequest()->getActionName()=="login" && Mage::app()->getRequest()->getModuleName()=="customer")
+        if(Mage::app()->getRequest()->getControllerName()=="wholesale" && Mage::app()->getRequest()->getActionName()=="login" && Mage::app()->getRequest()->getModuleName()=="wholesale-customer")
             return true;
 
         return false;
