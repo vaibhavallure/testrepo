@@ -8,6 +8,7 @@
 
 class Allure_Wholesale_Model_Observer
 {
+    const RETAIL_STORE_ID=1;
 
     public function checkUserIsWholesale()
     {
@@ -42,7 +43,7 @@ class Allure_Wholesale_Model_Observer
         if(Mage::getSingleton('customer/session')->isLoggedIn() && !$this->isWholesaleCustomer() && !$this->isWholeSaleLoginPage() &&  $this->getCurrentStoreId()==$this->helper()->getStoreId())
         {
             Mage::getSingleton('customer/session')->logout();
-            Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."customer/account");
+            Mage::app()->getResponse()->setRedirect($this->getStoreUrl(self::RETAIL_STORE_ID)."customer/account");
             return;
         }
 
@@ -60,7 +61,9 @@ class Allure_Wholesale_Model_Observer
          * */
         if($this->isWholesaleGroup($customer->getGroupId()) && $this->getCurrentStoreId()!=$this->helper()->getStoreId())
         {
-            throw Mage::exception('Mage_Core', Mage::helper('customer')->__('Invalid User Login.'),
+            $message='Please login to the <a href="'.$this->getStoreUrl($this->helper()->getStoreId()).'"><u>Wholesale Site</u></a> to continue.';
+
+            throw Mage::exception('Mage_Core', Mage::helper('customer')->__($message),
                 Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD
             );
         }
@@ -69,7 +72,9 @@ class Allure_Wholesale_Model_Observer
          * */
         if(!$this->isWholesaleGroup($customer->getGroupId()) && $this->getCurrentStoreId()==$this->helper()->getStoreId())
         {
-            throw Mage::exception('Mage_Core', Mage::helper('customer')->__('Invalid User Login.'),
+            $message='Please login to the <a href="'.$this->getStoreUrl(self::RETAIL_STORE_ID).'"><u>Retail Site</u></a> to continue.';
+
+            throw Mage::exception('Mage_Core', Mage::helper('customer')->__($message),
                 Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD
             );
         }

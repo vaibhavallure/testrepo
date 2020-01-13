@@ -11,10 +11,17 @@
         <use>standard</use>
         <args>
           <module>Allure_Wholesale</module>
-          <frontName>wholesale</frontName>
+          <frontName>wholesale-customer</frontName>
         </args>
       </wholesale>
-    </routers>    
+    </routers>
+    <layout>
+      <updates>
+        <wholesale>
+          <file>allure/wholesale.xml</file>
+        </wholesale>
+      </updates>
+    </layout>
   </frontend>
   <global>
     <models>
@@ -28,6 +35,11 @@
         <class>Allure_Wholesale_Helper</class>
       </wholesale>
     </helpers>
+    <blocks>
+      <appointments>
+        <class>Allure_Wholesale_Block</class>
+      </appointments>
+    </blocks>
     <events>
       <core_block_abstract_to_html_before>
         <observers>
@@ -43,7 +55,7 @@
           <wholesale>
             <type>singleton</type>
             <class>wholesale/observer</class>
-            <method>afterLoginCheckUser</method>
+            <method>afterLoginCheckUserGroup</method>
           </wholesale>
         </observers>
       </customer_customer_authenticated>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<wholesale_wholesale_login>
+		<update handle="default_wholesale"/>
+		<reference name="content">
+			<block type="appointments/wholesale" name="wholesale_customer_login" as="wholesale_customer_login" template="allure/wholesale/login.phtml" />
+		</reference>
+	</wholesale_wholesale_login>
+	<wholesale_wholesale_application>
+		<update handle="default_wholesale"/>
+		<reference name="content">
+			<block type="appointments/wholesale" name="wholesale_customer_application" as="wholesale_customer_application" template="allure/wholesale/application.phtml" />
+		</reference>
+	</wholesale_wholesale_application>
+</layout>
