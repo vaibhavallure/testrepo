@@ -123,7 +123,8 @@ class Allure_Salesforce_Model_Observer_Update
                     $count = 0;
                     foreach ($reqArr as $order) {
                         $count += 1;
-                        $count += sizeof($order['OrderItems']);
+                        if(empty($lastRunTime))
+                            $count += sizeof($order['OrderItems']);
 
                         if($count >= 50) {
                             $count = 0;
