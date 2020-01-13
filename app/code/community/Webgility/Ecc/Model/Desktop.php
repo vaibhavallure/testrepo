@@ -1709,7 +1709,9 @@ class Webgility_Ecc_Model_Desktop
         if (strpos($store_name, 'broadway') !== false) {
             $all =true;
             Mage::log('All is true',Zend_Log::DEBUG,'webgility.log',true);
-        }
+        }if($storeid == '2020' || $storeid == '2021' || $storeid == '2022'){
+        $all= true;
+    }
 
         /***************/
         Mage::log('In Get Order 1',Zend_Log::DEBUG,'webgility.log',true);
