@@ -125,6 +125,21 @@ abstract class Mirasvit_Advr_Block_Adminhtml_Order_Abstract extends Mirasvit_Adv
             'type'   => 'currency',
             'hidden' => true,
         );
+        $columns['net_sales'] = array(
+            'header' => 'Net Sales',
+            'type'   => 'currency',
+            'hidden' => true,
+        );
+        $columns['net_revenue'] = array(
+            'header' => 'Net Revenue',
+            'type'   => 'currency',
+            'hidden' => true,
+        );
+        $columns['net_revenue_from_products'] = array(
+            'header' => 'Net Revenue From Products',
+            'type'   => 'currency',
+            'hidden' => true,
+        );
         $columns['sum_gross_profit'] = array(
             'header'         => 'Gross Profit',
             'type'           => 'currency',
