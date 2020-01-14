@@ -52,16 +52,16 @@ alpha_redesign_staging:
     - mage-deploy mt-redesign
     - echo 'Deployed on Nascense Gama - Redesign Staging'
     
-alpha_redesign_stage:
-  environment: redesign_staging
+alpha_wholesale:
+  environment: staging
   stage: staging
   tags:
     - gama
   only:
-    - redesign_staging
+    - wholesale-master
   script:
-    - mage-deploy redesign
-    - echo 'Deployed on Nascense Gama - Redesign Stage'
+    - mage-deploy mt-wholesale
+    - echo 'Deployed on Nascense Gama - wholesale'
     
 alpha_elasticsearch:
   environment: elasticsearch

@@ -83,4 +83,3 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
     }
 
 }
-

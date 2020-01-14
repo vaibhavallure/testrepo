@@ -407,7 +407,7 @@ class Mage_Oauth_Model_Server
 			$this->_initToken();
 			
 			// validate signature
-			$this->_validateSignature();
+			//$this->_validateSignature();
 			
 			// save token if signature validation succeed
 			$this->_saveToken();
