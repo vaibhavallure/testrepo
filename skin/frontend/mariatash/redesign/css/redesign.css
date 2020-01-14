@@ -5051,3 +5051,44 @@ a.product-video-link:hover div.product-video-play-icon {
 	margin-top: 26px;
   display: inline-block;
 }
+
+
+/***************************Wholesale CSS**************************************/
+.wholesaleLogin .eye-image{
+	right: 0;
+}
+.popupApplicationModal{
+		max-width: 1000px;
+		margin: auto;
+}
+#popup-wholesale-application-form label{
+		width: 100%;
+		font-size:12px;
+		font-family: urw-din-light;
+		text-align: left;
+		text-transform: uppercase;
+}
+#popup-wholesale-application-form .pop-up-button{
+		width: 100%;
+		padding: 0 20px;
+}
+.popupApplicationModal .pop-up-cover{
+		width: 1000px;
+}
+.popupApplicationModal .input-form input{
+		width: 100%;
+		/* height: 30px !important; */
+}
+.popupApplicationModal .input-form textarea{
+		min-height: 70px;
+}
+.popupApplicationModal .input-form{
+		width: 100%;
+		/* margin-bottom: 13px; */
+}
+.popupApplicationModal .modal-footer{
+		justify-content: start;
+}
+.popupApplicationModal .input-set {
+		margin-bottom: 0;
+}
