@@ -5092,3 +5092,10 @@ a.product-video-link:hover div.product-video-play-icon {
 .popupApplicationModal .input-set {
 		margin-bottom: 0;
 }
+#applicationSuccess .modal-header {
+    padding: 3rem 1rem;
+    border: 0;
+}
+#applicationSuccess .modal-body{
+		margin-bottom: 77px;
+}

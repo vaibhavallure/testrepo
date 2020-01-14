@@ -17,6 +17,10 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
 
     public function applicationSaveAction()
     {
+      $result['success'] = true;
+      $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+       return;
+
         $data=$this->getRequest()->getPost();
 
         $templateId = $this->helper()->getTemplateId();
@@ -57,4 +61,3 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
     }
 
 }
-
