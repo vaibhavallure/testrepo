@@ -31,9 +31,9 @@ class Allure_Wholesale_Model_Observer
         */
         if(!Mage::getSingleton('customer/session')->isLoggedIn() &&  $this->getCurrentStoreId()==$this->helper()->getStoreId())
         {
-            if(!$this->isWholeSaleLoginPage())
-                Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId())."wholesale-customer/wholesale/login");
-
+            if(!$this->isWholeSaleLoginPage()) {
+                Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId()) . "wholesale-customer/wholesale/login");
+            }
             return;
         }
 
@@ -110,7 +110,9 @@ class Allure_Wholesale_Model_Observer
 
     private function isWholeSaleLoginPage()
     {
-        if(Mage::app()->getRequest()->getControllerName()=="wholesale" && Mage::app()->getRequest()->getActionName()=="login" && Mage::app()->getRequest()->getModuleName()=="wholesale-customer")
+        $urls=array("/checkout/cart/update/","/wholesale-customer/wholesale/login","/magebird_popup/index/show");
+
+        if(in_array(Mage::app()->getRequest()->getOriginalPathInfo(),$urls))
             return true;
 
         return false;

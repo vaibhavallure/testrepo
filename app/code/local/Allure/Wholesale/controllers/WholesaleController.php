@@ -6,12 +6,14 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
     public function loginAction()
     {
         $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('Wholesale Login'));
         $this->renderLayout();
     }
 
     public function applicationAction()
     {
         $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('Wholesale Application'));
         $this->renderLayout();
     }
 
