@@ -1,0 +1,48 @@
+<style>
+    .wholesaleLogin{
+        max-width: 500px;
+        margin: auto;
+    }
+</style>
+<div class="wholesaleLogin">
+    <div>
+        <form class="form-signin" action="<?php echo $this->getPostActionUrl() ?>" method="post" id="popup-login-form">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <img class="d-lg-block d-md-block d-none" src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="x">
+                    <img class="d-block d-lg-none d-md-none" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-grey.png'); ?>" alt="x">                </a>
+                <h1><?php echo $this->__("Login to My Account")?></h1>
+            </div>
+            <div class="body modal-body">
+                <div id="login_msg_div">
+                    <span class="invalid-login" id="login-msg"></span>
+                </div>
+                <div class="form-group input-form">
+                    <!-- <label class="popup-login-lbl" for="email"><em>*</em> <//?php echo $this->__("Email Address")?></label> -->
+                    <input id='username-login' type="text" name='login[username]' placeholder="Email*" class="ele_width required-entry validate-email"/>
+                </div>
+                <div class="form-group input-form">
+                    <!-- <label class="popup-login-lbl" for="password"><em>*</em> <//?php echo $this->__("Password")?></label> -->
+                    <input id="passwd-login" type="password" name="login[password]" placeholder="Password*" class="ele_width required-entry consistent-password"/>
+                    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+                    <div class="">
+                        <img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
+                        <img class="eye-image show-hide-on-click close-eye" src="<?php echo $this->getSkinUrl("images/eye-c.png")?>" alt="">
+                    </div>
+                </div>
+                <div class="forget-password">
+                    <a class="link-button" onclick="openRestPasswordModal()"><?php echo $this->__("Forgot Password")?></a>
+                </div>
+                <div class="submit-login text-right position-relative">
+                <span id="popup_loader" class="please-wait-popup" style="display: none;">
+                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
+                    <button type="button" id="signin-btn-popup" class="button dark-button pop-up-button"><?php echo $this->__("LogIn")?></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    jQuery(".popupLoginModel").remove();
+</script>
