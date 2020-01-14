@@ -75,7 +75,7 @@
                             } ?>
 
 						<?php } ?>
-						
+
                   	<?php if($isIternational == $shipCodeArr[2]):?>
                         <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' selected="selected"' ?>>
                        	<?= $this->escapeHtml($_rate->getMethodTitle()) ?>
@@ -100,7 +100,7 @@
                       	?>
 
                    	<?php endif;?>
-                   
+
                     <?php    }
                     } else {
                             $ship_sign_national[$_rate->getCode()] = $shipDataArr;

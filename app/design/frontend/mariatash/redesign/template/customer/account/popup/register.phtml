@@ -79,11 +79,11 @@
 		</div>
 		<div class="body modal-body">
 			<p class="para-normal">Thank you for joining Maria Tash!</p>
- 
+
 		</div>
 	</div>
 </div>
- 
+
 
 
 <script type="text/javascript">
@@ -95,19 +95,19 @@ Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/acc
 
             jQuery('.towhishred').click(function(event){
                 event.preventDefault();event.stopPropagation();
-                var wishvar = '<?php echo Mage::getSingleton("core/session")->getMywish();?>';  
-                var pid = '<?php echo Mage::getSingleton("core/session")->getPwish();?>';  
+                var wishvar = '<?php echo Mage::getSingleton("core/session")->getMywish();?>';
+                var pid = '<?php echo Mage::getSingleton("core/session")->getPwish();?>';
                     if(pid && pid != ''){
-                    jQuery('.link-wishlist').trigger('click');   
-                    <?php echo Mage::getSingleton("core/session")->unsPwish();?>;                      
-                    setTimeout(function(){                
-                    window.location.href='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>'+"/myaccount/#wishlist";         
+                    jQuery('.link-wishlist').trigger('click');
+                    <?php echo Mage::getSingleton("core/session")->unsPwish();?>;
+                    setTimeout(function(){
+                    window.location.href='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) ?>'+"/myaccount/#wishlist";
                     }, 2000);
                      exit;
                 }
-                 
+
 });
-            
+
 Validation.addAllThese([
 	['validate-password-custom', 'Please enter 6 or more characters without leading or trailing spaces.', function(v) {
         var pass=v.strip(); /*strip leading and trailing spaces*/
@@ -131,5 +131,5 @@ Validation.addAllThese([
         }
         return (pass.value == conf.value);
     }]
-]);            
+]);
 </script>
