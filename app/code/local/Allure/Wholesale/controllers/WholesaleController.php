@@ -19,43 +19,67 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
 
     public function applicationSaveAction()
     {
-        $data=$this->getRequest()->getPost();
 
-        $templateId = $this->helper()->getTemplateId();
 
-        $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
+        $data = $this->getRequest()->getPost();
+        $receiver = $this->helper()->getEmailReceiver();
+        $html =$this->getHtml($data);
 
-        $senderName = "wholesale-application";
+        $mail = Mage::getModel('core/email');
+        $mail->setToName('wholesale team');
+        $mail->setToEmail($receiver);
+        $mail->setBody($html);
+        $mail->setSubject(' Application for Wholesale Account from ' . $data["firstname"] . ' ' . $data["lastname"]);
+        $mail->setFromEmail('wholesale-application@mariatash.com');
+        $mail->setFromName("wholesale application system");
+        $mail->setType('html');
 
-        $senderEmail = "wholesale-application@mariatash.com";
-
-        $receiver=$this->helper()->getEmailReceiver();
-
-        $emailTemplateVariables = $data;
-
-        $processedTemplate = $emailTemplate->getProcessedTemplate($emailTemplateVariables);
-
-        $mail = Mage::getModel('core/email')
-            ->setToName($senderName)
-            ->setToEmail($receiver)
-            ->setBody($processedTemplate)
-            ->setSubject('Subject :Wholesale Application')
-            ->setFromEmail($senderEmail)
-            ->setFromName($senderName)
-            ->setType('html');
-        try{
+        try {
             $mail->send();
             $result['success'] = true;
-        }
-        catch(Exception $error)
-        {
+        } catch (Exception $error) {
             $result['error'] = $error->getMessage();
         }
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
+
     private function helper()
     {
         return Mage::helper("wholesale");
+    }
+    private function getHtml($data)
+    {
+        $html='<style> th{text-align:left}</style>
+<table>
+<tr>
+<th>Name</th>
+<td>'.$data["firstname"].' '.$data["lastname"].'</td>
+</tr>
+<tr>
+<th>Company Name</th>
+<td>'.$data["company_name"].'</td>
+</tr>
+<tr>
+<th>Email Address</th>
+<td>'.$data["email"].'</td>
+</tr>
+<tr>
+<th>Telephone Number</th>
+<td>'.$data["phone"].'</td>
+</tr>
+<tr>
+<th>Company Wedsite</th>
+<td>'.$data["company_website"].'</td>
+</tr>
+<tr>
+<th>Message</th>
+<td>'.$data["message"].'</td>
+</tr>
+<tr>
+</table>
+';
+        return $html;
+
     }
 
 }
