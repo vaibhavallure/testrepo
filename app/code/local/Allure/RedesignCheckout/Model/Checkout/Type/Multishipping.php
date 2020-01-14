@@ -687,14 +687,14 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
         $orders = array();
         $addressCount = count($shippingAddresses);
         
-        if($addressCount > 1){
+        //if($addressCount > 1){
             if ($this->getQuote()->hasVirtualItems()) {
                 $shippingAddresses[] = $this->getQuote()->getBillingAddress();
             }
-        }
+        //}
         
         try {
-            if($addressCount > 1){
+        //    if($addressCount > 1){
                 $_index = 1;
                 $quote = $this->getQuote();
                 $quote->unsReservedOrderId();
@@ -708,6 +708,11 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     }
                     
                     $newIncrementId = $incrementId."-".$_index . $backOrderPrefix;
+                    
+                    if($addressCount == 1){
+                        $newIncrementId = $incrementId;
+                    }
+                    
                     $order = $this->_prepareOrder($address, $newIncrementId);
                     $_index++;
                     
@@ -738,7 +743,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $order->queueMultiAddressNewOrderEmail($orders);
                 }
                 
-            }else{
+            /*}else{
                 $this->getQuote()->setIsMultiShipping(false)->save();
                 $this->getQuote()->collectTotals();
                 $payment = Mage::app()->getRequest()->getPost('payment');
@@ -764,7 +769,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         Mage::logException($e);
                     }
                 }
-            }
+            }*/
             
             Mage::getSingleton('core/session')->setOrderIds($orderIds);
             Mage::getSingleton('checkout/session')->setLastQuoteId($this->getQuote()->getId());
@@ -772,6 +777,9 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             $this->getQuote()
             ->setIsActive(false)
             ->save();
+            
+            //reset coupon code from session after order place.
+            $this->getCheckoutSession()->setCartCouponCode(null);
             
             Mage::dispatchEvent('checkout_submit_all_after', array('orders' => $orders, 'quote' => $this->getQuote()));
             
