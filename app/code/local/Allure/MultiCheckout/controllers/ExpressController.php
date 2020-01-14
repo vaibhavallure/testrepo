@@ -351,6 +351,7 @@ class Allure_MultiCheckout_ExpressController extends Mage_Paypal_ExpressControll
 				}
 				
 				$this->_initToken(false); // no need in token anymore
+				$session->setCartCouponCode(null);
 				$this->_redirect('checkout/onepage/success');
 			}
 			
@@ -440,6 +441,8 @@ class Allure_MultiCheckout_ExpressController extends Mage_Paypal_ExpressControll
 	            );
 	        $session->clear();
 	        $session->setDisplaySuccess(true);
+	        
+	        $session->setCartCouponCode(null);
 	        
 	        $this->_redirect('checkout/multishipping/success');
 	        return;
