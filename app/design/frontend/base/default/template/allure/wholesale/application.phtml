@@ -1,0 +1,190 @@
+<style>
+    .popupApplicationModal{
+        max-width: 1000px;
+        margin: auto;
+    }
+    #popup-wholesale-application-form label{
+        width: 100%;
+        font-size:12px;
+        font-family: urw-din-light;
+        text-align: left;
+        text-transform: uppercase;
+    }
+    #popup-wholesale-application-form .pop-up-button{
+        width: 100%;
+        padding: 0 20px;
+    }
+    .popupApplicationModal .pop-up-cover{
+        width: 1000px;
+    }
+    .popupApplicationModal .input-form input{
+        width: 100%;
+        height: 30px !important;
+    }
+    .popupApplicationModal .input-form textarea{
+        min-height: 70px;
+    }
+    .popupApplicationModal .input-form{
+        width: 100%;
+        margin-bottom: 13px;
+    }
+    .popupApplicationModal .modal-footer{
+        justify-content: start;
+    }
+    .popupApplicationModal .input-set {
+        margin-bottom: 0;
+    }
+
+    @media (max-width:1023px){
+        .popupApplicationModal .pop-up-cover{
+            width: 100%;
+        }
+    }
+
+</style>
+
+
+
+<div class="popupApplicationModal">
+    <div>
+        <form class="form-signup" method="post" id="popup-wholesale-application-form">
+            <div class="pop-title modal-header">
+                <h1 class="text-uppercase para-bold"><?php echo $this->__("Request a Trade Account")?></h1>
+            </div>
+            <div class="modal-body">
+                <div class="input-set">
+                    <div id="application_msg_div">
+                        <span id="application-msg"></span>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="application-info info-text-two mb-3">Please enter your details to request your free trade account or call us on: <span class="text-underline">+44203 8722545</span></div>
+                            <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
+                                <label for="first_name">Please Enter your Name*</label>
+                                <input id='wholesale_firstname' placeholder="First Name" type="text" name='firstname' class="ele_width required-entry"/>
+                            </div>
+                            <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
+                                <label class="invisible" for="first_name">Please Enter your Name*</label>
+                                <input id='wholesale_lastname' placeholder="Last Name" type="text" name='lastname' class="ele_width required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="company_name">Please Enter your Company Name*</label>
+                                <input id='company-name' type="text" name='company' class="ele_width required-entry required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="email_name">Please Enter your Email Address*</label>
+                                <input id='wholesale_email' type="text" name='email' class="ele_width required-entry validate-email"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="phone-number">Please Enter your Telephone Number*</label>
+                                <input id='phone-no' type="text" name='phone-number' class="ele_width required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="company_website">Please Enter your Company company Website</label>
+                                <input id='company-website' type="text" name='company-web' class="ele_width"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="message">Message</label>
+                                <textarea class="w-100" id='message' type="text" name='message' plcaeholder="If you have any requests or require a quote please let us know." class="ele_width"/></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pop-link modal-footer">
+                    <div class="pop-up-button-set row m-0">
+
+                        <div class="submit-login mb-5">
+                            <button type="button" id="application-wholsale-btn" class="button dark-button pop-up-button"><?php echo $this->__("Submit Request")?></button>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+<div id="applicationSuccess" class="popupSignUpConfirmationModel">
+    <div class="pop-up-cover">
+        <div class="pop-title modal-header">
+            <a  href="javascript:void(0);" title="Close" class="close towhishred exit-large">
+                <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
+            </a>
+        </div>
+        <div class="body modal-body">
+            <p class="para-normal">Thank you for joining Maria Tash!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+    var actionPath= '<?php echo Mage::getBaseUrl('web').'wholesale-customer/wholesale/applicationSave';?>';
+
+
+
+    jQuery("#application-wholsale-btn").on('click',function(){
+        var myForm = new VarienForm('popup-wholesale-application-form');
+
+        if(myForm.validator.validate()){
+            var firstname 		= jQuery('#wholesale_firstname').val();
+            var lastname 		= jQuery('#wholesale_lastname').val();
+            var email 			= jQuery('#wholesale_email').val();
+            var company_name 	= jQuery('#company-name').val();
+            var phone	        = jQuery('#phone-no').val();
+            var company_website	        = jQuery('#company-website').val();
+            var message	        = jQuery('#message').val();
+            var key				= formKey;
+
+            var requestData = {
+                "firstname":firstname,
+                "lastname":lastname,
+                "email":email,
+                "company_name":company_name,
+                "phone":phone,
+                "company_website":company_website,
+                "message":message,
+                "form_key":key
+            };
+
+            jQuery.ajax({
+                url :actionPath ,
+                dataType : 'json',
+                type : 'POST',
+                data: requestData,
+                beforeSend: function() {setLoader();},
+                complete: function() {unsetLoader();},
+                success : function(data) {
+                    if (data.success) {
+                        jQuery("#applicationSuccess").css({"opacity":"1","pointer-events":"auto"});
+                    } else {
+                        jQuery('#application_msg_div').css('display','block');
+                        jQuery('#application-msg').html(data.msg);
+                    }
+                }
+            });
+        }
+    });
+
+</script>
