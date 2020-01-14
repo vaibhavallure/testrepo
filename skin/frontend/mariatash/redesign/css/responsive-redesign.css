@@ -473,6 +473,9 @@ ul.tabs li{
 .mobile-device .navigation-parent{
   padding-bottom: 60px;
 }
+.popupApplicationModal .pop-up-cover{
+    width: 100%;
+}
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -1611,7 +1614,7 @@ ul.tabs li{
   #slidecaption{
     display: none;
   }
-.category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
+  .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
   }
   .cart-collaterals.fix-section{
@@ -1743,6 +1746,22 @@ ul.tabs li{
   }
   .amazon-payments-customer-verify .col-main{
     padding: 10px;
+  }
+  .popupApplicationModal .input-form{
+    padding: 0;
+  }
+  .trade-last-name-lable {
+    display: none;
+  }
+  #popup-wholesale-application-form .pop-up-button-set {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  #popup-wholesale-application-form .pop-up-button-set .submit-login{
+    width: 100%;
+  }
+  input#wholesale_lastname {
+    margin-top: 10px;
   }
 }
 
