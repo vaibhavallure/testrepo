@@ -5,9 +5,14 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
 {
     public function loginAction()
     {
-        $this->loadLayout();
-        $this->getLayout()->getBlock('head')->setTitle($this->__('Wholesale Login'));
-        $this->renderLayout();
+        if(!Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $this->loadLayout();
+            $this->getLayout()->getBlock('head')->setTitle($this->__('Wholesale Login'));
+            $this->renderLayout();
+        }else{
+            $myaccountURL= Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'customer/account/';
+            Mage::app()->getResponse()->setRedirect($myaccountURL);
+        }
     }
 
     public function applicationAction()
@@ -68,7 +73,7 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
 <td>'.$data["phone"].'</td>
 </tr>
 <tr>
-<th>Company Wedsite</th>
+<th>Company Website</th>
 <td>'.$data["company_website"].'</td>
 </tr>
 <tr>
