@@ -76,7 +76,7 @@
                         <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
                     <dt><?php echo $this->__($_filter->getName()) ?></dt>
                     <dd data-filter-code="<?= $_filter->getCode() ?>" class="filtru-<?php echo $_filter->getCode().'-content-dtn'; ?>" style ="display:none">
-                
+
                 		<?php echo $_filter->getHtml() ?>
             		</dd>
             </div>
@@ -211,7 +211,7 @@
     var meth="load";
     if(jQuery("body").hasClass("desktop-device"))
     {
-         meth="resize load";
+         meth="load";
     }
 
     jQuery(window).bind(meth,function () {
