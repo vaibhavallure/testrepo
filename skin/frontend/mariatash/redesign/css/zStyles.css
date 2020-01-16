@@ -2385,7 +2385,9 @@ img.print-size-chart{
 	font-weight: normal;
 	text-transform: capitalize;
 }
-
+.login-dropdown{
+	min-height: 184px;
+}
 /*TEMP Solution for MT-1309*/
 .catalog-category-view  .block.block-reorder {
 	display: none;
