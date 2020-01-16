@@ -2,73 +2,171 @@
 <div class="popupApplicationModal">
     <div>
         <form class="form-signup" method="post" id="popup-wholesale-application-form">
-            <div class="pop-title modal-header">
+            <div class="pop-title col-12">
+              <div class="row">
                 <h1 class="text-uppercase para-bold"><?php echo $this->__("Request a Trade Account")?></h1>
+              </div>
             </div>
-            <div class="modal-body">
+            <div class="">
                 <div class="input-set">
                     <div id="application_msg_div">
                         <span id="application-msg"></span>
                     </div>
-                    <div class="application-name col-12">
+                    <!-- <div class="col-12">
+                      <div class="row">
+                        <div class="application-info info-text-two mb-3">Please enter your details to request your free trade account or call us on: <span class="text-underline">+44203 8722545</span>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="col-12">
                         <div class="row">
-                            <div class="application-info info-text-two mb-3">Please enter your details to request your free trade account or call us on: <span class="text-underline">+44203 8722545</span></div>
-                            <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
-                                <label for="first_name">Please Enter your Name*</label>
-                                <input id='wholesale_firstname' placeholder="First Name" type="text" name='firstname' class="ele_width required-entry"/>
-                            </div>
-                            <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
-                                <label class="invisible trade-last-name-lable" for="first_name">Please Enter your Name*</label>
-                                <input id='wholesale_lastname' placeholder="Last Name" type="text" name='lastname' class="ele_width required-entry"/>
+                            <div class="input-form">
+                                <label for="company_name">Store Name*</label>
+                                <input id='company-name' type="text" name='company' class="ele_width required-entry required-entry"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="row">
                             <div class="input-form">
-                                <label for="company_name">Please Enter your Company Name*</label>
-                                <input id='company-name' type="text" name='company' class="ele_width required-entry required-entry"/>
+                                <label for="store_address">Store Address*</label>
+                                <input id='store_address' type="text" name='' class="ele_width required-entry required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="">Address Line 2</label>
+                                <input id='' type="text" name='company' class="ele_width required-entry required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
+                                <label for="city_name">City*</label>
+                                <input id='city_name' type="text" name='city-name' class="ele_width required-entry"/>
+                            </div>
+                            <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
+                                <label class="trade-last-name-lable" for="state_name">State*</label>
+                                <input id='state_name' type="text" name='state-name' class="ele_width required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
+                                <label for="zip_code">Postal / Zip Code*</label>
+                                <input id='zip_code' type="number" name='zipcode' class="ele_width required-entry"/>
+                            </div>
+                            <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
+                                <label class="trade-last-name-lable" for="country_name">Country*</label>
+                                <select id='country_name' type="text" name='country-name' class="ele_width required-entry"/></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="bussiness-years">Years in Business*</label>
+                                <input id='bussiness-years' type="text" name='years' class="ele_width required-entry required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="application-info info-text-two mb-5">Please upload 3 images of your store. 1MB max file size per image
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 image-uploader-section">
+                      <div class="row">
+                      <div class="formElement_1 form-group fadeMe text clearfix col-sm-6 image" data-count="1" id="">
+                        <div class="row">
+    											<input type="file" name="Store image" id="imageupload_1" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
+    												<label for="imageupload_1" class="store-images-button">Store image</label>
+    											<span class="fileres"></span>
+                        </div>
+  										</div>
+                      <div class="formElement_2 form-group fadeMe text clearfix col-sm-6 image" data-count="2" id="">
+                        <div class="row">
+    											<input type="file" name="Store image 2" id="imageupload_2" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
+    												<label for="imageupload_2" class="store-images-button">Store image 2</label>
+    											<span class="fileres"></span>
+                        </div>
+  										</div>
+                      <div class="formElement_3 form-group fadeMe text clearfix col-sm-12 image" data-count="3" id="">
+                        <div class="row">
+    											<input type="file" name="Store image 3" id="imageupload_3" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
+    												<label for="imageupload_3" class="store-images-button">Store image 3</label>
+    											<span class="fileres"></span>
+                        </div>
+  										</div>
+                    </div>
+                  </div>
+
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="website_link">Link to your website*</label>
+                                <input id='website_link' type="text" name='website-link' class="ele_width required-entry required-entry"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="instagram_link">Link to your Instagram</label>
+                                <input id='instagram_link' type="text" name='instagram-link' class="ele_width required-entry required-entry"/>
                             </div>
                         </div>
                     </div>
                     <div class="application-name col-12">
                         <div class="row">
                             <div class="input-form">
-                                <label for="email_name">Please Enter your Email Address*</label>
+                                <label for="store_concept">In a few words, please explain the concept of your store*</label>
+                                <textarea class="w-100" id='store_concept' type="text" name='store-concept' class="ele_width"/></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="current_stock">List 3 designers/brands you currently stock that you feel align with Maria Tash Designs*</label>
+                                <textarea class="w-100" id='current_stock' type="text" name='current-stock' class="ele_width"/></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="stock_maria">Tell us why you would like to stock Maria Tash Designs</label>
+                                <textarea class="w-100" id='stock_maria' type="text" name='stock-maria' class="ele_width"/></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-name col-12">
+                        <div class="row">
+                          <div class="input-form">
+                                <label for="first_name">Contact name*</label>
+                                <input id='wholesale_firstname' type="text" name='firstname' class="ele_width required-entry"/>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="application-name col-12">
+                        <div class="row">
+                            <div class="input-form">
+                                <label for="email_name">Email*</label>
                                 <input id='wholesale_email' type="text" name='email' class="ele_width required-entry validate-email"/>
                             </div>
                         </div>
                     </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="phone-number">Please Enter your Telephone Number*</label>
-                                <input id='phone-no' type="text" name='phone-number' class="ele_width required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="company_website">Please Enter your Company Website</label>
-                                <input id='company-website' type="text" name='company-web' class="ele_width"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="message">Message</label>
-                                <textarea class="w-100" id='message' type="text" name='message' plcaeholder="If you have any requests or require a quote please let us know." class="ele_width"/></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pop-link modal-footer">
+                <div class="pop-link col-12 p-0">
                     <div class="pop-up-button-set row m-0">
-
-                        <div class="submit-login mb-5">
-                            <button type="button" id="application-wholsale-btn" class="button dark-button pop-up-button"><?php echo $this->__("Submit Request")?></button>
+                        <div class="submit-login mb-5 col-12 p-0 mt-3">
+                            <button type="button" id="application-wholsale-btn" class="button dark-button pop-up-button"><?php echo $this->__("Submit")?></button>
                         </div>
                     </div>
                 </div>
@@ -80,12 +178,12 @@
 
 <div id="applicationSuccess" class="popupSignUpConfirmationModel">
     <div class="pop-up-cover">
-        <div class="pop-title modal-header">
+        <div class="pop-title">
             <a  href="javascript:void(0);" title="Close" class="close towhishred exit-large">
                 <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
             </a>
         </div>
-        <div class="body modal-body">
+        <div class="body">
             <p class="para-normal">Your request has been submitted!!</p>
         </div>
     </div>
