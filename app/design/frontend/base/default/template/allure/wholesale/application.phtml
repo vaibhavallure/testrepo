@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-12">
                             <div class="row">
-                                <div class="application-info info-text-two mb-5">Please upload 3 images of your store.
+                                <div class="application-info info-text-two mb-5">Please upload 3 images of your store. 1MB max file size per image.
                                 </div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                      if(!jQuery(this).attr("value"))
                      {
                          errors=true;
-                         var error_message='<p style="color:#830000">Please Select Image To Upload</p>';
+                         var error_message='<p style="color:#830000" class="para-normal">Please Select Image To Upload</p>';
                          jQuery("."+jQuery(this).attr("id")+"_selected").html(error_message);
                      }
                 });
@@ -226,8 +226,15 @@ s
         });
 
         jQuery('.inputfile').change(function(e) {
-            var fileName = e.target.files[0].name;
-            jQuery("."+jQuery(this).attr("id")+"_selected").html(fileName);
+
+            if(e.target.files[0].size > 1000000) {
+                jQuery("."+jQuery(this).attr("id")+"_selected").html('<p style="color:#830000" class="para-normal">Please upload Image less than 1MB.</p>');
+                jQuery(this).val('');
+            }
+            else {
+                var fileName = e.target.files[0].name;
+                jQuery("." + jQuery(this).attr("id") + "_selected").html("<p class='para-normal'>"+fileName+"</p>");
+            }
         })
 
 

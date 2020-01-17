@@ -389,6 +389,9 @@ class Mage_Core_Model_Email_Template extends Mage_Core_Model_Email_Template_Abst
 
         $this->setUseAbsoluteLinks(true);
         $text = $this->getProcessedTemplate($variables, true);
+
+        Mage::log($text,Zend_Log::DEBUG,"adi.log",true);
+
         $subject = $this->getProcessedTemplateSubject($variables);
 
         $setReturnPath = Mage::getStoreConfig(self::XML_PATH_SENDING_SET_RETURN_PATH);
