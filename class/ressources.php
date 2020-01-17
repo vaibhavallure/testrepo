@@ -1525,6 +1525,10 @@ switch ($country) {
 										"libelle" => "<strong>-50%</strong> on the 2nd case",
 										"nbcaisses" => $phrase_APartirDe . "2",
 										),
+							"125" => array(
+								"libelle" => "<strong>20% off 2 cases </strong>- mix & match possible",
+								"nbcaisses" => $phrase_APartirDe . "2",
+										),
 							"702" => array(
 										"libelle" => "<strong>Special prices</strong>",
 										"nbcaisses" => "",
