@@ -75,7 +75,7 @@
                                             $selected="selected";
 
                                         ?>
-                                        <option <?= $selected ?> value="<?= $country['value']?>"><?= $country['label']?></option>
+                                        <option <?= $selected ?> value="<?= $country['label']?>"><?= $country['label']?></option>
                                     <?php }
                                     ?>
                                     </select>
@@ -192,21 +192,12 @@
     </div>
 
 
-    <div id="applicationSuccess" class="popupSignUpConfirmationModel">
-        <div class="pop-up-cover">
-            <div class="pop-title">
-                <a  href="javascript:void(0);" title="Close" class="close towhishred exit-large">
-                    <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
-                </a>
-            </div>
-            <div class="body">
-                <p class="para-normal">Your request has been submitted!!</p>
-            </div>
-        </div>
-    </div>
 
     <script>
         jQuery("#application-wholsale-btn").on('click',function(){
+
+            setLoader();
+
             var myForm = new VarienForm('popup-wholesale-application-form');
 
             if(myForm.validator.validate()) {
@@ -223,7 +214,15 @@
 
                 if(!errors)
                 jQuery('form#popup-wholesale-application-form').submit();
+                else
+                    unsetLoader();
+
+            }else
+            {
+                unsetLoader();
+s
             }
+
         });
 
         jQuery('.inputfile').change(function(e) {
