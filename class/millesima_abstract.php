@@ -302,6 +302,7 @@ class Millesima_Abstract{
             default:
                 $content_url=str_replace("\r\n",";;",$content_url);
                 if($content_url != ""){
+					$urls=array();
                     $urls=explode(";;", $content_url);
                 }
                 $liste=array();
@@ -507,8 +508,8 @@ class Millesima_Abstract{
                 $messageG .= 'Merci'. '<br />';
                 //mail('alopes@millesima.com', $objet, $messageG,$headers);
                 if(!$testenvoi){
-                    mail('hgee@millesima.com', $objet, $messageG,$headers);
-                    mail('mrenaud@millesima.com', $objet, $messageG,$headers);
+                    mail('pdunoyer@millesima.com', $objet, $messageG,$headers);
+                    mail('npiro@millesima.com', $objet, $messageG,$headers);
                     mail('lkocsis@millesima.com', $objet, $messageG,$headers);
                     mail('pastanislas@millesima.com', $objet, $messageG,$headers);
                 }
@@ -579,8 +580,8 @@ class Millesima_Abstract{
             if(isset($brief['pays_g']) || isset($brief['pays_i']) || isset($brief['pays_h']) || isset($brief['pays_sg'])){
                 $message .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/g-'.$id.'<br />';
                 if(!$testenvoi){
-                    $recipiants[] = 'mrenaud@millesima.com';
-                    $recipiants[] = 'hgee@millesima.com';
+                    $recipiants[] = 'pdunoyer@millesima.com';
+                    $recipiants[] = 'npiro@millesima.com';
                     $recipiants[] = 'lkocsis@millesima.com';
                     $recipiants[] = 'pastanislas@millesima.com';
                 }
@@ -590,7 +591,6 @@ class Millesima_Abstract{
                 $message .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/d-'.$id.'<br />';
                 if(!$testenvoi){
                     $recipiants[] = 'utreptow@millesima.com';
-                    $recipiants[] = 'sniggl@millesima.com';
                     $recipiants[] = 'pastanislas@millesima.com';
                     $recipiants[] = 'ekohr@millesima.com';
                     $recipiants[] = 'bteurquetil@millesima.com';
@@ -734,7 +734,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'hobernard@millesima.com';
             $tabRecipiant[] = 'ebrancato@millesima.com';
             $tabRecipiant[] = 'marketingus@millesima.com';
-            $tabRecipiant[] = 'hobernard@millesima.com';
+            $tabRecipiant[] = 'egarnaud@millesima.com';
             $tabRecipiant[] = 'lkocsis@millesima.com';
             $tabRecipiant[] = 'imiossec@millesima.com';
         }
@@ -755,6 +755,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'smonneau@millesima.com';
             $tabRecipiant[] = 'pastanislas@millesima.com';
             $tabRecipiant[] = 'vvecchione@millesima.com';
+            $tabRecipiant[] = 'egarnaud@millesima.com';
         }
 
         return $tabRecipiant;
