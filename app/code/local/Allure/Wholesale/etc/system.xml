@@ -35,14 +35,16 @@
                         <show_in_store>0</show_in_store>
                         <sort_order>80</sort_order>
                     </store_id>
-                   <!-- <email_temp_code translate="label">
+                    <email_temp_code translate="label">
                         <label>Email Template Code</label>
-                        <frontend_type>text</frontend_type>
+                        <frontend_type>select</frontend_type>
+                        <source_model>adminhtml/system_config_source_email_template</source_model>
                         <show_in_default>1</show_in_default>
                         <show_in_website>0</show_in_website>
                         <show_in_store>0</show_in_store>
                         <sort_order>80</sort_order>
-                    </email_temp_code>-->
+                    </email_temp_code>
+
                     <receiver translate="label">
                         <label>Receiver Emails</label>
                         <frontend_type>text</frontend_type>

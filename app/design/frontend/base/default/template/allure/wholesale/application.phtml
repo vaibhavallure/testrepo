@@ -1,242 +1,245 @@
-
-<div class="popupApplicationModal">
-    <div>
-        <form class="form-signup" method="post" id="popup-wholesale-application-form">
-            <div class="pop-title col-12">
-              <div class="row">
-                <h1 class="text-uppercase para-bold"><?php echo $this->__("Request a Trade Account")?></h1>
-              </div>
-            </div>
-            <div class="">
-                <div class="input-set">
-                    <div id="application_msg_div">
-                        <span id="application-msg"></span>
-                    </div>
-                    <!-- <div class="col-12">
-                      <div class="row">
-                        <div class="application-info info-text-two mb-3">Please enter your details to request your free trade account or call us on: <span class="text-underline">+44203 8722545</span>
-                        </div>
-                      </div>
-                    </div> -->
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="company_name">Store Name*</label>
-                                <input id='company-name' type="text" name='company' class="ele_width required-entry required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="store_address">Store Address*</label>
-                                <input id='store_address' type="text" name='' class="ele_width required-entry required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="">Address Line 2</label>
-                                <input id='' type="text" name='company' class="ele_width required-entry required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
-                                <label for="city_name">City*</label>
-                                <input id='city_name' type="text" name='city-name' class="ele_width required-entry"/>
-                            </div>
-                            <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
-                                <label class="trade-last-name-lable" for="state_name">State*</label>
-                                <input id='state_name' type="text" name='state-name' class="ele_width required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
-                                <label for="zip_code">Postal / Zip Code*</label>
-                                <input id='zip_code' type="number" name='zipcode' class="ele_width required-entry"/>
-                            </div>
-                            <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
-                                <label class="trade-last-name-lable" for="country_name">Country*</label>
-                                <select id='country_name' type="text" name='country-name' class="ele_width required-entry"/></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="bussiness-years">Years in Business*</label>
-                                <input id='bussiness-years' type="text" name='years' class="ele_width required-entry required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="row">
-                        <div class="application-info info-text-two mb-5">Please upload 3 images of your store. 1MB max file size per image
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 image-uploader-section">
-                      <div class="row">
-                      <div class="formElement_1 form-group fadeMe text clearfix col-sm-6 image" data-count="1" id="">
-                        <div class="row">
-    											<input type="file" name="Store image" id="imageupload_1" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
-    												<label for="imageupload_1" class="store-images-button">Store image</label>
-    											<span class="fileres"></span>
-                        </div>
-  										</div>
-                      <div class="formElement_2 form-group fadeMe text clearfix col-sm-6 image" data-count="2" id="">
-                        <div class="row">
-    											<input type="file" name="Store image 2" id="imageupload_2" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
-    												<label for="imageupload_2" class="store-images-button">Store image 2</label>
-    											<span class="fileres"></span>
-                        </div>
-  										</div>
-                      <div class="formElement_3 form-group fadeMe text clearfix col-sm-12 image" data-count="3" id="">
-                        <div class="row">
-    											<input type="file" name="Store image 3" id="imageupload_3" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
-    												<label for="imageupload_3" class="store-images-button">Store image 3</label>
-    											<span class="fileres"></span>
-                        </div>
-  										</div>
-                    </div>
-                  </div>
-
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="website_link">Link to your website*</label>
-                                <input id='website_link' type="text" name='website-link' class="ele_width required-entry required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="instagram_link">Link to your Instagram</label>
-                                <input id='instagram_link' type="text" name='instagram-link' class="ele_width required-entry required-entry"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="store_concept">In a few words, please explain the concept of your store*</label>
-                                <textarea class="w-100" id='store_concept' type="text" name='store-concept' class="ele_width"/></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="current_stock">List 3 designers/brands you currently stock that you feel align with Maria Tash Designs*</label>
-                                <textarea class="w-100" id='current_stock' type="text" name='current-stock' class="ele_width"/></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="stock_maria">Tell us why you would like to stock Maria Tash Designs</label>
-                                <textarea class="w-100" id='stock_maria' type="text" name='stock-maria' class="ele_width"/></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="application-name col-12">
-                        <div class="row">
-                          <div class="input-form">
-                                <label for="first_name">Contact name*</label>
-                                <input id='wholesale_firstname' type="text" name='firstname' class="ele_width required-entry"/>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="application-name col-12">
-                        <div class="row">
-                            <div class="input-form">
-                                <label for="email_name">Email*</label>
-                                <input id='wholesale_email' type="text" name='email' class="ele_width required-entry validate-email"/>
-                            </div>
-                        </div>
-                    </div>
-                <div class="pop-link col-12 p-0">
-                    <div class="pop-up-button-set row m-0">
-                        <div class="submit-login mb-5 col-12 p-0 mt-3">
-                            <button type="button" id="application-wholsale-btn" class="button dark-button pop-up-button"><?php echo $this->__("Submit")?></button>
-                        </div>
+ <div class="popupApplicationModal">
+        <div>
+            <form class="form-signup" action="<?= $this->getAction() ?>" method="post" id="popup-wholesale-application-form" enctype="multipart/form-data">
+                <div class="pop-title col-12">
+                    <div class="row">
+                        <h1 class="text-uppercase para-bold"><?php echo $this->__("Request a Trade Account")?></h1>
                     </div>
                 </div>
-        </form>
-    </div>
-</div>
-</div>
+                <div class="">
+                    <div class="input-set">
+                        <div id="application_msg_div">
+                            <span id="application-msg"></span>
+                        </div>
+                        <!-- <div class="col-12">
+                          <div class="row">
+                            <div class="application-info info-text-two mb-3">Please enter your details to request your free trade account or call us on: <span class="text-underline">+44203 8722545</span>
+                            </div>
+                          </div>
+                        </div> -->
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="company_name">Store Name*</label>
+                                    <input id='store_name' type="text" name='store_name' value="<?= $this->escapeHtml($this->application()->getStoreName()) ?>" class="ele_width required-entry required-entry"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="store_address">Store Address*</label>
+                                    <input id='store_address' type="text" name='store_address' value="<?= $this->escapeHtml($this->application()->getStoreAddress()); ?>" class="ele_width required-entry required-entry"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="">Address Line 2</label>
+                                    <input id='' type="text" name='address_line' value="<?= $this->escapeHtml($this->application()->getAddressLine()); ?>"class="ele_width"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
+                                    <label for="city_name">City*</label>
+                                    <input id='city_name' type="text" name='city_name' value="<?= $this->escapeHtml($this->application()->getCityName()); ?>" class="ele_width required-entry"/>
+                                </div>
+                                <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
+                                    <label class="trade-last-name-lable" for="state_name">State*</label>
+                                    <input id='state_name' type="text" name='state_name' value="<?= $this->escapeHtml($this->application()->getStateName()); ?>"class="ele_width required-entry"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form col-lg-6 col-md-6 col-12 pl-lg-0 pl-md-0">
+                                    <label for="zip_code">Postal / Zip Code*</label>
+                                    <input id='zip_code' type="number" name='zipcode' value="<?= $this->escapeHtml($this->application()->getZipcode()); ?>" class="ele_width required-entry"/>
+                                </div>
+                                <div class="input-form col-lg-6 col-md-6 col-12 pr-lg-0 pr-md-0">
+                                    <label class="trade-last-name-lable" for="country_name">Country*</label>
+                                    <select id='country_name' type="text" name='country' class="ele_width required-entry"/>
+                                    <?php
+                                    foreach ($this->getCountryList() as $country)
+                                    {
+                                        $selected="";
+
+                                        if($this->application()->getCountry() && $this->application()->getCountry()==$country['label'])
+                                            $selected="selected";
 
 
-<div id="applicationSuccess" class="popupSignUpConfirmationModel">
-    <div class="pop-up-cover">
-        <div class="pop-title">
-            <a  href="javascript:void(0);" title="Close" class="close towhishred exit-large">
-                <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
-            </a>
+                                        if(!$this->application()->getCountry() && "US"==$country['value'])
+                                            $selected="selected";
+
+                                        ?>
+                                        <option <?= $selected ?> value="<?= $country['label']?>"><?= $country['label']?></option>
+                                    <?php }
+                                    ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="business-years">Years in Business*</label>
+                                    <input id='business-years' type="text" name='business_years' value="<?= $this->escapeHtml($this->application()->getBusinessYears()); ?>" class="ele_width required-entry required-entry"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="application-info info-text-two mb-5">Please upload 3 images of your store. 1MB max file size per image.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 image-uploader-section">
+                            <div class="row">
+                                <div class="formElement_1 form-group fadeMe text clearfix col-sm-6 image" data-count="1" id="">
+                                    <div class="row">
+                                        <input type="file" name="store_image[]" id="imageupload_1" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
+                                        <label for="imageupload_1" class="store-images-button">Store image</label>
+                                        <span class="imageupload_1_selected p-1"></span>
+                                    </div>
+                                </div>
+                                <div class="formElement_2 form-group fadeMe text clearfix col-sm-6 image" data-count="2" id="">
+                                    <div class="row">
+                                        <input type="file" name="store_image[]" id="imageupload_2" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
+                                        <label for="imageupload_2" class="store-images-button">Store image 2</label>
+                                        <span class="imageupload_2_selected p-1"></span>
+                                    </div>
+                                </div>
+                                <div class="formElement_3 form-group fadeMe text clearfix col-sm-12 image" data-count="3" id="">
+                                    <div class="row">
+                                        <input type="file" name="store_image[]" id="imageupload_3" accept=".gif,.png,.jpg,.jpeg" class="inputfile  required" data-filetype="image" data-alloudupload="1" data-multiple="false" style="display: none;">
+                                        <label for="imageupload_3" class="store-images-button">Store image 3</label>
+                                        <span class="imageupload_3_selected p-1"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="website_link">Link to your website*</label>
+                                    <input id='website_link' type="url" name='website_link' value="<?= $this->escapeHtml($this->application()->getWebsiteLink());?>" class="ele_width required-entry required-entry"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="instagram_link">Link to your Instagram</label>
+                                    <input id='instagram_link' type="text" name='instagram_link' value="<?= $this->escapeHtml($this->application()->getInstagramLink());?>" class="ele_width"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="application-name col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="store_concept">In a few words, please explain the concept of your store*</label>
+                                    <textarea class="w-100 ele_width required-entry" id='store_concept' type="text" name='store_concept' /><?= $this->escapeHtml($this->application()->getStoreConcept());?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="application-name col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="current_stock">List 3 designers/brands you currently stock that you feel align with Maria Tash Designs*</label>
+                                    <textarea class="w-100 ele_width required-entry" id='current_stock' type="text" name='current_stock'/><?= $this->escapeHtml($this->application()->getCurrentStock());?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="application-name col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="stock_maria">Tell us why you would like to stock Maria Tash Designs*</label>
+                                    <textarea class="w-100 ele_width required-entry" id='stock_maria' type="text" name='stock_maria'  /><?= $this->escapeHtml($this->application()->getStockMaria());?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="application-name col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="first_name">Contact name*</label>
+                                    <input id='contact_name' type="text" name='contact_name' value="<?= $this->escapeHtml($this->application()->getContactName());?>" class="ele_width required-entry"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="application-name col-12">
+                            <div class="row">
+                                <div class="input-form">
+                                    <label for="email">Email*</label>
+                                    <input id='email' type="text" name='applicant_email' value="<?= $this->escapeHtml($this->application()->getApplicantEmail());?>"class="ele_width required-entry validate-email"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pop-link col-12 p-0">
+                            <div class="pop-up-button-set row m-0">
+                                <div class="submit-login mb-5 col-12 p-0 mt-3">
+                                    <button type="button" id="application-wholsale-btn" class="button dark-button pop-up-button"><?php echo $this->__("Submit")?></button>
+                                </div>
+                            </div>
+                        </div>
+            </form>
         </div>
-        <div class="body">
-            <p class="para-normal">Your request has been submitted!!</p>
-        </div>
     </div>
-</div>
-
-<script>
-
-    var formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-    var actionPath= '<?php echo Mage::getBaseUrl('web').'wholesale-customer/wholesale/applicationSave';?>';
+    </div>
 
 
 
-    jQuery("#application-wholsale-btn").on('click',function(){
-        var myForm = new VarienForm('popup-wholesale-application-form');
+    <script>
+        jQuery("#application-wholsale-btn").on('click',function(){
 
-        if(myForm.validator.validate()){
-            var firstname 		= jQuery('#wholesale_firstname').val();
-            var lastname 		= jQuery('#wholesale_lastname').val();
-            var email 			= jQuery('#wholesale_email').val();
-            var company_name 	= jQuery('#company-name').val();
-            var phone	        = jQuery('#phone-no').val();
-            var company_website	        = jQuery('#company-website').val();
-            var message	        = jQuery('#message').val();
-            var key				= formKey;
+            setLoader();
 
-            var requestData = {
-                "firstname":firstname,
-                "lastname":lastname,
-                "email":email,
-                "company_name":company_name,
-                "phone":phone,
-                "company_website":company_website,
-                "message":message,
-                "form_key":key
-            };
+            var myForm = new VarienForm('popup-wholesale-application-form');
 
-            jQuery.ajax({
-                url :actionPath ,
-                dataType : 'json',
-                type : 'POST',
-                data: requestData,
-                beforeSend: function() {setLoader();},
-                complete: function() {unsetLoader();},
-                success : function(data) {
-                    if (data.success) {
-                        jQuery("#applicationSuccess").css({"opacity":"1","pointer-events":"auto"});
-                    } else {
-                        jQuery('#application_msg_div').css('display','block');
-                        jQuery('#application-msg').html(data.msg);
-                    }
-                }
-            });
-        }
-    });
+            if(myForm.validator.validate()) {
 
-</script>
+                var errors=false;
+                jQuery(".inputfile").each(function() {
+                     if(!jQuery(this).attr("value"))
+                     {
+                         errors=true;
+                         var error_message='<p style="color:#830000" class="para-normal">Please Select Image To Upload</p>';
+                         jQuery("."+jQuery(this).attr("id")+"_selected").html(error_message);
+                     }
+                });
+
+                if(!errors)
+                jQuery('form#popup-wholesale-application-form').submit();
+                else
+                    unsetLoader();
+
+            }else
+            {
+                unsetLoader();
+s
+            }
+
+        });
+
+        jQuery('.inputfile').change(function(e) {
+
+            if(e.target.files[0].size > 1000000) {
+                jQuery("."+jQuery(this).attr("id")+"_selected").html('<p style="color:#830000" class="para-normal">Please upload Image less than 1MB.</p>');
+                jQuery(this).val('');
+            }
+            else {
+                var fileName = e.target.files[0].name;
+                jQuery("." + jQuery(this).attr("id") + "_selected").html("<p class='para-normal'>"+fileName+"</p>");
+            }
+        })
+
+
+    </script>
+
+<?php
+$this->clearSessionData();
+?>
