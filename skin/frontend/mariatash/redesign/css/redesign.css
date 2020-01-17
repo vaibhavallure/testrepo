@@ -5061,7 +5061,10 @@ a.product-video-link:hover div.product-video-play-icon {
 	font-size: 13px;
 }
 .wholesale-wholesale-application .messages li.success-msg{
-	color: #8BC34A!important;
+	color: #5c755c !important;
+}
+.wholesale-wholesale-application .messages li.success-msg span{
+	font-size: 20px;
 }
 .wholesaleLogin .eye-image{
 	right: 0;
