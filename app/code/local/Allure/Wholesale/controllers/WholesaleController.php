@@ -109,7 +109,7 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
 
     private function checkEmailIfAlreadyRegisteredAsWholesale()
     {
-        $email = $this->getRequest()->getPost("email");
+        $email = $this->getRequest()->getPost("applicant_email");
         $customer = Mage::getModel('customer/customer')
             ->getCollection()
             ->addAttributeToSelect('*')
