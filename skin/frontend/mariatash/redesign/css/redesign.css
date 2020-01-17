@@ -5054,6 +5054,15 @@ a.product-video-link:hover div.product-video-play-icon {
 
 
 /***************************Wholesale CSS**************************************/
+
+.wholesale-wholesale-application .messages li{
+	text-align: center;
+	padding-top: 10px;
+	font-size: 13px;
+}
+.wholesale-wholesale-application .messages li.success-msg{
+	color: #8BC34A!important;
+}
 .wholesaleLogin .eye-image{
 	right: 0;
 }
