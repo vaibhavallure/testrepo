@@ -2265,6 +2265,23 @@ tr.tr-piercing td {
 		overflow-y: scroll;
 		max-height: 500px;
 	}
+	/*Cartilage Moved for Desktop only*/
+	#cartilage-items-slider li img {
+		/*-webkit-filter: grayscale(100%); !* Safari 6.0 - 9.0*!
+         filter: grayscale(100%);*/
+		transition: transform .3s;
+	}
+	#cartilage-items-slider li img:hover {
+		-ms-transform: scale(1);
+		-webkit-transform: scale(1);
+		transform: scale(1.1);
+	}
+
+	#cartilage-items-slider li img:hover, #cartilage-items-slider li.current img {
+		-webkit-filter: grayscale(0%);
+		filter: grayscale(0%);
+	}
+
 }
 
 .mobile_menu_overlay {
