@@ -263,7 +263,9 @@ jQuery('.link-button').click(function(event) {
             jQuery(this).addClass('active_menu');
             jQuery('section.sub-menu').hide();
             setTimeout(function() {
-                jQuery(".menu_overlay").removeClass("d-none");
+                if(jQuery(window).width() > 1024) {
+                    jQuery(".menu_overlay").removeClass("d-none");
+                }
                 jQuery(section_id).slideDown("slow");
             unScrollBody();
             }, 300);
@@ -284,7 +286,9 @@ jQuery('.link-button').click(function(event) {
         jQuery('.noChild').mouseover(function () {
             jQuery(".main_menu").removeClass('active_menu');
             jQuery('section.sub-menu').slideUp();
-            jQuery(".menu_overlay").addClass("d-none");
+            if(jQuery(window).width() > 1024) {
+                jQuery(".menu_overlay").addClass("d-none");
+            }
             scrollBody();
         });
     }

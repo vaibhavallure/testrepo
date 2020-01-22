@@ -207,7 +207,7 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
             convert(jQuery(this),'lastname',evt);
         });
 
-        if(jQuery('body').hasClass('mobile-device') && jQuery('.top-nav-3').length == 0) {
+        if(jQuery('body').hasClass('mobile-device') || jQuery('.top-nav-3').length == 0) {
             let topNav = jQuery('.mobile-main_menu #top-nav').clone()
             jQuery(topNav).empty()
             jQuery(topNav).attr('id','top-nav-3')
