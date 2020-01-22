@@ -5035,3 +5035,6 @@ a.product-video-link:hover div.product-video-play-icon {
 .store-switcher { /*Dropdown of select store*/
   display: none;
 }
+.insta-loader{
+	 z-index: 1 !important;
+}
