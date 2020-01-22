@@ -2219,6 +2219,18 @@ tr.tr-piercing td {
 	.category-inspiration .celebPopup .product-info {
 		position: relative;
 	}
+	.cms-store-locations-html .fancybox-wrap{
+		position: fixed !important;
+		top: 60px !important;
+	}
+	.cms-store-locations-html a.fancybox-item.fancybox-close {
+		width: 20px;
+		height: 20px;
+	}
+	.cms-store-locations-html .fancybox-lock{
+		position: fixed;
+	}
+
 }
 .zoom-next,
 .zoom-prev{
