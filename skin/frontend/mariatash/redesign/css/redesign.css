@@ -2938,22 +2938,6 @@ ul.tabs li{
 }
 
 /*Cartilage CSS*/
-#cartilage-items-slider li img {
-	/*-webkit-filter: grayscale(100%); !* Safari 6.0 - 9.0*!
- 	filter: grayscale(100%);*/
-	transition: transform .3s;
-}
-#cartilage-items-slider li img:hover {
-	-ms-transform: scale(1);
-	-webkit-transform: scale(1);
-	transform: scale(1.1);
-}
-
-#cartilage-items-slider li img:hover, #cartilage-items-slider li.current img {
-	-webkit-filter: grayscale(0%);
-	filter: grayscale(0%);
-}
-
 #cartilage-items-slider {
 	border-bottom: 1px solid #d8d8d8;
 	padding-left: 0;
@@ -5034,4 +5018,7 @@ a.product-video-link:hover div.product-video-play-icon {
 }
 .store-switcher { /*Dropdown of select store*/
   display: none;
+}
+.insta-loader{
+	 z-index: 1 !important;
 }

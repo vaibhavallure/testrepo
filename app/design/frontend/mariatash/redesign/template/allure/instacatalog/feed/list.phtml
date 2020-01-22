@@ -236,7 +236,9 @@ foreach($collection as $date_to) {
                              style="cursor: pointer; background-image: url(<?php echo $_post->getStandardResolution()?>);">
                             <div class="fs-text-container">
                                 <div class="fs-service-icon">
-                                    <i media-id="<?php echo $mediaId?>" class="fs-icon fs-fa-instagram"></i>
+                                    <i media-id="<?php echo $mediaId?>" >
+                                        <img width="21px" src="<?=  $this->getSkinUrl('images/social/instagram_new.png')?>" >
+                                    </i>
                                 </div>
                                 <span id="shop-<?php echo $mediaId?>" class="instagram_shop_button <?php echo $class_css?>" target="_blank">
                  <span class="shop-it-button">SHOP IT</span>
