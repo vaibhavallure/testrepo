@@ -2892,9 +2892,9 @@ ul.tabs li{
     background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
   }
 }
-@media (min-width:1366px) and (max-width:1390px){
+@media (min-width:1359px) and (max-width:1390px){
   .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
-    max-width: 150px;
+    max-width: 130px;
   }
 }
 @media (min-width:768px) and (max-width:910px){
