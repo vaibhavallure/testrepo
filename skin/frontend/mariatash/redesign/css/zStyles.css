@@ -2281,7 +2281,6 @@ tr.tr-piercing td {
 		-webkit-filter: grayscale(0%);
 		filter: grayscale(0%);
 	}
-
 }
 
 .mobile_menu_overlay {
@@ -2385,4 +2384,9 @@ img.print-size-chart{
 .custom-options-univaersal dt{
 	font-weight: normal;
 	text-transform: capitalize;
+}
+
+/*TEMP Solution for MT-1309*/
+.catalog-category-view  .block.block-reorder {
+	display: none;
 }
