@@ -43,8 +43,8 @@ $baseUrl = Mage::getBaseUrl();
             <?php echo $_menu ?>
         </ul>
         <?php
-        if($isMobile):?>
-            <div class="top-nav-v2">
+        if($isMobile || true):?><!--True added for resize window and handled with css-->
+            <div class="top-nav-v2 d-none">
                 <ul>
                     <li class="currency-section-for-mobile">
                         <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
