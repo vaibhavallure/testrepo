@@ -96,6 +96,17 @@ alpha_bugfixes:
     - mage-deploy mariatash-bugfixes
     - echo 'Deployed on Bugfixes Staging'
 
+alpha_searchspring:
+  environment: searchspring
+  stage: staging
+  tags:
+    - alpha
+  only:
+    - searchSpring
+  script:
+    - mage-deploy mt-searchspring
+    - echo 'Deployed on mt srearch spring'
+
 beta:
   environment: beta
   stage: staging
