@@ -145,6 +145,11 @@
         foreach ($links as $link):
             if ($link->getStatus() == 1):
 
+                /*code added to skip wholesale link on wholesale store*/
+                if(strtolower($link->getTitle())=="wholesale" && Mage::helper("wholesale")->isWholesaleStore())
+                    continue;
+
+
                 $footer_title=$this->__($link->getTitle());
 
                 ?>
