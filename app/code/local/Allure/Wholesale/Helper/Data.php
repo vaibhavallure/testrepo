@@ -21,4 +21,14 @@ class Allure_Wholesale_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getStoreConfig(self::XML_PATH_RECEIVER);
     }
 
+    public function isWholesaleStore()
+    {
+        return $this->getCurrentStoreId()==$this->getStoreId();
+    }
+
+    public function getCurrentStoreId()
+    {
+        $store = Mage::app()->getStore();
+        return $store->getId();
+    }
 }
