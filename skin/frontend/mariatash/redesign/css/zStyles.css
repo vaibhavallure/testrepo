@@ -1883,6 +1883,12 @@ img.print-size-chart{
 		padding-left: 40px;
 	}
 }
+/*Greater than mobile devices*/
+@media(min-width: 768px){
+	.allure-instacatalog-feed-view .insta-details {
+		margin-top: 70px;
+	}
+}
 
 /*INDRAJIT : SEARCH CSS*/
 .catalogsearch-result-index li#total_item_counts_holder {
@@ -2199,6 +2205,10 @@ tr.tr-piercing td {
 		margin-bottom: 60px;
 		overflow-y: scroll;
 	}
+	.category-shop-our-instagram .fs-detail-outer-container .fs-post-info .wrap.text-right {
+		margin-right: 10px;
+	}
+
 }
 /*Mobile devices Landscape*/
 @media (max-width: 767px) and (orientation: landscape) {
@@ -2389,4 +2399,17 @@ img.print-size-chart{
 /*TEMP Solution for MT-1309*/
 .catalog-category-view  .block.block-reorder {
 	display: none;
+}
+/*MT-1274 Instagram*/
+.category-shop-our-instagram span.share_link_icon {
+	position: absolute;
+	margin-top:2px;
+}
+.category-shop-our-instagram div#instagram-view-container .fs-detail-date.para-normal {
+	margin-left: 20px;
+}
+
+
+.category-shop-our-instagram div#instagram-view-container .fs-post-info.para-normal {
+	margin-bottom: 20px;
 }
