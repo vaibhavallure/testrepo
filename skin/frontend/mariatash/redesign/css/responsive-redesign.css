@@ -706,7 +706,7 @@ ul.tabs li{
     padding-bottom: 10px;
     text-transform: uppercase;
   }
-  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
+  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account, #tooltip-id-wholesale{
     margin-top: 7px;
   }
   #tooltip-id-contact-us table td{
