@@ -110,7 +110,7 @@ class Allure_Wholesale_Model_Observer
 
     private function isWholeSaleLoginPage()
     {
-        $urls=array("/newsletter-form","/customers/account/ajaxLogin","/checkout/cart/update/","/wholesale-customer/wholesale/login","/magebird_popup/index/show");
+        $urls=array("/newsletter-form","/customers/account/ajaxLogin","/customers/account/forgotPasswordPost","/checkout/cart/update/","/wholesale-customer/wholesale/login","/magebird_popup/index/show");
 
         if(in_array(Mage::app()->getRequest()->getOriginalPathInfo(),$urls))
             return true;
