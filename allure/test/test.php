@@ -6,6 +6,23 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
+
+/*
+var_dump(json_decode(Mage::getStoreConfig("reclaim/allure/coupon_prefix")));
+
+
+die();*/
+
+
+$data[0]=array("qty"=>1,"length"=>12,"format"=>"alphanum");
+
+Mage::getModel('klaviyo_reclaim/api2_coupon_rest_admin_v1')->_multiCreate($data);
+
+
+
+
+die();
+
 $product = Mage::getModel('catalog/product')->loadByAttribute('sku','ZXMARK');
 var_dump($product->getId());
 die();
