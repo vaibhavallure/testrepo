@@ -22,6 +22,14 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
         $this->renderLayout();
     }
 
+    public function successAction()
+    {
+        $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('success'));
+        $this->renderLayout();
+    }
+
+
     public function applicationSaveAction()
     {
 
@@ -60,8 +68,10 @@ class Allure_Wholesale_WholesaleController extends Mage_Core_Controller_Front_Ac
             return;
         }
 
-        Mage::getSingleton("core/session")->addSuccess("Your Application Has Been Submitted Successfully.");
-        $this->_redirectReferer();
+        /*Mage::getSingleton("core/session")->addSuccess("Your Application Has Been Submitted Successfully.");
+        $this->_redirectReferer();*/
+
+        $this->_redirect('*/*/success');
 
     }
 

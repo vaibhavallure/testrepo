@@ -12,4 +12,10 @@
 			<block type="appointments/wholesale" name="wholesale_customer_application" as="wholesale_customer_application" template="allure/wholesale/application.phtml" />
 		</reference>
 	</wholesale_wholesale_application>
+	<wholesale_wholesale_success>
+		<update handle="default_wholesale"/>
+		<reference name="content">
+			<block type="appointments/wholesale" name="wholesale_customer_success" as="wholesale_customer_success" template="allure/wholesale/success.phtml" />
+		</reference>
+	</wholesale_wholesale_success>
 </layout>
