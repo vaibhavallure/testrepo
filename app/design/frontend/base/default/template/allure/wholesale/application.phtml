@@ -206,14 +206,14 @@
             if(myForm.validator.validate()) {
 
                 var errors=false;
-                jQuery(".inputfile").each(function() {
-                     if(!jQuery(this).attr("value"))
+//                jQuery(".inputfile").each(function() {
+                     if(!jQuery("#imageupload_1").attr("value"))
                      {
                          errors=true;
                          var error_message='<p style="color:#830000" class="para-normal">Please Select Image To Upload</p>';
-                         jQuery("."+jQuery(this).attr("id")+"_selected").html(error_message);
+                         jQuery("."+jQuery("#imageupload_1").attr("id")+"_selected").html(error_message);
                      }
-                });
+//                });
 
                 if(!errors)
                 jQuery('form#popup-wholesale-application-form').submit();
