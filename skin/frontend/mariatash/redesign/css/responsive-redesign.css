@@ -6,9 +6,9 @@
   .product-view .containerThumb .thumb a.product-video-link{
     margin-top: 0;
   }
-.menu_overlay {
-  z-index: 3;
-}
+  .menu_overlay {
+    z-index: 3;
+  }
 /*filter -------------------------------*/
 dt.filter-head:after {
   background: url(../images/redesign/plus.png) no-repeat;
@@ -101,9 +101,9 @@ dt.filter-head.showing:after {
   padding-top: 8px;
   background: white;
 }
-  .my-account .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    padding-top: 5px;
-  }
+.my-account .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+  padding-top: 5px;
+}
 .selected-filters{
   width: 100%;
   position: static;
@@ -417,11 +417,11 @@ ul.tabs li{
 }
 .login-dropdown {
   position: absolute;
-  width: 137px;
+  width: 140px;
   right: 10px;
   top: 22px;
   padding-top: 18px;
-  line-height: 25px;
+  line-height: 20px;
 }
 .checkoutPopupLoginModel .pop-up-cover{
   width: 520px;
@@ -472,6 +472,9 @@ ul.tabs li{
 }
 .mobile-device .navigation-parent{
   padding-bottom: 60px;
+}
+.maria-right-menus .icon-user {
+    height: 40px;
 }
 }
 
