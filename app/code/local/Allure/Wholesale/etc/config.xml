@@ -36,9 +36,9 @@
       </wholesale>
     </helpers>
     <blocks>
-      <appointments>
+      <wholesale>
         <class>Allure_Wholesale_Block</class>
-      </appointments>
+      </wholesale>
     </blocks>
     <events>
       <controller_action_predispatch>
