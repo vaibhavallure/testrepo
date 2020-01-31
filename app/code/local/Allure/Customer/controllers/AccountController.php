@@ -122,11 +122,11 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 
                       /*Allure new changes for wholesale portal*/
                         case Mage_Customer_Model_Customer::EXCEPTION_WHOLESALE_LOGIN_FOR_RETAIL:
-                            $message="Invalid User Account For Retail Site";
+                            $message=""; /*Invalid User Account For Retail Site*/
                             $result['error_code']=Mage_Customer_Model_Customer::EXCEPTION_WHOLESALE_LOGIN_FOR_RETAIL;
                             break;
                         case Mage_Customer_Model_Customer::EXCEPTION_RETAIL_LOGIN_FOR_WHOLESALE:
-                            $message="Invalid User Account For Wholesale Site";
+                            $message=""; /*Invalid User Account For Wholesale Site*/
                             $result['error_code']=Mage_Customer_Model_Customer::EXCEPTION_RETAIL_LOGIN_FOR_WHOLESALE;
                             break;
                         /*changes end*/

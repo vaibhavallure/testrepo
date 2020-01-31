@@ -3,6 +3,11 @@
         width: fit-content;
         padding: 5px;
     }
+    @media (max-width: 767px) and (orientation: portrait) {
+        .popupWholesaleAlert .pop-up-button,.popupRetailAlert .pop-up-button {
+            width: fit-content !important;
+        }
+    }
 </style>
 <div id="openModal" class="popupWholesaleAlert">
     <div class="pop-up-cover">
@@ -15,13 +20,13 @@
             </h1>
         </div>
         <div class="body modal-body">
-            <p class="text-center">Please click continue to login to your account.</p>
+            <p class="text-center">Please click to login to your account.</p>
         </div>
         <div class="pop-link modal-footer">
             <div class="pop-up-button-set row">
                 <div class="submit-login col">
 <!--                    <button type="button" id="reset_pass_btn" class="button button dark-button pop-up-button">--><?php //echo $this->__("Go to ".$this->get_domain($this->getWholesaleStoreUrl()))?><!--</button>-->
-                    <button type="button" onclick="window.location.href ='<?= $this->getWholesaleStoreUrl(); ?>'" id="reset_pass_btn" class="button button dark-button pop-up-button"><?php echo $this->__("Go to wholesale.mariatash.com")?></button>
+                    <button type="button" onclick="window.location.href ='<?= $this->getWholesaleStoreUrl(); ?>'"  class="button button dark-button pop-up-button"><?php echo $this->__("Go to wholesale.mariatash.com")?></button>
                 </div>
             </div>
         </div>
@@ -34,17 +39,17 @@
                 <img class="d-lg-block d-md-block d-none" src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="x">
                 <img class="d-block d-lg-none d-md-none" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-grey.png'); ?>" alt="x">
             </a>
-            <h1 class="text-center"><?php echo $this->__("Shopping with the Wholesale account? ")?>
+            <h1 class="text-center"><?php echo $this->__("Shopping with the Retail account? ")?>
             </h1>
         </div>
         <div class="body modal-body">
-            <p class="text-center">Please click continue to login to your account.</p>
+            <p class="text-center">Please click to login to your account.</p>
         </div>
         <div class="pop-link modal-footer">
             <div class="pop-up-button-set row">
                 <div class="submit-login col">
                     <!--                    <button type="button" id="reset_pass_btn" class="button button dark-button pop-up-button">--><?php //echo $this->__("Go to ".$this->get_domain($this->getWholesaleStoreUrl()))?><!--</button>-->
-                    <button type="button" onclick="window.location.href ='<?= $this->getRetailStoreUrl(); ?>'" id="reset_pass_btn" class="button button dark-button pop-up-button"><?php echo $this->__("Go to mariatash.com")?></button>
+                    <button type="button" onclick="window.location.href ='<?= $this->getRetailStoreUrl(); ?>'"  class="button button dark-button pop-up-button"><?php echo $this->__("Go to mariatash.com")?></button>
                 </div>
             </div>
         </div>
@@ -53,9 +58,9 @@
 
 <script>
     jQuery(".popupWholesaleAlert .close").on("click",function () {
-            jQuery(".popupWholesaleAlert").css({"opacity":"0","pointer-events":"auto"});
+            jQuery(".popupWholesaleAlert").css({"opacity":"0","pointer-events":"none"});
     });
     jQuery(".popupRetailAlert .close").on("click",function () {
-        jQuery(".popupRetailAlert").css({"opacity":"0","pointer-events":"auto"});
+        jQuery(".popupRetailAlert").css({"opacity":"0","pointer-events":"none"});
     });
 </script>
