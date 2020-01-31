@@ -53,6 +53,9 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
+    /**
+     *
+     */
     public function ajaxLoginAction()
     {
         $result = [
@@ -111,10 +114,23 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
                     }
 
                 } catch (Mage_Core_Exception $e) {
+
                     switch ($e->getCode()) {
                         case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
                             $message = Mage::helper('core')->__('Email is not confirmed. <a href="%s">Resend confirmation email.</a>', Mage::helper('customer')->getEmailConfirmationUrl($username));
                             break;
+
+                      /*Allure new changes for wholesale portal*/
+                        case Mage_Customer_Model_Customer::EXCEPTION_WHOLESALE_LOGIN_FOR_RETAIL:
+                            $message="Invalid User Account For Retail Site";
+                            $result['error_code']=Mage_Customer_Model_Customer::EXCEPTION_WHOLESALE_LOGIN_FOR_RETAIL;
+                            break;
+                        case Mage_Customer_Model_Customer::EXCEPTION_RETAIL_LOGIN_FOR_WHOLESALE:
+                            $message="Invalid User Account For Wholesale Site";
+                            $result['error_code']=Mage_Customer_Model_Customer::EXCEPTION_RETAIL_LOGIN_FOR_WHOLESALE;
+                            break;
+                        /*changes end*/
+
                         default:
                             $message = $e->getMessage();
                     }

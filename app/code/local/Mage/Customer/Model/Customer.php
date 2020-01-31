@@ -61,6 +61,11 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
     const EXCEPTION_EMAIL_EXISTS              = 3;
     const EXCEPTION_INVALID_RESET_PASSWORD_LINK_TOKEN = 4;
     const EXCEPTION_INVALID_RESET_PASSWORD_LINK_CUSTOMER_ID = 5;
+
+    /*ALLURE Changes Made For WHOESALE PORTAL*/
+    const EXCEPTION_WHOLESALE_LOGIN_FOR_RETAIL = 35;
+    const EXCEPTION_RETAIL_LOGIN_FOR_WHOLESALE = 36;
+
     /**#@-*/
 
     /**#@+
