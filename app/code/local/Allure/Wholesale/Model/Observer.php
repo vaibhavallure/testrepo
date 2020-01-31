@@ -64,7 +64,7 @@ class Allure_Wholesale_Model_Observer
             $message='Please login to the <a href="'.$this->getStoreUrl($this->helper()->getStoreId()).'"><u>Wholesale Site</u></a> to continue.';
 
             throw Mage::exception('Mage_Core', Mage::helper('customer')->__($message),
-                Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD
+                Mage_Customer_Model_Customer::EXCEPTION_WHOLESALE_LOGIN_FOR_RETAIL
             );
         }
         /*
@@ -75,7 +75,7 @@ class Allure_Wholesale_Model_Observer
             $message='Please login to the <a href="'.$this->getStoreUrl(self::RETAIL_STORE_ID).'"><u>Retail Site</u></a> to continue.';
 
             throw Mage::exception('Mage_Core', Mage::helper('customer')->__($message),
-                Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD
+                Mage_Customer_Model_Customer::EXCEPTION_RETAIL_LOGIN_FOR_WHOLESALE
             );
         }
     }

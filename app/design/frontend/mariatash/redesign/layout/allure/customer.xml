@@ -75,6 +75,8 @@ Default layout, loads most of the pages
                 <block type="customer/form_login" name="account.popup.login" as="account_popup_login" template="customer/account/popup/login.phtml"/>
                 <block type="core/template" name="account.popup.register" as="account_popup_register" template="customer/account/popup/register.phtml"/>
                 <block type="core/template" name="account.popup.resetpassword" as="account_popup_resetpassword" template="customer/account/popup/reset_password.phtml"/>
+                <!--new pop up added for wholesale-->
+                <block type="wholesale/wholesale" name="wholesale.msg.box" as="wholesale_message_box" template="allure/wholesale/popup.phtml"/>
             </block>
         </reference>
 
