@@ -78,7 +78,7 @@ jQuery(document).ready(function(){
 						/*new changes for wholesale portal*/
 						if(data.error_code==35)
                             jQuery(".popupWholesaleAlert").css({"opacity":"1","pointer-events":"auto"});
-						else if(data.error_code=36)
+						else if(data.error_code==36)
                             jQuery(".popupRetailAlert").css({"opacity":"1","pointer-events":"auto"});
 					}
 				}
