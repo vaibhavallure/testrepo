@@ -154,7 +154,7 @@ class AW_Autorelated_Adminhtml_ProductblockController extends AW_Autorelated_Adm
         $this->_redirect('admin_awautorelated/adminhtml_blocksgrid/list');
     }
 
-    protected function _isAllowed()
+    public function _isAllowed()
     {
         $helper = Mage::helper('awautorelated');
         switch ($this->getRequest()->getActionName()) {
