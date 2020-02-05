@@ -473,6 +473,10 @@ ul.tabs li{
 .mobile-device .navigation-parent{
   padding-bottom: 60px;
 }
+
+.popupApplicationModal .pop-up-cover{
+    width: 100%;
+}
 .maria-right-menus .icon-user {
     height: 40px;
 }
@@ -706,7 +710,7 @@ ul.tabs li{
     padding-bottom: 10px;
     text-transform: uppercase;
   }
-  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account{
+  #tooltip-id-contact-us, #tooltip-id-customer-care, #tooltip-id-my-account, #tooltip-id-wholesale{
     margin-top: 7px;
   }
   #tooltip-id-contact-us table td{
@@ -842,6 +846,8 @@ ul.tabs li{
   #newsletter-form-menu .validation-advice{
     position: relative;
     top:0;
+    left: 0;
+    text-transform: initial;
   }
   .form-subscribe-mt .input-box,
   .form-subscribe-mt-menu .input-box{
@@ -1612,7 +1618,7 @@ ul.tabs li{
   #slidecaption{
     display: none;
   }
-.category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
+  .category-press h1, .simple-page-title h1, .order-success-title, .higher-h1{
     font-size: 19px;
   }
   .cart-collaterals.fix-section{
@@ -1744,6 +1750,19 @@ ul.tabs li{
   }
   .amazon-payments-customer-verify .col-main{
     padding: 10px;
+  }
+  .popupApplicationModal .input-form{
+    padding: 0;
+  }
+  #popup-wholesale-application-form .pop-up-button-set {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  #popup-wholesale-application-form .pop-up-button-set .submit-login{
+    width: 100%;
+  }
+  input#wholesale_lastname {
+    margin-top: 10px;
   }
 }
 
@@ -2036,7 +2055,7 @@ ul.tabs li{
   }
   .containerThumb {
     /* width: 340px; */
-     overflow-y: scroll;
+    overflow-y: scroll;
     padding-left: 65px;
     padding-right: 52px;
   }
@@ -2224,6 +2243,12 @@ ul.tabs li{
   }
   .dashboard .flex-row .flex-item .text-wrap{
     top:363px;
+  }
+  .giftcards .div_selector_day{
+    width: 20%;
+  }
+  .giftcards .div_selector_year{
+    width: 30%;
   }
 }
 

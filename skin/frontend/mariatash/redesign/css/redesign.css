@@ -2295,7 +2295,7 @@ span#popup_loader_register {
 
 
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup, .popupWholesaleAlert, .popupRetailAlert {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -4874,7 +4874,7 @@ address{
 }
 .page-print .buttons-set {
 	float: right;
-	margin: 20px 0;
+	margin: 20px 9% 40px 0;
 }
 .page-print .buttons-set button{
 	height: 42px;
@@ -4886,6 +4886,9 @@ address{
 }
 .print-padding-left.info-text-two {
   margin: 20px 0;
+}
+.page-print.sales-order-print dt {
+	font-weight: normal;
 }
 
 .continue-shopping-button{
@@ -5018,6 +5021,94 @@ a.product-video-link:hover div.product-video-play-icon {
 }
 .store-switcher { /*Dropdown of select store*/
   display: none;
+}
+
+.mt-myaccount-new.sales-order-view .page-title {
+  margin-top: 40px;
+}
+.mt-myaccount-new.sales-order-view .mt-header-sku, .mt-myaccount-new.sales-order-view td.nobr-sku {
+  text-align: center !important;
+}
+.apple-pay-button-with-text.apple-pay-button-black-with-text > .logo{
+	background-color: transparent !important;
+}
+.other-product-quantity{
+	margin-top: 26px;
+  display: inline-block;
+}
+
+
+/***************************Wholesale CSS**************************************/
+
+.wholesale-wholesale-application .messages li{
+	text-align: center;
+	padding-top: 10px;
+	font-size: 13px;
+}
+.wholesale-wholesale-application .messages li.success-msg{
+	color: #5c755c !important;
+}
+.wholesale-wholesale-application .messages li.success-msg span{
+	font-size: 20px;
+}
+.wholesaleLogin .eye-image{
+	right: 0;
+}
+.popupApplicationModal{
+		max-width: 1230px;
+		margin: auto;
+		padding: 20px
+}
+#popup-wholesale-application-form label{
+		width: 100%;
+		font-size:12px;
+		font-family: urw-din-light;
+		text-align: left;
+		text-transform: uppercase;
+}
+#popup-wholesale-application-form .pop-up-button{
+		width: 100%;
+		padding: 0 20px;
+}
+.popupApplicationModal .pop-up-cover{
+		width: 1000px;
+}
+.popupApplicationModal .input-form input, .popupApplicationModal .input-form select{
+		width: 100%;
+		/* height: 30px !important; */
+}
+.popupApplicationModal .input-form textarea{
+		min-height: 70px;
+}
+.popupApplicationModal .input-form{
+		width: 100%;
+		/* margin-bottom: 13px; */
+}
+.popupApplicationModal .modal-footer{
+		justify-content: start;
+}
+.popupApplicationModal .input-set {
+		margin-bottom: 0;
+}
+#applicationSuccess .modal-header {
+    padding: 3rem 1rem;
+    border: 0;
+}
+#applicationSuccess .modal-body{
+		margin-bottom: 77px;
+}
+.store-images-button{
+	border: 1px solid #D8D8D8;
+	text-align: center !important;
+	width: 100px !important;
+	padding: 5px;
+}
+.image-uploader-section .form-group{
+	margin-bottom: 25px;
+}
+#popup-wholesale-application-form h1{
+	font-size: 22px !important;
+	margin-top: 30px;
 }
 .insta-loader{
 	 z-index: 1 !important;
