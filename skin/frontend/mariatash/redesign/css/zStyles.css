@@ -853,8 +853,6 @@
 #open-order-info .order-details .item-options dd{
 	margin-bottom: 0;
 }
-#open-order-info .order-details th,
-#open-order-info .order-details td,
 #complete-order-info .order-details th,
 #complete-order-info .order-details td{
 	width: auto!important;
@@ -1407,7 +1405,7 @@ img.print-size-chart{
 .acc-products-wrapper #new-mt-myproduct-openorders table td .nobr{
 	width: 100%;
 	display: block;
-	text-align: right;
+	/* text-align: right; */
 }
 .acc-products-wrapper #new-mt-myproduct-openorders table .a-center span,
 .acc-products-wrapper #new-mt-myproduct-openorders table td,
@@ -2303,13 +2301,13 @@ tr.tr-piercing td {
 }
 
 /*Email : Lowercase*/
-input[name=email],
+/* input[name=email],
 input[name="login[username]"],
 input[name="mail_to_email"],
 input[name="mail_from_email"],
 .email{
 	text-transform: lowercase;
-}
+} */
 
 input[name=email]::-webkit-input-placeholder,
 input[name="login[username]"]::-webkit-input-placeholder,
