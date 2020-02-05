@@ -274,9 +274,12 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
                 {
                     if ($store->getId() == $this->_order->getStoreId())
                     {
+                        /*allure code change for wholesale store orders*/
+                        $store_code="default";//$store->getCode();
+
                         $select = $this->_db->select()
                             ->from(array(Mage::getSingleton('core/resource')->getTableName('service_channel')), array('channel_id'))
-                        ->where('channel_name = ?', $store->getCode());
+                        ->where('channel_name = ?', $store_code);
 
                         $channel_id = $this->_db->fetchOne($select);
                         if( !empty($channel_id) )
