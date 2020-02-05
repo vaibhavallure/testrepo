@@ -60,14 +60,14 @@
 				<model>allure_customer/observer::setcustomerStatusActive</model>
 			</run>
 		</allure_customer_schedule> -->
-		<allure_wholesale_schedule>
+		<!--<allure_wholesale_schedule>
 			<schedule>
 				<cron_expr>*/30 * * * *</cron_expr>
 			</schedule>
 			<run>
 				<model>allure_customer/observer::setcustomerGroup</model>
 			</run>
-		</allure_wholesale_schedule>
+		</allure_wholesale_schedule>-->
 	</jobs>
 	</crontab>
 </config>
