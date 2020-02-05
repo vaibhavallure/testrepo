@@ -553,7 +553,9 @@ switch ($country) {
 		
 		$revendeurs="DIESE ANGEBOT IST AUSSCHLIESSLICH AN ENDVERBRAUCHER GERICHTET.";
 
+		$ht="";
 		$ttc=" inkl.MwSt.";
+		$fnpx1btlleht="&nbsp;HT/Flasche";
 		$fnpx1btllettc="/Flasche";
 		$fnpxcaissettc="/Kiste";
 		$legendepxind="";
@@ -657,9 +659,11 @@ switch ($country) {
 		$validitestock="Offre valable dans la limite des stocks disponibles.";
 		
 		$revendeurs="Réservé &agrave; une clientèle particulière, et en aucun cas aux revendeurs professionnels.";
-		
+
+		$ht="";
 		$ttc=" TVAC";
 		$fnpx1btllettc="&nbsp;la bouteille";
+		$fnpx1btlleht="&nbsp;HT/blle";
 		$fnpxcaissettc="&nbsp;la caisse";
 		$legendepxind="";
 		
