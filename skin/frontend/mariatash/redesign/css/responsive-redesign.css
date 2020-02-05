@@ -6,9 +6,9 @@
   .product-view .containerThumb .thumb a.product-video-link{
     margin-top: 0;
   }
-.menu_overlay {
-  z-index: 3;
-}
+  .menu_overlay {
+    z-index: 3;
+  }
 /*filter -------------------------------*/
 dt.filter-head:after {
   background: url(../images/redesign/plus.png) no-repeat;
@@ -101,9 +101,9 @@ dt.filter-head.showing:after {
   padding-top: 8px;
   background: white;
 }
-  .my-account .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
-    padding-top: 5px;
-  }
+.my-account .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+  padding-top: 5px;
+}
 .selected-filters{
   width: 100%;
   position: static;
@@ -417,11 +417,11 @@ ul.tabs li{
 }
 .login-dropdown {
   position: absolute;
-  width: 137px;
+  width: 140px;
   right: 10px;
   top: 22px;
   padding-top: 18px;
-  line-height: 25px;
+  line-height: 20px;
 }
 .checkoutPopupLoginModel .pop-up-cover{
   width: 520px;
@@ -473,8 +473,12 @@ ul.tabs li{
 .mobile-device .navigation-parent{
   padding-bottom: 60px;
 }
+
 .popupApplicationModal .pop-up-cover{
     width: 100%;
+}
+.maria-right-menus .icon-user {
+    height: 40px;
 }
 }
 
@@ -2916,9 +2920,9 @@ ul.tabs li{
     background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%) !important;
   }
 }
-@media (min-width:1366px) and (max-width:1390px){
+@media (min-width:1359px) and (max-width:1390px){
   .catalog-category-view .product-name, .catalogsearch-result-index .product-name{
-    max-width: 150px;
+    max-width: 130px;
   }
 }
 @media (min-width:768px) and (max-width:910px){

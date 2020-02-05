@@ -2217,6 +2217,18 @@ tr.tr-piercing td {
 	.category-inspiration .celebPopup .product-info {
 		position: relative;
 	}
+	.cms-store-locations-html .fancybox-wrap{
+		position: fixed !important;
+		top: 60px !important;
+	}
+	.cms-store-locations-html a.fancybox-item.fancybox-close {
+		width: 20px;
+		height: 20px;
+	}
+	.cms-store-locations-html .fancybox-lock{
+		position: fixed;
+	}
+
 }
 .zoom-next,
 .zoom-prev{
@@ -2250,6 +2262,22 @@ tr.tr-piercing td {
 	.celebPopup .product-info {
 		overflow-y: scroll;
 		max-height: 500px;
+	}
+	/*Cartilage Moved for Desktop only*/
+	#cartilage-items-slider li img {
+		/*-webkit-filter: grayscale(100%); !* Safari 6.0 - 9.0*!
+         filter: grayscale(100%);*/
+		transition: transform .3s;
+	}
+	#cartilage-items-slider li img:hover {
+		-ms-transform: scale(1);
+		-webkit-transform: scale(1);
+		transform: scale(1.1);
+	}
+
+	#cartilage-items-slider li img:hover, #cartilage-items-slider li.current img {
+		-webkit-filter: grayscale(0%);
+		filter: grayscale(0%);
 	}
 }
 
@@ -2354,4 +2382,11 @@ img.print-size-chart{
 .custom-options-univaersal dt{
 	font-weight: normal;
 	text-transform: capitalize;
+}
+.login-dropdown{
+	min-height: 184px;
+}
+/*TEMP Solution for MT-1309*/
+.catalog-category-view  .block.block-reorder {
+	display: none;
 }

@@ -85,15 +85,15 @@ alpha_parispopup:
     - mage-deploy mt-popup
     - echo 'Deployed on Nascense Staging'
 
-alpha_bugfixes:
-  environment: bugfixes
+alpha_staging:
+  environment: staging
   stage: staging
   tags:
     - alpha
   only:
-    - bugfixes
+    - staging
   script:
-    - mage-deploy mariatash-bugfixes
+    - mage-deploy mt-staging
     - echo 'Deployed on Bugfixes Staging'
 
 beta:

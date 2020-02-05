@@ -43,8 +43,8 @@ $baseUrl = Mage::getBaseUrl();
             <?php echo $_menu ?>
         </ul>
         <?php
-        if($isMobile):?>
-            <div class="top-nav-v2">
+        if($isMobile || true):?><!--True added for resize window and handled with css-->
+            <div class="top-nav-v2 d-none">
                 <ul>
                     <li class="currency-section-for-mobile">
                         <?= $this->getChildHtml('store_currency_selector_mobile'); ?>
@@ -85,7 +85,7 @@ $baseUrl = Mage::getBaseUrl();
                                 <dd><a href="<?= $baseUrl;?>myaccount/#purchase"><?= $this->__('My Products')?></a></dd>
                                 <dd><a href="<?= $baseUrl;?>customer/account/edit"><?= $this->__('Login & Security') ?></a></dd>
                                 <dd class="user-address"><a href="<?= $baseUrl;?>customer/address"><?= $this->__('Addresses')?></a></dd>
-                                <dd><a href="<?= $baseUrl;?>customer/paymentinfo"><?= $this->__('Payment Option')?></a></dd>
+                                <dd><a href="<?= $baseUrl;?>customer/paymentinfo"><?= $this->__('Payment Options')?></a></dd>
                                 <dd class="user-sign-out"><a href="<?= $baseUrl;?>customer/account/logout"><?= $this->__('Sign Out')?></a></dd>
                             </div>
                         </dl>
