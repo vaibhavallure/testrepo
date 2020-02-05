@@ -5067,8 +5067,11 @@ a.product-video-link:hover div.product-video-play-icon {
 		text-transform: uppercase;
 }
 #popup-wholesale-application-form .pop-up-button{
-		width: 100%;
+		width: 30%;
 		padding: 0 20px;
+}
+#popup-wholesale-application-form .submit-login {
+    text-align: center;
 }
 .popupApplicationModal .pop-up-cover{
 		width: 1000px;
