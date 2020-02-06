@@ -352,14 +352,14 @@ jQuery('.link-button').click(function(event) {
         // jQuery("body").prepend(overlay);
 
     });
-    // jQuery('.mobile-main_menu .main_menu').click(function () {
-    //     var section_id = '.' + jQuery(this).attr('data-id');
-    //     jQuery('section.sub-menu').hide();
-    //     jQuery(section_id).show();
-    // });
-    // jQuery('.close-section').click(function () {
-    //     jQuery('section.sub-menu').hide();
-    // });
+    jQuery('.mobile-main_menu .main_menu').click(function () {
+        var section_id = '.' + jQuery(this).attr('data-id');
+        jQuery('section.sub-menu').hide();
+        jQuery(section_id).show();
+    });
+    jQuery('.close-section').click(function () {
+        jQuery('section.sub-menu').hide();
+    });
 
     jQuery(".mobile-sub_menu  #jewelry .menu-head.jwl-head span a").attr("href", "#");
 
