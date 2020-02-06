@@ -476,3 +476,213 @@ var unsetLoader= function(){
     jQuery.fancybox.hideLoading();
     jQuery('.fancybox-overlay.fancybox-overlay-fixed, .fancybox-overlay').hide();
 }
+
+
+
+
+jQuery( document ).ready(function() {
+
+    /*CONVERT FIRSTNAME AND LASTNAME IN CAPITAL LETTERS*/
+    jQuery('#first_name').keyup(function (evt) {
+        convert(jQuery(this),'firstname',evt);
+    });
+    jQuery('#last_name').keyup(function (evt) {
+        convert(jQuery(this),'lastname',evt);
+    });
+
+    if(jQuery('body').hasClass('mobile-device') || jQuery('.top-nav-3').length == 0) {
+        let topNav = jQuery('.mobile-main_menu #top-nav').clone()
+        jQuery(topNav).empty()
+        jQuery(topNav).attr('id','top-nav-3')
+        let footlinks = jQuery('#footer8 .footlinks')
+        let footlinkLis = jQuery(footlinks).children().clone()
+        let topNavLiLength = topNav.children().length
+
+        jQuery(footlinkLis).each((i) => {
+            let currentLi = footlinkLis[i]
+            let firstElem = jQuery(currentLi).children().first()
+            let dataId = jQuery(firstElem).attr('id')
+            jQuery(currentLi).attr('data-id',`${dataId}-nav`)
+            if(jQuery(currentLi).hasClass('data-block')) {
+                jQuery(currentLi).removeAttr('class');
+                jQuery(currentLi).addClass(`level0 nav-${i+(topNavLiLength+1)} level-top parent nav-item main_menu`);
+                let liName = jQuery(currentLi).find('.w-100 span')
+                let liContentMain = jQuery(currentLi).children().children().eq(1)
+                let liContent = jQuery(liContentMain).clone()
+                if(jQuery(currentLi).find('#newsletter-form').length) {
+                    let inputBoxes = liContent.find('.input-box')
+                    jQuery(liContent).css('margin-left','50px')
+                    jQuery(inputBoxes).each((_i)=> {
+                        let cInputBox = inputBoxes[_i]
+                        jQuery(cInputBox).removeClass('col-6')
+                        jQuery(cInputBox).removeClass('col-12')
+                        jQuery(cInputBox).addClass('col-10')
+                    })
+                    jQuery(liContent).find('.mt-terms-condtions-policy').removeClass('col-12')
+                    jQuery(liContent).find('.mt-terms-condtions-policy').addClass('col-10')
+
+                }else if(jQuery(currentLi).find('.customer-care-list').length) {
+                    let listLis = jQuery(currentLi).find('.customer-care-list').children();
+                    let html = ""
+                    jQuery(listLis).each((_i) => {
+                        let cLi = listLis[_i]
+                        let span = jQuery(cLi).find('span').eq(1).html()
+                        if(span === undefined) {
+                            span = jQuery(cLi).find('span').eq(0).html()
+                        }
+                        let anchor = jQuery(cLi).find('a').attr('href')
+                        html  += `<div class="col-lg col-12 piercing_options">
+                                            <a href="${anchor}">
+                                                <div class="image-text text-center">
+                                                    <h6 class="text-uppercase text-white">${span}</h6>
+                                                 </div>
+                                            </a>
+                                        </div>`;
+                    })
+                    liContent = html
+                }
+                jQuery(currentLi).find('.w-100').remove();
+                jQuery(currentLi).append(`<a href="#" class="level-top"><span>${jQuery(liName[0]).html()}</span></a>`)
+                let lastSectionElement = jQuery('.mobile-sub_menu').children().last().clone();
+                jQuery(lastSectionElement).attr('id',`${dataId}-nav`)
+                jQuery(lastSectionElement).find('span').first().text(jQuery(liName[0]).html())
+                jQuery(lastSectionElement).find('.row.div-row').empty();
+                jQuery(liContent).show()
+                jQuery(liContent).attr('id','')
+                jQuery(lastSectionElement).find('.row.div-row').append(liContent)
+                //jQuery('#popup_ajax_contain').append(liContentMain)
+                jQuery('.mobile-sub_menu').append(lastSectionElement)
+            }else {
+                jQuery(currentLi).removeAttr('class');
+                jQuery(currentLi).addClass(`level0 nav-${i+(topNavLiLength+1)} level-top noChild`);
+                let link = jQuery(currentLi).find('a')
+                jQuery(currentLi).append(link[0])
+                jQuery(currentLi).find('.w-100').remove();
+            }
+        })
+
+
+        jQuery(topNav).append(footlinkLis)
+        let socialIcons = jQuery('.social-media').clone();
+        jQuery(topNav).append(socialIcons);
+        jQuery('.mobile-main_menu').children().append(topNav)
+
+        /*UPPEND FOOTER MENU*/
+        jQuery('.mobile-main_menu .main_menu').click(function () {
+            var section_id = jQuery(this).attr('data-id');
+            console.log(section_id)
+            jQuery('section.sub-menu').hide();
+            jQuery('.mobile-sub_menu').find(`#${section_id}`).show();
+        });
+
+        jQuery('.close-section').click(function () {
+            jQuery('section.sub-menu').hide();
+        });
+    }
+
+    /*For mobile Menu only*/
+    let form = jQuery('.menu-inner').find('#newsletter-validate-detail');
+    if(form.length > 0) {
+        form.attr('id', 'newsletter_validate_detail_menu');
+        let inputElement = jQuery('.mt-terms-condtions-policy.col-10');
+        let checkBox = inputElement.find('#mt-newsl-terms');
+        let checkLabel = inputElement.find('.custom-checkbox');
+        if (checkBox.length > 0) {
+            checkBox.attr('id', 'mt_newsl_terms_menu')
+            checkBox.attr('name', 'mt_newsl_terms_menu')
+        }
+        if (checkLabel.length) {
+            checkLabel.attr('for', 'mt_newsl_terms_menu')
+        }
+        let $ = jQuery;
+        $('#newsletter_validate_detail_menu').parent().attr('id','newsletter-form-menu')
+        $('#newsletter-form-menu').find('.form-subscribe-mt').removeClass('form-subscribe-mt').addClass('form-subscribe-mt-menu');
+        $('#newsletter-form-menu').find('#errors').attr('id','errors-menu');
+        $('.menu-inner #success').attr('id','success-menu');
+        $('.menu-inner #msg-country').attr('id','msg-country-menu');
+        $('.menu-inner #msg-email').attr('id','msg-email-menu');
+        $('.menu-inner #msg-name').attr('id','msg-name-menu');
+        $('.menu-inner #msg-lastname').attr('id','msg-lastname-menu');
+        $('.menu-inner #first_name').attr('id','first_name_menu');
+        $('.menu-inner #last_name').attr('id','last_name_menu');
+        $('.menu-inner #email').attr('id','email_menu');
+        $('#newsletter_validate_detail_menu').find('.dark-button').addClass('subscribe-menu')
+        $('.subscribe-menu').removeAttr('onclick');
+        $('.subscribe-menu').unbind('click');
+        $('.subscribe-menu').on('click',function () {
+            sendNewsletterSubscriptionMenu(document.getElementById('newsletter_validate_detail_menu'))
+        });
+    }
+    /*For Mobile menu Subscribe form*/
+    function sendNewsletterSubscriptionMenu(form){
+
+        jQuery('#msg-country-menu').text('');
+        jQuery('#msg-email-menu').text('');
+        jQuery('#msg-name-menu').text('');
+        jQuery('#msg-lastname-menu').text('');
+
+        var newsletterPrivacySelector = jQuery("#mt_newsl_terms_menu");
+        var ischeck = newsletterPrivacySelector.prop('checked');
+        if(ischeck == false){
+            newsletterPrivacySelector.addClass("checkbox-error-validate");
+            newsletterPrivacySelector.parent().addClass("label-error-validate");
+            return;
+        }else{
+            newsletterPrivacySelector.removeClass("checkbox-error-validate");
+            newsletterPrivacySelector.parent().removeClass("label-error-validate");
+        }
+
+        var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail-menu');
+        jQuery('.loader').css({display:'inline-block'});
+        jQuery('.form-subscribe-mt .button').hide();
+        jQuery('#success-menu').hide();
+        jQuery('#errors-menu').hide();
+
+        jQuery('#first_name_menu').val(jQuery.trim(jQuery('#first_name_menu').val()));
+        jQuery('#last_name_menu').val(jQuery.trim(jQuery('#last_name_menu').val()));
+        jQuery('#email_menu').val(jQuery.trim(jQuery('#email_menu').val()));
+        var stringJSON='{"email":"'+jQuery('#email_menu').val()+'","first_name":"'+jQuery('#first_name_menu').val()+'","last_name":"'+jQuery('#last_name_menu').val()+'","country":"Canada"}';
+        var dataSend = JSON.parse(stringJSON);
+
+        jQuery.getJSON(form.action,dataSend,function(data){
+            jQuery('.loader').hide();
+            jQuery('.form-subscribe-mt-menu .button').show();
+            if(data.success){
+                jQuery('#newsletter-form-menu').hide();
+                jQuery('#success-menu').show();
+                jQuery('#success-menu').html(data.thankyou);
+                jQuery('.t_Tooltip.t_Tooltip_dark').css('height' , '120px');
+                jQuery('.t_Shadow').css('height' , '120px');
+                jQuery('.t_Skin').css('height' , '115px');
+                jQuery('.t_Bubble').css('height' , '115px');
+                jQuery('.t_ShadowBubble').css('height' , '115px');
+                jQuery('.t_ShadowBubble canvas').css('height' , '120px');
+                jQuery('.t_Tooltip.t_Tooltip_dark').css('bottom' , '30px');
+                jQuery('.t_Tooltip.t_Tooltip_dark').css('background' , '#000');
+                jQuery('.t_Tooltip.t_Tooltip_dark').css('top' , '');
+                jQuery(window).resize(function() {
+                    jQuery('.t_Tooltip.t_visible').css('top' , '');
+                });
+            }else{
+                if(data.message.country){
+                    jQuery('#msg-country-menu').text(data.message.country);
+                }
+                if(data.message.email){
+                    jQuery('#msg-email-menu').text(data.message.email);
+                }
+                if(data.message.first){
+                    jQuery('#msg-name-menu').text(data.message.first);
+                }
+                if(data.message.last){
+                    jQuery('#msg-lastname-menu').text(data.message.last);
+                }
+
+                //jQuery('#errors').show();
+                //jQuery('#errors').html(data.message);
+            }
+        });
+
+    }
+
+
+});
