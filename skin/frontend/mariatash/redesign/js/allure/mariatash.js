@@ -254,7 +254,7 @@ jQuery('.link-button').click(function(event) {
 
     /*-----------------------------new js code-----------------------------*/
 
-    jQuery('.main_menu').mouseover(function () {
+    jQuery('.main_menu').on("click mouseover",function () {
 
         var section_id = '#' + jQuery(this).attr('data-id');
 
