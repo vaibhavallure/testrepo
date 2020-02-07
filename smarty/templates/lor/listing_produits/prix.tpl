@@ -1,5 +1,5 @@
 {* ------ PRIX PROMO LIVRABLES ------ *}
-{if isset($promo) and $promo != '' and $promo != '1165' and $promo != '1234' and $promo != '125'  }
+{if isset($promo) and $promo != '' and $promo != '1165' and $promo != '1234' and $promo != '125' and $promo != '5' }
 <tr><td style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:16px;vertical-align:middle;margin-top: 10px;">
 {if $produit->pays == 'U'}
 {* ---------------------------- 
