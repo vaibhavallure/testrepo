@@ -140,6 +140,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $data=array();
                 if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                     $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
+                    $data['order_qty'] = $collection->getFirstItem()->getTotalQtyOrdered();
                     $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
                     $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
                     $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
@@ -149,6 +150,7 @@ class Ecp_ReportToEmail_Model_Observer
                     $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
                 }else {
                     $data['orders_count'] = 0;
+                    $data['order_qty'] = 0;
                     $data['total_income_amount'] = 0;
                     $data['total_invoiced_amount'] = 0;
                     $data['total_canceled_amount'] = 0;
@@ -162,21 +164,64 @@ class Ecp_ReportToEmail_Model_Observer
                 $getdata=$collection->getFirstItem()->getTotalProfitAmount();
                 $storeObj = Mage::getSingleton("allure_virtualstore/store")->load($storesId);
 
+                $storeName = $storeObj->getName();
+                $wholesaleId = Mage::helper("wholesale")->getStoreId();
+                $reportNameStore = array(
+                    1 => "Maria Tash - Retail",
+                    $wholesaleId => "Maria Tash - Wholesale"
+                );
+                if(isset($reportNameStore[$storeId])){
+                    $storeName = $reportNameStore[$storeId];
+                }
+
                 $mailbody="";
 
                 $mailbody .= '<div   style="border-top: 3px solid white; text-align: center;float:left;background-color:#374254;margin-right: 50px">';
                 $mailbody .= '<table width="300"  cellpadding="7" >';
                 $mailbody .= '<tbody>';
-                $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeObj->getName().'</strong></u></span></span></td></tr>';
+                $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeName.'</strong></u></span></span></td></tr>';
+
                 $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Orders</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . '</span></span></td>';
                 $mailbody .= '</tr>';
+
                 $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Income Amount</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Units</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['order_qty'] . '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Refunded</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Discounts</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Shipping</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Tax</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revenue</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.$data['total_income_amount'] . '</span></span></td>';
                 $mailbody .= '</tr>';
+
                 $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
+                $mailbody .= '</tr>';
+
+                /*$mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Invoiced Amount</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_invoiced_amount']. '</span></span></td>';
                 $mailbody .= '</tr>';
@@ -184,27 +229,9 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Canceled Amount</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_canceled_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Tax Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Refunded Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Shipping Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Discount Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
-                $mailbody .= '</tr>';
+                $mailbody .= '</tr>';*/
+
+
                 $mailbody .= '</tbody>';
                 $mailbody .= '</table>';
                 $mailbody .= '</div>';
@@ -333,6 +360,7 @@ class Ecp_ReportToEmail_Model_Observer
         $data=array();
         if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
             $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
+            $data['order_qty'] = $collection->getFirstItem()->getTotalQtyOrdered();
             $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
             $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
             $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
@@ -342,6 +370,7 @@ class Ecp_ReportToEmail_Model_Observer
             $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
         }else {
             $data['orders_count'] = 0;
+            $data['order_qty'] =0;
             $data['total_income_amount'] = 0;
             $data['total_invoiced_amount'] = 0;
             $data['total_canceled_amount'] = 0;
@@ -360,15 +389,48 @@ class Ecp_ReportToEmail_Model_Observer
         $mailbody .= '<table width="300"  cellpadding="7" >';
         $mailbody .= '<tbody>';
         $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>Maria Tash - Total Ecommerce</strong></u></span></span></td></tr>';
+
         $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Orders</strong></span></span></span></td>';
         $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . '</span></span></td>';
         $mailbody .= '</tr>';
+
         $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Income Amount</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Units</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['order_qty'] . '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Refunded</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Discounts</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Shipping</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Tax</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revenue</strong></span></span></span></td>';
         $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.$data['total_income_amount'] . '</span></span></td>';
         $mailbody .= '</tr>';
+
         $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
+        $mailbody .= '</tr>';
+
+        /*$mailbody .= '<tr>';
         $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Invoiced Amount</strong></span></span></span></td>';
         $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_invoiced_amount']. '</span></span></td>';
         $mailbody .= '</tr>';
@@ -376,27 +438,8 @@ class Ecp_ReportToEmail_Model_Observer
         $mailbody .= '<tr>';
         $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Canceled Amount</strong></span></span></span></td>';
         $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_canceled_amount']. '</span></span></td>';
-        $mailbody .= '</tr>';
-        $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Tax Amount</strong></span></span></span></td>';
-        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
-        $mailbody .= '</tr>';
-        $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Refunded Amount</strong></span></span></span></td>';
-        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
-        $mailbody .= '</tr>';
-        $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Shipping Amount</strong></span></span></span></td>';
-        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
-        $mailbody .= '</tr>';
-        $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Discount Amount</strong></span></span></span></td>';
-        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
-        $mailbody .= '</tr>';
-        $mailbody .= '<tr>';
-        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
-        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
-        $mailbody .= '</tr>';
+        $mailbody .= '</tr>';*/
+
         $mailbody .= '</tbody>';
         $mailbody .= '</table>';
         $mailbody .= '</div>';
