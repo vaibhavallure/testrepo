@@ -193,7 +193,9 @@ INLINECSS;
             return false;
         }
         $storeId = Mage::app()->getStore()->getStoreId();
-        $stockId = $storeId;
+
+        /*changed By aws14 to resolve issue wrong stock status display on  wholesale store*/
+        $stockId = Mage::app()->getStore()->getWebsiteId();//$storeId;
         $product = Mage::getModel('catalog/product')
             ->setStoreId($storeId)
             ->load($product->getId());
@@ -237,7 +239,9 @@ INLINECSS;
             return false;
 
         $storeId = Mage::app()->getStore()->getStoreId();
-        $stockId = $storeId;
+
+        /*changed By aws14 to resolve issue wrong stock status display on  wholesale store*/
+        $stockId = Mage::app()->getStore()->getWebsiteId();//$storeId;
 
         $product = Mage::getModel('catalog/product')
             ->setStoreId($storeId)
