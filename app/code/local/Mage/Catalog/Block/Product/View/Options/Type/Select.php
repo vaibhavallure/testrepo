@@ -179,8 +179,8 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                         'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
                     ), false);
                     $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                        'price' => $this->helper('core')
-                            ->currencyByStore($_value->getPrice(true), $store, false)
+                        'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
+                        'selected' => (trim($defaultTitleTxt) == trim($_value->getTitle()) ? 'selected' : NULL)
                     ));
                 }
             }
