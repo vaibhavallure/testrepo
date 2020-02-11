@@ -335,7 +335,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $this->removeStockZero($parentProductId);
                 }
 
-                $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
+                $data['GTIN_number'] = $this->charEncode($_product->getBarcode());
                 $data['harrods_inventory'] = $_product->getHarrodsInventory();
                 $data['site_listings'] = $this->charEncode('D369');
 
@@ -416,7 +416,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data = array();
 
 
-                $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
+                $data['GTIN_number'] = $this->charEncode($_product->getBarcode());
                 $data['harrods_price'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
                 $data['Active Date'] = $this->charEncode($activeDate);
                 $data['End Date'] = $this->charEncode("99991231");
