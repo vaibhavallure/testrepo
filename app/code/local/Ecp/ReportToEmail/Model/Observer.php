@@ -140,6 +140,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $data=array();
                 if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                     $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
+                    $data['order_qty'] = $collection->getFirstItem()->getTotalQtyOrdered();
                     $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
                     $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
                     $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
@@ -149,6 +150,7 @@ class Ecp_ReportToEmail_Model_Observer
                     $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
                 }else {
                     $data['orders_count'] = 0;
+                    $data['order_qty'] = 0;
                     $data['total_income_amount'] = 0;
                     $data['total_invoiced_amount'] = 0;
                     $data['total_canceled_amount'] = 0;
@@ -162,21 +164,64 @@ class Ecp_ReportToEmail_Model_Observer
                 $getdata=$collection->getFirstItem()->getTotalProfitAmount();
                 $storeObj = Mage::getSingleton("allure_virtualstore/store")->load($storesId);
 
+                $storeName = $storeObj->getName();
+                $wholesaleId = Mage::helper("wholesale")->getStoreId();
+                $reportNameStore = array(
+                    1 => "Maria Tash - Retail",
+                    $wholesaleId => "Maria Tash - Wholesale"
+                );
+                if(isset($reportNameStore[$storeId])){
+                    $storeName = $reportNameStore[$storeId];
+                }
+
                 $mailbody="";
 
                 $mailbody .= '<div   style="border-top: 3px solid white; text-align: center;float:left;background-color:#374254;margin-right: 50px">';
                 $mailbody .= '<table width="300"  cellpadding="7" >';
                 $mailbody .= '<tbody>';
-                $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeObj->getName().'</strong></u></span></span></td></tr>';
+                $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeName.'</strong></u></span></span></td></tr>';
+
                 $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Orders</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . '</span></span></td>';
                 $mailbody .= '</tr>';
+
                 $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Income Amount</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Units</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['order_qty'] . '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Refunded</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Discounts</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Shipping</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Tax</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revenue</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.$data['total_income_amount'] . '</span></span></td>';
                 $mailbody .= '</tr>';
+
                 $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
+                $mailbody .= '</tr>';
+
+                /*$mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Invoiced Amount</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_invoiced_amount']. '</span></span></td>';
                 $mailbody .= '</tr>';
@@ -184,27 +229,9 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Canceled Amount</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_canceled_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Tax Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Refunded Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Shipping Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Discount Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
-                $mailbody .= '</tr>';
-                $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
-                $mailbody .= '</tr>';
+                $mailbody .= '</tr>';*/
+
+
                 $mailbody .= '</tbody>';
                 $mailbody .= '</table>';
                 $mailbody .= '</div>';
@@ -217,6 +244,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $allMailbody.=$mailbody;
 
             }
+            $allMailbody.= $this->getTotalEcomReport($getdate);
         }
 
 
@@ -231,6 +259,7 @@ class Ecp_ReportToEmail_Model_Observer
             $storeDate = date('Y-m-d');
             $yesterday = date("m/d/Y", strtotime("-1 day", strtotime($storeDate)));
         }
+
 
         $mail->setBodyHtml($allMailbody)
             ->setSubject(' Daily Ecommerce Sales Report - ' . $yesterday)
@@ -251,7 +280,176 @@ class Ecp_ReportToEmail_Model_Observer
     }
 
 
+    /*MT-1356 : Maria Tash - Total Ecommerce (Magento)*/
+    /**
+     * @param $getedate
+     * @return string|void
+     * @throws Mage_Core_Model_Store_Exception
+     */
+    public function getTotalEcomReport($getdate){
+        /*Default Sore set to 1*/
+        $storeId = 1;
+        if($getdate!=null)
+            $yesterday=$getdate;
+        else
+            $yesterday=date('Y-m-d');
 
+
+        $from = $yesterday."00:00:00";
+        $to = $yesterday."23:59:59";
+
+
+        $local_tz = new DateTimeZone('UTC');
+        $local = new DateTime('now', $local_tz);
+
+        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$storeId));
+        $user = new DateTime('now', $user_tz);
+
+        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+        $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
+
+        $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
+
+        $interval = $usersTime->diff($localsTime);
+        if ($offset > 0)
+            $diffZone = $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
+        else
+            $diffZone = '-' . $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
+
+        $from = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($from)));
+        $to = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($to)));
+
+        $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
+
+        $curTime = new DateTime();
+
+        $collection = Mage::getModel('sales/order')->getCollection();
+        $collection->getSelect()
+            ->reset(Zend_Db_Select::COLUMNS);
+        $collection->getSelect()
+            ->columns('count(entity_id) orders_count')
+            ->columns('sum(IFNULL(total_qty_ordered,0)) total_qty_ordered')
+            ->columns('sum(IFNULL(base_grand_total,0)-IFNULL(base_total_canceled,0)) total_income_amount')
+            ->columns('sum(
+                   (IFNULL(base_total_invoiced,0)-IFNULL(base_tax_invoiced,0)-IFNULL(base_shipping_invoiced,0)
+                  -(IFNULL(base_total_refunded,0)-IFNULL(base_tax_refunded,0)-IFNULL(base_shipping_refunded,0))
+                  )) total_revenue_amount')
+
+            ->columns('sum(
+                     (IFNULL(base_subtotal,0)-IFNULL(base_subtotal_canceled,0)-IFNULL(base_subtotal_refunded,0))+
+                     (IFNULL(base_discount_amount,0)+IFNULL(base_discount_canceled,0)-IFNULL(base_discount_refunded,0)) ) 
+                     total_profit_amount
+                 ')
+            ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
+            ->columns('sum(IFNULL(base_total_canceled,0)) total_canceled_amount')
+            ->columns('sum(IFNULL(base_total_paid,0)) total_paid_amount')
+            ->columns('sum(IFNULL(base_total_refunded,0)) total_refunded_amount')
+            ->columns('sum(IFNULL(base_tax_amount,0)-IFNULL(base_tax_canceled,0)) total_tax_amount')
+            ->columns('sum(IFNULL(base_tax_invoiced,0)-IFNULL(base_tax_refunded,0)) total_tax_amount_actual')
+            ->columns('sum(IFNULL(base_shipping_amount,0)-IFNULL(base_shipping_canceled,0)) total_shipping_amount')
+            ->columns('sum(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0)) total_shipping_amount_actual')
+            ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
+            ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
+            ->where("create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')");
+
+
+        $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
+        $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
+        Mage::app()->getStore()->setId($storeId);
+        //die($symbol);
+        $data=array();
+        if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
+            $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
+            $data['order_qty'] = $collection->getFirstItem()->getTotalQtyOrdered();
+            $data['total_income_amount'] = $collection->getFirstItem()->getTotalIncomeAmount();
+            $data['total_invoiced_amount'] = $collection->getFirstItem()->getTotalInvoicedAmount();
+            $data['total_canceled_amount'] = $collection->getFirstItem()->getTotalCanceledAmount();
+            $data['total_refunded_amount'] = $collection->getFirstItem()->getTotalRefundedAmount();
+            $data['total_tax_amount'] = $collection->getFirstItem()->getTotalTaxAmount();
+            $data['total_shipping_amount'] = $collection->getFirstItem()->getTotalShippingAmount();
+            $data['total_discount_amount'] = $collection->getFirstItem()->getTotalDiscountAmount();
+        }else {
+            $data['orders_count'] = 0;
+            $data['order_qty'] =0;
+            $data['total_income_amount'] = 0;
+            $data['total_invoiced_amount'] = 0;
+            $data['total_canceled_amount'] = 0;
+            $data['total_refunded_amount'] = 0;
+            $data['total_tax_amount'] = 0;
+            $data['total_shipping_amount'] = 0;
+            $data['total_discount_amount'] = 0;
+        }
+        $mail = new Zend_Mail();
+
+        $getdata=$collection->getFirstItem()->getTotalProfitAmount();
+
+        $mailbody="";
+
+        $mailbody .= '<div   style="border-top: 3px solid white; text-align: center;float:left;background-color:#374254;margin-right: 50px">';
+        $mailbody .= '<table width="300"  cellpadding="7" >';
+        $mailbody .= '<tbody>';
+        $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>Maria Tash - Total Ecommerce</strong></u></span></span></td></tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Orders</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Units</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['order_qty'] . '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Refunded</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Discounts</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Shipping</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Tax</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revenue</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.$data['total_income_amount'] . '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
+        $mailbody .= '</tr>';
+
+        /*$mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Invoiced Amount</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_invoiced_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';
+
+        $mailbody .= '<tr>';
+        $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Canceled Amount</strong></span></span></span></td>';
+        $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_canceled_amount']. '</span></span></td>';
+        $mailbody .= '</tr>';*/
+
+        $mailbody .= '</tbody>';
+        $mailbody .= '</table>';
+        $mailbody .= '</div>';
+        $mailbody .= '</tbody>';
+        $mailbody .= '</table>';
+        $mailbody .= '</div>';
+        $mailbody .= '</div>';
+
+        return $mailbody;
+    }
     /*--------------------------------------------------------------------------------------*/
 
 
