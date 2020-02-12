@@ -178,7 +178,16 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data['airports_retail'] = '';
                 $data['wholes_selling'] = '';
                 $data['ctry_of_origi'] = 'US';
-                $data['import_code'] = '';
+                /*New hs-code on N'th Position*/
+                $hs_code = '';
+                if(!empty($_product->getHsCode())){
+                    $hs_code = $_product->getHsCode();
+                    $hs_code = str_replace('.','',$hs_code); /*Remove all the dots . from hs code*/
+                    if(strlen($hs_code) > 6) {
+                        $hs_code = substr($hs_code, 0, 6); /*Take only first 6 digits of hs code*/
+                    }
+                }
+                $data['hs_code'] = $this->charEncode($hs_code);
                 $data['tax_cls'] = $this->charEncode($_product->getTaxClassId() ? 1 : 0);
                 $data['seas_code'] = $this->charEncode('0000');
                 $data['seas_year'] = $this->charEncode('2018');
@@ -225,10 +234,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 //                    $data['string_for_generic_lines'] = '';
 
                 if($splitsku['p_size'])
-                    $data['gtin'] = $this->charEncode("(".$splitsku['p_size'].";".$_product->getGtinNumber().";;;;)");
+                    $data['gtin'] = $this->charEncode("(".$splitsku['p_size'].";".$_product->getBarcode().";;;;)");
                 else
-
-                    $data['gtin'] = $this->charEncode("(O/S;".$_product->getGtinNumber().";;;;)");
+                    $data['gtin'] = $this->charEncode("(O/S;".$_product->getBarcode().";;;;)");
 
 
                 $data['sizeDelimited'] = $this->charEncode('SizeDelim');
@@ -327,7 +335,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $this->removeStockZero($parentProductId);
                 }
 
-                $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
+                $data['GTIN_number'] = $this->charEncode($_product->getBarcode());
                 $data['harrods_inventory'] = $_product->getHarrodsInventory();
                 $data['site_listings'] = $this->charEncode('D369');
 
@@ -408,7 +416,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data = array();
 
 
-                $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
+                $data['GTIN_number'] = $this->charEncode($_product->getBarcode());
                 $data['harrods_price'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
                 $data['Active Date'] = $this->charEncode($activeDate);
                 $data['End Date'] = $this->charEncode("99991231");

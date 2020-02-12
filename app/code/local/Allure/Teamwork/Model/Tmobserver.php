@@ -479,6 +479,15 @@ class Allure_Teamwork_Model_Tmobserver{
                     ->loadByEmail($email);
 
                 if($customer->getId()){
+
+                    /*save customer again to update password into svs*/
+                    $customer->setPassword($password)
+                        ->setPasswordConfirmation($password)
+                        ->setPasswordCreatedAt(time());
+                    $customer->save();
+
+
+
                     //$billingAddress = $customer->getDefaultBillingAddress();
 
                     $billingAddress = Mage::getModel('sales/quote_address')

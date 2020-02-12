@@ -1714,6 +1714,10 @@ class Webgility_Ecc_Model_Desktop
         }if($storeid == '2020' || $storeid == '2021' || $storeid == '2022'){
         $all= true;
     }
+        $temp_allure_filter = "";
+        if($storeid == '2023'){
+                $temp_allure_filter = 'us_tw';
+        }
 
         /***************/
         Mage::log('In Get Order 1',Zend_Log::DEBUG,'webgility.log',true);
@@ -2335,6 +2339,7 @@ class Webgility_Ecc_Model_Desktop
                         $iInfo["price"] = $iInfo["price"]/$iInfo["qty_ordered"];
                         $iInfo["weight"] = $iInfo["weight"]/$iInfo["qty_ordered"];
                     }
+
                     $Item->setItemID($iInfo['item_id']);
                     $Item->setQuantity($iInfo["qty_ordered"]);
                     $Item->setShippedQuantity($iInfo["qty_shipped"]);
@@ -2342,6 +2347,19 @@ class Webgility_Ecc_Model_Desktop
                     if($all){
                         $iInfo["price"] = $iInfo['base_price'];
                     }
+                    /*if($temp_allure_filter == "us_tw"){*/
+                        if(isset($iInfo['qty_refunded'])){
+                            if($iInfo['qty_refunded'] > 0) {
+                                $result = $iInfo["qty_ordered"] - $iInfo['qty_refunded'];
+                                if ($result == 0) {
+                                    if ($iInfo["price"] > 0) {
+                                        $iInfo["price"] = (-1) * $iInfo["price"];
+                                    }
+                                }
+                            }
+
+                        }
+                    /*}*/
                     $Item->setUnitPrice($iInfo["price"]);
                     $Item->setCostPrice($onlineInfo["cost"]);
                     $Item->setWeight($iInfo["weight"]);
