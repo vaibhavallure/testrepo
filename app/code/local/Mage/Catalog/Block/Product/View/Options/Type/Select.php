@@ -110,24 +110,17 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     
                     if(trim($defaultTitleTxt) == trim($_value->getTitle()) && $isShownPostLength){
                         $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                            'price' => $this->helper('core')
-                            ->currencyByStore($_value->getPrice(true), $store, false),
+                            'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
                             "selected" => "selected"
                         ));
                     }else{
                         $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                            'price' => $this->helper('core')
-                            ->currencyByStore($_value->getPrice(true), $store, false)
+                            'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
+                            'selected' => (trim($defaultTitleTxt) == trim($_value->getTitle()) ? 'selected' : NULL)
                         ));
                     }
-                    
                 }
             } else {
-
-
-
-
-
 
                 /*code to set default post length--------------------------*/
 
@@ -156,7 +149,6 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     $defaultLengthFlag=true;
                 }
 
-
                 if($defaultLengthFlag) {
                     $count = 2;
 
@@ -174,15 +166,6 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                 }
                 /*-------------------------------------------------------*/
 
-
-
-
-
-
-
-
-
-
                 if (! empty($temparray) && $defaultLengthFlag) {
                     $postLengthValues = $temparray;
                 }
@@ -196,8 +179,8 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                         'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
                     ), false);
                     $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                        'price' => $this->helper('core')
-                            ->currencyByStore($_value->getPrice(true), $store, false)
+                        'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
+                        'selected' => (trim($defaultTitleTxt) == trim($_value->getTitle()) ? 'selected' : NULL)
                     ));
                 }
             }
@@ -283,7 +266,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
         $cat = Mage::getStoreConfig("allure/options/category_to_compare_with");
         $_compare_cat = array();
         array_push($_compare_cat,$cat);
-//        if($_category->getId() != $cat):
+        //if($_category->getId() != $cat):
         $productCategories = $this->getProduct()->getCategoryIds();
 
         $categories = Mage::getModel('catalog/category')
@@ -296,7 +279,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             ->load()
             ->toArray();
 
-// Arrange categories in required array
+        // Arrange categories in required array
 
         $categoryList = array();
         foreach ($categories as $catId => $category) {
