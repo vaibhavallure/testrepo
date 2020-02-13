@@ -41,6 +41,9 @@ class Allure_BackorderRecord_Helper_Config extends Mage_Core_Helper_Abstract
     	return Mage::getStoreConfig(self::XML_PATH_EMAIL_TEMPLATE);
     }
 
+    public function getDays(){
+        return Mage::getStoreConfig(self::XML_PATH_NUMBER_DAYS);
+    }
 
     public function getStores(){
         return Mage::getStoreConfig(self::XML_PATH_STORES);
