@@ -6,14 +6,16 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::helper("backorderrecord/config");
     }
 
-    public function sample()
+    public function sendBackOrderReport()
     {
-        echo  $this->config()->getSenderEmail();
+        $stores=explode(",",$this->config()->getStores());
+        foreach ($stores as $store)
+        {
+            $this->sendEmail($store);
+        }
     }
 
-
-
-    public function getReportXls($dates=array())
+    public function getReportXls($dates=array(),$store=1)
     {
 
         $folderPath   = Mage::getBaseDir('var') . DS . 'export';
@@ -41,7 +43,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         try{
 
-            $csv->saveData($filepath,$this->getTableData($dates));
+            $csv->saveData($filepath,$this->getTableData($dates,$store));
 
             $flag = 1;
 
@@ -74,7 +76,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-    public function sendEmail()
+    public function sendEmail($store=1)
     {
 
         if($this->config()->getEmailStatus()):
@@ -96,13 +98,14 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             $recipientNames = explode(',',$recieverNames);
 
             //$emailTemplateVariables['collection'] = $collection;
-            $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
+            $store = Mage::getModel('core/store')->load($store);
+            $emailTemplateVariables['store_name'] = $store->getName();
             $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 
 
 
 
-            $inventory_xls=$this->getReportXls();
+            $inventory_xls=$this->getReportXls(array(),$store);
 
 
             if($inventory_xls['is_create']){
@@ -190,9 +193,9 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 
-    public function getTableData($dates=array())
+    public function getTableData($dates=array(),$store=1)
     {
-        $backorderCollection=Mage::getModel('backorderrecord/cron')->getBackorederCollection($dates);
+        $backorderCollection=Mage::getModel('backorderrecord/cron')->getBackorederCollection($dates,$store);
 
         $rowData = array();
         $rowData[] = $this->getTableHeaders();

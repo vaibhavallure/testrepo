@@ -3023,7 +3023,7 @@ class Webgility_Ecc_Model_Desktop
                     }
                 }
                 if ($allure_filter == 'us_tw') {
-                    $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '2'));
+                    $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 2"));
                     /*Removed Wholesale Customer filter for teamwork only teamwork order will go to Webgility*/
                     /*if (isset($groups[0]['customer_group_id'])) {
                         $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
@@ -3065,41 +3065,46 @@ class Webgility_Ecc_Model_Desktop
                 ->addFieldToFilter('old_store_id', array('in'=>$storeIds))
                 ->addAttributeToFilter('entity_id', array('gt' => $start_order_no))
                 ->addAttributeToFilter('status', array('in' => $order_status));
-            if ($allure_filter == 'us') {
-                $this->_orders->join('order_address',
-                    'main_table.entity_id=order_address.parent_id',
-                    ['address_type', 'country_id']);
-                $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 0 AND (order_address.address_type = 'shipping' AND order_address.country_id = 'US')"));
-                if (isset($groups[0]['customer_group_id'])) {
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
-                }
-            } elseif ($allure_filter == 'non_us') {
-                $this->_orders->join('order_address',
-                    'main_table.entity_id=order_address.parent_id',
-                    ['address_type', 'country_id']);
-                $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
-                $this->_orders->addAttributeToFilter('order_address.country_id', array('neq' => 'US'));
-                $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '0'));
-                if (isset($groups[0]['customer_group_id'])) {
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
-                }
-            } elseif ($allure_filter == 'wholesale') {
-                if (isset($groups[0]['customer_group_id'])) {
-                    /*Only websites wholesale order will go to webgility*/
+            try {
+                if ($allure_filter == 'us') {
+                    $this->_orders->join('order_address',
+                        'main_table.entity_id=order_address.parent_id',
+                        ['address_type', 'country_id']);
+                    $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 0 AND (order_address.address_type = 'shipping' AND order_address.country_id = 'US')"));
+                    if (isset($groups[0]['customer_group_id'])) {
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                    }
+                } elseif ($allure_filter == 'non_us') {
+                    $this->_orders->join('order_address',
+                        'main_table.entity_id=order_address.parent_id',
+                        ['address_type', 'country_id']);
+                    $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
+                    $this->_orders->addAttributeToFilter('order_address.country_id', array('neq' => 'US'));
                     $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '0'));
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                    if (isset($groups[0]['customer_group_id'])) {
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                    }
+                } elseif ($allure_filter == 'wholesale') {
+                    if (isset($groups[0]['customer_group_id'])) {
+                        /*Only websites wholesale order will go to webgility*/
+                        $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '0'));
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                    }
                 }
+                if ($allure_filter == 'us_tw') {
+                    $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 2"));
+                    /*Removed Wholesale Customer filter for teamwork only teamwork order will go to Webgility*/
+                    /*if (isset($groups[0]['customer_group_id'])) {
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                    }*/
+                }
+                $this->_orders->addAttributeToSort('entity_id', 'asc')
+                    ->setPageSize($no_of_orders)
+                    ->load();
             }
-            if ($allure_filter == 'us_tw') {
-                $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '2'));
-                /*Removed Wholesale Customer filter for teamwork only teamwork order will go to Webgility*/
-                /*if (isset($groups[0]['customer_group_id'])) {
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
-                }*/
+            catch (Exception $ex){
+                Mage::log($ex->getMessage(),Zend_Log::DEBUG,'webgility.log',true);
             }
-            $this->_orders->addAttributeToSort('entity_id', 'asc')
-                ->setPageSize($no_of_orders)
-                ->load();
             Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'webgility.log',true);
 
         }else
@@ -3130,41 +3135,47 @@ class Webgility_Ecc_Model_Desktop
                 ->joinAttribute('shipping_fax', 'order_address/fax', 'shipping_address_id', null, 'left')
                 ->addFieldToFilter('old_store_id', array('in'=>$storeIds))
                 ->addAttributeToFilter('increment_id', array('in' => $orderlist));
-            if ($allure_filter == 'us') {
-                $this->_orders->join('order_address',
-                    'main_table.entity_id=order_address.parent_id',
-                    ['address_type', 'country_id']);
-                $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 0 AND (order_address.address_type = 'shipping' AND order_address.country_id = 'US')"));
-                if (isset($groups[0]['customer_group_id'])) {
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
-                }
-            } elseif ($allure_filter == 'non_us') {
-                $this->_orders->join('order_address',
-                    'main_table.entity_id=order_address.parent_id',
-                    ['address_type', 'country_id']);
-                $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
-                $this->_orders->addAttributeToFilter('order_address.country_id', array('neq' => 'US'));
-                $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '0'));
-                if (isset($groups[0]['customer_group_id'])) {
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
-                }
-            } elseif ($allure_filter == 'wholesale') {
-                if (isset($groups[0]['customer_group_id'])) {
-                    /*Only websites wholesale order will go to webgility*/
+            try {
+
+                if ($allure_filter == 'us') {
+                    $this->_orders->join('order_address',
+                        'main_table.entity_id=order_address.parent_id',
+                        ['address_type', 'country_id']);
+                    $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 0 AND (order_address.address_type = 'shipping' AND order_address.country_id = 'US')"));
+                    if (isset($groups[0]['customer_group_id'])) {
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                    }
+                } elseif ($allure_filter == 'non_us') {
+                    $this->_orders->join('order_address',
+                        'main_table.entity_id=order_address.parent_id',
+                        ['address_type', 'country_id']);
+                    $this->_orders->addAttributeToFilter('order_address.address_type', 'shipping');
+                    $this->_orders->addAttributeToFilter('order_address.country_id', array('neq' => 'US'));
                     $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '0'));
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                    if (isset($groups[0]['customer_group_id'])) {
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                    }
+                } elseif ($allure_filter == 'wholesale') {
+                    if (isset($groups[0]['customer_group_id'])) {
+                        /*Only websites wholesale order will go to webgility*/
+                        $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '0'));
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('eq' => $groups[0]['customer_group_id']));
+                    }
                 }
+                if ($allure_filter == 'us_tw') {
+                    $this->_orders->getSelect()->where(new Zend_Db_Expr("main_table.create_order_method = 2"));
+                    /*Removed Wholesale Customer filter for teamwork only teamwork order will go to Webgility*/
+                    /*if (isset($groups[0]['customer_group_id'])) {
+                        $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
+                    }*/
+                }
+                $this->_orders->addAttributeToSort('entity_id', 'asc')
+                    ->load();
+                Mage::log($this->_orders->getSelect()->__toString(), Zend_Log::DEBUG, 'webgility.log', true);
             }
-            if ($allure_filter == 'us_tw') {
-                $this->_orders->addAttributeToFilter('create_order_method', array('eq' => '2'));
-                /*Removed Wholesale Customer filter for teamwork only teamwork order will go to Webgility*/
-                /*if (isset($groups[0]['customer_group_id'])) {
-                    $this->_orders->addAttributeToFilter('customer_group_id', array('neq' => $groups[0]['customer_group_id']));
-                }*/
+            catch(Exception $ex){
+                Mage::log($ex->getMessage(),Zend_Log::DEBUG,'webgility.log',true);
             }
-            $this->_orders->addAttributeToSort('entity_id', 'asc')
-                ->load();
-            Mage::log($this->_orders->getSelect()->__toString(),Zend_Log::DEBUG,'webgility.log',true);
 
         }
 

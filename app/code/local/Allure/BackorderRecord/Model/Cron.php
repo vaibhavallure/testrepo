@@ -5,12 +5,12 @@ class Allure_BackorderRecord_Model_Cron
 
     public function getBackorderRecord()
     {
-        Mage::helper("backorderrecord")->sendEmail();
+        Mage::helper("backorderrecord")->sendBackOrderReport();
     }
 
 
 
-    public function getBackorederCollection($dates=array())
+    public function getBackorederCollection($dates=array(),$store=1)
     {
 
         $data=$dates;
@@ -141,7 +141,7 @@ class Allure_BackorderRecord_Model_Cron
                 
             }
 
-            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."' AND sales_flat_order.old_store_id=1");
+            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."' AND sales_flat_order.old_store_id=".$store);
 
         }
         catch (Exception $e){
