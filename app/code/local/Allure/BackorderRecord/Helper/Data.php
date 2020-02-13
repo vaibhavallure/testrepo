@@ -98,8 +98,9 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             $recipientNames = explode(',',$recieverNames);
 
             //$emailTemplateVariables['collection'] = $collection;
-            $store = Mage::getModel('core/store')->load($store);
-            $emailTemplateVariables['store_name'] = $store->getName();
+
+
+            $emailTemplateVariables['store_name'] = $this->getStoreLable($store);
             $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 
 
@@ -338,6 +339,17 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         return $rowData;
 
 
+    }
+
+    private function getStoreLable($store)
+    {
+        $wholesaleId = Mage::helper("wholesale")->getStoreId();
+        $reportNameStore = array(
+            1 => "Maria Tash - Retail",
+            $wholesaleId => "Maria Tash - Wholesale"
+        );
+
+        return $reportNameStore[$store];
     }
 
 }
