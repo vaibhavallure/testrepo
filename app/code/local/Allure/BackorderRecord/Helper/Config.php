@@ -4,6 +4,7 @@ class Allure_BackorderRecord_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_ALERT_SENDER_EMAIL   = 'backorderrecord/alr_backorderrecord/sender_email';
     const XML_PATH_ALERT_SENDER_NAME    = 'backorderrecord/alr_backorderrecord/sender_name';
 	const XML_PATH_EMAIL_STATUS   		= 'backorderrecord/email_group/enabled';
+	const XML_PATH_STORES   		= 'backorderrecord/email_group/enable_stores';
 	const XML_PATH_GROUP_EMAILS  		= 'backorderrecord/email_group/group_emails';
 	const XML_PATH_GROUP_EMAILS_NAMES  	= 'backorderrecord/email_group/group_names';
 	const XML_PATH_EMAIL_TEMPLATE   = 'backorderrecord/email_group/email_temp';
@@ -40,8 +41,9 @@ class Allure_BackorderRecord_Helper_Config extends Mage_Core_Helper_Abstract
     	return Mage::getStoreConfig(self::XML_PATH_EMAIL_TEMPLATE);
     }
 
-    public function getDays(){
-    	return Mage::getStoreConfig(self::XML_PATH_NUMBER_DAYS);
+
+    public function getStores(){
+        return Mage::getStoreConfig(self::XML_PATH_STORES);
     }
 
 
