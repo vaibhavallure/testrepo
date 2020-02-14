@@ -43,7 +43,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
     public function getValuesHtml()
     {
         $_option = $this->getOption();
-        
+
         //Mage::log(json_encode(debug_backtrace()),Zend_Log::DEBUG,'abc.log',true);
 
         $category = Mage::registry('current_category');
@@ -64,20 +64,20 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             $count = 0 ;//2;
             if ($enableLength) {
                 //if($isShownPostLength){
-                    foreach ($_option->getValues() as $value) {
-                        if (in_array($value->getTitle(), $titles)) {
-                            if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
-                                $temparray[$count] = $value;//$temparray[1] = $value;
-                            } else {
-                                $temparray[$count] = $value;
-                                //$count ++;
-                            }
-                            $count ++;
+                foreach ($_option->getValues() as $value) {
+                    if (in_array($value->getTitle(), $titles)) {
+                        if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
+                            $temparray[$count] = $value;//$temparray[1] = $value;
+                        } else {
+                            $temparray[$count] = $value;
+                            //$count ++;
                         }
+                        $count ++;
                     }
-                    ksort($temparray);
-                    $temparray = array_values($temparray);
-                    $_option->setValues($temparray);
+                }
+                ksort($temparray);
+                $temparray = array_values($temparray);
+                $_option->setValues($temparray);
                 //}
             }
         }
@@ -101,123 +101,137 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                 $select->setClass('multiselect'.$require.' product-custom-option');
             }
 
-            if (! empty($temparray) && $enableLength) {
-                foreach ($temparray as $_value) {
-                    $priceStr = $this->_formatPrice(array(
-                        'is_percent' => ($_value->getPriceType() == 'percent'),
-                        'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
-                    ), false);
-                    
-                    if(trim($defaultTitleTxt) == trim($_value->getTitle()) && $isShownPostLength){
-                        $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                            'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
-                            "selected" => "selected"
-                        ));
-                    }else{
-                        $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
-                            'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
-                            'selected' => (trim($defaultTitleTxt) == trim($_value->getTitle()) ? 'selected' : NULL)
-                        ));
-                    }
-                }
-            } else {
+            if (! empty($temparray) && $enableLength)
+            {
 
-                /*code to set default post length--------------------------*/
-
-                /*first option*/
-                $category_for_6point5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/first_post_length_option"));
-
-                /*second option*/
-                $category_for_5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/second_post_length_option"));
-
-
-                $firstMatchingOptions=array_intersect($category_for_6point5mm_postLength,$this->getProduct()->getCategoryIds());
-                $secondMatchingOptions=array_intersect($category_for_5mm_postLength,$this->getProduct()->getCategoryIds());
-
-                /* Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
-                 Mage::log($secondMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
-                 Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);*/
-
-                $defaultLengthFlag=false;
-
-                if(count($secondMatchingOptions)) {
-                    $defaultTitleTxt = "5mm";
-                    $defaultLengthFlag=true;
-                }
-                else if(count($firstMatchingOptions)){
-                    $defaultTitleTxt = "6.5mm";
-                    $defaultLengthFlag=true;
-                }
-
-                if($defaultLengthFlag) {
-                    $count = 2;
-
-                    foreach ($_option->getValues() as $value) {
-                        if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
-                            $temparray[1] = $value;
-                        } else {
-                            $temparray[$count] = $value;
-                            $count++;
-                        }
-                    }
-                    ksort($temparray);
-                    $temparray = array_values($temparray);
-                    $_option->setValues($temparray);
-                }
-                /*-------------------------------------------------------*/
-
-                if (! empty($temparray) && $defaultLengthFlag) {
-                    $postLengthValues = $temparray;
-                }
-                else {
+                if($isShownPostLength)
                     $select->addOption('', 'Select Your Post Length', '', $store, false);
-                    $postLengthValues = $_option->getValues();
-                }
-                foreach ($postLengthValues as $_value) {
-                    $priceStr = $this->_formatPrice(array(
-                        'is_percent' => ($_value->getPriceType() == 'percent'),
-                        'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
-                    ), false);
+
+            foreach ($temparray as $_value) {
+                $priceStr = $this->_formatPrice(array(
+                    'is_percent' => ($_value->getPriceType() == 'percent'),
+                    'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
+                ), false);
+
+                if(trim($defaultTitleTxt) == trim($_value->getTitle()) && $isShownPostLength){
                     $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
                         'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
-                        'selected' => (trim($defaultTitleTxt) == trim($_value->getTitle()) ? 'selected' : NULL)
+                        "selected" => "selected"
+                    ));
+                }else{
+                    $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                        'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
                     ));
                 }
             }
-            if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_MULTIPLE) {
-                $extraParams = ' multiple="multiple"';
-            }
-            if (!$this->getSkipJsReloadPrice()) {
-                $extraParams .= 'style="width: 150px;" onchange="opConfig.reloadPrice()"';
-            }
-            $select->setExtraParams($extraParams);
+        } else {
 
-            if ($configValue) {
-                $select->setValue($configValue);
+            /*code to set default post length--------------------------*/
+
+            /*first option*/
+            $category_for_6point5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/first_post_length_option"));
+
+            /*second option*/
+            $category_for_5mm_postLength=explode(",",Mage::getStoreConfig("merchandiser/options/second_post_length_option"));
+
+
+            $firstMatchingOptions=array_intersect($category_for_6point5mm_postLength,$this->getProduct()->getCategoryIds());
+            $secondMatchingOptions=array_intersect($category_for_5mm_postLength,$this->getProduct()->getCategoryIds());
+
+            /* Mage::log($firstMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+             Mage::log($secondMatchingOptions, Zend_Log::DEBUG, "adi.log", true);
+             Mage::log($this->getProduct()->getCategoryIds(), Zend_Log::DEBUG, "adi.log", true);*/
+
+            $defaultLengthFlag=false;
+
+            if(count($secondMatchingOptions)) {
+                $defaultTitleTxt = "5mm";
+                $defaultLengthFlag=true;
+            }
+            else if(count($firstMatchingOptions)){
+                $defaultTitleTxt = "6.5mm";
+                $defaultLengthFlag=true;
             }
 
-            return $select->getHtml();
+            if($defaultLengthFlag) {
+                $count = 2;
+
+                foreach ($_option->getValues() as $value) {
+                    if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
+                        $temparray[1] = $value;
+                    } else {
+                        $temparray[$count] = $value;
+                        $count++;
+                    }
+                }
+                ksort($temparray);
+                $temparray = array_values($temparray);
+                $_option->setValues($temparray);
+            }
+            /*-------------------------------------------------------*/
+
+            if (! empty($temparray) && $defaultLengthFlag) {
+                $postLengthValues = $temparray;
+
+                if($isShownPostLength)
+                    $select->addOption('', 'Select Your Post Length', '', $store, false);
+            }
+            else {
+                $select->addOption('', 'Select Your Post Length', '', $store, false);
+                $postLengthValues = $_option->getValues();
+            }
+            foreach ($postLengthValues as $_value) {
+                $priceStr = $this->_formatPrice(array(
+                    'is_percent' => ($_value->getPriceType() == 'percent'),
+                    'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
+                ), false);
+
+                if(trim($defaultTitleTxt) == trim($_value->getTitle()) && $isShownPostLength) {
+
+                    $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                        'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false),
+                        'selected' => 'selected'));
+                }
+                else{
+                    $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                        'price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false)));
+                }
+            }
+        }
+        if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_MULTIPLE) {
+            $extraParams = ' multiple="multiple"';
+        }
+        if (!$this->getSkipJsReloadPrice()) {
+            $extraParams .= 'style="width: 150px;" onchange="opConfig.reloadPrice()"';
+        }
+        $select->setExtraParams($extraParams);
+
+        if ($configValue) {
+            $select->setValue($configValue);
         }
 
-        if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO
-            || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX
-        ) {
-            $selectHtml = '<ul id="options-'.$_option->getId().'-list" class="options-list">';
-            $require = ($_option->getIsRequire()) ? ' validate-one-required-by-name' : '';
-            $arraySign = '';
-            switch ($_option->getType()) {
-                case Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO:
-                    $type = 'radio';
-                    $class = 'radio';
-                    if (!$_option->getIsRequire()) {
-                        $selectHtml .= '<li><input type="radio" id="options_' . $_option->getId() . '" class="'
-                            . $class . ' product-custom-option" name="options[' . $_option->getId() . ']"'
-                            . ($this->getSkipJsReloadPrice() ? '' : ' onclick="opConfig.reloadPrice()"')
-                            . ' value="" checked="checked" /><span class="label"><label for="options_'
-                            . $_option->getId() . '">' . $this->__('None') . '</label></span></li>';
-                    }
-                    break;
-                case Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX:
+        return $select->getHtml();
+    }
+
+if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO
+|| $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX
+) {
+$selectHtml = '<ul id="options-'.$_option->getId().'-list" class="options-list">';
+$require = ($_option->getIsRequire()) ? ' validate-one-required-by-name' : '';
+$arraySign = '';
+switch ($_option->getType()) {
+case Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO:
+$type = 'radio';
+$class = 'radio';
+if (!$_option->getIsRequire()) {
+$selectHtml .= '<li><input type="radio" id="options_' . $_option->getId() . '" class="'
+. $class . ' product-custom-option" name="options[' . $_option->getId() . ']"'
+. ($this->getSkipJsReloadPrice() ? '' : ' onclick="opConfig.reloadPrice()"')
+. ' value="" checked="checked" /><span class="label"><label for="options_'
+. $_option->getId() . '">' . $this->__('None') . '</label></span></li>';
+}
+break;
+case Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX:
                     $type = 'checkbox';
                     $class = 'checkbox';
                     $arraySign = '[]';
@@ -263,35 +277,35 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
 
     private function getIsShowPostLength($_category){
 
-        $cat = Mage::getStoreConfig("allure/options/category_to_compare_with");
-        $_compare_cat = array();
-        array_push($_compare_cat,$cat);
-        //if($_category->getId() != $cat):
-        $productCategories = $this->getProduct()->getCategoryIds();
+    $cat = Mage::getStoreConfig("allure/options/category_to_compare_with");
+    $_compare_cat = array();
+    array_push($_compare_cat,$cat);
+    //if($_category->getId() != $cat):
+    $productCategories = $this->getProduct()->getCategoryIds();
 
-        $categories = Mage::getModel('catalog/category')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addAttributeToSort('path', 'asc')
-            ->addFieldToFilter('is_active', array('eq' => '1'))
-            ->addFieldToFilter('entity_id', array('in' => $productCategories))
-            ->addAttributeToFilter('level', array('eq','4'))
-            ->load()
-            ->toArray();
+    $categories = Mage::getModel('catalog/category')
+        ->getCollection()
+        ->addAttributeToSelect('*')
+        ->addAttributeToSort('path', 'asc')
+        ->addFieldToFilter('is_active', array('eq' => '1'))
+        ->addFieldToFilter('entity_id', array('in' => $productCategories))
+        ->addAttributeToFilter('level', array('eq','4'))
+        ->load()
+        ->toArray();
 
-        // Arrange categories in required array
+    // Arrange categories in required array
 
-        $categoryList = array();
-        foreach ($categories as $catId => $category) {
-            if (isset($category['name'])) {
-                $categoryList[] = $catId;
-            }
+    $categoryList = array();
+    foreach ($categories as $catId => $category) {
+        if (isset($category['name'])) {
+            $categoryList[] = $catId;
         }
-        $cat_set = array_intersect($_compare_cat,$categoryList);
-        if(count($cat_set) > 0 && count($categoryList) > 1){
-            return false;
-        }
-        return true;
     }
+    $cat_set = array_intersect($_compare_cat,$categoryList);
+    if(count($cat_set) > 0 && count($categoryList) > 1){
+        return false;
+    }
+    return true;
+}
 
 }
