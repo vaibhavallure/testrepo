@@ -104,7 +104,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             if (! empty($temparray) && $enableLength)
             {
 
-                if($isShownPostLength)
+                if(!$isShownPostLength)
                     $select->addOption('', 'Select Your Post Length', '', $store, false);
 
             foreach ($temparray as $_value) {
@@ -173,7 +173,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             if (! empty($temparray) && $defaultLengthFlag) {
                 $postLengthValues = $temparray;
 
-                if($isShownPostLength)
+                if(!$isShownPostLength)
                     $select->addOption('', 'Select Your Post Length', '', $store, false);
             }
             else {
