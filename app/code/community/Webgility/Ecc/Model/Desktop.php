@@ -2204,12 +2204,11 @@ class Webgility_Ecc_Model_Desktop
             }
 
 
-
+            Mage::log('Order Inc. Id'.$orders["increment_id"],Zend_Log::DEBUG,'webgility_items_not_send.log',true);
             $itemI = 0;
             foreach($item_array as $iInfo)
             {
-
-
+                $issSendItem = true; /*Allure Custom code for xero : don't sent item if it has -ve amount or qty*/
                 if(is_object($iInfo['product']))
                     $onlineInfo =  $iInfo['product']->toArray();
 
@@ -2347,19 +2346,22 @@ class Webgility_Ecc_Model_Desktop
                     if($all){
                         $iInfo["price"] = $iInfo['base_price'];
                     }
+                    /*Allure Code for Webgility-Xero : Do not sent item if qty is -ve*/
                     /*if($temp_allure_filter == "us_tw"){*/
                         if(isset($iInfo['qty_refunded'])){
                             if($iInfo['qty_refunded'] > 0) {
                                 $result = $iInfo["qty_ordered"] - $iInfo['qty_refunded'];
-                                if ($result == 0) {
-                                    if ($iInfo["price"] > 0) {
+                                if ($result <= 0) {
+                                    $isSendItem = false;
+                                    /*if ($iInfo["price"] > 0) {
                                         $iInfo["price"] = (-1) * $iInfo["price"];
-                                    }
+                                    }*/
                                 }
                             }
-
                         }
                     /*}*/
+                    /*Allure Code If End Here*/
+
                     $Item->setUnitPrice($iInfo["price"]);
                     $Item->setCostPrice($onlineInfo["cost"]);
                     $Item->setWeight($iInfo["weight"]);
@@ -2429,7 +2431,12 @@ class Webgility_Ecc_Model_Desktop
 
                 }
                 $itemI++;
-                $Order->setOrderItems($Item->getItem());
+                /*Allure Custom code for Webgility-Xero Integration : Do not send item if isSendItem set to false;*/
+                if($isSendItem) {
+                    $Order->setOrderItems($Item->getItem());
+                }else{
+                    Mage::log('Item Data: '.json_encode($Item->getItem()),Zend_Log::DEBUG,'webgility_items_not_send.log',true);
+                }
 
             }
             /*Mage::log('Before Discount Coupon',Zend_Log::DEBUG,'webgility.log',true);*/
