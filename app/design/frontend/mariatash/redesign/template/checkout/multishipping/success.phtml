@@ -30,7 +30,8 @@
     </div>
     <h2 class="sub-title info-text-two mb-4"><?php echo $this->__('Thank you for your purchase!') ?></h2>
     <p class="para-normal"><?php echo $this->__('We are processing your order and you will soon receive an email with details of the order. Once the order has shipped you will receive another email with a link to track its progress.') ?></p>
-    <?php if($_orderIds = $this->getOrderIds()): ?>
+    <?php $_orderIds = $this->getOrderIds()?>
+    <?php if($_orderIds): ?>
     <p data-role="order-numbers" class="para-normal">
         <?php $flag = false ?>
         <?php echo $this->__('Your order number is ') ?>
@@ -49,10 +50,10 @@
     </div>
 </div>
 
-
+<?php foreach ($_orderIds as $orderId=>$incrementId): ?>
 <?php
 $order = Mage::getModel('sales/order')
-    ->load(Mage::getSingleton('checkout/session')->getLastOrderId()); 
+    ->load($orderId); 
 $subtotal = $order->getSubtotal();
 $order_id = $order->getId(); //the id of the order
 //$order->getIncrementId();//the increment id of the order
@@ -101,3 +102,4 @@ ga('ecommerce:addItem', {
 ga('ecommerce:send');
 
 </script>
+<?php endforeach;?>
