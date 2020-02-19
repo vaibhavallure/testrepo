@@ -47,19 +47,31 @@
 </div>
 </div>
 
+<?php $_orderIds = array();
+$orderId = Mage::getSingleton("allure_multicheckout/ordered_session")->getLastOrderId();
+$secondOrderId = Mage::getSingleton("allure_multicheckout/backordered_session")->getSecondLastOrderId();
+
+if($orderId){
+    $_orderIds[] = $orderId;
+}
+if($secondOrderId){
+    $_orderIds[] = $secondOrderId;
+}
+?>
+<?php foreach ($_orderIds as $_orderId): ?>
 <?php
 $order = Mage::getModel('sales/order')
-    ->load(Mage::getSingleton('checkout/session')->getLastOrderId()); 
-$subtotal = $order->getSubtotal();
-$order_id = $order->getId(); //the id of the order
+->load($_orderId); 
+$subtotal = $order->getBaseSubtotal();
+$order_id = $order->getIncrementId(); //the id of the order
 //$order->getIncrementId();//the increment id of the order
-$gtotal = $order->getGrandTotal();//grand total of the order 
+$gtotal = $order->getBaseGrandTotal();//grand total of the order 
 $address = $order->getBillingAddress()->getData();
 $city = $address['city'];
 $state = $address['region'];
 $country = $address['country_id'];
-$shippingVal=$order->getShippingAmount();
-$taxAmount=$order->getTaxAmount();
+$shippingVal=$order->getBaseShippingAmount();
+$taxAmount=$order->getBaseTaxAmount();
 ?>
 <script type="text/javascript">
 ga('require', 'ecommerce');
@@ -88,7 +100,7 @@ ga('ecommerce:addItem', {
   'name': '<?php echo $item->getName(); ?>',    // Product name. Required.
   'sku': '<?php echo $item->getSku(); ?>',                 // SKU/code.
   'category': '',         // Category or variation.
-  'price': '<?php echo $item->getPrice(); ?>',                 // Unit price.
+  'price': '<?php echo $item->getBasePrice(); ?>',                 // Unit price.
   'quantity': '<?php echo $item->getQtyToInvoice(); ?>'                   // Quantity.
 });
 <?php 
@@ -98,6 +110,7 @@ ga('ecommerce:addItem', {
 ga('ecommerce:send');
 
 </script>
+<?php endforeach;?>
 
 <!--codigo reutilizable-->
 
