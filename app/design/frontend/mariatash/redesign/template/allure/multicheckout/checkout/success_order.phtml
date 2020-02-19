@@ -47,6 +47,58 @@
 </div>
 </div>
 
+<?php
+$order = Mage::getModel('sales/order')
+    ->load(Mage::getSingleton('checkout/session')->getLastOrderId()); 
+$subtotal = $order->getSubtotal();
+$order_id = $order->getId(); //the id of the order
+//$order->getIncrementId();//the increment id of the order
+$gtotal = $order->getGrandTotal();//grand total of the order 
+$address = $order->getBillingAddress()->getData();
+$city = $address['city'];
+$state = $address['region'];
+$country = $address['country_id'];
+$shippingVal=$order->getShippingAmount();
+$taxAmount=$order->getTaxAmount();
+?>
+<script type="text/javascript">
+ga('require', 'ecommerce');
+
+ga('ecommerce:addTransaction', {
+  'id': '<?php echo $order_id; ?>',                     // Transaction ID. Required.
+  'affiliation': '',   // Affiliation or store name.
+  'revenue': '<?php echo $gtotal;?>',               // Grand Total.
+  'shipping': '<?php echo $shippingVal;?>',                  // Shipping.
+  'tax': '<?php echo $taxAmount;?>'                     // Tax.
+});
+
+<?php 
+$items = $order->getAllItems();
+$itemcount=count($items);
+$name=array();
+$unitPrice=array();
+$sku=array();
+$ids=array();
+$qty=array();
+foreach ($items as $itemId => $item)
+{?>
+
+ga('ecommerce:addItem', {
+  'id': '<?php echo $order_id; ?>',                     // Transaction ID. Required.
+  'name': '<?php echo $item->getName(); ?>',    // Product name. Required.
+  'sku': '<?php echo $item->getSku(); ?>',                 // SKU/code.
+  'category': '',         // Category or variation.
+  'price': '<?php echo $item->getPrice(); ?>',                 // Unit price.
+  'quantity': '<?php echo $item->getQtyToInvoice(); ?>'                   // Quantity.
+});
+<?php 
+}
+?> 
+
+ga('ecommerce:send');
+
+</script>
+
 <!--codigo reutilizable-->
 
 
