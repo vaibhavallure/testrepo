@@ -26,4 +26,56 @@
             </adminhtml>
         </routers>
     </admin>
+    <crontab>
+        <jobs>
+            <sales_clean_quotes>
+                <schedule>
+                    <cron_expr>0 5 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::cleanExpiredQuotes</model>
+                </run>
+            </sales_clean_quotes>
+            <aggregate_sales_report_order_data>
+                <schedule>
+                    <cron_expr>0 10 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::aggregateSalesReportOrderData</model>
+                </run>
+            </aggregate_sales_report_order_data>
+            <aggregate_sales_report_shipment_data>
+                <schedule>
+                    <cron_expr>0 15 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::aggregateSalesReportShipmentData</model>
+                </run>
+            </aggregate_sales_report_shipment_data>
+            <aggregate_sales_report_invoiced_data>
+                <schedule>
+                    <cron_expr>0 20 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::aggregateSalesReportInvoicedData</model>
+                </run>
+            </aggregate_sales_report_invoiced_data>
+            <aggregate_sales_report_refunded_data>
+                <schedule>
+                    <cron_expr>0 25 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::aggregateSalesReportRefundedData</model>
+                </run>
+            </aggregate_sales_report_refunded_data>
+            <aggregate_sales_report_bestsellers_data>
+                <schedule>
+                    <cron_expr>0 30 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>sales/observer::aggregateSalesReportBestsellersData</model>
+                </run>
+            </aggregate_sales_report_bestsellers_data>
+        </jobs>
+    </crontab>
 </config>
