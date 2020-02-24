@@ -113,6 +113,11 @@
                 <h1><?php echo $this->__("Login to My Account")?></h1>
             </div>
             <div class="body modal-body">
+                <div class="password-success">
+                    <span><?= Mage::getSingleton('customer/session')->getData("success_message")?>
+                        <?php Mage::getSingleton('customer/session')->setData("success_message","")?>
+                    </span>
+                </div>
                 <div id="login_msg_div">
                     <span class="invalid-login" id="login-msg"></span>
                 </div>

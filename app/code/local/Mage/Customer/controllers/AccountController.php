@@ -1003,6 +1003,7 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             endif;
 
             $this->_getSession()->addSuccess($this->_getHelper('customer')->__('Your password has been updated.'));
+            $this->_getSession()->setData("success_message",$this->_getHelper('customer')->__('Your password has been updated.'));
             $this->_redirect('*/*/login');
         } catch (Exception $exception) {
             $this->_getSession()->addException($exception, $this->__('Cannot save a new password.'));
