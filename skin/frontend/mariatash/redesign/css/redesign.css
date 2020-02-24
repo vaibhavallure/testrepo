@@ -4390,6 +4390,10 @@ dt.post-lengthds-lbl {
 	margin: 25px 0 95px;
 }
 
+.password-success, .password-success span{
+   color: #2b542c;
+	padding-bottom: 10px;
+}
 /*Wholesale separate css*/
 .wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove {
   margin-top: 37px;
