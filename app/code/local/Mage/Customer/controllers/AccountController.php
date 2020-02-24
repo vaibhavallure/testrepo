@@ -1003,8 +1003,15 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             endif;
 
             $this->_getSession()->addSuccess($this->_getHelper('customer')->__('Your password has been updated.'));
-            $this->_getSession()->setData("success_message",$this->_getHelper('customer')->__('Your password has been updated.'));
-            $this->_redirect('*/*/login');
+
+            if(Mage::helper("wholesale")->isWholesaleStore()) {
+                $this->_getSession()->setData("success_message_wholesale",$this->_getHelper('customer')->__('Your password has been updated.'));
+                $this->_redirect('wholesale-customer/wholesale/login');
+            }
+            else {
+                $this->_getSession()->setData("success_message_retail",$this->_getHelper('customer')->__('Your password has been updated.'));
+                $this->_redirect('*/*/login');
+            }
         } catch (Exception $exception) {
             $this->_getSession()->addException($exception, $this->__('Cannot save a new password.'));
             $this->_redirect('*/*/changeforgotten');
