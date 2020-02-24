@@ -1,15 +1,19 @@
+
 <?php
 /**
  * One page checkout payment methods
  *
  * @see Mage_Checkout_Block_Onepage_Payment_Methods
  */
-
+?>
+<?php
 $quote = Mage::getModel('checkout/cart')->getQuote();
 $codeExists = ($quote->getCouponCode()) ? true : false;
 ?>
 <div class='promoDiv row'>
     <div class="coupons col-12">
+    <!--AWS14 MT-1375 condition added-->
+    <?php if(Mage::helper("giftcards")->getEGiftCardStatus()): ?>
 		<?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
 		<div class="discount row">
     		<div class="sp-methods">
@@ -49,6 +53,7 @@ $codeExists = ($quote->getCouponCode()) ? true : false;
        		 	<?php endif;?>
     		</div>
 		</div>
+        <?php endif; ?>
 		<div class="discount row">
         	<div class="discount-form col-12">
              	<div class="row">

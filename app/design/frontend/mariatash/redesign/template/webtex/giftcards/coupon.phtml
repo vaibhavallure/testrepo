@@ -1,3 +1,6 @@
+<!--AWS14 MT-1375 condition added-->
+<?php if(Mage::helper("giftcards")->getEGiftCardStatus()): ?>
+
 <?php $oGiftCardSession = Mage::getSingleton('giftcards/session'); ?>
 
 <div class="discount">
@@ -33,3 +36,5 @@
         });
     </script>
 </div>
+
+<?php endif; ?>
