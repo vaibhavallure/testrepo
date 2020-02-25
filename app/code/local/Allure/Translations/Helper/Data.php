@@ -4,7 +4,10 @@ class Allure_Translations_Helper_Data extends Mage_Customer_Helper_Data
 {
     public function getCountryByIp($ip) {
 
-        $url='http://geoip.allureinc.co/geoip/'.$ip;
+//      $url='http://geoip.allureinc.co/geoip/'.$ip;
+
+        $helper = Mage::helper("allure_geolocation");
+        $url=$helper->getAPIUrl().''.$ip;
 
         $ch = curl_init();
 

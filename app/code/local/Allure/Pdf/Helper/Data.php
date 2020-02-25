@@ -104,7 +104,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
     public function getOrderSalesProductStockStatus($item , $order){
         $storeId = $order->getStoreId();
         $message = "";
-        if($storeId == 1){
+        if($storeId == 1 || $storeId==Mage::helper("wholesale")->getStoreId()){
             $amstockHelper = Mage::helper('amstockstatus');
             $message = $amstockHelper->getOrderSalesProductStockStatus($item);
         }
