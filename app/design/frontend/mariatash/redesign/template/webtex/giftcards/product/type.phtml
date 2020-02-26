@@ -1,4 +1,17 @@
 <?php
+$url =  Mage::getModel('catalog/product')->loadByAttribute('sku',"STORECARD")->getProductUrl();
+$url=str_replace("/jewelry","",$url);
+
+
+/*AWS14 MT-1375*/
+if(!Mage::helper("giftcards")->getEGiftCardStatus())
+    Mage::app()->getFrontController()->getResponse()->setRedirect($url);
+/*Code Ended------*/
+
+
+?>
+
+<?php
 $_product = $this->getProduct();
 $_currency = Mage::app()->getStore()->getCurrentCurrency();
 $_currency_usd = Mage::app()->getStore()->getBaseCurrency();
@@ -63,10 +76,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                     </select>
                 </div>
             </div>
-                <?php
-                $url =  Mage::getModel('catalog/product')->loadByAttribute('sku',"STORECARD")->getProductUrl();
-                $url=str_replace("/jewelry","",$url);
-                ?>
+
                 <div class="swatch-section">
                     <div class="chooseList row giftcardtype">
                         <ul>

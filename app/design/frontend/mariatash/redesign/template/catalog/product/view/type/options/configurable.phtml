@@ -86,7 +86,12 @@ if ($_product->getSizeSample() == 1) {
                             <li class="label li-1">
                                 <h3 class="product-attribute-name mb-0">format</h3>
                             </li>
+
+                            <!--AWS14 MT-1375 condition added-->
+                            <?php if(Mage::helper("giftcards")->getEGiftCardStatus()): ?>
                             <li data-option_value="egift"  onclick="setLoader()" class="option  li-2 "><a href="<?= $url ?>"><span class="egift-text">eGift Card</span></a></li>
+                             <?php endif;?>
+
                             <li data-option_value="storecard" class="option  li-3 active"><span>Gift Card</span></li>
                         </ul>
                     </div></div></div>
