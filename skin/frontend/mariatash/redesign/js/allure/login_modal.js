@@ -72,8 +72,10 @@ jQuery(document).ready(function(){
 
 					} else {
 						$j('#login_msg_div').css('display','block');
+						$j('.password-success').remove();
 						$j('#login-msg').html(data.error);
 						$j('#popup-login-form #passwd-login').val("");
+
 
 						/*new changes for wholesale portal*/
 						if(data.error_code==35)
