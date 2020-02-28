@@ -21,6 +21,8 @@ if ($model) {
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
 
+<?php $this->getDefaultCountryShortCodeHtml() ?>
+
 <form class="" autocomplete="off" action="<?php echo $this->getActionUrl() ?>" method="post" id="appointemnet_form">
     <input autocomplete="off" type="hidden" name="language_pref" value="">
     <?php if($this->isAdmin()):?>
@@ -80,7 +82,7 @@ if ($model) {
                                                         <input type="checkbox" data-no="<?= $customer_count ?>" class="piercing_select clschk" id="piercing_select_<?= $customer_count ?>"
                                                                onchange="displayPiercing('#piercing-wrapper<?= $customer_count ?>')"
                                                                name="customer[<?= $customer_count ?>][piercing_select]"
-                                                               <?= ($customer->getPiercing() > 0) ? 'checked' : ''; ?>
+                                                            <?= ($customer->getPiercing() > 0) ? 'checked' : ''; ?>
                                                         >
                                                         <span class="checkmark"></span><?php echo $this->__('Piercing') ?>
                                                     </label>
@@ -91,7 +93,7 @@ if ($model) {
                                                     <label class="label translate-popup custom-checkbox" for="checkup_select_<?= $customer_count ?>">
                                                         <input type="checkbox" data-no="<?= $customer_count ?>" class="checkup_select clschk" id="checkup_select_<?= $customer_count ?>"
                                                                value="1" name="customer[<?= $customer_count ?>][checkup]"
-                                                               <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
+                                                            <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
                                                         >                                                        <span class="checkmark"></span>
 
                                                         <?php echo $this->__('Checkup/downsize') ?></label>
@@ -200,7 +202,11 @@ if ($model) {
 
                                 <div class="customer_section col-md-12">
                                     <?php if ($fetch_aptId):
-                                        $customer_count = 1;
+                                        $customer_count = 1; ?>
+                                        <script>
+                                            var itiUpdate=[];
+                                        </script>
+                                    <?php
                                     foreach ($customers as $customer):?>
 
                                         <div id="customer<?= $customer_count ?>">
@@ -237,7 +243,7 @@ if ($model) {
                                                                value="<?= $customer->getEmail() ?>" required <?=$this->isReleaseSubmitted($customer->getInfoUpdate())?>>
                                                     </div>
                                                     <div id="phone-box" class="col-md-6 form-group">
-                                                        <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup select-type-one"
+                                                        <input class="input-box required-entry validate-intl-telephone phonenumber al-phone-update invalid_telp translate-popup select-type-one"
                                                                type="search" name="customer[<?= $customer_count ?>][phone]"
                                                                id="phonenumber<?= $customer_count ?>"
                                                                placeholder="<?php echo $this->__('Phone Number') ?>"
@@ -276,20 +282,56 @@ if ($model) {
                                         </div>
                                         <script type="text/javascript">
                                             jQuery(document).ready(function () {
-                                                var iti=window.intlTelInput(document.querySelector("#phonenumber<?=$customer_count?>"), {
-//                                                    initialCountry: 'fr',
+                                                itiUpdate["phonenumber<?=$customer_count?>"]=window.intlTelInput(document.querySelector("#phonenumber<?=$customer_count?>"), {
+                                                    initialCountry: jQuery("#default_country_phone").val(),
                                                     autoFormat: false,
                                                     autoHideDialCode: false,
                                                     autoPlaceholder: false,
                                                     nationalMode: false,
                                                     utilsScript:  Allure.UtilPath
                                                 });
-                                                allureIntlTelValidate(jQuery("#phonenumber<?=$customer_count?>"), iti);
+//                                                allureIntlTelValidate(jQuery("#phonenumber<?//=$customer_count?>//"), iti);
                                             });
                                         </script>
                                     <?php
                                     $customer_count++;
                                     endforeach; ?>
+                                        <script>
+                                            jQuery(document).ready(function () {
+                                                jQuery(".al-phone-update").on('keyup', function() {
+                                                    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+                                                    console.log("inside al-phone-update");
+                                                    var id=jQuery(this).attr("id");
+                                                    jQuery("#"+id+"_message").remove();
+                                                    if(jQuery.trim(jQuery(this).val())) {
+                                                        if (itiUpdate[id].isValidNumber()) {
+
+                                                            var str=jQuery(this).attr("value");
+                                                            if(str.replace(/[^+]/g, "").length==1)
+                                                                jQuery(this).removeClass("invalid_telp");
+                                                            else {
+                                                                jQuery(this).addClass("invalid_telp");
+                                                                errorMessage = '<div id="' + id + '_message" class="error2 invalid-feedback2 translate-popup" style="display: block;">Invalid number</div>';
+                                                                jQuery(this).after(errorMessage);
+                                                            }
+
+
+                                                        } else {
+                                                            var errorCode = itiUpdate[id].getValidationError();
+                                                            var errorMessage = errorMap[errorCode];
+
+                                                            if(!errorMessage)
+                                                                errorMessage="Invalid number";
+
+                                                            jQuery(this).addClass("invalid_telp");
+                                                            errorMessage = '<div id="' + id + '_message" class="error2 invalid-feedback2 translate-popup" style="display: block;">' + errorMessage + '</div>';
+                                                            jQuery(this).after(errorMessage);
+                                                        }
+                                                    }
+                                                });
+
+                                            });
+                                        </script>
                                     <?php else: ?>
                                         <div id="customer1">
                                             <div class="col">
@@ -322,7 +364,7 @@ if ($model) {
                                                                required>
                                                     </div>
                                                     <div id="phone-box" class="col-md-6 form-group">
-                                                        <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup select-type-one"
+                                                        <input class="input-box required-entry validate-intl-telephone phonenumber invalid_telp translate-popup select-type-one"
                                                                type="search" name="customer[1][phone]" id="phonenumber1"
                                                                placeholder="<?php echo $this->__('Phone Number') ?>"
                                                                value=""
@@ -333,7 +375,7 @@ if ($model) {
 
                                             <div class="col-12 form-group">
 
-                                                        <textarea  maxlength="100" id="special-notes-1" class="splnotesTxtarea w-100" name="customer[1][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ></textarea>
+                                                <textarea  maxlength="100" id="special-notes-1" class="splnotesTxtarea w-100" name="customer[1][special_notes]" placeholder="<?= $this->__("Special notes") ?>" rows="4" ></textarea>
 
                                             </div>
 
@@ -359,15 +401,47 @@ if ($model) {
                                         </div>
                                         <script type="text/javascript">
                                             jQuery(document).ready(function () {
-                                                var iti=window.intlTelInput(document.querySelector("#phonenumber1"), {
-//                                                initialCountry: 'fr',
+                                                var intil=window.intlTelInput(document.querySelector("#phonenumber1"), {
+                                                    initialCountry: jQuery("#default_country_phone").val(),
                                                     autoFormat: false,
                                                     autoHideDialCode: false,
                                                     autoPlaceholder: false,
                                                     nationalMode: false,
                                                     utilsScript:  Allure.UtilPath
                                                 });
-                                                allureIntlTelValidate(jQuery("#phonenumber1"), iti);
+
+                                                // on blur: validate
+                                                jQuery("#phonenumber1").on('keyup', function() {
+                                                    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+                                                    var id=jQuery(this).attr("id");
+                                                    jQuery("#"+id+"_message").remove();
+                                                    if(jQuery.trim(jQuery(this).val())) {
+                                                        if (intil.isValidNumber()) {
+
+                                                            var str=jQuery(this).attr("value");
+                                                            if(str.replace(/[^+]/g, "").length==1)
+                                                                jQuery(this).removeClass("invalid_telp");
+                                                            else {
+                                                                jQuery(this).addClass("invalid_telp");
+                                                                errorMessage = '<div id="' + id + '_message" class="error2 invalid-feedback2 translate-popup" style="display: block;">Invalid number</div>';
+                                                                jQuery(this).after(errorMessage);
+                                                            }
+
+
+                                                        } else {
+                                                            var errorCode = intil.getValidationError();
+                                                            var errorMessage = errorMap[errorCode];
+
+                                                            if(!errorMessage)
+                                                                errorMessage="Invalid number";
+
+                                                            jQuery(this).addClass("invalid_telp");
+                                                            errorMessage = '<div id="' + id + '_message" class="error2 invalid-feedback2 translate-popup" style="display: block;">' + errorMessage + '</div>';
+                                                            jQuery(this).after(errorMessage);
+                                                        }
+                                                    }
+                                                });
                                             });
                                         </script>
                                     <?php endif; ?>

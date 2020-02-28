@@ -1212,7 +1212,7 @@ select.input-box {
 .store-info-wrapper{
 	margin: 0 15px;
 }
-.error.invalid-feedback {
+.error.invalid-feedback,.invalid-feedback2 {
   border: none;
   background: no-repeat;
   color: #830000;
@@ -1436,7 +1436,7 @@ tr.tr-piercing td span, tr.tr-piercing td {
 	}
 }
 @media (min-width:991px){
-	.error.invalid-feedback{
+	.error.invalid-feedback,.invalid-feedback2{
 		text-align: left;
     padding: 0 3px;
 	}

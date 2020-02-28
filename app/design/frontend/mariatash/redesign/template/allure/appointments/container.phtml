@@ -70,6 +70,7 @@ if($this->isAdmin())
 
         var $ = jQuery;
 
+
         $('.form-disable-overlay').fadeOut();
         unsetLoader();
 
@@ -77,8 +78,11 @@ if($this->isAdmin())
         $("#appointemnet_form").validate({
             submitHandler: function(form) {
 
+                $ (".phonenumber").keyup();
+
+
                 var number_of_people=$('select[name=piercing_qty]').val();
-                console.log("number people",number_of_people);
+//                console.log("number people",number_of_people);
                 for(var i=1;i<=number_of_people;i++)
                 {
                     for (var j=i+1;j<=number_of_people;j++)
@@ -97,6 +101,20 @@ if($this->isAdmin())
                 }
 
 
+                if(jQuery(".invalid_telp").length)
+                {
+                    jQuery(".invalid_telp").each(function () {
+                        var id=jQuery(this).attr("id");
+                        errorMessage = '<div id="' + id + '_message" class="invalid-feedback2 translate-popup" style="display: block;">Invalid number</div>';
+                        if(!jQuery('#' + id + '_message').length)
+                        {
+                            jQuery(this).after(errorMessage);
+                        }
+
+                    });
+
+                    return;
+                }
 
 
                 if (!Allure.isProcessing) {
