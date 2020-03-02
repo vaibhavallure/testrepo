@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <allure>
+            <children>
+                <promobox module="promobox">
+                    <title>Promo Box</title>
+                    <sort_order>3</sort_order>
+                    <action>adminhtml/promobox</action>
+                    <children>
+                    <appointments module="promobox">
+                        <title>Manage Banner</title>
+                        <sort_order>1</sort_order>
+                        <action>adminhtml/banner</action>
+                    </appointments>
+                    <appointments_calender module="promobox">
+                        <title>Manage Category</title>
+                        <sort_order>2</sort_order>
+                        <action>adminhtml/category</action>
+                    </appointments_calender>
+                    </children>
+                </promobox>
+            </children>
+        </allure>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <promobox translate="title" module="promobox">
+                                        <title>Promo Box</title>
+                                    </promobox>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
