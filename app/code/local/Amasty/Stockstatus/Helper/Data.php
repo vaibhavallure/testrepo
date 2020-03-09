@@ -413,7 +413,8 @@ INLINECSS;
                 return $message;
             }
 
-            if($storeId == 1){
+            if($storeId == 1 || $storeId==Mage::helper("wholesale")->getStoreId()){
+                
                 $stockMsg = $item->getBackorderTime();
                 if (!empty($stockMsg) && ($stockMsg != self::BACKORDER_LABEL) ) {
                     if(!empty($stockMsg)){
