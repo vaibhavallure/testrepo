@@ -2235,8 +2235,8 @@ tr.tr-piercing td {
 		width: 20px;
 		height: 20px;
 	}
-	.cms-store-locations-html .fancybox-lock{
-		position: fixed;
+	.cms-store-locations-html.fancybox-lock{
+		position: fixed !important;
 	}
 
 }

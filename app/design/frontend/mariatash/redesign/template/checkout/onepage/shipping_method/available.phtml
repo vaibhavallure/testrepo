@@ -32,7 +32,9 @@
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
 <?php $quote = $this->getQuote();?>
 <?php if (!$_shippingRateGroups): ?>
-	<p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
+    <?php $custome_error_message = Mage::getStoreConfig('carriers/matrixrate/specificerrmsg', Mage_Core_Model_App::ADMIN_STORE_ID)?>
+	<!--<p><?php /*echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') */?></p>-->
+	<p><?php echo $this->__($custome_error_message) ?></p>
 <?php else: ?>
 	<?php $_sole = count($_shippingRateGroups) == 1;?>
 	<?php $_address = $this->getAddress();?>
