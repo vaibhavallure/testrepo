@@ -68,7 +68,35 @@
       </promobox>
     </helpers>
   </global>
+  <admin>
+    <routers>
+      <allure_promobox>
+        <use>admin</use>
+        <args>
+          <module>Allure_PromoBox</module>
+          <frontName>allurepromobox</frontName>
+        </args>
+      </allure_promobox>
+    </routers>
+  </admin>
   <adminhtml>
+    <menu>
+      <allure>
+        <children>
+          <promobox module="promobox">
+            <title>Promo Box</title>
+            <sort_order>3</sort_order>
+            <children>
+              <appointments module="promobox">
+                <title>Manage Banner</title>
+                <sort_order>1</sort_order>
+                <action>allurepromobox/adminhtml_banner</action>
+              </appointments>
+            </children>
+          </promobox>
+        </children>
+      </allure>
+    </menu>
     <acl>
       <resources>
         <all>
@@ -76,31 +104,20 @@
         </all>
         <admin>
           <children>
-            <system>
-              <children>
-                <config>
-                  <children>
-                    <promobox>
-                      <title>Promo Box</title>
-                    </promobox>
-                  </children>
-                </config>
-              </children>
-            </system>
+            <Allure_PromoBox>
+              <title>Celebrities Module</title>
+              <sort_order>10</sort_order>
+            </Allure_PromoBox>
           </children>
         </admin>
       </resources>
     </acl>
+    <layout>
+      <updates>
+        <allure_promobox>
+          <file>allure/promobox.xml</file>
+        </allure_promobox>
+      </updates>
+    </layout>
   </adminhtml>
-  <admin>
-    <routers>
-      <adminhtml>
-        <args>
-          <modules>
-            <promobox before="Mage_Adminhtml">Allure_PromoBox_Adminhtml</promobox>
-          </modules>
-        </args>
-      </adminhtml>
-    </routers>
-  </admin>
 </config> 
