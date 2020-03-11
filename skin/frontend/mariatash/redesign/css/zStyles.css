@@ -2289,6 +2289,9 @@ tr.tr-piercing td {
 		-webkit-filter: grayscale(0%);
 		filter: grayscale(0%);
 	}
+	.category-shop-our-instagram div#instagram-view-container .fs-post-info.para-normal {
+		margin-bottom: 20px;
+	}
 }
 
 .mobile_menu_overlay {
