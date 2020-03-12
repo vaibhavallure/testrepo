@@ -45,7 +45,8 @@ h4{
 }
 
 .info-text-three,
-.cart-collaterals .special-total .total-title{
+.cart-collaterals .special-total .total-title,
+.shipping-method-parent .address-method-common p.col-12{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
