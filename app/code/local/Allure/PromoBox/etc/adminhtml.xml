@@ -11,9 +11,9 @@
                         <children>
                             <config>
                                 <children>
-                                    <ecp_celebrities translate="title" module="promo box">
+                                    <promobox translate="title" module="promo box">
                                         <title>Promo Box</title>
-                                    </ecp_celebrities>
+                                    </promobox>
                                 </children>
                             </config>
                         </children>

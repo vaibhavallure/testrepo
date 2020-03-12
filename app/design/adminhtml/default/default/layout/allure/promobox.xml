@@ -2,7 +2,7 @@
 <layout version="0.1.0">
     <allure_promobox_adminhtml_banner_index>
         <reference name="content">
-            <block type="allure_promobox/adminhtml_banner" name="allure_promobox_banner" />
+            <block type="promobox/adminhtml_banner" name="allure_promobox_banner" />
         </reference>
     </allure_promobox_adminhtml_banner_index>
 </layout>

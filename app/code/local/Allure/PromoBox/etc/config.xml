@@ -105,7 +105,7 @@
         <admin>
           <children>
             <Allure_PromoBox>
-              <title>Celebrities Module</title>
+              <title>Promo Box Module</title>
               <sort_order>10</sort_order>
             </Allure_PromoBox>
           </children>

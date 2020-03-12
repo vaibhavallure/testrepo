@@ -1,5 +1,5 @@
 <?php
-class Ecp_Celebrities_Block_Adminhtml_Celebrities_Renderer_Image extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract{
+class Allure_PromoBox_Block_Adminhtml_Banner_Renderer_Image extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract{
      
     public function render(Varien_Object $row)
     {
@@ -10,7 +10,7 @@ class Ecp_Celebrities_Block_Adminhtml_Celebrities_Renderer_Image extends Mage_Ad
     {       
         $val = $row->getData($this->getColumn()->getIndex());
        // $val = str_replace("no_selection", "", $val);
-        $url = Mage::getBaseUrl('media') . 'celebrities/'.$val; 
+        $url = Mage::getBaseUrl('media') . 'promobox/'.$val;
         $out = "<img src=". $url ." width='60px'/>"; 
         return $out;
     }
