@@ -1,11 +1,11 @@
 <?php
 
-class Allure_PromoBox_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Allure_PromoBox_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
     {
         parent::__construct();
-        $this->setId('promobannerId');
+        $this->setId('promocategoryId');
         $this->setDefaultSort('id');
         $this->setDefaultDir('ASC');
         $this->setSaveParametersInSession(true);
@@ -13,22 +13,13 @@ class Allure_PromoBox_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_W
 
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('promobox/banner')->getCollection();
+        $collection = Mage::getModel('promobox/category')->getCollection();
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
 
     protected function _prepareColumns()
     {
-        $this->addColumn('image', array(
-            'header'    => Mage::helper('promobox')->__('Image'),
-            'width'     => '150px',
-            'index'     => 'image',
-            'align'     => 'center',
-            'type'      => 'image',
-            'renderer'  => 'Allure_PromoBox_Block_Adminhtml_Banner_Renderer_Image'
-        ));
-
         $this->addColumn('id', array(
             'header'    => Mage::helper('promobox')->__('ID'),
             'align'     =>'right',
@@ -36,21 +27,38 @@ class Allure_PromoBox_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_W
             'index'     => 'id',
         ));
 
-        $this->addColumn('name', array(
-            'header'    => Mage::helper('promobox')->__('Name'),
-            'align'     =>'left',
-            'index'     => 'name',
+        $this->addColumn('category_id', array(
+            'header'    => Mage::helper('promobox')->__('Category'),
+            'index'     => 'category_id',
+            'align'     => 'center',
+            'renderer'  => 'Allure_PromoBox_Block_Adminhtml_Category_Renderer_Category'
         ));
 
-        $this->addColumn('html_block', array(
-            'header'    => Mage::helper('promobox')->__('Html Content'),
+        $this->addColumn('start_date', array(
+            'header'    => Mage::helper('promobox')->__('Start Date'),
             'align'     =>'left',
-            'index'     => 'html_block',
+            'index'     => 'start_date',
+            'type'      => 'datetime',
+        ));
+
+        $this->addColumn('end_date', array(
+            'header'    => Mage::helper('promobox')->__('End Date'),
+            'align'     =>'left',
+            'index'     => 'end_date',
+            'type'      => 'datetime',
+
         ));
         $this->addColumn('size', array(
             'header'    => Mage::helper('promobox')->__('size'),
             'align'     =>'left',
             'index'     => 'size',
+        ));
+        $this->addColumn('status', array(
+            'header'    => Mage::helper('promobox')->__('status'),
+            'align'     =>'left',
+            'index'     => 'status',
+            'renderer'  => 'Allure_PromoBox_Block_Adminhtml_Category_Renderer_Status'
+
         ));
 
 
@@ -80,7 +88,7 @@ class Allure_PromoBox_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_W
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('id');
-        $this->getMassactionBlock()->setFormFieldName('banners');
+        $this->getMassactionBlock()->setFormFieldName('category');
 
         $this->getMassactionBlock()->addItem('delete', array(
             'label'    => Mage::helper('promobox')->__('Delete'),

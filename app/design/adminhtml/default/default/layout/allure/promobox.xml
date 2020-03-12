@@ -5,4 +5,9 @@
             <block type="promobox/adminhtml_banner" name="allure_promobox_banner" />
         </reference>
     </allure_promobox_adminhtml_banner_index>
+    <allure_promobox_adminhtml_category_index>
+        <reference name="content">
+            <block type="promobox/adminhtml_category" name="allure_promobox_category" />
+        </reference>
+    </allure_promobox_adminhtml_category_index>
 </layout>
