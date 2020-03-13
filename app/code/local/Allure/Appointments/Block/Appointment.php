@@ -202,4 +202,9 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         $blockId= !empty($this->getStoreCode())?$this->getStoreCode()."_appointment_banner_block":"appointment_banner_block";
         return $this->getLayout()->createBlock('cms/block')->setBlockId($blockId)->toHtml();
     }
+    public function getAlertMessage(){
+        $store_id=$this->getStoreId();
+        return $this->helper()->getStoreData($store_id,"alertMessage");
+    }
+
 }
