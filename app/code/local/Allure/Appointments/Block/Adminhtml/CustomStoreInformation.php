@@ -255,14 +255,19 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             . $this->getElement()->getName() . '[store_map][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
 
-        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="digital_form_url">Digital Release URL </label>';
         $html .= '<input class="appointment-setting-input" name="'
             . $this->getElement()->getName() . '[digital_form_url][]" value="'
             . $this->_getValue('digital_form_url/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
         $html .= '</div>';
 
-
+        /*Alert message that will appear after strore info*/
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="appointments_alert_message">Alert Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[alertMessage][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('alertMessage/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
 
         $html .= '<hr class="appointment-setting-hr">';
         $html .= '<div style="text-align:center"><h3>SMS body for First Language</h3></div>';
