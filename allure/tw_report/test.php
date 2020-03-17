@@ -11,11 +11,25 @@ umask(0);
 Mage::app();
 echo "<pre>";
 
-$xeroClient = Mage::helper('allure_xero/xeroClient');
-$xero = Mage::getModel('allure_xero/xero');
+$type = $_GET['type'];
+$isTw = $_GET['tw'];
+if(isset($type)){
+    if($isTw == 1){
+        $isTw = true;
+    } else {
+        $isTw = false;
+    }
+
+    $xeroClient = Mage::helper('allure_xero/xeroClient');
+    $xero = Mage::getModel('allure_xero/xero');
+    if($type === 'invoice') {
+        $xero->setInvoicePaymentForOrder($isTw);
+    }else if($type == 'creditnote') {
+        $xero->createCreditNoteForOrder($isTw);
+    }
+}
+
 //$xero->bankTransaction();
-//$xero->setInvoicePaymentForOrder(null);
-$xero->createCreditNoteForOrder(null);
 //$xero->deleteInvoices();
 //$xero->deleteCreditNotes();
 //$xeroClient->deleteInvoice(	"INV-6138");
