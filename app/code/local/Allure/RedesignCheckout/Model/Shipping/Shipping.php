@@ -24,34 +24,82 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
             ->setPostcode(Mage::getStoreConfig(self::XML_PATH_STORE_ZIP, $request->getStore()));
         }
         
-        $routeName = Mage::app()->getRequest()->getRouteName();
+        
+        //matrixrate related code
+        $isAllowOtherShippingForFrontend = true;
+        $isAllowOtherShippingForBackend = true;
         $allowedCarrierArray = array("matrixrate");
-        if($routeName == "adminhtml"){
-            $allowedCarrierArray = array("flatrate", "freeshipping", "tablerate", "dhl", "fedex", "ups", "usps", "dhlint");
+        $routeName = Mage::app()->getRequest()->getRouteName();
+        if (Mage::helper('core')->isModuleEnabled("Allure_Matrixrate")) {
+            if(Mage::getStoreConfig('carriers/matrixrate/active', $storeId)){
+                $matrixRateHelper = Mage::helper("matrixrate");
+                $isShowMatrixRate = $matrixRateHelper->isShowMatrixRate();
+                if($isShowMatrixRate){
+                    $isAllowOtherShippingForFrontend = $matrixRateHelper->isAllowDefaultShippingMethodsToFrontend();
+                    $isAllowOtherShippingForBackend = $matrixRateHelper->isAllowDefaultShippingMethodsToBackend();
+                }
+            }
         }
         
         $limitCarrier = $request->getLimitCarrier();
         if (!$limitCarrier) {
             $carriers = Mage::getStoreConfig('carriers', $storeId);
             
-            foreach ($carriers as $carrierCode => $carrierConfig) {
-                if(in_array($carrierCode, $allowedCarrierArray)){
-                    $this->collectCarrierRates($carrierCode, $request);
+            if($routeName == "adminhtml"){
+                foreach ($carriers as $carrierCode => $carrierConfig) {
+                    if($isAllowOtherShippingForBackend){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }else if(in_array($carrierCode, $allowedCarrierArray)){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }
+                }
+            }else{ //for frontend
+                foreach ($carriers as $carrierCode => $carrierConfig) {
+                    if($isAllowOtherShippingForFrontend){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }else if(in_array($carrierCode, $allowedCarrierArray)){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }
                 }
             }
+            
+            
         } else {
             if (!is_array($limitCarrier)) {
                 $limitCarrier = array($limitCarrier);
             }
-            foreach ($limitCarrier as $carrierCode) {
-                if(in_array($carrierCode, $allowedCarrierArray)){
+            
+            //changes
+            if($routeName == "adminhtml"){
+                foreach ($limitCarrier as $carrierCode) {
                     $carrierConfig = Mage::getStoreConfig('carriers/' . $carrierCode, $storeId);
                     if (!$carrierConfig) {
                         continue;
                     }
-                    $this->collectCarrierRates($carrierCode, $request);
+                    
+                    if($isAllowOtherShippingForBackend){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }else if(in_array($carrierCode, $allowedCarrierArray)){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }
                 }
+            }else{ //for frontend
+                foreach ($limitCarrier as $carrierCode) {
+                    $carrierConfig = Mage::getStoreConfig('carriers/' . $carrierCode, $storeId);
+                    if (!$carrierConfig) {
+                        continue;
+                    }
+                    
+                    if($isAllowOtherShippingForFrontend){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }else if(in_array($carrierCode, $allowedCarrierArray)){
+                        $this->collectCarrierRates($carrierCode, $request);
+                    }
+                }
+                
             }
+            
+            
         }
         
         return $this;
