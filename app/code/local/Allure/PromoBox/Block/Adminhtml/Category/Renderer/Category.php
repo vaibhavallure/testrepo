@@ -5,17 +5,14 @@ class Allure_PromoBox_Block_Adminhtml_Category_Renderer_Category extends Mage_Ad
     {
         return $this->_getValue($row);
     }
-
     protected function _getValue(Varien_Object $row)
     {
         $val = $row->getData($this->getColumn()->getIndex());
-        return $this->getCategoryName($val);
+        return $this->helper()->getCategoryName($val);
     }
-    protected function getCategoryName($category_id)
+    public function helper()
     {
-        $_category = Mage::getModel('catalog/category')->load($category_id);
-
-        return $_category->getName();
+        return Mage::helper("promobox");
     }
 
 }

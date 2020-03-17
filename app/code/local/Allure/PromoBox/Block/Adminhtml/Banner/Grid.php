@@ -51,6 +51,7 @@ class Allure_PromoBox_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_W
             'header'    => Mage::helper('promobox')->__('size'),
             'align'     =>'left',
             'index'     => 'size',
+            'renderer'  => 'Allure_PromoBox_Block_Adminhtml_Banner_Renderer_Size'
         ));
 
 

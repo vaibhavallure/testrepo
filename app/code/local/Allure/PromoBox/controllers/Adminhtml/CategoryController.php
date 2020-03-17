@@ -13,7 +13,7 @@ class Allure_PromoBox_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
     }
     public function editAction() {
         $id = $this->getRequest()->getParam('id');
-        $model = Mage::getModel('promobox/banner')->load($id);
+        $model = Mage::getModel('promobox/category')->load($id);
 
         if ($model->getId() || $id == 0) {
 
@@ -23,18 +23,18 @@ class Allure_PromoBox_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
             }
 
             if($model->getId())
-            Mage::register('banner_data', $model);
+            Mage::register('category_data', $model);
 
             $this->loadLayout();
 
             $this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
 
-            $this->_addContent($this->getLayout()->createBlock('promobox/adminhtml_banner_edit'))
-                ->_addLeft($this->getLayout()->createBlock('promobox/adminhtml_banner_edit_tabs'));
+            $this->_addContent($this->getLayout()->createBlock('promobox/adminhtml_category_edit'))
+                ->_addLeft($this->getLayout()->createBlock('promobox/adminhtml_category_edit_tabs'));
 
             $this->renderLayout();
         } else {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('promobox')->__('Banner does not exist'));
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('promobox')->__('Category does not exist'));
             $this->_redirect('*/*/');
         }
     }
@@ -45,39 +45,18 @@ class Allure_PromoBox_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
 
     public function saveAction() {
         if ($data = $this->getRequest()->getPost()) {
-            if (!empty($_FILES['image']['name'])) {
-                $_FILES['image']['name'] = preg_replace('|[^a-z0-9\-_\.]+|i', '_', $_FILES['image']['name']);
-                try {
-                    $uploader = new Varien_File_Uploader('image');
-
-                    $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png'));
-                    $uploader->setAllowRenameFiles(false);
-                    $uploader->setFilesDispersion(false);
-
-                    $path = Mage::getBaseDir('media') . DS . 'promobox';
-                    $result=$uploader->save($path, $_FILES['image']['name']);
-
-                } catch (Exception $e) {
-                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                    Mage::getSingleton('adminhtml/session')->setNewsData($this->getRequest()->getPost());
-                    $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
-                    return;
-                }
-                $data['image'] = $result['file'];
-            }
-
-            $model = Mage::getModel('promobox/banner');
-            if (is_array($data['image'])) {
-                $data['image'] = basename($data['image']['value']);
-            }
 
 
+            $this->checkUpdates();
+
+            $model = Mage::getModel('promobox/category');
             $data['id']=$this->getRequest()->getParam('id');
             $model->setData($data);
             try {
                 $model->save();
+                $this->saveBox($model->getId());
 
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('promobox')->__('Banner was successfully saved'));
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('promobox')->__('Category was successfully saved'));
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
 
                 if ($this->getRequest()->getParam('back')) {
@@ -96,14 +75,36 @@ class Allure_PromoBox_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('promobox')->__('Unable to find item to save'));
         $this->_redirect('*/*/');
     }
+    public function saveBox($promoboxCategoryId)
+    {
+        $data = $this->getRequest()->getPost();
+        $model = Mage::getModel('promobox/box');
+
+        foreach ($data['box'] as $box)
+        {
+            /*if(!$box['promobox_banner_id'])
+                continue;*/
+
+            $box['promobox_category_id']=$promoboxCategoryId;
+            $model->setData($box);
+            try {
+                $model->save();
+            }catch (Exception $e)
+            {
+                //$e->getMessage();
+            }
+
+        }
+
+    }
 
     public function deleteAction() {
         if ($this->getRequest()->getParam('id') > 0) {
             try {
-                $model = Mage::getModel('promobox/banner')->load($this->getRequest()->getParam('id'));
+                $model = Mage::getModel('promobox/category')->load($this->getRequest()->getParam('id'));
                 $model->delete();
 
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Banner was successfully deleted'));
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Category was successfully deleted'));
                 $this->_redirect('*/*/');
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -114,18 +115,18 @@ class Allure_PromoBox_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
     }
 
     public function massDeleteAction() {
-        $bannerIds = $this->getRequest()->getParam('banners');
-        if (!is_array($bannerIds)) {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select Banner(s)'));
+        $categoryIds = $this->getRequest()->getParam('category');
+        if (!is_array($categoryIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select Category'));
         } else {
             try {
-                foreach ($bannerIds as $bannerId) {
-                    $banner = Mage::getModel('promobox/banner')->load($bannerId);
-                    $banner->delete();
+                foreach ($categoryIds as $categoryId) {
+                    $category = Mage::getModel('promobox/category')->load($categoryId);
+                    $category->delete();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__(
-                        'Total of %d banner(s) were successfully deleted', count($bannerIds)
+                        'Total of %d category(s) were successfully deleted', count($categoryIds)
                     )
                 );
             } catch (Exception $e) {
@@ -133,6 +134,37 @@ class Allure_PromoBox_Adminhtml_CategoryController extends Mage_Adminhtml_Contro
             }
         }
         $this->_redirect('*/*/index');
+    }
+
+    protected function checkUpdates()
+    {
+        if(!$this->getRequest()->getParam('id'))
+           return;
+
+        $data = $this->getRequest()->getPost();
+
+        $PromoCategory = Mage::getModel('promobox/category')->load($this->getRequest()->getParam('id'));
+
+        if($PromoCategory->getCategoryId()!=$data['category_id'] || $PromoCategory->getStartingRow()!=$data['starting_row'] || $PromoCategory->getRowGap()!=$data['row_gap'] || $PromoCategory->getSize()!=$data['size'])
+        {
+            $this->clearBoxes();
+        }
+    }
+    protected function clearBoxes()
+    {
+        $promoboxCategoryId=$this->getRequest()->getParam("id");
+        $boxes= Mage::getModel("promobox/box")->getCollection()
+            ->addFieldToFilter('promobox_category_id', array('eq'=>$promoboxCategoryId));
+
+        foreach ($boxes as $box)
+        {
+            try{
+                $box->delete();
+            }catch (Exception $e)
+            {
+                //echo $e->getMessage();
+            }
+        }
     }
 
 }

@@ -34,12 +34,12 @@ class Allure_PromoBox_Block_Adminhtml_Banner_Edit_Tab_Form extends Mage_Adminhtm
             'name' => 'size',
             'values' => array(
                 array(
-                    'value' => "one_by_one",
-                    'label' => Mage::helper('promobox')->__('One By One'),
+                    'value' => "one_by_two",
+                    'label' => Mage::helper('promobox')->__('1X2'),
                 ),
                 array(
-                    'value' => "one_by_two",
-                    'label' => Mage::helper('promobox')->__('One By Two'),
+                    'value' => "two_by_two",
+                    'label' => Mage::helper('promobox')->__('2X2'),
                 ),
             ),
         ));

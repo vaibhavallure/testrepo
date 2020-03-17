@@ -38,20 +38,21 @@ class Allure_PromoBox_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block
             'header'    => Mage::helper('promobox')->__('Start Date'),
             'align'     =>'left',
             'index'     => 'start_date',
-            'type'      => 'datetime',
+            'type'      => 'date',
         ));
 
         $this->addColumn('end_date', array(
             'header'    => Mage::helper('promobox')->__('End Date'),
             'align'     =>'left',
             'index'     => 'end_date',
-            'type'      => 'datetime',
+            'type'      => 'date',
 
         ));
         $this->addColumn('size', array(
             'header'    => Mage::helper('promobox')->__('size'),
             'align'     =>'left',
             'index'     => 'size',
+            'renderer'  => 'Allure_PromoBox_Block_Adminhtml_Banner_Renderer_Size'
         ));
         $this->addColumn('status', array(
             'header'    => Mage::helper('promobox')->__('status'),
