@@ -11,6 +11,13 @@
                 <h1><?php echo $this->__("Wholesale Login")?></h1>
             </div>
             <div class="body modal-body">
+                <?php if(Mage::getSingleton('customer/session')->getData("success_message_wholesale")):?>
+                <div class="password-success">
+                    <span><?= Mage::getSingleton('customer/session')->getData("success_message_wholesale")?>
+                        <?php Mage::getSingleton('customer/session')->setData("success_message_wholesale","")?>
+                    </span>
+                </div>
+                <?php endif; ?>
                 <div id="login_msg_div">
                     <span class="invalid-login" id="login-msg"></span>
                 </div>

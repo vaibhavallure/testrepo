@@ -42,7 +42,9 @@
   ?>
   <div id="category-title" class="page-title category-title <?php echo ($currentCategory->getCategoryBleed()) ? ' category-bleed' : ''?>">
          <h1><?php echo $currentCategory->getName(); ?></h1>
- </div>
+      <div class="cat-description para-normal"><?= $currentCategory->getDescription() ?></div>
+
+  </div>
 <?php } ?>
 <div class="block-layered-nav-bg filter-common-div">
 <div class="block block-layered-nav mb-mana-catalogsearch-leftnav">
