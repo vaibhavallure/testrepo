@@ -14,11 +14,9 @@ class Allure_PromoBox_Block_Adminhtml_Category_Renderer_Promobox extends Varien_
 
             foreach ($this->getPromoBoxes() as $box)
             {
-
-                $style=($box->getPromoboxBannerId())?"style='border-color:green;border-width:2px'": "";
-//              $boxes.="<div style='background-color: forestgreen'>";
-                $boxes.="Row Number:".$box->getRowNumber()."<br> ";
-                $boxes.="<select $style name='box[".$box->getRowNumber()."][promobox_banner_id]' id=banner_".$box->getRowNumber().">";
+                $checkMark=($box->getPromoboxBannerId())?'<div style="background: url('.Mage::getDesign()->getSkinUrl('images/success_msg_icon.gif').') no-repeat 0px 0px;width: 16px;height: 16px;float: left"></div>':'';
+                $boxes.="Row Number:".$box->getRowNumber().$checkMark."<br>";
+                $boxes.="<select name='box[".$box->getRowNumber()."][promobox_banner_id]' id=banner_".$box->getRowNumber().">";
                 $boxes.="<option value=''>Select Banner</option>";
                 $boxes.=$this->getBanners($this->getCategoryData("size"),$box->getPromoboxBannerId());
                 $boxes.="</select><br>";
@@ -33,7 +31,6 @@ class Allure_PromoBox_Block_Adminhtml_Category_Renderer_Promobox extends Varien_
                 $boxes.="</select><br><br>";
                 $boxes.="<input type='hidden' name='box[".$box->getRowNumber()."][row_number]' value=".$box->getRowNumber()." >";
                 $boxes.="<input type='hidden' name='box[".$box->getRowNumber()."][id]' value=".$box->getId()." >";
-//                $boxes.="</div>";
             }
 
         }
