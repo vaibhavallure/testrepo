@@ -1,0 +1,29 @@
+.pb-item {
+    width: 40%;
+    padding: 4px;
+    display: none;
+}
+.pb-item div{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.pb-item.two_by_two.top {
+    padding: 4px 4px 0 4px;
+}
+.pb-item.two_by_two.bottom {
+    padding: 0 4px 4px 4px;
+}
+.pb-item.two_by_two div{
+    background-size: cover;
+}
+.pb-item.two_by_two.bottom div{
+    background-position-y: bottom;
+}
+
+@media (min-width:1366px) {
+.pb-item{
+    display: block;
+    }
+}
