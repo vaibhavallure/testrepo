@@ -5122,7 +5122,6 @@ a.product-video-link:hover div.product-video-play-icon {
 }
 .category-title .cat-description {
     width: 611px;
-    height: 48px;
     font-family: urw-din-xlight;
     font-size: 18px;
     font-weight: 300;
@@ -5132,5 +5131,4 @@ a.product-video-link:hover div.product-video-play-icon {
     letter-spacing: normal;
     color: rgba(41, 41, 41, 0.9);
     margin: 14px 0 15px 0;
-    overflow: hidden;
 }
