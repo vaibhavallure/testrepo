@@ -129,8 +129,8 @@ class Allure_PromoBox_Block_Adminhtml_Category_Renderer_Promobox extends Varien_
         $html="";
         foreach ($banners as $banner)
         {
-            $selected=($banner->getId()==$selected)? "selected": "";
-            $html='<option value="'.$banner->getId().'" '.$selected.'>'.$banner->getName().'</option>';
+            $select=($banner->getId()==$selected)? "selected": "";
+            $html.='<option value="'.$banner->getId().'" '.$select.'>'.$banner->getName().'</option>';
         }
 
         return $html;
