@@ -89,10 +89,7 @@ $table = $installer->getConnection()
     ), 'Row number')
     ->addColumn('side', Varien_Db_Ddl_Table::TYPE_VARCHAR, null, array(
         'nullable'  => false,
-    ), 'Side')
-    ->addColumn('block_number', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-        'nullable'  => true,
-    ), 'Block number');
+    ), 'Side');
 
 if (!$installer->getConnection()->isTableExists($table->getName())) {
     $installer->getConnection()->createTable($table);

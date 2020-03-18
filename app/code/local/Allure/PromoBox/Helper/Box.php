@@ -29,6 +29,9 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         if(!$this->validateDate())
             return;
 
+        if(!$this->moduleEnabled())
+            return;
+
 
         $limit=Mage::app()->getRequest()->getParam("limit");
         $page=Mage::app()->getRequest()->getParam("p");
@@ -128,28 +131,6 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
             ->addFieldToFilter('promobox_banner_id', array('neq'=>0));
     }
 
-    /**
-     * @return int|mixed
-     */
-    private function getUpdatedCount()
-    {
-        $limit=Mage::app()->getRequest()->getParam("limit");
-        $page=Mage::app()->getRequest()->getParam("p");
-
-        $bannerBoxCounter=0;
-        foreach ($this->_box_positions as $pos) {
-            if($pos<($limit*$page-$limit))
-            {
-                $bannerBoxCounter=$bannerBoxCounter+2;
-            }
-        }
-
-        if($limit && $page)
-            return ($limit*$page-$limit)+$bannerBoxCounter+1;
-
-        return 1;
-    }
-
     private function getBannerImage($banner_id)
     {
         $image=$this->getBanner($banner_id)->getImage();
@@ -158,6 +139,10 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         $path=Mage::getBaseUrl()."media/promobox/";
 
         return $path.$image;
+    }
+    private function getBannerHtmlBlock($banner_id)
+    {
+        return $this->getBanner($banner_id)->getHtmlBlock();
     }
 
     /**
@@ -190,8 +175,12 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
     {
         $style=$this->getStyle($i);
         $class=$this->getClass($i);
+        $htmlBlock="";
 
-        echo '<li  class="'.$class.'" ><div style="'.$style.'"></li>';
+        if($this->_box_size=="one_by_two" || ($this->_box_size=="two_by_two" && $this->_boxes[$i]['position']=="top"))
+            $htmlBlock=$this->getBannerHtmlBlock($this->_boxes[$i]['banner_id']);
+
+        echo '<li  class="'.$class.'" ><div style="'.$style.'">'.$htmlBlock.'</div></li>';
     }
     private function setI($i)
     {
@@ -244,5 +233,9 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         }
 
         return true;
+    }
+    public function moduleEnabled()
+    {
+        return Mage::getStoreConfig("promobox/module_status/module_enabled");
     }
 }
