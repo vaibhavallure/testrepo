@@ -29,10 +29,6 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         if(!$this->validateDate())
             return;
 
-        $date = Mage::getModel('core/date')->gmtDate('Y-m-d');
-
-//        Mage::log($date,7,"adi.log",true);
-
 
         $limit=Mage::app()->getRequest()->getParam("limit");
         $page=Mage::app()->getRequest()->getParam("p");
@@ -77,13 +73,6 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         foreach ($boxes as $box) {
             $number_of_product_blocks=$box->getRowNumber()*5;
 
-            if($count>0)
-            {
-                if($this->_box_size=='tow_by_two')
-                {
-//                    $number_of_product_blocks=$number_of_product_blocks+($count*4);
-                }
-            }
 
             if($box->getSide()=="right")
                 $number_of_product_blocks = $number_of_product_blocks - 1;
@@ -220,7 +209,6 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         $currentdate = Mage::getModel('core/date')->gmtDate('Y-m-d');
         $currentdate = new DateTime($currentdate);
 
-        Mage::log($currentdate,7,"adi.log",true);
 
         if(!$this->getCategory()->getStartDate() && !$this->getCategory()->getEndDate()) {
             return true;
