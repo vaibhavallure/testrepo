@@ -70,13 +70,9 @@ class Allure_Category_Model_Url extends Dnd_Patchindexurl_Model_Url
         $fullPath = $requestPath . $categoryUrlSuffix;
         
         if($oldFullPath != $fullPath){
-            if($this->_deleteOldTargetPath($fullPath, $idPath, $storeId)){
-                return $requestPath;
-            }
+            $this->_deleteOldTargetPath($fullPath, $idPath, $storeId);
         }else{
-            if($this->_deleteOldTargetPath($oldFullPath, $idPath, $storeId)){
-                return $existingRequestPath;
-            }
+            $this->_deleteOldTargetPath($oldFullPath, $idPath, $storeId);
         }
         
         if ($this->_deleteOldTargetPath($fullPath, $idPath, $storeId)) {
