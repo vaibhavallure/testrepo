@@ -59,11 +59,19 @@ class Allure_PromoBox_Adminhtml_BannerController extends Mage_Adminhtml_Controll
 
                 } catch (Exception $e) {
                     Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                    Mage::getSingleton('adminhtml/session')->setNewsData($this->getRequest()->getPost());
+                    Mage::getSingleton('adminhtml/session')->setBannerData($this->getRequest()->getPost());
                     $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                     return;
                 }
                 $data['image'] = $result['file'];
+            }else{
+                if(!$this->getRequest()->getParam("id"))
+                {
+                    Mage::getSingleton('adminhtml/session')->addError("Banner image is required");
+                    Mage::getSingleton('adminhtml/session')->setBannerData($this->getRequest()->getPost());
+                    $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+                    return;
+                }
             }
 
             $model = Mage::getModel('promobox/banner');

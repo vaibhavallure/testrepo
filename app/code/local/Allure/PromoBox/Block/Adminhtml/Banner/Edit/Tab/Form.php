@@ -15,11 +15,24 @@ class Allure_PromoBox_Block_Adminhtml_Banner_Edit_Tab_Form extends Mage_Adminhtm
             'name' => 'name',
         ));
 
-        $fieldset->addField('image', 'image', array(
+        $afterElementHtml = '<p class="nm" style="color: red"><small>' . 'For 1x2 Banner upload image size 565X361(PX)<br> For 2x2 Banner upload image size 565X733(PX)' . '</small></p>';
+        $field = $fieldset->addField('image', 'image', array(
             'label' => Mage::helper('promobox')->__('Image'),
             'required' => true,
+            'class'     => 'required-entry required-file',
             'name' => 'image',
+            'after_element_html' => $afterElementHtml,
         ));
+
+
+        $field->setAfterElementHtml('<script>
+//<![CDATA[
+document.addEventListener("DOMContentLoaded", function(){ 
+       document.getElementsByClassName("delete-image")[0].style.display="none";
+}, false);
+
+//]]>
+</script>');
 
 
         $fieldset->addField('html_block', 'editor', array(
