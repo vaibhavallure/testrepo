@@ -4,6 +4,9 @@
 		<Allure_Category>
 			<active>true</active>
 			<codePool>local</codePool>
+			<depends>
+				<Dnd_Patchindexurl />
+			</depends>
 		</Allure_Category>
 	</modules>
 </config>
