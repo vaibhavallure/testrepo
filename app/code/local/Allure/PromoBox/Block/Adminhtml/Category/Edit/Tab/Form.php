@@ -124,7 +124,6 @@ function genrateRow() {
         starting_row.value="";
         return;
         }
-        console.log(number_of_rows);
         
         if(parseInt(starting_row.value)>=number_of_rows)
         {
