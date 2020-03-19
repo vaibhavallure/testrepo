@@ -22,7 +22,7 @@
     background-position-y: bottom;
 }
 .promobox-content{
-    padding-left: 18px;
+    padding-left: 30px;
     padding-top: 24px;
     text-align: left;
 }
@@ -40,6 +40,8 @@
     text-align: left;
     margin-top: 31px;
     margin-left: 6px;
+    display: block;
+    font-size: 15px;
 }
 
 @media (min-width:1366px) {
