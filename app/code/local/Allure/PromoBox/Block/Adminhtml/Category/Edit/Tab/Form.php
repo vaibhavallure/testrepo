@@ -112,12 +112,23 @@ function genrateRow() {
     var size = document.getElementById("size");
     var size_type=size.options[size.selectedIndex].value; 
     
+     var row_count=category.options[category.selectedIndex].getAttribute(\'data-row-count\');
+     var number_of_rows = parseInt(row_count);
+   
        if(!starting_row.value || starting_row.value=="undefined" || !row_gap.value || row_gap.value=="undefined")
           return;
  
         if(parseInt(starting_row.value)<1)
         {
         alert("Starting Row Value must be greater than zero");
+        starting_row.value="";
+        return;
+        }
+        console.log(number_of_rows);
+        
+        if(parseInt(starting_row.value)>=number_of_rows)
+        {
+        alert("Starting Row Value must be less than "+number_of_rows);
         starting_row.value="";
         return;
         }
@@ -129,8 +140,6 @@ function genrateRow() {
         return;
         }
 
-    var row_count=category.options[category.selectedIndex].getAttribute(\'data-row-count\');
-    var number_of_rows = parseInt(row_count);
    
        
     

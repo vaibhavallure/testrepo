@@ -88,7 +88,10 @@ class Allure_PromoBox_Block_Adminhtml_Category_Renderer_Promohtml extends Varien
     protected function getProductCount($category_id)
     {
         $cat = Mage::getModel('catalog/category')->load($category_id);
-        return (int)$cat->getProductCount();
+        $productCollection=$cat->getProductCollection()
+            ->addAttributeToFilter('status', array('eq'=>'1'));
+
+        return (int)$productCollection->getSize();
     }
 
     protected function getRowCount($category_id)
