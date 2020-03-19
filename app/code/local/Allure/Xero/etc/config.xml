@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<config>
+	<modules>
+		<Allure_Xero>
+			<version>1.0.0</version>
+		</Allure_Xero>
+	</modules>
+	<global>
+<!--		<resources>-->
+<!--			<allure_xero_setup>-->
+<!--				<setup>-->
+<!--                    <module>Allure_Xero</module>-->
+<!--                </setup>-->
+<!--                <connection>-->
+<!--                    <use>core_setup</use>-->
+<!--                </connection>-->
+<!--			</allure_xero_setup>-->
+<!--		</resources>-->
+        
+
+		<helpers>
+			<allure_xero>
+				<class>Allure_Xero_Helper</class>
+			</allure_xero>
+		</helpers>
+
+		<models>
+			<allure_xero>
+				<class>Allure_Xero_Model</class>
+<!--				<resourceModel>allure_xero_resource</resourceModel>-->
+			</allure_xero>
+		</models>
+	</global>
+
+<!--	<crontab>-->
+<!--		<jobs>-->
+<!--		</jobs>-->
+<!--	</crontab>-->
+
+</config>
