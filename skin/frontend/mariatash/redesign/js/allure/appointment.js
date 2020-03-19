@@ -1,6 +1,8 @@
 
 jQuery(document).ready(function () {
 
+    window.iti=[];
+
     unsetLoader();
 
     jQuery(window).bind('orientationchange', function (event) {
@@ -13,37 +15,69 @@ jQuery(document).ready(function () {
         jQuery("#slots_section div").removeClass("active");
         calculateTime();
     });
-    jQuery(document).on('change','.checkup_select,.piercing_select',function () {
-     var no= jQuery(this).data('no');
-     if(jQuery('#piercing_select_'+no+':checked').length!=0 || jQuery('#checkup_select_'+no+':checked').length!=0) {
-         jQuery('#customer_select_' + no + '').attr("value", 1);
-         jQuery('#customer_select_' + no + '').focus();
-         jQuery('#customer_select_' + no + '').focusout();
 
-     }else
-         jQuery('#customer_select_'+no+'').attr("value","");
+    jQuery(document).on('keyup','.al-phone', function() {
+        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+        var id=jQuery(this).attr("id");
+        jQuery("#"+id+"_message").remove();
+
+        if(jQuery.trim(jQuery(this).val())) {
+            if (iti[id].isValidNumber()) {
+                var str=jQuery(this).attr("value");
+                if(str.replace(/[^+]/g, "").length==1)
+                    jQuery(this).removeClass("invalid_telp");
+                else {
+                    jQuery(this).addClass("invalid_telp");
+                    errorMessage = '<div id="' + id + '_message" class="error2 invalid-feedback2 translate-popup" style="display: block;">Invalid number</div>';
+                    jQuery(this).after(errorMessage);
+                }
+
+            } else {
+                var errorCode = iti[id].getValidationError();
+                var errorMessage = errorMap[errorCode];
+
+                if(!errorMessage)
+                    errorMessage="Invalid number";
+
+                jQuery(this).addClass("invalid_telp");
+                errorMessage = '<div id="' + id + '_message" class="invalid-feedback2 translate-popup" style="display: block;">' + errorMessage + '</div>';
+                jQuery(this).after(errorMessage);
+            }
+        }
     });
 
+    jQuery(document).on('change','.checkup_select,.piercing_select',function () {
+        var no= jQuery(this).data('no');
+        if(jQuery('#piercing_select_'+no+':checked').length!=0 || jQuery('#checkup_select_'+no+':checked').length!=0) {
+            jQuery('#customer_select_' + no + '').attr("value", 1);
+            jQuery('#customer_select_' + no + '').focus();
+            jQuery('#customer_select_' + no + '').focusout();
+
+        }else
+            jQuery('#customer_select_'+no+'').attr("value","");
+    });
 
 
 
     jQuery(document.body).on('keydown', '.phonenumber', function (event) {
         var key= (event.keyCode ? event.keyCode : event.which);
 
-            if (key == 0 || key == 229) { //for android chrome keycode fix
-                if (!jQuery(this).hasClass('allure_only_number'))
-                    jQuery(this).addClass('allure_only_number');
-            }
-            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46 || (key >= 96 && key <= 107) || (key >= 109 && key <= 111)) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
-                return;
-            }
 
-            var regex = new RegExp("^[0-9]+$");
-            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            if (!regex.test(key)) {
-                event.preventDefault();
-                return false;
-            }
+        if (key == 0 || key == 229) { //for android chrome keycode fix
+            if (!jQuery(this).hasClass('allure_only_number'))
+                jQuery(this).addClass('allure_only_number');
+        }
+        if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46 || (key >= 96 && key <= 107) || (key >= 109 && key <= 111)) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
+            return;
+        }
+
+        var regex = new RegExp("^[0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
 
     });
 
@@ -109,7 +143,7 @@ var addCustomer = function (srno) {
                         <input class="input-box required-entry email translate-popup select-type-one"  type="email" name="customer[${srno}][email]" id="email${srno}" placeholder="${__('Email*')}" value="" required>
                    </div>
                    <div id="phone-box" class="col-md-6 form-group">
-                       <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup select-type-one" type="search" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required autocomplete="off" Try ="disabled" autocorrect="off">
+                       <input class="input-box required-entry validate-intl-telephone phonenumber al-phone invalid_telp translate-popup select-type-one" type="search" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required autocomplete="off" Try ="disabled" autocorrect="off">
                    </div>
                  </div>
                  </div>
@@ -152,15 +186,15 @@ var addCustomer = function (srno) {
         convert(jQuery(this),'lastname',evt);
     });
 
-   var iti= window.intlTelInput(document.querySelector("#phonenumber" + srno), {
-        // initialCountry: 'fr',
+    iti["phonenumber"+ srno]= window.intlTelInput(document.querySelector("#phonenumber" + srno), {
+        initialCountry:jQuery("#default_country_phone").val(),
         autoFormat: false,
         autoHideDialCode: false,
         autoPlaceholder: false,
         nationalMode: false,
         utilsScript:  Allure.UtilPath
-    });
-    allureIntlTelValidate(jQuery("#phonenumber" + srno), iti);
+});
+    // allureIntlTelValidate(jQuery("#phonenumber" + srno), iti);
 
 };
 
@@ -271,17 +305,17 @@ var calculateTime = function () {
         var hoursLabel=(hours>1)?"Hours":"Hour";
         var minLabel=(minutes>1)?"Minutes":"Minute";
 
-    timeSpan.slideUp("slow",function () {
-        timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __(hoursLabel)+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__(minLabel)+'</span>');
-    });
-    timeSpan.slideDown("slow");
+        timeSpan.slideUp("slow",function () {
+            timeSpan.html('<span class="translate-popup para-normal">'+__('Expected Appointment Length:')+'</span> '+hours +' <span class="translate-popup info-text-two">'+ __(hoursLabel)+'</span> '+ minutes+' <span class="translate-popup info-text-two">'+__(minLabel)+'</span>');
+        });
+        timeSpan.slideDown("slow");
 
         // jQuery('.form-disable-overlay').show();
         setLoader();
-       //jQuery('#appointemnet_form input').prop("disabled",true);
+        //jQuery('#appointemnet_form input').prop("disabled",true);
         if(getAvailableSlots())
         {
-         //   jQuery('#appointemnet_form input').prop("disabled",false);
+            //   jQuery('#appointemnet_form input').prop("disabled",false);
         }
     }
     else {
@@ -325,13 +359,13 @@ var getAvailableSlots = function () {
         dataType: 'json',
         type: 'POST',
         data: request,
-       // async:false,
+        // async:false,
         beforeSend: function () {
-             jQuery("#slots_section").slideUp("slow",function () {
-                 jQuery("#pick_ur_slot").addClass("loading");
-             });
+            jQuery("#slots_section").slideUp("slow",function () {
+                jQuery("#pick_ur_slot").addClass("loading");
+            });
 
-           // jQuery('#slotloader').show();
+            // jQuery('#slotloader').show();
         },
         complete: function () {
             // jQuery('#slotloader').hide();
@@ -352,7 +386,7 @@ var getAvailableSlots = function () {
 var modifyDateSlotAvlble=0;
 
 var setAvailableSlots = function (response) {
-   // jQuery('#slotloader').hide();
+    // jQuery('#slotloader').hide();
 
     html=`<p class="col-12 p-1 m-1 text-center">
         <span class="translate-popup para-normal">${__('No Slot Available')}</span>
@@ -362,16 +396,16 @@ var setAvailableSlots = function (response) {
     {
         //console.log(response.slots);
         var slots=JSON.stringify(response.slots);
-         slots=JSON.parse(slots);
-         if(slots.length>0) {
-             var html="";
-             for (var i = 0; i < slots.length; i++) {
+        slots=JSON.parse(slots);
+        if(slots.length>0) {
+            var html="";
+            for (var i = 0; i < slots.length; i++) {
 
-                 html+=' <div class="slot-width float-left text-center info-text-two'+isModifyActive(slots[i])+'" data-start="'+slots[i]["start"]+'" data-end="'+slots[i]["end"]+'" data-p_id="'+slots[i]["id"]+'" title="'+slots[i]["start"]+'-'+slots[i]["end"]+'">\n'
-                            +slots[i]["start"]+
-                     '</div>';
-             }
-         }
+                html+=' <div class="slot-width float-left text-center info-text-two'+isModifyActive(slots[i])+'" data-start="'+slots[i]["start"]+'" data-end="'+slots[i]["end"]+'" data-p_id="'+slots[i]["id"]+'" title="'+slots[i]["start"]+'-'+slots[i]["end"]+'">\n'
+                    +slots[i]["start"]+
+                    '</div>';
+            }
+        }
     }
 
     if(modifyDateSlotAvlble==0)
@@ -454,10 +488,10 @@ var formatDate = function(date) {
 
 var validateForm = function () {
 
-/*
-    jQuery.validator.addMethod("noSpace", function(value, element) {
-        return value.indexOf(" ") < 0 && value != "";
-    }, "No space please and don't leave it empty");*/
+    /*
+        jQuery.validator.addMethod("noSpace", function(value, element) {
+            return value.indexOf(" ") < 0 && value != "";
+        }, "No space please and don't leave it empty");*/
 
 
     jQuery('.firstname,.lastname,.email').each(function() {
@@ -473,18 +507,18 @@ var validateForm = function () {
     });
 
 
-    jQuery('.phonenumber').each(function() {
+    /*jQuery('.phonenumber').each(function() {
         jQuery(this).rules('add', {
             minlength: 10,
             messages: {
                 minlength: __("Please enter valid phone number.")
             }
         });
-    });
+    });*/
 
 
 
-/*validation using hidden inputs*/
+    /*validation using hidden inputs*/
     jQuery('.customer_select').each(function() {
         jQuery(this).rules('add', {
             required:true,

@@ -56,6 +56,15 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         $oldCustomerListHtml ='';
 
 
+
+        /*check if release_form enable*/
+        if($type=="release" || $type=="release_reminder_week" || $type=="release_reminder_day")
+            if(!$configData['release_form_enable'][$store_id])
+                return;
+
+
+
+
         /*If Old Appointment Data Exist Then  Take it.*/
         if($oldAppointment != null) {
 
