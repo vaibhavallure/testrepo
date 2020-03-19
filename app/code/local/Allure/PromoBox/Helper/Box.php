@@ -164,7 +164,7 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
     private function getClass($i)
     {
         $class='';
-        $class.='pb-item p-item item five-col box-id-'.$i;
+        $class.='pb-item p-item five-col box-id-'.$i;
         $class.=' '.$this->_box_size;
         $class.=' '.$this->_boxes[$i]['position'];
 

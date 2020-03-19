@@ -24,6 +24,7 @@
 .promobox-content{
     padding-left: 18px;
     padding-top: 24px;
+    text-align: left;
 }
 .promobox-content h1 {
     font-size: 30px;
@@ -36,7 +37,6 @@
     color: #fff;
     text-decoration: underline;
     text-transform: uppercase;
-    text-align: left;
     text-align: left;
     margin-top: 31px;
     margin-left: 6px;
