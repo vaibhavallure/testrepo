@@ -21,6 +21,26 @@
 .pb-item.two_by_two.bottom div{
     background-position-y: bottom;
 }
+.promobox-content{
+    padding-left: 18px;
+    padding-top: 24px;
+}
+.promobox-content h1 {
+    font-size: 30px;
+    color: #fff;
+    font-family: urw-din-xlight;
+
+}
+.promobox-content a{
+    font-family: urw-din-bold;
+    color: #fff;
+    text-decoration: underline;
+    text-transform: uppercase;
+    text-align: left;
+    text-align: left;
+    margin-top: 31px;
+    margin-left: 6px;
+}
 
 @media (min-width:1366px) {
 .pb-item{
