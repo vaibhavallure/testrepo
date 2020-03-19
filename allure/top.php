@@ -4,6 +4,11 @@ umask(0);
 
 Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
 
+echo(Mage::getStoreConfig('carriers/matrixrate/specificerrmsg', Mage_Core_Model_App::ADMIN_STORE_ID));
+
+echo "\n";
+
+die;
 $type = (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) ? $_REQUEST['type'] : 'log';
 $name = (isset($_REQUEST['name']) && !empty($_REQUEST['name'])) ? $_REQUEST['name'].'.log' : 'exception.log';
 
