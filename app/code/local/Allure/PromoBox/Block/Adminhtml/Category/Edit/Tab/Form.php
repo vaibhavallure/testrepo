@@ -16,23 +16,24 @@ class Allure_PromoBox_Block_Adminhtml_Category_Edit_Tab_Form extends Mage_Adminh
         ));
 
 
-        $dateFormatIso = Mage::app()->getLocale()->getDateFormat(
-            Mage_Core_Model_Locale::FORMAT_TYPE_SHORT
-        );
+        $dateTimeFormatIso = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
 
-        $fieldset->addField('start_date', 'date', array(
+
+        $fieldset->addField('start_date', 'datetime', array(
             'label' => Mage::helper('promobox')->__('Starting Date'),
             'name' => 'start_date',
+            'time'      => true,
             'image'     => $this->getSkinUrl('images/grid-cal.gif'),
-            'format'    => $dateFormatIso,
+            'format'    => $dateTimeFormatIso,
             'class'     => 'validate-date validate-date-range date-range-custom_theme-from'
 
         ));
-        $fieldset->addField('end_date', 'date', array(
+        $fieldset->addField('end_date', 'datetime', array(
             'label' => Mage::helper('promobox')->__('Ending Date'),
             'name' => 'end_date',
+            'time'      => true,
             'image'     => $this->getSkinUrl('images/grid-cal.gif'),
-            'format'    => $dateFormatIso,
+            'format'    => $dateTimeFormatIso,
             'class'     => 'validate-date validate-date-range date-range-custom_theme-from'
         ));
 

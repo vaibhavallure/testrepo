@@ -195,7 +195,7 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
 
     private function validateDate()
     {
-        $currentdate = Mage::getModel('core/date')->gmtDate('Y-m-d');
+        $currentdate = Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s');
         $currentdate = new DateTime($currentdate);
 
 
