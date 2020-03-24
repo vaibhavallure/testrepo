@@ -6,7 +6,7 @@
 <?php $helper = Mage::helper('allure_smartanalytics');?>
 <?php if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled()) return;
 $order = $this->getOrder();
-if (!$helper->sendTransactionDataOnInvoice() && !$helper->sendTransactionDataOffline()):
+if (false && !$helper->sendTransactionDataOnInvoice() && !$helper->sendTransactionDataOffline()):
 	if ($helper->sendBaseData()):
 		$orderCurrency 		= $order->getBaseCurrencyCode();
 		$orderGrandTotal 	= $order->getBaseGrandTotal();
