@@ -217,6 +217,7 @@
 
 
     <h1 class="catalog-product-name-display" style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
+    <div class="cat-description para-normal"><?= $_category->getDescription() ?></div>
 </div>
 <?php $_collection = $this->getCategories() ?>
 <div class="container cartilage-section position-relative">

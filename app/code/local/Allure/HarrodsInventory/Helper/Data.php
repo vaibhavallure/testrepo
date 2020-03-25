@@ -413,6 +413,12 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     continue;
                 }
 
+                if(!$_product->getHarrodsOnlineFlag())
+                {
+                    continue;
+                }
+
+
                 $data = array();
 
 
