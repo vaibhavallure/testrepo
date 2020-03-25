@@ -50,7 +50,7 @@
     new AWAjaxCatalog({
         containerSelector: <?php echo Zend_Json::encode($this->getContainerSelector());?> || ".category-products",
         pagerSelector: <?php echo Zend_Json::encode($this->getPagerSelector());?> || ".category-products .toolbar .pager",
-        categoryRowSelectorList: <?php echo Zend_Json::encode($this->getCategoryRowSelector());?> || [".products-grid2", ".products-grid"],
+        categoryRowSelectorList: <?php echo Zend_Json::encode($this->getCategoryRowSelector());?> || [".p-item"],
         isScrollMode: <?php echo Zend_Json::encode($this->isScrollMode());?>,
         buttonAsHtml: <?php echo Zend_Json::encode($this->getButtonHtml());?>,
         loadingAsHtml: <?php echo Zend_Json::encode($this->getLoadingHtml());?>,

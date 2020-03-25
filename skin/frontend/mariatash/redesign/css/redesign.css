@@ -5121,3 +5121,15 @@ a.product-video-link:hover div.product-video-play-icon {
 .insta-loader{
 	 z-index: 1 !important;
 }
+.category-title .cat-description {
+    width: 611px;
+    font-family: urw-din-xlight;
+    font-size: 18px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: rgba(41, 41, 41, 0.9);
+    margin: 14px 0 15px 0;
+}
