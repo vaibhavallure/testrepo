@@ -822,7 +822,7 @@ nav.mariatash-header {
   margin-right: 19px;
 }
 .footer .social-media li{
-  margin-right: 26px;
+  margin-right: 19px;/*26px;*/
 }
 .footer .footlinks li:first-child {
   margin-left: 40px;
@@ -5121,6 +5121,10 @@ a.product-video-link:hover div.product-video-play-icon {
 .insta-loader{
 	 z-index: 1 !important;
 }
+.footer .footlinks .social-media li:first-child{
+	margin-left: 0px;
+}
+
 .category-title .cat-description {
     width: 611px;
     font-family: urw-din-xlight;
