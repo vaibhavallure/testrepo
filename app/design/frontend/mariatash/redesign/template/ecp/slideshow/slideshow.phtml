@@ -14,7 +14,7 @@
 
         if ((width > 1024)) {
             jQuery(".homepageSliderControllers").removeClass("mobile");
-            jQuery(".mobile-background-list").hide();
+            jQuery(".mobile-background-list").css("display","none");
             jQuery(".desktop-only").show();
 
         var transitionEffect=1;
@@ -40,7 +40,7 @@
         });
         }else {
             jQuery(".homepageSliderControllers").addClass("mobile");
-            jQuery(".mobile-background-list").show();
+            jQuery(".mobile-background-list").css("display","block");
             jQuery(".desktop-only").hide();
         }
 
