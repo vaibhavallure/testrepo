@@ -4,7 +4,8 @@
  */
 ?>
 <?php $isMobile = $this->isMobile();?>
-<?php $jsonImages =  $this->getJsonImages($isMobile);?>
+<?php $jsonImages =  $this->getJsonImages(false);?>
+<?php $jsonImagesMobile =  $this->getJsonImages(true);?>
 <?php //if(!$isMobile):?>
 <script type="text/javascript">
     jQuery.noConflict(); 
@@ -14,6 +15,7 @@
         if ((width > 1024)) {
             jQuery(".homepageSliderControllers").removeClass("mobile");
             jQuery(".mobile-background-list").hide();
+            jQuery(".desktop-only").show();
 
         var transitionEffect=1;
         if (jQuery(window).width() <= 767) {
@@ -38,7 +40,8 @@
         });
         }else {
             jQuery(".homepageSliderControllers").addClass("mobile");
-            jQuery(".mobile-background-list").show();   
+            jQuery(".mobile-background-list").show();
+            jQuery(".desktop-only").hide();
         }
 
     });
@@ -52,11 +55,11 @@
 
         <div class="homepageSliderControllers >
         	<?php //if($isMobile): // for mobile ?>
-        		<?php $slideShows = json_decode($jsonImages);?>
+        		<?php $slideShows = json_decode($jsonImagesMobile);?>
         		<ul class="ul-mobile-images">
         		<?php foreach ($slideShows as $item):?>
             		<?php if(isset($item->image) && !empty($item->image)):?>
-            			<li class="mobile-background-list" style="display:none">
+            			<li class="mobile-background-list" style="display:none;">
             				<div class="mob-slideshow-container">
                 				<div class="mob-slideshow-img">
                 					<img class="img-background" src="<?=$item->image?>">
@@ -72,9 +75,9 @@
         		<?php endforeach;?>
         		</ul>
         	<?php //else: // for desktop ?>
-        		<div class="prevS" title="Previous"></div>
-            	<div id="slidecaption"></div>
-        		<div class="nextS" title="Next"></div>
+        		<div class="prevS desktop-only" title="Previous"></div>
+            	<div id="slidecaption" class="desktop-only"></div>
+        		<div class="nextS desktop-only" title="Next"></div>
         	<?php //endif;?>
         </div>
     </div>        
