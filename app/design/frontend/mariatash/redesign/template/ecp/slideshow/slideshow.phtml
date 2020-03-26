@@ -5,10 +5,14 @@
 ?>
 <?php $isMobile = $this->isMobile();?>
 <?php $jsonImages =  $this->getJsonImages($isMobile);?>
-<?php if(!$isMobile):?>
+<?php //if(!$isMobile):?>
 <script type="text/javascript">
     jQuery.noConflict(); 
     jQuery(document).ready(function() {
+        var width = jQuery(window).width();
+
+        if ((width > 1024)) {
+            jQuery(".homepageSliderControllers").removeClass("mobile");
 
         var transitionEffect=1;
         if (jQuery(window).width() <= 767) {
@@ -31,17 +35,21 @@
         jQuery(".prevS").on("click",function () {
             api.prevSlide();
         });
+        }else {
+            jQuery(".homepageSliderControllers").addClass("mobile");
+        }
+
     });
 </script>
-<?php endif;?>
+<?php //endif;?>
 <div id="controls-wrapper" class="load-item ">
     <div id="controls">
         <!--Slide captions displayed here-->
         <!--Navigation-->
         <ul id="slide-list"></ul>
 
-        <div class="homepageSliderControllers <?=($isMobile)?"mobile":""?>">
-        	<?php if($isMobile): // for mobile ?>
+        <div class="homepageSliderControllers >
+        	<?php //if($isMobile): // for mobile ?>
         		<?php $slideShows = json_decode($jsonImages);?>
         		<ul class="ul-mobile-images">
         		<?php foreach ($slideShows as $item):?>
@@ -61,11 +69,11 @@
             		<?php endif;?>
         		<?php endforeach;?>
         		</ul>
-        	<?php else: // for desktop ?>
+        	<?php //else: // for desktop ?>
         		<div class="prevS" title="Previous"></div>
             	<div id="slidecaption"></div>
         		<div class="nextS" title="Next"></div>
-        	<?php endif;?>
+        	<?php //endif;?>
         </div>
     </div>        
 </div>
