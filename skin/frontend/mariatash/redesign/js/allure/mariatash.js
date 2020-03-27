@@ -1,3 +1,4 @@
+var noticeHeight = 0;
 jQuery(document).ready(function () {
 
     //on enter search
@@ -37,17 +38,17 @@ jQuery(document).ready(function () {
 
     unsetLoader();
 
-jQuery('.link-button').click(function(event) {
-    unsetLoader();
-});
+    jQuery('.link-button').click(function(event) {
+        unsetLoader();
+    });
 
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
-    jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
+        jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
 
     if(!jQuery("p.category-image").length && !jQuery("p.category-image-bleed").length && !jQuery(".second-header-image").length ){
-      jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
+        jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
     }
 
     if(jQuery("p.category-image").length) {
@@ -69,9 +70,9 @@ jQuery('.link-button').click(function(event) {
         //.recently-view insta-main you_may_like
         if(!jQuery(".recently-view").length && !jQuery(".insta-main").length && !jQuery(".you_may_like").length)
         {
-         jQuery(".footer").attr("style","padding-top:0px!important");
-         jQuery(".for-bottom-space.p-5").removeClass("p-5");
-         jQuery(".product-detail-parent").css("padding-bottom", "65px");
+            jQuery(".footer").attr("style","padding-top:0px!important");
+            jQuery(".for-bottom-space.p-5").removeClass("p-5");
+            jQuery(".product-detail-parent").css("padding-bottom", "65px");
         }
 
     }
@@ -100,14 +101,14 @@ jQuery('.link-button').click(function(event) {
 
 
     jQuery(".mobile-sub_menu .menu-head").click(function () {
-    	var $ = jQuery;
-    	if ($(this).find("a").hasClass('active')) {
-    		$(this).find("a").removeClass('active');
-    		$(this).next().removeClass('active');
-    	} else {
-    		$(this).find("a").addClass('active');
-    		$(this).next().addClass('active');
-    	}
+        var $ = jQuery;
+        if ($(this).find("a").hasClass('active')) {
+            $(this).find("a").removeClass('active');
+            $(this).next().removeClass('active');
+        } else {
+            $(this).find("a").addClass('active');
+            $(this).next().addClass('active');
+        }
     });
 
 
@@ -120,19 +121,19 @@ jQuery('.link-button').click(function(event) {
 
         if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)
         {
-          var scroll = jQuery(window).scrollTop();
-          var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
-          var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-          // if (jQuery('.owl-carousel').length) {
-              if ((productImageHeight) > (productDetailsHeight - scroll)) {
-                  jQuery('#product-details-flow').removeClass('offset-66');
-                  jQuery('#product-detail-image').removeClass('fix-image');
-                  jQuery('#product-detail-image > div').addClass('position-bottom');
-              } else {
-                  jQuery('#product-details-flow').addClass('offset-66');
-                  jQuery('#product-detail-image').addClass('fix-image');
-                  jQuery('#product-detail-image > div').removeClass('position-bottom');
-              }
+            var scroll = jQuery(window).scrollTop();
+            var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
+            var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
+            // if (jQuery('.owl-carousel').length) {
+            if ((productImageHeight) > (productDetailsHeight - scroll)) {
+                jQuery('#product-details-flow').removeClass('offset-66');
+                jQuery('#product-detail-image').removeClass('fix-image');
+                jQuery('#product-detail-image > div').addClass('position-bottom');
+            } else {
+                jQuery('#product-details-flow').addClass('offset-66');
+                jQuery('#product-detail-image').addClass('fix-image');
+                jQuery('#product-detail-image > div').removeClass('position-bottom');
+            }
 
 
             let hidden = true;
@@ -170,10 +171,10 @@ jQuery('.link-button').click(function(event) {
 
 
             if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
-                    jQuery(".footer").removeClass("floating");
-                }else {
-                    jQuery(".footer").addClass("floating");
-                }
+                jQuery(".footer").removeClass("floating");
+            }else {
+                jQuery(".footer").addClass("floating");
+            }
             /*  zopim -code end-----------------*/
 
         }else {
@@ -223,7 +224,7 @@ jQuery('.link-button').click(function(event) {
                 /*scaling close quick view*/
                 if(jQuery(".fancybox-desktop.fancybox-type-iframe.fancybox-opened").length)
                 {
-                      jQuery(".fancybox-item.fancybox-close").trigger("click");
+                    jQuery(".fancybox-item.fancybox-close").trigger("click");
                 }
 
             }
@@ -267,7 +268,7 @@ jQuery('.link-button').click(function(event) {
                     jQuery(".menu_overlay").removeClass("d-none");
                 }
                 jQuery(section_id).slideDown("slow");
-            unScrollBody();
+                unScrollBody();
             }, 300);
         }
     });
@@ -323,7 +324,7 @@ jQuery('.link-button').click(function(event) {
     /*----------------mobile menu js-----------------------*/
 
     jQuery('.menu_overlay').on('click',function(e){
-    	event.stopPropagation();
+        event.stopPropagation();
         if (jQuery(window).width() <= 1024 || jQuery('body').hasClass('mobile-device')) {
             jQuery('#menu-btn').click()
         }
@@ -372,55 +373,55 @@ jQuery('.link-button').click(function(event) {
 /*filter popup start---------------------------------*/
 
 jQuery(window).bind("load resize", function (e) {
-   /* var width = jQuery(window).width();
-    if ((width < 1023)) {
+    /* var width = jQuery(window).width();
+     if ((width < 1023)) {
 
-        if (jQuery('.filter-common-div').length) {
+         if (jQuery('.filter-common-div').length) {
 
-            if(!jQuery('.filterPopup').length) {
-                var filter_popup = '<div id="openModal" class="filterPopup">\n' +
-                    '\t<div class="pop-up-cover">\n' +
-                    '\t\t<div class="pop-title modal-header">\n' +
-                    '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
-                    '\t\t\t\t<div></div>\n' +
-                    '\t\t\t</a>\n' +
-                    '\t\t</div>\n' +
-                    '\t\t<div class="body modal-body">\n' +
-                    '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
-                    '\t\t</div>\n' +
-                    '\t</div>\n' +
-                    '</div>';
-                var filterButton = '<a href="#" class="filterButton">' +
-                    '</a>';
+             if(!jQuery('.filterPopup').length) {
+                 var filter_popup = '<div id="openModal" class="filterPopup">\n' +
+                     '\t<div class="pop-up-cover">\n' +
+                     '\t\t<div class="pop-title modal-header">\n' +
+                     '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
+                     '\t\t\t\t<div></div>\n' +
+                     '\t\t\t</a>\n' +
+                     '\t\t</div>\n' +
+                     '\t\t<div class="body modal-body">\n' +
+                     '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
+                     '\t\t</div>\n' +
+                     '\t</div>\n' +
+                     '</div>';
+                 var filterButton = '<a href="#" class="filterButton">' +
+                     '</a>';
 
-                jQuery('.filter-common-div').html("");
-                jQuery('.filter-common-div').hide();
+                 jQuery('.filter-common-div').html("");
+                 jQuery('.filter-common-div').hide();
 
-                jQuery("body").append(filter_popup);
-                jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
+                 jQuery("body").append(filter_popup);
+                 jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
 
-            }
-            else {
-                jQuery('.filter-common-div').html("");
-                jQuery('.filter-common-div').hide();
-                jQuery('.filterButton').show();
+             }
+             else {
+                 jQuery('.filter-common-div').html("");
+                 jQuery('.filter-common-div').hide();
+                 jQuery('.filterButton').show();
 
-            }
-            jQuery(".filterButton").on('click', function () {
-                jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
-                unScrollBody();
-            });
+             }
+             jQuery(".filterButton").on('click', function () {
+                 jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
+                 unScrollBody();
+             });
 
-            jQuery(".filterPopup .close").on('click', function () {
-                jQuery(".filterPopup").css({"opacity": "0", "pointer-events": "none"});
-                scrollBody();
-            });
-        }
-    }else {
-        jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
-        jQuery('.filter-common-div').show();
-        jQuery('.filterButton').hide();
-    }*/
+             jQuery(".filterPopup .close").on('click', function () {
+                 jQuery(".filterPopup").css({"opacity": "0", "pointer-events": "none"});
+                 scrollBody();
+             });
+         }
+     }else {
+         jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
+         jQuery('.filter-common-div').show();
+         jQuery('.filterButton').hide();
+     }*/
 });
 /*filter popup end---------------------------------*/
 
@@ -438,33 +439,33 @@ jQuery(window).bind("load resize scroll", function (e) {
 
 var fixit=function (parent,el,top,right,left) {
 
-if (jQuery(window).width() >= 1024) {
+    if (jQuery(window).width() >= 1024) {
 
-    if(jQuery(parent).length) {
-        var scroll = jQuery(window).scrollTop();
-        if (scroll > jQuery(parent).offset().top) {
+        if(jQuery(parent).length) {
+            var scroll = jQuery(window).scrollTop();
+            if (scroll > jQuery(parent).offset().top) {
 
-            //if(jQuery('.fix-section'))
-            jQuery(el).css({
-                'position': 'fixed',
-                'top': top,
-                'right': right,
-                'padding-top': jQuery('.navbar').outerHeight() + 5
-            });
-        } else {
-            jQuery(el).css({
-                'position': 'static',
-                'top': '0px'
-            });
+                //if(jQuery('.fix-section'))
+                jQuery(el).css({
+                    'position': 'fixed',
+                    'top': top,
+                    'right': right,
+                    'padding-top': jQuery('.navbar').outerHeight() + 5
+                });
+            } else {
+                jQuery(el).css({
+                    'position': 'static',
+                    'top': '0px'
+                });
+            }
         }
     }
-}
-else{
-    jQuery(el).css({
-        'position':'static',
-        'top' : '0px'
-    });
-}
+    else{
+        jQuery(el).css({
+            'position':'static',
+            'top' : '0px'
+        });
+    }
 }
 
 var setLoader = function(){
@@ -684,5 +685,44 @@ jQuery( document ).ready(function() {
 
     }
 
+    /*Notification Banners*/
+    if(jQuery('.notice-text').length > 0 && false) {
+        noticeHeight = jQuery('.notice-text').height();
+        jQuery('.fixed-top').css({'top': noticeHeight})
+
+        var intHeight = parseInt(noticeHeight);
+        console.log(intHeight)
+        /*Sub Menu Height*/
+        if(jQuery('body').hasClass('desktop-device')) {
+            setTopForItem(jQuery('.sub-menu'));
+
+        }else {
+            setTopForItem(jQuery('.mobile-main_menu'));
+            setTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
+            setTopForItem(jQuery('#search'));
+            setTopForItem( jQuery('#cross-icon'));
+        }
+
+    }
+jQuery('.btn_chat_now').click(function(e){
+jQuery('.minimizedChatButtonSelector').click();
+});
+
 
 });
+
+var setTopForItem = function(item){
+    if (item.length > 0) {
+        var item_top = item.css('top');
+        console.log(item);
+        item_top = parseInt(item_top.replace('px', ''));
+        if(item.attr('id') === 'cross-icon'){
+            item_top *=2;
+        }
+        console.log(item_top);
+        item_top += noticeHeight;
+        item_top = item_top.toString()
+        console.log(item_top)
+        item.css('top', item_top + 'px');
+    }
+}
