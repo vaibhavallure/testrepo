@@ -2188,9 +2188,6 @@ tr.tr-piercing td {
 	}
 }
 @media (max-width: 767px) {
-	#top-nav-3 ul.social-media {
-		display: flex;
-	}
 	#cross-icon {
 		padding: 10px;
 		top: 0px;
@@ -2477,3 +2474,9 @@ img.print-size-chart{
 	padding: 0px;
 }
 
+#top-nav-3 li.level0.nav-10.level-top.noChild {
+	display: none;
+}
+#top-nav-3 ul.social-media {
+	display: flex;
+}
