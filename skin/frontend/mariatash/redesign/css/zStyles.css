@@ -2188,6 +2188,9 @@ tr.tr-piercing td {
 	}
 }
 @media (max-width: 767px) {
+	#top-nav-3 ul.social-media {
+		display: flex;
+	}
 	#cross-icon {
 		padding: 10px;
 		top: 0px;
@@ -2316,10 +2319,7 @@ tr.tr-piercing td {
 	/*New MT-1398 Contact us page*/
 
 	.cms-contact-us .dark-button {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		right: 15px;
+		margin-top: 10px;
 	}
 
 	.cms-contact-us .col-12.details {
@@ -2459,3 +2459,18 @@ img.print-size-chart{
 .cms-contact-us .dark-button:hover {
 	color: #fff;
 }
+
+.store-notice .close {
+	color: #fff !important;
+	text-shadow:none !important;
+	opacity:1 !important;
+	top:10% !important;
+	right:20px !important;
+}
+
+.notice-text{
+	font-family: urw-din-light !important;
+	font-size: 12px !important;
+	letter-spacing: 0.5px !important;
+}
+
