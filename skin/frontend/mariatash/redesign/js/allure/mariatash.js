@@ -686,7 +686,7 @@ jQuery( document ).ready(function() {
     }
 
     /*Notification Banners*/
-    if(jQuery('.notice-text').length > 0) {
+    if(jQuery('.notice-text').length > 0 && false) {
         noticeHeight = jQuery('.notice-text').height();
         jQuery('.fixed-top').css({'top': noticeHeight})
 
