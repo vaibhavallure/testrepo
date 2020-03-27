@@ -1,4 +1,7 @@
 var noticeHeight = 0;
+var isRemovedSpace = false;
+var addedMobileMenu = false;
+var isAddedForMobile  = false;
 jQuery(document).ready(function () {
 
     //on enter search
@@ -187,6 +190,7 @@ jQuery(document).ready(function () {
         if (jQuery(window).width() >= 1363) {
             var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
+                console.log('Scrolled Down')
                 jQuery(".mt-logo").addClass('d-none');
                 jQuery(".nav-links-left").addClass('d-none');
                 jQuery("#scroll-logo").removeClass('d-none');
@@ -194,7 +198,15 @@ jQuery(document).ready(function () {
                 jQuery('.mariatash-header').addClass('maria-black');
                 jQuery('.mariatash-header').addClass('scrolled-menu');
                 jQuery("section.sub-menu").addClass("scrolled");
+                /*MT-1404*/
+                if(jQuery('.mariatash-header').hasClass('scrolled-menu') && !isRemovedSpace){
+                    jQuery('.fixed-top').css({'top': '0'})
+                    jQuery('.store-notice').css('z-index','1');
+                    jQuery('.store-notice').hide(1500)
+                    isRemovedSpace = true;
+                }
             } else {
+                console.log('Scrolled UP')
                 jQuery(".mt-logo").removeClass('d-none');
                 jQuery(".nav-links-left").removeClass('d-none');
                 jQuery("#scroll-logo").addClass('d-none');
@@ -202,6 +214,13 @@ jQuery(document).ready(function () {
                 jQuery('.mariatash-header').removeClass('maria-black');
                 jQuery('.mariatash-header').removeClass('scrolled-menu');
                 jQuery("section.sub-menu").removeClass("scrolled");
+                /*MT-1404*/
+                if(!jQuery('.mariatash-header').hasClass('scrolled-menu') && isRemovedSpace){
+                    jQuery('.fixed-top').css({'top': noticeHeight})
+                    jQuery('.store-notice').css('z-index','9999');
+                    jQuery('.store-notice').show(100)
+                    isRemovedSpace = false;
+                }
 
             }
 
@@ -686,31 +705,54 @@ jQuery( document ).ready(function() {
     }
 
     /*Notification Banners*/
-    if(jQuery('.notice-text').length > 0 && false) {
+    /*MT-1404 : While init*/
+    if(jQuery('.notice-text').length > 0 ) {
         noticeHeight = jQuery('.notice-text').height();
-        jQuery('.fixed-top').css({'top': noticeHeight})
+
 
         var intHeight = parseInt(noticeHeight);
         console.log(intHeight)
         /*Sub Menu Height*/
         if(jQuery('body').hasClass('desktop-device')) {
+            console.log('adding for desktop')
+            jQuery('.fixed-top').css({'top': noticeHeight})
             setTopForItem(jQuery('.sub-menu'));
 
-        }else {
-            setTopForItem(jQuery('.mobile-main_menu'));
-            setTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
-            setTopForItem(jQuery('#search'));
-            setTopForItem( jQuery('#cross-icon'));
         }
-
     }
-jQuery('.btn_chat_now').click(function(e){
-jQuery('.minimizedChatButtonSelector').click();
+    jQuery('.btn_chat_now').click(function(e){
+        jQuery('.minimizedChatButtonSelector').click();
+    });
+
+    /*MT-1404 When resize window*/
+    jQuery(window).bind("resize",function(){
+        noticeHeight = jQuery('.notice-text').height();
+        var intHeight = parseInt(noticeHeight);
+        console.log(intHeight)
+        /*Sub Menu Height*/
+        if(jQuery('body').hasClass('desktop-device')) {
+            console.log('adding for desktop')
+            jQuery('.fixed-top').css({'top': noticeHeight})
+            removeTopForItem(jQuery('.sub-menu'));
+            setTopForItem(jQuery('.sub-menu'));
+
+        }
+        if(jQuery('body').hasClass('mobile-device') && isAddedForMobile) {
+            console.log('adding for mobile')
+            jQuery('.fixed-top').css({'top': noticeHeight})
+            removeTopForItem(jQuery('.mobile-main_menu'))
+            setTopForItem(jQuery('.mobile-main_menu'));
+            removeTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
+            setTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
+            removeTopForItem(jQuery('#search'));
+            setTopForItem(jQuery('#search'));
+            /*removeTopForItem(jQuery('#cross-icon'));
+            setTopForItem(jQuery('#cross-icon'));*/
+        }
+    });
+
 });
-
-
-});
-
+/*MT-1404 : functions*/
 var setTopForItem = function(item){
     if (item.length > 0) {
         var item_top = item.css('top');
@@ -726,3 +768,33 @@ var setTopForItem = function(item){
         item.css('top', item_top + 'px');
     }
 }
+var removeTopForItem = function (item) {
+    if (item.length > 0) {
+        var item_top = item.css('top');
+        console.log(item.attr('id'));
+        console.log(item_top);
+        item_top = parseInt(item_top.replace('px', ''));
+        if(item.attr('id') === 'cross-icon'){
+            item_top -= (item_top*2);
+        }
+        console.log(item_top);
+        item_top -= noticeHeight;
+        item_top = item_top.toString()
+        console.log(item_top)
+        item.css('top', item_top + 'px');
+    }
+}
+var addSpaceForMobile = function () {
+
+    if(jQuery('.notice-text').length > 0 ) {
+        console.log('adding for mobile')
+        jQuery('.fixed-top').css({'top': noticeHeight})
+        setTopForItem(jQuery('.mobile-main_menu'));
+        setTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
+        setTopForItem(jQuery('#search'));
+        setTopForItem(jQuery('#cross-icon'));
+    }
+    isAddedForMobile =true;
+    jQuery('.notice-text').show()
+}
+

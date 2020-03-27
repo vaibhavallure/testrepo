@@ -1727,6 +1727,9 @@ img.print-size-chart{
 	.category-shop-our-instagram .fs-timeline-detail {
 		padding: 20px;
 	}
+	.notice-text {
+		font-size: 11px !important;
+	}
 }
 @media (min-width: 1800px){
 	#container-cu {
@@ -2480,3 +2483,10 @@ img.print-size-chart{
 #top-nav-3 ul.social-media {
 	display: flex;
 }
+/*
+.mariatash-header{
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
+}*/
