@@ -2952,3 +2952,21 @@ ul.tabs li{
     width: 250px;
   }
 }
+
+
+
+@media (min-width: 1025px) and (max-width: 1193px) {
+  .footer .footlinks li:last-child {
+    display: none;
+  }
+}
+@media (max-width:1024px){
+  .footer .footlinks li:last-child {
+    padding-left: 12px;
+  }
+}
+@media (max-width:767px){
+  .footer .footlinks li:last-child {
+    padding-left: 0;
+  }
+}
