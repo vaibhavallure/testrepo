@@ -2473,4 +2473,7 @@ img.print-size-chart{
 	font-size: 12px !important;
 	letter-spacing: 0.5px !important;
 }
+.footer .footlinks ul.social-media{
+	padding: 0px;
+}
 
