@@ -5137,3 +5137,19 @@ a.product-video-link:hover div.product-video-play-icon {
     color: rgba(41, 41, 41, 0.9);
     margin: 14px 0 15px 0;
 }
+.cms-contact-us-new .page-title h1 {
+	text-align: center;
+}
+.cont-icon span {
+	font-size: 0;
+}
+.inner-block .con-title {
+	font-size: 16px;
+	font-family: urw-din-medium;
+	letter-spacing: Normal;
+	color: rgba(40,40,40,0.9);
+}
+.inner-block p {
+	font-size: 15px;
+	margin-bottom: 5px;
+}
