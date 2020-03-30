@@ -47,7 +47,16 @@
         		<?php foreach ($slideShows as $item):?>
             		<?php if(isset($item->image) && !empty($item->image)):?>
             			<li class="mobile-background-list">
-            				<img class="img-background" src="<?=$item->image?>">
+            				<div class="mob-slideshow-container">
+                				<div class="mob-slideshow-img">
+                					<img class="img-background" src="<?=$item->image?>">
+                				</div>
+                				<?php if(isset($item->description) && !empty($item->description)):?>
+                				<div class="mob-slideshow-content">
+                					<?=$item->description?>
+                				</div>
+                				<?php endif;?>
+            				</div>
             			</li>
             		<?php endif;?>
         		<?php endforeach;?>
