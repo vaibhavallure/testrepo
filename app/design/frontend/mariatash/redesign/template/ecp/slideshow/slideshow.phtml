@@ -41,6 +41,7 @@
         }else {
             jQuery(".homepageSliderControllers").addClass("mobile");
             jQuery(".mobile-background-list").css("display","block");
+            jQuery(".ul-mobile-images li:last-child").css("margin-bottom","20px");
             jQuery(".desktop-only").hide();
         }
 
@@ -53,7 +54,7 @@
         <!--Navigation-->
         <ul id="slide-list"></ul>
 
-        <div class="homepageSliderControllers >
+        <div class="homepageSliderControllers" >
         	<?php //if($isMobile): // for mobile ?>
         		<?php $slideShows = json_decode($jsonImagesMobile);?>
         		<ul class="ul-mobile-images">
