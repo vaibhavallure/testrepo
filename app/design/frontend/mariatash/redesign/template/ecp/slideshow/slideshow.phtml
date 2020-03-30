@@ -1,3 +1,11 @@
+<?php 
+/**
+ * @var Ecp_Slideshow_Block_Home $this
+ */
+?>
+<?php $isMobile = $this->isMobile();?>
+<?php $jsonImages =  $this->getJsonImages($isMobile);?>
+<?php if(!$isMobile):?>
 <script type="text/javascript">
     jQuery.noConflict(); 
     jQuery(document).ready(function() {
@@ -14,7 +22,7 @@
             // Component						
             slide_links: 'blank',// Individual links for each slide (Options: false, 'num', 'name', 'blank')
             slides:// Slideshow Images
-                <?php echo $this->getJsonImages(); ?>
+                <?php echo $jsonImages; ?>
         });
 		jQuery('.std').remove();
         jQuery(".nextS").on("click",function () {
@@ -25,16 +33,31 @@
         });
     });
 </script>
+<?php endif;?>
 <div id="controls-wrapper" class="load-item ">
     <div id="controls">
         <!--Slide captions displayed here-->
         <!--Navigation-->
         <ul id="slide-list"></ul>
 
-        <div class="homepageSliderControllers">
-        <div class="prevS" title="Previous"></div>
-            <div id="slidecaption"></div>
-        <div class="nextS" title="Next"></div>
+        <div class="homepageSliderControllers <?=($isMobile)?"mobile":""?>">
+        	<?php if($isMobile): // for mobile ?>
+        		<?php $slideShows = json_decode($jsonImages);?>
+        		<ul class="ul-mobile-images">
+        		<?php foreach ($slideShows as $item):?>
+            		<?php if(isset($item->image) && !empty($item->image)):?>
+            			<li class="mobile-background-list">
+            				<img class="img-background" src="<?=$item->image?>">
+            			</li>
+            		<?php endif;?>
+        		<?php endforeach;?>
+        		</ul>
+        	<?php else: // for desktop ?>
+        		<div class="prevS" title="Previous"></div>
+            	<div id="slidecaption"></div>
+        		<div class="nextS" title="Next"></div>
+        	<?php endif;?>
         </div>
     </div>        
 </div>
+

@@ -32,15 +32,39 @@ class Ecp_Slideshow_Block_Home
         return $this->getData('slideshow');
     }
     
-    public function getJsonImages(){
+    public function isMobile(){
+        return Zend_Http_UserAgent_Mobile::match(
+            Mage::helper('core/http')->getHttpUserAgent(), $_SERVER
+            );
+    }
+    
+    public function getJsonImages($isMobile = 0){
         $tmpImages = array();
+        $mediaPath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "slideshow/";
         $collection = Mage::getModel('ecp_slideshow/slideshow')->getCollection()			
 			->addFilter('status',1) 
-			->setOrder('position', 'asc')
-			;
+			->setOrder('position', 'asc');
+        
         foreach ($collection as $item) {
-            $tmpImages[] = "{image : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideBackground()."', title : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideThumb()."', url : '".$item->getUrl()."', description : '".str_replace("\r\n","",$item->getSlideContent())."', background: '".$item->getBackground()."', switch: '".$item->getSwitch()."'}";
+            $imageUrl = "";
+            if($isMobile){
+                $imageUrl = $item->getSlideMobileBackground();
+            }else{
+                $imageUrl = $item->getSlideBackground();
+            }
+            
+            if(!$imageUrl) continue;
+            $temp = array(
+                "image" => $mediaPath . $imageUrl,
+                "title" => $mediaPath . $item->getSlideThumb(),
+                "url"   => $item->getUrl(),
+                "description" => str_replace("\r\n","",$item->getSlideContent()),
+                "background" => $item->getBackground(),
+                "switch" => $item->getSwitch()
+            );
+            $tmpImages[] = $temp;//"{image : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/". $imageUrl ."', title : '".Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."slideshow/".$item->getSlideThumb()."', url : '".$item->getUrl()."', description : '".str_replace("\r\n","",$item->getSlideContent())."', background: '".$item->getBackground()."', switch: '".$item->getSwitch()."'}";
+            $temp = null;
         }
-        return '['.implode(',',$tmpImages).']';
+        return json_encode($tmpImages);//implode(',',$tmpImages);
     }
 }
