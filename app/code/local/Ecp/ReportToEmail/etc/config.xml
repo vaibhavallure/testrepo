@@ -9,8 +9,29 @@
         <models>
             <ecp_reporttoemail>
                 <class>Ecp_ReportToEmail_Model</class>
+                <resourceModel>ecp_reporttoemail_resource</resourceModel>
             </ecp_reporttoemail>
+            <ecp_reporttoemail_resource>
+            	<class>Ecp_ReportToEmail_Model_Resource</class>
+				<entities>
+					<reportlog>
+						<table>ecp_sales_report_mail_log</table>
+					</reportlog>
+				</entities>
+            </ecp_reporttoemail_resource>
         </models>
+        
+        <resources>
+			<ecp_reporttoemail_setup>
+				<setup>
+					<module>Ecp_ReportToEmail</module>
+				</setup>
+				<connection>
+					<use>default_setup</use>
+				</connection>
+			</ecp_reporttoemail_setup>
+		</resources>
+		
         <helpers>
             <ecp_reporttoemail>
                 <class>Ecp_ReportToEmail_Helper</class>

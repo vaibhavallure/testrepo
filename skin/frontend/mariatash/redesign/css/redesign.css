@@ -5137,3 +5137,29 @@ a.product-video-link:hover div.product-video-play-icon {
     color: rgba(41, 41, 41, 0.9);
     margin: 14px 0 15px 0;
 }
+.cms-home .mob-slideshow-content .slider-caption-content {
+	margin-top: 0;
+	padding: 15px 0 25px;
+}
+.cms-home .mob-slideshow-img img {
+	width: 100%;
+}
+.cms-home .mob-slideshow-content  h1 {
+	font-family: urw-din-xlight;
+	font-size: 22px;
+	letter-spacing: Normal;
+	color: #fff;
+	text-align: center;
+	margin: 0;
+}
+.cms-home .mob-slideshow-content  p {
+	margin-bottom: 0;
+	font-family: urw-din-medium;
+	color: #fff;
+}
+.cms-home .mob-slideshow-content a {
+	color: #fff;
+	text-decoration: underline;
+	text-transform: uppercase;
+	font-family: urw-din-bold;
+} 
