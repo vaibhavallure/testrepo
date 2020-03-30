@@ -90,11 +90,12 @@ class Ecp_Slideshow_Adminhtml_SlideshowController extends Mage_Adminhtml_Control
  
             try {
 				$id111= $this->getRequest()->getParam('id');
-                if (isset($data['slide_thumb']['delete'])){
-                    if(isset($_FILES['slide_thumb']['name']) && $_FILES['slide_thumb']['name'] != '') {
+                if (isset($data['slide_thumb']['delete'])) {
+                    if (isset($_FILES['slide_thumb']['name']) && $_FILES['slide_thumb']['name'] != '') {
                         unlink($path . DS . basename($data['slide_thumb']['value']));
                         $data['slide_thumb'] = '';
-                    }else Mage::throwException ('You are tryin\'g to delete a thumbnail image without replacing it');
+                    } else
+                        Mage::throwException('You are tryin\'g to delete a thumbnail image without replacing it');
                 }
   
                 //Removig size check as per Max request
@@ -124,19 +125,18 @@ class Ecp_Slideshow_Adminhtml_SlideshowController extends Mage_Adminhtml_Control
                 
                 if (isset($_FILES['slide_thumb']['name']) && $_FILES['slide_thumb']['name'] != '') {
                     try {
-  
+
                         $uploader = new Varien_File_Uploader('slide_thumb');
                         $uploader->setAllowedExtensions($validExtensions);
                         $uploader->setAllowRenameFiles(false);
                         $uploader->setFilesDispersion(false);
                         $uploader->addValidateCallback('validate_thumb', $this, 'isRealImage');
-                        $nameImage = $uuid . "-thumb" . substr($_FILES['slide_thumb']['name'], -4);
-					if (empty($_FILES['slide_background']['name'] )&& empty($id111)){
-                    Mage::throwException('Please upload a background too');
-                    }
-                    else{
-                        $uploader->save($path, $nameImage);
-						}
+                        $nameImage = $uuid . "-thumb" . substr($_FILES['slide_thumb']['name'], - 4);
+                        if (empty($_FILES['slide_background']['name']) && empty($id111)) {
+                            Mage::throwException('Please upload a background too');
+                        } else {
+                            $uploader->save($path, $nameImage);
+                        }
                     } catch (Exception $e) {
                         Mage::throwException($e->getMessage());
                     }
@@ -153,24 +153,52 @@ class Ecp_Slideshow_Adminhtml_SlideshowController extends Mage_Adminhtml_Control
                     try {
                         /* Create a uniqueid for rename the files */
 
-                        
                         $uploader = new Varien_File_Uploader('slide_background');
                         $uploader->setAllowedExtensions($validExtensions);
                         $uploader->setAllowRenameFiles(false);
                         $uploader->setFilesDispersion(false);
-						$uploader->addValidateCallback('validate_background', $this, 'isRealImage');
-                        $nameImage = $uuid . "-bg" . substr($_FILES['slide_background']['name'], -4);
-					if (empty($_FILES['slide_thumb']['name']) && empty($id111)){
-                    Mage::throwException('Please upload a thumbnail too');
-                    }
-                    else{
-                        $uploader->save($path, $nameImage);
-						}
+                        $uploader->addValidateCallback('validate_background', $this, 'isRealImage');
+                        $nameImage = $uuid . "-bg" . substr($_FILES['slide_background']['name'], - 4);
+                        if (empty($_FILES['slide_thumb']['name']) && empty($id111)) {
+                            Mage::throwException('Please upload a thumbnail too');
+                        } else {
+                            $uploader->save($path, $nameImage);
+                        }
                     } catch (Exception $e) {
                         Mage::throwException($e->getMessage());
                     }
                     $data['slide_background'] = $nameImage;
                 }
+                
+                if (isset($data['slide_mobile_background']['delete'])) {
+                    unlink($path . DS . basename($data['slide_mobile_background']['value']));
+                    $data['slide_mobile_background'] = '';
+                }
+                
+                if (isset($_FILES['slide_mobile_background']['name']) && $_FILES['slide_mobile_background']['name'] != '') {
+                    try {
+                        /* Create a uniqueid for rename the files */
+                        
+                        $uploader = new Varien_File_Uploader('slide_mobile_background');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $uploader->addValidateCallback('validate_mobile_background', $this, 'isRealImage');
+                        $nameImage = $uuid . "-mobile_bg" . substr($_FILES['slide_mobile_background']['name'], - 4);
+                        if (empty($_FILES['slide_thumb']['name']) && empty($id111)) {
+                            Mage::throwException('Please upload a thumbnail too');
+                        } else {
+                            $uploader->save($path, $nameImage);
+                        }
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['slide_mobile_background'] = $nameImage;
+                }
+                
+                if (is_array($data['slide_mobile_background']))
+                    $data['slide_mobile_background'] = basename($data['slide_mobile_background']['value']);
+                
 
                 if (is_array($data['slide_background']))
                     $data['slide_background'] = basename($data['slide_background']['value']);
