@@ -101,7 +101,7 @@ class Ecp_ReportToEmail_Model_Observer
                 /* if ($time != (int) $curTime->format("H") && $runFrom!="manual")
                     return; */
                 
-                if ($time >= (int) $curTime->format("H") && $runFrom!="manual")
+                if ($time > (int) $curTime->format("H") && $runFrom!="manual")
                     return; 
 
 
