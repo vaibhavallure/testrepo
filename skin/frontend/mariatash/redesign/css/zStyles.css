@@ -1420,6 +1420,9 @@ img.print-size-chart{
 	top:15% !important;
 	right:20px !important;
 }
+.store-notice .notice-text a {
+	text-decoration: underline !important;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
