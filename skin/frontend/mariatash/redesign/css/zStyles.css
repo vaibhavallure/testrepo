@@ -2244,6 +2244,9 @@ tr.tr-piercing td {
 	.mobile-sub_menu .sub-menu  button.button.dark-button {
 		position: absolute;
 	}
+	.store-notice .close {
+		top: 20% !important;
+	}
 
 }
 /*Mobile devices portrait*/
@@ -2262,7 +2265,10 @@ tr.tr-piercing td {
 	.cms-store-locations-html.fancybox-lock{
 		position: fixed !important;
 	}
-
+	.store-notice .close {
+		top: 30% !important;
+		right: 10px !important;
+	}
 }
 .zoom-next,
 .zoom-prev{
@@ -2464,7 +2470,7 @@ img.print-size-chart{
 	color: #fff !important;
 	text-shadow:none !important;
 	opacity:1 !important;
-	top:10% !important;
+	top:15% !important;
 	right:20px !important;
 }
 
