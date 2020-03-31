@@ -707,7 +707,7 @@ jQuery( document ).ready(function() {
     /*MT-1404 When resize scroll load window*/
     jQuery(window).bind("resize scroll load",function(){
         if(jQuery('.notice-text').length > 0 && jQuery('.store-notice.top').length > 0) {
-
+            jQuery('.notice-text').show()
             noticeHeight = jQuery('.notice-text').outerHeight();
 
             var intHeight = parseInt(noticeHeight);
@@ -772,7 +772,9 @@ jQuery( document ).ready(function() {
     jQuery('.store-notice.bottom .close').on("click",function () {
         jQuery('.store-notice.top').remove();
     });
-
+    if(jQuery('.notice-text').length > 0){
+        jQuery('.notice-text').hide();
+    }
 
 });
 
