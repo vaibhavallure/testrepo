@@ -1,7 +1,4 @@
-var noticeHeight = 0;
-var isRemovedSpace = false;
 var addedMobileMenu = false;
-var isAddedForMobile  = false;
 jQuery(document).ready(function () {
 
     //on enter search
@@ -150,12 +147,20 @@ jQuery(document).ready(function () {
                             if (hidden) {
                                 jQuery(".zopim").addClass("bottom-change");
                                 jQuery("#footer8").css("height", "59px");
+
+                                /*MT-1404*/
+                                jQuery('.store-notice.bottom').css("bottom","59px");
+
                                 hidden = false;
                             }
                         }else if ( !(parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0)
                             || (jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none') ) {
                             jQuery(".zopim").removeClass("bottom-change");
                             jQuery("#footer8").css("height", "0px");
+
+                            /*MT-1404*/
+                            jQuery('.store-notice.bottom').css("bottom","0px");
+
                             hidden = true;
                         }
                     }
@@ -190,7 +195,7 @@ jQuery(document).ready(function () {
         if (jQuery(window).width() >= 1363) {
             var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
-                console.log('Scrolled Down')
+                // console.log('Scrolled Down')
                 jQuery(".mt-logo").addClass('d-none');
                 jQuery(".nav-links-left").addClass('d-none');
                 jQuery("#scroll-logo").removeClass('d-none');
@@ -198,15 +203,9 @@ jQuery(document).ready(function () {
                 jQuery('.mariatash-header').addClass('maria-black');
                 jQuery('.mariatash-header').addClass('scrolled-menu');
                 jQuery("section.sub-menu").addClass("scrolled");
-                /*MT-1404*/
-                if(jQuery('.mariatash-header').hasClass('scrolled-menu') && !isRemovedSpace){
-                    jQuery('.fixed-top').css({'top': '0'})
-                    jQuery('.store-notice').css('z-index','1');
-                    jQuery('.store-notice').hide(1500)
-                    isRemovedSpace = true;
-                }
+
             } else {
-                console.log('Scrolled UP')
+                // console.log('Scrolled UP')
                 jQuery(".mt-logo").removeClass('d-none');
                 jQuery(".nav-links-left").removeClass('d-none');
                 jQuery("#scroll-logo").addClass('d-none');
@@ -214,13 +213,6 @@ jQuery(document).ready(function () {
                 jQuery('.mariatash-header').removeClass('maria-black');
                 jQuery('.mariatash-header').removeClass('scrolled-menu');
                 jQuery("section.sub-menu").removeClass("scrolled");
-                /*MT-1404*/
-                if(!jQuery('.mariatash-header').hasClass('scrolled-menu') && isRemovedSpace){
-                    jQuery('.fixed-top').css({'top': noticeHeight})
-                    jQuery('.store-notice').css('z-index','9999');
-                    jQuery('.store-notice').show(100)
-                    isRemovedSpace = false;
-                }
 
             }
 
@@ -590,7 +582,7 @@ jQuery( document ).ready(function() {
         /*UPPEND FOOTER MENU*/
         jQuery('.mobile-main_menu .main_menu').click(function () {
             var section_id = jQuery(this).attr('data-id');
-            console.log(section_id)
+            // console.log(section_id)
             jQuery('section.sub-menu').hide();
             jQuery('.mobile-sub_menu').find(`#${section_id}`).show();
         });
@@ -704,97 +696,90 @@ jQuery( document ).ready(function() {
 
     }
 
-    /*Notification Banners*/
-    /*MT-1404 : While init*/
-    if(jQuery('.notice-text').length > 0 ) {
-        noticeHeight = jQuery('.notice-text').height();
 
-
-        var intHeight = parseInt(noticeHeight);
-        console.log(intHeight)
-        /*Sub Menu Height*/
-        if(jQuery('body').hasClass('desktop-device')) {
-            console.log('adding for desktop')
-            jQuery('.fixed-top').css({'top': noticeHeight})
-            setTopForItem(jQuery('.sub-menu'));
-
-        }
-    }
     jQuery('.btn_chat_now').click(function(e){
         jQuery('.minimizedChatButtonSelector').click();
     });
 
-    /*MT-1404 When resize window*/
-    jQuery(window).bind("resize",function(){
-        noticeHeight = jQuery('.notice-text').height();
-        var intHeight = parseInt(noticeHeight);
-        console.log(intHeight)
-        /*Sub Menu Height*/
-        if(jQuery('body').hasClass('desktop-device')) {
-            console.log('adding for desktop')
-            jQuery('.fixed-top').css({'top': noticeHeight})
-            removeTopForItem(jQuery('.sub-menu'));
-            setTopForItem(jQuery('.sub-menu'));
 
+    /*MT-1404 START--------------------------------------------------------------*/
+    /*Notification Banners*/
+    /*MT-1404 When resize scroll load window*/
+    jQuery(window).bind("resize scroll load",function(){
+        if(jQuery('.notice-text').length > 0 && jQuery('.store-notice.top').length > 0) {
+
+            noticeHeight = jQuery('.notice-text').outerHeight();
+
+            var intHeight = parseInt(noticeHeight);
+            var fixedTopIntHeight = parseInt(jQuery('.fixed-top').outerHeight());
+            var topHeight = intHeight + fixedTopIntHeight;
+
+            if (jQuery(window).width() >= 1363) {
+
+                if(!jQuery('.mariatash-header').hasClass('scrolled-menu')){
+                    jQuery('.fixed-top').css({'top': noticeHeight});
+                    jQuery('.sub-menu').css({'top': topHeight});
+                    jQuery('.store-notice').css('z-index','9999');
+                    jQuery('.store-notice').show(100)
+                }else {
+                        jQuery('.fixed-top').css({'top': '0'});
+                        jQuery('.store-notice').css('z-index','1');
+                        jQuery('.store-notice').hide(1500);
+                }
+
+
+            }else {
+                jQuery('.fixed-top').css({'top': (noticeHeight)});
+                jQuery('.mobile-main_menu').css('top', (topHeight) + 'px');
+                jQuery('.mobile-sub_menu .sub-menu').css('top', (topHeight) + 'px');
+                jQuery('#search').css('top', (intHeight) + 'px');
+                jQuery('#cross-icon').css('top', (intHeight + 6) + 'px');
+            }
+        }else if(jQuery('.notice-text').length > 0 && jQuery('.store-notice.bottom').length > 0) {
+            if (jQuery(window).width() >= 1363) {
+                if(jQuery("body.cms-home").length>0) {
+                    jQuery('.store-notice.bottom').css("bottom","59px");
+                }
+            }else {
+
+            }
         }
-        if(jQuery('body').hasClass('mobile-device') && isAddedForMobile) {
-            console.log('adding for mobile')
-            jQuery('.fixed-top').css({'top': noticeHeight})
-            removeTopForItem(jQuery('.mobile-main_menu'))
-            setTopForItem(jQuery('.mobile-main_menu'));
-            removeTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
-            setTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
-            removeTopForItem(jQuery('#search'));
-            setTopForItem(jQuery('#search'));
-            /*removeTopForItem(jQuery('#cross-icon'));
-            setTopForItem(jQuery('#cross-icon'));*/
-        }
+
     });
 
-});
-/*MT-1404 : functions*/
-var setTopForItem = function(item){
-    if (item.length > 0) {
-        var item_top = item.css('top');
-        console.log(item);
-        item_top = parseInt(item_top.replace('px', ''));
-        if(item.attr('id') === 'cross-icon'){
-            item_top *=2;
+    var lastScrollTop = 0;
+    jQuery(window).scroll(function(event){
+        var st = jQuery(this).scrollTop();
+        if (st > lastScrollTop){
+            jQuery('.store-notice.bottom').hide(100);
+        } else {
+            jQuery('.store-notice.bottom').show(100);
         }
-        console.log(item_top);
-        item_top += noticeHeight;
-        item_top = item_top.toString()
-        console.log(item_top)
-        item.css('top', item_top + 'px');
-    }
-}
-var removeTopForItem = function (item) {
-    if (item.length > 0) {
-        var item_top = item.css('top');
-        console.log(item.attr('id'));
-        console.log(item_top);
-        item_top = parseInt(item_top.replace('px', ''));
-        if(item.attr('id') === 'cross-icon'){
-            item_top -= (item_top*2);
-        }
-        console.log(item_top);
-        item_top -= noticeHeight;
-        item_top = item_top.toString()
-        console.log(item_top)
-        item.css('top', item_top + 'px');
-    }
-}
-var addSpaceForMobile = function () {
+        lastScrollTop = st;
+    });
 
-    if(jQuery('.notice-text').length > 0 ) {
-        console.log('adding for mobile')
-        jQuery('.fixed-top').css({'top': noticeHeight})
-        setTopForItem(jQuery('.mobile-main_menu'));
-        setTopForItem(jQuery('.mobile-sub_menu .sub-menu'));
-        setTopForItem(jQuery('#search'));
-        setTopForItem(jQuery('#cross-icon'));
-    }
-    isAddedForMobile =true;
+    jQuery('.store-notice.top .close').on("click",function () {
+        var fixedTopIntHeight = parseInt(jQuery('.fixed-top').outerHeight());
+        jQuery('.fixed-top').css({'top': '0'});
+        if (jQuery(window).width() >= 1363) {
+            jQuery('.sub-menu').css({'top': fixedTopIntHeight});
+        }else {
+            jQuery('.mobile-main_menu').css('top', (fixedTopIntHeight) + 'px');
+            jQuery('.mobile-sub_menu .sub-menu').css('top', (fixedTopIntHeight) + 'px');
+        }
+        jQuery('.store-notice.top').remove();
+    });
+    jQuery('.store-notice.bottom .close').on("click",function () {
+        jQuery('.store-notice.top').remove();
+    });
+
+
+});
+
+var addSpaceForMobile = function () {
     jQuery('.notice-text').show()
-}
+};
+
+/*MT-1404 END ------------------------------------------------------*/
+
 
