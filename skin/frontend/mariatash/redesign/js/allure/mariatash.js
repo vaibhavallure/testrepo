@@ -773,7 +773,7 @@ jQuery( document ).ready(function() {
         jQuery('.store-notice.top').remove();
     });
     if(jQuery('.notice-text').length > 0){
-        jQuery('.store-notice').show()
+        jQuery('.store-notice').hide()
     }
 
 });
