@@ -1413,6 +1413,13 @@ img.print-size-chart{
 .mt-myaccount-new .order-items table th, .mt-myaccount-new .order-items table td{
 	font-family: urw-din-light;
 }
+.store-notice .close {
+	color: #fff !important;
+	text-shadow:none !important;
+	opacity:1 !important;
+	top:15% !important;
+	right:20px !important;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -2464,14 +2471,6 @@ img.print-size-chart{
 }
 .cms-contact-us .dark-button:hover {
 	color: #fff;
-}
-
-.store-notice .close {
-	color: #fff !important;
-	text-shadow:none !important;
-	opacity:1 !important;
-	top:15% !important;
-	right:20px !important;
 }
 
 .notice-text{
