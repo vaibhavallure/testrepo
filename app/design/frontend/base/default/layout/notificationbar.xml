@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<block type="notificationbar/notificationbar" name="after_body_start_script" template="notificationbar/notice.phtml" ifconfig="notificationconfig/notificationbar/enable" />
+			<action method="addCss"><stylesheet>notificationbar/font-awesome-4.7.0/css/font-awesome.css</stylesheet></action>
+			<action method="addCss"><stylesheet>notificationbar/font-awesome-4.7.0/css/font-awesome.min.css</stylesheet></action>
+		    <action method="addCss"><stylesheet>notificationbar/css/notification.css</stylesheet></action>
+			<action method="addCss"><stylesheet>notificationbar/css/countdown.css</stylesheet></action>
+			<action method="addItem"><type>skin_js</type><name>notificationbar/js/notification.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>notificationbar/js/countdown.js</name></action>
+		</reference>
+	</default>
+</layout>
