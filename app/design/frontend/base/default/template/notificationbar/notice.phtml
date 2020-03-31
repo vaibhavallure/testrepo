@@ -1,0 +1,116 @@
+<?php
+$helper = Mage::helper('notificationbar');
+$enddate 	= new DateTime($helper->getEnddate());
+if($helper->isEnabled()){
+?>
+
+<div class="store-notice <?php echo $helper->getPosition()." ";echo $helper->getEffect();?>">                                             
+	<div class="notice-text" style="background-color:#<?php echo $helper->getBackgroundColor();?>;
+    		font-size:<?php echo $helper->getBarSize(); ?>px;
+            color:#<?php echo $helper->getColor();?>">
+	
+    <?php
+		if($helper->isMobile()){
+			echo "<style>.store-notice{display:none;}</style>"; 
+		}
+		if($helper->getGoal()==0){ ?>
+        	<span><?php echo $helper->getNotificationText(); ?></span>
+            <?php if($helper->getButtonRef()==""){ ?>
+            	<a style="background-color:#<?php echo $helper->getButtonBgcolor();?>;color:#<?php echo $helper->getButtonColor();?>"><?php echo $this->__($helper->getButtonText())?></a>
+           	<?php }
+			else
+			 {?>
+    			<a href="<?php echo $helper->getButtonRef(); ?>" target="_blank" style="background-color:#<?php echo $helper->getButtonBgcolor();?>;color:#<?php echo $helper->getButtonColor();?>"><?php echo $this->__($helper->getButtonText())?></a>
+    <?php }
+	  	}
+	  	if($helper->getCallText()!="" && $helper->getGoal()==1 ){ ?>
+        	<span><?php echo $helper->getNotificationText(); ?></span>
+       		<a href="tel:+<?php echo $helper->getButtonCall(); ?>" target="_blank" style="background-color:#<?php echo $helper->getCallButtonBgcolor();?>;color:#<?php echo $helper->getCallButtonColor();?>"><?php echo $this->__($helper->getCallText())?></a>
+	<?php } ?>
+	<?php
+		if($helper->getGoal()==2){
+			echo "<span>".$helper->getNotificationText()."</span>";
+			echo "<span class=allsocial>".$helper->getAllSocial()."</span>";
+		}
+		if($helper->getGoal()==3){ ?>
+				<form action="" method="post" id="notificationMailing">
+                	<span><?php echo $helper->getNotificationText(); ?></span>
+	                <input id="notificationbarEmail" class="mailing-input required-entry validate-email" type="email" name="email" placeholder="Email"/>	
+    	            <button class="btnMailing" type="button" style="background-color:#<?php echo $helper->getNewsletterBgcolor()?>; color:#<?php echo $helper->getNewsletterColor()?>;" value="<?php echo $helper->getNewsletterText();?>"><?php echo $this->__($helper->getNewsletterText())?></button>
+                    <img class="notification-loading" src="<?php echo $this->getSkinUrl('notificationbar/image/ajax-loader.gif')?>" alt="test"/>
+                    <div class="notification-err"></div>  
+               	</form>         
+		<?php
+		}
+		if($helper->getGoal()==4){ ?>
+        	<div class="countdown-main">
+            <span class="counttext"><?php echo $helper->getNotificationText(); ?></span>
+            <div class='countdown' data-date="<?php echo $enddate->format('Y-m-d').""; ?>"></div>
+            <div class="countref"><a href="<?php echo $helper->getCountdownRef(); ?>" target="_blank" style="background-color:#<?php echo $helper->getContdownbtnbgcolor();?>;color:#<?php echo $helper->getContdownbtncolor();?>"><?php echo $this->__($helper->getCountdowntext())?></a></div>
+            
+		<?php }
+		?>
+    </div>
+    
+    	<?php if($helper->isClose()){ ?>
+    		<div class="close"><i style="font-size:<?php echo $helper->getClose(); ?>px" class="fa fa-times" aria-hidden="true"></i>
+        <?php } ?>
+</i></div></div>
+</div>
+<?php }?>
+<script>
+jQuery(document).ready(function(e) {
+    jQuery('body').css('margin-top',jQuery('.store-notice.top').height());
+	jQuery('body').css('margin-bottom',jQuery('.store-notice.bottom').height());
+	
+	jQuery('.btnMailing').click(function(){
+		emailText=jQuery('#notificationbarEmail').val();
+		Nerror=jQuery('.notification-err');
+		if(jQuery.trim(emailText).length== 0){
+			erromsg("You can't Leave Email Empty.");
+		}
+		else{
+			if(validateEmail(emailText)){
+				jQuery('.notification-loading').show();
+				jQuery('.notification-loading').css("display","inline");
+				jQuery('.btnMailing').hide();
+				jQuery.ajax({
+					url: "<?php echo Mage::getUrl("notificationbar/subscriber/index"); ?>",
+					type: 'POST',
+					data: {
+							email:emailText
+						  },
+					dataType:"json",
+					success: function(data){
+						erromsg(data);
+					},
+					error: function(data) {
+						console.log('Error :'.data);
+					},
+					complete: function(){
+       					jQuery('.notification-loading').hide();
+						jQuery('.btnMailing').show();
+      				}
+				});
+			}
+			else{
+				Nerror.text("Invalid Email address");
+			}
+		}
+	});
+	function validateEmail(sEmail) {
+		var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+		if (filter.test(sEmail)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	function erromsg(err){
+		jQuery('.notification-err').text(err);
+		jQuery('#notificationbarEmail').val('');
+		jQuery(".notification-err").show().delay(4000).fadeOut();
+	}
+});
+</script>

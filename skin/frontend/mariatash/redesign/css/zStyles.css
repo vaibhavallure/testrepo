@@ -1413,6 +1413,22 @@ img.print-size-chart{
 .mt-myaccount-new .order-items table th, .mt-myaccount-new .order-items table td{
 	font-family: urw-din-light;
 }
+.store-notice .close {
+	color: #fff !important;
+	text-shadow:none !important;
+	opacity:1 !important;
+	top:15% !important;
+	right:20px !important;
+}
+.store-notice .notice-text a {
+	text-decoration: underline !important;
+}
+.body-no-top-margin{
+	margin-top: 0px !important;
+}
+.body-top-margin{
+	margin-top: 40px !important;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1726,6 +1742,9 @@ img.print-size-chart{
 	}
 	.category-shop-our-instagram .fs-timeline-detail {
 		padding: 20px;
+	}
+	.notice-text {
+		font-size: 11px !important;
 	}
 }
 @media (min-width: 1800px){
@@ -2241,6 +2260,9 @@ tr.tr-piercing td {
 	.mobile-sub_menu .sub-menu  button.button.dark-button {
 		position: absolute;
 	}
+	.store-notice .close {
+		top: 20% !important;
+	}
 
 }
 /*Mobile devices portrait*/
@@ -2259,7 +2281,10 @@ tr.tr-piercing td {
 	.cms-store-locations-html.fancybox-lock{
 		position: fixed !important;
 	}
-
+	.store-notice .close {
+		top: 30% !important;
+		right: 10px !important;
+	}
 }
 .zoom-next,
 .zoom-prev{
@@ -2457,14 +2482,6 @@ img.print-size-chart{
 	color: #fff;
 }
 
-.store-notice .close {
-	color: #fff !important;
-	text-shadow:none !important;
-	opacity:1 !important;
-	top:10% !important;
-	right:20px !important;
-}
-
 .notice-text{
 	font-family: urw-din-light !important;
 	font-size: 12px !important;
@@ -2480,3 +2497,10 @@ img.print-size-chart{
 #top-nav-3 ul.social-media {
 	display: flex;
 }
+/*
+.mariatash-header{
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
+}*/
