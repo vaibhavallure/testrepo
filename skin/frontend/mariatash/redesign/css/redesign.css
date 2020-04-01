@@ -684,7 +684,7 @@ html {
 }
 nav.mariatash-header {
   background: var(--light-black);
-	transition: all 1s;
+	/*transition: all 1s;*/
 }
 
 .menu-dropdown {
@@ -1635,7 +1635,7 @@ input[type="checkbox"]:checked+label:before {
 	border-bottom: 1px solid #292929;
 }
 .sub-menu.scrolled{
-	top:83px;
+	top:83px !important;
 }
 #appointments {
   padding: 48px 121px;

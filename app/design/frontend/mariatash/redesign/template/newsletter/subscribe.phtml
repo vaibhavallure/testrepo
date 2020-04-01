@@ -198,6 +198,7 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
     }
 
     jQuery( document ).ready(function() {
+//        jQuery('.notice-text').hide()
 
         /*CONVERT FIRSTNAME AND LASTNAME IN CAPITAL LETTERS*/
         jQuery('#first_name').keyup(function (evt) {
@@ -295,6 +296,9 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
             jQuery('.close-section').click(function () {
                 jQuery('section.sub-menu').hide();
             });
+            /*MT-1404 : for mobile after adding footer in menu add css*/
+            addedMobileMenu = true
+            // addSpaceForMobile()
         }
 
         /*For mobile Menu only*/

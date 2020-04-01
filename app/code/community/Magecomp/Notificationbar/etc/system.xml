@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<tabs>
+        <magecomp translate="label">
+            <label><![CDATA[<img src="https://www.magecomp.com/media/images/magecomp--extension.png" alt="MAGECOMP" height="25" style="vertical-align:middle;"/>]]></label>
+            <sort_order>50</sort_order>
+        </magecomp>
+    </tabs>
+	<sections>
+     	<notificationconfig translate="label">
+            <label>Notification Bar</label>
+            <tab>magecomp</tab>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+			<groups>
+            	<notificationbar translate="label">
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>15</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+						 <enable translate="label">
+                            <label>Notification Bar</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+						 </enable> 
+						 <goal translate="label">
+							<label>Notification Goal</label>
+							<frontend_type>select</frontend_type>
+							<source_model>notificationbar/source_goal</source_model>
+							<sort_order>19</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</goal> 
+						 <barsize translate="label">
+							<label>Bar Size</label>
+							<frontend_type>select</frontend_type>
+							<source_model>notificationbar/source_fontsize</source_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</barsize>
+						<position translate="label">
+							<label>Bar Position</label>
+							<frontend_type>select</frontend_type>
+							<source_model>notificationbar/source_position</source_model>
+							<sort_order>21</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</position>
+						<effect translate="label">
+							<label>Bar Transition Effect</label>
+							<frontend_type>select</frontend_type>
+							<source_model>notificationbar/source_effect</source_model>
+							<sort_order>22</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</effect> 
+						<mobile translate="label">
+							<label>Display in Mobile</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>23</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</mobile> 
+						<close translate="label">
+							<label>Close Button</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</close> 
+						 <message translate="label">
+                            <label>Notification Text</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>27</sort_order>
+							<validate>required-entry validate-length maximum-length-100</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+							<comment><![CDATA[Maximum 100 Characters Allowed]]></comment>
+						 </message>
+						<fontcolor translate="label">
+                            <label>Text Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</fontcolor>
+						<bgcolor translate="label">
+                            <label>Background Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enable>1</enable></depends>
+						</bgcolor>
+						<buttontext translate="label">
+                            <label>Button Text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>0</goal></depends>
+						</buttontext>
+						<calltext translate="label">
+                            <label>Call Text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>1</goal></depends>
+						</calltext>
+						<countdownbtntext translate="label">
+                            <label>Countdown Button Text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+							<validate>required-entry</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>4</goal></depends>
+						</countdownbtntext>
+						<newslettertext translate="label">
+                            <label>Newsletter Button Text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>3</goal></depends>
+						</newslettertext>
+						<buttonref translate="label">
+                            <label>Button Hyperlink</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+							<validate>validate-url</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>0</goal></depends>
+						</buttonref>
+						<buttoncall translate="label">
+                            <label>Call Button Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>71</sort_order>
+							<validate>validate-digits</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>1</goal></depends>
+							<comment><![CDATA[Enter with country code 91(India)]]></comment>
+						</buttoncall>
+						<countdownref translate="label">
+                            <label>Button Hyperlink</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>71</sort_order>
+							<validate>validate-url</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>4</goal></depends>
+						</countdownref>
+						<buttoncolor translate="label">
+                            <label>Button Font Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>0</goal></depends>
+						</buttoncolor>
+						<callbuttoncolor translate="label">
+                            <label>Call Button Font Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>1</goal></depends>
+						</callbuttoncolor>
+						<countdownbuttoncolor translate="label">
+                            <label>Countdown Button Font Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>4</goal></depends>
+						</countdownbuttoncolor>
+						<buttonbgcolor translate="label">
+                            <label>Button Background Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>0</goal></depends>
+						</buttonbgcolor>
+						<callbuttonbgcolor translate="label">
+                            <label>Call Button Background Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>1</goal></depends>
+						</callbuttonbgcolor>
+						<countdownbuttonbgcolor translate="label">
+                            <label>Countdown Button Background Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>4</goal></depends>
+						</countdownbuttonbgcolor>
+						<newslettercolor translate="label">
+                            <label>Newsletter Button Text Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>3</goal></depends>
+						</newslettercolor>
+						<newsletterbgcolor translate="label">
+                            <label>Newsletter Button Background Color</label>
+                            <frontend_type>text</frontend_type>
+							<validate>color</validate>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><goal>3</goal></depends>
+						</newsletterbgcolor>		
+						<facebook translate="label">
+							<label>Facebook</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>110</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</facebook>
+						<twitter translate="label">
+							<label>Twitter</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>112</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</twitter>
+						<instagram translate="label">
+							<label>Instagram</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>114</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</instagram>
+						<youtube translate="label">
+							<label>Youtube</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>116</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</youtube>
+						<linkedin translate="label">
+							<label>Linkedin</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>118</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</linkedin>
+						<gplus translate="label">
+							<label>Google+</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>120</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</gplus>
+						<pinterest translate="label">
+							<label>Pinterest</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>122</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</pinterest>
+						<reddit translate="label">
+							<label>Reddit</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>124</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</reddit>
+						<tumblr translate="label">
+							<label>Tumblr</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>126</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</tumblr>
+						<delicious translate="label">
+							<label>Delicious</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>128</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<validate>validate-url</validate>
+							<depends><goal>2</goal></depends>
+						</delicious>
+						<digg translate="label">
+							<label>Digg</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>130</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</digg>
+						<dribble translate="label">
+							<label>Dribble</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>132</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</dribble>
+						<flickr translate="label">
+							<label>Flickr</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>134</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</flickr>
+						<vine translate="label">
+							<label>Vine</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>136</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</vine>
+						<yelp translate="label">
+							<label>Yelp</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>138</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</yelp>
+						<github translate="label">
+							<label>Github</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>140</sort_order>
+							<validate>validate-url</validate>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><goal>2</goal></depends>
+						</github>
+						<enddate translate="label">
+						   <label>Offer End Date</label>
+						   <frontend_model>notificationbar/adminhtml_system_config_date</frontend_model> 
+						   <sort_order>142</sort_order>
+						   <validate>required-entry</validate>
+						   <show_in_default>1</show_in_default>
+						   <show_in_website>1</show_in_website>
+						   <show_in_store>1</show_in_store>
+						   <depends><goal>4</goal></depends>
+						</enddate>
+					</fields>
+				</notificationbar>	
+			</groups>
+		</notificationconfig>
+	</sections>
+</config>
