@@ -3,6 +3,27 @@ $helper = Mage::helper('notificationbar');
 $enddate 	= new DateTime($helper->getEnddate());
 if($helper->isEnabled()){
 ?>
+    <style>
+
+        div.store-notice {
+            display: none;
+        }
+
+        @media (min-width:1362px) {
+
+            div.store-notice {
+                display: block;
+            }
+
+            .fixed-top {
+                top: 40px;
+            }
+
+            .sub-menu {
+                top: 175px
+            }
+        }
+    </style>
 
 <div class="store-notice <?php echo $helper->getPosition()." ";echo $helper->getEffect();?>">                                             
 	<div class="notice-text" style="background-color:#<?php echo $helper->getBackgroundColor();?>;

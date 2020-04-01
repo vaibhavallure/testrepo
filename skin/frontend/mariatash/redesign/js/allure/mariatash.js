@@ -720,11 +720,11 @@ jQuery( document ).ready(function() {
                     jQuery('.fixed-top').css({'top': noticeHeight});
                     jQuery('.sub-menu').css({'top': topHeight});
                     jQuery('.store-notice').css('z-index','9999');
-                    jQuery('.store-notice').show(100)
+                    jQuery('.store-notice').show()
                 }else {
                         jQuery('.fixed-top').css({'top': '0'});
                         jQuery('.store-notice').css('z-index','1');
-                        jQuery('.store-notice').hide(1500);
+                        jQuery('.store-notice').hide();
                 }
 
 
@@ -751,9 +751,9 @@ jQuery( document ).ready(function() {
     jQuery(window).scroll(function(event){
         var st = jQuery(this).scrollTop();
         if (st > lastScrollTop){
-            jQuery('.store-notice.bottom').hide(100);
+            jQuery('.store-notice.bottom').hide();
         } else {
-            jQuery('.store-notice.bottom').show(100);
+            jQuery('.store-notice.bottom').show();
         }
         lastScrollTop = st;
     });
@@ -773,7 +773,7 @@ jQuery( document ).ready(function() {
         jQuery('.store-notice.top').remove();
     });
     if(jQuery('.notice-text').length > 0){
-        jQuery('.store-notice').hide()
+        // jQuery('.store-notice').hide()
         if(
             jQuery('body').is('.category-helix-jewelry, ' +
             '.category-shop-by-piercing, ' +
