@@ -77,6 +77,8 @@ if ($_product->getTypeId() != 'giftcards'):
 ?>
 <script>
     //call priceHtml via ajax, to avoid varnish caching
+    var MariaTash = {};
+    MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
     jQuery.ajax({
         type: "POST",
         dataType : "json",
