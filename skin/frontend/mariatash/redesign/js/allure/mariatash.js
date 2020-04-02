@@ -774,20 +774,22 @@ jQuery( document ).ready(function() {
     });
     if(jQuery('.notice-text').length > 0){
         // jQuery('.store-notice').hide()
-        if(
-            jQuery('body').is('.category-helix-jewelry, ' +
-            '.category-shop-by-piercing, ' +
-            '.category-tash-rook-jewelry, ' +
-            '.category-tragus-jewelry, ' +
-            '.category-conch-jewelry, ' +
-            '.category-rook-jewelry, ' +
-            '.category-forward-helix,' +
-            '.category-daith-jewelry,' +
-            '.category-antitragus,' +
-            '.category-contraconch')
-        ){
-            jQuery('body').removeClass('body-no-top-margin')
-            jQuery('body').addClass('body-top-margin')
+        if(jQuery('body').hasClass('desktop-device')) {
+            if (
+                jQuery('body').is('.category-helix-jewelry, ' +
+                    '.category-shop-by-piercing, ' +
+                    '.category-tash-rook-jewelry, ' +
+                    '.category-tragus-jewelry, ' +
+                    '.category-conch-jewelry, ' +
+                    '.category-rook-jewelry, ' +
+                    '.category-forward-helix,' +
+                    '.category-daith-jewelry,' +
+                    '.category-antitragus,' +
+                    '.category-contraconch')
+            ) {
+                jQuery('body').removeClass('body-no-top-margin')
+                jQuery('body').addClass('body-top-margin')
+            }
         }
     }
     jQuery('.store-notice .close').on('click',function () {
