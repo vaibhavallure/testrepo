@@ -10,9 +10,10 @@ class Allure_Virtualstore_Model_Observer
 	 */
     public function setDataToOrder($observer){
         try{
-            $order = $observer->getOrder();
+            $order =$observer->getEvent()->getOrder();
             $storeId = $order->getStoreId();
-            $order->setOldStoreId($storeId)->save();
+            $order->setOldStoreId($storeId);
+
         }catch(Exception $e){
         }
     }
