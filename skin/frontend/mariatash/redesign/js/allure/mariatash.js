@@ -715,7 +715,7 @@ jQuery( document ).ready(function() {
             var topHeight = intHeight + fixedTopIntHeight;
 
             if (jQuery(window).width() >= 1363) {
-
+jQuery('#search_autocomplete').css('top', (intHeight) + 'px');
                 if(!jQuery('.mariatash-header').hasClass('scrolled-menu')){
                     jQuery('.fixed-top').css({'top': noticeHeight});
                     jQuery('.sub-menu').css({'top': topHeight});
@@ -734,6 +734,7 @@ jQuery( document ).ready(function() {
                 jQuery('.mobile-sub_menu .sub-menu').css('top', (topHeight) + 'px');
                 jQuery('#search').css('top', (intHeight) + 'px');
                 jQuery('#cross-icon').css('top', (intHeight + 6) + 'px');
+                jQuery('#search_autocomplete').css('top', (intHeight*2) + 'px');
             }
         }else if(jQuery('.notice-text').length > 0 && jQuery('.store-notice.bottom').length > 0) {
             if (jQuery(window).width() >= 1363) {
@@ -774,20 +775,22 @@ jQuery( document ).ready(function() {
     });
     if(jQuery('.notice-text').length > 0){
         // jQuery('.store-notice').hide()
-        if(
-            jQuery('body').is('.category-helix-jewelry, ' +
-            '.category-shop-by-piercing, ' +
-            '.category-tash-rook-jewelry, ' +
-            '.category-tragus-jewelry, ' +
-            '.category-conch-jewelry, ' +
-            '.category-rook-jewelry, ' +
-            '.category-forward-helix,' +
-            '.category-daith-jewelry,' +
-            '.category-antitragus,' +
-            '.category-contraconch')
-        ){
-            jQuery('body').removeClass('body-no-top-margin')
-            jQuery('body').addClass('body-top-margin')
+        if(jQuery('body').hasClass('desktop-device')) {
+            if (
+                jQuery('body').is('.category-helix-jewelry, ' +
+                    '.category-shop-by-piercing, ' +
+                    '.category-tash-rook-jewelry, ' +
+                    '.category-tragus-jewelry, ' +
+                    '.category-conch-jewelry, ' +
+                    '.category-rook-jewelry, ' +
+                    '.category-forward-helix,' +
+                    '.category-daith-jewelry,' +
+                    '.category-antitragus,' +
+                    '.category-contraconch')
+            ) {
+                jQuery('body').removeClass('body-no-top-margin')
+                jQuery('body').addClass('body-top-margin')
+            }
         }
     }
     jQuery('.store-notice .close').on('click',function () {
