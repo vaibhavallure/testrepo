@@ -153,7 +153,7 @@ if ($_product->getSizeSample() == 1) {
 
                     setCustomeOptionsByMetal();
 
-                    jQuery('.chooseList ul li.option').on('click', function () {
+                    jQuery(document).on('click',".chooseList ul li.option", function () {
                         var selected_id = jQuery(this).data("select_id");
                         var option_value = jQuery(this).data("option_value");
                         jQuery(this).parent().find("li").removeClass("active");
