@@ -154,48 +154,11 @@ if ($_product->getSizeSample() == 1) {
 
                      <?= $this->getInStockAttribute() ?>
 
-                    /*new code added for redesign attributes----*/
-                    var i=1;
-                    jQuery('.change_select').each(function (index, element) {
-                        var select_id=jQuery(this).attr("id");
-                        var attr_id=jQuery(this).attr("data-attr_id");
-                        var selectlabel=jQuery('#label-attr'+attr_id).html();
-                        var selectlabel2=jQuery('#label-attr'+attr_id+' h3').html();
-                        var selectedValue=jQuery(this).find(":selected").val();
-                        var attrClass=selectlabel2.toLowerCase();
-                        attrClass=attrClass.replace(" ","-");
 
-                        jQuery(this).parent().after().append("<div class='chooseList row "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
-                        var selectlabel=jQuery('#label-attr'+attr_id).html();
-                        jQuery('#label-attr'+attr_id).hide();
-                        var j=1;
 
-                        var optioncount=jQuery(this).find('option').length;
+                    setCustomeOptionsByMetal();
 
-                        jQuery('#chooseList'+select_id+' ul:last').append('<li class="label li-'+j+'">'+selectlabel+'</li>');
-                        jQuery(element).each(function (idx, elm) {
-                            var liCounter=1;
-                            jQuery('option', elm).each(function (id, el) {
-                                if(el.value!="") {
-                                    j++;
-
-                                    var liRow="";
-
-                                    var classes="";
-                                    if(selectedValue==el.value)
-                                    {
-                                        classes="active";
-                                    }
-                                    jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option  li-'+j+' '+classes+' ' + liRow + '"><span>' + el.text.toLowerCase() + '</span></li>');
-                                    liCounter++;
-
-                                }
-                            });
-                        });
-                        i++;
-                    });
-
-                    jQuery('.chooseList ul li.option').on('click', function () {
+                    jQuery(document).on('click',".chooseList ul li.option", function () {
                         var selected_id = jQuery(this).data("select_id");
                         var option_value = jQuery(this).data("option_value");
                         jQuery(this).parent().find("li").removeClass("active");
@@ -209,8 +172,61 @@ if ($_product->getSizeSample() == 1) {
                     jQuery('.chooseList').slideDown(1000);
 
                 });
+
+            jQuery(document).on("click",".metal-swatch img",function () {
+                setCustomeOptionsByMetal();
+            })
         });
         /*new code added for redesign attributes----*/
+
+
+        var setCustomeOptionsByMetal=function () {
+            /*new code added for redesign attributes----*/
+            var i=1;
+            jQuery(".chooseList").remove();
+
+            jQuery('.change_select').each(function (index, element) {
+                var select_id=jQuery(this).attr("id");
+                var attr_id=jQuery(this).attr("data-attr_id");
+                var selectlabel=jQuery('#label-attr'+attr_id).html();
+                var selectlabel2=jQuery('#label-attr'+attr_id+' h3').html();
+                var selectedValue=jQuery(this).find(":selected").val();
+                var attrClass=selectlabel2.toLowerCase();
+                attrClass=attrClass.replace(" ","-");
+
+                jQuery(this).parent().after().append("<div class='chooseList row "+attrClass+"' id='chooseList"+select_id+"' style='display: none'><ul></ul></div>");
+                var selectlabel=jQuery('#label-attr'+attr_id).html();
+                jQuery('#label-attr'+attr_id).hide();
+                var j=1;
+
+                var optioncount=jQuery(this).find('option').length;
+
+                jQuery('#chooseList'+select_id+' ul:last').append('<li class="label li-'+j+'">'+selectlabel+'</li>');
+                jQuery(element).each(function (idx, elm) {
+                    var liCounter=1;
+                    jQuery('option', elm).each(function (id, el) {
+                        if(el.value!="") {
+                            j++;
+
+                            var liRow="";
+
+                            var classes="";
+                            if(selectedValue==el.value)
+                            {
+                                classes="active";
+                            }
+                            jQuery('#chooseList' + select_id + ' ul:last').append('<li data-select_id="' + select_id + '" data-option_value="' + el.value + '" class="option  li-'+j+' '+classes+' ' + liRow + '"><span>' + el.text.toLowerCase() + '</span></li>');
+                            liCounter++;
+
+                        }
+                    });
+                });
+                i++;
+            });
+
+            jQuery('.change_select').hide();
+            jQuery('.chooseList').show();
+        };
 
     </script>
     <?php endif;?>
