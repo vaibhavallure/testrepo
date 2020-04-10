@@ -44,6 +44,7 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         //check the quote item is belong to address item
         if($quoteItem instanceof Mage_Sales_Model_Quote_Address_Item){
             $item = $quoteItem->getQuote()->getItemById($quoteItem->getQuoteItemId());
+            $orderItem->setStoreId($item->getStoreId());
             $backorderQty = $item->getBackorders();
             $orderItem->setQtyBackordered($backorderQty);
             $orderItem->setBackorderTime($item->getBackorderTime());

@@ -26,6 +26,14 @@
  */
 ?>
 <?php $orderObjects = $this->getMultiOrder() ?>
+<?php $isShow = false; foreach ($orderObjects as $_order):?>
+<?php if(preg_match("/-B/", $_order->getIncrementId())){
+        $isShow = true;
+        break;
+    }
+?>
+<?php endforeach;?>
+
 <?php foreach ($orderObjects as $_order):?>
 <?php $_order = Mage::getModel("sales/order")->load($_order->getId());?>
 <?php if ($_order): ?>
@@ -33,10 +41,12 @@
 	<tr>
     	<td style=" padding-left: 10px; background: #d1d1d1; ">
        		<h2 style="font-size:13px; font-weight:normal; margin:0; line-height: 34px; text-transform: uppercase;">Your Order #<?= $_order->getIncrementId()?></h2>
-           	<?php if($_order->getIsContainBackorder()):?>
-           	<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped when ALL BACKORDERED ITEMS ARE IN STOCK.)</span>
-     		<?php else:?>
-     		<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped NOW.)</span>
+           	<?php if($isShow):?>
+               	<?php if($_order->getIsContainBackorder()):?>
+               	<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped when ALL BACKORDERED ITEMS ARE IN STOCK.)</span>
+         		<?php else:?>
+         		<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped NOW.)</span>
+         		<?php endif;?>
      		<?php endif;?>
      	</td>
   	</tr>
