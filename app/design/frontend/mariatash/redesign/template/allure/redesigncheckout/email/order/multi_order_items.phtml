@@ -27,7 +27,7 @@
 ?>
 <?php $orderObjects = $this->getMultiOrder() ?>
 <?php $isShow = false; foreach ($orderObjects as $_order):?>
-<?php if(preg_match("/-B/", $_order->getIncrementId())){
+<?php if(preg_match("/B/", $_order->getIncrementId())){
         $isShow = true;
         break;
     }
