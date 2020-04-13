@@ -23,7 +23,7 @@ class Allure_BackorderRecord_Adminhtml_BackorderReportController extends Mage_Ad
 
         $post_data = $this->getRequest()->getPost();
 
-        $report = Mage::helper("backorderrecord")->getReportXls($post_data);
+        $report = Mage::helper("backorderrecord")->getReportXls($post_data,$post_data['store_id']);
 
         if ($report['is_create']) {
 
