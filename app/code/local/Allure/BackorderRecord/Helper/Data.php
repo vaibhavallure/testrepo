@@ -24,9 +24,9 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
         if($dates['order_type']=="all")
-            $filename     = "All_Order_Report_".$date.".csv";
+            $filename     = "All_Order_Report_".str_replace(" ","-",$this->getStoreLable($store))."_".$date.".csv";
         else if($dates['order_type']=="back")
-            $filename     = "Backorder_Report_".$date.".csv";
+            $filename     = "Backorder_Report_".str_replace(" ","-",$this->getStoreLable($store))."_".$date.".csv";
         else
             $filename     = "Daily_Backorder_Report_".$date.".csv";
 
