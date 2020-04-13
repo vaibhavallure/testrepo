@@ -69,6 +69,16 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
 
         ));
 
+        $fieldset->addField('store_id', 'select', array(
+            'name'      => 'store_id',
+            'label'     => Mage::helper("backorderrecord")->__('Select Store'),
+            'options'   => array(
+                1 => Mage::helper('backorderrecord')->__('Retail'),
+                Mage::helper("wholesale")->getStoreId() => Mage::helper('backorderrecord')->__('Wholesale'),
+            ),
+
+        ));
+
         $fieldset->addField('fromdate', 'datetime', array(
             'label'    => 'From',
             'title'    => 'From',
