@@ -168,8 +168,11 @@ if(!$product->getId()){
        <button data-url="<?php echo $receiptUrl?>" class="light-button" onclick="openPurchaseWindow(this)">See Receipt</button>
    </div>
    <?php if($product->getId()):?>
+   <!--MT-1408-->
+       <?php $_labelHelper = Mage::helper('allure_category/vip');?>
+       <?php $buttonTitle = $this->__($_labelHelper->getLabel($product)); ?>
        <div class="mt-purchase-btn mt-4">
-          <button data-item-id="<?php echo $_item->getId()?>" class="dark-button" onclick="reorderItem(this)">Add to Cart</button>
+          <button data-item-id="<?php echo $_item->getId()?>" class="dark-button" onclick="reorderItem(this)"><?=$buttonTitle?></button>
       </div>
   <?php endif;?>
 </td>
