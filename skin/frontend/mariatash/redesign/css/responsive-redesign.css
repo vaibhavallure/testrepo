@@ -1788,15 +1788,16 @@ ul.tabs li{
   .cms-home .col1-layout .col-main .std {
    display: none;
   }
-}
   .category-title .cat-description {
-  width: 360px;
-  font-size: 13px;
-  line-height: 1.38;
-  text-align: center;
-  color: rgba(41, 41, 41, 0.6);
-  margin: 23px auto 17px;
+    width: 360px;
+    font-size: 13px;
+    line-height: 1.38;
+    text-align: center;
+    color: rgba(41, 41, 41, 0.6);
+    margin: 23px auto 17px;
+  }
 }
+
 @media (max-width:766px) {
 body.cms-index-index.cms-home .footer.col-12 {
     padding-top: 25px !important;
