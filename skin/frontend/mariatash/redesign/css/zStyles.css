@@ -67,7 +67,7 @@
 	width: 100%;
 }
 .other-contact-options .details{
-	padding-bottom: 2.4rem;
+	padding-bottom: 1.5rem;
 }
 /*=====================*/
 /*STORE LOCATIONS*/
@@ -1413,6 +1413,22 @@ img.print-size-chart{
 .mt-myaccount-new .order-items table th, .mt-myaccount-new .order-items table td{
 	font-family: urw-din-light;
 }
+.store-notice .close {
+	color: #fff !important;
+	text-shadow:none !important;
+	opacity:1 !important;
+	top:15% !important;
+	right:20px !important;
+}
+.store-notice .notice-text a {
+	text-decoration: underline !important;
+}
+.body-no-top-margin{
+	margin-top: 0px !important;
+}
+.body-top-margin{
+	margin-top: 40px !important;
+}
 /*=====================*/
 /*MEDIA QUERIES*/
 /*=====================*/
@@ -1420,6 +1436,9 @@ img.print-size-chart{
 @media only screen and (max-width: 769px){
 	.fs-divider {
 		margin-right: 0!important;
+	}
+	.cms-contact-us .dark-button {
+		margin-top: 14px;
 	}
 }
 
@@ -1724,6 +1743,9 @@ img.print-size-chart{
 	.category-shop-our-instagram .fs-timeline-detail {
 		padding: 20px;
 	}
+	.notice-text {
+		font-size: 11px !important;
+	}
 }
 @media (min-width: 1800px){
 	#container-cu {
@@ -1879,6 +1901,12 @@ img.print-size-chart{
 	}
 	.acc-products-wrapper .mt-my-wishlist .product-w-mt .item.fprice{
 		padding-left: 40px;
+	}
+}
+/*Greater than mobile devices*/
+@media(min-width: 768px){
+	.allure-instacatalog-feed-view .insta-details {
+		margin-top: 70px;
 	}
 }
 
@@ -2145,6 +2173,15 @@ tr.tr-piercing td {
 	.mobile-sub_menu .sub-menu button.button.dark-button {
 		position: absolute;
 	}
+	.cms-contact-us .dark-button  {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 15px;
+	}
+	.cms-contact-us .col-12.details {
+		margin-bottom: 1.3rem;
+	}
 }
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
@@ -2158,6 +2195,15 @@ tr.tr-piercing td {
 	}
 	.mobile-sub_menu .sub-menu  button.button.dark-button {
 		position: absolute;
+	}
+	.cms-contact-us .dark-button  {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 15px;
+	}
+	.cms-contact-us .col-12.details {
+		margin-bottom: 1.3rem;
 	}
 }
 @media (max-width: 767px) {
@@ -2197,6 +2243,10 @@ tr.tr-piercing td {
 		margin-bottom: 60px;
 		overflow-y: scroll;
 	}
+	.category-shop-our-instagram .fs-detail-outer-container .fs-post-info .wrap.text-right {
+		margin-right: 10px;
+	}
+
 }
 /*Mobile devices Landscape*/
 @media (max-width: 767px) and (orientation: landscape) {
@@ -2209,6 +2259,9 @@ tr.tr-piercing td {
 	}
 	.mobile-sub_menu .sub-menu  button.button.dark-button {
 		position: absolute;
+	}
+	.store-notice .close {
+		top: 20% !important;
 	}
 
 }
@@ -2225,10 +2278,13 @@ tr.tr-piercing td {
 		width: 20px;
 		height: 20px;
 	}
-	.cms-store-locations-html .fancybox-lock{
-		position: fixed;
+	.cms-store-locations-html.fancybox-lock{
+		position: fixed !important;
 	}
-
+	.store-notice .close {
+		top: 30% !important;
+		right: 10px !important;
+	}
 }
 .zoom-next,
 .zoom-prev{
@@ -2278,6 +2334,22 @@ tr.tr-piercing td {
 	#cartilage-items-slider li img:hover, #cartilage-items-slider li.current img {
 		-webkit-filter: grayscale(0%);
 		filter: grayscale(0%);
+	}
+	.category-shop-our-instagram div#instagram-view-container .fs-post-info.para-normal {
+		margin-bottom: 20px;
+	}
+	/*New MT-1398 Contact us page*/
+
+	.cms-contact-us .dark-button {
+		margin-top: 10px;
+	}
+
+	.cms-contact-us .col-12.details {
+		margin-bottom: 1.3rem;
+	}
+	.cms-contact-us .contact-us-wrapper h1 {
+		margin-top:0.9rem !important;
+		margin-bottom:0.9rem !important;
 	}
 }
 
@@ -2390,3 +2462,45 @@ img.print-size-chart{
 .catalog-category-view  .block.block-reorder {
 	display: none;
 }
+/*MT-1274 Instagram*/
+.category-shop-our-instagram span.share_link_icon {
+	position: absolute;
+	margin-top:2px;
+}
+.category-shop-our-instagram div#instagram-view-container .fs-detail-date.para-normal {
+	margin-left: 20px;
+}
+
+.category-shop-our-instagram div#instagram-view-container .fs-post-info.para-normal {
+	margin-bottom: 20px;
+}
+/*MT-1398 New Contact US page*/
+.fs-18{
+	font-size: 18px;
+}
+.cms-contact-us .dark-button:hover {
+	color: #fff;
+}
+
+.notice-text{
+	font-family: urw-din-light !important;
+	font-size: 12px !important;
+	letter-spacing: 0.5px !important;
+}
+.footer .footlinks ul.social-media{
+	padding: 0px;
+}
+
+#top-nav-3 li.level0.nav-10.level-top.noChild {
+	display: none;
+}
+#top-nav-3 ul.social-media {
+	display: flex;
+}
+/*
+.mariatash-header{
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
+}*/

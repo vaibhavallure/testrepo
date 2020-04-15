@@ -17,7 +17,7 @@ class Webtex_Giftcards_Helper_Data extends Mage_Core_Helper_Data
 
         return $balance;
     }
-    
+
     public function isShowEmailType()
     {
         return Mage::getStoreConfigFlag('giftcards/default/card_type_email');
@@ -61,7 +61,7 @@ class Webtex_Giftcards_Helper_Data extends Mage_Core_Helper_Data
     {
         $orderModel = Mage::getModel('giftcards/order')->getCollection()->addFieldToFilter('id_order',$id);
         $storeId = Mage::getModel('sales/order')->load($id)->getStoreId();
-        
+
         $usedGiftcards = array();
         $html = '';
         if($orderModel->getData()){
@@ -78,18 +78,27 @@ class Webtex_Giftcards_Helper_Data extends Mage_Core_Helper_Data
     }
 
     public function getGiftCardMessage($id){
-    	
-    	$card = Mage::getModel('giftcards/giftcards')->load($id, 'order_id')->getMailMessage();
-    	return $card;
+
+        $card = Mage::getModel('giftcards/giftcards')->load($id, 'order_id')->getMailMessage();
+        return $card;
     }
     public function getCardCurrencyOptionHash(){
-           $currencyes = Mage::helper("allure_geocurrency")->getMappingArray();
-            $options = array();
-            $options['USD']="USD";
-            foreach ($currencyes as $key=>$currency){
-                 $options[$currency[currencyCode]] = $currency[currencyCode];
-            }
-            return $options;
+        $currencyes = Mage::helper("allure_geocurrency")->getMappingArray();
+        $options = array();
+        $options['USD']="USD";
+        foreach ($currencyes as $key=>$currency){
+            $options[$currency[currencyCode]] = $currency[currencyCode];
         }
-    
+        return $options;
+    }
+
+    /**
+     * MT-1375
+     * @return bool
+     */
+    public function getEGiftCardStatus()
+    {
+        return Mage::getStoreConfigFlag('giftcards/egift_card_setting/status');
+    }
+
 }

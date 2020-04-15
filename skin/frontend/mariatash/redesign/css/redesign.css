@@ -45,7 +45,8 @@ h4{
 }
 
 .info-text-three,
-.cart-collaterals .special-total .total-title{
+.cart-collaterals .special-total .total-title,
+.shipping-method-parent .address-method-common p.col-12{
 	font-family: urw-din-light;
 	font-size: 13px;
 	color: rgba(41,41,41,0.90);
@@ -683,7 +684,7 @@ html {
 }
 nav.mariatash-header {
   background: var(--light-black);
-	transition: all 1s;
+	/*transition: all 1s;*/
 }
 
 .menu-dropdown {
@@ -821,7 +822,7 @@ nav.mariatash-header {
   margin-right: 19px;
 }
 .footer .social-media li{
-  margin-right: 26px;
+  margin-right: 19px;/*26px;*/
 }
 .footer .footlinks li:first-child {
   margin-left: 40px;
@@ -1634,7 +1635,7 @@ input[type="checkbox"]:checked+label:before {
 	border-bottom: 1px solid #292929;
 }
 .sub-menu.scrolled{
-	top:83px;
+	top:83px !important;
 }
 #appointments {
   padding: 48px 121px;
@@ -3961,7 +3962,7 @@ table thead {
 	position: absolute;
 	top: 21px;
 	z-index: 99999;
-	width: 222px;/*90px*/
+	width: 90px;/*222px*/
 	height: auto;
 	background: #fff;
 	/* height: 253px;
@@ -4005,11 +4006,11 @@ table thead {
 	color: rgba(41,41,41,0.9);
 }
 .select-currency.main-nav-link-dropdown span span {
-  margin-right: 15px;
+  /*margin-right: 15px;*/
 }
-/*.block-content-currency{
+.block-content-currency{
 	margin-left: 15px;
-}*/
+}
 .block-currency .block-title {
 	border: 0;
 	background: none;
@@ -4374,6 +4375,10 @@ dt.post-lengthds-lbl {
 	margin: 25px 0 95px;
 }
 
+.password-success, .password-success span{
+   color: #2b542c;
+	padding-bottom: 10px;
+}
 /*Wholesale separate css*/
 .wholesale-avail-row .ad-to-fav, .wholesale-avail-row .w-remove {
   margin-top: 37px;
@@ -5116,3 +5121,45 @@ a.product-video-link:hover div.product-video-play-icon {
 .insta-loader{
 	 z-index: 1 !important;
 }
+.footer .footlinks .social-media li:first-child{
+	margin-left: 0px;
+}
+
+.category-title .cat-description {
+    width: 611px;
+    font-family: urw-din-xlight;
+    font-size: 18px;
+    font-weight: 300;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: rgba(41, 41, 41, 0.9);
+    margin: 14px 0 15px 0;
+}
+.cms-home .mob-slideshow-content .slider-caption-content {
+	margin-top: 0;
+	padding: 15px 0 25px;
+}
+.cms-home .mob-slideshow-img img {
+	width: 100%;
+}
+.cms-home .mob-slideshow-content  h1 {
+	font-family: urw-din-xlight;
+	font-size: 22px;
+	letter-spacing: Normal;
+	color: #fff;
+	text-align: center;
+	margin: 0;
+}
+.cms-home .mob-slideshow-content  p {
+	margin-bottom: 0;
+	font-family: urw-din-medium;
+	color: #fff;
+}
+.cms-home .mob-slideshow-content a {
+	color: #fff;
+	text-decoration: underline;
+	text-transform: uppercase;
+	font-family: urw-din-bold;
+} 

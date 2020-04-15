@@ -24,7 +24,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function validateMerchantAction() {
         $validationUrl="https://apple-pay-gateway-cert.apple.com/paymentservices/startSession";
 
-        $pemPwd = '';
+        $certPasswd     = 'eSt!sPgqF3';
+        $keyPasswd      = 'eSt!sPgqF3';
+        
         $displayName    = "Maria Tash";
         $domainName     = $_SERVER['HTTP_HOST'];
         $merchantId     = 'merchant.com.mariatash.authorizenet';
@@ -58,9 +60,10 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);	//for production, set value to true or 1
             //curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);	//for production, set value to 2
             curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-            curl_setopt($ch, CURLOPT_SSLCERT, dirname(__FILE__).'/../certs/Identity_MariaTash.pem');
-            curl_setopt($ch, CURLOPT_SSLKEY, dirname(__FILE__).'/../certs/Identity_MariaTash.key');
-            curl_setopt($ch, CURLOPT_SSLCERTPASSWD, $pemPwd);
+            curl_setopt($ch, CURLOPT_SSLCERT, dirname(__FILE__).'/../certs/Merchant_MariaTash_ApplePay_AuthorizeNet.pem');
+            curl_setopt($ch, CURLOPT_SSLKEY, dirname(__FILE__).'/../certs/MariaTash.pem');
+            curl_setopt($ch, CURLOPT_SSLCERTPASSWD, $certPasswd);
+            curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $keyPasswd);
             curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false );
             $content = curl_exec($ch);
 

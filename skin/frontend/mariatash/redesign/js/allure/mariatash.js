@@ -1,3 +1,4 @@
+var addedMobileMenu = false;
 jQuery(document).ready(function () {
 
     //on enter search
@@ -37,17 +38,17 @@ jQuery(document).ready(function () {
 
     unsetLoader();
 
-jQuery('.link-button').click(function(event) {
-    unsetLoader();
-});
+    jQuery('.link-button').click(function(event) {
+        unsetLoader();
+    });
 
     /*move cartilage section to filter bottom*/
     if(jQuery(".cartilage-section").length)
-    jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
+        jQuery(".cartilage-section").appendTo(jQuery(".mb-mana-catalog-leftnav"));
 
 
     if(!jQuery("p.category-image").length && !jQuery("p.category-image-bleed").length && !jQuery(".second-header-image").length ){
-      jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
+        jQuery(".mariatash-header").css("background","rgba(41,41,41,0.90)");
     }
 
     if(jQuery("p.category-image").length) {
@@ -69,9 +70,9 @@ jQuery('.link-button').click(function(event) {
         //.recently-view insta-main you_may_like
         if(!jQuery(".recently-view").length && !jQuery(".insta-main").length && !jQuery(".you_may_like").length)
         {
-         jQuery(".footer").attr("style","padding-top:0px!important");
-         jQuery(".for-bottom-space.p-5").removeClass("p-5");
-         jQuery(".product-detail-parent").css("padding-bottom", "65px");
+            jQuery(".footer").attr("style","padding-top:0px!important");
+            jQuery(".for-bottom-space.p-5").removeClass("p-5");
+            jQuery(".product-detail-parent").css("padding-bottom", "65px");
         }
 
     }
@@ -100,14 +101,14 @@ jQuery('.link-button').click(function(event) {
 
 
     jQuery(".mobile-sub_menu .menu-head").click(function () {
-    	var $ = jQuery;
-    	if ($(this).find("a").hasClass('active')) {
-    		$(this).find("a").removeClass('active');
-    		$(this).next().removeClass('active');
-    	} else {
-    		$(this).find("a").addClass('active');
-    		$(this).next().addClass('active');
-    	}
+        var $ = jQuery;
+        if ($(this).find("a").hasClass('active')) {
+            $(this).find("a").removeClass('active');
+            $(this).next().removeClass('active');
+        } else {
+            $(this).find("a").addClass('active');
+            $(this).next().addClass('active');
+        }
     });
 
 
@@ -120,19 +121,19 @@ jQuery('.link-button').click(function(event) {
 
         if(jQuery(window).width() >= 992 && !jQuery("body.quickview-index-index").length)
         {
-          var scroll = jQuery(window).scrollTop();
-          var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
-          var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
-          // if (jQuery('.owl-carousel').length) {
-              if ((productImageHeight) > (productDetailsHeight - scroll)) {
-                  jQuery('#product-details-flow').removeClass('offset-66');
-                  jQuery('#product-detail-image').removeClass('fix-image');
-                  jQuery('#product-detail-image > div').addClass('position-bottom');
-              } else {
-                  jQuery('#product-details-flow').addClass('offset-66');
-                  jQuery('#product-detail-image').addClass('fix-image');
-                  jQuery('#product-detail-image > div').removeClass('position-bottom');
-              }
+            var scroll = jQuery(window).scrollTop();
+            var productImageHeight = jQuery('#product-detail-image > div').outerHeight();
+            var productDetailsHeight = jQuery('#product-details-flow').outerHeight();
+            // if (jQuery('.owl-carousel').length) {
+            if ((productImageHeight) > (productDetailsHeight - scroll)) {
+                jQuery('#product-details-flow').removeClass('offset-66');
+                jQuery('#product-detail-image').removeClass('fix-image');
+                jQuery('#product-detail-image > div').addClass('position-bottom');
+            } else {
+                jQuery('#product-details-flow').addClass('offset-66');
+                jQuery('#product-detail-image').addClass('fix-image');
+                jQuery('#product-detail-image > div').removeClass('position-bottom');
+            }
 
 
             let hidden = true;
@@ -146,12 +147,20 @@ jQuery('.link-button').click(function(event) {
                             if (hidden) {
                                 jQuery(".zopim").addClass("bottom-change");
                                 jQuery("#footer8").css("height", "59px");
+
+                                /*MT-1404*/
+                                jQuery('.store-notice.bottom').css("bottom","59px");
+
                                 hidden = false;
                             }
                         }else if ( !(parseInt(jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('left')) > 0)
                             || (jQuery('.t_Tooltip.t_Tooltip_allure_footer').css('display') == 'none') ) {
                             jQuery(".zopim").removeClass("bottom-change");
                             jQuery("#footer8").css("height", "0px");
+
+                            /*MT-1404*/
+                            jQuery('.store-notice.bottom').css("bottom","0px");
+
                             hidden = true;
                         }
                     }
@@ -170,10 +179,10 @@ jQuery('.link-button').click(function(event) {
 
 
             if(jQuery(window).scrollTop() + jQuery(window).height()+100 > jQuery(document).height()) {
-                    jQuery(".footer").removeClass("floating");
-                }else {
-                    jQuery(".footer").addClass("floating");
-                }
+                jQuery(".footer").removeClass("floating");
+            }else {
+                jQuery(".footer").addClass("floating");
+            }
             /*  zopim -code end-----------------*/
 
         }else {
@@ -186,6 +195,7 @@ jQuery('.link-button').click(function(event) {
         if (jQuery(window).width() >= 1363) {
             var scroll = jQuery(window).scrollTop();
             if (scroll > jQuery(".mariatash-header").outerHeight()) {
+                // console.log('Scrolled Down')
                 jQuery(".mt-logo").addClass('d-none');
                 jQuery(".nav-links-left").addClass('d-none');
                 jQuery("#scroll-logo").removeClass('d-none');
@@ -193,7 +203,9 @@ jQuery('.link-button').click(function(event) {
                 jQuery('.mariatash-header').addClass('maria-black');
                 jQuery('.mariatash-header').addClass('scrolled-menu');
                 jQuery("section.sub-menu").addClass("scrolled");
+
             } else {
+                // console.log('Scrolled UP')
                 jQuery(".mt-logo").removeClass('d-none');
                 jQuery(".nav-links-left").removeClass('d-none');
                 jQuery("#scroll-logo").addClass('d-none');
@@ -223,7 +235,7 @@ jQuery('.link-button').click(function(event) {
                 /*scaling close quick view*/
                 if(jQuery(".fancybox-desktop.fancybox-type-iframe.fancybox-opened").length)
                 {
-                      jQuery(".fancybox-item.fancybox-close").trigger("click");
+                    jQuery(".fancybox-item.fancybox-close").trigger("click");
                 }
 
             }
@@ -267,7 +279,7 @@ jQuery('.link-button').click(function(event) {
                     jQuery(".menu_overlay").removeClass("d-none");
                 }
                 jQuery(section_id).slideDown("slow");
-            unScrollBody();
+                unScrollBody();
             }, 300);
         }
     });
@@ -323,7 +335,7 @@ jQuery('.link-button').click(function(event) {
     /*----------------mobile menu js-----------------------*/
 
     jQuery('.menu_overlay').on('click',function(e){
-    	event.stopPropagation();
+        event.stopPropagation();
         if (jQuery(window).width() <= 1024 || jQuery('body').hasClass('mobile-device')) {
             jQuery('#menu-btn').click()
         }
@@ -372,55 +384,55 @@ jQuery('.link-button').click(function(event) {
 /*filter popup start---------------------------------*/
 
 jQuery(window).bind("load resize", function (e) {
-   /* var width = jQuery(window).width();
-    if ((width < 1023)) {
+    /* var width = jQuery(window).width();
+     if ((width < 1023)) {
 
-        if (jQuery('.filter-common-div').length) {
+         if (jQuery('.filter-common-div').length) {
 
-            if(!jQuery('.filterPopup').length) {
-                var filter_popup = '<div id="openModal" class="filterPopup">\n' +
-                    '\t<div class="pop-up-cover">\n' +
-                    '\t\t<div class="pop-title modal-header">\n' +
-                    '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
-                    '\t\t\t\t<div></div>\n' +
-                    '\t\t\t</a>\n' +
-                    '\t\t</div>\n' +
-                    '\t\t<div class="body modal-body">\n' +
-                    '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
-                    '\t\t</div>\n' +
-                    '\t</div>\n' +
-                    '</div>';
-                var filterButton = '<a href="#" class="filterButton">' +
-                    '</a>';
+             if(!jQuery('.filterPopup').length) {
+                 var filter_popup = '<div id="openModal" class="filterPopup">\n' +
+                     '\t<div class="pop-up-cover">\n' +
+                     '\t\t<div class="pop-title modal-header">\n' +
+                     '\t\t\t<a href="#close" title="Close" class="close exit-large">\n' +
+                     '\t\t\t\t<div></div>\n' +
+                     '\t\t\t</a>\n' +
+                     '\t\t</div>\n' +
+                     '\t\t<div class="body modal-body">\n' +
+                     '\t\t\t<p class="para-normal">' + jQuery('.filter-common-div').html() + '</p>\n' +
+                     '\t\t</div>\n' +
+                     '\t</div>\n' +
+                     '</div>';
+                 var filterButton = '<a href="#" class="filterButton">' +
+                     '</a>';
 
-                jQuery('.filter-common-div').html("");
-                jQuery('.filter-common-div').hide();
+                 jQuery('.filter-common-div').html("");
+                 jQuery('.filter-common-div').hide();
 
-                jQuery("body").append(filter_popup);
-                jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
+                 jQuery("body").append(filter_popup);
+                 jQuery(".mb-breadcrumbs .breadcrumbs").prepend(filterButton);
 
-            }
-            else {
-                jQuery('.filter-common-div').html("");
-                jQuery('.filter-common-div').hide();
-                jQuery('.filterButton').show();
+             }
+             else {
+                 jQuery('.filter-common-div').html("");
+                 jQuery('.filter-common-div').hide();
+                 jQuery('.filterButton').show();
 
-            }
-            jQuery(".filterButton").on('click', function () {
-                jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
-                unScrollBody();
-            });
+             }
+             jQuery(".filterButton").on('click', function () {
+                 jQuery(".filterPopup").css({"opacity": "1", "pointer-events": "auto"});
+                 unScrollBody();
+             });
 
-            jQuery(".filterPopup .close").on('click', function () {
-                jQuery(".filterPopup").css({"opacity": "0", "pointer-events": "none"});
-                scrollBody();
-            });
-        }
-    }else {
-        jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
-        jQuery('.filter-common-div').show();
-        jQuery('.filterButton').hide();
-    }*/
+             jQuery(".filterPopup .close").on('click', function () {
+                 jQuery(".filterPopup").css({"opacity": "0", "pointer-events": "none"});
+                 scrollBody();
+             });
+         }
+     }else {
+         jQuery('.filter-common-div').html(jQuery('.filterPopup .modal-body').html());
+         jQuery('.filter-common-div').show();
+         jQuery('.filterButton').hide();
+     }*/
 });
 /*filter popup end---------------------------------*/
 
@@ -438,33 +450,33 @@ jQuery(window).bind("load resize scroll", function (e) {
 
 var fixit=function (parent,el,top,right,left) {
 
-if (jQuery(window).width() >= 1024) {
+    if (jQuery(window).width() >= 1024) {
 
-    if(jQuery(parent).length) {
-        var scroll = jQuery(window).scrollTop();
-        if (scroll > jQuery(parent).offset().top) {
+        if(jQuery(parent).length) {
+            var scroll = jQuery(window).scrollTop();
+            if (scroll > jQuery(parent).offset().top) {
 
-            //if(jQuery('.fix-section'))
-            jQuery(el).css({
-                'position': 'fixed',
-                'top': top,
-                'right': right,
-                'padding-top': jQuery('.navbar').outerHeight() + 5
-            });
-        } else {
-            jQuery(el).css({
-                'position': 'static',
-                'top': '0px'
-            });
+                //if(jQuery('.fix-section'))
+                jQuery(el).css({
+                    'position': 'fixed',
+                    'top': top,
+                    'right': right,
+                    'padding-top': jQuery('.navbar').outerHeight() + 5
+                });
+            } else {
+                jQuery(el).css({
+                    'position': 'static',
+                    'top': '0px'
+                });
+            }
         }
     }
-}
-else{
-    jQuery(el).css({
-        'position':'static',
-        'top' : '0px'
-    });
-}
+    else{
+        jQuery(el).css({
+            'position':'static',
+            'top' : '0px'
+        });
+    }
 }
 
 var setLoader = function(){
@@ -570,7 +582,7 @@ jQuery( document ).ready(function() {
         /*UPPEND FOOTER MENU*/
         jQuery('.mobile-main_menu .main_menu').click(function () {
             var section_id = jQuery(this).attr('data-id');
-            console.log(section_id)
+            // console.log(section_id)
             jQuery('section.sub-menu').hide();
             jQuery('.mobile-sub_menu').find(`#${section_id}`).show();
         });
@@ -685,4 +697,113 @@ jQuery( document ).ready(function() {
     }
 
 
+    jQuery('.btn_chat_now').click(function(e){
+        jQuery('.minimizedChatButtonSelector').click();
+    });
+
+
+    /*MT-1404 START--------------------------------------------------------------*/
+    /*Notification Banners*/
+    /*MT-1404 When resize scroll load window*/
+    jQuery(window).bind("resize scroll load",function(){
+        if(jQuery('.notice-text').length > 0 && jQuery('.store-notice.top').length > 0) {
+            jQuery('.store-notice').show()
+            noticeHeight = jQuery('.notice-text').outerHeight();
+
+            var intHeight = parseInt(noticeHeight);
+            var fixedTopIntHeight = parseInt(jQuery('.fixed-top').outerHeight());
+            var topHeight = intHeight + fixedTopIntHeight;
+
+            if (jQuery(window).width() >= 1363) {
+jQuery('#search_autocomplete').css('top', (intHeight) + 'px');
+                if(!jQuery('.mariatash-header').hasClass('scrolled-menu')){
+                    jQuery('.fixed-top').css({'top': noticeHeight});
+                    jQuery('.sub-menu').css({'top': topHeight});
+                    jQuery('.store-notice').css('z-index','9999');
+                    jQuery('.store-notice').show()
+                }else {
+                        jQuery('.fixed-top').css({'top': '0'});
+                        jQuery('.store-notice').css('z-index','1');
+                        jQuery('.store-notice').hide();
+                }
+
+
+            }else {
+                jQuery('.fixed-top').css({'top': (noticeHeight)});
+                jQuery('.mobile-main_menu').css('top', (topHeight) + 'px');
+                jQuery('.mobile-sub_menu .sub-menu').css('top', (topHeight) + 'px');
+                jQuery('#search').css('top', (intHeight) + 'px');
+                jQuery('#cross-icon').css('top', (intHeight + 6) + 'px');
+                jQuery('#search_autocomplete').css('top', (intHeight*2) + 'px');
+            }
+        }else if(jQuery('.notice-text').length > 0 && jQuery('.store-notice.bottom').length > 0) {
+            if (jQuery(window).width() >= 1363) {
+                if(jQuery("body.cms-home").length>0) {
+                    jQuery('.store-notice.bottom').css("bottom","59px");
+                }
+            }else {
+
+            }
+        }
+
+    });
+
+    var lastScrollTop = 0;
+    jQuery(window).scroll(function(event){
+        var st = jQuery(this).scrollTop();
+        if (st > lastScrollTop){
+            jQuery('.store-notice.bottom').hide();
+        } else {
+            jQuery('.store-notice.bottom').show();
+        }
+        lastScrollTop = st;
+    });
+
+    jQuery('.store-notice.top .close').on("click",function () {
+        var fixedTopIntHeight = parseInt(jQuery('.fixed-top').outerHeight());
+        jQuery('.fixed-top').css({'top': '0'});
+        if (jQuery(window).width() >= 1363) {
+            jQuery('.sub-menu').css({'top': fixedTopIntHeight});
+        }else {
+            jQuery('.mobile-main_menu').css('top', (fixedTopIntHeight) + 'px');
+            jQuery('.mobile-sub_menu .sub-menu').css('top', (fixedTopIntHeight) + 'px');
+        }
+        jQuery('.store-notice.top').remove();
+    });
+    jQuery('.store-notice.bottom .close').on("click",function () {
+        jQuery('.store-notice.top').remove();
+    });
+    if(jQuery('.notice-text').length > 0){
+        // jQuery('.store-notice').hide()
+        if(jQuery('body').hasClass('desktop-device')) {
+            if (
+                jQuery('body').is('.category-helix-jewelry, ' +
+                    '.category-shop-by-piercing, ' +
+                    '.category-tash-rook-jewelry, ' +
+                    '.category-tragus-jewelry, ' +
+                    '.category-conch-jewelry, ' +
+                    '.category-rook-jewelry, ' +
+                    '.category-forward-helix,' +
+                    '.category-daith-jewelry,' +
+                    '.category-antitragus,' +
+                    '.category-contraconch')
+            ) {
+                jQuery('body').removeClass('body-no-top-margin')
+                jQuery('body').addClass('body-top-margin')
+            }
+        }
+    }
+    jQuery('.store-notice .close').on('click',function () {
+        jQuery('body').removeClass('body-top-margin')
+        jQuery('body').addClass('body-no-top-margin')
+
+    })
 });
+
+var addSpaceForMobile = function () {
+    jQuery('.store-notice').show()
+};
+
+/*MT-1404 END ------------------------------------------------------*/
+
+

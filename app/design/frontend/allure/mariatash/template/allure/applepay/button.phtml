@@ -8,7 +8,7 @@
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 ?>
-<?php if ($this->isApplePayButtonEnabled()): ?>
+<?php if (false && $this->isApplePayButtonEnabled()): //Disable ApplePay As Payment Option ?>
 
 <button id="<?php echo $this->getApplePayButtonId(); ?>" class='apple-pay-button-with-text apple-pay-button-black-with-text'  onclick="return Allure.ApplePay.Callbacks.<?php echo $this->getApplePayButtonId(); ?>()"><span class="text">Pay with</span><span class="logo"></span></button>
 

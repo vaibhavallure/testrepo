@@ -11,6 +11,11 @@
 			<allure_category>
 				<class>Allure_Category_Model</class>
 			</allure_category>
+			<catalog>
+        		<rewrite>
+        			<url>Allure_Category_Model_Url</url>
+        		</rewrite>
+        	</catalog>
 		</models>
 		
        <helpers>

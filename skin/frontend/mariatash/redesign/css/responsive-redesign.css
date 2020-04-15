@@ -155,11 +155,11 @@ dt.filter-head.showing:after {
   padding: 0;
 }
  #narrow-by-list li div dd {
-	position: relative;
-	top:auto;
-	left: auto;
-	border: none;
-	padding: 0px 10px;
+  position: relative;
+  top:auto;
+  left: auto;
+  border: none;
+  padding: 0px 10px;
 }
  #narrow-by-list{
   padding: 0;
@@ -175,9 +175,9 @@ dt.filter-head.showing:after {
   height: 34px;
 }
  #narrow-by-list li {
-	min-width: 100%;
- 	padding-left: 0px;
- 	flex-direction: row;
+  min-width: 100%;
+  padding-left: 0px;
+  flex-direction: row;
 }
  #narrow-by-list ol li {
   min-width: 208px;
@@ -630,7 +630,7 @@ ul.tabs li{
     padding: 0 10px;
   }
   .mobile-device .head-child.active {
-  	display: block;
+    display: block;
   }
   .mobile-main_menu, .mobile-sub_menu .sub-menu {
     height: 100%;
@@ -731,30 +731,30 @@ ul.tabs li{
   .footer-item-list span {
     font-size: 12px !important;
     font-family: urw-din-medium;
-  	letter-spacing: 0 !important;
+    letter-spacing: 0 !important;
     text-transform: uppercase;
   }
   .footer .footlinks li:first-child{
     margin-left: 0;
   }
   #tooltip-id-customer-care{
-  	width: 100% !important;
+    width: 100% !important;
   }
   .customer-care-list {
-  	padding: 0;
+    padding: 0;
     width: 100%;
   }
   .customer-care-list li{
-  	width: 100%;
+    width: 100%;
   }
   #piercing .inner-box{
     width: 100%;
   }
   .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
-  	color: #fff;
-  	font-size: 12px;
-  	font-family: urw-din-medium;
-  	letter-spacing: 0.5px;
+    color: #fff;
+    font-size: 12px;
+    font-family: urw-din-medium;
+    letter-spacing: 0.5px;
   }
 
   .mobile-sub_menu .form-subscribe-mt p{
@@ -766,12 +766,12 @@ ul.tabs li{
 
 
   #tooltip-id-our-jewelry .slide {
-  	width: 300px;
-  	height: 120px;
-  	overflow: hidden;
-  	float: left;
-  	overflow-y: auto;
-  	color: #fff;
+    width: 300px;
+    height: 120px;
+    overflow: hidden;
+    float: left;
+    overflow-y: auto;
+    color: #fff;
   }
   #tooltip-id-our-jewelry a.next-content-block-seo{
     margin-right: -15px;
@@ -783,7 +783,7 @@ ul.tabs li{
   }
   #newsletter-form .link-button,
   #newsletter-form-menu .link-button{
-  	color: #fff !important;
+    color: #fff !important;
   }
 
   .mobile-sub_menu #newsletter-form .link-button,
@@ -803,13 +803,13 @@ ul.tabs li{
 
   .form-subscribe-mt .checkmark:after,
   .form-subscribe-mt-menu .checkmark:after{
-  	background: #fff;
+    background: #fff;
   }
   #newsletter-form .dark-button,
   #newsletter-form-menu .dark-button{
     border: 1px solid #fff;
-  	background: transparent;
-  	color: #fff;
+    background: transparent;
+    color: #fff;
     padding: 10px;
   }
 
@@ -840,7 +840,7 @@ ul.tabs li{
   }
   #newsletter-form .label-error-validate p, #newsletter-form .label-error-validate .link-button, #newsletter-form .validation-advice,
   #newsletter-form-menu .label-error-validate p, #newsletter-form-menu .label-error-validate .link-button, #newsletter-form-menu .validation-advice{
-  	color: red !important;
+    color: red !important;
   }
   #newsletter-form .validation-advice,
   #newsletter-form-menu .validation-advice{
@@ -863,6 +863,24 @@ ul.tabs li{
   }
   .page-print.sales-order-print{
     padding: 10px 50px;
+  }
+  .cms-home #supersized-loader {
+    display: none;
+  }
+  .cms-home #supersized {
+    display: none;
+  }
+  .cms-home #controls .homepageSliderControllers {
+    display: none;
+  }
+  .cms-home #controls .mobile {
+    display: block;
+  }
+  .cms-home #controls #slide-list {
+    display: none;
+  }
+  .cms-home header .for-space-to-bottom {
+    min-height: 0 !important;
   }
 }
 /*qqqq*/
@@ -1041,7 +1059,7 @@ ul.tabs li{
     padding: 0 58px 30px;
   }
   .filterPopup .selected-filters .actions.current{
-  	width: 50%;
+    width: 50%;
     padding: 0 18px 0px;
   }
   .big-popup-image{
@@ -1159,8 +1177,8 @@ ul.tabs li{
     margin: 0 auto -98px;
   }
   ul#slide-list{
-		bottom: 120px !important;
-	}
+    bottom: 120px !important;
+  }
   /*Search CSS*/
   #cross-icon{
     right: 8px;
@@ -1179,7 +1197,7 @@ ul.tabs li{
     top: 67px;
   }
   .allure_filter {
-  	border-width: 1px !important;
+    border-width: 1px !important;
   }
   .dashboard .flex-row .flex-item .text-wrap{
     top: 250px;
@@ -1189,6 +1207,9 @@ ul.tabs li{
   }
   #booking-wrapper .intl-tel-input .country-list{
     width: 299px;
+  }
+  .cms-home header .for-space-to-bottom {
+    height: 0 !important;
   }
 }
 
@@ -1224,7 +1245,7 @@ ul.tabs li{
     margin: 0.5%;
   }
   .m-filter-checkboxes label {
-	    margin-bottom: 12px;
+      margin-bottom: 12px;
   }
   .desktop-device #narrow-by-list li div dt {
     width: 100%
@@ -1294,7 +1315,7 @@ ul.tabs li{
     max-width: 332px;
   }
   .mobile-device .product-detail-parent > .row{
-  	width: 100%;
+    width: 100%;
   }
   .mobile-device .position-bottom{
     padding-right: 13px;
@@ -1440,9 +1461,9 @@ ul.tabs li{
 
 
 @media (max-width: 1023px) and (orientation: landscape) {
-	#narrow-by-list {
-	    max-height: 200px;
-	}
+  #narrow-by-list {
+      max-height: 200px;
+  }
 }
 
 
@@ -1763,6 +1784,22 @@ ul.tabs li{
   }
   input#wholesale_lastname {
     margin-top: 10px;
+  }
+  .cms-home .col1-layout .col-main .std {
+   display: none;
+  }
+}
+  .category-title .cat-description {
+  width: 360px;
+  font-size: 13px;
+  line-height: 1.38;
+  text-align: center;
+  color: rgba(41, 41, 41, 0.6);
+  margin: 23px auto 17px;
+}
+@media (max-width:766px) {
+body.cms-index-index.cms-home .footer.col-12 {
+    padding-top: 25px !important;
   }
 }
 
@@ -2820,6 +2857,9 @@ ul.tabs li{
   .desktop-device .inner-box{
     padding: 0 32px;
   }
+  .cms-home header .for-space-to-bottom {
+    height: 0;
+  }
 }
 @media (max-width:991px){
   .desktop-device .image-section{
@@ -2849,6 +2889,12 @@ ul.tabs li{
       display: block !important;
     }
 }
+@media (min-width:767px) and (max-width:1023px) {
+   body.cms-index-index.cms-home .footer.col-12 {
+    padding-top: 80px !important;
+  }
+}
+
 @media (min-width:768px) and (max-width:1023px) {
   .desktop-device .allure_filter{
     margin-left: 109px;
@@ -2856,6 +2902,12 @@ ul.tabs li{
     margin-top: 0px;
   }
 }
+@media (min-width:768px) and (max-width:1024px) {
+  body.cms-index-index.cms-home .footer.col-12 {
+    padding-top: 82px !important;
+  }
+}
+
 @media (min-width:786px) and (max-width:1111px){
   #jewelry .special-menu img {
     width: 200px !important;
@@ -2863,7 +2915,7 @@ ul.tabs li{
 }
 @media (min-width:992px){
   .cms-home .homepage-menu.mariatash-header:hover{
-  	background: rgba(41, 41, 41, 0.9) !important;
+    background: rgba(41, 41, 41, 0.9) !important;
   }
   .navbar-expand-lg .navbar-toggler {
     display: block !important;
@@ -2930,17 +2982,35 @@ ul.tabs li{
     max-width: 132px;
   }
   .category-earring-pairs.catalog-category-view .product-name{
-  	max-width: 120px;
+    max-width: 120px;
   }
 }
 @media (min-width:1025px) and (max-width:1130px){
   .category-earring-pairs.catalog-category-view .product-name{
-  	max-width: 120px;
+    max-width: 120px;
   }
 }
 
 @media (min-width: 1025px) and (max-width: 1254px) {
   .form-search input.input-text{
     width: 250px;
+  }
+}
+
+
+
+@media (min-width: 1025px) and (max-width: 1193px) {
+  .footer .footlinks li:last-child {
+    display: none;
+  }
+}
+@media (max-width:1024px){
+  .footer .footlinks li:last-child {
+    padding-left: 12px;
+  }
+}
+@media (max-width:767px){
+  .footer .footlinks li:last-child {
+    padding-left: 0;
   }
 }

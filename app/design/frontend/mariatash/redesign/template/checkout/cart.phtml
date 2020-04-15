@@ -70,6 +70,9 @@
                 </tbody>
             </table>
         </fieldset>
+        <div class="row cart-info-message">
+            <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+        </div>
     </form>
 
     <div class="cart-collaterals col-lg-4 col-md-12 col-12 fix-section">

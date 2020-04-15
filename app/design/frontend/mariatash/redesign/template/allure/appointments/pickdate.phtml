@@ -32,6 +32,16 @@ if ($fetch_model) {
         var datesAvailable = workingDays['dates'];
         var currentDateString=workingDays['today'];
 
+        /*code added to default select available date*/
+        var g1 = new Date(Date.parse(datesAvailable[0]));
+        var g2 = new Date(Date.parse(currentDateString));
+
+        if (g1.getTime() < g2.getTime())
+            currentDateString=formatDate(g2);
+        else if (g1.getTime() > g2.getTime())
+            currentDateString=formatDate(g1);
+
+
         // const locale = sessionStorage.getItem('popupLocale');
         // if(locale === 'fr'){
         //     const months = Object.keys(monthMapping);

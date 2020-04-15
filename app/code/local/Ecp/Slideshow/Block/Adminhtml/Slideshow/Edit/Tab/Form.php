@@ -45,6 +45,12 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Edit_Tab_Form extends Mage_Adminht
           'name'      => 'slide_background',
       ));
       
+      $fieldset->addField('slide_mobile_background', 'image', array(
+          'label'     => Mage::helper('ecp_slideshow')->__('Mobile Background'),
+          'required'  => false,
+          'name'      => 'slide_mobile_background',
+      ));
+      
       $fieldset->addField('slide_thumb', 'image', array(
           'label'     => Mage::helper('ecp_slideshow')->__('Thumbnail'),
           'required'  => false,
@@ -124,6 +130,14 @@ class Ecp_Slideshow_Block_Adminhtml_Slideshow_Edit_Tab_Form extends Mage_Adminht
           $tmp = $slide->getSlideBackground();
           if(is_array($tmp)) $slide->setSlideBackground($path.basename($tmp['value']));
           elseif(!empty($tmp)) $slide->setSlideBackground($path.basename($slide->getSlideBackground()));
+          
+          $tmp = $slide->getSlideMobileBackground();
+          if(is_array($tmp)) {
+              $slide->setSlideMobileBackground($path.basename($tmp['value']));
+          }else if(!empty($tmp)) {
+              $slide->setSlideMobileBackground($path.basename($slide->getSlideMobileBackground()));
+          }
+          
           
           $form->setValues($slide->getData());
       }

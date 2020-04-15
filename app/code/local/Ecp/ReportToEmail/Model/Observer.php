@@ -54,7 +54,6 @@ class Ecp_ReportToEmail_Model_Observer
         $allMailbody .= 'div,p,a,li,td {-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;-ms-text-size-adjust:none;}';
         $allMailbody .= '</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 
-
         if(! empty($stores)) {
             foreach ($stores as $storesId) {
                 $emails = trim(Mage::getStoreConfig('report/scheduled_reports/emails'));
@@ -99,10 +98,24 @@ class Ecp_ReportToEmail_Model_Observer
                 $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
 
                 $curTime = new DateTime();
-                if ($time != (int) $curTime->format("H") && $runFrom!="manual")
-                    return;
+                /* if ($time != (int) $curTime->format("H") && $runFrom!="manual")
+                    return; */
+                
+                if ($time > (int) $curTime->format("H") && $runFrom!="manual")
+                    return; 
 
 
+                $currentDateTime = date("Y-m-d H:i:s", $curTime->getTimestamp()); 
+                
+                $collectionReportLog = Mage::getModel("ecp_reporttoemail/reportlog")
+                    ->getCollection()
+                    ->addFieldToFilter("is_sent", 1)
+                    ->addFieldToFilter("sent_time", array("gteq" => date("Y-m-d", strtotime($currentDateTime)) ));
+                
+                if($collectionReportLog->getSize()){
+                   return;     
+                }
+                
                 $collection = Mage::getModel('sales/order')->getCollection();
                 $collection->getSelect()
                     ->reset(Zend_Db_Select::COLUMNS);
@@ -253,27 +266,44 @@ class Ecp_ReportToEmail_Model_Observer
 
         if($getdate!=null) {
             $storeDate = $getdate;
-            $yesterday = date("Y/m/d", strtotime($storeDate));
+            $yesterday = date("m/d/Y", strtotime($storeDate));
         }
         else {
             $storeDate = date('Y-m-d');
-            $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
+            $yesterday = date("m/d/Y", strtotime("-1 day", strtotime($storeDate)));
         }
 
 
         $mail->setBodyHtml($allMailbody)
-            ->setSubject(' Daily Order Summary Report for ' . $yesterday)
+            ->setSubject(' Daily Ecommerce Sales Report - ' . $yesterday)
             ->addTo($emails)
             ->setFrom($sender, "Sales Report");
 
+        $reportLogModel = Mage::getModel("ecp_reporttoemail/reportlog");
+        $reportLogModel->setSentTime($currentDateTime);
+        
         try {
             $mail->send();
             $this->add_log("mail sent");
+            
+            $reportLogModel->setIsSent(1);
 
         } catch (Mage_Core_Exception $e) {
             Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
+            
+            $reportLogModel->setIsSent(0)
+                ->setErrorMessage($e->getMessage());
         } catch (Exception $e) {
             Mage::logException($e);
+            $this->add_log($e->getMessage());
+            
+            $reportLogModel->setIsSent(0)
+                ->setErrorMessage($e->getMessage());
+        }
+        
+        try{
+            $reportLogModel->save();
+        }catch (Exception $e){
             $this->add_log($e->getMessage());
         }
 

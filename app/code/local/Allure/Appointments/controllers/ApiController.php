@@ -21,7 +21,8 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
     private $api = array(
         "getcustomer" => "getCustomer",
         "getappointment" => "getAppointment",
-        "setcustomer" => "setCustomer"
+        "setcustomer" => "setCustomer",
+        "getstorelist" => "getStoreList"
     );
     private $table = array(
         "getcustomer" => "allure_appointment_customers",
@@ -47,6 +48,10 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
 
         if (array_key_exists($this->getReq(), $this->api)) {
             $this->result['api'] = 'Found';
+            if($this->getReq() == 'getstorelist'){
+                $this->result['success'] = true;
+                return true;
+            }
         } else {
             $this->result['success'] = false;
             $this->result['api'] = 'Not Found';
@@ -277,5 +282,22 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
     private function result()
     {
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($this->result));
+    }
+    /*New function to get store list for release app*/
+    public function getStoreList(){
+        try {
+            $virtualStoreHelper = Mage::helper("allure_virtualstore");
+            $stores = $virtualStoreHelper->getVirtualStores();
+            $storeList = array();
+            foreach ($stores as $store) {
+                $storeList[] = $store->toArray();
+            }
+            $this->result['success'] = true;
+            $this->result['stores'] = $storeList;
+            return $storeList;
+        }catch (Exception $ex){
+            $this->result['success'] = false;
+            $this->result['message'] = 'Error :'.$ex->getMessage();
+        }
     }
 }
