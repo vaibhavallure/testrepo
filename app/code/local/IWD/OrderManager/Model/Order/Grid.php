@@ -499,6 +499,8 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'filter_index' => 'puchased_from',
                 'type' => 'text',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Category(),
+                'filter' => false,
+                'sortable' => false,
             ),
 
             'product_images' => array(
