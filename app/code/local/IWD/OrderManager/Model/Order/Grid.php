@@ -496,10 +496,9 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'puchased_from' => array(
                 'header' => $helper->__('Purchased From(Category)'),
                 'index' => 'puchased_from',
-                'filter_index' => 'puchased_from',
+                'filter_index' => "purchased_from",
                 'type' => 'text',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Category(),
-                'filter' => false,
                 'sortable' => false,
             ),
 
