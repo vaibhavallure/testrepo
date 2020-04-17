@@ -739,7 +739,7 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                     $orderIds[$order->getId()] = $order->getIncrementId();
                 }
                 
-                if($isAllowCombinedEmail){
+                if($isAllowCombinedEmail && $order->getCanSendNewEmailFlag()){
                     $order->queueMultiAddressNewOrderEmail($orders);
                 }
                 

@@ -22,15 +22,48 @@
  * @package     base_default
  * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * 
+ * @var Mage_Checkout_Block_Multishipping_Success $this
  */
 ?>
+<?php 
+    $isChange = false;
+    $_orderIds = $this->getOrderIds();
+    if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+        foreach ($_orderIds as $orderId => $incrementId ){
+            $order = Mage::getModel('sales/order')->load($orderId); 
+            $storeId = $order->getStoreId();
+            $isChange = Mage::helper("allure_orders")->isSuccessPageChange($storeId);
+            break;
+        }
+    }
+    
+?>
+
+<?php if($isChange):?>
+
 <div class="multiple-checkout">
-    <div class="page-title">
-        <h1 class="order-success-title text-center" data-role="page-title"><?php echo $this->__('Order Success') ?></h1>
+	<div class="page-title">
+    	<h1 class="order-success-title text-center" data-role="page-title"><?php echo $this->__('Your order has been received') ?></h1>
+    </div>
+    <h2 class="sub-title info-text-two mb-4"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+    <p class="para-normal"><?php echo $this->__('You will receive an order confirmation email with details of your order and a link to track your progress.') ?></p>
+    <p class="para-normal"><?php echo $this->__('If you have any questions or concerns please don’t hesitate to <a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."contact-us".'">contact us</a>')?></p>
+    
+    <?php echo $this->getChildHtml() ?>
+    <div class="buttons-set text-center mt-4">
+        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue Shopping')) ?>" class="button dark-button next-button" onclick="setLocation('<?php echo $this->getContinueUrl() ?>')"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+    </div>
+</div>	
+
+<?php else:?>
+
+<div class="multiple-checkout">
+	<div class="page-title">
+    	<h1 class="order-success-title text-center" data-role="page-title"><?php echo $this->__('Order Success') ?></h1>
     </div>
     <h2 class="sub-title info-text-two mb-4"><?php echo $this->__('Thank you for your purchase!') ?></h2>
     <p class="para-normal"><?php echo $this->__('We are processing your order and you will soon receive an email with details of the order. Once the order has shipped you will receive another email with a link to track its progress.') ?></p>
-    <?php $_orderIds = $this->getOrderIds()?>
     <?php if($_orderIds): ?>
     <p data-role="order-numbers" class="para-normal">
         <?php $flag = false ?>
@@ -52,54 +85,38 @@
 
 <?php foreach ($_orderIds as $orderId=>$incrementId): ?>
 <?php
-$order = Mage::getModel('sales/order')
-    ->load($orderId); 
-$subtotal = $order->getBaseSubtotal();
-$order_id = $order->getIncrementId(); //the id of the order
-//$order->getIncrementId();//the increment id of the order
-$gtotal = $order->getBaseGrandTotal();//grand total of the order 
-$address = $order->getBillingAddress()->getData();
-$city = $address['city'];
-$state = $address['region'];
-$country = $address['country_id'];
-$shippingVal=$order->getBaseShippingAmount();
-$taxAmount=$order->getBaseTaxAmount();
+    $order = Mage::getModel('sales/order')->load($orderId); 
+    $order_id = $order->getIncrementId();   //the id of the order
+    $gtotal = $order->getBaseGrandTotal();  //grand total of the order 
+    $shippingVal = $order->getBaseShippingAmount();
+    $taxAmount = $order->getBaseTaxAmount();
 ?>
 <script type="text/javascript">
-ga('require', 'ecommerce');
+	ga('require', 'ecommerce');
 
-ga('ecommerce:addTransaction', {
-  'id': '<?php echo $order_id; ?>',                     // Transaction ID. Required.
-  'affiliation': '',   // Affiliation or store name.
-  'revenue': '<?php echo $gtotal;?>',               // Grand Total.
-  'shipping': '<?php echo $shippingVal;?>',                  // Shipping.
-  'tax': '<?php echo $taxAmount;?>'                     // Tax.
-});
+    ga('ecommerce:addTransaction', {
+      'id': '<?php echo $order_id; ?>',			// Transaction ID. Required.
+      'affiliation': '',   						// Affiliation or store name.
+      'revenue': '<?php echo $gtotal;?>',		// Grand Total.
+      'shipping': '<?php echo $shippingVal;?>',	// Shipping.
+      'tax': '<?php echo $taxAmount;?>'			// Tax.
+    });
 
-<?php 
-$items = $order->getAllItems();
-$itemcount=count($items);
-$name=array();
-$unitPrice=array();
-$sku=array();
-$ids=array();
-$qty=array();
-foreach ($items as $itemId => $item)
-{?>
+<?php $items = $order->getAllItems();?>
+<?php foreach ($items as $itemId => $item):?>
+    ga('ecommerce:addItem', {
+      'id': '<?php echo $order_id; ?>',					// Transaction ID. Required.
+      'name': '<?php echo $item->getName(); ?>',    	// Product name. Required.
+      'sku': '<?php echo $item->getSku(); ?>',			// SKU/code.
+      'category': '',									// Category or variation.
+      'price': '<?php echo $item->getBasePrice(); ?>',	// Unit price.
+      'quantity': '<?php echo $item->getQtyToInvoice(); ?>' // Quantity.
+    });
+<?php endforeach;?> 
 
-ga('ecommerce:addItem', {
-  'id': '<?php echo $order_id; ?>',                     // Transaction ID. Required.
-  'name': '<?php echo $item->getName(); ?>',    // Product name. Required.
-  'sku': '<?php echo $item->getSku(); ?>',                 // SKU/code.
-  'category': '',         // Category or variation.
-  'price': '<?php echo $item->getBasePrice(); ?>',                 // Unit price.
-  'quantity': '<?php echo $item->getQtyToInvoice(); ?>'                   // Quantity.
-});
-<?php 
-}
-?> 
-
-ga('ecommerce:send');
+	ga('ecommerce:send');
 
 </script>
 <?php endforeach;?>
+
+<?php endif;?>
