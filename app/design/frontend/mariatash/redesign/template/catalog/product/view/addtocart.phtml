@@ -24,10 +24,11 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-
+<div class="cart-add-div"></div>
 <?php $_product = $this->getProduct(); ?>
-
-<?php $buttonTitle = $this->__('Add to Bag'); ?>
+<!--MT-1408-->
+<?php $_labelHelper = Mage::helper('allure_category/vip');?>
+<?php $buttonTitle = $this->__($_labelHelper->getLabel($_product)); ?>
 <?php if ($_product->isSaleable()): ?>
     <div class="add-to-cart col-12 p-0">
     	<div class="add-to-cart-left row">
@@ -172,8 +173,7 @@
         <div class="col-6 float-left add-to-bag">
           <div class="row">
               <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
-              <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)">
-                <?php echo $buttonTitle ?>
+              <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)"><?=$buttonTitle ?>
             </button>
         <?php //echo $this->getChildHtml('', true, true) ?>
         </div>

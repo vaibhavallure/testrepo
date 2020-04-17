@@ -27,7 +27,9 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Mage_Sales_Model
             $addressItem->setGiftItemQty($item->getGiftItemQty());
             $addressItem->setIsGiftWrap($item->getIsGiftWrap());
             $addressItem->setGiftWrapQty($item->getGiftWrapQty());
-            
+
+            //set purchased from category name
+            $addressItem->setPurchasedFrom($item->getPurchasedFrom());
             //set separatly ship item
             $addressItem->setIsSeparateShip($item->getIsSeparateShip());
             
@@ -44,7 +46,10 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Mage_Sales_Model
                     $addressChildItem->setGiftItemQty($item->getGiftItemQty());
                     $addressChildItem->setIsGiftWrap($item->getIsGiftWrap());
                     $addressChildItem->setGiftWrapQty($item->getGiftWrapQty());
-                    
+
+                    //set purchased from category name
+                    $addressItem->setPurchasedFrom($item->getPurchasedFrom());
+
                     //set separatly ship item
                     $addressChildItem->setIsSeparateShip($item->getIsSeparateShip());
                     
@@ -60,7 +65,10 @@ class Allure_RedesignCheckout_Model_Sales_Quote_Address extends Mage_Sales_Model
                 $addressItem->setGiftItemQty($item->getGiftItemQty());
                 $addressItem->setIsGiftWrap($item->getIsGiftWrap());
                 $addressItem->setGiftWrapQty($item->getGiftWrapQty());
-                
+
+                //set purchased from category name
+                $addressItem->setPurchasedFrom($item->getPurchasedFrom());
+
                 //set separatly ship item
                 $addressItem->setIsSeparateShip($item->getIsSeparateShip());
                 
