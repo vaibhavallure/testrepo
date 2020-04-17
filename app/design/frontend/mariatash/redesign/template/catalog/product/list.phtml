@@ -271,6 +271,10 @@ $category = Mage::registry('current_category');
                                                         <?php
                                                         $j=0;
                                                         $firstOption = '';
+                                                        
+                                                        $productUrls = explode(".html", $productUrl);
+                                                        $newProductUrl = $productUrls[0];
+
                                                         foreach ($optionsValues['value'] as $option): ?>
                                                             <?php
                                                             $optionId = $option[$attribute_code];
@@ -281,10 +285,15 @@ $category = Mage::registry('current_category');
 
                                                             $simpleProduct = Mage::getModel('catalog/product')->load($simple_id);
                                                             ?>
+                                                            <?php $colorTitle = strtolower(str_replace(" ", "-", $optionLb));?>
+                                                            
                                                             <li id="<?php echo $simple_id ?>"
                                                                 style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');"
                                                                 class="colorSelector tipped-create <?=($j==1)?"active":"" ?>" value="<?php echo $optionId ?>"
                                                                 title="<?php echo $optionLb ?>"
+                                                                data-color="<?= $colorTitle?>"
+                                                                data-option_id="<?=$optionId?>"
+                                                                data-color-url="<?= $newProductUrl . "-" . $colorTitle . ".html" ?>"
                                                                 data-pid="<?php echo $_product->getId() ?>"
                                                                 data-image="<?=  Mage::helper('catalog/image')->init($simpleProduct, 'small_image')->resize(314, 409) ?>"
                                                                 data-rollover="<?=($this->getRolloverImage($simpleProduct))? $this->getRolloverImage($simpleProduct) :"" ?>"
@@ -364,6 +373,19 @@ $category = Mage::registry('current_category');
 
             jQuery('#rollover-img-'+ product_id).attr('src',rolloverSrc);
 
+            var colorUrl = jQuery(this).data("color-url");
+            if(colorUrl){
+                var urlSelector = jQuery('.products-grid #item-'+product_id+ ' a.product-image');
+            	urlSelector.attr("href", colorUrl);
+            	var quickviewSelector = jQuery('#product-quickview-'+product_id);
+                var quickviewUrl = quickviewSelector.attr("href");
+                var quickviewUrlParts = quickviewUrl.split("optionId=");
+                var newOptionId = jQuery(this).data("option_id");
+                if(quickviewUrlParts.length > 0){
+                	quickviewUrl = quickviewUrlParts[0] + "optionId=" + newOptionId;
+                	quickviewSelector.attr("href", quickviewUrl);
+                }
+            }
 
         });
         jQuery(document).on("hover",".product-image-hover",function () {

@@ -487,9 +487,60 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
             }
 
-
-
-                if ($selectedColor) {
+            $curUrlPath = Mage::helper('core/url')->getCurrentUrl();
+            $request = $this->getRequest();
+            $identifier = trim($request->getPathInfo(), '/');
+            $currentColor = "";
+            if($identifier){
+                $identifierArr = explode(".html", $identifier);
+                if(count($identifierArr) > 0){
+                    $urlPart = trim($identifierArr[0]);
+                    $newUrlPartArr = explode($urlPart."-", $curUrlPath);
+                    if(count($newUrlPartArr) > 1){
+                        $colorVal = trim($newUrlPartArr[1]);
+                        $currentColor = str_replace(".html" ,"",$colorVal);
+                        $currentColor = str_replace("-" ," ",$currentColor);
+                    }
+                }
+            }
+            
+            $isSet = false;
+            $colorOptionId = "";
+            if($currentColor)
+            {
+                $resource = Mage::getSingleton('core/resource');
+                $readConnection = $resource->getConnection('core_read');
+                $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product', "metal");
+                if($attribute)
+                {
+                    $attributeId = $attribute->getId();
+                    
+                    $query = "SELECT rel.parent_id, rel.child_id, atr.product_super_attribute_id, atr.attribute_id, cpen.value 
+                              FROM `catalog_product_relation` rel 
+                              JOIN catalog_product_super_attribute atr on (atr.product_id = rel.parent_id AND atr.attribute_id = {$attributeId})
+                              JOIN catalog_product_entity_int cpen ON (cpen.attribute_id = atr.attribute_id AND cpen.entity_id = rel.child_id)
+                              JOIN eav_attribute_option_value opt_val ON(opt_val.option_id = cpen.value AND opt_val.value = '{$currentColor}')
+                              WHERE rel.parent_id = {$productId} GROUP BY rel.parent_id";
+                    
+                    
+                    $results = $readConnection->fetchAll($query);
+                    if(count($results) > 0){
+                        $optionId = "";
+                        if(isset($results[0]["value"])){
+                            $colorOptionId = $results[0]["value"];
+                            $isSet = true;
+                        }
+                    }
+                }
+                
+            }
+            
+            if($isSet){
+                echo "var id = 'amconf-image-".$colorOptionId."';";
+                echo "\n if($(id)){
+                            $(id).simulate('click');
+                                }";
+            }else if ($selectedColor) {
 
                     $selectedColorText = $optionHelper->getOptionText($selectedColor);
 
