@@ -93,7 +93,7 @@ alpha_staging:
   only:
     - staging
   script:
-    - mage-deploy mt-staging
+    - mage-deploy mt-beta
     - echo 'Deployed on Bugfixes Staging'
 
 beta:

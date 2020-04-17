@@ -122,8 +122,8 @@ class Ecp_Quickview_IndexController extends Mage_Core_Controller_Front_Action {
 
 
 
-
-                if ($selectedColor) {
+                $optionId = $this->getRequest()->getParam("optionId", false);
+                if ($selectedColor && !$optionId) {
 
                     $selectedColorText = $optionHelper->getOptionText($selectedColor);
 
