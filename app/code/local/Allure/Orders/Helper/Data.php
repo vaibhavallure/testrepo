@@ -10,16 +10,18 @@ class Allure_Orders_Helper_Data extends Mage_Core_Helper_Abstract
    const XML_ORDER_CONFIRMATION_EMAIL_AFTER_INVOICE = 'allure_orders/settings/order_email_after_invoice';
    const XML_ORDER_CANCELLATION_EMAIL = 'allure_orders/settings/cancel_order_email';
    
+   const XML_ORDER_STATUS_CHANGE_ENABLED = 'allure_orders/order_status_settings/is_order_paid_status';
+   const XML_ORDER_STATUS_AFTER_INVOICE = 'allure_orders/order_status_settings/order_status';
+   
    /**
     * Check signifyd plugin is active
     * @param int|string $storeId
     * @return boolean
     */
-   private function isSignifydActive($storeId = null)
+   public function isSignifydActive($storeId = null)
    {
        $flag = false;
        if( Mage::helper("core")->isModuleEnabled("Signifyd_Connect") ){
-           Mage::log("Signifyd_Connect---",Zend_Log::DEBUG,'abc.log',true);
            $isEnabled = Mage::getStoreConfig("signifyd_connect/settings/enabled", $storeId);
            if($isEnabled)
            {
@@ -57,6 +59,24 @@ class Allure_Orders_Helper_Data extends Mage_Core_Helper_Abstract
    public function isAllowOrderCancellationEmail($storeId = null)
    {
        return Mage::getStoreConfig(self::XML_ORDER_CANCELLATION_EMAIL, $storeId);
+   }
+   
+   /**
+    * Check is order status value change after invoice
+    * @param int|string $storeId
+    */
+   public function isOrderStatusChangeAfterPaymentCapture($storeId = null)
+   {
+       return Mage::getStoreConfig(self::XML_ORDER_STATUS_CHANGE_ENABLED, $storeId);
+   }
+   
+   /**
+    * get order status after payment capture
+    * @param int|string $storeId
+    */
+   public function getOrderStatusAfterPaymentCapture($storeId = null)
+   {
+       return Mage::getStoreConfig(self::XML_ORDER_STATUS_AFTER_INVOICE, $storeId);
    }
    
    /**

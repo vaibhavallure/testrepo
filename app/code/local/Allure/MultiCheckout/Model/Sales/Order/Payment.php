@@ -10,7 +10,9 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
      * @return Mage_Sales_Model_Order_Invoice
      */
     protected $out_of_stock_order_id;
-
+    
+    const WHOLESALE_CUSTOMER = 2;
+    
     public function setOutOfStockOrderId ($id)
     {
         $this->out_of_stock_order_id = $id;
@@ -68,6 +70,22 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                 $methodInstance->initialize($methodInstance->getConfigData('payment_action'), $stateObject);
             } else {
                 $orderState = Mage_Sales_Model_Order::STATE_PROCESSING;
+                
+                //patch - order payment pending when signifyd
+                $customerId = $order->getCustomerGroupId();
+                if($customerId == self::WHOLESALE_CUSTOMER){
+                    $action = Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE_CAPTURE;
+                }else {
+                    if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+                        $storeId = $order->getStoreId();
+                        $isSignifydActive = Mage::helper("allure_orders")->isSignifydActive($storeId);
+                        if($isSignifydActive){
+                            $orderState = Mage_Sales_Model_Order::STATE_PENDING_PAYMENT;
+                        }
+                    }
+                }
+                
+                
                 switch ($action) {
                     case Mage_Payment_Model_Method_Abstract::ACTION_ORDER:
                         $this->_order($order->getBaseTotalDue());
@@ -251,6 +269,19 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                 $message = $this->_prependMessage($message);
                 $message = $this->_appendTransactionToMessage($transaction, $message);
             }
+            
+            //patch -signifyd
+            if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+               $ordHelper = Mage::helper("allure_orders");
+               $storeId  = $order->getStoreId();
+               if($ordHelper->isOrderStatusChangeAfterPaymentCapture($storeId))
+               {
+                   if($invoice->getIsPaid()){
+                       $status = $ordHelper->getOrderStatusAfterPaymentCapture($storeId);
+                   }
+               }
+            }
+            
             $order->setState($state, $status, $message);
             $this->getMethodInstance()->processInvoice($invoice, $this); // should
                                                                          // be
@@ -340,5 +371,33 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
         }
         
         return false;
+    }
+    
+    /**
+     * Authorize payment either online or offline (process auth notification)
+     * Updates transactions hierarchy, if required
+     * Prevents transaction double processing
+     * Updates payment totals, updates order status and adds proper comments
+     *
+     * @param bool $isOnline
+     * @param float $amount
+     * @return Mage_Sales_Model_Order_Payment
+     */
+    protected function _authorize($isOnline, $amount)
+    {
+        parent::_authorize($isOnline, $amount);
+        $customerId = $this->getOrder()->getCustomerGroupId();
+        if($customerId != self::WHOLESALE_CUSTOMER)
+        {
+            if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+                $order = $this->getOrder();
+                $storeId = $order->getStoreId();
+                $isSignifydActive = Mage::helper("allure_orders")->isSignifydActive($storeId);
+                if($isSignifydActive && $order->getState() == Mage_Sales_Model_Order::STATE_PROCESSING){
+                    $order->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+                }
+            }
+        }
+        return $this;
     }
 }

@@ -3,6 +3,8 @@
 class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // Webtex_Giftcards_Model_Sales_Order
 {
     protected $_canSendNewEmailFlag = true;
+    
+    const WHOLESALE_CUSTOMER = 2;
 
     const XML_MULTIORDER_EMAIL_TEMPLATE = 'sales_email/allure_multicheckout_sales_email/template';
     const XML_MULTIORDER_EMAIL_GUEST_TEMPLATE = 'sales_email/allure_multicheckout_sales_email/guest_template';
@@ -348,14 +350,19 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
     public function getCanSendNewEmailFlag()
     {
         $storeId = $this->getStoreId();
-        if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
-            $isSendOrderEmail = Mage::helper("allure_orders")
+        $customerGroupId = $this->getCustomerGroupId();
+        if($customerGroupId == self::WHOLESALE_CUSTOMER){
+            $this->_canSendNewEmailFlag = true;
+        }else{
+            if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+                $isSendOrderEmail = Mage::helper("allure_orders")
                 ->canSendConfirmationEmail($storeId);
-            if($isSendOrderEmail){
-                $this->_canSendNewEmailFlag = false;
+                if($isSendOrderEmail){
+                    $this->_canSendNewEmailFlag = false;
+                }
             }
         }
-        Mage::log("HHH - {$this->_canSendNewEmailFlag}", Zend_Log::DEBUG, 'abc.log', true);
+        
         return $this->_canSendNewEmailFlag;
     }
     

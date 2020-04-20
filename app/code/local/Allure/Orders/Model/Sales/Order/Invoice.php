@@ -14,7 +14,6 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
     {
         try {
             parent::save();
-            Mage::log("In save method of invoice", Zend_Log::DEBUG, 'abc.log', true);
             
             $order = $this->getOrder();
             $isSent = $order->getEmailSent();
@@ -24,7 +23,7 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
            
             $customerGroupId = $order->getCustomerGroupId();
             
-            if($isSendOrderEmail && !$isSent){
+            if($isSendOrderEmail && !$isSent && $customerGroupId != self::WHOLESALE){
                 if($customerGroupId == self::GUEST){
                     $order->queueNewOrderEmail();
                 }elseif ($customerGroupId == self::GENERAL){

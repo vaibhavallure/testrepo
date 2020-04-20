@@ -6,7 +6,7 @@
  * @package     Signifyd_Connect
  * @author      Signifyd
  */
-class Signifyd_Connect_Model_Order_Payment extends Mage_Sales_Model_Order_Payment
+class Signifyd_Connect_Model_Order_Payment extends Allure_MultiCheckout_Model_Sales_Order_Payment
 {
     public function registerCaptureNotification($amount, $skipFraudDetection = false)
     {
