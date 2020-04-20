@@ -73,7 +73,8 @@ if($this->isthumbnailCat($pc->getName())){
                                     endif;
                                     } ?>
 
-                                <?php if((count( $withoutChildrenCategory) || $pc->getSetVirtualChild()) && strtolower($pc->getName()) == "jewelry"): ?>
+                                <!--disabled direct show non parent category for MT-1415 && MT-1416-->
+                                <?php if(false): //if((count( $withoutChildrenCategory) || $pc->getSetVirtualChild()) && strtolower($pc->getName()) == "jewelry"): ?>
                                 <div class="common-option-div" id="c-<?= $pc->getId() ?>">
                                     <div class="menu-head jwl-head text-uppercase">
                                         <span><a href="#"><?= $this->__("shop by category"); ?></a></span>
