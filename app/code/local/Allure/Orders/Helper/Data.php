@@ -13,6 +13,9 @@ class Allure_Orders_Helper_Data extends Mage_Core_Helper_Abstract
    const XML_ORDER_STATUS_CHANGE_ENABLED = 'allure_orders/order_status_settings/is_order_paid_status';
    const XML_ORDER_STATUS_AFTER_INVOICE = 'allure_orders/order_status_settings/order_status';
    
+   const XML_ORDER_CANCEL_STATUS_ENABLED = 'allure_orders/order_status_settings/is_order_cancel_status';
+   const XML_AFTER_ORDER_CANCEL_STATUS = 'allure_orders/order_status_settings/order_cancel_status';
+   
    /**
     * Check signifyd plugin is active
     * @param int|string $storeId
@@ -77,6 +80,24 @@ class Allure_Orders_Helper_Data extends Mage_Core_Helper_Abstract
    public function getOrderStatusAfterPaymentCapture($storeId = null)
    {
        return Mage::getStoreConfig(self::XML_ORDER_STATUS_AFTER_INVOICE, $storeId);
+   }
+   
+   /**
+    * is order cancellation status enabled
+    * @param int|string $storeId
+    */
+   public function isOrderCancelStatusEnabled($storeId = null)
+   {
+       return Mage::getStoreConfig(self::XML_ORDER_CANCEL_STATUS_ENABLED, $storeId);
+   }
+   
+   /**
+    * Get cancel order status
+    * @param int|string $storeId
+    */
+   public function getCancelOrderStatus($storeId = null)
+   {
+       return Mage::getStoreConfig(self::XML_AFTER_ORDER_CANCEL_STATUS, $storeId);
    }
    
    /**

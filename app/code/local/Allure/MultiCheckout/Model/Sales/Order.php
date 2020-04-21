@@ -326,14 +326,15 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
     }
     
     /**
-     * Cancel order email when signifyd
-     * {@inheritDoc}
-     * @see Mage_Sales_Model_Order::cancel()
+     * Cancel order
+     *
+     * @return Mage_Sales_Model_Order
      */
     public function cancel()
     {
         if ($this->canCancel()) {
-            parent::cancel();
+            $this->getPayment()->cancel();
+            $this->registerCancellation();
             
             $storeId = $this->getStoreId();
             $isSendCancelOrderEmail = Mage::helper("allure_orders")
@@ -343,7 +344,9 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
                 $this->sendCancelOrderEmail();
             }
             
+            Mage::dispatchEvent('order_cancel_after', array('order' => $this));
         }
+        
         return $this;
     }
     

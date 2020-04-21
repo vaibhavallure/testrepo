@@ -277,7 +277,10 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                if($ordHelper->isOrderStatusChangeAfterPaymentCapture($storeId))
                {
                    if($invoice->getIsPaid()){
-                       $status = $ordHelper->getOrderStatusAfterPaymentCapture($storeId);
+                       $statusVal = $ordHelper->getOrderStatusAfterPaymentCapture($storeId);
+                       if($statusVal){
+                           $status = $statusVal;
+                       }
                    }
                }
             }
