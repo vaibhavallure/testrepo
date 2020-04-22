@@ -73,9 +73,9 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                 
                 //patch - order payment pending when signifyd
                 $customerId = $order->getCustomerGroupId();
-                if($customerId == self::WHOLESALE_CUSTOMER){
+                /* if($customerId == self::WHOLESALE_CUSTOMER){
                     $action = Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE_CAPTURE;
-                }else {
+                }else { */
                     if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
                         $storeId = $order->getStoreId();
                         $isSignifydActive = Mage::helper("allure_orders")->isSignifydActive($storeId);
@@ -83,7 +83,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                             $orderState = Mage_Sales_Model_Order::STATE_PENDING_PAYMENT;
                         }
                     }
-                }
+                //}
                 
                 
                 switch ($action) {
@@ -390,8 +390,8 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
     {
         parent::_authorize($isOnline, $amount);
         $customerId = $this->getOrder()->getCustomerGroupId();
-        if($customerId != self::WHOLESALE_CUSTOMER)
-        {
+        /* if($customerId != self::WHOLESALE_CUSTOMER)
+        { */
             if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
                 $order = $this->getOrder();
                 $storeId = $order->getStoreId();
@@ -400,7 +400,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                     $order->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
                 }
             }
-        }
+        /*}*/
         return $this;
     }
 }

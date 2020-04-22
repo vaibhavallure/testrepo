@@ -353,10 +353,10 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
     public function getCanSendNewEmailFlag()
     {
         $storeId = $this->getStoreId();
-        $customerGroupId = $this->getCustomerGroupId();
+        /* $customerGroupId = $this->getCustomerGroupId();
         if($customerGroupId == self::WHOLESALE_CUSTOMER){
             $this->_canSendNewEmailFlag = true;
-        }else{
+        }else{ */
             if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
                 $isSendOrderEmail = Mage::helper("allure_orders")
                 ->canSendConfirmationEmail($storeId);
@@ -364,7 +364,7 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
                     $this->_canSendNewEmailFlag = false;
                 }
             }
-        }
+        //}
         
         return $this->_canSendNewEmailFlag;
     }

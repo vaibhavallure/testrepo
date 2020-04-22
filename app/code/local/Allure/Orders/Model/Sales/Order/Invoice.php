@@ -23,7 +23,7 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
            
             $customerGroupId = $order->getCustomerGroupId();
             
-            if($isSendOrderEmail && !$isSent && $customerGroupId != self::WHOLESALE){
+            if($isSendOrderEmail && !$isSent){
                 if($customerGroupId == self::GUEST){
                     $order->queueNewOrderEmail();
                 }elseif ($customerGroupId == self::GENERAL){
