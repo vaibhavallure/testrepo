@@ -217,7 +217,7 @@ INLINECSS;
 
         if($stockItem->getIsInStock() == 0 &&
             $stockItem->getUuseConfigBackorders() == 0){
-            $status = "{$this->getInStockStatus($product)}";
+            $status = $this->_out_stock;
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() >= 1){
             $status = "{$this->getInStockStatus($product)}";
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() <= 0){
