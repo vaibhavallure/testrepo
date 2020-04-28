@@ -35,17 +35,16 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
      */
     public function setPlu($observer){
         try{
-            $items = $observer->getEvent()->getItems();
-                foreach ($items as $item){
+            $item = $observer->getEvent()->getDataObject();
                     if($item->getPlu()==null || $item->getPlu()==0){
                         $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$item->getSku());
                         $item->setPlu($product->getTeamworkPlu());
-                        $item->save();
-                    }
-                }
-        }catch (Exception $e){
 
+                    }
+        }catch (Exception $e){
+             Mage::log($e->getMessage(),7,'adi.log',true);
         }
+        return $item;
     }
     
     /**
