@@ -1,0 +1,19 @@
+
+<div class="content-header">
+    <h3 class="icon-head">Upload csv file to set in-stock status messages to product</h3>
+</div>
+<div style="text-align: center;
+    margin-top: 100px;">
+    <form enctype="multipart/form-data" method="post" style="border: 2px solid; padding: 20px;" action="<?= Mage::helper("adminhtml")->getUrl("amasty_stockstatus/adminhtml_index/upload")?>">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        <input type="file" name="csvfile"  accept=".csv" >
+        <button>Upload</button>
+        <a href="<?= Mage::helper("adminhtml")->getUrl("amasty_stockstatus/adminhtml_index/downloadsample")?>">Download Sample File</a>
+    </form>
+</div>
+
+
+
+
+
+
