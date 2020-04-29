@@ -102,11 +102,13 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 
                         if (Mage::getStoreConfig('amstockstatus/general/icononly') || $product->getData('hide_default_stock_status') || (!$product->isConfigurable() && ('bundle' != $product->getTypeId()) && $product->isInStock() && $stockItem->getManageStock() && 0 == $stockItem->getData('qty')))
                         {
-                            $html = preg_replace("@($inStock|$outStock|$inStock1|$outStock1)[\s]*<@", '' . $status  . '<', $html);
+                            /*$inStock|$inStock1 removed*/
+                            $html = preg_replace("@($outStock|$outStock1)[\s]*<@", '' . $status  . '<', $html);
                         }
                         else
                         {
-                            $html = preg_replace("@($inStock|$outStock|$inStock1|$outStock1)[\s]*<@", '$1 ' . $status  . '<', $html);
+                            /*$inStock|$inStock1 removed*/
+                            $html = preg_replace("@($outStock|$outStock1)[\s]*<@", '$1 ' . $status  . '<', $html);
                         }
                     }
                 }
