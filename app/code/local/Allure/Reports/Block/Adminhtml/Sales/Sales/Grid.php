@@ -221,6 +221,33 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             $collection = $collection->
                 addFieldToFilter("status",array("in"=>$order_status));
         }
+        
+        //signifyd order cancel patch
+        $isCancelBySignifydOrderStatusFilterAppied = false;
+        if(!empty($order_status)) {
+            if(in_array("cancel_by_signifiyd", $order_status)){
+                $isCancelBySignifydOrderStatusFilterAppied = true;
+            }
+        }
+        
+        $resource = Mage::getSingleton('core/resource');
+        $connection = $resource->getConnection('core_write');
+        if($connection->isTableExists(trim("signifyd_connect_case"))){
+            $collection->getSelect()
+            ->joinLeft(
+                array("signifyd" => "signifyd_connect_case"),
+                "signifyd.order_increment = main_table.increment_id",
+                array("signifyd.guarantee")
+            );
+            
+            if(!$isCancelBySignifydOrderStatusFilterAppied){
+                $collection->getSelect()->where("( signifyd.guarantee not in('DECLINED') OR signifyd.guarantee is null )");
+            }
+        }else{
+            if(!$isCancelBySignifydOrderStatusFilterAppied){
+                $collection = $collection->addFieldToFilter("status", array("nin" => array("cancel_by_signifiyd")));
+            }
+        }
 
         $counterpointStationIds = $filterData['counterpoint_sta_id'];
         if(!empty($counterpointStationIds)){
