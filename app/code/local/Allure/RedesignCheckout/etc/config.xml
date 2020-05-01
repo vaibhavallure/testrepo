@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_RedesignCheckout>
 			<name>Allure - Redesign Checkout</name>
-			<version>1.0.2</version>
+			<version>1.0.3</version>
 		</Allure_RedesignCheckout>
 	</modules>
 	<global>
@@ -75,7 +75,10 @@
 				<gift_wrap_qty>
 					<to_order_item>*</to_order_item>
 				</gift_wrap_qty>
-			</sales_convert_quote_item>
+				<plu>
+					<to_quote_item>*</to_quote_item>
+				</plu>
+				</sales_convert_quote_item>
 			<sales_convert_order_item>
 				<is_gift_item>
 					<to_quote_item>*</to_quote_item>
@@ -110,6 +113,15 @@
                     </allure_redesigncheckout>
                 </observers>
         	</checkout_cart_save_before>
+			<sales_quote_item_save_before>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>setPlu</method>
+					</allure_redesigncheckout>
+				</observers>
+			</sales_quote_item_save_before>
             <sales_convert_quote_item_to_order_item>
                 <observers>
                     <allure_redesigncheckout>

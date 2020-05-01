@@ -6,6 +6,51 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+
+//remote site wsdl url
+$_URL       = "https://mt-uat.allurecommerce.com/api/v2_soap/?wsdl=1";
+/**
+ * @return array of magento credentials.
+ */
+function getMagentoSiteCredentials(){
+    $_USERNAME  = "allureinc";
+    $_APIKEY    = "12qwaszx";
+    return array("username"=>$_USERNAME,'apiKey'=>$_APIKEY);
+}
+
+/**
+ * @return array of soap wsdl options.
+ */
+function getSoapWSDLOptions(){
+    return array('connection_timeout' => 60,'trace' => 1,
+        'cache_wsdl' => WSDL_CACHE_NONE);
+}
+
+try{
+    $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
+    $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
+    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    $session = $client->login($_AUTH_DETAILS_ARR);
+    
+    /* $reqS = addslashes(serialize($mainArr));
+    $reqU = utf8_encode('"'.$reqS.'"') */;
+    
+    
+    $_RequestData = array(
+        'sessionId' => $session->result,
+        'orderIncrementId' => "2015000211"
+    );
+    
+    $result  = $client->salesOrderInfo($_RequestData);
+    echo "<pre>";
+    print_r($result);
+    $client->endSession(array('sessionId' => $session->result));
+}catch (Exception $e){
+    echo "<pre>";
+    print_r($e);
+}
+
+
 die;
 
 $orderIds = array(454175, 454176);
