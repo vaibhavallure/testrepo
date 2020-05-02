@@ -50,7 +50,7 @@ class MT_Api_Model_Rewrite_Order_Api_V2 extends Mage_Sales_Model_Order_Api_V2
 			    $itemNew['product_options']=serialize($product_options);
 			    
 			}
-			
+			$itemNew["plu"] = $item->getPlu();
 			Mage::log(json_encode($user),Zend_log::DEBUG,'api_orders.log',true);
 			$result['items'][] = $itemNew;
 		}

@@ -29,6 +29,23 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
             
         }
     }
+
+    /**
+     * set plu to quote item
+     */
+    public function setPlu($observer){
+        try{
+            $item = $observer->getEvent()->getDataObject();
+                    if($item->getPlu()==null || $item->getPlu()==0){
+                        $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$item->getSku());
+                        $item->setPlu($product->getTeamworkPlu());
+
+                    }
+        }catch (Exception $e){
+             Mage::log($e->getMessage(),7,'adi.log',true);
+        }
+        return $item;
+    }
     
     /**
      * Set address item gift to order
@@ -40,7 +57,8 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         $quoteItem = $observer->getEvent()->getItem();
         $orderItem->setIsGiftItem($quoteItem->getIsGiftItem());
         $orderItem->setGiftItemQty($quoteItem->getGiftItemQty());
-        
+        $orderItem->setPlu($quoteItem->getPlu());
+
         //check the quote item is belong to address item
         if($quoteItem instanceof Mage_Sales_Model_Quote_Address_Item){
             $item = $quoteItem->getQuote()->getItemById($quoteItem->getQuoteItemId());
@@ -48,6 +66,8 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
             $backorderQty = $item->getBackorders();
             $orderItem->setQtyBackordered($backorderQty);
             $orderItem->setBackorderTime($item->getBackorderTime());
+            $orderItem->setPlu($item->getPlu());
+
         }
     }
     

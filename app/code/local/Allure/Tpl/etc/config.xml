@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Tpl>
+			<name>Allure - 3pl</name>
+			<version>1.0.0</version>
+		</Allure_Tpl>
+	</modules>
+	<global>
+		<helpers>
+			<allure_tpl>
+				<class>Allure_Tpl_Helper</class>
+			</allure_tpl>
+		</helpers>
+	</global>
+</config>
