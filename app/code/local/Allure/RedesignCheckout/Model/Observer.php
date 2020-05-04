@@ -42,7 +42,7 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
 
                     }
         }catch (Exception $e){
-             Mage::log($e->getMessage(),7,'adi.log',true);
+             Mage::log($e->getMessage(),7,'exception.log',true);
         }
         return $item;
     }

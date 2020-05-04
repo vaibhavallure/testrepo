@@ -85,6 +85,17 @@
 				</is_gift_item>
 			</sales_convert_order_item>
 		</fieldsets>
+		<events>
+			<sales_quote_item_save_before>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>setPlu</method>
+					</allure_redesigncheckout>
+				</observers>
+			</sales_quote_item_save_before>
+		</events>
 	</global>
 	<frontend>
 		<layout>
@@ -113,15 +124,6 @@
                     </allure_redesigncheckout>
                 </observers>
         	</checkout_cart_save_before>
-			<sales_quote_item_save_before>
-				<observers>
-					<allure_redesigncheckout>
-						<type>model</type>
-						<class>allure_redesigncheckout/observer</class>
-						<method>setPlu</method>
-					</allure_redesigncheckout>
-				</observers>
-			</sales_quote_item_save_before>
             <sales_convert_quote_item_to_order_item>
                 <observers>
                     <allure_redesigncheckout>
