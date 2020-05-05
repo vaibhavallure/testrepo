@@ -160,15 +160,6 @@
                     </allure_redesigncheckout>
                 </observers>
             </checkout_controller_multishipping_overview_giftmessage_post>
-			<sales_quote_item_save_before>
-				<observers>
-					<allure_redesigncheckout>
-						<type>model</type>
-						<class>allure_redesigncheckout/observer</class>
-						<method>setPlu</method>
-					</allure_redesigncheckout>
-				</observers>
-			</sales_quote_item_save_before>
    		</events>
    	</frontend>
    	<admin>
