@@ -46,6 +46,24 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         }
         return $item;
     }
+
+
+    /**
+     * set plu to quote item admin side
+     */
+    public function setPluForAdmin($observer){
+        try{
+            $item = $observer->getQuoteItem();
+            $product = $observer->getProduct();
+
+                    if($item->getPlu()==null || $item->getPlu()==0){
+                        $item->setPlu($product->getTeamworkPlu());
+                    }
+        }catch (Exception $e){
+             Mage::log($e->getMessage(),7,'exception.log',true);
+        }
+       return $item;
+    }
     
     /**
      * Set address item gift to order
