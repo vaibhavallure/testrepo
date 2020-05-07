@@ -9,14 +9,71 @@
 <config>
     <modules>
         <Amasty_Stockstatus>
-            <version>3.6.9</version>
+            <version>3.7.0</version>
         </Amasty_Stockstatus>
     </modules>
-    
-    
+
     <admin>
-        
+        <routers>
+            <amasty_stockstatus>
+                <use>admin</use>
+                <args>
+                    <module>Amasty_Stockstatus</module>
+                    <frontName>amstockstatus</frontName>
+                </args>
+            </amasty_stockstatus>
+        </routers>
     </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Amasty_Stockstatus>
+                    <files>
+                        <default>Amasty_Stockstatus.csv</default>
+                    </files>
+                </Amasty_Stockstatus>
+            </modules>
+        </translate>
+        <menu>
+            <allure>
+                <children>
+                    <amstockstatus module="amstockstatus">
+                        <title>Amasty Stock Status</title>
+                        <sort_order>3</sort_order>
+                        <children>
+                            <in-stock module="amstockstatus">
+                                <title>In-stock</title>
+                                <sort_order>1</sort_order>
+                                <action>amstockstatus/adminhtml_index/instock</action>
+                            </in-stock>
+                        </children>
+                    </amstockstatus>
+                </children>
+            </allure>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <Amasty_Stockstatus>
+                            <title>Amasty_Stock Status Module</title>
+                            <sort_order>10</sort_order>
+                        </Amasty_Stockstatus>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <amasty_stockstatus>
+                    <file>allure/amstockstatus.xml</file>
+                </amasty_stockstatus>
+            </updates>
+        </layout>
+    </adminhtml>
     
     
     <frontend>
@@ -53,24 +110,7 @@
         
     </frontend>
     
-    
-    
-    
-    <adminhtml>
 
-        <translate>
-            <modules>
-                <Amasty_Stockstatus>
-                    <files>
-                        <default>Amasty_Stockstatus.csv</default>
-                    </files>
-                </Amasty_Stockstatus>
-            </modules>
-        </translate>
-        
-    </adminhtml>
-    
-    
     
     
     <global>
