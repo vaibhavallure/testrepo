@@ -150,6 +150,34 @@
                         </auto_select_attribute>
                     </fields>
                 </general>
+
+                <stock_messages translate="label">
+                    <label>Default Stock Status Message</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <in-stock translate="label comment">
+                            <label>In-Stock</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </in-stock>
+                        <id-field translate="label comment">
+                            <label>Set product identification field</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default product identification field is teamwork_plu</comment>
+                        </id-field>
+                    </fields>
+                </stock_messages>
             </groups>
         </amstockstatus>
     </sections>
