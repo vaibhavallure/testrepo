@@ -111,7 +111,8 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
         {
             return false;
         }
-        $allowAuthorizeOnly = Mage::helper('teamwork_transfer/webstaging')->allowAuthorizeOnlyPayment( $this->_order->getPayment()->getMethod(), $this->_getChannelId() );
+        //$allowAuthorizeOnly = Mage::helper('teamwork_transfer/webstaging')->allowAuthorizeOnlyPayment( $this->_order->getPayment()->getMethod(), $this->_getChannelId() );
+        /**/$allowAuthorizeOnly = 0;
         $authorizedAmount = floatval($this->_order->getPayment()->getBaseAmountAuthorized()); /**/
         $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() );/**/
 
