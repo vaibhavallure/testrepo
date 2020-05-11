@@ -267,8 +267,14 @@
         /*Code for mobile only : After swipe navigate to category*/
         <?php $isMobile = Zend_Http_UserAgent_Mobile::match( Mage::helper('core/http')->getHttpUserAgent(), $_SERVER );?>
         var minusValue = 2;
-        var data_count = parseInt(jQuery('.current_active').attr('data-count')) - minusValue;
-        console.log(data_count);
+        var activeSlide = jQuery('.current_active').attr('data-count');
+        var data_count = 0;
+        if(typeof activeSlide === 'undefined'){
+
+        }else {
+             data_count = parseInt(activeSlide) - minusValue;
+        }
+        
         var owl = jQuery('.owl-carousel');
         owl.trigger("to.owl.carousel", [data_count, 1,true])
 // Listen to owl events:
