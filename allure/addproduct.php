@@ -7,6 +7,7 @@ $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
 
+
 //remote site wsdl url
 $_URL       = "https://mt-uat.allurecommerce.com/api/v2_soap/?wsdl=1";
 /**
