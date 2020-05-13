@@ -440,7 +440,11 @@ INLINECSS;
                 } else if ($stockMsg == self::BACKORDER_LABEL) {
                     $message = $this->_backorder_without_time;
                 }else{
-                    $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$item->getProductOptionByCode('simple_sku'));
+                    if($item->getProductType()=='configurable')
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$item->getProductOptionByCode('simple_sku'));
+                    else
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$item->getSku());
+
                     $message = $this->getInStockStatus($product);
                 }
                 $message = " (".$message.")";
