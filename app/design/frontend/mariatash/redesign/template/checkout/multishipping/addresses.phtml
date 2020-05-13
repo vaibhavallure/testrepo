@@ -120,8 +120,9 @@
 											
 											<?php
                                             $notAllowedAsGift=$redesignHelper->canNotOrderAsGift($_item->getSku());
+                                            $quoteItem=$_item->getQuoteItem();
 
-                                            if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift):?>
+                                            if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift && !$quoteItem->getPlParentItem()):?>
                                             <div class="col2-set">
                                                 <div class="gift-messages">
                                                  	<p class="control">

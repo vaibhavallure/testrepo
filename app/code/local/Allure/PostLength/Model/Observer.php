@@ -175,7 +175,7 @@ class Allure_PostLength_Model_Observer extends Varien_Object
                     if($product->getData($attrPL)) {
                         $productPL['sku'] = $product->getData($attrPL);
                         $productPL['qty'] = $info['qty'];
-                        $productPL['post_length'] = $info['sku'];
+                        $productPL['post_length'] = $info['post_length'];
                         $productPL['parent_sku'] = $info['sku'];
                         $newPostLengthItems[] = $productPL;
                     }
