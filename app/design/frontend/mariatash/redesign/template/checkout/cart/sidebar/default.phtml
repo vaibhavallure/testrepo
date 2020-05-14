@@ -152,12 +152,19 @@ if(!is_null($parentId)){
         </div>
         <div class="cart_price"><h5><?php echo $this->__('Qty: '); ?><?php echo $this->getQty() ?></h5></div>
 </div>
-  		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+  		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);
+  		?>
         <?php if(!empty($message)): ?>
              <div class="item-msg col-12">
              	<p><?php echo $message ?></p>
         	</div>
         <?php endif; ?>
+
+       <?php if($_item->getPlParentItem()): ?>
+           <div class="item-msg col-12">
+               <p><?php echo Mage::helper("postlength")->isPLMessage() ?></p>
+           </div>
+       <?php endif; ?>
 
 
 </li>
