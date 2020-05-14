@@ -6,9 +6,7 @@
  */
 class Allure_PostLength_Model_Observer extends Varien_Object
 {
-    /**
-     * add post length product.
-     */
+
 
     private $_cart="";
     private $_itemsAdded=array();
@@ -28,6 +26,9 @@ class Allure_PostLength_Model_Observer extends Varien_Object
         $this->_cart=$cart;
 
         if($this->checkIfItemAdded()) {
+            $this->addPostLengthItem();
+        }
+        if($this->checkIfItemFoundWithoutPLP()) {
             $this->addPostLengthItem();
         }
         $this->checkIfItemQtyUpdated();
@@ -54,6 +55,19 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
 
         if($items["new"])
+            return true;
+        else
+            return false;
+
+    }
+    private function checkIfItemFoundWithoutPLP()
+    {
+        $items=$this->getIfItemFoundWithoutPLP();
+
+        $this->_itemsAdded=$items;
+
+
+        if(count($items))
             return true;
         else
             return false;
@@ -106,6 +120,43 @@ class Allure_PostLength_Model_Observer extends Varien_Object
                         $key="new";
                     else
                         $key=$item->getItemId();
+
+                    $quoteItems[$key]['sku']=$item->getSku();
+                    $quoteItems[$key]['post_length']=$option['value'];
+                    $quoteItems[$key]['qty']=$item->getQty();
+                }
+            }
+        }
+
+        return $quoteItems;
+    }
+    private function PlProductPresent($itemId)
+    {
+        foreach ($this->_cart->getQuote()->getAllItems() as $item) {
+            $plParentItem= $item->getPlParentItem();
+            if($itemId==$plParentItem)
+            {
+                return true;
+            }
+        }
+    }
+    private function getIfItemFoundWithoutPLP()
+    {
+        $quoteItems=array();
+        $cart=$this->_cart;
+
+        foreach ($cart->getQuote()->getAllVisibleItems() as $item) {
+
+            if($this->PlProductPresent($item->getId()) || !$item->getId())
+            {
+                 continue;
+            }
+            $options = Mage::helper('catalog/product_configuration')->getCustomOptions($item);
+            foreach ($options as $option)
+            {
+                if(strtolower($option['label'])=="post length")
+                {
+                    $key=$item->getItemId();
 
                     $quoteItems[$key]['sku']=$item->getSku();
                     $quoteItems[$key]['post_length']=$option['value'];
