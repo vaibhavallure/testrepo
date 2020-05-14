@@ -222,7 +222,10 @@ if(!is_null($parentId)){
     	<div class="item-msg float-left">
         	<p class="info-text-three">
         		<span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?>
-        	</p>
+            </p>
+            <?php if($_item->getPlParentItem()): ?>
+                <p class="info-text-three"><?php echo Mage::helper("postlength")->isPLMessage() ?></p>
+            <?php endif; ?>
         </div>
         <?php endif; ?>
         <?php if(!$_item->getPlParentItem()):?>

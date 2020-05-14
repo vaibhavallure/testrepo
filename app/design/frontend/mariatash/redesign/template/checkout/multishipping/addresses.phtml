@@ -127,6 +127,10 @@
                                                                     <div class="box-content">
                                                                         <div class="item-msg">
                                                                             <p><span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?></p>
+
+                                                                            <?php if($quoteItem->getPlParentItem()): ?>
+                                                                                <p class="info-text-three"><?php echo Mage::helper("postlength")->isPLMessage() ?></p>
+                                                                            <?php endif; ?>
                                                                         </div>
                                                                     </div>
                                                                 </div>
