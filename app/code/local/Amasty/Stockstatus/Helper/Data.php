@@ -13,6 +13,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
     protected $_in_stock ="<span class='info-text-two instock-product'>In stock ships within 24 hours (Mon-Fri)</span>";
     protected $_out_stock = "<span class='info-text-three'>The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.</span>";
     protected $_backorder_with_time = "<span class='info-text-two'>Order now and it will ship <span class='text-lowercase'>%s</span>.</span><br><span class='para-lighter'>The metal color or length combination you selected is backordered.</span> ";
+    protected $_item_backorder_with_time = "<span class='info-text-two'>It will ships <span class='text-lowercase'>%s</span>.</span><br><span class='para-lighter'>The metal color or length combination you selected is backordered.</span> ";
     protected $_backorder_without_time = "<span class='para-lighter'>The metal color or length combination you selected is backordered.</span>";
     protected $_backorder_with_qty = "<span class='info-text-three'>This product is not available in the requested quantity.%s of the items will be backordered.</span>";
 
@@ -433,7 +434,7 @@ INLINECSS;
                 $stockMsg = $item->getBackorderTime();
                 if (!empty($stockMsg) && ($stockMsg != self::BACKORDER_LABEL) ) {
                     if(!empty($stockMsg)){
-                        $message = sprintf($this->_backorder_with_time, $stockMsg);
+                        $message = sprintf($this->_item_backorder_with_time, $stockMsg);
                     }else{
                         $message = sprintf($this->_backorder_with_qty, $qty);
                     }
@@ -569,7 +570,7 @@ INLINECSS;
         }
 
         if (!empty($backTimeMsg) && $backTimeMsg != self::BACKORDER_LABEL) {
-            $stockMsg = sprintf($this->_backorder_with_time, $backTimeMsg);
+            $stockMsg = sprintf($this->_item_backorder_with_time, $backTimeMsg);
         } else if ($backTimeMsg == self::BACKORDER_LABEL) {
             $stockMsg = $this->_backorder_without_time;
         } else {
