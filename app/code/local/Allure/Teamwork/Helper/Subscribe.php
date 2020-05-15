@@ -58,6 +58,9 @@ class Allure_Teamwork_Helper_Subscribe extends Mage_Core_Helper_Data
         }
     }
     public function setCustomerData($customerMarkentingFlag,$customerEmail){
+        $this->writeLog('------------ Customer Data -------------');
+        $this->writeLog('Email:'.$customerEmail);
+        $this->writeLog('Marketing Flag:'.$customerMarkentingFlag);
         $this->_customerEmail = $customerEmail;
         $this->_customerMarketingFlag = $customerMarkentingFlag;
     }
