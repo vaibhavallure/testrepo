@@ -318,9 +318,11 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
         $this->_stopFurtherRules = false;
         foreach ($this->_getRules() as $rule) {
 
+            /*Allure code added for post length item*/
             if(!$this->checkForPostLengthRule($rule,$item)) {
                 continue;
             }
+            /*code end*/
 
             /* @var $rule Mage_SalesRule_Model_Rule */
             if (!$this->_canProcessRule($rule, $address)) {
@@ -1085,9 +1087,16 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
 
     public function checkForPostLengthRule($rule,$item)
     {
-        if($rule->getName()=="postlength product" && !$item->getPlParentItem())
-            return false;
-
+        if($rule->getName()=="postlength product") {
+            if($item->getQuoteItemId()){
+                if(!$item->getQuoteItem()->getPlParentItem())
+                {
+                    return false;
+                }
+            }elseif(!$item->getPlParentItem()) {
+                return false;
+            }
+        }
         return true;
     }
 }
