@@ -18,32 +18,39 @@ class Allure_PostLength_Model_Observer extends Varien_Object
         "9.5mm"=>"nine_point_five_mm_sku",
     );
 
+    private function isValidStore()
+    {
+        return (Mage::app()->getStore()->getStoreId()==1)? 1:0;
+    }
+
 
 
     public function beforeSave($observer){
 
-        $cart=$observer->getCart();
-        $this->_cart=$cart;
+        if($this->isValidStore()) {
+            $cart = $observer->getCart();
+            $this->_cart = $cart;
 
-        if($this->checkIfItemAdded()) {
-            $this->addPostLengthItem();
+            if ($this->checkIfItemAdded()) {
+                $this->addPostLengthItem();
+            }
+            if ($this->checkIfItemFoundWithoutPLP()) {
+                $this->addPostLengthItem();
+            }
+            $this->checkIfItemQtyUpdated();
+            $this->checkIfItemRemoved();
         }
-        if($this->checkIfItemFoundWithoutPLP()) {
-            $this->addPostLengthItem();
-        }
-        $this->checkIfItemQtyUpdated();
-        $this->checkIfItemRemoved();
-
 
     }
 
     public function afterSave($observer){
 
-        $cart=$observer->getCart();
-        $this->_cart=$cart;
-        $this->setPostLengthParentItemId();
-        $this->session()->setData('quote_items_with_selected_postlength', $this->getQuoteItemsWithSelectedPostLength());
-
+        if($this->isValidStore()) {
+            $cart = $observer->getCart();
+            $this->_cart = $cart;
+            $this->setPostLengthParentItemId();
+            $this->session()->setData('quote_items_with_selected_postlength', $this->getQuoteItemsWithSelectedPostLength());
+        }
     }
 
 
@@ -149,7 +156,7 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
             if($this->PlProductPresent($item->getId()) || !$item->getId())
             {
-                 continue;
+                continue;
             }
             $options = Mage::helper('catalog/product_configuration')->getCustomOptions($item);
             foreach ($options as $option)
@@ -219,7 +226,7 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
             if($product->getDefaultPostlength() && trim($defaultPL)!=trim($info['post_length']))
             {
-                if($defaultPL)
+                /*if($defaultPL)
                 {
                     $productPL=array();
                     $attrPL=$this->_postLengthAttributeMapping[$defaultPL];
@@ -230,20 +237,21 @@ class Allure_PostLength_Model_Observer extends Varien_Object
                         $productPL['parent_sku'] = $info['sku'];
                         $newPostLengthItems[] = $productPL;
                     }
+                }*/
+
+                $productPL=array();
+                $attrPL=$this->_postLengthAttributeMapping[strtolower($info['post_length'])];
+
+                if($product->getData($attrPL)) {
+                    $productPL['sku'] = $product->getData($attrPL);
+                    $productPL['post_length'] = $info['post_length'];
+                    $productPL['qty'] = $info['qty'];
+                    $productPL['parent_sku'] = $info['sku'];
+
+                    $newPostLengthItems[] = $productPL;
                 }
             }
 
-            $productPL=array();
-            $attrPL=$this->_postLengthAttributeMapping[strtolower($info['post_length'])];
-
-            if($product->getData($attrPL)) {
-                $productPL['sku'] = $product->getData($attrPL);
-                $productPL['post_length'] = $info['post_length'];
-                $productPL['qty'] = $info['qty'];
-                $productPL['parent_sku'] = $info['sku'];
-
-                $newPostLengthItems[] = $productPL;
-            }
         }
 
         return $newPostLengthItems;
@@ -294,7 +302,7 @@ class Allure_PostLength_Model_Observer extends Varien_Object
             $plParentItem= $item->getPlParentItem();
             if(in_array($plParentItem,$itemIds))
             {
-             $item->setQty($updatedItem[$plParentItem]['qty']);
+                $item->setQty($updatedItem[$plParentItem]['qty']);
             }
         }
     }
@@ -340,11 +348,14 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
     public function removetax($observer)
     {
+        if($this->isValidStore()) {
+
             $items = $observer->getEvent()->getQuote()->getAllVisibleItems();
             foreach($items as $item) {
-             if($item->getPlParentItem())
-                $item->getProduct()->setTaxClassId(0);
+                if($item->getPlParentItem())
+                    $item->getProduct()->setTaxClassId(0);
             }
+        }
     }
 }
 
