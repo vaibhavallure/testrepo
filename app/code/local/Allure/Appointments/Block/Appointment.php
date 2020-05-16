@@ -214,6 +214,10 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         $store_id=$this->getStoreId();
         return $this->helper()->getStoreData($store_id,"alertMessage");
     }
-
+    /* MT-1439 :Disable Piercing Option */
+    public function getIsDisabledPiercingOption(){
+        $store_id = $this->getStoreId();
+        return $this->helper()->getStoreData($store_id,"disable_piercing");
+    }
 
 }

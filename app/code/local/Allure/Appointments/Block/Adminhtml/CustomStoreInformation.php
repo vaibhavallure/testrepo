@@ -280,7 +280,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '</div>';
 
 
-        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
         $html .= '<label for="digital_form_url">Add Country shortcode for Default selection(Phone number Field)</label>';
         $html .= '<input class="appointment-setting-input" name="'
             . $this->getElement()->getName() . '[default_country_phone][]" value="'
@@ -289,12 +289,28 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
 
 
         /*Alert message that will appear after strore info*/
-        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="appointments_alert_message">Alert Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
             . $this->getElement()->getName() . '[alertMessage][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('alertMessage/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
 
+        /*Enable Or Disable Piercing Option*/
+        $DisablePiercing = '';
+        $enableOptions = array('0'=>'No','1'=>'Yes');
+        foreach ($enableOptions as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('disable_piercing/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $DisablePiercing .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $html.='<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="appointments_disable_piercing">Disable Piercing Option</label>';
+        $html .= '<select onclick="disablePiercingContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[disable_piercing][]'.'" style="">';
+        $html.= $DisablePiercing;
+        $html.=  '</select>';
+        $html .= '</div>';
 
         $html .= '<hr class="appointment-setting-hr">';
         $html .= '<div style="text-align:center"><h3>SMS body for First Language</h3></div>';

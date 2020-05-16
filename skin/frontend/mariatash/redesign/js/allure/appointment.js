@@ -204,7 +204,7 @@ var addCustomerJob = function (srno) {
             <h6 class=" translate-popup">${__('Guest')} ${srno}:</h6>
             <label class="label mb-4 translate-popup para-normal">${__('Type of Appointment:')}</label>
             <div  class="row mb-4">
-                <div class="col-xs-12 col-sm-3 col-md-3">
+                <div class="col-xs-12 col-sm-3 col-md-3 piercing_option_hide">
                     <label class="label translate-popup custom-checkbox" for="piercing_select_${srno}">${__('Piercing')}
                       <input type="checkbox" class="piercing_select" data-no="${srno}" id="piercing_select_${srno}" onchange="displayPiercing(\'${'#piercing-wrapper' + srno}\')" name="customer[${srno}][piercing_select]">
                       <span class="checkmark"></span>

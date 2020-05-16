@@ -446,6 +446,12 @@ class Allure_Teamwork_Model_Tmobserver{
                         $this->addLog("customer address create id :".$address->getId());
                     }
                     array_push($createList['customers'],$customer->getId());
+
+                    /*Subscription Operations*/
+                    $helper = $this->getSubscribeHelper();
+                    $helper->setCustomerData($customerDetails["AcceptMarketing"],$email);
+                    $helper->doSubscriptionOperations();
+
                 }else{
                     $customer->setTwAcceptMarketing($customerDetails["AcceptMarketing"])
                     ->setTwAcceptTransactional($customerDetails["AcceptTransactional1"])
@@ -454,6 +460,10 @@ class Allure_Teamwork_Model_Tmobserver{
                         $tmOrderObj->setCustomerStatus("already")->save();
                     }
                     //array_push($updateList['customers'],$customer->getId());
+                    /*Subscription Operations*/
+                    $helper = $this->getSubscribeHelper();
+                    $helper->setCustomerData($customerDetails["AcceptMarketing"],$email);
+                    $helper->doSubscriptionOperations();
                 }
             }catch (Exception $e){
                 $this->addLog("03 - Exc - :".$e->getMessage());
@@ -1670,6 +1680,9 @@ class Allure_Teamwork_Model_Tmobserver{
         }
 
 
+    }
+    private function getSubscribeHelper(){
+        return Mage::helper('allure_teamwork/subscribe');
     }
     
 }
