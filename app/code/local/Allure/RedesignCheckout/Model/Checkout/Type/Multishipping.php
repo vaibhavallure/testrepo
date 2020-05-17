@@ -189,16 +189,20 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
             foreach ($addresses as $address) {
                 if($address->getIsContainBackorder()){
                     if($helper->isAddressContainBackOrderItem($address)){
+                        
                         /** @var Mage_Sales_Model_Quote_Address $backOrderAddress */
                         $customerAddress = $this->getCustomer()->getAddressById($address->getCustomerAddressId());
                         $quoteAddress = Mage::getModel('sales/quote_address')->importCustomerAddress($customerAddress);
-                        $this->getQuote()->addShippingAddress($quoteAddress);
+                        //$this->getQuote()->addShippingAddress($quoteAddress);
                         
                         $backOrderAddress = Mage::getModel('sales/quote_address')->importCustomerAddress($customerAddress);
-                        $this->getQuote()->addShippingAddress($backOrderAddress);
+                        //$this->getQuote()->addShippingAddress($backOrderAddress);
                         $instockGiftWrapQty = 0; $outofstockGiftWrapQty = 0;
                         $giftItem = null;
                         $storeId = Mage::app()->getStore()->getStoreId();
+                        
+                        $backOrderItemArray = array();
+                        
                         foreach($address->getAllItems() as $item){
                             if ($item->getParentItemId()) continue;
                             
@@ -208,29 +212,209 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                             }
                             
                             $_product = Mage::getModel('catalog/product')
-                                ->setStoreId($storeId)
-                                ->loadByAttribute('sku', $item->getSku());
+                            ->setStoreId($storeId)
+                            ->loadByAttribute('sku', $item->getSku());
                             $stock = Mage::getModel('cataloginventory/stock_item')
-                                ->loadByProduct($_product);
+                            ->loadByProduct($_product);
                             $stockQty = $stock->getQty();
                             
                             $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
                             $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
                             $quoteItem->setQty($quoteItem->getMultishippingQty());
+                            
+                            $plParentItem = $quoteItem->getPlParentItem();
+                            $parentItemId = $quoteItem->getParentItemId();
+                            
                             if (($stockQty < $item->getQty() && $stock->getManageStock() == 1)) {
                                 if($item->getIsGiftWrap()){
                                     $outofstockGiftWrapQty += $item->getGiftWrapQty();
                                 }
-                                $backOrderAddress->addItem($quoteItem, $item->getQty());
+                                //$backOrderAddress->addItem($quoteItem, $item->getQty());
+                                
+                                $backOrderItemArray[$item->getId()] = array(
+                                    "quote_item_id" => $item->getQuoteItemId(),
+                                    "sku" => $item->getSku(),
+                                    "parent_item_id" => $parentItemId,
+                                    "is_post_length_item" =>  ($plParentItem) ? true : false,
+                                    "pl_parent_item" => $plParentItem,
+                                    "qty" => $item->getQty()
+                                );
+                                
                             }else{
                                 if($item->getIsGiftWrap()){
                                     $instockGiftWrapQty += $item->getGiftWrapQty();
                                 }
-                                $quoteAddress->addItem($quoteItem, $item->getQty());
+                                //$quoteAddress->addItem($quoteItem, $item->getQty());
                             }
                             $_product = null;
                             $stock = null;
+                            $quoteItem = null;
                         }
+                        
+                        //add backorder product
+                        $processedItemArray = array();
+                        $isAddBackorder = false;
+                        foreach($backOrderItemArray as $itemId => $data){
+                            if(array_key_exists($itemId, $processedItemArray)){
+                                continue;
+                            }
+                            $quoteItemId = $data["quote_item_id"];
+                            $parentItemId = $data["parent_item_id"];
+                            $isPostLengthItem = $data["is_post_length_item"];
+                            $qty = $data["qty"];
+                            
+                            $quoteItem = $this->getQuote()->getItemById($quoteItemId);
+                            $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                            $quoteItem->setQty($quoteItem->getMultishippingQty());
+                            
+                            if($isPostLengthItem){
+                                $backOrderAddress->addItem($quoteItem, $qty);
+                                $processedItemArray[$itemId] = true;
+                                
+                                $isAddBackorder = true;
+                                
+                                //add parent item product
+                                $plParentItem = $data["pl_parent_item"];
+                                foreach ($address->getAllItems() as $item){
+                                    if ($item->getParentItemId()) continue;
+                                    
+                                    if($item->getSku() == $giftWrapSku){
+                                        $giftItem = $item;
+                                        continue;
+                                    }
+                                    
+                                    if(array_key_exists($item->getId(), $processedItemArray)){
+                                        continue;
+                                    }
+                                    
+                                    $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
+                                    $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                                    $quoteItem->setQty($quoteItem->getMultishippingQty());
+                                    if($plParentItem == $quoteItem->getId() ||
+                                        $plParentItem == $quoteItem->getPlParentItem()){
+                                            $backOrderAddress->addItem($quoteItem, $qty);
+                                            $processedItemArray[$item->getId()] = true;
+                                    }
+                                    $quoteItem = null;
+                                }
+                            }else{
+                                $backOrderAddress->addItem($quoteItem, $qty);
+                                $processedItemArray[$itemId] = true;
+                                
+                                $quoteItemIdB = $quoteItem->getId();
+                                $isAddBackorder = true;
+                                
+                                foreach ($address->getAllItems() as $item){
+                                    if ($item->getParentItemId()) continue;
+                                    
+                                    if($item->getSku() == $giftWrapSku){
+                                        $giftItem = $item;
+                                        continue;
+                                    }
+                                    
+                                    if(array_key_exists($item->getId(), $processedItemArray)){
+                                        continue;
+                                    }
+                                    
+                                    $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
+                                    $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                                    $quoteItem->setQty($quoteItem->getMultishippingQty());
+                                    if($quoteItemIdB == $quoteItem->getPlParentItem()){
+                                        $backOrderAddress->addItem($quoteItem, $qty);
+                                        $processedItemArray[$item->getId()] = true;
+                                    }
+                                    $quoteItem = null;
+                                }
+                            }
+                        }
+                        
+                        //add in stock order product
+                        
+                        $isInstockAdd = false;
+                        
+                        foreach ($address->getAllItems() as $item){
+                            if ($item->getParentItemId()) continue;
+                            
+                            if($item->getSku() == $giftWrapSku){
+                                $giftItem = $item;
+                                continue;
+                            }
+                            
+                            if(array_key_exists($item->getId(), $processedItemArray)){
+                                continue;
+                            }
+                            
+                            $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
+                            $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                            $quoteItem->setQty($quoteItem->getMultishippingQty());
+                            
+                            $plParentItem = $quoteItem->getPlParentItem();
+                            $parentItemId = $quoteItem->getParentItemId();
+                            $isPostLengthItem = ($isPostLengthItem) ? true : false;
+                            
+                            $qty = $item->getQty();
+                            
+                            if($isPostLengthItem){
+                                $quoteAddress->addItem($quoteItem, $qty);
+                                $processedItemArray[$item->getId()] = true;
+                                
+                                $isInstockAdd = true;
+                                
+                                //add parent item product
+                                foreach ($address->getAllItems() as $item){
+                                    if ($item->getParentItemId()) continue;
+                                    
+                                    if($item->getSku() == $giftWrapSku){
+                                        $giftItem = $item;
+                                        continue;
+                                    }
+                                    
+                                    if(array_key_exists($item->getId(), $processedItemArray)){
+                                        continue;
+                                    }
+                                    
+                                    $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
+                                    $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                                    $quoteItem->setQty($quoteItem->getMultishippingQty());
+                                    if($plParentItem == $quoteItem->getId() ||
+                                        $plParentItem == $quoteItem->getPlParentItem()){
+                                            $quoteAddress->addItem($quoteItem, $qty);
+                                            $processedItemArray[$item->getId()] = true;
+                                    }
+                                    $quoteItem = null;
+                                }
+                            }else{
+                                $quoteAddress->addItem($quoteItem, $qty);
+                                $processedItemArray[$item->getId()] = true;
+                                
+                                $quoteItemIdI = $quoteItem->getId();
+                                
+                                $isInstockAdd = true;
+                                
+                                foreach ($address->getAllItems() as $item){
+                                    if ($item->getParentItemId()) continue;
+                                    
+                                    if($item->getSku() == $giftWrapSku){
+                                        $giftItem = $item;
+                                        continue;
+                                    }
+                                    
+                                    if(array_key_exists($item->getId(), $processedItemArray)){
+                                        continue;
+                                    }
+                                    
+                                    $quoteItem = $this->getQuote()->getItemById($item->getQuoteItemId());
+                                    $quoteItem->setMultishippingQty((int)$quoteItem->getMultishippingQty());
+                                    $quoteItem->setQty($quoteItem->getMultishippingQty());
+                                    if($quoteItemIdI == $quoteItem->getPlParentItem()){
+                                        $quoteAddress->addItem($quoteItem, $qty);
+                                        $processedItemArray[$item->getId()] = true;
+                                    }
+                                    $quoteItem = null;
+                                }
+                            }
+                        }
+                        
                         
                         if($giftItem){
                             $quoteGiftItem = $this->getQuote()->getItemById($giftItem->getQuoteItemId());
@@ -245,9 +429,21 @@ class Allure_RedesignCheckout_Model_Checkout_Type_Multishipping extends Mage_Che
                         }
                         
                         $this->getQuote()->removeAddress($address->getId());
-                        $quoteAddress->setCollectShippingRates(1);
-                        $backOrderAddress->setCollectShippingRates(1);
-                        $backOrderAddress->setIsContainBackorder(1);
+                        
+                        if($isInstockAdd){
+                            $this->getQuote()->addShippingAddress($quoteAddress);
+                            $quoteAddress->setCollectShippingRates(1);
+                        }
+                        
+                        if($isAddBackorder){
+                            $this->getQuote()->addShippingAddress($backOrderAddress);
+                            $backOrderAddress->setCollectShippingRates(1);
+                            $backOrderAddress->setIsContainBackorder(1);
+                        }
+                        
+                        /* $quoteAddress->setCollectShippingRates(1);
+                         $backOrderAddress->setCollectShippingRates(1);
+                         $backOrderAddress->setIsContainBackorder(1); */
                     }
                 }
             }
