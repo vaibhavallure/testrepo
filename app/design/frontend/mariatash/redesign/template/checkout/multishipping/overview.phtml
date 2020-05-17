@@ -119,6 +119,9 @@
                                         			<?php if(!empty($message) && !$isGiftWrap): ?>
                                               		<p class="info-text-two"><span class="info-text-two">Availability:</span> <?php echo $message ?></p>
                                             		<?php endif;?>
+                                                    <?php if($_item->getQuoteItem()->getPlParentItem()): ?>
+                                                            <p><?php echo Mage::helper("postlength")->isPLMessage() ?></p>
+                                                    <?php endif; ?>
                                             	</div>
                                             	<div class="text-right overview-price-qty">
                                             		<div class="">

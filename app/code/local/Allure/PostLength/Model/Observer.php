@@ -192,7 +192,7 @@ class Allure_PostLength_Model_Observer extends Varien_Object
     }
     private function addProductBySku($sku,$params)
     {
-        try {
+        try {       
 
             $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$sku);
 
