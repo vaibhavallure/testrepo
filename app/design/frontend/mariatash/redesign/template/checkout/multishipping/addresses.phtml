@@ -139,8 +139,9 @@
                                                             <?php
                                                             $notAllowedAsGift=$redesignHelper->canNotOrderAsGift($_item->getSku());
 
-                                                            if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift && !$quoteItem->getPlParentItem()):?>
+                                                            if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift):?>
                                                                 <div class="col2-set">
+                                                                	<?php if(!$quoteItem->getPlParentItem()): ?>
                                                                     <div class="gift-messages">
                                                                         <p class="control">
                                                                             <label class="custom-checkbox custom-checkbox-two" for="gift_item_<?= $_index."_".$_item->getQuoteItemId()?>">
@@ -161,6 +162,7 @@
                                                                             </label>
                                                                         </p>
                                                                     </div>
+                                                                    <?php endif;?>
                                                                     <?php if(!empty($message) && !$isSingleProduct): ?>
                                                                         <?php $tmpMessage = $message;?>
                                                                         <?php if(!preg_match('/instock-product/', strtolower($tmpMessage) )):?>
