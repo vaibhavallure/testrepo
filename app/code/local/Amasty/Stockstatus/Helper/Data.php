@@ -24,7 +24,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
     public function __construct()
     {
         if($message = Mage::getStoreConfig('amstockstatus/stock_messages/in-stock'))
-            $this->_in_stock =$message;
+            $this->_in_stock = '<span class="instock-product">' . $message . '</span>';
     }
 
     public function show($product)
