@@ -16,7 +16,7 @@ XTHBF2D
 XTHMQD
 */
 /*Get group Ids*/
-Mage::log('------------- Start ------------',Zend_Log::DEBUG,'setVisible.log',true);
+Mage::log('------------- Start ------------',Zend_Log::DEBUG,'setPostPrice.log',true);
 $attrCode = 'allowed_group';
 $sourceModel = Mage::getModel('catalog/product')->getResource()
     ->getAttribute($attrCode)->getSource();
@@ -87,9 +87,9 @@ foreach ($sku_list as $sku) {
 Mage::log('Total Found: '.$totalCount,Zend_Log::DEBUG,'setPostPrice.log',true);
 echo "Done";
 function getPriceArray($product,$priceArray){
-    Mage::log('Product Id. :'.$product->getId(),Zend_Log::DEBUG,'PreviousPrice.log',true);
+    Mage::log('Product Id. :'.$product->getId(),Zend_Log::DEBUG,'setPostPrice.log',true);
     $previousPrices = $product->getData('group_price');
-    Mage::log('Previous Price: '.json_encode($previousPrices,true),Zend_Log::DEBUG,'PreviousPrice.log',true);
+    Mage::log('Previous Price: '.json_encode($previousPrices,true),Zend_Log::DEBUG,'setPostPrice.log',true);
     foreach ($previousPrices as $prevPrice){
         if(isset($prevPrice['cust_group'])){
             if($prevPrice['cust_group'] != '0' && $prevPrice['cust_group'] != '2'){
@@ -97,7 +97,7 @@ function getPriceArray($product,$priceArray){
             }
         }
     }
-    Mage::log('New Price: '.json_encode($priceArray,true),Zend_Log::DEBUG,'PreviousPrice.log',true);
+    Mage::log('New Price: '.json_encode($priceArray,true),Zend_Log::DEBUG,'setPostPrice.log',true);
 
     return $priceArray;
 }
@@ -107,7 +107,7 @@ function savePrice($product,$groupPricingData){
         $product->setData('group_price', $groupPricingData);
        // $product->save();
     }catch (Exception $ex){
-        Mage::log('Exception While Saving:'.$ex->getMessage(),Zend_Log::DEBUG,'PreviousPrice.log',true);
+        Mage::log('Exception While Saving:'.$ex->getMessage(),Zend_Log::DEBUG,'setPostPrice.log',true);
     }
 }
 
