@@ -79,7 +79,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                     if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
                         $storeId = $order->getStoreId();
                         $isSignifydActive = Mage::helper("allure_orders")->isSignifydActive($storeId);
-                        if($isSignifydActive){
+                        if($isSignifydActive && $action == Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE){
                             $orderState = Mage_Sales_Model_Order::STATE_PENDING_PAYMENT;
                         }
                     }
