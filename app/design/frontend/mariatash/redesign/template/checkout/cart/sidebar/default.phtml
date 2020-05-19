@@ -49,9 +49,13 @@ if(!is_null($parentId)){
     <?php else: ?>
         <span class="product-image col-3"><img src="<?php echo $this->getProductThumbnail()->resize(56, 73)->setWatermarkSize('30x10'); ?>" width="56" height="73" style="width:56px; height:73px;"  alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></span>
     <?php endif; ?>
+
+    <?php if(!$_item->getPlParentItem()): ?>
       <a href="#" title="<?php echo $this->__('Remove') ?>" onclick="confirmBox('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>', function(){window.location='<?php echo $this->getDeleteUrl() ?>'},'REMOVE');" class="btn-remove position-absolute minicart-remove">
         <img width="14px" src="<?php echo $this->getSkinUrl('images/redesign/thinner-cross.png'); ?>" alt="">
       </a>
+    <?php endif; ?>
+
     <div class="product-details col-9">
         <div class="product-name"><?php if ($isVisibleProduct && $this->hasProductUrl()): ?><a href="<?php echo $url?>"><?php endif; ?><h5><?php echo $this->htmlEscape($this->getProductName()) ?><?php if ($isVisibleProduct && $this->hasProductUrl()): ?></h5></a><?php endif; ?></div>
         <?php if ($_options = $this->getOptionList()):?>
@@ -152,12 +156,19 @@ if(!is_null($parentId)){
         </div>
         <div class="cart_price"><h5><?php echo $this->__('Qty: '); ?><?php echo $this->getQty() ?></h5></div>
 </div>
-  		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+  		<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);
+  		?>
         <?php if(!empty($message)): ?>
              <div class="item-msg col-12">
              	<p><?php echo $message ?></p>
         	</div>
         <?php endif; ?>
+
+       <?php if($_item->getPlParentItem()): ?>
+           <div class="item-msg col-12">
+               <p><?php echo Mage::helper("postlength")->isPLMessage() ?></p>
+           </div>
+       <?php endif; ?>
 
 
 </li>

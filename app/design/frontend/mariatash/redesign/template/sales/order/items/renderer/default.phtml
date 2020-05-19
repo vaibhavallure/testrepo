@@ -59,6 +59,11 @@
                 <dd><?php echo $stockStatus['message'] ?></dd>
             </dl>
         <?php endif;?>
+        <?php if($this->getItem()->getPlParentItem()): ?>
+            <dl class="item-options">
+                <dd><?php echo Mage::helper("postlength")->isPLMessage() ?></dd>
+            </dl>
+        <?php endif;?>
         <?php //@author:allure code end?>
 
 

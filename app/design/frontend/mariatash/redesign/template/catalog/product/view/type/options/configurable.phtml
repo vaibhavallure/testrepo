@@ -104,6 +104,8 @@ if ($_product->getSizeSample() == 1) {
         MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
+        <?= $this->mappingOfSimpleToPostLength();?>
+
 
         jQuery(document).ready(function(){
             //call priceHtml via ajax, to avoid varnish caching
@@ -155,7 +157,6 @@ if ($_product->getSizeSample() == 1) {
                      <?= $this->getInStockAttribute() ?>
 
 
-
                     setCustomeOptionsByMetal();
 
                     jQuery(document).on('click',".chooseList ul li.option", function () {
@@ -167,6 +168,7 @@ if ($_product->getSizeSample() == 1) {
                         var evt = document.createEvent("HTMLEvents");
                         evt.initEvent("change", false, true);
                         document.getElementById(selected_id).dispatchEvent(evt);
+                        setPlStatus();
                     });
                     jQuery('.change_select').hide();
                     jQuery('.chooseList').slideDown(1000);
@@ -175,10 +177,48 @@ if ($_product->getSizeSample() == 1) {
 
             jQuery(document).on("click",".metal-swatch img",function () {
                 setCustomeOptionsByMetal();
-            })
-        });
-        /*new code added for redesign attributes----*/
+                setPlStatus();
+            });
 
+
+        });
+
+
+
+        <?php if((Mage::app()->getStore()->getStoreId()==1)): ?>
+        var defMainProductStatus="";
+        var setPlStatus=function () {
+            var selectedPL=jQuery.trim(jQuery('select.product-custom-option option:selected').text());
+            var pid=jQuery.trim(jQuery('#pid-hidden').val());
+
+            defMainProductStatus=jQuery("p.availability.in-stock span").html();
+
+            if(pl_mapping[pid][selectedPL]!="")
+            {
+                var stkmessage=pl_mapping[pid][selectedPL];
+                jQuery("p.availability.in-stock span").html(stkmessage);
+            }
+
+        };
+
+        var setPlStatusOnPlChange=function () {
+            var selectedPL=jQuery.trim(jQuery('select.product-custom-option option:selected').text());
+            var pid=jQuery.trim(jQuery('#pid-hidden').val());
+
+            if(pl_mapping[pid][selectedPL]!="")
+            {
+                var stkmessage=pl_mapping[pid][selectedPL];
+                jQuery("p.availability.in-stock span").html(stkmessage);
+            }
+            else {
+                jQuery("p.availability.in-stock span").html(defMainProductStatus);
+            }
+
+        };
+
+<?php endif;?>
+
+        /*new code added for redesign attributes----*/
 
         var setCustomeOptionsByMetal=function () {
             /*new code added for redesign attributes----*/
