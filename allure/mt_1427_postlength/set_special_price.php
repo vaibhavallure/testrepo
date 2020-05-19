@@ -23,9 +23,13 @@ $sourceModel = Mage::getModel('catalog/product')->getResource()
 $valuesText = explode(',', 'Wholesale');
 $valuesIds = array_map(array($sourceModel, 'getOptionId'), $valuesText);
 
+/*
+ *General
+ *NOT LOGGED IN
+ * */
 $groupPricingData = array(
     array ('website_id'=>0, 'cust_group'=>0, 'price'=>0),
-    array ('website_id'=>0, 'cust_group'=>2, 'price'=>0)
+    array ('website_id'=>0, 'cust_group'=>1, 'price'=>0)
 );
 
 
@@ -92,7 +96,7 @@ function getPriceArray($product,$priceArray){
     Mage::log('Previous Price: '.json_encode($previousPrices,true),Zend_Log::DEBUG,'setPostPrice.log',true);
     foreach ($previousPrices as $prevPrice){
         if(isset($prevPrice['cust_group'])){
-            if($prevPrice['cust_group'] != '0' && $prevPrice['cust_group'] != '2'){
+            if($prevPrice['cust_group'] != '0' && $prevPrice['cust_group'] != '1'){
                 array_push($priceArray,$prevPrice);
             }
         }
