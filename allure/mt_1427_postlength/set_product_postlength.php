@@ -44,7 +44,7 @@ foreach ($post_length_options as $option){
 17 8MM
 20 9.5MM
 */
-$fileName="./Threaded_Studs_Online_Review_Final.csv";
+$fileName="./Threaded_Studs_Online_Review_Final2.csv";
 $lines = file($fileName);
 $founArray = $notFoundArray = array();
 $totalFound = $totalUpdated = $totalNotFound = 0;
