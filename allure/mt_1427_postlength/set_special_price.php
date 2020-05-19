@@ -23,9 +23,13 @@ $sourceModel = Mage::getModel('catalog/product')->getResource()
 $valuesText = explode(',', 'Wholesale');
 $valuesIds = array_map(array($sourceModel, 'getOptionId'), $valuesText);
 
+/*
+ *General
+ *NOT LOGGED IN
+ * */
 $groupPricingData = array(
     array ('website_id'=>0, 'cust_group'=>0, 'price'=>0),
-    array ('website_id'=>0, 'cust_group'=>2, 'price'=>0)
+    array ('website_id'=>0, 'cust_group'=>1, 'price'=>0)
 );
 
 
