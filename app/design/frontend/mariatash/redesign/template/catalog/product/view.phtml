@@ -612,6 +612,16 @@ if ($_product->getSizeSample() == 1) {
         });
         var stockFlowControl;
         productAddToCartForm.submit = function (button, form) {
+
+        var selectedPL=jQuery.trim(jQuery('select.product-custom-option option:selected').text());
+        var pid=jQuery.trim(jQuery('#pid-hidden').val());
+
+
+        if(pl_mapping[pid][selectedPL]=="1")
+        {
+            alert("this product will be back-ordered because post length product is backordered");
+        }
+
         var instru = jQuery('.special-inst-product').val();
         //console.log(instru);
 	    <?php

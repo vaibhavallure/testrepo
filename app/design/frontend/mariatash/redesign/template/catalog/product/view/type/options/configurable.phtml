@@ -104,6 +104,8 @@ if ($_product->getSizeSample() == 1) {
         MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
+        <?= $this->mappingOfSimpleToPostLength();?>
+
 
         jQuery(document).ready(function(){
             //call priceHtml via ajax, to avoid varnish caching
@@ -155,7 +157,6 @@ if ($_product->getSizeSample() == 1) {
                      <?= $this->getInStockAttribute() ?>
 
 
-
                     setCustomeOptionsByMetal();
 
                     jQuery(document).on('click',".chooseList ul li.option", function () {
@@ -175,7 +176,9 @@ if ($_product->getSizeSample() == 1) {
 
             jQuery(document).on("click",".metal-swatch img",function () {
                 setCustomeOptionsByMetal();
-            })
+            });
+
+
         });
         /*new code added for redesign attributes----*/
 

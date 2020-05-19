@@ -623,4 +623,46 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
     }
 
+    public function mappingOfSimpleToPostLength()
+    {
+        $childProducts = Mage::getModel('catalog/product_type_configurable')
+            ->getChildrenIds($this->getProduct()->getId());
+
+        $productsPl=array();
+
+        foreach ($childProducts[0] as $childP)
+        {
+            $product=Mage::getModel("catalog/product")->load($childP);
+            $productsPl[$childP]["5mm"]=$this->getProductStockBySku($product->getData("five_mm_sku"));
+            $productsPl[$childP]["6.5mm"]=$this->getProductStockBySku($product->getData("six_point_five_mm_sku"));
+            $productsPl[$childP]["8mm"]=$this->getProductStockBySku($product->getData("eight_mm_sku"));
+            $productsPl[$childP]["9.5mm"]=$this->getProductStockBySku($product->getData("nine_point_five_mm_sku"));
+        }
+
+        echo "var pl_mapping=".json_encode($productsPl).";";
+
+
+    }
+
+    private function getProductStockBySku($sku)
+    {
+        $productPL =Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+        $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productPL);
+        $isBackorder="";
+
+        if($stock->getBackorders() && $stock->getQty()<1)
+        {
+            $isBackorder=1;
+        }/*elseif (!$stock->getBackorders() && $stock->getQty()<1)
+        {
+            $message= "out of stock pl";
+        }
+        elseif ($stock->getQty()>0)
+        {
+            $message= "in stock";
+        }*/
+
+        return $isBackorder;
+    }
+
 }

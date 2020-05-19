@@ -221,6 +221,8 @@ class Allure_PostLength_Model_Observer extends Varien_Object
         foreach ($quoteItems as $info)
         {
             $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$info['sku']);
+            $product=Mage::getModel("catalog/product")->load($product->getId());
+            
             $defaultPL=strtolower($defaultPostLengthKV[$product->getDefaultPostlength()]);
 
 
