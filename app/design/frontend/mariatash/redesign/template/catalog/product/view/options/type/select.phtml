@@ -94,6 +94,7 @@
             jQuery(this).parent().find("li").removeClass("active");
             jQuery(this).addClass("active");
             jQuery('#'+selected_id+'').val(option_value).trigger('change');
+            setPlStatus();
         });
         jQuery('.product-custom-option').hide();
         jQuery('.chooseList').slideDown(1000);

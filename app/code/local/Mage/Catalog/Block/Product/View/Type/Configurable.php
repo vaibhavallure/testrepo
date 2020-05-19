@@ -652,7 +652,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
         if($stock->getBackorders() && $stock->getQty()<1)
         {
-            $isBackorder=1;
+            $isBackorder=Mage::helper('amstockstatus')->getCustomStockStatusText($productPL);
         }/*elseif (!$stock->getBackorders() && $stock->getQty()<1)
         {
             $message= "out of stock pl";

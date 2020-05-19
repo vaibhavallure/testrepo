@@ -168,6 +168,7 @@ if ($_product->getSizeSample() == 1) {
                         var evt = document.createEvent("HTMLEvents");
                         evt.initEvent("change", false, true);
                         document.getElementById(selected_id).dispatchEvent(evt);
+                        setPlStatus();
                     });
                     jQuery('.change_select').hide();
                     jQuery('.chooseList').slideDown(1000);
@@ -176,12 +177,27 @@ if ($_product->getSizeSample() == 1) {
 
             jQuery(document).on("click",".metal-swatch img",function () {
                 setCustomeOptionsByMetal();
+                setPlStatus();
             });
 
 
         });
-        /*new code added for redesign attributes----*/
 
+
+
+        var setPlStatus=function () {
+            var selectedPL=jQuery.trim(jQuery('select.product-custom-option option:selected').text());
+            var pid=jQuery.trim(jQuery('#pid-hidden').val());
+
+            if(pl_mapping[pid][selectedPL]!="")
+            {
+                var stkmessage="Availability:"+pl_mapping[pid][selectedPL];
+                jQuery("p.availability.in-stock").html(stkmessage);
+            }
+
+        };
+
+        /*new code added for redesign attributes----*/
 
         var setCustomeOptionsByMetal=function () {
             /*new code added for redesign attributes----*/
