@@ -65,6 +65,7 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         $orderItem->setIsGiftItem($quoteItem->getIsGiftItem());
         $orderItem->setGiftItemQty($quoteItem->getGiftItemQty());
         $orderItem->setPlu($quoteItem->getPlu());
+        $orderItem->setPlParentItem($quoteItem->getPlParentItem());
 
         //check the quote item is belong to address item
         if($quoteItem instanceof Mage_Sales_Model_Quote_Address_Item){
@@ -74,6 +75,7 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
             $orderItem->setQtyBackordered($backorderQty);
             $orderItem->setBackorderTime($item->getBackorderTime());
             $orderItem->setPlu($item->getPlu());
+            $orderItem->setPlParentItem($item->getPlParentItem());
 
         }
     }
