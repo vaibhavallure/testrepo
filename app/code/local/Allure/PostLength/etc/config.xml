@@ -52,15 +52,6 @@
           </postlength>
         </observers>
       </checkout_cart_save_after>
-      <sales_quote_collect_totals_before>
-        <observers>
-          <postlength>
-            <type>model</type>
-            <class>postlength/observer</class>
-            <method>removetax</method>
-          </postlength>
-        </observers>
-      </sales_quote_collect_totals_before>
     </events>
   </frontend>
 </config>

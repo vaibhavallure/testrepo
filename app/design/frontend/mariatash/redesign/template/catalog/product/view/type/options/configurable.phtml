@@ -185,17 +185,38 @@ if ($_product->getSizeSample() == 1) {
 
 
 
+        <?php if((Mage::app()->getStore()->getStoreId()==1)): ?>
+        var defMainProductStatus="";
         var setPlStatus=function () {
+            var selectedPL=jQuery.trim(jQuery('select.product-custom-option option:selected').text());
+            var pid=jQuery.trim(jQuery('#pid-hidden').val());
+
+            defMainProductStatus=jQuery("p.availability.in-stock span").html();
+
+            if(pl_mapping[pid][selectedPL]!="")
+            {
+                var stkmessage=pl_mapping[pid][selectedPL];
+                jQuery("p.availability.in-stock span").html(stkmessage);
+            }
+
+        };
+
+        var setPlStatusOnPlChange=function () {
             var selectedPL=jQuery.trim(jQuery('select.product-custom-option option:selected').text());
             var pid=jQuery.trim(jQuery('#pid-hidden').val());
 
             if(pl_mapping[pid][selectedPL]!="")
             {
-                var stkmessage="Availability:"+pl_mapping[pid][selectedPL];
-                jQuery("p.availability.in-stock").html(stkmessage);
+                var stkmessage=pl_mapping[pid][selectedPL];
+                jQuery("p.availability.in-stock span").html(stkmessage);
+            }
+            else {
+                jQuery("p.availability.in-stock span").html(defMainProductStatus);
             }
 
         };
+
+<?php endif;?>
 
         /*new code added for redesign attributes----*/
 
