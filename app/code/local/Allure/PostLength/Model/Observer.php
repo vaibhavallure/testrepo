@@ -194,18 +194,19 @@ class Allure_PostLength_Model_Observer extends Varien_Object
     {
         try {       
 
-            $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$sku);
+            $product=Mage::getModel("catalog/product")->loadByAttribute('sku',trim($sku));
 
-            $params = array_merge($params,array(
-                'product' => $product->getId(),
-                'form_key' => Mage::getSingleton('core/session')->getFormKey(),
-            ));
+            if($product) {
+                $params = array_merge($params, array(
+                    'product' => $product->getId(),
+                    'form_key' => Mage::getSingleton('core/session')->getFormKey(),
+                ));
 
-            $request = new Varien_Object();
-            $request->setData($params);
+                $request = new Varien_Object();
+                $request->setData($params);
 
-            $this->_cart->addProduct($product, $request);
-
+                $this->_cart->addProduct($product, $request);
+            }
 
         }catch (Exception $e)
         {
