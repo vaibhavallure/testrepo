@@ -348,16 +348,5 @@ class Allure_PostLength_Model_Observer extends Varien_Object
         return Mage::getSingleton('core/session');
     }
 
-    public function removetax($observer)
-    {
-        if($this->isValidStore()) {
-
-            $items = $observer->getEvent()->getQuote()->getAllVisibleItems();
-            foreach($items as $item) {
-                if($item->getPlParentItem())
-                    $item->getProduct()->setTaxClassId(0);
-            }
-        }
-    }
 }
 
