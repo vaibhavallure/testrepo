@@ -96,7 +96,7 @@ function getPriceArray($product,$priceArray){
     Mage::log('Previous Price: '.json_encode($previousPrices,true),Zend_Log::DEBUG,'setPostPrice.log',true);
     foreach ($previousPrices as $prevPrice){
         if(isset($prevPrice['cust_group'])){
-            if($prevPrice['cust_group'] != '0' && $prevPrice['cust_group'] != '2'){
+            if($prevPrice['cust_group'] != '0' && $prevPrice['cust_group'] != '1'){
                 array_push($priceArray,$prevPrice);
             }
         }
