@@ -43,9 +43,9 @@
        		<h2 style="font-size:13px; font-weight:normal; margin:0; line-height: 34px; text-transform: uppercase;">Your Order #<?= $_order->getIncrementId()?></h2>
            	<?php if($isShow):?>
                	<?php if($_order->getIsContainBackorder()):?>
-               	<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped when ALL BACKORDERED ITEMS ARE IN STOCK.)</span>
+<!--               	<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped when ALL BACKORDERED ITEMS ARE IN STOCK.)</span>-->
          		<?php else:?>
-         		<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped NOW.)</span>
+<!--         		<span style="font-size:13px;line-height:20px;color:#790000;">(All items in this order will be shipped NOW.)</span>-->
          		<?php endif;?>
      		<?php endif;?>
      	</td>
