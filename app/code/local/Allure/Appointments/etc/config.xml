@@ -61,6 +61,11 @@
 					</customers>
                 </entities>
             </appointments_resource>
+			<adminhtml>
+				<rewrite>
+					<system_config_backend_serialized>Allure_Appointments_Model_Adminhtml_System_Config_Backend_Serialized</system_config_backend_serialized>
+				</rewrite>
+			</adminhtml>
         </models>
 		<helpers>
 			<appointments>
