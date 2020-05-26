@@ -8,12 +8,15 @@ Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
 /*
 XTHBF
 XTHBF6
+XTHBF2D
+XTHBF25D
 XTHD4
 XTHD2
 ZPBF6R0
-XTHBF25D
-XTHBF2D
 XTHMQD
+ZPBF6R3
+ZPBF6R15
+        ZPBF6R0
 */
 /*Get group Ids*/
 Mage::log('------------- Start ------------',Zend_Log::DEBUG,'setPostPrice.log',true);
@@ -40,7 +43,10 @@ $sku_list = array('XTHBF',
     'ZPBF6R0',
     'XTHBF25D',
     'XTHBF2D',
-    'XTHMQD');
+    'XTHMQD',
+    'ZPBF6R3',
+    'ZPBF6R15',
+    'ZPBF6R0');
 
 $totalCount = 0;
 foreach ($sku_list as $sku) {
@@ -109,7 +115,7 @@ function savePrice($product,$groupPricingData){
 
     try {
         $product->setData('group_price', $groupPricingData);
-       // $product->save();
+        /*$product->save();*/
     }catch (Exception $ex){
         Mage::log('Exception While Saving:'.$ex->getMessage(),Zend_Log::DEBUG,'setPostPrice.log',true);
     }
