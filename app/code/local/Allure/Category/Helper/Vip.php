@@ -61,5 +61,29 @@ class Allure_Category_Helper_Vip extends Mage_Core_Helper_Abstract
         }
         return $_parent;
     }
+    public function isAllowedProduct($productId){
+        $product = Mage::getModel('catalog/product')
+            ->load($productId);
+        if($product->getId()) {
+            $alloweGroupList = $product->getAllowedGroup();
+            if(empty($alloweGroupList)){
+                return true;
+            }
+            $alloweGroupList = explode(',', $alloweGroupList);
+            $allowed_group = 1; /*for NOT LOGGED IN*/
+            if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+                $customerData = Mage::getSingleton('customer/session')->getCustomer();
+                $group_id = $customerData->getGroupId();
+                $allowed_group = $group_id+1;
+            }
+            if (in_array($allowed_group, $alloweGroupList) || in_array('all', $alloweGroupList)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+        return true;
+    }
 
 }
