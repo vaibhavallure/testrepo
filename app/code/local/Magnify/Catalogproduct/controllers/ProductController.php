@@ -213,6 +213,9 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
             ->load($productId);
         if($product->getId()) {
             $alloweGroupList = $product->getAllowedGroup();
+            if(empty($alloweGroupList)){
+                return true;
+            }
             $alloweGroupList = explode(',', $alloweGroupList);
             $allowed_group = 1; /*for NOT LOGGED IN*/
             if (Mage::getSingleton('customer/session')->isLoggedIn()) {

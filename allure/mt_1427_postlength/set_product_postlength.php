@@ -44,7 +44,7 @@ foreach ($post_length_options as $option){
 17 8MM
 20 9.5MM
 */
-$fileName="./Threaded_Studs_Online_Review_Final2.csv";
+$fileName="./Threaded_Studs_Online_Review_Final3.csv";
 $lines = file($fileName);
 $founArray = $notFoundArray = array();
 $totalFound = $totalUpdated = $totalNotFound = 0;
@@ -68,7 +68,7 @@ foreach ($lines as $lineNumber => $line) {
             fwrite($fp,$plu.','.$foundCount.PHP_EOL);
             fclose($fp);
         }else{
-            $fp = fopen("not_found_list.txt","a");
+            $fp = fopen("not_found_list.txt","w+");
             fwrite($fp,$plu.PHP_EOL);
             fclose($fp);
         }
@@ -80,18 +80,18 @@ foreach ($lines as $lineNumber => $line) {
         }
 
         if (!empty($productId)) {
-            $fiveMM = isset($data[11])?$data[11]:'';
-            $sixPointFiveMM = isset($data[14])?$data[14]:'';
-            $eightMM = isset($data[17])?$data[17]:'';
-            $ninePointFiveMM = isset($data[20])?$data[20]:'';
+            $fiveMM = isset($data[12])?$data[12]:'';
+            $sixPointFiveMM = isset($data[15])?$data[15]:'';
+            $eightMM = isset($data[18])?$data[18]:'';
+            $ninePointFiveMM = isset($data[21])?$data[21]:'';
             /*Default Postlenth*/
-            if ($data[10] == 'Yes') {
+            if ($data[11] == 'Yes') {
                 $default_postLength = '5MM';
-            } elseif ($data[13] == "Yes") {
+            } elseif ($data[14] == "Yes") {
                 $default_postLength = '6.5MM';
-            } elseif ($data[16] == "Yes") {
+            } elseif ($data[17] == "Yes") {
                 $default_postLength = '8MM';
-            } elseif ($data[19] == "Yes") {
+            } elseif ($data[20] == "Yes") {
                 $default_postLength = '9.5MM';
             }
 
@@ -130,7 +130,7 @@ foreach ($lines as $lineNumber => $line) {
 
 Mage::log('================ DONE ====================',Zend_Log::DEBUG,'setPostlength.log',true);
 /*Mage::log('Found Data'.PHP_EOL.json_decode($founArray,true),Zend_Log::DEBUG,'setPostlength.log',true);
-Mage::log('Not Found Data'.PHP_EOL.json_decode($notFoundArray,true),Zend_Log::DEBUG,'setPostlength.log',true);
+Mage::log('Not Found Data'.PHP_EOL.json_decode($notFoundArray,true),Zend_Log::DEBUG,'setPostlength.log',true);*/
 echo 'Total Found :'.$totalFound.PHP_EOL;
 echo 'Total Not Found :'.$totalNotFound.PHP_EOL;
-echo 'Total Updated :'.$totalUpdated.PHP_EOL;*/
+echo 'Total Updated :'.$totalUpdated.PHP_EOL;
