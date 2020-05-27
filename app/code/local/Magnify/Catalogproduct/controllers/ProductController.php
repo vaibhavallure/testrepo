@@ -130,7 +130,11 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
         $specifyOptions = $this->getRequest()->getParam('options');
-
+        if(!empty($productId)) {
+            if(!$this->isAllowedProduct($productId)){
+                $this->_redirect("/");
+            }
+        }
         $viewHelper = Mage::helper('catalog/product_view');
 
         $params = new Varien_Object();
@@ -203,6 +207,31 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
          * All logic has been cut to avoid possible malicious usage of the method
          */
         $this->_forward('noRoute');
+    }
+    protected function isAllowedProduct($productId){
+        $product = Mage::getModel('catalog/product')
+            ->load($productId);
+        if($product->getId()) {
+            $alloweGroupList = $product->getAllowedGroup();
+            if(empty($alloweGroupList)){
+                return true;
+            }
+            $alloweGroupList = explode(',', $alloweGroupList);
+            $allowed_group = 1; /*for NOT LOGGED IN*/
+            if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+                $customerData = Mage::getSingleton('customer/session')->getCustomer();
+                $group_id = $customerData->getGroupId();
+                $allowed_group = $group_id+1;
+            }
+
+            if (in_array($allowed_group, $alloweGroupList) || in_array('all', $alloweGroupList)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+        return true;
     }
 }
 

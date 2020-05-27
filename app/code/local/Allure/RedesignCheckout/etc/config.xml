@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_RedesignCheckout>
 			<name>Allure - Redesign Checkout</name>
-			<version>1.0.2</version>
+			<version>1.0.3</version>
 		</Allure_RedesignCheckout>
 	</modules>
 	<global>
@@ -15,12 +15,12 @@
 			</Allure_RedesignCheckout>
 		</controllers>
 		<helpers>
-            <allure_redesigncheckout>
-                <class>Allure_RedesignCheckout_Helper</class>
-            </allure_redesigncheckout>
-        </helpers>
-        <blocks>
-        	<allure_redesigncheckout>
+			<allure_redesigncheckout>
+				<class>Allure_RedesignCheckout_Helper</class>
+			</allure_redesigncheckout>
+		</helpers>
+		<blocks>
+			<allure_redesigncheckout>
 				<class>Allure_RedesignCheckout_Block</class>
 			</allure_redesigncheckout>
 			<checkout>
@@ -28,9 +28,9 @@
 					<multishipping_overview>Allure_RedesignCheckout_Block_Checkout_Multishipping_Overview</multishipping_overview>
 				</rewrite>
 			</checkout>
-        </blocks>
-        <models>
-        	<allure_redesigncheckout>
+		</blocks>
+		<models>
+			<allure_redesigncheckout>
 				<class>Allure_RedesignCheckout_Model</class>
 			</allure_redesigncheckout>
 			<shipping>
@@ -49,7 +49,7 @@
 					<quote_address>Allure_RedesignCheckout_Model_Sales_Quote_Address</quote_address>
 				</rewrite>
 			</sales>
-        </models>
+		</models>
 		<resources>
 			<allure_redesigncheckout_setup>
 				<setup>
@@ -75,6 +75,9 @@
 				<gift_wrap_qty>
 					<to_order_item>*</to_order_item>
 				</gift_wrap_qty>
+				<plu>
+					<to_quote_item>*</to_quote_item>
+				</plu>
 			</sales_convert_quote_item>
 			<sales_convert_order_item>
 				<is_gift_item>
@@ -82,15 +85,26 @@
 				</is_gift_item>
 			</sales_convert_order_item>
 		</fieldsets>
+		<events>
+			<sales_order_place_before>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>setPluOrderLevel</method>
+					</allure_redesigncheckout>
+				</observers>
+			</sales_order_place_before>
+		</events>
 	</global>
 	<frontend>
 		<layout>
-            <updates>
-                <amstockstatus>
-                    <file>allure/redesign_checkout.xml</file>
-                </amstockstatus>
-            </updates>
-        </layout>
+			<updates>
+				<amstockstatus>
+					<file>allure/redesign_checkout.xml</file>
+				</amstockstatus>
+			</updates>
+		</layout>
 		<routers>
 			<checkout>
 				<args>
@@ -100,72 +114,72 @@
 				</args>
 			</checkout>
 		</routers>
-        <events>
-        	<checkout_cart_save_before>
-        		<observers>
-                    <allure_redesigncheckout>
-                        <type>model</type>
-                        <class>allure_redesigncheckout/observer</class>
-                        <method>removeGiftWrapItem</method>
-                    </allure_redesigncheckout>
-                </observers>
-        	</checkout_cart_save_before>
-            <sales_convert_quote_item_to_order_item>
-                <observers>
-                    <allure_redesigncheckout>
-                        <type>model</type>
-                        <class>allure_redesigncheckout/observer</class>
-                        <method>salesEventConvertQuoteItemToOrderItem</method>
-                    </allure_redesigncheckout>
-                </observers>
-            </sales_convert_quote_item_to_order_item>
-            <sales_convert_quote_address_to_order>
-                <observers>
-                    <allure_redesigncheckout>
-                        <type>model</type>
-                        <class>allure_redesigncheckout/observer</class>
-                        <method>salesEventConvertQuoteAddressToOrder</method>
-                    </allure_redesigncheckout>
-                </observers>
-            </sales_convert_quote_address_to_order>
-            <checkout_controller_multishipping_shipping_signature_post>
-                <observers>
-                    <allure_redesigncheckout>
-                        <type>model</type>
-                        <class>allure_redesigncheckout/observer</class>
-                        <method>checkoutEventSaveSignature</method>
-                    </allure_redesigncheckout>
-                </observers>
-            </checkout_controller_multishipping_shipping_signature_post>
-            <checkout_controller_multishipping_overview_giftmessage_post>
-                <observers>
-                    <allure_redesigncheckout>
-                        <type>model</type>
-                        <class>giftmessage/observer</class>
-                        <method>checkoutEventCreateGiftMessage</method>
-                    </allure_redesigncheckout>
-                </observers>
-            </checkout_controller_multishipping_overview_giftmessage_post>
-   		</events>
-   	</frontend>
-   	<admin>
-        <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <Allure_RedesignCheckout before="Mage_Adminhtml">Allure_RedesignCheckout_Adminhtml</Allure_RedesignCheckout>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers>
-    </admin>
-   	<adminhtml>
-        <layout>
-            <updates>
-                <allure_redesigncheckout>
-                    <file>allure/redesign.xml</file>
-                </allure_redesigncheckout>
-            </updates>
-        </layout>
-    </adminhtml>
+		<events>
+			<checkout_cart_save_before>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>removeGiftWrapItem</method>
+					</allure_redesigncheckout>
+				</observers>
+			</checkout_cart_save_before>
+			<sales_convert_quote_address_to_order>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>salesEventConvertQuoteAddressToOrder</method>
+					</allure_redesigncheckout>
+				</observers>
+			</sales_convert_quote_address_to_order>
+			<checkout_controller_multishipping_shipping_signature_post>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>checkoutEventSaveSignature</method>
+					</allure_redesigncheckout>
+				</observers>
+			</checkout_controller_multishipping_shipping_signature_post>
+			<checkout_controller_multishipping_overview_giftmessage_post>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>giftmessage/observer</class>
+						<method>checkoutEventCreateGiftMessage</method>
+					</allure_redesigncheckout>
+				</observers>
+			</checkout_controller_multishipping_overview_giftmessage_post>
+			<sales_convert_quote_item_to_order_item>
+				<observers>
+					<allure_redesigncheckout>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>salesEventConvertQuoteItemToOrderItem</method>
+					</allure_redesigncheckout>
+				</observers>
+			</sales_convert_quote_item_to_order_item>
+		</events>
+	</frontend>
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Allure_RedesignCheckout before="Mage_Adminhtml">Allure_RedesignCheckout_Adminhtml</Allure_RedesignCheckout>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+		<layout>
+			<updates>
+				<allure_redesigncheckout>
+					<file>allure/redesign.xml</file>
+				</allure_redesigncheckout>
+			</updates>
+		</layout>
+	</adminhtml>
 </config>

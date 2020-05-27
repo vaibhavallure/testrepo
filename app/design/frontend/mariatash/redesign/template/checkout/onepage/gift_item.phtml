@@ -48,14 +48,18 @@
                      	<div class="box-content">
                         	<div class="item-msg">
                             	<p><span class="info-text-two"><?= $this->__('Availability:')?></span> <?php echo $message ?></p>
-                         	</div>
+
+                                <?php if($_item->getPlParentItem()): ?>
+                                    <p class="info-text-three"><?php echo Mage::helper("postlength")->isPLMessage() ?></p>
+                                <?php endif; ?>
+                            </div>
                       	</div>
                     </div>
             		<?php endif;?>
                     <?php
                     $notAllowedAsGift=$redesignHelper->canNotOrderAsGift($_item->getSku());
 
-                    if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift):?>
+                    if(!$_item->getProduct()->getIsVirtual() && !$notAllowedAsGift && !$_item->getPlParentItem()):?>
 
                     <div class="col2-set">
                     	<div class="gift-messages">

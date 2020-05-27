@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * @author allure
  *
  */
@@ -26,10 +26,34 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
                 }
             }
         }catch (Exception $e){
-            
+
         }
     }
+
     
+    /**
+     * set plu to order item
+     */
+    public function setPluOrderLevel($observer){
+
+        Mage::log("setPluOrderLevel",7,'adi.log',true);
+
+        try{
+            $order = $observer->getOrder();
+
+            $items = $order->getAllItems();
+            foreach($items as $i) {
+                if($i->getPlu()==null || $i->getPlu()==0){
+                    $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$i->getSku());
+                    $i->setPlu($product->getTeamworkPlu());
+                }
+            }
+        }catch (Exception $e){
+            Mage::log($e->getMessage(),7,'exception.log',true);
+        }
+        return $order;
+    }
+
     /**
      * Set address item gift to order
      * @param Varien_Object $observer
@@ -40,7 +64,9 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         $quoteItem = $observer->getEvent()->getItem();
         $orderItem->setIsGiftItem($quoteItem->getIsGiftItem());
         $orderItem->setGiftItemQty($quoteItem->getGiftItemQty());
-        
+        $orderItem->setPlu($quoteItem->getPlu());
+        $orderItem->setPlParentItem($quoteItem->getPlParentItem());
+
         //check the quote item is belong to address item
         if($quoteItem instanceof Mage_Sales_Model_Quote_Address_Item){
             $item = $quoteItem->getQuote()->getItemById($quoteItem->getQuoteItemId());
@@ -48,9 +74,12 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
             $backorderQty = $item->getBackorders();
             $orderItem->setQtyBackordered($backorderQty);
             $orderItem->setBackorderTime($item->getBackorderTime());
+            $orderItem->setPlu($item->getPlu());
+            $orderItem->setPlParentItem($item->getPlParentItem());
+
         }
     }
-    
+
     /**
      * Set signature delivery method to quote address
      * @param Varien_Object $observer
@@ -72,11 +101,11 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
                     if($signatureDelivery[$address->getId()]){
                         $address->setNoSignatureDelivery(1);
                     }
-                } 
+                }
             }catch (Exception $e){}
         }
     }
-    
+
     public function salesEventConvertQuoteAddressToOrder($observer){
         $address = $observer->getEvent()->getAddress();
         $order = $observer->getEvent()->getOrder();

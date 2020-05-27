@@ -79,6 +79,14 @@
 					<model>allure_catalog/cron::autoProcessGTINNumber</model>
 				</run>
 			</gtin_schedule>
+			<allure_post_price_update>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_catalog/priceupdate::executePriceUpdate</model>
+				</run>
+			</allure_post_price_update>
 		</jobs>
 	</crontab>
 	<admin>

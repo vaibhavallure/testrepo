@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <amasty_stockstatus_adminhtml_index_instock>
+        <reference name="content">
+            <block type="core/template" name="book_appointment_special" template="amstockstatus/instock.phtml" />
+        </reference>
+    </amasty_stockstatus_adminhtml_index_instock>
+</layout>
