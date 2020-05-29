@@ -478,8 +478,11 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
                     if (strtolower($workSlot['day']) == strtolower($appDay)) {
                         $option['work']['start'] = $this->formatWorkTime($this->validatePiercerStartTime($this->helper()->getTimeByValue($workSlot['start'])));
                         $option['work']['end'] = $this->formatWorkTime($this->helper()->getTimeByValue($workSlot['end']));
-                        $option['break']['appointment_start'] = $this->formatBreakTime($this->helper()->getTimeByValue($workSlot['break_start']));
-                        $option['break']['appointment_end'] = $this->formatBreakTime($this->helper()->getTimeByValue($workSlot['break_end']), "end");
+
+                        if($workSlot['break_start']!=$workSlot['break_end']) {
+                            $option['break']['appointment_start'] = $this->formatBreakTime($this->helper()->getTimeByValue($workSlot['break_start']));
+                            $option['break']['appointment_end'] = $this->formatBreakTime($this->helper()->getTimeByValue($workSlot['break_end']), "end");
+                        }
                         return $option;
                     }
                 }, $workingHours)));
