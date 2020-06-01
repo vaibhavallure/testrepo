@@ -23,7 +23,10 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
            
             $customerGroupId = $order->getCustomerGroupId();
             
-            if($isSendOrderEmail && !$isSent){
+            $paymentMethod = $order->getPayment()->getMethod();
+            Mage::log("order_id = {$order->getId()} payment method = {$paymentMethod}",Zend_Log::DEBUG, 'split_orders.log',true);
+            
+            if($isSendOrderEmail && !$isSent && $paymentMethod != "paypal_express"){
                 if($customerGroupId == self::GUEST){
                     $order->queueNewOrderEmail();
                 }elseif ($customerGroupId == self::GENERAL){
@@ -33,9 +36,22 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
                     $order->queueNewOrderEmail();
                 }
             }
+            
+            
         } catch (Exception $e) {
             throw  $e;
         }
+        
+        /* try {
+            //split order
+            $order = $this->getOrder();
+            Mage::getModel("allure_orders/splitOrder")->spliteOrders($order->getId(),$order->getIncrementId());
+        } catch (Exception $e) {
+            Mage::log("Exception in save method of invoice",Zend_Log::DEBUG, 'split_orders.log',true);
+            Mage::log("order_id = {$order->getId()} Exc = {$e->getMessage()}",Zend_Log::DEBUG, 'split_orders.log',true);
+            
+        } */
+        
         return $this;
     }
 }

@@ -7,6 +7,16 @@
 		</Allure_Orders>
 	</modules>
 	<global>
+		<resources>
+			<allure_orders_setup>
+				<setup>
+                    <module>Allure_Orders</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_orders_setup>
+		</resources>
 		<helpers>
 			<allure_orders>
 				<class>Allure_Orders_Helper</class>
@@ -22,5 +32,15 @@
 				</rewrite>
 			</sales>
 		</models>
+		<events>
+			<sales_order_save_commit_after>
+				<observers>
+					<allure_teamwork_changeorderstatus>
+						<class>allure_orders/splitOrder</class>
+						<method>orderSaveAfter</method>
+					</allure_teamwork_changeorderstatus>
+				</observers>
+			</sales_order_save_commit_after>
+		</events>
 	</global>
 </config>
