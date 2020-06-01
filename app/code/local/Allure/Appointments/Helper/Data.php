@@ -688,7 +688,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
             /*open-------------------*/
             $this->addLog("open","save");
 
-            if ((($bstart <= $app_start && $bend > $app_start) || ($app_end > $bstart && $app_end < $bend)) || (($bstart >= $app_start && $bstart < $app_end) || ($app_end < $bend && $app_end > $bend))) {
+            if ($bstart!=$bend && ((($bstart <= $app_start && $bend > $app_start) || ($app_end > $bstart && $app_end < $bend)) || (($bstart >= $app_start && $bstart < $app_end) || ($app_end < $bend && $app_end > $bend)))) {
                 /*between break---------------------*/
                 $this->addLog("between break","save");
                 return false;
