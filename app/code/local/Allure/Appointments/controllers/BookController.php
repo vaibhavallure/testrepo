@@ -410,6 +410,10 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
             }
         }, $available_wdays));
 
+        usort($available_wdays, function ($a, $b) {
+            return strtotime($a) - strtotime($b);
+        });
+        
         $result['current_date'] = $currentDate;
         $result['available_dates'] = array_values($available_wdays);
 
