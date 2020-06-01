@@ -223,6 +223,23 @@ class Signifyd_Connect_Model_Order extends Mage_Core_Model_Abstract
 
         try {
             $order->cancel();
+            
+            //patch allure-signifyd
+            $customerGroupId = $order->getCustomerGroupId();
+            //if($customerGroupId != 2){
+                if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+                    $storeId = $order->getStoreId();
+                    $ordHelper = Mage::helper("allure_orders");
+                    $isChangeCancelOrderStatus = $ordHelper->isOrderCancelStatusEnabled($storeId);
+                    if($isChangeCancelOrderStatus){
+                        $cancelStatus = $ordHelper->getCancelOrderStatus($storeId);
+                        if($cancelStatus){
+                            $order->setStatus($cancelStatus);
+                        }
+                    }
+                }
+            //}
+            
             $order->addStatusHistoryComment("Signifyd: order canceled, {$reason}");
             $order->save();
 

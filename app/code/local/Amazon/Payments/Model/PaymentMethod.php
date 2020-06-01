@@ -100,8 +100,13 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         }
         else {
             $stateObject->setStatus($this->getConfigData('order_status'));
+            
+            //modifyd for signifyd
+            if(!$stateObject->getState()) {
+                $stateObject->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+            }
         }
-
+        
         $stateObject->setIsNotified(Mage_Sales_Model_Order_Status_History::CUSTOMER_NOTIFICATION_NOT_APPLICABLE);
     }
 
@@ -149,6 +154,10 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
                 $payment->setTransactionId($result->getAmazonAuthorizationId());
                 $payment->setParentTransactionId($payment->getAdditionalInformation('order_reference'));
                 $payment->setIsTransactionClosed(false);
+                
+                //modified for signifyd
+                $payment->setAmountAuthorized($order->getTotalDue());
+                $payment->setBaseAmountAuthorized($order->getBaseTotalDue());
 
                 // Add transaction
                 if ($captureNow) {
