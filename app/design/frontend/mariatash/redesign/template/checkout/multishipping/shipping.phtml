@@ -45,6 +45,9 @@ function setShippingAddress(eleId, addrId ,custAddrId){
 </script>
 <div class="container">
 	<ol id="checkoutSteps" class="opc">
+        <div class="row cart-info-message text-justify">
+            <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+        </div>
     <?php foreach ($steps as $stepKey => $_step): ?>
     <?php if($stepKey == 'multishipping_shipping'): ?>
     	<li id="opc-<?=$stepKey?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
@@ -69,10 +72,10 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                  		<?php $isIternational = (strtolower($_address->getCountryId()) != strtolower("us")) ? 1: 0; ?>
             							<?php $isSignature = ($_address->getNoSignatureDelivery()) ? 1 : 0; ?>
             							<label class="custom-checkbox custom-checkbox-two" for="no_signature_delivery_<?= $_address->getId()?>">
-                                        	<input type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>" 
-                                        		value="1" class="checkbox shipping-signature" 
-                                        		<?php //if($isSignature):?>checked="checked"<?php //endif;?> 
-                                        		data-address_id="<?= $_address->getId()?>" 
+                                        	<input type="checkbox" name="no_signature_delivery[<?= $_address->getId()?>]" id="no_signature_delivery_<?= $_address->getId()?>"
+                                        		value="1" class="checkbox shipping-signature"
+                                        		<?php //if($isSignature):?>checked="checked"<?php //endif;?>
+                                        		data-address_id="<?= $_address->getId()?>"
                                         		data-is_international="<?= $isIternational?>" />
                                             <span class="checkmark"></span>
                                             <?= $this->__('Require signature upon delivery') ?>
@@ -126,16 +129,16 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                                         $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;
                                                                     }
                                                    ?>
-                                                   	   
+
                                                    <?php }else{
                                                            if($shipCodeArr[2] == 1){
                                                                $ship_withoutsign_national[$_rate->getCode()] = $shipDataArr;
                                                            }else{
                                                                $ship_withoutsign_without_national[$_rate->getCode()] = $shipDataArr;
                                                            }?>
-                                                       
+
                                                   <?php } ?>
-                                                  
+
                                                   <?php if(($isIternational == $shipCodeArr[2]) /* && ($isSignature == $shipCodeArr[1]) */):?>
                                                        <option value="<?= $this->htmlEscape($_rate->getCode()) ?>" <?php if($_rate->getCode()===$this->getAddressShippingMethod($_address)) echo ' selected="selected"' ?>>
                                                        <?= $this->escapeHtml($_rate->getMethodTitle()) ?>
@@ -145,9 +148,9 @@ function setShippingAddress(eleId, addrId ,custAddrId){
                                                        <?php endif; ?>
                                                    		</option>
                                                 <?php endif;?>
-                                                  
-                                                  
-                                               <?php  } 
+
+
+                                               <?php  }
                                              }else{
                                                  $ship_sign_national[$_rate->getCode()] = $shipDataArr;
                                                  $ship_sign_without_national[$_rate->getCode()] = $shipDataArr;

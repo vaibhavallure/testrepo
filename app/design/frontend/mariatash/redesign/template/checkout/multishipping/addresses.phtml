@@ -43,6 +43,9 @@
 
 <div class="container">
     <ol id="checkoutSteps" class="opc">
+        <div class="row cart-info-message text-justify">
+            <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+        </div>
         <?php foreach ($steps as $stepKey => $_step): ?>
             <?php if($stepKey == "multishipping_addresses"):?>
                 <li id="opc-<?= $stepKey?>" class="section allow active">

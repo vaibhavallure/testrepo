@@ -46,7 +46,11 @@
 <?php endif; ?>
 
 <div class="cart-mt container row mx-auto <?php if($isWholesaleCustomer):?>wholesale-cart-container<?php endif;?>">
-	<?php echo $this->getChildHtml('form_before') ?>
+    <div class="row cart-info-message p-2 pl-3 text-justify">
+        <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+    </div>
+
+    <?php echo $this->getChildHtml('form_before') ?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <form id="shopping-cart-form" class="col-lg-8 col-md-12 col-12" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
     	<?php echo $this->getBlockHtml('formkey'); ?>
@@ -70,9 +74,7 @@
                 </tbody>
             </table>
         </fieldset>
-        <div class="row cart-info-message">
-            <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
-        </div>
+
     </form>
 
     <div class="cart-collaterals col-lg-4 col-md-12 col-12 fix-section">
