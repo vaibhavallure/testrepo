@@ -715,7 +715,7 @@ class Allure_Orders_Model_SplitOrder{
                     $itmTaxAmt = ($orderItem["tax_amount"]) ? $orderItem["tax_amount"] : 0.0;
                     $baseItmTaxAmt = ($orderItem["base_tax_amount"]) ? $orderItem["base_tax_amount"] : 0.0;
                     $itmDiscountAmt = ($orderItem["discount_amount"]) ? $orderItem["discount_amount"] : 0.0;
-                    $baseItmDiscountAmt = ($orderItem["discount_amount"]) ? $orderItem["discount_amount"] : 0.0;
+                    $baseItmDiscountAmt = ($orderItem["base_discount_amount"]) ? $orderItem["base_discount_amount"] : 0.0;
                 }
                 
                 //order item total calculation
