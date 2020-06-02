@@ -819,6 +819,9 @@ class Allure_Orders_Model_SplitOrder{
             $grandTotal = $subtotalInclTax + $shippingInclTax  - $discAmount;
             $baseGrandTotal = $baseSubtotalInclTax + $baseShippingInclTax - $baseDiscAmount;
             
+            $discAmount *= (-1);
+            $baseDiscAmount *= (-1);
+            
             if($isOrderInvoiced){
                 $discInvoiced = $discAmount;
                 $baseDiscInvoiced = $baseDiscAmount;
