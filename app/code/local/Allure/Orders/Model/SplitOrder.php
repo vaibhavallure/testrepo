@@ -478,14 +478,15 @@ class Allure_Orders_Model_SplitOrder{
                 }
             }
             
-            echo "<pre>";
             /*get all backordered items*/
-            print_r($backorderItems);
+            $this->addLog("Out of stock items");
+            $this->addLog($backorderItems);
             
             /*get all in stock items*/
-            $instockorderItems= array_diff($orderItemsKeys, $backorderItems);
+            $instockorderItems = array_diff($orderItemsKeys, $backorderItems);
             
-            print_r($instockorderItems);
+            $this->addLog("instock items");
+            $this->addLog($instockorderItems);
             
             
             if(count($instockorderItems) > 0 && count($backorderItems) > 0){
@@ -964,11 +965,14 @@ class Allure_Orders_Model_SplitOrder{
     {
         $this->addLog("orderSaveAfter method");
         try {
+            //$invoice = $observer->getEvent()->getDataObject();
+            //$order = $invoice->getOrder();
             $order = $observer->getEvent()->getOrder();
             $status = $order->getStatus();
             $this->addLog("order id = {$order->getIncrementId()}");
+            $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
+            $this->addLog("order id = {$order->getIncrementId()} has invoice = {$order->hasInvoices()}");
             if ($status == "processing") {
-                $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
                 $this->spliteOrders($order->getId(), $order->getIncrementId());
             }
         } catch (Exception $e) {
