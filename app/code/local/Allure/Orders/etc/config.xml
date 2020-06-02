@@ -33,14 +33,30 @@
 			</sales>
 		</models>
 		<events>
-			<sales_order_invoice_save_commit_after>
+			<!-- <sales_order_invoice_save_commit_after>
 				<observers>
-					<allure_teamwork_changeorderstatus>
+					<allure_splitorders>
 						<class>allure_orders/splitOrder</class>
 						<method>orderSaveAfter</method>
-					</allure_teamwork_changeorderstatus>
+					</allure_splitorders>
 				</observers>
-			</sales_order_invoice_save_commit_after>
+			</sales_order_invoice_save_commit_after> -->
+			<checkout_submit_all_after>
+                <observers>
+                    <allure_splitorders>
+                        <class>allure_orders/splitOrder</class>
+						<method>orderSaveAfter</method>
+                    </allure_splitorders>
+                </observers>
+            </checkout_submit_all_after>
+            <sales_model_service_quote_submit_success>
+            	<observers>
+                    <allure_splitorders>
+                        <class>allure_orders/splitOrder</class>
+						<method>orderSaveAfterForPaypal</method>
+                    </allure_splitorders>
+                </observers>
+            </sales_model_service_quote_submit_success>
 		</events>
 	</global>
 </config>

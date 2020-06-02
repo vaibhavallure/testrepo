@@ -972,19 +972,102 @@ class Allure_Orders_Model_SplitOrder{
         $this->addLog("Order Id = {$incrementId} spliting process end");
     }
     
+    public function orderSaveAfterForPaypal($observer)
+    {
+        $this->addLog("orderSaveAfterForPaypal method");
+        try {
+            /* $invoice = $observer->getEvent()->getDataObject();
+             $order = $invoice->getOrder(); */
+            //$order = $observer->getEvent()->getOrder();
+            
+            $order = $observer->getEvent()->getOrder();
+            
+            
+                
+                $isSent = $order->getEmailSent();
+                $storeId = $order->getStoreId();
+                $isSendOrderEmail = Mage::helper("allure_orders")
+                ->canSendConfirmationEmail($storeId);
+                
+                $customerGroupId = $order->getCustomerGroupId();
+                
+                $paymentMethod = $order->getPayment()->getMethod();
+                Mage::log("order_id = {$order->getId()} payment method = {$paymentMethod}",Zend_Log::DEBUG, 'split_orders.log',true);
+                
+                if($isSendOrderEmail && !$isSent && $paymentMethod != "paypal_express"){
+                    if($customerGroupId == self::GUEST){
+                        $order->queueNewOrderEmail();
+                    }elseif ($customerGroupId == self::GENERAL){
+                        $orderArray = array($order->getId() => $order);
+                        $order->queueMultiAddressNewOrderEmail($orderArray);
+                    }else {
+                        $order->queueNewOrderEmail();
+                    }
+                }
+                
+                if($paymentMethod != "paypal_express"){
+                    return ;
+                }
+                
+                $status = $order->getStatus();
+                $this->addLog("order id = {$order->getIncrementId()}");
+                $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
+                $this->addLog("order id = {$order->getIncrementId()} has invoice = {$order->hasInvoices()}");
+                if ($order->hasInvoices() && $status == "processing") {
+                    $this->spliteOrders($order->getId(), $order->getIncrementId());
+                }
+        } catch (Exception $e) {
+            $this->addLog("Exc - in orderSaveAfterForPaypal . Message: {$e->getMessage()}");
+        }
+        
+    }
+    
     public function orderSaveAfter($observer)
     {
         $this->addLog("orderSaveAfter method");
         try {
-            $invoice = $observer->getEvent()->getDataObject();
-            $order = $invoice->getOrder();
+            /* $invoice = $observer->getEvent()->getDataObject();
+            $order = $invoice->getOrder(); */
             //$order = $observer->getEvent()->getOrder();
-            $status = $order->getStatus();
-            $this->addLog("order id = {$order->getIncrementId()}");
-            $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
-            $this->addLog("order id = {$order->getIncrementId()} has invoice = {$order->hasInvoices()}");
-            if ($order->hasInvoices() && $status == "processing") {
-                $this->spliteOrders($order->getId(), $order->getIncrementId());
+            
+            $orders = $observer->getEvent()->getOrder();
+            if ($orders) { //if (!is_array($orders)) {
+                $orders = array($orders);
+            }else{ //handle multiaddress order
+                $orders = $observer->getEvent()->getOrders();
+            }
+            
+            foreach ($orders as $order){
+                
+                $isSent = $order->getEmailSent();
+                $storeId = $order->getStoreId();
+                $isSendOrderEmail = Mage::helper("allure_orders")
+                ->canSendConfirmationEmail($storeId);
+                
+                $customerGroupId = $order->getCustomerGroupId();
+                
+                $paymentMethod = $order->getPayment()->getMethod();
+                Mage::log("order_id = {$order->getId()} payment method = {$paymentMethod}",Zend_Log::DEBUG, 'split_orders.log',true);
+                
+                if($isSendOrderEmail && !$isSent && $paymentMethod != "paypal_express"){
+                    if($customerGroupId == self::GUEST){
+                        $order->queueNewOrderEmail();
+                    }elseif ($customerGroupId == self::GENERAL){
+                        $orderArray = array($order->getId() => $order);
+                        $order->queueMultiAddressNewOrderEmail($orderArray);
+                    }else {
+                        $order->queueNewOrderEmail();
+                    }
+                }
+                
+                
+                $status = $order->getStatus();
+                $this->addLog("order id = {$order->getIncrementId()}");
+                $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
+                $this->addLog("order id = {$order->getIncrementId()} has invoice = {$order->hasInvoices()}");
+                if ($order->hasInvoices() && $status == "processing") {
+                    $this->spliteOrders($order->getId(), $order->getIncrementId());
+                }
             }
         } catch (Exception $e) {
             $this->addLog("Exc - in orderSaveAfter order id = {$order->getId()}. Message: {$e->getMessage()}");
