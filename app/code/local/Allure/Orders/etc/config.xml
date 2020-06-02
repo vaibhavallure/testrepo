@@ -33,14 +33,14 @@
 			</sales>
 		</models>
 		<events>
-			<sales_order_save_commit_after>
+			<sales_order_invoice_save_commit_after>
 				<observers>
 					<allure_teamwork_changeorderstatus>
 						<class>allure_orders/splitOrder</class>
 						<method>orderSaveAfter</method>
 					</allure_teamwork_changeorderstatus>
 				</observers>
-			</sales_order_save_commit_after>
+			</sales_order_invoice_save_commit_after>
 		</events>
 	</global>
 </config>

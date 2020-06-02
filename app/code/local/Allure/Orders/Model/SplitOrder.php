@@ -189,6 +189,13 @@ class Allure_Orders_Model_SplitOrder{
                 $orderInvoiceDataCopy["subtotal"] = $updateOrder["subtotal"];
                 $orderInvoiceDataCopy["base_subtotal"] = $updateOrder["base_subtotal"];
                 $this->_writeConnection->update($orderInvoiceTable, $orderInvoiceDataCopy, "entity_id = {$ordInvoice["entity_id"]}");
+                
+                $invGridId = $ordInvoice["entity_id"];
+                $invoiceGridDataCopy = array();
+                $invoiceGridDataCopy["grand_total"] = $updateOrder["grand_total"];
+                $invoiceGridDataCopy["base_grand_total"] = $updateOrder["base_grand_total"];
+                $this->_writeConnection->update($orderInvoiceGridTable, $invoiceGridDataCopy,"entity_id = {$invGridId}");
+                $this->addLog("Invoice grid {$incrementId} updated.");
             }
         }else{
             //load original order invoice data
@@ -234,6 +241,7 @@ class Allure_Orders_Model_SplitOrder{
                 
                 $affInvRows = $this->_writeConnection->insert($orderInvoiceTable, $orderInvoiceDataCopy);
                 if($affInvRows){
+                    $this->addLog("Invoice created...");
                     $newInvoiceId = $this->_writeConnection->lastInsertId($this->_resource->getTableName("sales/order_item"));
                     //load invoice grid
                     $invoiceGridCond = "increment_id = '{$invIncrementId}'";
@@ -265,7 +273,6 @@ class Allure_Orders_Model_SplitOrder{
                         }
                     }
                 }
-                $this->addLog("Invoice created...");
             }
         }
     }
@@ -809,6 +816,9 @@ class Allure_Orders_Model_SplitOrder{
                 }
             }
             
+            $grandTotal = $subtotalInclTax + $shippingInclTax  - $discAmount;
+            $baseGrandTotal = $baseSubtotalInclTax + $baseShippingInclTax - $baseDiscAmount;
+            
             if($isOrderInvoiced){
                 $discInvoiced = $discAmount;
                 $baseDiscInvoiced = $baseDiscAmount;
@@ -829,8 +839,6 @@ class Allure_Orders_Model_SplitOrder{
                 $totalPaid = $baseTotalPaid = 0.0;
             }
             
-            $grandTotal = $subtotalInclTax + $shippingInclTax  - $discAmount;
-            $baseGrandTotal = $baseSubtotalInclTax + $baseShippingInclTax - $baseDiscAmount;
             $updateOrder = array(
                 "subtotal" => $subtotal,
                 "base_subtotal" => $baseSubtotal,
@@ -965,18 +973,18 @@ class Allure_Orders_Model_SplitOrder{
     {
         $this->addLog("orderSaveAfter method");
         try {
-            //$invoice = $observer->getEvent()->getDataObject();
-            //$order = $invoice->getOrder();
-            $order = $observer->getEvent()->getOrder();
+            $invoice = $observer->getEvent()->getDataObject();
+            $order = $invoice->getOrder();
+            //$order = $observer->getEvent()->getOrder();
             $status = $order->getStatus();
             $this->addLog("order id = {$order->getIncrementId()}");
             $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
             $this->addLog("order id = {$order->getIncrementId()} has invoice = {$order->hasInvoices()}");
-            if ($status == "processing") {
+            if ($order->hasInvoices() && $status == "processing") {
                 $this->spliteOrders($order->getId(), $order->getIncrementId());
             }
         } catch (Exception $e) {
-            $this->addLog("Exc - in invoiceSaveAfter order id = {$order->getId()}. Message: {$e->getMessage()}");
+            $this->addLog("Exc - in orderSaveAfter order id = {$order->getId()}. Message: {$e->getMessage()}");
         }
         
     }
