@@ -11,6 +11,10 @@ class Allure_Orders_Model_SplitOrder{
     const BILLING_ADDR_TYPE = "billing";
     const SHIPPING_ADDR_TYPE = "shipping";
     
+    const GUEST = 0;
+    const GENERAL = 1;
+    const WHOLESALE = 2;
+    
     /** @var Mage_Core_Model_Resource $_resource */
     protected $_resource;
     
