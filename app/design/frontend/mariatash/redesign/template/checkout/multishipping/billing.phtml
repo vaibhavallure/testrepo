@@ -36,6 +36,9 @@
 <?php $cnt = 1;?>
 <div class="container">
 <ol id="checkoutSteps" class="opc">
+    <div class="row cart-info-message text-justify">
+        <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+    </div>
     <?php foreach ($steps as $stepKey => $_step): ?>
         <?php if($stepKey == 'multishipping_billing'): ?>
             <li id="opc-<?= $stepKey ?>" title="<?= $_step->getLabel() ?>" class="section allow active" >
@@ -43,11 +46,11 @@
                     <span class="number"><?php echo $cnt ?></span>
                     <h3><?= $_step->getLabel() ?></h3>
                 </div>
-                
+
                 <div id="giftcard-section">
                 <?= $this->getChildHtml("onepagegiftcard");?>
                 </div>
-                
+
                 <div class="multiple-checkout">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
                     <script src="<?= Mage::getBaseUrl('js') ?>varien/payment.js" type="text/javascript"></script>
@@ -87,7 +90,7 @@
                             <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shipping Information') ?></a></p>
                             <button type="submit" title="<?php echo $this->__('Next') ?>" class="button continue light-button next-button"><span><span><?php echo $this->__('Next') ?></span></span></button>
                             <span id="multiaddress-billing-method-please-wait" class="please-wait" style="display: none;">
-            					<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...        
+            					<img src="<?= $this->getSkinUrl("images/opc-ajax-loader.gif")?>" alt="Loading next step..." title="Loading next step..." class="v-middle"> Loading next step...
             				</span>
                         </div>
 						<?= $this->getBlockHtml("formkey") ?>
