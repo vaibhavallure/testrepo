@@ -738,7 +738,7 @@ class Allure_Orders_Model_SplitOrder{
                 
                 $orderItemResult = $this->_readConnection->select()
                 ->from($orderItemTable)
-                ->where("sku = '{$sku}' AND product_type = '{$typeId}' AND order_id = {$orderId}");
+                ->where("sku = '{$sku}' AND product_type = '{$typeId}' AND order_id = {$orderId} AND quote_item_id = {$orderItem["quote_item_id"]}");
                 $selectOrderItemData = $this->_readConnection->fetchAll($orderItemResult);
                 
                 
@@ -767,9 +767,15 @@ class Allure_Orders_Model_SplitOrder{
                 }else{
                     $copyOrderItem = $orderItem;
                     
+                    $oldItemId = $copyOrderItem["item_id"];
+                    
                     if(isset($copyOrderItem["parent_item_id"]) && !empty($copyOrderItem["parent_item_id"])){
-                        if(isset($newParentItems[$sku]) && !empty($newParentItems[$sku])){
+                        /* if(isset($newParentItems[$sku]) && !empty($newParentItems[$sku])){
                             $copyOrderItem["parent_item_id"] = $newParentItems[$sku];
+                        } */
+                        
+                        if(isset($newParentItems[$oldItemId]) && !empty($newParentItems[$oldItemId])){
+                            $copyOrderItem["parent_item_id"] = $newParentItems[$oldItemId];
                         }
                     }
                     
@@ -785,6 +791,7 @@ class Allure_Orders_Model_SplitOrder{
                     }
                     
                     $copyOrderItem["order_id"] = $orderId;
+                    
                     unset($copyOrderItem["item_id"]);
                     
                     if(isset($copyOrderItem["parent_item_id"]) && !empty($copyOrderItem["parent_item_id"])){
@@ -796,7 +803,8 @@ class Allure_Orders_Model_SplitOrder{
                     if($insertedItemCount){
                         $newOrdeItemId = $this->_writeConnection->lastInsertId($orderItemTable);
                         if(empty($copyOrderItem["parent_item_id"])){
-                            $newParentItems[$sku] = $newOrdeItemId;
+                            //$newParentItems[$sku] = $newOrdeItemId;
+                            $newParentItems[$oldItemId] = $newOrdeItemId;
                         }
                     }
                 }
@@ -1071,6 +1079,52 @@ class Allure_Orders_Model_SplitOrder{
             }
         } catch (Exception $e) {
             $this->addLog("Exc - in orderSaveAfter order id = {$order->getId()}. Message: {$e->getMessage()}");
+        }
+        
+    }
+    
+    
+    public function orderSplit($observer)
+    {
+        $this->addLog("in orderSplit method");
+        try {
+            $ordersIds = $observer->getEvent()->getOrderIds();
+            
+            foreach ($ordersIds as $orderId){
+                $order = Mage::getModel("sales/order")->load($orderId);
+                
+                $isSent = $order->getEmailSent();
+                $storeId = $order->getStoreId();
+                $isSendOrderEmail = Mage::helper("allure_orders")
+                ->canSendConfirmationEmail($storeId);
+                
+                $customerGroupId = $order->getCustomerGroupId();
+                
+                $paymentMethod = $order->getPayment()->getMethod();
+                Mage::log("order_id = {$order->getId()} payment method = {$paymentMethod}",Zend_Log::DEBUG, 'split_orders.log',true);
+                
+                if($isSendOrderEmail && !$isSent && $paymentMethod != "paypal_express"){
+                    if($customerGroupId == self::GUEST){
+                        $order->queueNewOrderEmail();
+                    }elseif ($customerGroupId == self::GENERAL){
+                        $orderArray = array($order->getId() => $order);
+                        $order->queueMultiAddressNewOrderEmail($orderArray);
+                    }else {
+                        $order->queueNewOrderEmail();
+                    }
+                }
+                
+                
+                $status = $order->getStatus();
+                $this->addLog("order id = {$order->getIncrementId()}");
+                $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
+                $this->addLog("order id = {$order->getIncrementId()} has invoice = {$order->hasInvoices()}");
+                if ($order->hasInvoices()) {
+                    $this->spliteOrders($order->getId(), $order->getIncrementId());
+                }
+            }
+        } catch (Exception $e) {
+            $this->addLog("Exc - in orderSplit order id = {$order->getId()}. Message: {$e->getMessage()}");
         }
         
     }
