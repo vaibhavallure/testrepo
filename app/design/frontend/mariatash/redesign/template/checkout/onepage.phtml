@@ -33,6 +33,9 @@
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/allure/card_validate.js') ?>"></script>
 <div class="container">
 <ol class="opc" id="checkoutSteps">
+    <div class="row cart-info-message text-justify">
+        <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+    </div>
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId)): continue; endif; $i++ ?>
 
