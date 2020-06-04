@@ -1104,7 +1104,10 @@ class Allure_Orders_Model_SplitOrder{
                     if($cnt == 1){
                         $orderObj = $order;
                     }
-                    $orderArray[$order->getId()] = $order;
+                    
+                    if($order->hasInvoices()){
+                        $orderArray[$order->getId()] = $order;
+                    }
                     $cnt++;
                 }
             }
