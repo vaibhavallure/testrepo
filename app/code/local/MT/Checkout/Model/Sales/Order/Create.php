@@ -55,4 +55,21 @@ class MT_Checkout_Model_Sales_Order_Create extends Mage_Adminhtml_Model_Sales_Or
         }
         return $this;
     }
+    
+    
+    //for signifyd
+    public function getSendConfirmation(){
+        $senConfirmation = $this->getData('send_confirmation');
+        if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
+            $quote = $this->getQuote();
+            $storeId = $quote->getStoreId();
+            $isSendOrderEmail = Mage::helper("allure_orders")
+                ->canSendConfirmationEmail($storeId);
+            if($isSendOrderEmail){
+                $senConfirmation = 0;
+            }
+        }
+        return $senConfirmation;
+    }
+    
 }
