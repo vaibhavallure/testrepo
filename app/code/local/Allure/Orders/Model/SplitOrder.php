@@ -825,6 +825,10 @@ class Allure_Orders_Model_SplitOrder{
                     $baseShippingInclTax = $orderData["base_shipping_incl_tax"];
                     $shippingTaxAmt = $orderData["shipping_tax_amount"];
                     $baseShippingTaxAmt = $orderData["base_shipping_tax_amount"];
+                    $shippingDiscountAmt = isset($orderData["shipping_discount_amount"]) ? $orderData["shipping_discount_amount"] : 0.0;
+                    $baseShippingDiscountAmt = isset($orderData["base_shipping_discount_amount"]) ? $orderData["base_shipping_discount_amount"] : 0.0;
+                    $discAmount += $shippingDiscountAmt;
+                    $baseDiscAmount += $baseShippingDiscountAmt;
                 }
             }
             
@@ -869,6 +873,8 @@ class Allure_Orders_Model_SplitOrder{
                 "base_shipping_incl_tax" => $baseShippingInclTax,
                 "discount_amount" => $discAmount,
                 "base_discount_amount" => $baseDiscAmount,
+                "shipping_discount_amount" => $shippingDiscountAmt,
+                "base_shipping_discount_amount" => $shippingDiscountAmt,
                 "tax_amount" => $taxAmt,
                 "base_tax_amount" => $baseTaxAmt,
                 "total_paid" => $totalPaid,
