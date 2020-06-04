@@ -15,7 +15,7 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
         try {
             parent::save();
             
-            $order = $this->getOrder();
+            /* $order = $this->getOrder();
             $isSent = $order->getEmailSent();
             $storeId = $order->getStoreId();
             $isSendOrderEmail = Mage::helper("allure_orders")
@@ -35,7 +35,7 @@ class Allure_Orders_Model_Sales_Order_Invoice extends Mage_Sales_Model_Order_Inv
                 }else {
                     $order->queueNewOrderEmail();
                 }
-            }
+            } */
             
             
         } catch (Exception $e) {

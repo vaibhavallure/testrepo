@@ -1087,38 +1087,56 @@ class Allure_Orders_Model_SplitOrder{
         
     }
     
-    
-    public function orderSplit($observer)
-    {
-        $this->addLog("in orderSplit method");
+    public function orderSplitProcess($ordersIds){
+        $this->addLog("in orderSplitProcess method");
         try {
-            $ordersIds = $observer->getEvent()->getOrderIds();
+            $orderObj = null;
+            $orderArray = array();
+            if(count($ordersIds) == 1){
+                foreach ($ordersIds as $orderId){
+                    $orderObj = Mage::getModel("sales/order")->load($orderId);
+                    $orderArray[$orderObj->getId()] = $orderObj;
+                }
+            }elseif (count($ordersIds) > 1){
+                $cnt = 1;
+                foreach ($ordersIds as $orderId){
+                    $order = Mage::getModel("sales/order")->load($orderId);
+                    if($cnt == 1){
+                        $orderObj = $order;
+                    }
+                    $orderArray[$order->getId()] = $order;
+                    $cnt++;
+                }
+            }
             
-            foreach ($ordersIds as $orderId){
-                $order = Mage::getModel("sales/order")->load($orderId);
-                
-                $isSent = $order->getEmailSent();
-                $storeId = $order->getStoreId();
+            if($orderObj && $orderObj->hasInvoices()){
+                $isSent = $orderObj->getEmailSent();
+                $storeId = $orderObj->getStoreId();
                 $isSendOrderEmail = Mage::helper("allure_orders")
                 ->canSendConfirmationEmail($storeId);
                 
-                $customerGroupId = $order->getCustomerGroupId();
+                $customerGroupId = $orderObj->getCustomerGroupId();
                 
-                $paymentMethod = $order->getPayment()->getMethod();
-                Mage::log("order_id = {$order->getId()} payment method = {$paymentMethod}",Zend_Log::DEBUG, 'split_orders.log',true);
+                $paymentMethod = $orderObj->getPayment()->getMethod();
+                Mage::log("order_id = {$orderObj->getId()} payment method = {$paymentMethod}",Zend_Log::DEBUG, 'split_orders.log',true);
                 
                 if($isSendOrderEmail && !$isSent && $paymentMethod != "paypal_express"){
                     if($customerGroupId == self::GUEST){
-                        $order->queueNewOrderEmail();
+                        $orderObj->queueNewOrderEmail();
                     }elseif ($customerGroupId == self::GENERAL){
-                        $orderArray = array($order->getId() => $order);
-                        $order->queueMultiAddressNewOrderEmail($orderArray);
+                        if(count($orderArray) == 1){
+                            $orderObj->queueNewOrderEmail();
+                        }else{
+                            $orderObj->queueMultiAddressNewOrderEmail($orderArray);
+                        }
                     }else {
-                        $order->queueNewOrderEmail();
+                        $orderObj->queueNewOrderEmail();
                     }
                 }
-                
-                
+            }
+            
+            foreach ($orderArray as $order){
+                //$order = Mage::getModel("sales/order")->load($orderId);
                 $status = $order->getStatus();
                 $this->addLog("order id = {$order->getIncrementId()}");
                 $this->addLog("order id = {$order->getIncrementId()} status = {$status}");
@@ -1128,7 +1146,19 @@ class Allure_Orders_Model_SplitOrder{
                 }
             }
         } catch (Exception $e) {
-            $this->addLog("Exc - in orderSplit order id = {$order->getId()}. Message: {$e->getMessage()}");
+            $this->addLog("Exc - in orderSplitProcess. Message: {$e->getMessage()}");
+        }
+    }
+    
+    
+    public function orderSplit($observer)
+    {
+        $this->addLog("in orderSplit method");
+        try {
+            $ordersIds = $observer->getEvent()->getOrderIds();
+            $this->orderSplitProcess($ordersIds);
+        } catch (Exception $e) {
+            $this->addLog("Exc - in orderSplit . Message: {$e->getMessage()}");
         }
         
     }
