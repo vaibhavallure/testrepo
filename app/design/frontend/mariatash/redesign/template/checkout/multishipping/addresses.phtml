@@ -166,10 +166,10 @@
                                                                     <?php if(!empty($message) && !$isSingleProduct): ?>
                                                                         <?php $tmpMessage = $message;?>
                                                                         <?php if(!preg_match('/instock-product/', strtolower($tmpMessage) )):?>
-                                                                            <div class="gift-messages d-none">
+                                                                            <div class="gift-messages">
                                                                                 <p class="control">
                                                                                     <label class="para-normal custom-checkbox custom-checkbox-two" for="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>">
-                                                                                        <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?php //echo (false && $_item->getIsSeparateShip()) ? 'checked="checked"': 'checked="checked"' ?>>
+                                                                                        <input type="checkbox" name="ship[<?= $_index ?>][<?= $_item->getQuoteItemId() ?>][is_separate_ship]" id="backorder_item_<?= $_index."_".$_item->getQuoteItemId()?>" value="1" class="checkbox" <?= (false && $_item->getIsSeparateShip()) ? 'checked="checked"': 'checked="checked"' ?>>
                                                                                         <span class="checkmark"></span><?= $this->__('Ship remaining item(s) once all are available.(Multiple shipping charges will be applied.)')?>
                                                                                     </label>
                                                                                 </p>
