@@ -36,9 +36,6 @@
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId)): continue; endif; $i++ ?>
 
-   <!--removed delivery_option step-->
-    <?php if($_stepId=="delivery_option") continue; ?>
-
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
         <div class="step-title checkout-step-name col-12">
             <span class="number"><?php echo $i ?></span>
