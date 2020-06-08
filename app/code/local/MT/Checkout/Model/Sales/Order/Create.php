@@ -58,7 +58,7 @@ class MT_Checkout_Model_Sales_Order_Create extends Mage_Adminhtml_Model_Sales_Or
     
     
     //for signifyd
-    public function getSendConfirmation(){
+    /* public function getSendConfirmation(){
         $senConfirmation = $this->getData('send_confirmation');
         if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
             $quote = $this->getQuote();
@@ -70,6 +70,6 @@ class MT_Checkout_Model_Sales_Order_Create extends Mage_Adminhtml_Model_Sales_Or
             }
         }
         return $senConfirmation;
-    }
+    } */
     
 }
