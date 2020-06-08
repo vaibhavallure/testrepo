@@ -225,6 +225,7 @@ class Signifyd_Connect_Model_Order extends Mage_Core_Model_Abstract
             $order->cancel();
             
             //patch allure-signifyd
+            Mage::log("In local signifyd connect",7,"split_orders.log",true);
             $customerGroupId = $order->getCustomerGroupId();
             //if($customerGroupId != 2){
                 if(Mage::helper("core")->isModuleEnabled("Allure_Orders")){
@@ -415,6 +416,12 @@ class Signifyd_Connect_Model_Order extends Mage_Core_Model_Abstract
 
             $order->addStatusHistoryComment("Signifyd: create order invoice: {$invoice->getIncrementId()}");
             $order->save();
+            
+            //order spliting
+            if ($order->hasInvoices()) {
+                Mage::getModel("allure_orders/splitOrder")->orderSplitProcess(array($order->getId()));
+            }
+            
         } catch (Exception $e) {
             $this->logger->addLog('Exception while creating invoice: ' . $e->__toString(), $order);
 

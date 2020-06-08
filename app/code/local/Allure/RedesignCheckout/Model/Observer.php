@@ -36,8 +36,6 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
      */
     public function setPluOrderLevel($observer){
 
-        Mage::log("setPluOrderLevel",7,'adi.log',true);
-
         try{
             $order = $observer->getOrder();
 
@@ -45,6 +43,8 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
             foreach($items as $i) {
                 if($i->getPlu()==null || $i->getPlu()==0){
                     $product=Mage::getModel("catalog/product")->loadByAttribute('sku',$i->getSku());
+                    $product=Mage::getModel("catalog/product")->load($product->getId());
+
                     $i->setPlu($product->getTeamworkPlu());
                 }
             }

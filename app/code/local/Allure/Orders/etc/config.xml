@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Orders>
+			<name>Allure - Orders</name>
+			<version>1.0.0</version>
+		</Allure_Orders>
+	</modules>
+	<global>
+		<resources>
+			<allure_orders_setup>
+				<setup>
+                    <module>Allure_Orders</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_orders_setup>
+		</resources>
+		<helpers>
+			<allure_orders>
+				<class>Allure_Orders_Helper</class>
+			</allure_orders>
+		</helpers>
+		<models>
+			<allure_orders>
+				<class>Allure_Orders_Model</class>
+			</allure_orders>
+			<sales>
+				<rewrite>
+					<order_invoice>Allure_Orders_Model_Sales_Order_Invoice</order_invoice>
+				</rewrite>
+			</sales>
+		</models>
+		<events>
+			<!-- <sales_order_invoice_save_commit_after>
+				<observers>
+					<allure_splitorders>
+						<class>allure_orders/splitOrder</class>
+						<method>orderSaveAfter</method>
+					</allure_splitorders>
+				</observers>
+			</sales_order_invoice_save_commit_after> -->
+			<!-- <checkout_submit_all_after>
+                <observers>
+                    <allure_splitorders>
+                        <class>allure_orders/splitOrder</class>
+						<method>orderSaveAfter</method>
+                    </allure_splitorders>
+                </observers>
+            </checkout_submit_all_after> -->
+            <!-- <sales_model_service_quote_submit_success>
+            	<observers>
+                    <allure_splitorders>
+                        <class>allure_orders/splitOrder</class>
+						<method>orderSaveAfterForPaypal</method>
+                    </allure_splitorders>
+                </observers>
+            </sales_model_service_quote_submit_success> -->
+            <checkout_onepage_controller_success_action>
+            	<observers>
+                    <allure_splitorders>
+                        <class>allure_orders/splitOrder</class>
+						<method>orderSplit</method>
+                    </allure_splitorders>
+                </observers>
+            </checkout_onepage_controller_success_action>
+            <checkout_multishipping_controller_success_action>
+            	<observers>
+                    <allure_splitorders>
+                        <class>allure_orders/splitOrder</class>
+						<method>orderSplit</method>
+                    </allure_splitorders>
+                </observers>
+            </checkout_multishipping_controller_success_action>
+		</events>
+	</global>
+</config>
