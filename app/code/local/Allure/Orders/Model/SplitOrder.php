@@ -778,9 +778,9 @@ class Allure_Orders_Model_SplitOrder{
                             $copyOrderItem["parent_item_id"] = $newParentItems[$sku];
                         } */
                         
-                        if(isset($newParentItems[$oldItemId]) && !empty($newParentItems[$oldItemId])){
-                            $copyOrderItem["parent_item_id"] = $newParentItems[$oldItemId];
-                        }
+                        //if(isset($newParentItems[$oldItemId]) && !empty($newParentItems[$oldItemId])){
+                        $copyOrderItem["parent_item_id"] = $newParentItems[$copyOrderItem["parent_item_id"]];
+                        //}
                     }
                     
                     $copyOrderItem["qty_ordered"] = $qtys;
