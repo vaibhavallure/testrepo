@@ -57,7 +57,8 @@
                     </allure_splitorders>
                 </observers>
             </sales_model_service_quote_submit_success> -->
-            <checkout_onepage_controller_success_action>
+            
+            <!-- <checkout_onepage_controller_success_action>
             	<observers>
                     <allure_splitorders>
                         <class>allure_orders/splitOrder</class>
@@ -72,7 +73,7 @@
 						<method>orderSplit</method>
                     </allure_splitorders>
                 </observers>
-            </checkout_multishipping_controller_success_action>
+            </checkout_multishipping_controller_success_action> -->
 		</events>
 	</global>
 </config>
