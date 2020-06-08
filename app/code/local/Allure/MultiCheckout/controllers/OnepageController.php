@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /**
  * Onepage controller for checkout
@@ -116,8 +116,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                     );
                 } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
 
-//                    if (Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
-                      if (false){
+                    if (Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
                         $result['goto_section'] = 'delivery_option';
                         $result['update_section'] = array(
                                 'name' => 'delivery-option',
@@ -179,8 +178,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                         'name' => 'payment-method',
                         'html' => $this->_getPaymentMethodsHtml()
                     );
-//                }elseif (Mage::getSingleton('customer/session')->isLoggedIn() && Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
-                }elseif (false) {
+                }elseif (Mage::getSingleton('customer/session')->isLoggedIn() && Mage::helper('allure_multicheckout')->isQuoteContainOutOfStockProducts()) {
                     $result['goto_section'] = 'delivery_option';
                     $result['update_section'] = array(
                             'name' => 'delivery-option',
