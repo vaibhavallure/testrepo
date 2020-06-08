@@ -111,12 +111,38 @@ class Ecp_ReportToEmail_Model_Observer
                     ->getCollection()
                     ->addFieldToFilter("is_sent", 1)
                     ->addFieldToFilter("sent_time", array("gteq" => date("Y-m-d", strtotime($currentDateTime)) ));
-                
                 if($collectionReportLog->getSize()){
                    return;     
                 }
-                
                 $collection = Mage::getModel('sales/order')->getCollection();
+
+                //signifyd order cancel patch
+                $isCancelBySignifydOrderStatusFilterAppied = false;
+                if(!empty($order_status)) {
+                    if(in_array("cancel_by_signifiyd", $order_status)){
+                        $isCancelBySignifydOrderStatusFilterAppied = true;
+                    }
+                }
+
+                $resource = Mage::getSingleton('core/resource');
+                $connection = $resource->getConnection('core_write');
+                if($connection->isTableExists(trim("signifyd_connect_case"))){
+                    $collection->getSelect()
+                        ->joinLeft(
+                            array("signifyd" => "signifyd_connect_case"),
+                            "signifyd.order_increment = main_table.increment_id",
+                            array("signifyd.guarantee")
+                        );
+
+                    if(!$isCancelBySignifydOrderStatusFilterAppied){
+                        $collection->getSelect()->where("( signifyd.guarantee not in('DECLINED') OR signifyd.guarantee is null )");
+                    }
+                }else{
+                    if(!$isCancelBySignifydOrderStatusFilterAppied){
+                        $collection = $collection->addFieldToFilter("status", array("nin" => array("cancel_by_signifiyd")));
+                    }
+                }
+
                 $collection->getSelect()
                     ->reset(Zend_Db_Select::COLUMNS);
                 $collection->getSelect()
@@ -144,7 +170,6 @@ class Ecp_ReportToEmail_Model_Observer
                     ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
                     ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
                     ->where("store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')");
-
 
                 $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
                 $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
@@ -354,6 +379,34 @@ class Ecp_ReportToEmail_Model_Observer
         $curTime = new DateTime();
 
         $collection = Mage::getModel('sales/order')->getCollection();
+
+        //signifyd order cancel patch
+        $isCancelBySignifydOrderStatusFilterAppied = false;
+        if(!empty($order_status)) {
+            if(in_array("cancel_by_signifiyd", $order_status)){
+                $isCancelBySignifydOrderStatusFilterAppied = true;
+            }
+        }
+
+        $resource = Mage::getSingleton('core/resource');
+        $connection = $resource->getConnection('core_write');
+        if($connection->isTableExists(trim("signifyd_connect_case"))){
+            $collection->getSelect()
+                ->joinLeft(
+                    array("signifyd" => "signifyd_connect_case"),
+                    "signifyd.order_increment = main_table.increment_id",
+                    array("signifyd.guarantee")
+                );
+
+            if(!$isCancelBySignifydOrderStatusFilterAppied){
+                $collection->getSelect()->where("( signifyd.guarantee not in('DECLINED') OR signifyd.guarantee is null )");
+            }
+        }else{
+            if(!$isCancelBySignifydOrderStatusFilterAppied){
+                $collection = $collection->addFieldToFilter("status", array("nin" => array("cancel_by_signifiyd")));
+            }
+        }
+
         $collection->getSelect()
             ->reset(Zend_Db_Select::COLUMNS);
         $collection->getSelect()
@@ -753,6 +806,34 @@ class Ecp_ReportToEmail_Model_Observer
 
         if(!$isComparisonReport){
             $collection = Mage::getModel('sales/order')->getCollection();
+
+            //signifyd order cancel patch
+            $isCancelBySignifydOrderStatusFilterAppied = false;
+            if(!empty($order_status)) {
+                if(in_array("cancel_by_signifiyd", $order_status)){
+                    $isCancelBySignifydOrderStatusFilterAppied = true;
+                }
+            }
+
+            $resource = Mage::getSingleton('core/resource');
+            $connection = $resource->getConnection('core_write');
+            if($connection->isTableExists(trim("signifyd_connect_case"))){
+                $collection->getSelect()
+                    ->joinLeft(
+                        array("signifyd" => "signifyd_connect_case"),
+                        "signifyd.order_increment = main_table.increment_id",
+                        array("signifyd.guarantee")
+                    );
+
+                if(!$isCancelBySignifydOrderStatusFilterAppied){
+                    $collection->getSelect()->where("( signifyd.guarantee not in('DECLINED') OR signifyd.guarantee is null )");
+                }
+            }else{
+                if(!$isCancelBySignifydOrderStatusFilterAppied){
+                    $collection = $collection->addFieldToFilter("status", array("nin" => array("cancel_by_signifiyd")));
+                }
+            }
+
             $collection->getSelect()
                 ->reset(Zend_Db_Select::COLUMNS);
             $collection->getSelect()

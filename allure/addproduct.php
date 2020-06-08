@@ -7,7 +7,13 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$orderId = 494141;
+$order = Mage::getModel("sales/order")->load($orderId);
+Mage::getModel("allure_orders/splitOrder")->spliteOrders($order->getId(),$order->getIncrementId());
 
+
+die;
+die;
 
 //remote site wsdl url
 $_URL       = "https://mt-uat.allurecommerce.com/api/v2_soap/?wsdl=1";

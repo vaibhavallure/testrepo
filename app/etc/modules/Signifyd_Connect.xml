@@ -4,6 +4,9 @@
         <Signifyd_Connect>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+            	<Allure_MultiCheckout/>
+            </depends>
         </Signifyd_Connect>
     </modules>
 </config>
