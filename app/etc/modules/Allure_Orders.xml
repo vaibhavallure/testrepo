@@ -4,6 +4,9 @@
 		<Allure_Orders>
 			<active>true</active>
 			<codePool>local</codePool>
+			<depends>
+				<Teamwork_TransferMariatash />
+			</depends>
 		</Allure_Orders>
 	</modules>
 </config> 

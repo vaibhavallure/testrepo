@@ -418,9 +418,9 @@ class Signifyd_Connect_Model_Order extends Mage_Core_Model_Abstract
             $order->save();
             
             //order spliting
-            /* if ($order->hasInvoices()) {
+            if ($order->hasInvoices()) {
                 Mage::getModel("allure_orders/splitOrder")->orderSplitProcess(array($order->getId()));
-            } */
+            }
             
         } catch (Exception $e) {
             $this->logger->addLog('Exception while creating invoice: ' . $e->__toString(), $order);
