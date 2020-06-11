@@ -617,6 +617,15 @@ class Teamwork_Service_Model_Settings extends Mage_Core_Model_Abstract
             3 => "International"
         );
         
+        //dyanamic matrixrate handle
+        if(Mage::helper("core")->isModuleEnabled("Allure_Matrixrate")){
+            $tableMatrixRate = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+            $matrixRateData = $this->_db->getAll($tableMatrixRate);
+            foreach ($matrixRateData as $matrixData){
+                $subMethods[$matrixData["pk"]] = $matrixData["shipping_name"];
+            }
+        }
+        
         foreach ($subMethods as $index => $name) {
             $data = array(
                 'name'          => 'matrixrate_matrixrate_'.$index,
