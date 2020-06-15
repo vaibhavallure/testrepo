@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Signifyd>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+                <Signifyd_Connect />
+			</depends>
+		</Allure_Signifyd>
+	</modules>
+</config> 

@@ -11,5 +11,12 @@ $options = array(
     'required' => false
 );
 foreach ($entities as $entity) {
-    $installer->addAttribute($entity, 'is_processed', $options);
+    $tableName = $installer->getTable("sales/{$entity}");
+    if (!$installer->getConnection()->tableColumnExists($tableName, 'is_processed')) {
+        $installer->addAttribute($entity, 'is_processed', $options);
+    }
+    
+    if (!$installer->getConnection()->tableColumnExists($tableName, 'is_skip_to_signifyd')) {
+        $installer->addAttribute($entity, 'is_skip_to_signifyd', $options);
+    }
 }

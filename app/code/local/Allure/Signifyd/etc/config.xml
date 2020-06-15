@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Signifyd>
+			<name>Allure - Signifyd Connect</name>
+			<version>1.0.0</version>
+		</Allure_Signifyd>
+	</modules>
+	<global>
+		<models>
+			<allure_signifyd>
+				<class>Allure_Signifyd_Model</class>
+			</allure_signifyd>
+			<signifyd_connect>
+				<rewrite>
+					<observer>Allure_Signifyd_Model_Rewrite_Observer</observer>
+					<order>Allure_Signifyd_Model_Rewrite_Order</order>
+				</rewrite>
+			</signifyd_connect>
+		</models>
+	</global>
+</config>

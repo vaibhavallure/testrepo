@@ -612,7 +612,8 @@ class Allure_Orders_Model_SplitOrder{
                 $this->addLog("order {$internalOrderId} saved.");
                 $backOrder = Mage::getModel("sales/order")->load($newInternalOrderId);
                 $backOrder->setIsProcessed(1);
-                $this->_writeConnection->update($salesOrderTable, array("is_processed" => 1), "entity_id = {$newInternalOrderId}");
+                $backOrder->setIsSkipToSignifyd(1);
+                $this->_writeConnection->update($salesOrderTable, array("is_processed" => 1, "is_skip_to_signifyd" => 1), "entity_id = {$newInternalOrderId}");
                 //$backOrder->save();
                 Mage::dispatchEvent('sales_order_save_after', array('order'=>$backOrder));
                 $this->addLog("order {$backOrder->getId()} saved.");
