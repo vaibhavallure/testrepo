@@ -527,7 +527,6 @@ class Allure_Orders_Model_SplitOrder{
                     }
                 }
                 
-                
                 //create back order
                 $newInternalOrderId = 0;
                 $code = "B";
@@ -603,17 +602,28 @@ class Allure_Orders_Model_SplitOrder{
                 $this->updateOrderItems($internalOrderId, $origIncrementId, $internalOrderId, $origIncrementId, $instockOrderItemsData);
                 $this->addLog("instock order end");
                 
+                
                 //load backorder & instock order again
                 $instockOrder = Mage::getModel("sales/order")->load($internalOrderId);
-                $instockOrder->save();
+                $instockOrder->setIsProcessed(1);
+                $this->_writeConnection->update($salesOrderTable, array("is_processed" => 1), "entity_id = {$internalOrderId}");
+                //$instockOrder->save();
                 Mage::dispatchEvent('sales_order_save_after', array('order'=>$instockOrder));
                 $this->addLog("order {$internalOrderId} saved.");
                 $backOrder = Mage::getModel("sales/order")->load($newInternalOrderId);
-                $backOrder->save();
+                $backOrder->setIsProcessed(1);
+                $backOrder->setIsSkipToSignifyd(1);
+                $this->_writeConnection->update($salesOrderTable, array("is_processed" => 1, "is_skip_to_signifyd" => 1), "entity_id = {$newInternalOrderId}");
+                //$backOrder->save();
                 Mage::dispatchEvent('sales_order_save_after', array('order'=>$backOrder));
                 $this->addLog("order {$backOrder->getId()} saved.");
                 
             }else {
+                $instockOrder = Mage::getModel("sales/order")->load($internalOrderId);
+                $instockOrder->setIsProcessed(1);
+                $this->_writeConnection->update($salesOrderTable, array("is_processed" => 1), "entity_id = {$internalOrderId}");
+                //$instockOrder->save();
+                Mage::dispatchEvent('sales_order_save_after', array('order'=>$instockOrder));
                 $this->addLog("No order spliting required.");
             }
         } catch (Exception $e) {
@@ -778,9 +788,9 @@ class Allure_Orders_Model_SplitOrder{
                             $copyOrderItem["parent_item_id"] = $newParentItems[$sku];
                         } */
                         
-                        if(isset($newParentItems[$oldItemId]) && !empty($newParentItems[$oldItemId])){
-                            $copyOrderItem["parent_item_id"] = $newParentItems[$oldItemId];
-                        }
+                        //if(isset($newParentItems[$oldItemId]) && !empty($newParentItems[$oldItemId])){
+                        $copyOrderItem["parent_item_id"] = $newParentItems[$copyOrderItem["parent_item_id"]];
+                        //}
                     }
                     
                     $copyOrderItem["qty_ordered"] = $qtys;
@@ -1170,5 +1180,20 @@ class Allure_Orders_Model_SplitOrder{
             $this->addLog("Exc - in orderSplit . Message: {$e->getMessage()}");
         }
         
+    }
+    
+    public function beforeTm($observer)
+    {
+        $this->addLog("----- IN beforeTm method -----");
+        try {
+            $order = $observer->getEvent()->getOrder();
+            $this->addLog("Order Id = {$order->getId()} status = {$order->getStatus()} paid amount = {$order->getPayment()->getBaseAmountPaid()}");
+            if($order->getStatus() == "processing" && $order->getPayment()->getBaseAmountPaid()){
+                $this->orderSplitProcess(array($order->getId()));
+            }
+            
+        } catch (Exception $e) {
+            $this->addLog("Error - ".$e->getMessage());
+        }
     }
 }

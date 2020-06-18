@@ -7,6 +7,15 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+/* $model = Mage::getModel("teamwork_transfer/webstaging");
+echo get_class($model);
+
+die; */
+
+Mage::getModel("signifyd_connect/cron")->retry();
+
+die;
+
 $orderId = 494141;
 $order = Mage::getModel("sales/order")->load($orderId);
 Mage::getModel("allure_orders/splitOrder")->spliteOrders($order->getId(),$order->getIncrementId());
