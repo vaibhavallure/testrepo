@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <config>
 	<modules>
-		<Allure_Orders>
+		<Allure_Signifyd>
 			<active>true</active>
 			<codePool>local</codePool>
 			<depends>
-				<Teamwork_TransferMariatash />
+                <Signifyd_Connect />
 			</depends>
-		</Allure_Orders>
+		</Allure_Signifyd>
 	</modules>
 </config> 

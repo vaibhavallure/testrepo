@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Orders>
 			<name>Allure - Orders</name>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</Allure_Orders>
 	</modules>
 	<global>
@@ -31,6 +31,11 @@
 					<order_invoice>Allure_Orders_Model_Sales_Order_Invoice</order_invoice>
 				</rewrite>
 			</sales>
+			<teamwork_transfer>
+                <rewrite>
+                    <webstaging>Allure_Orders_Model_Teamwork_Webstaging</webstaging>
+                </rewrite>
+            </teamwork_transfer>
 		</models>
 		<events>
 			<!-- <sales_order_invoice_save_commit_after>
@@ -58,7 +63,7 @@
                 </observers>
             </sales_model_service_quote_submit_success> -->
             
-            <!-- <checkout_onepage_controller_success_action>
+            <checkout_onepage_controller_success_action>
             	<observers>
                     <allure_splitorders>
                         <class>allure_orders/splitOrder</class>
@@ -73,7 +78,7 @@
 						<method>orderSplit</method>
                     </allure_splitorders>
                 </observers>
-            </checkout_multishipping_controller_success_action> -->
+            </checkout_multishipping_controller_success_action>
 		</events>
 	</global>
 </config>
