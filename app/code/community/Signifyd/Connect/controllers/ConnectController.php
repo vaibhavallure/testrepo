@@ -160,7 +160,7 @@ class Signifyd_Connect_ConnectController extends Mage_Core_Controller_Front_Acti
 
                 switch ($topic) {
                     case "cases/creation":
-                        Mage::getModel('signifyd_connect/case')->processCreation($case, $requestJson);
+                        //Mage::getModel('signifyd_connect/case')->processCreation($case, $requestJson);
                         break;
                     case "cases/rescore":
                     case "cases/review":

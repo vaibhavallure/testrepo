@@ -5163,3 +5163,7 @@ a.product-video-link:hover div.product-video-play-icon {
 	text-transform: uppercase;
 	font-family: urw-din-bold;
 } 
+
+.success-page-text-link-style{
+	text-decoration: underline;
+}
