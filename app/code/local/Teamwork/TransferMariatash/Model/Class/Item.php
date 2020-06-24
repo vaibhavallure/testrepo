@@ -17,7 +17,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             {
                 $optionId = null;
                 $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_closing_mechanism');
-                if ($attr->usesSource())
+                    if ($attr && $attr->usesSource()) 
                 {
                     $optionId = $attr->getSource()->getOptionId($style['customlongtext16']);
                 }
@@ -30,7 +30,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             {
                 $optionId = null;
                 $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_diameter_as_filter');
-                if ($attr->usesSource())
+                if ($attr && $attr->usesSource()) 
                 {
                     $optionId = $attr->getSource()->getOptionId($style['customlongtext17']);
                 }
@@ -51,7 +51,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                         foreach ($attrValues as $val)
                         {
                             $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
-                            if ($attr->usesSource())
+                            if ($attr && $attr->usesSource()) 
                             {
                                 $optionId[] = $attr->getSource() ->getOptionId($val);
                             }
@@ -61,7 +61,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                     else
                     {
                         $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
-                        if ($attr->usesSource())
+                        if ($attr && $attr->usesSource()) 
                         {
                             $optionId[] = $attr->getSource() ->getOptionId($attrValues);
                         }
@@ -85,7 +85,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                         foreach ($attrValues as $val)
                         {
                             $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
-                            if ($attr->usesSource())
+                            if ($attr && $attr->usesSource()) 
                             {
                                 $optionId[] = $attr->getSource()->getOptionId($val);
                             }
@@ -95,7 +95,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
                     else
                     {
                         $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
-                        if ($attr->usesSource())
+                        if ($attr && $attr->usesSource()) 
                         {
                             $optionId[] = $attr->getSource() ->getOptionId($attrValues);
                         }
@@ -120,7 +120,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             {
                 $optionId = null;
                 $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('thread_type');
-                if ($attr->usesSource())
+                if ($attr && $attr->usesSource()) 
                 {
                     $optionId = $attr->getSource()->getOptionId($item['Attribute3']);
                 }
@@ -133,7 +133,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             {
                 $optionId = null;
                 $attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ball_size');
-                if ($attr->usesSource())
+                if ($attr && $attr->usesSource()) 
                 {
                     $optionId = $attr->getSource()->getOptionId($item['Attribute3']);
                 }
@@ -656,4 +656,5 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             }
         }
     }
+
 }

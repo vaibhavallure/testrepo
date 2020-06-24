@@ -4,6 +4,10 @@
         <Teamwork_TransferMariatash>
             <active>true</active>
             <codePool>local</codePool>
+            <depends>
+                <Teamwork_Transfer />
+                <Teamwork_CEGiftcards />
+            </depends>
         </Teamwork_TransferMariatash>
     </modules>
 </config>
