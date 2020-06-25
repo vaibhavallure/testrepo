@@ -40,6 +40,12 @@ class Allure_Signifyd_Model_Rewrite_Observer extends Signifyd_Connect_Model_Obse
                         continue;
                     }
                     
+                    //avoid teamwork order 
+                    if($order->getCreateOrderMethod() != 0){
+                        $this->logger->addLog("Avoid teamwork order sent to signifyd");
+                        continue;
+                    }
+                    
                     $originStoreCode = $order->getData('origin_store_code');
                     if (empty($originStoreCode)) {
                         $request = Mage::app()->getFrontController()->getRequest();
