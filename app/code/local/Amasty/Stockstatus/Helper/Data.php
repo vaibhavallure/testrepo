@@ -475,6 +475,7 @@ INLINECSS;
      */
     public function getStockMessage($_item){
 
+        $stockId = Mage::app()->getStore()->getWebsiteId();
 
         $storeId = Mage::app()->getStore()->getStoreId();
         $_product = Mage::getModel('catalog/product')
@@ -482,7 +483,7 @@ INLINECSS;
             ->loadByAttribute('sku',$_item->getProduct()->getSku());
 
         $stock = Mage::getModel('cataloginventory/stock_item')
-            ->loadByProductAndStock($_product,$storeId);
+            ->loadByProductAndStock($_product,$stockId);
 
         $stockQty = intval($stock->getQty());
         $manageStock = $stock->getManageStock();
