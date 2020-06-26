@@ -94,7 +94,9 @@
             jQuery(this).parent().find("li").removeClass("active");
             jQuery(this).addClass("active");
             jQuery('#'+selected_id+'').val(option_value).trigger('change');
+            <?php if((Mage::app()->getStore()->getStoreId()==1)): ?>
             setPlStatusOnPlChange()
+            <?php endif; ?>
         });
         jQuery('.product-custom-option').hide();
         jQuery('.chooseList').slideDown(1000);
