@@ -195,6 +195,7 @@ class Allure_PostLength_Model_Observer extends Varien_Object
         try {       
 
             $product=Mage::getModel("catalog/product")->loadByAttribute('sku',trim($sku));
+            $product=Mage::getModel("catalog/product")->load($product->getId());
 
             if($product) {
                 $params = array_merge($params, array(
