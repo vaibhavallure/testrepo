@@ -125,7 +125,7 @@
       'sku': '<?php echo $item->getSku(); ?>',      // SKU/code.
       'category': '',								// Category or variation.
       'price': '<?php echo $item->getBasePrice(); ?>',	// Unit price.
-      'quantity': '<?php echo $item->getQtyToInvoice(); ?>'	// Quantity.
+      'quantity': '<?php echo $item->getQtyOrdered(); ?>'	// Quantity.
     });
 <?php endforeach;?> 
 	ga('ecommerce:send');
