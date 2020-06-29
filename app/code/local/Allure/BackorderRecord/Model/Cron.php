@@ -123,7 +123,7 @@ class Allure_BackorderRecord_Model_Cron
             }
 
             if($ordertype=="back")
-                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL AND main_table.qty_backordered > 0)"));/* OR gift_message_id IS NOT NULL*/
             else
                 $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.product_type='simple')"));/* OR gift_message_id IS NOT NULL*/
 
