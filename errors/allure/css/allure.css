@@ -143,5 +143,12 @@ p{
         /*background-image: url("../images/maintenance-background-img.jpg");*/
         background-position: 45%;
     }
+    #footer {
+        position: static;
+        padding-bottom: 50px;
+    }
+    .page-background {
+        height: auto;
+    }
 }
 
