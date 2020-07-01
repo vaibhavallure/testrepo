@@ -7,7 +7,7 @@ body, html {
 
 .medium-big-font{
     font-family: urw-din;
-    font-size: 18px;
+    font-size: 30px;
     letter-spacing: 0.5px;
     line-height:normal;
     font-weight: 500;
@@ -22,21 +22,36 @@ h1{
     font-weight: 300;
     margin-bottom:17px;
 }
+h1 {
+    color: #fff;
+    font-weight: 100;
+    font-size: 40px;
+    /*margin: 40px 0px 20px;*/
+    font-family: urw-din-light;
+    font-weight: bold;
+}
 h1.error{
     padding-top:15px;
 }
+p{
+    color: #fff;
+    font-weight: 100;
+    font-size: 30px;
+    margin: 40px 0px 20px;
+    font-family: urw-din-light;
+    font-weight: bold;
 
+}
 
 .font-white a,
 .font-white{
     color: rgb(255, 255, 255);
 }
 .page-background {
-    background-image: url("../images/maintenance-background-img-full.jpg");
+    background-image: url("../images/Background_MT.jpg");
     height: 100%;
-    background-position: center 20%;
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size:auto;
 }
 .text-center{
     text-align: center;
@@ -45,7 +60,41 @@ h1.error{
     margin-top: 65px;
     margin-bottom:65px;
 }
+#clockdiv{
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+}
 
+#clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    /*background: #00BF96;*/
+    background-color: rgba(255,255,255,0.2);
+    display: inline-block;
+}
+
+#clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    /*background: #00816A;*/
+    /*background-color: rgba(255,255,255,0.2);*/
+    display: inline-block;
+}
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+    font-family: urw-din-light;
+}
+#footer {
+    position: fixed;
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+}
 @media screen and (max-width: 767px){
 
     img.maintenance-logo-img {
@@ -62,10 +111,13 @@ h1.error{
         font-size: 15px;
     }
     .page-background{
-        background-image: url("../images/maintenance-background-img-mobile.jpg");
+        background-image: url("../images/Background_MT.jpg");
     }
     p.first{
         padding-top: 20px;
+    }
+    #footer {
+    position: static;
     }
 }
 
@@ -78,7 +130,7 @@ h1.error{
         margin-top: 25px;
     }
     .page-background{
-        background-image: url("../images/maintenance-background-img-full.jpg");
+        /*background-image: url("../images/maintenance-background-img-full.jpg");*/
         background-position: center 0;
     }
     p.first{
@@ -88,7 +140,15 @@ h1.error{
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
     /* For landscape layouts only */
     .page-background {
-        background-image: url("../images/maintenance-background-img.jpg");
+        /*background-image: url("../images/maintenance-background-img.jpg");*/
         background-position: 45%;
     }
+    #footer {
+        position: static;
+        padding-bottom: 50px;
+    }
+    .page-background {
+        height: auto;
+    }
 }
+
