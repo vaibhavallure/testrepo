@@ -130,6 +130,36 @@ deploy-beta:
     - mage-deploy
     - echo 'Deployed on Production'
 
+deploy-staging:
+  environment: staging_webscale
+  stage: deploy
+  tags:
+    - MT,staging
+  only:
+    - staging_webscale
+  before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+    - rm -f digital-release/config/app.php && ln -s /var/www/shared/www.mariatash.com/digital-release/config/app.php digital-release/config/
+    - rm -f digital-release/tmp && ln -s /var/www/shared/www.mariatash.com/digital-release/tmp digital-release/
+    - rm -f digital-release/logs && ln -s /var/www/shared/www.mariatash.com/digital-release/logs digital-release/
+    - rm -f digital-release/webroot/media && ln -s /var/www/shared/www.mariatash.com/digital-release/webroot/media digital-release/webroot/
+    - rm -f media && ln -s /var/www/shared/www.mariatash.com/media
+    - rm -f var && ln -s /var/www/shared/www.mariatash.com/var
+    - rm -f sitemaps && ln -s /var/www/shared/www.mariatash.com/sitemaps
+  script:
+    - rm -f robots.txt && ln -s /var/www/shared/www.mariatash.com/robots.txt
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/www.mariatash.com/app/etc/local.xml app/etc/
+    - rm -f wholesale/dev wholesale/sitemap
+    - rsync -axWHAX --delete-after --exclude '.git' . "/var/www/builds/$CI_BUILD_REF"
+    - rm -f /var/www/www.mariatash.com && ln -s "/var/www/builds/$CI_BUILD_REF" /var/www/www.mariatash.com
+    - sudo -iu www-upload
+    - sudo webscale-cli deploy permissions
+    - sudo webscale-cli deploy app_permissions
+    - sudo acs sync && sudo acs status -w && sudo acs sync-status
+    - echo "Deployed on Webscale Staging -- Latest build is $CI_BUILD_REF"
+
+
 deploy-production:
   environment: production
   stage: deploy

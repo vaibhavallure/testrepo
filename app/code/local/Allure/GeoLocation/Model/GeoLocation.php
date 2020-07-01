@@ -95,6 +95,19 @@ class Allure_GeoLocation_Model_GeoLocation
      */
     protected function _getGeoInfo()
     {
+        $info = $_SERVER;
+        if(isset($info["HTTP_WEBSCALE_COUNTRY"]) && !empty($info["HTTP_WEBSCALE_COUNTRY"])){
+            $geoInfo = array();
+            $countryCode = $info["HTTP_WEBSCALE_COUNTRY"];
+            foreach ($this->infoMap as $key => $value) {
+                $geoInfo[$key] = isset($geoInfo[$value]) ? $geoInfo[$value] : null;
+            }
+            $geoInfo["countryName"] = $countryCode;
+            $geoInfo["country"] = $countryCode;
+            Mage::log(json_encode($geoInfo), Zend_Log::DEBUG, 'allure_geolocation.log', $this->_helper->getDebugMode());
+            return $geoInfo;
+        }
+        
     	$url = $this->getAPIUrl() . $this->_getIpAddress();
     
     	$ch = curl_init($url);
