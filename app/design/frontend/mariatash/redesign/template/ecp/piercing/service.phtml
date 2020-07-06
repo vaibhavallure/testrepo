@@ -18,14 +18,15 @@
                                 <div id="booking-box" class="col-12 booking-box">
                                     <div class="store-info-wrapper">
                                         <div class="col-12 p-0 ">
-                                            
+
                                             <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_service_location_and_contact')->toHtml()?>
                                         </div>
                                     </div>
                                     <div class="row walkin-top-text">
-                                        <div class="col-12 mt-3 mb-1">
+                                        <!--<div class="col-12 mt-3 mb-1">
                                             <p class="store-walkin">Appointments are currently unavailable at our New York Location. <span class="store-walkin--hl"> Walk-ins are always welcome.</span></p>
-                                        </div>
+                                        </div>-->
+                                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('new-york-appointment-page')->toHtml()?>
                                     </div>
                                     <div class="banner">
                                         <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_banner')->toHtml()?>
