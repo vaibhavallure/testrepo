@@ -143,6 +143,13 @@
       						<?php echo $this->__('Subtotal:') ?>
       					</span>
       					<?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+                        <br>
+                        <?php $baseGrandTotal = Mage::helper("currencymanager")->getGrandTotalWithBaseCurrency();?>
+                        <?php if(!empty($baseGrandTotal)):?>
+                            <p class="para-normal text-center" style="font-size: 11px">
+                                <?php echo $this->__("All orders are charged in USD. You will be charged( ".$baseGrandTotal." )");?>
+                            </p>
+                        <?php endif;?>
       				</div>
 					<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>
 					<br/>(<?php echo Mage::helper('checkout')->formatPrice($_subtotalInclTax) ?> <?php echo Mage::helper('tax')->getIncExcText(true) ?>)
