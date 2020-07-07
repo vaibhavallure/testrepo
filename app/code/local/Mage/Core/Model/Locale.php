@@ -137,7 +137,12 @@ class Mage_Core_Model_Locale
         $country = '';
         
         if ($ip != '127.0.0.1'){
-            $country=Mage::helper('allure_translations')->getCountryByIp($ip);
+            $info = $_SERVER;
+            if(isset($info["HTTP_WEBSCALE_COUNTRY"]) && !empty($info["HTTP_WEBSCALE_COUNTRY"])){
+                $country = $info["HTTP_WEBSCALE_COUNTRY"];
+            }else{
+                $country = Mage::helper('allure_translations')->getCountryByIp($ip);
+            }
         }
         if (Mage::getStoreConfig('allure_geolocation/switch_locales/test_mode')) {
             

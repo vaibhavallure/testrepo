@@ -11,7 +11,7 @@ class Ecp_Footlinks_Block_Footlinks extends Mage_Core_Block_Template {
         ));        
 
         /*to resolve footer cache issue */
-        Mage::app()->getCacheInstance()->cleanType(block_html);
+        Mage::app()->getCacheInstance()->cleanType("block_html");
 
     }
 

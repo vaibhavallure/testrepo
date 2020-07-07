@@ -1,5 +1,7 @@
 <?php
 $_product = Mage::registry('current_product');
+$sku_main = $_product->getSku();
+$old_sku = $sku_main;
 $collection = $this->getInstagramPostCollection();
 $collection->getSelect()->order('created_timestamp desc');//Feeds Descending Order
 
@@ -43,10 +45,12 @@ $childProductArr = $this->getChildProductArray();
         $numberOfProducts = 0;
         $temp_sku = "";
 
+        $parentItemNumber = $_product->getParentItemNumber();
+        
         foreach ($_options as $option) {
         	$sku = $option->text;
         	$temp_sku = $sku;
-        	$temp_product = $productArr[$temp_sku];
+        	$temp_product = isset($productArr[$temp_sku]) ? $productArr[$temp_sku] : null;
 
         	if ($temp_product && count($temp_product) <= 0) {
         		continue;

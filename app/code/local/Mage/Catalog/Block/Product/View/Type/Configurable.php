@@ -549,6 +549,8 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     $query="SELECT rel.parent_id,rel.child_id,atr.product_super_attribute_id,atr.attribute_id,itm.qty,cpen.value FROM `catalog_product_relation` rel JOIN catalog_product_super_attribute atr on atr.product_id = rel.parent_id join cataloginventory_stock_item itm on itm.product_id = rel.child_id JOIN catalog_product_entity_int cpen ON (cpen.attribute_id=atr.attribute_id AND cpen.entity_id=rel.child_id) where rel.parent_id = ".$productId." and itm.qty > 0 GROUP BY atr.attribute_id";
                     $results = $readConnection->fetchAll($query);
 
+                    $selectValue1 = "";
+                    
                     if(count($results)>=2)
                     {
 
