@@ -867,10 +867,10 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         foreach (Mage::app()->getLocale()->getOptionTimezones() as $_eachTimeZoneId => $val)
         {
             $selectedClass = "";
-            if($this->_getValue('timezones/' . $rowIndex) == $val[value] ){
+            if($this->_getValue('timezones/' . $rowIndex) == $val['value'] ){
                 $selectedClass = "selected='selected'";
             }
-            $zoneStr .= '<option '.$selectedClass.' value="'.$val[value].'">'.$val[label].'</option>';
+            $zoneStr .= '<option '.$selectedClass.' value="'.$val['value'].'">'.$val['label'].'</option>';
         }
         return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'[timezones][]' . '" style="">'.$zoneStr.'</select>';
 
@@ -887,10 +887,10 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         foreach ($arr as $val)
         {
             $selectedClass = "";
-            if($this->_getValue($work_state.'/' . $rowIndex) == $val[value] ){
+            if($this->_getValue($work_state.'/' . $rowIndex) == $val['value'] ){
                 $selectedClass = "selected='selected'";
             }
-            $zoneStr .= '<option '.$selectedClass.' value="'.$val[value].'">'.$val[label].'</option>';
+            $zoneStr .= '<option '.$selectedClass.' value="'.$val['value'].'">'.$val['label'].'</option>';
         }
         return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'['.$work_state.'][]' . '" style="">'.$zoneStr.'</select>';
 
@@ -923,10 +923,10 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         foreach ($arr as $val)
         {
             $selectedClass = "";
-            if($this->_getValue($email_template.'/' . $rowIndex) == $val[value] ){
+            if($this->_getValue($email_template.'/' . $rowIndex) == $val['value'] ){
                 $selectedClass = "selected='selected'";
             }
-            $zoneStr .= '<option '.$selectedClass.' value="'.$val[value].'">'.$val[label].'</option>';
+            $zoneStr .= '<option '.$selectedClass.' value="'.$val['value'].'">'.$val['label'].'</option>';
         }
         return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'['.$email_template.'][]' . '" style="">'.$zoneStr.'</select>';
 
@@ -948,10 +948,10 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         foreach ($arr as $val)
         {
             $selectedClass = "";
-            if($this->_getValue($email_template.'/' . $rowIndex) == $val[value] ){
+            if($this->_getValue($email_template.'/' . $rowIndex) == $val['value'] ){
                 $selectedClass = "selected='selected'";
             }
-            $zoneStr .= '<option '.$selectedClass.' value="'.$val[value].'">'.$val[label].'</option>';
+            $zoneStr .= '<option '.$selectedClass.' value="'.$val['value'].'">'.$val['label'].'</option>';
         }
         return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'['.$email_template.'][]' . '" style="">'.$zoneStr.'</select>';
 
@@ -971,10 +971,10 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         foreach ($arr as $val)
         {
             $selectedClass = "";
-            if($this->_getValue($email_template.'/' . $rowIndex) == $val[value] ){
+            if($this->_getValue($email_template.'/' . $rowIndex) == $val['value'] ){
                 $selectedClass = "selected='selected'";
             }
-            $zoneStr .= '<option '.$selectedClass.' value="'.$val[value].'">'.$val[label].'</option>';
+            $zoneStr .= '<option '.$selectedClass.' value="'.$val['value'].'">'.$val['label'].'</option>';
         }
         return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'['.$email_template.'][]' . '" style="">'.$zoneStr.'</select>';
 
@@ -1013,7 +1013,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         //$isDefault = !$this->getRequest()->getParam('website') && !$this->getRequest()->getParam('store');
         $isMultiple = $element->getExtType()==='multiple';
 
-        // replace [value] with [inherit]
+        // replace ['value'] with [inherit]
         $namePrefix = preg_replace('#\[value\](\[\])?$#', '', $element->getName());
 
         $options = $element->getValues();
