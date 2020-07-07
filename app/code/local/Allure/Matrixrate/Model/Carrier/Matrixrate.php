@@ -87,11 +87,11 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
                 }
                 if ($item->getHasChildren() && $item->isShipSeparately()) {
                     foreach ($item->getChildren() as $child) {
-                        if ($child->getProduct()->isVirtual() || $item->getProductType() == 'downloadable') {
+                        if ($child->getProduct()->isVirtual() || $item->getProductType() == 'downloadable' || $item->getProductType() == 'giftcards') {
                             $request->setPackageValue($request->getPackageValue() - $child->getBaseRowTotal());
                         }
                     }
-                } elseif ($item->getProduct()->isVirtual() || $item->getProductType() == 'downloadable') {
+                } elseif ($item->getProduct()->isVirtual() || $item->getProductType() == 'downloadable' || $item->getProductType() == 'giftcards') {
                     $request->setPackageValue($request->getPackageValue() - $item->getBaseRowTotal());
                 }
             }
@@ -129,13 +129,13 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 			$request->setPackageWeight($request->getFreeMethodWeight());
 			$request->setPackageQty($oldQty - $freeQty);
 		}
-        
+
 		$this->_result = Mage::getModel('shipping/rate_result');
      	$ratearray = $this->getRate($request);
 
      	$freeShipping=false;
-     	
-     	if (is_numeric($this->getConfigData('free_shipping_threshold')) && 
+
+     	if (is_numeric($this->getConfigData('free_shipping_threshold')) &&
 	        $this->getConfigData('free_shipping_threshold')>0 &&
 	        $request->getPackageValue()>$this->getConfigData('free_shipping_threshold')) {
 	         	$freeShipping=true;
@@ -155,7 +155,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 			$method->setPrice('0.00');
 			$method->setMethodTitle($this->getConfigData('free_method_text'));
 			$result->append($method);
-			
+
 			if ($this->getConfigData('show_only_free')) {
 				return $result;
 			}
@@ -164,7 +164,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 		//country id
 		$countryId = $request->getDestCountryId();
 		$isDomestic = (strtolower($countryId) == "us") ? 0 :1;
-     	
+
 	   foreach ($ratearray as $rate)
 		{
 		   if (!empty($rate) && $rate['price'] >= 0) {
@@ -182,8 +182,14 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 				$shippingPrice = $this->getFinalPriceWithHandlingFee($rate['price']);
 				$method->setCost($rate['cost']);
 				$method->setShippingName($rate['shipping_name']);
-        		
-				$method->setPrice($shippingPrice);
+
+				/*free international shipping MT-1471*/
+                  if($freeShipping && $rate['is_international'])
+                      $method->setPrice(0.00);
+                  else
+                      $method->setPrice($shippingPrice);
+
+                  
 
 				$this->_result->append($method);
 			  }
@@ -191,7 +197,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 		}
 
 		$this->_updateFreeMethodQuote($request);
-		
+
 		return $this->_result;
     }
 
