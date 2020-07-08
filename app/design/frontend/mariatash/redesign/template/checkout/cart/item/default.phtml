@@ -51,7 +51,7 @@ if(!is_null($parentId)){
 <tr <?php if ($messages):?>class="messages-tr"<?php endif;?>>
 	<td class="cart_col1" data-th="Product">
     	<?php if ($isVisibleProduct && $hasProductUrl):?>
-        	<a href="<?php echo $url ?>" title="<?php echo $productNamess?>" class="product-image">
+        	<a href="<?php echo $url ?>" title="<?php echo $productName?>" class="product-image">
         <?php endif;?>
         	<img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($productName) ?>" />
        	<?php if ($hasProductUrl):?>

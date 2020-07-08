@@ -56,17 +56,16 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
     private function checkIfItemAdded()
     {
-        $items["new"]=$this->getQuoteItemsWithSelectedPostLength()["new"];
-
-        $this->_itemsAdded=$items;
-
-
-        if($items["new"])
+        $items = array();
+        $selectedPostLengthItmes = $this->getQuoteItemsWithSelectedPostLength();
+        if(isset($selectedPostLengthItmes["new"])){
+            $items["new"] = $selectedPostLengthItmes["new"];
+            $this->_itemsAdded = $items;
             return true;
-        else
-            return false;
-
+        }
+        return false;
     }
+    
     private function checkIfItemFoundWithoutPLP()
     {
         $items=$this->getIfItemFoundWithoutPLP();

@@ -91,6 +91,11 @@ payment.singleMethod = true;
         $('promoCode').removeAttribute('disabled');
     }
     jQuery('dl.sp-methods > div.promoDiv').remove();
+    
+    <?php $quote = Mage::getModel('checkout/cart')->getQuote();
+        $codeExists = ($quote->getCouponCode()) ? true : false;
+    ?>
+    
    <?php if($codeExists): ?>
        $('promoCode').disable();
    <?php endif; ?>
