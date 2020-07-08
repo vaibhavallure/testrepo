@@ -39,6 +39,8 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
     
     protected $_result = null;
 
+    protected $international_free_shipping_over=600;
+
     public function __construct()
     {
         parent::__construct();
@@ -133,7 +135,11 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 		$this->_result = Mage::getModel('shipping/rate_result');
      	$ratearray = $this->getRate($request);
 
-     	$freeShipping=false;
+     	$freeInternationalShipping=false;
+
+        if ($request->getPackageValue()>=$this->international_free_shipping_over) {
+            $freeInternationalShipping=true;
+        }
 
      	if (is_numeric($this->getConfigData('free_shipping_threshold')) &&
 	        $this->getConfigData('free_shipping_threshold')>0 &&
@@ -184,7 +190,7 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 				$method->setShippingName($rate['shipping_name']);
 
 				/*free international shipping MT-1471*/
-                  if($freeShipping && $rate['is_international'])
+                  if($freeInternationalShipping && $rate['is_international'])
                       $method->setPrice(0.00);
                   else
                       $method->setPrice($shippingPrice);
