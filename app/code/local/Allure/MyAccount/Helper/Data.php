@@ -120,10 +120,10 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         $escapeSKU  = $this->getPurchaseEscapeSKU();
         
         if(count($request)){
-            if($request['page']){
+            if(isset($request['page'])){
                 $pageNo=$request['page'];
             }
-            if($request['limit']){
+            if(isset($request['limit'])){
                 $limit = $request['limit'];
             }
             if(!empty($request['m_store'])){
@@ -136,7 +136,7 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         $collection = Mage::getResourceModel('sales/order_item_collection')
                         ->addAttributeToSelect('*');
-        $collection->getSelect()->join( array('orders'=> sales_flat_order),
+        $collection->getSelect()->join( array('orders'=> 'sales_flat_order'),
                 'orders.entity_id=main_table.order_id',
                 array('orders.customer_email','orders.customer_id')
             );
@@ -194,16 +194,16 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
             if(!empty($request['m_sort'])){
                 $sortOrder = $request['m_sort'];
             }
-            if($request['page']){
+            if(isset($request['page'])){
                $pageNo = $request['page'];
             }
-            if($request['limit']){
+            if(isset($request['limit'])){
                $limit = $request['limit'];
             }
-            if($request['m_order']){
+            if(isset($request['m_order'])){
                 $openOrderStatus = $request['m_order'];
             }
-            if($request['m_aorder']){
+            if(isset($request['m_aorder'])){
                 $closeOrderStatus = $request['m_aorder'];
             }
         }

@@ -80,7 +80,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		              ->setPurchaseOrderCollection($collection)
 		              ->toHtml();
 		$data = array('html'=>$html);
-		$jsonData = json_encode(compact('success', 'message', 'data'));
+		$jsonData = json_encode(compact('data'));
 		$this->getResponse()->setHeader('Content-type', 'application/json');
 		$this->getResponse()->setBody($jsonData);
 	}
@@ -99,7 +99,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$count =  $request['count'] ;
 		$count += count($orders);
 		$data = array('html'=>$html,'order_count'=>$count);
-		$jsonData = json_encode(compact('success', 'message', 'data'));
+		$jsonData = json_encode(compact('data'));
 		$this->getResponse()->setHeader('Content-type', 'application/json');
 		$this->getResponse()->setBody($jsonData);
 				 
@@ -147,7 +147,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 	               ->toHtml();
 	    
 	    $data = array('html'=>$html);
-	    $jsonData = json_encode(compact('success', 'message', 'data'));
+	    $jsonData = json_encode(compact('data'));
 	    $this->getResponse()->setHeader('Content-type', 'application/json');
 	    $this->getResponse()->setBody($jsonData);
 	}

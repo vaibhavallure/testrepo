@@ -41,7 +41,7 @@
         <td class="a-left">
             <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
                <?php //echo $_order->getStatusLabel() ?>
-               <?php $status = $orderStatusArr[$_order->getState()]?$orderStatusArr[$_order->getState()]:$orderStatusArr1[$_order->getState()]?>
+               <?php $status = isset($orderStatusArr[$_order->getState()]) ? $orderStatusArr[$_order->getState()] : $orderStatusArr1[$_order->getState()]?>
                <?php echo $status?>
             </a>
         </td>
