@@ -45,7 +45,10 @@ $media_id = $feed->getMediaId();
 		    <div class="taggable-image-info">
 		      <?php 
 		      	$taggedProducts = json_decode($feed->getHotspots());
-		      	$taggedCnt = count($taggedProducts); 
+		      	$taggedCnt = 0;
+		      	if(is_array($taggedProducts) || is_object($taggedProducts)){
+		      	    $taggedCnt = count($taggedProducts); 
+		      	}
 		      	$type = "";
 		      	$mode = $feed->getLookbookMode();
 		      	if($mode==1)$type="shop by look";

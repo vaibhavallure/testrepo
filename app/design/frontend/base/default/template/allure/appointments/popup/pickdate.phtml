@@ -1,7 +1,7 @@
 <?php
 //To modify the appointment get the data from registry start
 $fetch_model = Mage::registry('apt_modify_data');;
-
+$fetch_date = null;
 if ($fetch_model) {
 
     $f_pickurday = $fetch_model->getAppointmentStart();
