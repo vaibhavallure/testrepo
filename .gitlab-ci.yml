@@ -164,7 +164,7 @@ deploy-production:
   environment: production
   stage: deploy
   tags:
-    - MT,production
+    - MT,Production
   only:
     - production
   before_script:
