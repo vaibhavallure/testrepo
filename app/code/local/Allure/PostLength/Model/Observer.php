@@ -94,12 +94,13 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
         $newItems=$this->getQuoteItemsWithSelectedPostLength();
         $oldItems=$this->session()->getData('quote_items_with_selected_postlength');
+        
+        //$commonItems=array_intersect($newItems,$oldItems);
 
-        $commonItems=array_intersect($newItems,$oldItems);
 
-
-        foreach ($commonItems as $key=>$cItem)
+        foreach ($newItems as $key=>$cItem)
         {
+            if(!isset($oldItems[$key])) continue;
             if($newItems[$key]['qty']!=$oldItems[$key]['qty'])
             {
                 $updatedQtyItems[$key]=$cItem;
