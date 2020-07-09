@@ -289,6 +289,16 @@ dt.filter-head.showing:after {
 .popup-right-section{
   padding: 0 30px 0 6px;
 }
+
+  .checkout-multishipping-addresses .main,
+  .checkout-multishipping-shipping .main,
+  .checkout-multishipping-delivery .main,
+  .checkout-multishipping-billing .main,
+  .checkout-multishipping-overview .main,
+  .checkout-onepage-index .main, .paypal-express-review .main, .paypal-express-overview .main{
+    flex-direction: column;
+  }
+
 .checkout-multishipping-addresses .col-main, .checkout-multishipping-shipping .col-main, .checkout-multishipping-delivery .col-main, .checkout-multishipping-billing .col-main, .checkout-multishipping-overview .col-main,
 .checkout-onepage-index .col-right.sidebar, .checkout-onepage-index .col-main, .paypal-express-overview .col-main{
   flex: 0 0 100%;
@@ -517,7 +527,9 @@ ul.tabs li{
     padding: 9px 3px 0 0px;
   }
   .col-right.sidebar{
-    display: none;
+    /*display: none;*/
+    flex: 0 0 100%!important;
+    max-width: 100%!important;
   }
   .cart-collaterals.fix-section{
     padding-top: 0;
