@@ -59,7 +59,6 @@ if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
 	 		type : 'POST',
 	 		data: {'store_id':'<?php echo $store_id; ?>',form_key:'<?php echo $k ?>'},
 	 		success : function(data){
-		 		console.log(data.response.events);
 		 		if(data.response.lang){
 		 			initialLangCode = data.response.lang;
 		 		}

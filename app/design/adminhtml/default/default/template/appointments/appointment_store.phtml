@@ -18,7 +18,6 @@ if(Mage::getSingleton('core/session')->getMyWebsiteId())
 	
 	function myFunction(baseUrl){
 		var selectedStore = jQuery('#store :selected').val();
-		console.log("selectedStore="+selectedStore);
 		var a_href = window.location.href;
 
 		a_href = baseUrl +"/store/"+ selectedStore;
