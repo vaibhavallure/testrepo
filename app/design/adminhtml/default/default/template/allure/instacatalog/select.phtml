@@ -42,7 +42,6 @@
 <?php if($post_type=='hashtag'): ?>
     <script type="text/javascript">
     	jQuery(function($){
-        	//console.log("Hiiiiiii");
     	var loadButton = document.getElementById('load-more');
         var feed = new Instafeed({
             get: 'tagged',
@@ -67,7 +66,6 @@
 <?php elseif($post_type=='account'): ?>
     <script type="text/javascript">
         jQuery(function($){
-        	//console.log("Hiii");
         var loadButton = document.getElementById('load-more');
         var feed = new Instafeed({
             get: 'user',
@@ -105,7 +103,6 @@ jQuery(document).on('click','.image-annotate-canvas',function(event){
 	jQuery('#image-annotate-add').trigger('click');
 	var x = event.offsetX; 
 	var y= event.offsetY; 
-	console.log(jQuery('.image-annotate-edit-area.ui-resizable.ui-draggable').css('height'));
 	jQuery('.image-annotate-edit-area.ui-resizable.ui-draggable').css({'left':x+'px','top':y+'px'});
 	/*jQuery('#image-annotate-edit-form').css({'left':event.pageX+'px','top':event.pageY+'px'});*/
 });

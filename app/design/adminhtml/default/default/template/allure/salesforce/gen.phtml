@@ -160,7 +160,6 @@ $_objectColumnList  = $_helper->getObjectColumnList();
 	});
 
 	function removeColumn(evt){
-		console.log("In Remove");
 		jQuery(evt).parent().remove();
 	}
 
@@ -176,7 +175,6 @@ $_objectColumnList  = $_helper->getObjectColumnList();
 			}
 		});
 		jQuery("#tarea-object").text(list);
-		console.log(list);
 		jQuery("#form-gen-csv").submit();
 	});
 
