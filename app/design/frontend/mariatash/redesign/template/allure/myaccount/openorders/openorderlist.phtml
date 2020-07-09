@@ -43,6 +43,10 @@
 		<?php $totalPageSize = $this->getOrders()->getLastPageNumber()?>
     </div>
 
+<?php 
+    $mStore = isset($_GET['m_store']) ? $_GET['m_store'] : "";
+    $mSort = isset($_GET['m_sort']) ? $_GET['m_sort'] : "";
+?>
 
 <script>
 var xhr = null;
@@ -63,7 +67,7 @@ jQuery(function($){
 				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getOpenOrders';?>',
 				        dataType : 'json',
 						type : 'POST',
-						data: {'page':page2,'limit':10,'count':count,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
+						data: {'page':page2,'limit':10,'count':count,'m_store':'<?php echo $mStore ?>','m_sort':'<?php echo $mSort ?>'},
 				        success: function(data) {console.log('HEEEEEREEEE');
 				        	jQuery('#my-openorders-table tbody').append(data.data.html);
 				        	jQuery("#total-openorders-count").text(data.data.order_count);

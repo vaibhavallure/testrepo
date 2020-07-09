@@ -846,6 +846,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $allStores = Mage::app()->getStores();
         }
 
+        $countryStr = "";
         foreach ($allStores as $_eachStoreId => $val)
         {
             $_storeName = $val->getName();
@@ -862,7 +863,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
 
 
     private function prepareTimeZone($rowIndex,$styleCss){
-        $countryStr = "";
+        $zoneStr = "";
         $timezoneList = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
         foreach (Mage::app()->getLocale()->getOptionTimezones() as $_eachTimeZoneId => $val)
         {
@@ -884,6 +885,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $work_state = "end_work_time";
         }
 
+        $zoneStr = "";
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -919,7 +921,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $email_template = "email_template_release_remind_day".$type;
         }
 
-
+        $zoneStr = "";
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -944,7 +946,8 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         }elseif($state == "welcome"){
             $email_template = "piercer_email_template_welcome";
         }
-
+        
+        $zoneStr = "";
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -968,6 +971,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $email_template = "admin_email_template_modify";
         }
 
+        $zoneStr = "";
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -982,7 +986,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
 
 
     private function getCmsBlock($rowIndex){
-
+        $zoneStr = "";
         $collection = Mage::getModel('cms/block')->getCollection()
             ->addFieldToFilter('identifier',array('like'=>'%appointment%'));
         foreach ($collection as $block) {
@@ -1034,7 +1038,8 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
                 $element->setDisabled(true);
             }
         }
-
+        
+        $html = "";
         if ($element->getTooltip()) {
             $html .= '<td class="value with-tooltip">';
             $html .= $this->_getElementHtml($element);

@@ -149,9 +149,9 @@ class Ecp_Color_IndexController extends Mage_Core_Controller_Front_Action
                             function ($one, $two) {
                                 return ($one['attribute_id_position'] > $two['attribute_id_position']) ? 1 : -1;
                             });
-                        $select_config = array('sa_count' => 1, 'attribute_value' => $attribute_position_1[$select_position[0]['attribute_id_position']], 'attribute_id' => $masterAttributeId['attribute_id'], 'custom_stock_status' => $select_position[0]['custom_stock_status'], 'count_product' => $count_pr);
+                        $select_config = array('sa_count' => 1, 'attribute_value' => $attribute_position_1[$select_position[0]['attribute_id_position']], 'attribute_id' => $masterAttributeId['attribute_id'], 'custom_stock_status' => isset($select_position[0]['custom_stock_status']) ? $select_position[0]['custom_stock_status'] : '', 'count_product' => $count_pr);
                     } else {
-                        $select_config = array('sa_count' => 1, 'attribute_value' => $attribute_position_1[0], 'attribute_id' => $masterAttributeId['attribute_id'], 'custom_stock_status' => $select_position[0]['custom_stock_status'], 'count_product' => $count_pr);
+                        $select_config = array('sa_count' => 1, 'attribute_value' => $attribute_position_1[0], 'attribute_id' => $masterAttributeId['attribute_id'], 'custom_stock_status' => isset($select_position[0]['custom_stock_status']) ? $select_position[0]['custom_stock_status'] : '', 'count_product' => $count_pr);
                     }
                 }
 

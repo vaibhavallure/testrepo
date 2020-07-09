@@ -1,6 +1,9 @@
 <?php
 $fetch_model = Mage::registry('apt_modify_data');
 
+$fetch_starttime = null;
+$fetch_endtime = null;
+$fetch_piercer_id = null;
 if($fetch_model){
     $fetch_starttime = date('H:i', strtotime($fetch_model->getAppointmentStart()));
     $fetch_endtime = date('H:i', strtotime($fetch_model->getAppointmentEnd()));

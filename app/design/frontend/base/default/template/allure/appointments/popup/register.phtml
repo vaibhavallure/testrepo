@@ -1,7 +1,8 @@
 <?php
 $model = Mage::registry('apt_modify_data');
 $customers = Mage::getSingleton("core/session")->getData('apt_customer_data');
-
+$fetch_piercing_qty = 1;
+$fetch_aptId = 0;
 if ($model) {
     $fetch_aptId = $model->getId();
     $f_firstName = $model->getFirstname();

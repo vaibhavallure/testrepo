@@ -25,35 +25,83 @@
  */
 ?>
 
-<!---->
-<!--<div id="notfound">-->
-<!--    <div class="notfound-bg"></div>-->
-<!--    <div class="notfound">-->
-<!--        <div class="notfound-404">-->
-<!--            <h1>503</h1>-->
-<!--        </div>-->
-<!--        <h2>Service Temporarily Unavailable</h2>-->
-<!--        <div class="notfound-social">-->
-<!--            <a href="https://www.instagram.com/maria_tash/"><i class="fa fa-instagram"></i></a>-->
-<!--            <a href="http://www.facebook.com/VenusbyMariaTash"><i class="fa fa-facebook"></i></a>-->
-<!--            <a href="https://twitter.com/mariatash/"><i class="fa fa-twitter"></i></a>-->
-<!--            <a href="https://www.pinterest.com/maria_tash/"><i class="fa fa-pinterest"></i></a>-->
-<!--            <a href="https://www.yelp.com/biz/maria-tash-new-york"><i class="fa fa-yelp"></i></a>-->
-<!--        </div>-->
-<!--        <a href="https://www.mariatash.com">Back To Homepage</a>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="container-fluid maintenance-page page-background">
     <div class="main text-center row">
         <div class="maintenance-logo col-md-12">
             <img class="maintenance-logo-img" src ="<?php echo $this->getSkinUrl().'images/maintenance-logo-img.png'; ?>"/>
         </div>
         <div class="content maintenance-content col-md-12">
-            <h1 class="error font-white">We are currently down for maintenance and will return shortly.</h1>
-            <p class="medium-big-font font-white">While you wait, feel free to explore our looks on <a  href="https://www.instagram.com/mariatash" style="text-decoration: underline" target="_blank">instagram</a>.</p>
-            <p class="medium-big-font font-white">You can reach us anytime at <br class="d-xs-block d-sm-block d-md-block d-lg-none d-xl-none"><a  href="mailto:cs@mariatash.com" style="text-decoration: underline" >cs@mariatash.com</a> or <a  href="tel:+1-833-775-8274" style="text-decoration: underline" >1-833-775-8274</a>.</p>
+            <h1 class="error font-white">We are currently down for maintenance.</h1>
+<!--            <h1><br></h1>-->
+            <p class="medium-big-font font-white">We will return shortly. Thank you for your patience.<br>While you wait, feel free to explore our looks on <a  href="https://www.instagram.com/mariatash" style="text-decoration: underline" target="_blank">instagram</a>.</p>
+        </div>
+    </div>
+    <div id="footer">
+        <h1>We’ll be back in</h1>
+        <div id="clockdiv">
+            <!--<div>
+              <span class="days"></span>
+              <div class="smalltext">Days</div>
+            </div>-->
+            <div>
+                <span class="hours"></span>
+                <div class="smalltext">Hours</div>
+            </div>
+            <div>
+                <span class="minutes"></span>
+                <div class="smalltext">Minutes</div>
+            </div>
+            <div>
+                <span class="seconds"></span>
+                <div class="smalltext">Seconds</div>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    function getTimeRemaining(endtime) {
+        const total = Date.parse(endtime) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+        return {
+            total,
+            days,
+            hours,
+            minutes,
+            seconds
+        };
+    }
+
+    function initializeClock(id, endtime) {
+        const clock = document.getElementById(id);
+        /*const daysSpan = clock.querySelector('.days');*/
+        const hoursSpan = clock.querySelector('.hours');
+        const minutesSpan = clock.querySelector('.minutes');
+        const secondsSpan = clock.querySelector('.seconds');
+
+        function updateClock() {
+            const t = getTimeRemaining(endtime);
+
+            /*daysSpan.innerHTML = ('0' + t.days).slice(-2);*/
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            if (t.total <= 0) {
+                clearInterval(timeinterval);
+            }
+        }
+
+        updateClock();
+        const timeinterval = setInterval(updateClock, 1000);
+    }
+
+    /*const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);*/
+    const deadline = new Date("2020-07-01T08:00:00Z");
+    initializeClock('clockdiv', deadline);
+
+</script>
 

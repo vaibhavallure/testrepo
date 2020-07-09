@@ -210,9 +210,9 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
     public function getStoreTimezone($storeId){
         $configData     = $this->getAppointmentStoreMapping();
         $storeKey = array_search ($storeId, $configData['stores']);
-        $timezone = $configData['timezones'][$storeKey];
-
-        return $timezone;
+        if(isset($configData['timezones'][$storeKey]))
+            return $configData['timezones'][$storeKey];
+        return "";
     }
     public function getTimezoneShortCodeForeStore($storeId){
         $timezone="EST";
@@ -531,7 +531,9 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
         $storeKey = array_search ($store_id, $configData['stores']);
-        return $configData['appears'][$storeKey];
+        if(isset($configData['appears'][$storeKey])) 
+            return $configData['appears'][$storeKey];
+        return "";
     }
 
     public function getStoreEmail($store_id=null)

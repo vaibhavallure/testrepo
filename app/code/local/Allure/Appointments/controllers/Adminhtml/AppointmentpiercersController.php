@@ -192,7 +192,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     public function viewCalenderAction ()
     {
     	$post_data = $this->getRequest()->getParam('piercer');
-    	$store_id = 0;
+    	$piercers_id = null;
     	if($post_data){
     		$piercers_id = $post_data;
     	}
@@ -320,7 +320,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	$lanCode = substr(strrchr($code1, "_"), 1);
 
     	$response = array('status'=>true,'events'=>$calenderEvents,'lang'=>$lanCode);
-    	$jsonData = json_encode ( compact ( 'success', 'response', 'data' ) );
+    	$jsonData = json_encode ( compact ('response') );
     	$this->getResponse ()->setHeader ( 'Content-type', 'application/json' );
     	$this->getResponse ()->setBody ( $jsonData );
     }

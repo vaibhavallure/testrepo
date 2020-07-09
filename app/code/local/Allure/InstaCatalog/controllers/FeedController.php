@@ -230,7 +230,7 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
 
 
         $data = array('html'=>$strHtml);
-        $jsonData = json_encode(compact('success', 'message', 'data'));
+        $jsonData = json_encode(compact('data'));
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody($jsonData);
     }
