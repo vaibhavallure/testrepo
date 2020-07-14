@@ -386,6 +386,73 @@ if ($model) {
 
                                             </div>
 
+
+
+                                            <!--covid 19 section start-->
+
+                                            <style>
+                                                .table.table-bordered td{
+                                                    vertical-align: middle;
+                                                }
+                                            </style>
+                                            <?php
+                                             $covidConditions=explode("\n",$this->getCovidBlock());
+                                             $covidConditionsCount=1;
+                                            ?>
+
+                                            <div id="covid-conditions-1" class="" data-no="1">
+                                                    <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+                                                        <fieldset id="covid-conditions-form">
+                                                            <div class="col-12 pl-0 pb-3">
+                                                                <input type="text" class="covid_section_validation" value="" id="covid_section_validation_1"
+                                                                       name="covid_section_validation_1" style="display:none">
+                                                            </div>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td class="td-first-1"></td>
+                                                                    <td class="yes-label translate td-second-1">Yes</td>
+                                                                    <td class="no-label translate td-last-1">No</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                <?php foreach ($covidConditions as $cc):
+                                                                    if(!$cc) continue;
+                                                                    ?>
+                                                                <tr>
+                                                                    <td class="translate-popup para-normal"><?= $cc?></td>
+                                                                    <td class="td-second-2">
+                                                                        <label class="label translate-popup custom-checkbox" for="condition-yes-<?=$covidConditionsCount?>">
+                                                                            <input type="radio" data-no="1" class="covid-yes" id="condition-yes-<?=$covidConditionsCount?>" name="covid_condition_<?=$covidConditionsCount?>" >
+                                                                            <span class="checkmark"></span></label>
+                                                                    </td>
+                                                                    <td class="td-last-2">
+                                                                        <label class="label translate-popup custom-checkbox" for="condition-no-<?=$covidConditionsCount?>">
+                                                                            <input type="radio" class="covid-no" data-no="1" id="condition-no-<?=$covidConditionsCount?>" name="covid_condition_<?=$covidConditionsCount?>" >
+                                                                            <span class="checkmark"></span></label>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php
+                                                                $covidConditionsCount++;
+                                                                endforeach;?>
+
+                                                                </tbody>
+                                                            </table>
+                                                        <div class="translate-popup para-normal covid-error" style="display: none;color: #830000" ><?= $this->getCovidMessage() ?></div>
+
+                                                        </fieldset>
+
+                                                    </div>
+
+                                            </div>
+
+<!--covid 19 section end-->
+
+
+
+
+
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <div class="row">
                                                     <div class="col-12 notify-text-line">
@@ -494,6 +561,8 @@ if ($model) {
 <!--cODE ADDED FOR MOBILE NO ISSUE WHILE MODIFY-->
 <script type="text/javascript">
     Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+    Allure.CovidQue=<?=json_encode(explode("\n",$this->getCovidBlock()));?>;
+    Allure.CovidMessage="<?= $this->getCovidMessage() ?>";
 
 
     jQuery(document).ready(function () {

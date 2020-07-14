@@ -191,6 +191,14 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         else
             return $this->getLayout()->createBlock('cms/block')->setBlockId("important-information")->toHtml();
     }
+    public function getCovidBlock()
+    {
+        $static_block_code="covid-condition-".$this->getStoreCode();
+        if($content= $this->getLayout()->createBlock('cms/block')->setBlockId($static_block_code)->toHtml())
+            return $content;
+        else
+            return $this->getLayout()->createBlock('cms/block')->setBlockId("covid-condition")->toHtml();
+    }
     public function storeFound()
     {
           if($this->getStoreId())
@@ -218,6 +226,9 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
     public function getIsDisabledPiercingOption(){
         $store_id = $this->getStoreId();
         return $this->helper()->getStoreData($store_id,"disable_piercing");
+    }
+    public function getCovidMessage(){
+        return Mage::getStoreConfig('appointments/covid_setting/covid_msg');
     }
 
 }
