@@ -7,7 +7,10 @@
  */
 class Allure_WaitWhile_Model_Observer
 {
+    const WAIT_WHILE_LOG_FILE = "waitwhile_booking.log";
+    
     protected $is_debug = false;
+    
     /**
      * Add wait-while booking logs data about appointment
      * @param string $message
@@ -15,8 +18,39 @@ class Allure_WaitWhile_Model_Observer
     private function addLog($message)
     {
         if($this->is_debug)
-            Mage::log($message,7,"abc.log",true);
+            Mage::log($message,7,self::WAIT_WHILE_LOG_FILE,true);
     }
+    
+    private function getBookingServiceIds($appointmentId)
+    {
+        $appointmentCustomers = Mage::getModel("appointments/customers")->getCollection();
+        $appointmentCustomers->addFieldToSelect("*");
+        $appointmentCustomers->addFieldToFilter("appointment_id", $appointmentId);
+        
+        $piercingCodeArray = array();
+        foreach ($appointmentCustomers as $customer)
+        {
+            if($customer->getPiercing()){
+                $piercingCodeArray[] = "piercing";
+            }
+            if($customer->getCheckup()){
+                $piercingCodeArray[] = "checkup";
+            }
+            
+        }
+        
+        $waitWhileBookingServices = Mage::getModel('allure_waitwhile/services')->getCollection();
+        $waitWhileBookingServices->addFieldToSelect("*");
+        $waitWhileBookingServices->addFieldToFilter("code",array("in" => $piercingCodeArray) );
+                
+        $waitWhileBookingServicesArray = array();
+        foreach ($waitWhileBookingServices as $bookingService)
+        {
+            $waitWhileBookingServicesArray[$bookingService->getWaitwhileServiceId()] = 1;
+        }
+        return $waitWhileBookingServicesArray;
+    }
+    
     /**
      * @param $observer
      */
@@ -43,28 +77,12 @@ class Allure_WaitWhile_Model_Observer
             /**@var $appointment Allure_Appointments_Model_Appointments */
             $appointment = Mage::getModel('appointments/appointments')->load($appointmentId);
             
-            $appointmentCustomer = Mage::getModel("appointments/customers")->getCollection()
-            ->addFieldToFilter("appointment_id", $appointmentId)
-            ->getFirstItem();
+            $waitWhileBookingServices = $this->getBookingServiceIds($appointmentId);
             
-            $piercingCode = 1;
-            if($appointmentCustomer->getId()){
-                $piercingCode = $appointmentCustomer->getPiercing();
-            }
-            
-            $waitWhileBookingService = Mage::getModel('allure_waitwhile/services')->getCollection()
-            ->addFieldToFilter("code", $piercingCode)
-            ->getFirstItem();
-            
-            $waitWhileBookingServiceId = "";
-            if($waitWhileBookingService->getId()){
-                $waitWhileBookingServiceId = $waitWhileBookingService->getWaitwhileServiceId();
-            }
-            
-            if(!$waitWhileBookingServiceId){
+            if(!count($waitWhileBookingServices)){
                 $this->addLog("Wait-While booking service id required.");
                 return ;
-            }
+            } 
             
             $waitWhileBooking = Mage::getModel('allure_waitwhile/booking')->load($appointmentId,"appointment_id");
             
@@ -97,7 +115,7 @@ class Allure_WaitWhile_Model_Observer
                 "notes" => $appointment->getSpecialNotes(),
                 "externalCustomerId" => null,
                 "externalId" => $appointmentId,
-                "services" => array($waitWhileBookingServiceId => 1),
+                "services" => $waitWhileBookingServices,
                 "phone" => $appointment->getPhone(),
                 "state" => $bookingState
             );
