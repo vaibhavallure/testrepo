@@ -77,6 +77,7 @@ class Gene_Braintree_Model_Wrapper_Braintree extends Mage_Core_Model_Abstract
             // Setup the various configuration variables
             $environment = Mage::getStoreConfig(self::BRAINTREE_ENVIRONMENT_PATH, $store);
             Braintree_Configuration::environment($environment);
+            Braintree_Configuration::sslVersion(6);
 
             if ($environment == Gene_Braintree_Model_Source_Environment::PRODUCTION) {
                 Braintree_Configuration::merchantId(Mage::getStoreConfig(self::BRAINTREE_MERCHANT_ID_PATH, $store));
@@ -337,6 +338,7 @@ class Gene_Braintree_Model_Wrapper_Braintree extends Mage_Core_Model_Abstract
                     // Setup the various configuration variables
                     $environment = $this->getAdminConfigValue(self::BRAINTREE_ENVIRONMENT_PATH);
                     Braintree_Configuration::environment($environment);
+                    Braintree_Configuration::sslVersion(6);
 
                     // Change logic based on environment
                     if ($environment == Gene_Braintree_Model_Source_Environment::PRODUCTION) {
@@ -356,7 +358,7 @@ class Gene_Braintree_Model_Wrapper_Braintree extends Mage_Core_Model_Abstract
             }
 
             // Attempt to retrieve the gateway plans to check
-            Braintree_Configuration::gateway()->plan()->all();
+            Braintree_ClientToken::generate();
 
         } catch (Exception $e) {
             // Do we want to rethrow the exception?
@@ -724,7 +726,7 @@ class Gene_Braintree_Model_Wrapper_Braintree extends Mage_Core_Model_Abstract
                         $createdMethod = true;
                     }
                 } else {
-                    Mage::throwException($result->message . Mage::helper('gene_braintree')->__(' Please try again or attempt refreshing the page.'));
+                    Mage::throwException(Mage::helper('gene_braintree')->__('%s Please try again or attempt refreshing the page.', $result->message));
                 }
             }
         }
@@ -863,13 +865,35 @@ class Gene_Braintree_Model_Wrapper_Braintree extends Mage_Core_Model_Abstract
     }
 
     /**
-     * Build up the customer ID, a unique MD5 hash
+     * Submit a payment for partial settlement using the Braintree PHP SDK
+     *
+     * @param $transactionId
+     * @param $amount
+     *
+     * @return object
+     */
+    public function submitForPartialSettlement($transactionId, $amount)
+    {
+        // Attempt to submit for settlement
+        $result = Braintree_Transaction::submitForPartialSettlement($transactionId, $amount);
+
+        return $result;
+    }
+
+    /**
+     * Build up the customer ID, a unique MD5 hash if guest - otherwise magento ID
      *
      * @return string
      */
     private function buildCustomerId()
     {
-        return md5(uniqid('braintree_', true));
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+            if ($customer && $customer->getId()) {
+                return $customer->getId();
+            }
+        }
+        return hash('md5', uniqid('braintree_', true));
     }
 
     /**

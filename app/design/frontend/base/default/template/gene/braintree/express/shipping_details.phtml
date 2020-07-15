@@ -1,7 +1,7 @@
 <?php
 /* @var $this Gene_Braintree_Block_Express_Checkout */
 ?>
-<form action="<?php echo $this->getUrl('braintree/express/shipping') ?>" method="post">
+<form action="<?php echo $this->getUrl('braintree/express/shipping') ?>" method="post" id="gene_braintree_paypal_express_pp">
     <input type="hidden" name="submit_shipping" value="1" />
 
     <div class="item-row"><strong><?php echo $this->__('Your Order'); ?></strong></div>

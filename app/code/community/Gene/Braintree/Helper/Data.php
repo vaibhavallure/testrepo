@@ -236,4 +236,68 @@ class Gene_Braintree_Helper_Data extends Mage_Core_Helper_Abstract
 
         return false;
     }
+
+    /**
+     * Get button styling configuration settings as an array for PayPal button
+     * @param $scope
+     * @return array
+     */
+    public function getStyleConfigArray($scope)
+    {
+        if (!Mage::getStoreConfig('payment/gene_braintree_paypal/button_style_' . $scope . '_customise')) {
+
+            // Load default config values
+            $configFile = Mage::getConfig()->getModuleDir('etc', 'Gene_Braintree').DS.'config.xml';
+            $xml = simplexml_load_string(file_get_contents($configFile), 'Varien_Simplexml_Element');
+            $xml = $xml->asArray();
+            $config = $xml['default']['payment']['gene_braintree_paypal'];
+
+            return array(
+                "layout" => $config['button_style_' . $scope . '_layout'],
+                "size" => $config['button_style_' . $scope . '_size'],
+                "shape" => $config['button_style_' . $scope . '_shape'],
+                "color" => $config['button_style_' . $scope . '_color'],
+                "tagline" => false
+            );
+        }
+
+        return array(
+            "layout" => Mage::getStoreConfig('payment/gene_braintree_paypal/button_style_' . $scope . '_layout'),
+            "size" => Mage::getStoreConfig('payment/gene_braintree_paypal/button_style_' . $scope . '_size'),
+            "shape" => Mage::getStoreConfig('payment/gene_braintree_paypal/button_style_' . $scope . '_shape'),
+            "color" => Mage::getStoreConfig('payment/gene_braintree_paypal/button_style_' . $scope . '_color'),
+            "tagline" => false
+        );
+    }
+
+    /**
+     * Get button styling configuration settings
+     * @param $scope
+     * @return string
+     */
+    public function getStyleConfig($scope)
+    {
+        $values = $this->getStyleConfigArray($scope);
+
+        return "{layout: '" . $values['layout'] ."',
+                size: '" . $values['size'] . "',
+                shape: '" . $values['shape'] . "',
+                color: '" . $values['color'] . "',
+                tagline: '" . $values['tagline'] . "'}";
+    }
+
+    public function log($data)
+    {
+        // Check the debug flag in the admin
+        if(Mage::getStoreConfigFlag('payment/gene_braintree/debug')) {
+
+            // If the data is an exception convert it to a string
+            if($data instanceof Exception) {
+                $data = $data->getMessage() . $data->getTraceAsString();
+            }
+
+            // Use the built in logging function
+            Mage::log($data, null, 'gene_braintree.log', true);
+        }
+    }
 }

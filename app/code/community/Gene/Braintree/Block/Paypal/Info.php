@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Gene_Braintree_Block_Info
+ * Class Gene_Braintree_Block_Paypal_Info
  *
  * @author Dave Macaulay <braintreesupport@gene.co.uk>
  */

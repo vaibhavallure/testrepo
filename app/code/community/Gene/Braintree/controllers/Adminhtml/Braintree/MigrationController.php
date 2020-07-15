@@ -8,6 +8,16 @@
 class Gene_Braintree_Adminhtml_Braintree_MigrationController extends Mage_Adminhtml_Controller_Action
 {
     /**
+     * Check current user permission on resource and privilege
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('sales/order');
+    }
+
+    /**
      * Run the migration based on the users choice
      *
      * @return $this

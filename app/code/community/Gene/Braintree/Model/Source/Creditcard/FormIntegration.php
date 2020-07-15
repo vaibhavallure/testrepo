@@ -7,6 +7,7 @@
  */
 class Gene_Braintree_Model_Source_Creditcard_FormIntegration
 {
+    // kept for 1.0 to 2.0 migration
     const INTEGRATION_ACTION_XML_PATH = 'payment/gene_braintree_creditcard/form_integration';
 
     /**

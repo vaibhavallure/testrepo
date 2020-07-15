@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Gene_Braintree>
-            <version>2.2.0</version>
+            <version>3.1.3</version>
         </Gene_Braintree>
     </modules>
     <global>
@@ -15,6 +15,7 @@
                 <class>Gene_Braintree_Model_Resource</class>
             </gene_braintree_resource>
         </models>
+
         <blocks>
             <gene_braintree>
                 <class>Gene_Braintree_Block</class>
@@ -26,6 +27,7 @@
                 </rewrite>
             </checkout>
         </blocks>
+
         <helpers>
             <gene_braintree>
                 <class>Gene_Braintree_Helper</class>
@@ -56,6 +58,8 @@
             <setup_required>
                 <gene_braintree_creditcard />
                 <gene_braintree_paypal />
+                <gene_braintree_applepay />
+                <gene_braintree_googlepay />
             </setup_required>
 
             <!-- Function checks for assets on specific pages -->
@@ -65,12 +69,20 @@
                         <class>gene_braintree/express_assets</class>
                         <method>isEnabledPdp</method>
                     </paypal>
+                    <applepay>
+                        <class>gene_braintree/applepay_express</class>
+                        <method>isEnabledPdp</method>
+                    </applepay>
                 </catalog_product_view>
                 <checkout_cart_index>
                     <paypal>
                         <class>gene_braintree/express_assets</class>
                         <method>isEnabledCart</method>
                     </paypal>
+                    <applepay>
+                        <class>gene_braintree/applepay_express</class>
+                        <method>isEnabledCart</method>
+                    </applepay>
                 </checkout_cart_index>
             </assets_required>
         </payment>
@@ -104,6 +116,26 @@
                 <active>0</active>
                 <express_active>1</express_active>
                 <express_link_guest>0</express_link_guest>
+                <button_style_product_customise>0</button_style_product_customise>
+                <button_style_product_layout>horizontal</button_style_product_layout>
+                <button_style_product_size>responsive</button_style_product_size>
+                <button_style_product_shape>rect</button_style_product_shape>
+                <button_style_product_color>gold</button_style_product_color>
+                <button_style_cart_primary_customise>0</button_style_cart_primary_customise>
+                <button_style_cart_primary_layout>vertical</button_style_cart_primary_layout>
+                <button_style_cart_primary_size>responsive</button_style_cart_primary_size>
+                <button_style_cart_primary_shape>rect</button_style_cart_primary_shape>
+                <button_style_cart_primary_color>gold</button_style_cart_primary_color>
+                <button_style_cart_secondary_customise>0</button_style_cart_secondary_customise>
+                <button_style_cart_secondary_layout>horizontal</button_style_cart_secondary_layout>
+                <button_style_cart_secondary_size>responsive</button_style_cart_secondary_size>
+                <button_style_cart_secondary_shape>rect</button_style_cart_secondary_shape>
+                <button_style_cart_secondary_color>gold</button_style_cart_secondary_color>
+                <button_style_checkout_customise>0</button_style_checkout_customise>
+                <button_style_checkout_layout>vertical</button_style_checkout_layout>
+                <button_style_checkout_size>responsive</button_style_checkout_size>
+                <button_style_checkout_shape>rect</button_style_checkout_shape>
+                <button_style_checkout_color>gold</button_style_checkout_color>
                 <model>gene_braintree/paymentmethod_paypal</model>
                 <order_status>processing</order_status>
                 <payment_action>authorize_capture</payment_action>
@@ -114,6 +146,8 @@
                 <use_vault>0</use_vault>
                 <locale>en_gb</locale>
                 <payee_email_active>0</payee_email_active>
+                <disabled_funding></disabled_funding>
+                <sort_order>1</sort_order>
             </gene_braintree_paypal>
 
             <!-- Credit Card method -->
@@ -129,17 +163,44 @@
                 <disable_auto_formatting>0</disable_auto_formatting>
                 <use_vault>0</use_vault>
                 <threedsecure>0</threedsecure>
-                <threedsecure_failed_liability>1</threedsecure_failed_liability>
+                <threedsecure_failed_liability>3</threedsecure_failed_liability>
                 <threedsecure_threshold>0</threedsecure_threshold>
                 <useccv>1</useccv>
                 <kount_ens_ips>209.81.12.0/24,64.128.91.0/24,64.128.87.0/24</kount_ens_ips>
+                <sort_order>0</sort_order>
             </gene_braintree_creditcard>
+
+            <!-- ApplePay method -->
+            <gene_braintree_applepay>
+                <active>0</active>
+                <express_active>1</express_active>
+                <disable_checkout>0</disable_checkout>
+                <model>gene_braintree/paymentmethod_applepay</model>
+                <order_status>processing</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>ApplePay (Braintree)</title>
+                <allowspecific>0</allowspecific>
+                <sort_order>3</sort_order>
+            </gene_braintree_applepay>
+
+            <!-- Google Pay method -->
+            <gene_braintree_googlepay>
+                <model>gene_braintree/paymentmethod_googlepay</model>
+                <active>0</active>
+                <merchant_account_id>sandbox</merchant_account_id>
+                <title>Google Pay (Braintree)</title>
+                <accepted_cards>AMEX,DISCOVER,INTERAC,JCB,MASTERCARD,VISA</accepted_cards>
+                <order_status>processing</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <sort_order>2</sort_order>
+            </gene_braintree_googlepay>
 
             <!-- Legacy methods used by the migration tool -->
             <braintree_legacy>
                 <active>0</active>
                 <model>gene_braintree/paymentmethod_legacy_creditcard</model>
             </braintree_legacy>
+
             <braintree_paypal_legacy>
                 <active>0</active>
                 <model>gene_braintree/paymentmethod_legacy_paypal</model>
@@ -153,7 +214,7 @@
         <secure_url>
             <braintree>/braintree/saved/</braintree>
         </secure_url>
-        
+
         <layout>
             <updates>
                 <gene_braintree module="Gene_Braintree">
@@ -284,6 +345,17 @@
                     </gene_braintree_saved_child>
                 </observers>
             </core_block_abstract_to_html_before>
+
+            <!-- Update each invoice with its corresponding transaction_id -->
+            <sales_order_invoice_save_before>
+                <observers>
+                    <gene_braintree_sales_order_invoice_save_before>
+                        <type>singleton</type>
+                        <class>gene_braintree/observer</class>
+                        <method>updateInvoiceTransactionId</method>
+                    </gene_braintree_sales_order_invoice_save_before>
+                </observers>
+            </sales_order_invoice_save_before>
         </events>
     </adminhtml>
 

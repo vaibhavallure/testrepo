@@ -36,33 +36,14 @@ class Gene_Braintree_Block_Express_Setup extends Gene_Braintree_Block_Express_Ab
     public function getSingleUse()
     {
         // We prefer to do future payments, so anything else is future
-        if (Mage::getSingleton('gene_braintree/paymentmethod_paypal')->getPaymentType() ==
-            Gene_Braintree_Model_Source_Paypal_Paymenttype::GENE_BRAINTREE_PAYPAL_SINGLE_PAYMENT
+        if ((Mage::getSingleton('gene_braintree/paymentmethod_paypal')->getPaymentType() ==
+                Gene_Braintree_Model_Source_Paypal_Paymenttype::GENE_BRAINTREE_PAYPAL_SINGLE_PAYMENT) ||
+            (!Mage::getSingleton('customer/session')->isLoggedIn())
         ) {
             return 'true';
         }
 
         return 'false';
-    }
-
-    /**
-     * Get store currency code.
-     *
-     * @return string
-     */
-    public function getStoreCurrency()
-    {
-        return Mage::app()->getStore()->getCurrentCurrencyCode();
-    }
-
-    /**
-     * Get the store locale.
-     *
-     * @return string
-     */
-    public function getStoreLocale()
-    {
-        return Mage::app()->getLocale()->getLocaleCode();
     }
 
     /**
@@ -103,5 +84,30 @@ class Gene_Braintree_Block_Express_Setup extends Gene_Braintree_Block_Express_Ab
         }
 
         return $html;
+    }
+
+    /**
+     * Get payment Environment
+     *
+     * @return string
+     */
+    public function getEnv()
+    {
+        return Mage::getStoreConfig('payment/gene_braintree/environment');
+    }
+
+    /**
+     * Get payment Environment
+     *
+     * @return string
+     */
+    public function getProductTotals()
+    {
+        $cart = Mage::getModel('checkout/cart')->getQuote();
+        $cartTotal = 0;
+        foreach ($cart->getAllItems() as $item) {
+            $cartTotal += ($item->getProduct()->getPrice() * $item->getQty() );
+        }
+        return $cartTotal;
     }
 }

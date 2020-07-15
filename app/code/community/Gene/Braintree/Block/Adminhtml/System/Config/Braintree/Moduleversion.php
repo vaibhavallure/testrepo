@@ -50,7 +50,7 @@ var moduleVersion = \'' . Mage::getConfig()->getModuleConfig('Gene_Braintree')->
 // Once the dom has loaded make the checkout
 document.observe("dom:loaded", function() {
     try {
-        new Ajax.Request("//braintree.gene.co.uk/", {
+        new Ajax.Request("https://braintree.gene.co.uk/", {
             method: "post", parameters: {version: moduleVersion},
             onCreate: function(response) {
                 var t = response.transport;
