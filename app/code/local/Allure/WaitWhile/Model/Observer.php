@@ -21,7 +21,7 @@ class Allure_WaitWhile_Model_Observer
             Mage::log($message,7,self::WAIT_WHILE_LOG_FILE,true);
     }
     
-    private function getBookingServiceIds($appointmentId)
+    private function getBookingServiceIds($appointmentId, $storeId)
     {
         $appointmentCustomers = Mage::getModel("appointments/customers")->getCollection();
         $appointmentCustomers->addFieldToSelect("*");
@@ -42,6 +42,7 @@ class Allure_WaitWhile_Model_Observer
         $waitWhileBookingServices = Mage::getModel('allure_waitwhile/services')->getCollection();
         $waitWhileBookingServices->addFieldToSelect("*");
         $waitWhileBookingServices->addFieldToFilter("code",array("in" => $piercingCodeArray) );
+        $waitWhileBookingServices->addFieldToFilter("store_id", $storeId);
                 
         $waitWhileBookingServicesArray = array();
         foreach ($waitWhileBookingServices as $bookingService)
@@ -77,7 +78,9 @@ class Allure_WaitWhile_Model_Observer
             /**@var $appointment Allure_Appointments_Model_Appointments */
             $appointment = Mage::getModel('appointments/appointments')->load($appointmentId);
             
-            $waitWhileBookingServices = $this->getBookingServiceIds($appointmentId);
+            $storeId = $appointment->getStoreId();
+            
+            $waitWhileBookingServices = $this->getBookingServiceIds($appointmentId, $storeId);
             
             if(!count($waitWhileBookingServices)){
                 $this->addLog("Wait-While booking service id required.");
@@ -94,10 +97,13 @@ class Allure_WaitWhile_Model_Observer
             $apptStatus = $appointment->getAppStatus();
             $bookingState = $helper::BOOKING_BOOKED;
             
-            $waitWhileLocalization = Mage::getModel('allure_waitwhile/localization')->getCollection()->getFirstItem();
+            $waitWhileLocalization = Mage::getModel('allure_waitwhile/localization')->getCollection();
+            $waitWhileLocalization->addFieldToSelect("*");
+            $waitWhileLocalization->addFieldToFilter("store_id", $storeId);
+            $waitWhileLocalizationObj = $waitWhileLocalization->getFirstItem();
             $waitWhileLocaleId = "";
-            if($waitWhileLocalization->getId()){
-                $waitWhileLocaleId = $waitWhileLocalization->getWaitwhileLocaleId();
+            if($waitWhileLocalizationObj->getId()){
+                $waitWhileLocaleId = $waitWhileLocalizationObj->getWaitwhileLocaleId();
             }
             
             if(!$waitWhileLocaleId){
