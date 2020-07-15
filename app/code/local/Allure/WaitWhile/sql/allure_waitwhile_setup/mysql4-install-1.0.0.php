@@ -16,14 +16,14 @@ $installer->run("
             `waitwhile_service_id` varchar(255) NOT NULL,
             `code` varchar(100) NOT NULL,
             `name` varchar(200) NOT NULL,
-            `location` varchar(255) DEFAULT NULL,
+            `store_id` smallint(5) NOT NULL,
             PRIMARY KEY  (`service_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
         CREATE TABLE IF NOT EXISTS {$this->getTable('allure_waitwhile_localization')} (
             `locale_id` smallint(5) UNSIGNED NOT NULL auto_increment,
             `waitwhile_locale_id` varchar(255) NOT NULL,
-            `time_zone` varchar(255) DEFAULT NULL,
+            `store_id` smallint(5) NOT NULL,
             PRIMARY KEY  (`locale_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   "); 
