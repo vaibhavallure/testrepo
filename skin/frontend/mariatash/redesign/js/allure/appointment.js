@@ -753,7 +753,7 @@ var addCovidSection=function (srno) {
 
     });
 
-  var covidSection='<div id="covid-conditions-'+srno+'" class="" data-no="'+srno+'">\n' +
+  var covidSection='<div id="covid-conditions-'+srno+'" class="covid-section" data-no="'+srno+'">\n' +
       '<input type="hidden" name="customer['+srno+'][ans_covid_section]"  value="1">\n'+
       '    <div class="col-12 col-md-12 col-sm-12 col-lg-12">\n' +
       '        <fieldset id="covid-conditions-form">\n' +
