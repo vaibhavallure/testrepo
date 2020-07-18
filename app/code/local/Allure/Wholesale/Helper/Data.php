@@ -31,4 +31,29 @@ class Allure_Wholesale_Helper_Data extends Mage_Core_Helper_Abstract
         $store = Mage::app()->getStore();
         return $store->getId();
     }
+    private function maximumAmount()
+    {
+        return Mage::getStoreConfig('wholesale/checkout_limit/limit');
+    }
+    private function maximumAmountLimitEnabled()
+    {
+        return Mage::getStoreConfig('wholesale/checkout_limit/enabled');
+    }
+    public function maximumAmountLimitMessage()
+    {
+        return Mage::getStoreConfig('wholesale/checkout_limit/message');
+    }
+    public function maxAmountDisabled()
+    {
+        if(!$this->isWholesaleStore())
+            return false;
+
+        if(!$this->maximumAmountLimitEnabled())
+            return false;
+
+        if(Mage::getSingleton('checkout/session')->getQuote()->getSubtotal()>=(float)$this->maximumAmount())
+             return true;
+
+        return false;
+    }
 }

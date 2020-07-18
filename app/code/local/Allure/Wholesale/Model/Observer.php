@@ -47,6 +47,7 @@ class Allure_Wholesale_Model_Observer
             return;
         }
 
+        $this->limitWholesaleCheckout();
     }
 
     public function afterLoginCheckUserGroup($observer)
@@ -127,6 +128,15 @@ class Allure_Wholesale_Model_Observer
             return true;
 
         return false;
+    }
+
+    public function limitWholesaleCheckout()
+    {
+        if($this->helper()->maxAmountDisabled()) {
+            if ("/checkout/onepage/" == Mage::app()->getRequest()->getOriginalPathInfo())
+                Mage::app()->getResponse()->setRedirect($this->getStoreUrl($this->helper()->getStoreId()) . "checkout/cart");
+        }
+
     }
 
 }
