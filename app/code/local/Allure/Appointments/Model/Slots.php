@@ -17,7 +17,8 @@ class Allure_Appointments_Model_Slots
         4 => array(0=>0, 4 => 60,5 => 60,6 => 70,7 => 80,8 => 90,9 => 90,10 => 120,11 => 120,12 => 120,13 => 120,14 => 120,15 => 120,16 => 120)
     );
 
-    const CHECKUP=10;
+    /*MSA-68 checkup time changed from 10 to 15*/
+    const CHECKUP=15;
 
     public function getSlot($number_of_people,$number_of_piercing,$checkup=0)
     {
