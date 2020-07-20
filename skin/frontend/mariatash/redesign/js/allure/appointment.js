@@ -738,7 +738,7 @@ var addCovidSection=function (srno) {
 
     jQuery.each(covidQues, function(i, item) {
         covidQuetr+='                <tr>\n' +
-        '                    <td class="translate-popup para-normal">'+covidQues[i]+'</td>\n' +
+        '                    <td class="translate para-normal">'+covidQues[i]+'</td>\n' +
         '                    <td class="td-second-2">\n' +
         '                        <label class="label translate-popup custom-checkbox" for="condition-yes-'+srno+'_'+i+'">\n' +
         '                            <input type="radio" data-no="'+srno+'" class="covid-yes" id="condition-yes-'+srno+'_'+i+'" name="covid_condition_'+srno+'_'+i+'" >\n' +
@@ -773,7 +773,7 @@ var addCovidSection=function (srno) {
       covidQuetr+
       '                </tbody>\n' +
       '            </table>\n' +
-      '            <div class="translate-popup para-normal covid-error" style="display: none;color: #830000" >'+Allure.CovidMessage+'</div>\n' +
+      '            <div class="translate para-normal covid-error" style="display: none;color: #830000" >'+Allure.CovidMessage+'</div>\n' +
       '        </fieldset>\n' +
       '    </div>\n' +
       '</div>';
