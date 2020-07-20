@@ -422,7 +422,7 @@ if ($model) {
                                                                     if(!$cc) continue;
                                                                     ?>
                                                                 <tr>
-                                                                    <td class="translate para-normal"><?= $cc?></td>
+                                                                    <td class="translate para-normal"><?= trim($cc)?></td>
                                                                     <td class="td-second-2">
                                                                         <label class="label translate-popup custom-checkbox" for="condition-yes-<?=$covidConditionsCount?>">
                                                                             <input type="radio" data-no="1" class="covid-yes" id="condition-yes-<?=$covidConditionsCount?>" name="covid_condition_<?=$covidConditionsCount?>" >

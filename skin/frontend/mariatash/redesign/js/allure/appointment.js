@@ -738,7 +738,7 @@ var addCovidSection=function (srno) {
 
     jQuery.each(covidQues, function(i, item) {
         covidQuetr+='                <tr>\n' +
-        '                    <td class="translate para-normal">'+covidQues[i]+'</td>\n' +
+        '                    <td class="translate para-normal">'+___(jQuery.trim(covidQues[i]))+'</td>\n' +
         '                    <td class="td-second-2">\n' +
         '                        <label class="label translate-popup custom-checkbox" for="condition-yes-'+srno+'_'+i+'">\n' +
         '                            <input type="radio" data-no="'+srno+'" class="covid-yes" id="condition-yes-'+srno+'_'+i+'" name="covid_condition_'+srno+'_'+i+'" >\n' +
@@ -765,8 +765,8 @@ var addCovidSection=function (srno) {
       '                <thead>\n' +
       '                <tr>\n' +
       '                    <td class="td-first-1"></td>\n' +
-      '                    <td class="yes-label translate td-second-1">Yes</td>\n' +
-      '                    <td class="no-label translate td-last-1">No</td>\n' +
+      '                    <td class="yes-label translate td-second-1">'+___("Yes")+'</td>\n' +
+      '                    <td class="no-label translate td-last-1">'+___("No")+'</td>\n' +
       '                </tr>\n' +
       '                </thead>\n' +
       '                <tbody>\n' +
