@@ -39,7 +39,7 @@
             PayPalInit = true;
 
             // Always set the amount as it's needed within 3D secure requests
-            vzeroPaypal.setPricing('<?php echo Mage::helper('gene_braintree')->formatPrice(Mage::getSingleton('checkout/cart')->getQuote()->collectTotals()->getGrandTotal()); ?>', '<?php echo Mage::getSingleton('checkout/cart')->getQuote()->getQuoteCurrencyCode(); ?>');
+            vzeroPaypal.setPricing('<?php echo Mage::helper('gene_braintree')->formatPrice(Mage::getSingleton('checkout/cart')->getQuote()->collectTotals()->getBaseGrandTotal()); ?>', '<?php echo Mage::getSingleton('checkout/cart')->getQuote()->getBaseCurrencyCode(); ?>');
         }
 
         if(typeof vzero !== 'undefined') {
