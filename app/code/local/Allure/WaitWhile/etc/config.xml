@@ -51,6 +51,14 @@
                     </allure_waitwhile>
                 </observers>
             </appointment_complete_save_after>
+            <appointment_save_commit_after>
+                <observers>
+                    <allure_waitwhile>
+                        <class>allure_waitwhile/observer</class>
+                        <method>process</method>
+                    </allure_waitwhile>
+                </observers>
+            </appointment_save_commit_after>
         </events>
 	</global>
 </config>
