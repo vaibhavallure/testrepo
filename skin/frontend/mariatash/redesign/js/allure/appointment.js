@@ -293,7 +293,8 @@ var calculateTime = function () {
     }
     var slotsArray = JSON.parse(slots);
     var slotTime = parseInt(slotsArray[number_of_piercing_people][number_of_piercing]);
-    var time = slotTime + (number_of_checkup * 10);
+    /*MSA-68 checkup time changed from 10 to 15*/
+    var time = slotTime + (number_of_checkup * 15);
     time_in_min=time;
     var hours = Math.trunc(time / 60);
     var minutes = time % 60;
