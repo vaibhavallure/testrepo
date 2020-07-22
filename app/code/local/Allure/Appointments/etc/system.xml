@@ -175,42 +175,25 @@
 					</fields>
 				</app_bcc>
 
-				<no_of_people translate="label">
-					<label>Number of people in group - setting</label>
+				<no_of_guest translate="label">
+					<label>Configure number of Guest</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>12</sort_order>
 					<show_in_default>1</show_in_default>
 					<show_in_website>1</show_in_website>
 					<show_in_store>1</show_in_store>
 					<fields>
-						<admin_side translate="label">
-							<label>Admin Side</label>
+						<no translate="label">
+							<label>No of Guest</label>
 							<frontend_type>text</frontend_type>
-							<comment>Left Blank For No Limitation</comment>
 							<sort_order>3</sort_order>
+							<comment>Default Limit 4</comment>
 							<show_in_default>1</show_in_default>
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
-						</admin_side>
-						<user_side translate="label">
-							<label>User Side</label>
-							<frontend_type>text</frontend_type>
-							<comment>Left Blank For No Limitation</comment>
-							<sort_order>3</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-						</user_side>
-						<popup_msg translate="label">
-							<label>Popup Message</label>
-							<frontend_type>text</frontend_type>
-							<sort_order>3</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-						</popup_msg>
+						</no>
 					</fields>
-				</no_of_people>
+				</no_of_guest>
 				<popup_setting translate="label">
 					<label>Popup store setting</label>
 					<frontend_type>text</frontend_type>

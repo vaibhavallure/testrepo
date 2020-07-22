@@ -231,4 +231,41 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         return Mage::getStoreConfig('appointments/covid_setting/covid_msg');
     }
 
+    /*MT-1484*/
+    public function getNoOfGuestBlock($selected=0)
+    {
+        $no_of_guest=$this->getGuestsNo($selected);
+
+        $options='';
+
+        for ($i=1;$i<=$no_of_guest;$i++)
+        {
+            $isSelected="";
+            if($selected==$i)
+            {
+                $isSelected="selected";
+            }
+          $options.='<option value="'.$i.'" '.$isSelected.'>'.$i.'</option>';
+        }
+        $dropdown='<select class="input-box" id="count" name="piercing_qty" onchange="changeQty(this)">'.$options.'</select>';
+
+        return $dropdown;
+    }
+
+    public function getGuestsNo($selected=0)
+    {
+             $no_of_guest=4;
+             $no_of_guest_config=(int)Mage::getStoreConfig('appointments/no_of_guest/no');
+
+             if(is_int($no_of_guest_config)  &&  $no_of_guest_config>0) {
+                 $no_of_guest = Mage::getStoreConfig('appointments/no_of_guest/no');
+             }
+
+             if($no_of_guest<$selected) {
+                 $no_of_guest = $selected;
+             }
+
+             return $no_of_guest;
+    }
+
 }
