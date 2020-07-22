@@ -718,6 +718,22 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $ap_end= $post['appointment_end'];
         $email=$post['email'];
 
+
+
+        /*validate number of guest*/
+
+        $no_of_guest=4;
+        $no_of_guest_config=(int)Mage::getStoreConfig('appointments/no_of_guest/no');
+        if(is_int($no_of_guest_config)  &&  $no_of_guest_config>0) {
+            $no_of_guest = Mage::getStoreConfig('appointments/no_of_guest/no');
+        }
+
+        if($qty<1 || $qty>$no_of_guest)
+        {
+            return false;
+        }
+
+
         /*check store id and piercer id */
 
         if (empty($store_id) || empty($piercer_id)) {
