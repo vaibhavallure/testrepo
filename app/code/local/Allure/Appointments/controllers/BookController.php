@@ -130,21 +130,23 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
             $model = $this->appointment()->addData($post_data)->save();
 
             foreach ($post_data['customer'] as $customer) {
-                $customer['appointment_id'] = $model->getId();
-                $customer['sms_notification'] = ($customer['noti_sms'] == 'on') ? 1 : 0;
-                $customer['piercing'] = ($customer['piercing']) ? $customer['piercing'] : 0;
+                if(isset($customer['firstname']) && isset($customer['lastname']) && isset($customer['email'])) {
+                    $customer['appointment_id'] = $model->getId();
+                    $customer['sms_notification'] = ($customer['noti_sms'] == 'on') ? 1 : 0;
+                    $customer['piercing'] = ($customer['piercing']) ? $customer['piercing'] : 0;
 
-                if ($customer['piercing'] > 0)
-                    $isPiercingAppointment = true;
+                    if ($customer['piercing'] > 0)
+                        $isPiercingAppointment = true;
 
-                $customer['checkup'] = ($customer['checkup']) ? 1 : 0;
-                $customer['language_pref'] = ($post_data['language_pref']) ? $post_data['language_pref'] : 'en';
+                    $customer['checkup'] = ($customer['checkup']) ? 1 : 0;
+                    $customer['language_pref'] = ($post_data['language_pref']) ? $post_data['language_pref'] : 'en';
 
 
-                $customerObj = $customers[] = Mage::getModel('appointments/customers')->addData($customer)->save();
+                    $customerObj = $customers[] = Mage::getModel('appointments/customers')->addData($customer)->save();
 
-                if ($customerObj->getId())
-                    $customer_ids[] = $customerObj->getId();
+                    if ($customerObj->getId())
+                        $customer_ids[] = $customerObj->getId();
+                }
             }
 
             if ($post_data['id'] && count($customer_ids) > 0) {
@@ -242,6 +244,14 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         $post_data['ip'] = $this->get_client_ip();
 
         $post_data['language_pref'] = ($post_data['language_pref']) ? $post_data['language_pref'] : 'en';
+
+        $validcustomerscount=0;
+        foreach ($post_data['customer'] as $customer) {
+            if(isset($customer['firstname']) && isset($customer['lastname']) && isset($customer['email'])) {
+                $validcustomerscount++;
+            }
+        }
+        $post_data['piercing_qty'] = $validcustomerscount;
 
         return $post_data;
     }

@@ -279,7 +279,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 				$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 				$customerDetails .= $quote->getCustomerEmail();
 				$dataRequest = $this->getRequest()->getPost();
-				Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.$dataRequest,Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
+				Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.json_encode($dataRequest),Zend_log::DEBUG,self::ONEPAGE_LOG_FILE,true);
 	        }
 
             Mage::getSingleton('checkout/session')->setInStockOrderShippingMethod($data);
@@ -305,8 +305,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
                 $_checkoutHelper = Mage::helper('allure_multicheckout');
                 $deliveryMethod = $this->getOnepage()->getQuote()->getDeliveryMethod();
+                $errorWhileDividingQuote = 0;
                 if (strtolower($deliveryMethod) == strtolower($_checkoutHelper::TWO_SHIP)) {
-                    $errorWhileDividingQuote=0;
                     /*this condition check if normal order and backorder contain same quote id*/
                     if ($this->getOnepage()->getQuoteOrdered()->getId() != $this->getOnepage()->getQuoteBackordered()->getId())
                     {

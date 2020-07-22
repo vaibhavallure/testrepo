@@ -29,7 +29,9 @@ $item = $this->getItem();
 $_data = $item->getBuyRequest()->getData();
 $product = $item->getProduct();
 
-$cpid = ($product->getId() == $_data['cpid']) ? 0 : $_data['cpid'];
+$dataCPid = isset($_data['cpid']) ? $_data['cpid'] : 0;
+
+$cpid = ($product->getId() == $dataCPid) ? 0 : $dataCPid;
 $defaultProduct  = $product;
 $arrayOptions = array();
 $productUrl = $defaultProduct->getProductUrl();

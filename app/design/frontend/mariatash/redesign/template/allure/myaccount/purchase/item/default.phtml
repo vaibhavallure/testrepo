@@ -92,7 +92,7 @@ if(!$product->getId()){
 
 
                          $_order = Mage::getModel('sales/order')->load($_item->getOrderId());
-                         $storeName = $storeList[$_order->getOldStoreId()];
+                         $storeName = isset($storeList[$_order->getOldStoreId()]) ? $storeList[$_order->getOldStoreId()] : "";
 
 
                        /* if(array_key_exists($_item->getStoreId(),$storeColorConfig)){

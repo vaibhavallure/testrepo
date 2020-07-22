@@ -20,12 +20,11 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
             $storeId=Mage::app()->getStore()->getStoreId();
             $groups = $this->getAddress()->getGroupedAllShippingRates();
             
-            
             foreach ($groups as $code => $_rates){
                 $quote=Mage::getSingleton('checkout/session')->getQuote();
                 $quoteItems=$quote->getAllVisibleItems();
                 
-                if($code="allure_pickinstore"){
+                if($code=="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
                     $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
                    
@@ -47,15 +46,16 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                         unset($groups[$code]);
                     }
                 }
-               
-                }
-                if($code="flatrate"){
+                
+                if($code=="flatrate"){
                     foreach ($quoteItems as $item){
                         if($item->getProduct()->getSku()!='SAMPLERINGS'){
                             unset($groups[$code]);
                             break;
                         }
                     }
+                }
+               
                 }
             
             return $this->_rates = $groups;

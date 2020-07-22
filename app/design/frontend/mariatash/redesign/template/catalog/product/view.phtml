@@ -33,7 +33,8 @@
  * @see Mage_Review_Block_Product_View
  */
 
-$categoryUrl = trim(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH),"/");
+$httpReferer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : "";
+$categoryUrl = trim(parse_url($httpReferer, PHP_URL_PATH),"/");
 
 $rewriteData = Mage::getModel('core/url_rewrite')->setStoreId(Mage::app()->getStore()->getId())->loadByRequestPath($categoryUrl);
 

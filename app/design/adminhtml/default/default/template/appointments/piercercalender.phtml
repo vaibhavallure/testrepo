@@ -76,7 +76,6 @@
 	 		type : 'POST',
 	 		data: {'piercer_id':'<?php echo $piercer_id; ?>',form_key:'<?php echo $k ?>'},
 	 		success : function(data){
-		 		console.log(data.response.events);
 		 		if(data.response.lang){
 		 			initialLangCode = data.response.lang;
 		 		}
@@ -84,7 +83,6 @@
 		 		var events = [];
 
 		 		var data = data.response.events;
-				//console.log(data);
 		 		for(var i = 0; i< data.length; i++){
 
 					var startDate = convertDate(data[i].start);
@@ -103,7 +101,6 @@
 		 			};
 		 		}
 
-				console.log(events);
 
 		 		$j('#loading-mask').hide();
 

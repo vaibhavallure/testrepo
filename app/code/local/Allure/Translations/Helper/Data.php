@@ -23,7 +23,7 @@ class Allure_Translations_Helper_Data extends Mage_Customer_Helper_Data
         curl_close($ch);
 
         $geoInfo = json_decode($result, true);
-        if (!empty($geoInfo)){
+        if (!empty($geoInfo) && isset($geoInfo['countryCode'])){
             return $geoInfo['countryCode'];
         }
         return '';

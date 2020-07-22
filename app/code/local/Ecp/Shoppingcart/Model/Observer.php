@@ -6,11 +6,11 @@ class Ecp_Shoppingcart_Model_Observer
     {
         $lastQid = Mage::getSingleton('checkout/session')->getQuoteId();
         $cookie = Mage::getSingleton('core/cookie');
-        Mage::log('subtotal read ' . $cookie->get('subtotal'));
+        //Mage::log('subtotal read ' . $cookie->get('subtotal'));
         $totals = Mage::getSingleton('checkout/cart')->getQuote()->getTotals();
         $subtotal = $totals['subtotal']->getValue();
         $cookie->set('subtotal', $subtotal, time() + 60 * 60 * 24 * 15);
-        Mage::log('subtotal' . $subtotal);
+        //Mage::log('subtotal' . $subtotal);
     }
 
     public function getCustomerQuote(Varien_Event_Observer $observer)

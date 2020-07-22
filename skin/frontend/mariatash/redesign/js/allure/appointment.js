@@ -153,7 +153,7 @@ var addCustomer = function (srno) {
                         	<textarea maxlength="100" id="special-notes-${srno}" class="splnotesTxtarea w-100" name="customer[${srno}][special_notes]" placeholder="${__('Special notes')}" rows="4" ></textarea>
 
               	 </div>
-                 
+                 `+addCovidSection(srno)+`
                <div id="notify-box" class="col-md-12 form-group">
                <div class="row">
                     <div class="col-12 notify-text-line">
@@ -195,7 +195,6 @@ var addCustomer = function (srno) {
         utilsScript:  Allure.UtilPath
 });
     // allureIntlTelValidate(jQuery("#phonenumber" + srno), iti);
-
 };
 
 var addCustomerJob = function (srno) {
@@ -294,7 +293,8 @@ var calculateTime = function () {
     }
     var slotsArray = JSON.parse(slots);
     var slotTime = parseInt(slotsArray[number_of_piercing_people][number_of_piercing]);
-    var time = slotTime + (number_of_checkup * 10);
+    /*MSA-68 checkup time changed from 10 to 15*/
+    var time = slotTime + (number_of_checkup * 15);
     time_in_min=time;
     var hours = Math.trunc(time / 60);
     var minutes = time % 60;
@@ -545,6 +545,15 @@ var validateForm = function () {
         });
     });
 
+    jQuery('.covid_section_validation').each(function() {
+        jQuery(this).rules('add', {
+            required:true,
+            messages: {
+                required:  __("Please answer below questions."),
+            }
+        });
+    });
+
     /*jQuery(".noti_sms").change(function() {
         if(this.checked) {
             jQuery("#phonenumber" + jQuery(this).attr("data-section_id")).rules('add', {
@@ -637,7 +646,141 @@ jQuery(document).ready(function () {
     });
 
 
+
+ /*covid 19 section code start*/
+$(document).on("change",".covid-yes",function () {
+    if($(this).prop("checked"))
+    {
+        var no=$(this).data("no");
+        $("#piercing_select_"+no).prop("checked",false).change();
+        $("#piercing_select_"+no).prop("disabled",true);
+        $("#customer_select_"+no).prop("disabled",true);
+        $("#checkup_select_"+no).prop("checked",false).change();
+        $("#checkup_select_"+no).prop("disabled",true);
+
+
+        $("#customer"+no).find("input,textarea").prop("disabled",true);
+        $("#covid-conditions-"+no).find("input").prop("disabled",false);
+
+        $("#covid-conditions-"+no).find(".covid-error").show();
+    }
+    checkIfAnsAllQue(no);
+
 });
+
+    $(document).on("change",".covid-no",function () {
+        if($(this).prop("checked")) {
+            var no = $(this).data("no");
+            var allNo = true;
+            $("#covid-conditions-" + no).find(".covid-yes").each(function () {
+                if ($(this).prop("checked")) {
+                    allNo = false;
+                    return;
+                }
+            });
+
+            if(allNo)
+            {
+                $("#piercing_select_"+no).prop("disabled",false);
+                $("#customer_select_"+no).prop("disabled",false);
+                $("#checkup_select_"+no).prop("disabled",false);
+                $("#customer"+no).find("input,textarea").prop("disabled",false);
+                $("#covid-conditions-"+no).find(".covid-error").hide();
+            }
+        }
+        checkIfAnsAllQue(no);
+    });
+
+
+    /*covid 19 condition code end here*/
+
+});
+
+var checkIfAnsAllQue= function(no)
+{
+    $=jQuery;
+    var total_que=$("#covid-conditions-" + no).find(".covid-yes").length;
+
+    var yes_count=0;
+
+    var no_count=0;
+
+
+    $("#covid-conditions-" + no).find(".covid-yes").each(function () {
+        if($(this).prop("checked"))
+        {
+            yes_count++;
+        }
+    });
+    $("#covid-conditions-" + no).find(".covid-no").each(function () {
+        if($(this).prop("checked"))
+        {
+            no_count++;
+        }
+    });
+
+    console.log(total_que,yes_count,no_count);
+
+    if(total_que===yes_count+no_count)
+    {
+        $("#covid_section_validation_"+no).val("1");
+    }else {
+        $("#covid_section_validation_"+no).val("");
+    }
+
+    };
+
+var addCovidSection=function (srno) {
+    var covidQuetr='';
+
+    // var que = jQuery.parseJSON(Allure.CovidQue);
+
+    var covidQues=Allure.CovidQue;
+
+    jQuery.each(covidQues, function(i, item) {
+        covidQuetr+='                <tr>\n' +
+        '                    <td class="translate para-normal">'+___(jQuery.trim(covidQues[i]))+'</td>\n' +
+        '                    <td class="td-second-2">\n' +
+        '                        <label class="label translate-popup custom-checkbox" for="condition-yes-'+srno+'_'+i+'">\n' +
+        '                            <input type="radio" data-no="'+srno+'" class="covid-yes" id="condition-yes-'+srno+'_'+i+'" name="covid_condition_'+srno+'_'+i+'" >\n' +
+        '                            <span class="checkmark"></span></label>\n' +
+        '                    </td>\n' +
+        '                    <td class="td-last-2">\n' +
+        '                        <label class="label translate-popup custom-checkbox" for="condition-no-'+srno+'_'+i+'">\n' +
+        '                            <input type="radio" class="covid-no" data-no="'+srno+'" id="condition-no-'+srno+'_'+i+'" name="covid_condition_'+srno+'_'+i+'" >\n' +
+        '                            <span class="checkmark"></span></label>\n' +
+        '                    </td>\n' +
+        '                </tr>\n';
+
+    });
+
+  var covidSection='<div id="covid-conditions-'+srno+'" class="covid-section" data-no="'+srno+'">\n' +
+      '<input type="hidden" name="customer['+srno+'][ans_covid_section]"  value="1">\n'+
+      '    <div class="col-12 col-md-12 col-sm-12 col-lg-12">\n' +
+      '        <fieldset id="covid-conditions-form">\n' +
+      '<div class="col-12 pl-0 pb-3">\n' +
+      '<input type="text" class="covid_section_validation" value="" id="covid_section_validation_'+srno+'"\n' +
+      ' name="covid_section_validation_'+srno+'" style="display:none">\n' +
+      '</div>'+
+      '            <table class="table table-bordered">\n' +
+      '                <thead>\n' +
+      '                <tr>\n' +
+      '                    <td class="td-first-1"></td>\n' +
+      '                    <td class="yes-label translate td-second-1">'+___("Yes")+'</td>\n' +
+      '                    <td class="no-label translate td-last-1">'+___("No")+'</td>\n' +
+      '                </tr>\n' +
+      '                </thead>\n' +
+      '                <tbody>\n' +
+      covidQuetr+
+      '                </tbody>\n' +
+      '            </table>\n' +
+      '            <div class="translate para-normal covid-error" style="display: none;color: #830000" >'+Allure.CovidMessage+'</div>\n' +
+      '        </fieldset>\n' +
+      '    </div>\n' +
+      '</div>';
+
+  return covidSection;
+};
 
 /*
 jQuery(window).bind('beforeunload', function() {

@@ -77,6 +77,11 @@
     </div>
 </div>
 
+<?php 
+    $mStore = isset($_GET['m_store']) ? $_GET['m_store'] : "";
+    $mSort = isset($_GET['m_sort']) ? $_GET['m_sort'] : "";
+?>
+
 <script>
 
     if (typeof Allure == "undefined") var Allure = {};
@@ -84,7 +89,7 @@
     Allure.showLoading = true;
     Allure.loader = '<div class="allure-fancybox-overlay allure-fancybox-overlay-fixed"><div id="allure-fancybox-loading"><div></div></div></div>';
 
-    var Filter_Store = '<?php echo $_GET['m_store']?>';
+    var Filter_Store = '<?php echo $mStore?>';
     jQuery(document).ready(function () {
 
         setTab();
@@ -324,8 +329,8 @@
                             data: {
                                 'page': page,
                                 'limit': limit,
-                                'm_store': '<?php echo $_GET['m_store']?>',
-                                'm_sort': '<?php echo $_GET['m_sort']?>',
+                                'm_store': '<?php echo $mStore ?>',
+                                'm_sort': '<?php echo $mSort ?>',
                                 'count': ord_cnt
                             },
                             success: function (data) {

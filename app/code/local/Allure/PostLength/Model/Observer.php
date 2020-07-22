@@ -56,17 +56,16 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
     private function checkIfItemAdded()
     {
-        $items["new"]=$this->getQuoteItemsWithSelectedPostLength()["new"];
-
-        $this->_itemsAdded=$items;
-
-
-        if($items["new"])
+        $items = array();
+        $selectedPostLengthItmes = $this->getQuoteItemsWithSelectedPostLength();
+        if(isset($selectedPostLengthItmes["new"])){
+            $items["new"] = $selectedPostLengthItmes["new"];
+            $this->_itemsAdded = $items;
             return true;
-        else
-            return false;
-
+        }
+        return false;
     }
+    
     private function checkIfItemFoundWithoutPLP()
     {
         $items=$this->getIfItemFoundWithoutPLP();
@@ -95,12 +94,13 @@ class Allure_PostLength_Model_Observer extends Varien_Object
 
         $newItems=$this->getQuoteItemsWithSelectedPostLength();
         $oldItems=$this->session()->getData('quote_items_with_selected_postlength');
+        
+        //$commonItems=array_intersect($newItems,$oldItems);
 
-        $commonItems=array_intersect($newItems,$oldItems);
 
-
-        foreach ($commonItems as $key=>$cItem)
+        foreach ($newItems as $key=>$cItem)
         {
+            if(!isset($oldItems[$key])) continue;
             if($newItems[$key]['qty']!=$oldItems[$key]['qty'])
             {
                 $updatedQtyItems[$key]=$cItem;

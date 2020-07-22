@@ -417,7 +417,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     	$lanCode = substr(strrchr($code1, "_"), 1);
     
     	$response = array('status'=>true,'events'=>$calenderEvents,'lang'=>$lanCode);
-    	$jsonData = json_encode ( compact ( 'success', 'response', 'data' ) );
+    	$jsonData = json_encode ( compact ('response') );
     	$this->getResponse ()->setHeader ( 'Content-type', 'application/json' );
     	$this->getResponse ()->setBody ( $jsonData );
     }
