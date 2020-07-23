@@ -211,7 +211,6 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
         $post_data = $this->getRequest()->getPost();
 
-
         if ($post_data['id'])
             $action = 'update';
         else
@@ -247,7 +246,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
         $validcustomerscount=0;
         foreach ($post_data['customer'] as $customer) {
-            if(isset($customer['firstname']) && isset($customer['lastname']) && isset($customer['email'])) {
+            if(isset($customer['firstname']) && isset($customer['lastname']) && isset($customer['email']) && ($customer['piercing']>0 || $customer['checkup']>0)) {
                 $validcustomerscount++;
             }
         }
