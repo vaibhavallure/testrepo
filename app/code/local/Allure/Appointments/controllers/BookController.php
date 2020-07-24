@@ -182,6 +182,9 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
             }
 
+            //crete appointment event
+            Mage::dispatchEvent('appointment_complete_save_after', array("appointment" => $model));
+            
             /*---------------------------------notification section end--------------------------------*/
 
 
