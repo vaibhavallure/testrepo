@@ -2,6 +2,9 @@
 
 class Allure_Appointments_Model_Appointments extends Mage_Core_Model_Abstract
 {
+    protected $_eventPrefix = 'appointment';
+    protected $_eventObject = 'appointment';
+    
 	const STATUS_REQUEST  = '1';
 	const STATUS_ASSIGNED  = '2';
 	const STATUS_COMPLETED = '3';
