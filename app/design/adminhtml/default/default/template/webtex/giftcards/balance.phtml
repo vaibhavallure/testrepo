@@ -3,7 +3,7 @@
     <div class="clear"></div>
     <div class="entry-edit box-left" style="float:inherit;display:block;margin-top: 5px;">
         <div class="entry-edit-head">
-            <h4 class="icon-head"><?php echo $this->__('Customer Gift Cards') ?></h4>
+            <h4 class="icon-head"><?php echo $this->__('Webtex Customer Gift Cards') ?></h4>
         </div>
 
         <fieldset class="np">
@@ -12,7 +12,7 @@
                     <tr>
                         <td><?php echo $this->__('Enter the Gift Card code') ?>:</td>
                         <td><input class="input-text" id="giftcard_code" name="giftcard_code" value="" /></td>
-                        <td><button style="margin-left: 3%" type="button" title="<?php echo $this->__('Redeem') ?>" class="button" onclick="updateBalance('<?php echo $this->getUrl('giftcards/adminhtml_giftcards/activategiftcard') ?>',<?php echo $this->getCustomerId()?>)" value="<?php echo $this->__('Redeem') ?>"><span><span><?php echo $this->__('Redeem') ?></span></span></button></td>
+                        <td><button style="margin-left: 3%" type="button" title="<?php echo $this->__('Redeem') ?>" class="scalable" onclick="updateBalance('<?php echo $this->getUrl('giftcards/adminhtml_giftcards/activategiftcard') ?>',<?php echo $this->getCustomerId()?>)" value="<?php echo $this->__('Redeem') ?>"><span><span><?php echo $this->__('Redeem') ?></span></span></button></td>
                     </tr>
                     <tr>
                         <td colspan="3">
