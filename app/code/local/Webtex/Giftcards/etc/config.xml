@@ -284,6 +284,13 @@
                 </create>
             </order>
         </sales>
+        <layout>
+            <updates>
+                <giftcards>
+                    <file>webtex/giftcards/giftcards.xml</file>
+                </giftcards>
+            </updates>
+        </layout>
     </adminhtml>
     <default>
         <giftcards>
