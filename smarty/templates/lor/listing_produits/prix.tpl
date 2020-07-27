@@ -70,10 +70,23 @@
     Caisse HT (non marqué)
     Bouteille  HT (non marqué)
    ----------------------------  *}
-    <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_ht}</span><br />
+    <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_ht}</span><span style="font-size:10px"> ex shipping</span><br />
     <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span><br />
-    <span style="font-size:12px">{$produit->devise}&nbsp;{$produit->prixhtblle} {$fnpx1btlleht}</span>
+    <span style="font-size:12px">{$produit->devise}&nbsp;{$produit->prixhtblle} {$fnpx1btlleht}</span><span style="font-size:10px"> ex shipping</span>
 {* ------ Fin Hong Kong ------ *}
+{* ------ Début G I ------ *}
+{elseif $produit->pays == 'G' OR $produit->pays == 'I'}
+    <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_ht} </span><span style="font-size:10px">ex duty & VAT</span><br />
+    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span><br />
+    <span style="font-size:12px">{$produit->devise}&nbsp;{$produit->prixhtblle} </span><span style="font-size:10px">ex duty & VAT</span>
+{* ------ Fin G I ------ *}
+{* ------ Début SG ------ *}
+{elseif $produit->pays == 'SG' }
+    <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_ht} </span><span style="font-size:10px">ex shipping, duty & GST</span><br />
+    <span style="font-size:12px">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span><br />
+    <span style="font-size:12px">{$produit->devise}&nbsp;{$produit->prixhtblle} </span><span style="font-size:10px"> ex shipping, duty & GST</span>
+{* ------ Fin SG ------ *}
+
 {elseif $produit->pays == 'U'}
 {* ---------------------------- 
 	USA
