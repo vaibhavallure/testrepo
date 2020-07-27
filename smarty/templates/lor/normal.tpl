@@ -618,7 +618,7 @@
 {include file="$tpl/push/push.tpl"}
 <!--==============Wallet debut ===============-->
 {if isset($w_wallet)}
-    {include file="$tpl/wallet/structure_widget.tpl"}
+    {include file="$tpl/wallet/structure_widget_new.tpl"}
 {/if}
 <!--==============Footer debut===============-->
 {include file="$tpl/footer/structure_footer.tpl"}
