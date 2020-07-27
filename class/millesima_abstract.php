@@ -563,6 +563,7 @@ class Millesima_Abstract{
                 //mail('alopes@millesima.com', $objet, $messageU,$headers);
                 if(!$testenvoi){
                     mail('imiossec@millesima.com', $objet, $messageU,$headers);
+                    mail('gbernard@millesima.com', $objet, $messageU,$headers);
                 }
             }
             $message .='Traductions attendues :'. '<br />';
@@ -583,7 +584,7 @@ class Millesima_Abstract{
                     $recipiants[] = 'pdunoyer@millesima.com';
                     $recipiants[] = 'npiro@millesima.com';
                     $recipiants[] = 'lkocsis@millesima.com';
-                    $recipiants[] = 'pastanislas@millesima.com';
+                    $recipiants[] = 'bgibier@millesima.com';
                 }
 
             }
@@ -736,9 +737,11 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'lkocsis@millesima.com';
             $tabRecipiant[] = 'imiossec@millesima.com';
             $tabRecipiant[] = 'pastanislas@millesima.com';
+            $tabRecipiant[] = 'gbernard@millesima.com';
         }
 		if($type == 'messagecreate' && array_intersect(array('U','u'),$pays) && !$isTest){
             $tabRecipiant[] = 'imiossec@millesima.com';
+            $tabRecipiant[] = 'gbernard@millesima.com';
         }
         if($type == 'marketing' && array_intersect(array('G','g','I','i','H','h','SG','sg','D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
             $tabRecipiant[] = 'bgibier@millesima.com';
