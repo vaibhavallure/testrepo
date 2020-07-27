@@ -19,7 +19,7 @@
         <table cellpadding="0" cellspacing="0" border="0" width="640" align="center" style="margin:auto;width:640px" class="t_w100p m_w100p" role="presentation">
           {if $bdheader.title != ""}
           <tr>
-            <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#ffffff;text-align:center;font-size:25px;padding-top:25px;padding-bottom:10px;vertical-align:middle;line-height:27px" class="m_fz18px m_lh20px crimsontext">
+            <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#ffffff;text-align:center;font-size:25px;padding:15px;vertical-align:middle;line-height:27px" class="m_fz18px m_lh20px crimsontext">
               {$bdheader.title}
             </td>
           </tr>
