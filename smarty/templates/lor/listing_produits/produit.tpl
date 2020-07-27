@@ -40,8 +40,8 @@
                         <!-- text / ad563a56-8adc-4257-9b3e-e75825b9dd3d -->
                         <table cellpadding="0" cellspacing="0" border="0" width="204" align="center" style="margin:auto;width:204px" class="t_w100p m_w100p" role="presentation">
                             <tr>
-                                <td style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:16px;vertical-align:middle;font-style:italic">
-                                 <span style="font-size: 10px; color: #535512;">{if $produit->pays == 'G' OR $produit->pays == 'I' OR $produit->pays == 'H' OR $produit->pays == 'SG'}{$produit->LibelleCouleur}&nbsp;{$produit->typedevin}{elseif $produit->pays == 'D' OR $produit->pays == 'O' OR $produit->pays == 'SA'}{$produit->LibelleCouleur}{$produit->typedevin|lower}{elseif $produit->pays == 'U'}{$produit->LibelleCouleur}{else}{$produit->typedevin}&nbsp;{$produit->LibelleCouleur}{/if}
+                                <td style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:16px;vertical-align:middle;">
+                                 <span style="font-size: 10px; color: #000000;">{if $produit->pays == 'G' OR $produit->pays == 'I' OR $produit->pays == 'H' OR $produit->pays == 'SG'}{$produit->LibelleCouleur}&nbsp;{$produit->typedevin}{elseif $produit->pays == 'D' OR $produit->pays == 'O' OR $produit->pays == 'SA'}{$produit->LibelleCouleur}{$produit->typedevin|lower}{elseif $produit->pays == 'U'}{$produit->LibelleCouleur}{else}{$produit->typedevin}&nbsp;{$produit->LibelleCouleur}{/if}
                                  </span>
                                 </td>
                             </tr>
@@ -50,7 +50,7 @@
 
                             <!-- text / 37d19f1e-e96f-4980-9fb9-4c030896961b -->
                             <table cellpadding="0" cellspacing="0" border="0" width="204" align="center" style="margin:auto;width:204px;height:100px;" class="t_w100p m_w100p" role="presentation">
-{if $typecgv != 'primeurs' AND !$lstprmodesc AND (substr_count($codemessagegeneral, "uiospick") == 0)}{include file="$tpl/listing_produits/indication.tpl"}{/if}
+                                {if !$lstprmodesc AND (substr_count($codemessagegeneral, "uiospick") == 0)}{include file="$tpl/listing_produits/indication.tpl"}{/if}
                                     {if !$ssprix}{include file="$tpl/listing_produits/prix.tpl"}{/if}
 
                             </table>
