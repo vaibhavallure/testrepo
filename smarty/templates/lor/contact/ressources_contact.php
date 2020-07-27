@@ -48,7 +48,7 @@ switch ($country) {
 	case "SF" :
 		$contacts = array ("conseil" => "Besoin de conseil ?","conseil2" => "Contactez-nous !",
 						"noms" => "Ulrike Treptow et Elodie Kohr",
-						"telephone" => array(array ("label" => "00800 267 33 289 (numéro gratuit)<br>0033 5 57 808 809 (Ligne directe Liechtenstein)", "href" => "+0080026733289")),
+						"telephone" => array(array ("label" => "+41 43 550 03 42", "href" => "+41435500342")),
 						"ouverture" => "Vos conseillers sont disponibles du lundi au jeudi de 9H à 17H et le vendredi de 9H à 16H.",
 						"emails" => array("contact@millesima.com"),
                         "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_allemagne.jpg"),
@@ -82,7 +82,7 @@ switch ($country) {
 	case "SA" :
 		$contacts = array ("conseil" => "Wir beraten Sie gerne!","conseil2" => "Rufen sie uns uns an",
 						"noms" => "Ulrike Treptow und Elodie Kohr",
-						"telephone" => array(array ("label" => "00800 267 33 289 (kostenlos)<br>0033 5 57 808 809<br>(Durchwahl Liechtenstein)", "href" => "+0080026733289")),
+						"telephone" => array(array ("label" => "+41 43 550 03 42", "href" => "+41435500342")),
 						"ouverture" => "Unser Team steht Ihnen von Montag bis Donnerstag 9 Uhr bis 17 Uhr und Freitags 9 Uhr bis 16 Uhr zur Verfügung!",
 						"emails" => array("kontakt@millesima.com"),
                         "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_allemagne.jpg"),
