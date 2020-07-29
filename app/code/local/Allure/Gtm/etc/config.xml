@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Gtm>
+			<name>Allure - GTM</name>
+			<version>1.0.0</version>
+		</Allure_Gtm>
+	</modules>
+	<global>
+		<helpers>
+			<allure_gtm>
+				<class>Allure_Gtm_Helper</class>
+			</allure_gtm>
+		</helpers>
+		<models>
+			<allure_gtm>
+				<class>Allure_Gtm_Model</class>
+			</allure_gtm>
+		</models>
+	</global>
+</config>
