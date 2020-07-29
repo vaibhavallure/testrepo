@@ -39,9 +39,9 @@ class Allure_GeoTax_Model_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_Tot
             $qty    = $item->getQty();
             $price  = $item->getPrice();
             $itemPrice = $price * $qty;
-            if($itemPrice <= $minTaxAmt){
+            /* if($itemPrice <= $minTaxAmt){    MT-1493
                 continue;
-            }
+            } */
             
             if ($item->getHasChildren() && $item->isChildrenCalculated()) {
                 foreach ($item->getChildren() as $child) {
