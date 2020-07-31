@@ -10,14 +10,26 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
     const WHOLESALE_GROUP_ID = 2;
     const CHECKOUT_LOG_FILE = "checkout_multishipping.log";
     
-    private function addCheckoutLogs($action){
+    /**
+     * Write infomation
+     * @param string|mixed $info
+     */
+    private function writeLogs($info = null)
+    {
+        if(!$info) return;
         $logStatus = Mage::helper("allure_multicheckout")->getOnePagelogStatus();
         if(!$logStatus) return;
-        
+        Mage::log($info,Zend_log::DEBUG,self::CHECKOUT_LOG_FILE,true);
+    }
+    
+    private function addCheckoutLogs($action){
         $quote = $this->_getCheckoutSession()->getQuote();
-        $customerInfo = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
-        $customerInfo .= $quote->getCustomerEmail();
-        Mage::log("{$action}::\tQuote Id: ".$quote->getId().', Customer: '.$customerInfo,Zend_log::DEBUG,self::CHECKOUT_LOG_FILE,true);
+        $firstName = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname() : "";
+        $lastName = $quote->getCustomerLastname() ? $quote->getCustomerLastname() : "";
+        $customerInfo = "Quote Id: ".$quote->getId();
+        $customerInfo .= " Name: {$firstName} {$lastName}";
+        $customerInfo .= " Email: {$quote->getCustomerEmail()}";
+        $this->writeLogs("{$action}:: {$customerInfo}");
     }
     
     
@@ -343,24 +355,48 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
             if ( !empty($message) ) {
                 $this->_getCheckoutSession()->addError($message);
             }
+            
+            $quote = $this->_getCheckout()->getQuote();
+            $this->writeLogs("Mage_Payment_Model_Info_Exception :: Quote Id : {$quote->getId()} Email:{$quote->getCustomerEmail()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} Error Code:{$e->getCode()} Error Message: {$e->getMessage()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} " . $e->getTraceAsString());
+            
             $this->_redirect('*/*/billing');
         } catch (Mage_Checkout_Exception $e) {
             Mage::helper('checkout')
             ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
             $this->_getCheckout()->getCheckoutSession()->clear();
             $this->_getCheckoutSession()->addError($e->getMessage());
+            
+            $quote = $this->_getCheckout()->getQuote();
+            $this->writeLogs("Mage_Checkout_Exception :: Quote Id : {$quote->getId()} Email:{$quote->getCustomerEmail()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} Error Code:{$e->getCode()} Error Message: {$e->getMessage()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} " . $e->getTraceAsString());
+            
             $this->_redirect('*/cart');
         }
         catch (Mage_Core_Exception $e) {
             Mage::helper('checkout')
             ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
             $this->_getCheckoutSession()->addError($e->getMessage());
+            
+            $quote = $this->_getCheckout()->getQuote();
+            $this->writeLogs("Mage_Core_Exception :: Quote Id : {$quote->getId()} Email:{$quote->getCustomerEmail()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} Error Code:{$e->getCode()} Error Message: {$e->getMessage()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} " . $e->getTraceAsString());
+            
             $this->_redirect('*/*/billing');
         } catch (Exception $e) {
             Mage::logException($e);
             Mage::helper('checkout')
             ->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage(), 'multi-shipping');
             $this->_getCheckoutSession()->addError($this->__('Order place error.'));
+            
+            $quote = $this->_getCheckout()->getQuote();
+            $this->writeLogs("Exception :: Quote Id : {$quote->getId()} Email:{$quote->getCustomerEmail()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} Error Code:{$e->getCode()} Error Message: {$e->getMessage()}");
+            $this->writeLogs("Quote Id : {$quote->getId()} " . $e->getTraceAsString());
+            
             $this->_redirect('*/*/billing');
         }
     }
