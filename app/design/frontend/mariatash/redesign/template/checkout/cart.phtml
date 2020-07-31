@@ -78,6 +78,10 @@
     </form>
 
     <div class="cart-collaterals col-lg-4 col-md-12 col-12 fix-section">
+
+        <?php if(Mage::helper("wholesale")->maxAmountDisabled()):?>
+            <div class="para-lighter pb-2 text-left"><?= Mage::helper("wholesale")->maximumAmountLimitMessage() ?></div>
+        <?php endif; ?>
     	<div class="collat-wrap">
         	<table cellpadding="0" cellspacing="0" border="0" class="cart-wrap-table w-100">
             	<tr>
