@@ -2212,7 +2212,7 @@ tr.tr-piercing td {
 		top: 0px;
 		/* left: 60px; */
 		margin-right: 10px;
-		position: absolute;
+		position: fixed;
 		z-index: 1032;
 		right: 10px !important;
 	}

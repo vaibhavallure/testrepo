@@ -13,13 +13,13 @@ class Allure_Managestock_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function getStockId(){
 		$stockId = self::DEFAULT_STOCK_ID;
-		if(Mage::app()->getStore()->isAdmin()){
+		/* if(Mage::app()->getStore()->isAdmin()){
 			$storeId = $this->getStoreIdByAdminControllerAction();
 			$websiteId = Mage::getModel('core/store')->load($storeId)->getWebsiteId();
 			$stockId = $this->getStockIdByWebsiteId($websiteId);
 		}else{
 			$stockId = Mage::app()->getWebsite()->getStockId();
-		}
+		} */
 		return $stockId;
 	}
 	
