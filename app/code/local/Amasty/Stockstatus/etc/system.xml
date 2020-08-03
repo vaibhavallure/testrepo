@@ -176,6 +176,15 @@
                             <show_in_store>1</show_in_store>
                             <comment>Default product identification field is teamwork_plu</comment>
                         </id-field>
+                         <out_of_stock translate="label comment">
+                            <label>Out of Stock Message</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Set Out of Stock product message.</comment>
+                        </out_of_stock>
                     </fields>
                 </stock_messages>
             </groups>

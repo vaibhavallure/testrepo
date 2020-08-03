@@ -7,6 +7,8 @@
 class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const BACKORDER_LABEL = "backorder";
+    
+    const XML_OUT_OF_STOCK_MSG = 'amstockstatus/stock_messages/out_of_stock';
 
     protected $_escape_stock_msg_array = array("STORECARD", "GIFT");
 
@@ -26,6 +28,11 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if($message = Mage::getStoreConfig('amstockstatus/stock_messages/in-stock'))
             $this->_in_stock = '<span class="instock-product">' . $message . '</span>';
+        
+        $outOfStockMsg = Mage::getStoreConfig(self::XML_OUT_OF_STOCK_MSG);
+        if(!empty($outOfStockMsg)){
+            $this->_out_stock = "<span class='info-text-three'>{$outOfStockMsg}</span>";
+        }
     }
 
     public function show($product)
