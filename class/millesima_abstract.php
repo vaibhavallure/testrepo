@@ -613,7 +613,7 @@ class Millesima_Abstract{
         } else if($type == 'batfr')	{
             if(!$testenvoi){
                 $recipiants[] = 'egarnaud@millesima.com, mdutoya@millesima.com, bgibier@millesima.com,pastanislas@millesima.com, vvecchione@millesima.com';
-			    $cc = 'lbassagaits@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com';
+			    $cc = 'lbassagaits@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com,cserrier@millesima.com';
             } else {
                 $cc = '';
             }
