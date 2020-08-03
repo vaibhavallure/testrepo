@@ -446,6 +446,7 @@ class Millesima_Abstract{
                 if(!$testenvoi){
                     $recipiants[] = 'imiossec@millesima.com';
                     $recipiants[] = 'hobernard@millesima.com';
+                    $recipiants[] = 'gbernard@millesima.com';
                 }
             }
             if(isset($brief['pays_g']) || isset($brief['pays_i']) || isset($brief['pays_h']) || isset($brief['pays_sg'])){
