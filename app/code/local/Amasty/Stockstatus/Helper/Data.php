@@ -30,8 +30,9 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
             $this->_in_stock = '<span class="instock-product">' . $message . '</span>';
         
         $outOfStockMsg = Mage::getStoreConfig(self::XML_OUT_OF_STOCK_MSG);
-        if(!empty($outOfStockMsg)){
-            $this->_out_stock = "<span class='info-text-three'>{$outOfStockMsg}</span>";
+        if(isset($outOfStockMsg) && !empty($outOfStockMsg)){
+            Mage::log($outOfStockMsg,7,'abc.log',true);
+            $this->_out_stock = $outOfStockMsg;
         }
     }
 
