@@ -51,7 +51,7 @@ class Allure_Wholesale_Helper_Data extends Mage_Core_Helper_Abstract
         if(!$this->maximumAmountLimitEnabled())
             return false;
 
-        if(Mage::getSingleton('checkout/session')->getQuote()->getSubtotal()>=(float)$this->maximumAmount())
+        if(Mage::getSingleton('checkout/session')->getQuote()->getBaseSubtotal()>=(float)$this->maximumAmount())
              return true;
 
         return false;
