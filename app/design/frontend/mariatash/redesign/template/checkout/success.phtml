@@ -98,7 +98,7 @@
 
 <?php endif;?>
 
-
+<?php if(false):?>
 <?php
     //$order = Mage::getModel('sales/order')->load($orderId); 
     $order_id = $order->getIncrementId();   //the id of the order
@@ -130,5 +130,5 @@
 <?php endforeach;?> 
 	ga('ecommerce:send');
 </script>
-
+<?php endif;?>
 

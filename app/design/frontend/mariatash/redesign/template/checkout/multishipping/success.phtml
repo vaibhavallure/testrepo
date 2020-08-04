@@ -86,7 +86,7 @@
 
 <?php endif;?>
 
-
+<?php if(false):?>
 <?php foreach ($_orderIds as $orderId=>$incrementId): ?>
 <?php
     $order = Mage::getModel('sales/order')->load($orderId); 
@@ -122,4 +122,5 @@
 
 </script>
 <?php endforeach;?>
+<?php endif;?>
 
