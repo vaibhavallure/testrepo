@@ -171,7 +171,7 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
                         'name' => basename($imgName) . '_' . $image,
                     ),
                     'label' => $product->getName() . ' Image #' . $image, // change this.
-                    'position' => $image,
+                    'position' => $this->getCustomPosition($image),
                     'types' => $types,
                     'exclude' => 0,
                 );
@@ -330,6 +330,21 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
         }
         self::log("done");
         self::log("------------------------------------------------------");
+    }
+
+
+    /*code added to set custom position*/
+    function getCustomPosition($image)
+    {
+        if(is_numeric($image))
+            return $image;
+        else{
+            if($image=="model")
+                return 4;
+            else if($image=="sizechart")
+                return 5;
+        }
+
     }
 
 }
