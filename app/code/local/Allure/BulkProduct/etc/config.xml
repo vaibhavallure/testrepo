@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_BulkProduct>
+			<name>Allure - Bulk Product</name>
+			<version>1.0.0</version>
+		</Allure_BulkProduct>
+	</modules>
+	<global>
+		<models>
+			<allure_bulkproduct>
+				<class>Allure_BulkProduct_Model</class>
+			</allure_bulkproduct>
+			<catalog>
+				<rewrite>
+					<convert_parser_product>Allure_BulkProduct_Model_Catalog_Convert_Parser_Product</convert_parser_product>
+					<convert_adapter_product>Allure_BulkProduct_Model_Catalog_Convert_Adapter_Product</convert_adapter_product>
+				</rewrite>
+			</catalog>
+		</models>
+	</global>
+</config>
