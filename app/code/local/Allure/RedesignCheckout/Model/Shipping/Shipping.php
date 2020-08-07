@@ -30,7 +30,7 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
         $isAllowOtherShippingForBackend = true;
         $allowedCarrierArray = array("matrixrate");
         $routeName = Mage::app()->getRequest()->getRouteName();
-        if (Mage::helper('core')->isModuleEnabled("Allure_Matrixrate")) {
+        /* if (Mage::helper('core')->isModuleEnabled("Allure_Matrixrate")) {
             if(Mage::getStoreConfig('carriers/matrixrate/active', $storeId)){
                 $matrixRateHelper = Mage::helper("matrixrate");
                 $isShowMatrixRate = $matrixRateHelper->isShowMatrixRate();
@@ -39,13 +39,26 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
                     $isAllowOtherShippingForBackend = $matrixRateHelper->isAllowDefaultShippingMethodsToBackend();
                 }
             }
+        } */
+        
+        $allowedShippings = array();
+        if (Mage::helper('core')->isModuleEnabled("Allure_Shipping")) {
+            /* @var Allure_Shipping_Helper_Data $shippingHelper */
+            $shippingHelper = Mage::helper("allure_shipping");
+            if($shippingHelper->isEnabled()){
+                $allowedShippings = $shippingHelper->getShippingConfigMapping();
+            }
         }
+        $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        
+        if($routeName != "adminhtml") $routeName = "frontend";
+        
         
         $limitCarrier = $request->getLimitCarrier();
         if (!$limitCarrier) {
             $carriers = Mage::getStoreConfig('carriers', $storeId);
             
-            if($routeName == "adminhtml"){
+            /* if($routeName == "adminhtml"){
                 foreach ($carriers as $carrierCode => $carrierConfig) {
                     if($isAllowOtherShippingForBackend){
                         $this->collectCarrierRates($carrierCode, $request);
@@ -60,6 +73,19 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
                     }else if(in_array($carrierCode, $allowedCarrierArray)){
                         $this->collectCarrierRates($carrierCode, $request);
                     }
+                }
+            } */
+            
+            foreach ($carriers as $carrierCode => $carrierConfig) {
+                if(count($allowedShippings) > 0){
+                    $allowedShippingConfig = isset($allowedShippings[$carrierCode]) ? $allowedShippings[$carrierCode] : array();
+                    if(($carrierCode == $allowedShippingConfig['shipping_carrier']) &&
+                        in_array($routeName, $allowedShippingConfig['used_in']) &&
+                        in_array($customerGroupId, $allowedShippingConfig['customer_group'])){
+                            $this->collectCarrierRates($carrierCode, $request);
+                    }
+                }else{
+                    $this->collectCarrierRates($carrierCode, $request);
                 }
             }
             
@@ -70,7 +96,7 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
             }
             
             //changes
-            if($routeName == "adminhtml"){
+            /* if($routeName == "adminhtml"){
                 foreach ($limitCarrier as $carrierCode) {
                     $carrierConfig = Mage::getStoreConfig('carriers/' . $carrierCode, $storeId);
                     if (!$carrierConfig) {
@@ -95,10 +121,29 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
                     }else if(in_array($carrierCode, $allowedCarrierArray)){
                         $this->collectCarrierRates($carrierCode, $request);
                     }
+                    $this->collectCarrierRates($carrierCode, $request);
+                }
+                
+            } */
+            
+            foreach ($limitCarrier as $carrierCode) {
+                $carrierConfig = Mage::getStoreConfig('carriers/' . $carrierCode, $storeId);
+                if (!$carrierConfig) {
+                    continue;
+                }
+                
+                if(count($allowedShippings) > 0){
+                    $allowedShippingConfig = isset($allowedShippings[$carrierCode]) ? $allowedShippings[$carrierCode] : array();
+                    if(($carrierCode == $allowedShippingConfig['shipping_carrier']) &&
+                        in_array($routeName, $allowedShippingConfig['used_in']) &&
+                        in_array($customerGroupId, $allowedShippingConfig['customer_group'])){
+                            $this->collectCarrierRates($carrierCode, $request);
+                    }
+                }else{
+                    $this->collectCarrierRates($carrierCode, $request);
                 }
                 
             }
-            
             
         }
         
