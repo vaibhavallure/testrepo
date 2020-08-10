@@ -65,6 +65,14 @@ StockStatus.prototype =
                     }else{
                         jQuery('#addtocart').removeClass('hideaddToCart');
                     }
+                    
+                    //hide add wishlist link
+                    if (this.options[key]['is_show_wishlist_out_of_stock']) {
+                    	jQuery('.link-wishlist').removeClass('d-none');
+                    }else{
+                    	jQuery('.link-wishlist').addClass('d-none');
+                    }
+                    
                     /*
                     * end aws12
                     */
