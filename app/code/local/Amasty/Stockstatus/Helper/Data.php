@@ -7,7 +7,10 @@
 class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const BACKORDER_LABEL = "backorder";
-
+    
+    const XML_OUT_OF_STOCK_MSG = 'amstockstatus/stock_messages/out_of_stock';
+    const XML_IS_SHOW_WISHLIST_FOR_OUT_STOCK_PRODUCT = 'amstockstatus/wishlist_settings/is_show_out_of_stock';
+    
     protected $_escape_stock_msg_array = array("STORECARD", "GIFT");
 
     protected $_in_stock ="<span class='info-text-two instock-product'>In stock ships within 24 hours (Mon-Fri)</span>";
@@ -26,6 +29,12 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
     {
         if($message = Mage::getStoreConfig('amstockstatus/stock_messages/in-stock'))
             $this->_in_stock = '<span class="instock-product">' . $message . '</span>';
+        
+        $outOfStockMsg = Mage::getStoreConfig(self::XML_OUT_OF_STOCK_MSG);
+        if(isset($outOfStockMsg) && !empty($outOfStockMsg)){
+            Mage::log($outOfStockMsg,7,'abc.log',true);
+            $this->_out_stock = $outOfStockMsg;
+        }
     }
 
     public function show($product)
@@ -593,5 +602,10 @@ INLINECSS;
             return $product->getCustomInStockMessage();
 
         return $this->_in_stock;
+    }
+    
+    public function isShowWishlistForOutOfStockProduct()
+    {
+        return Mage::getStoreConfig(self::XML_IS_SHOW_WISHLIST_FOR_OUT_STOCK_PRODUCT);
     }
 }

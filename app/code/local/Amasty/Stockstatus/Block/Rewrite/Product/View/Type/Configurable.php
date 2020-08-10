@@ -62,6 +62,12 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
                 $stockStatus = Mage::helper('amstockstatus')->getCustomStockStatusText($product);
                 if ($key)
                 {
+                    //wishlist settings code
+                    $iswishlistForOutofStock = 1;
+                    if($hideAddToCart){
+                        $iswishlistForOutofStock = Mage::helper('amstockstatus')->isShowWishlistForOutOfStockProduct();
+                    }
+                    
                     $aStockStatus[implode(',', $key)] = array(
                         'is_in_stock'   =>$this->checkStockStatus($product),
                         'custom_status' => $stockStatus,
@@ -71,6 +77,7 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
                         'is_qnt_0'      => (int)($product->isInStock() && $stockItem->getData('qty') <= Mage::helper('amstockstatus')->getBackorderQnt()),
                         'product_id'    => $product->getId(),
                         'stockalert'	=> Mage::helper('amstockstatus')->getStockAlert($product),
+                        'is_show_wishlist_out_of_stock' => ($iswishlistForOutofStock) ? 1 : 0
                     );
                 }
             }
