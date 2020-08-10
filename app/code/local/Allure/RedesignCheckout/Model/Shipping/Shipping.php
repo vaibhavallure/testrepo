@@ -51,8 +51,11 @@ class Allure_RedesignCheckout_Model_Shipping_Shipping extends Mage_Shipping_Mode
         }
         $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
         
-        if($routeName != "adminhtml") $routeName = "frontend";
-        
+        if($routeName == "adminhtml"){
+            $customerGroupId = Mage::getSingleton('adminhtml/session_quote')->getQuote()->getCustomerGroupId();
+        }else{
+            $routeName = "frontend";
+        }
         
         $limitCarrier = $request->getLimitCarrier();
         if (!$limitCarrier) {
