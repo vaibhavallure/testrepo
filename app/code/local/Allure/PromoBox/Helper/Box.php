@@ -144,6 +144,15 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
     {
         return $this->getBanner($banner_id)->getHtmlBlock();
     }
+    private function getIframeSrc($banner_id)
+    {
+        return $this->getBanner($banner_id)->getIframeSrc();
+    }
+    private function getIframe($banner_id)
+    {
+        $iframe='<iframe src="'.$this->getIframeSrc($banner_id).'" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+        return $iframe;
+    }
 
     /**
      * @param $banner_id
@@ -177,9 +186,16 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         $class=$this->getClass($i);
         $htmlBlock="";
 
-        if($this->_box_size=="one_by_two" || ($this->_box_size=="two_by_two" && $this->_boxes[$i]['position']=="top"))
-            $htmlBlock=$this->getBannerHtmlBlock($this->_boxes[$i]['banner_id']);
+        if($this->_box_size=="one_by_two" || ($this->_box_size=="two_by_two" && $this->_boxes[$i]['position']=="top")) {
 
+            if(!empty($this->getIframeSrc($this->_boxes[$i]['banner_id'])) && $this->_box_size=="one_by_two") {
+                $htmlBlock = $this->getIframe($this->_boxes[$i]['banner_id']);
+                $style="background:none";
+            }
+            else {
+                $htmlBlock = $this->getBannerHtmlBlock($this->_boxes[$i]['banner_id']);
+            }
+        }
         echo '<li  class="'.$class.'" ><div style="'.$style.'">'.$htmlBlock.'</div></li>';
     }
     private function setI($i)

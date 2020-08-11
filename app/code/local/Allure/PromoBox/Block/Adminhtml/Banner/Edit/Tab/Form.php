@@ -25,6 +25,41 @@ document.addEventListener("DOMContentLoaded", function(){
 //]]>
 </script>';
 
+        $sizeAfterelement='<script>
+//<![CDATA[
+
+function checkIsIframeAvailble(obj) {
+  
+    if(obj.value=="two_by_two") {
+    document.getElementById("iframe_src").parentElement.parentElement.style.display="none";
+    }else{
+    document.getElementById("iframe_src").parentElement.parentElement.style.display="";        
+    }
+}
+
+
+checkIsIframeAvailble(document.getElementById("size"));
+
+//]]>
+</script>';
+        $fieldset->addField('size', 'select', array(
+            'label' => Mage::helper('promobox')->__('Size'),
+            'name' => 'size',
+            'values' => array(
+                array(
+                    'value' => "one_by_two",
+                    'label' => Mage::helper('promobox')->__('1X2'),
+                ),
+                array(
+                    'value' => "two_by_two",
+                    'label' => Mage::helper('promobox')->__('2X2'),
+                ),
+            ),
+            'after_element_html'=>$sizeAfterelement,
+            'onchange'=>'checkIsIframeAvailble(this)',
+        ));
+
+
         $fieldset->addField('image', 'image', array(
             'label' => Mage::helper('promobox')->__('Image'),
             'required' => true,
@@ -41,22 +76,10 @@ document.addEventListener("DOMContentLoaded", function(){
             'title' => Mage::helper('promobox')->__('Html Content'),
         ));
 
-
-        $fieldset->addField('size', 'select', array(
-            'label' => Mage::helper('promobox')->__('Size'),
-            'name' => 'size',
-            'values' => array(
-                array(
-                    'value' => "one_by_two",
-                    'label' => Mage::helper('promobox')->__('1X2'),
-                ),
-                array(
-                    'value' => "two_by_two",
-                    'label' => Mage::helper('promobox')->__('2X2'),
-                ),
-            ),
+        $fieldset->addField('iframe_src', 'text', array(
+            'name' => 'iframe_src',
+            'label' => Mage::helper('promobox')->__('IFRAME source url'),
         ));
-
 
 
         if (Mage::getSingleton('adminhtml/session')->getBannerData()) {
