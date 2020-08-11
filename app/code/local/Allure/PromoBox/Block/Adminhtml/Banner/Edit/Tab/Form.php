@@ -32,8 +32,10 @@ function checkIsIframeAvailble(obj) {
   
     if(obj.value=="two_by_two") {
     document.getElementById("iframe_src").parentElement.parentElement.style.display="none";
+    document.getElementById("iframe_style").parentElement.parentElement.style.display="none";
     }else{
     document.getElementById("iframe_src").parentElement.parentElement.style.display="";        
+    document.getElementById("iframe_style").parentElement.parentElement.style.display="";        
     }
 }
 
@@ -78,7 +80,15 @@ checkIsIframeAvailble(document.getElementById("size"));
 
         $fieldset->addField('iframe_src', 'text', array(
             'name' => 'iframe_src',
-            'label' => Mage::helper('promobox')->__('IFRAME source url'),
+            'label' => Mage::helper('promobox')->__('Video Id'),
+            'after_element_html' => "<p><small>Left empty to display banner image</small></p>",
+        ));
+
+        $fieldset->addField('iframe_style', 'textarea', array(
+            'name' => 'iframe_style',
+            'label' => Mage::helper('promobox')->__('IFrame style'),
+            'after_element_html' => "<p><small>Left empty to apply global style</small></p>",
+
         ));
 
 

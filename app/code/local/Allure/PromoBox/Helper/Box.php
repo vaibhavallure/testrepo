@@ -148,9 +148,18 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
     {
         return $this->getBanner($banner_id)->getIframeSrc();
     }
+    private function getIframeStyle($banner_id)
+    {
+        return $this->getBanner($banner_id)->getIframeStyle();
+    }
     private function getIframe($banner_id)
     {
-        $iframe='<iframe src="'.$this->getIframeSrc($banner_id).'" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+        $width=($this->_iFrameSetting("width"))? $this->_iFrameSetting("width") : "640";
+        $height=($this->_iFrameSetting("height"))? $this->_iFrameSetting("height") : "360";
+        $style=($this->getIframeStyle($banner_id))? $this->getIframeStyle($banner_id) : $this->_iFrameSetting("style");
+
+        $src=$this->_iFrameSetting("video_player_url")."".$this->getIframeSrc($banner_id).'?'.$this->getIFrameUrlSettingsParam();
+        $iframe='<iframe src="'.$src.'" width="'.$width.'" height="'.$height.'" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="'.$style.'"></iframe>';
         return $iframe;
     }
 
@@ -190,13 +199,14 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
 
             if(!empty($this->getIframeSrc($this->_boxes[$i]['banner_id'])) && $this->_box_size=="one_by_two") {
                 $htmlBlock = $this->getIframe($this->_boxes[$i]['banner_id']);
-                $style="background:none";
+                $style=($this->_iFrameSetting('parent_style'))?$this->_iFrameSetting('parent_style'):"background:none";
+                $liStyle="overflow:hidden";
             }
             else {
                 $htmlBlock = $this->getBannerHtmlBlock($this->_boxes[$i]['banner_id']);
             }
         }
-        echo '<li  class="'.$class.'" ><div style="'.$style.'">'.$htmlBlock.'</div></li>';
+        echo '<li  class="'.$class.'" style="'.$liStyle.'"><div style="'.$style.'">'.$htmlBlock.'</div></li>';
     }
     private function setI($i)
     {
@@ -253,5 +263,19 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
     public function moduleEnabled()
     {
         return Mage::getStoreConfig("promobox/module_status/module_enabled");
+    }
+    private function _iFrameSetting($setting)
+    {
+        return Mage::getStoreConfig("promobox/iframe_settings/".$setting);
+    }
+    private function getIFrameUrlSettingsParam()
+    {
+        $urlParam=array();
+        $urlParam['autoplay']=$this->_iFrameSetting('autoplay');
+        $urlParam['loop']=$this->_iFrameSetting('loop');
+        $urlParam['controls']=$this->_iFrameSetting('controls');
+        $urlParam['autopause']=$this->_iFrameSetting('autopause');
+
+        return http_build_query($urlParam);
     }
 }
