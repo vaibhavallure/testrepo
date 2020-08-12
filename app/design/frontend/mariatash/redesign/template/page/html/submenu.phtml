@@ -17,7 +17,7 @@ if($this->isthumbnailCat($pc->getName())){
                 <div class="row div-row">
 
 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
-        if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
+        if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()) || $this->isPrivateCategory($child->getId()))
             continue;
         ?>
 <div class="col-lg col-12 piercing_options"> <a href="/<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
@@ -48,7 +48,7 @@ if($this->isthumbnailCat($pc->getName())){
                                 $withChildrenCategory=array();
 
                                 foreach ($this->getChildCategories($pc->getId()) as $child) {
-                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
+                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()) || $this->isPrivateCategory($child->getId()))
                                         continue;
 
                                     if ($this->isJwRightSectionCat($this->__($child->getName()))) {
@@ -88,7 +88,7 @@ if($this->isthumbnailCat($pc->getName())){
                                                 $virtualChildren=explode(",",$pc->getSetVirtualChild());
                                                 foreach ($virtualChildren as $catid) {
                                                     $child2 = Mage::getModel('catalog/category')->load($catid);
-                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
+                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()) || $this->isPrivateCategory($child2->getId()))
                                                         continue;
                                                     ?>
                                                     <li class=""><a href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
@@ -127,7 +127,7 @@ if($this->isthumbnailCat($pc->getName())){
                                                 $virtualChildren=explode(",",$child->getSetVirtualChild());
                                                 foreach ($virtualChildren as $catid) {
                                                     $child2 = Mage::getModel('catalog/category')->load($catid);
-                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
+                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()) || $this->isPrivateCategory($child2->getId()))
                                                         continue;
                                                     ?>
                                                     <li class=""><a href="/<?= $child2->getRequestPath() ?>"><?= $this->__($child2->getName()); ?></a>
@@ -136,7 +136,7 @@ if($this->isthumbnailCat($pc->getName())){
                                                 }
                                              else: ?>
                                             <?php foreach ($this->getChildCategories($child->getId()) as $child2) {
-                                                if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
+                                                if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()) || $this->isPrivateCategory($child2->getId()))
                                                     continue;
                                                 ?>
                                                 <li class=""><a
