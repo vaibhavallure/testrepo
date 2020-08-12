@@ -416,6 +416,9 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
             if($product->getSmallImage() == $image->getFile())
                 continue;
 
+            if(strpos($image->getLabel(), '#sizechart') !== false)
+                continue;
+
             return Mage::helper('catalog/image')->init($product, 'small_image',$image->getFile())->resize(376, 490);
 
         }
