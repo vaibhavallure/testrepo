@@ -275,6 +275,7 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
         $urlParam['loop']=$this->_iFrameSetting('loop');
         $urlParam['controls']=$this->_iFrameSetting('controls');
         $urlParam['autopause']=$this->_iFrameSetting('autopause');
+        $urlParam['muted']='1';
 
         return http_build_query($urlParam);
     }
