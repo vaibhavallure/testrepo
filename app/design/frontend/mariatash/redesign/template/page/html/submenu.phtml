@@ -1,6 +1,9 @@
 <?php
 $parentCategory = $this->getParentCategories();
 
+//custom url array
+$customUrlArr = $this->getCustomUrlArray();
+
 foreach ($parentCategory as $pc):
 if($pc->getChildrenCount()):
 $childRightSection=array();
@@ -119,7 +122,19 @@ if($this->isthumbnailCat($pc->getName())){
                                     ?>
                                 <div class="common-option-div" id="c-<?= $child->getId() ?>">
                                     <div class="menu-head jwl-head text-uppercase">
-                                        <span><a href="<?= (!$child->hasChildren())? "/".$child->getRequestPath() : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
+                                    
+                                    	<?php 
+                                    	$requestPath = trim($child->getRequestPath());
+                                    	if(isset($customUrlArr[$requestPath])){
+                                    	    $requestPath = $customUrlArr[$requestPath];
+                                    	}
+                                    	?>
+                                        <?php if($child->getSetVirtualChild()):?>
+                                        <span><a href="<?= (!$child->hasChildren())? "/".$requestPath : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
+                                        <?php else:?>
+                                        <a href="<?= (!$child->hasChildren())? "/".$requestPath : "#" ?>"><?= $this->__($child->getName()); ?></a>
+                                        <?php endif;?>
+                                        
                                     </div>
                                     <div class="head-child">
                                         <ul class="p-0">
