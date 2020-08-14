@@ -155,8 +155,9 @@
 	    $gtotal = $order->getBaseGrandTotal();  //grand total of the order 
 	    $shippingVal = $order->getBaseShippingAmount();
 	    $taxAmount = $order->getBaseTaxAmount();
-	    $orderItems = $order->getAllItems();
+	    $orderItems = $order->getAllVisibleItems();
 	    $intCtr = 0;
+	    $itemscnt = count($orderItems);
 	?>
     dataLayer.push({
         'transactionId': '<?php echo $incrementId?>',
@@ -174,7 +175,7 @@
                 'category': '',
                 'price': <?php echo $item->getBasePrice(); ?>,
                 'quantity': <?php echo $item->getQtyOrdered(); ?>
-              <?php if ($intCtr == count($orderItems)):?>
+              <?php if ($intCtr == $itemscnt):?>
                 }]
               <?php else:?>
                 },
