@@ -1023,8 +1023,12 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
                 $image['id'] = isset($image['value_id']) ? $image['value_id'] : null;
                 $image['path'] = $this->getMediaConfig()->getMediaPath($image['file']);
                 $image['viewon'] = 0;
+                $image['sizechart'] = 0;
                 if(count(explode ('#model',$image['label'])) > 1)  {
                     $image['viewon'] = 1;
+                    $_images[] = $image;
+                }else if(count(explode ('#sizechart',$image['label'])) > 1)  {
+                    $image['sizechart'] = 1;
                     $_images[] = $image;
                 } else {
                     $images->addItem(new Varien_Object($image));
