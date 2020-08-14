@@ -132,3 +132,39 @@
 </script>
 <?php endif;?>
 
+<script type="text/javascript">
+	window.dataLayer = window.dataLayer || [];
+    <?php
+	    $incrementId = $order->getIncrementId();   //the id of the order
+	    $gtotal = $order->getBaseGrandTotal();  //grand total of the order 
+	    $shippingVal = $order->getBaseShippingAmount();
+	    $taxAmount = $order->getBaseTaxAmount();
+	    $orderItems = $order->getAllItems();
+	    $intCtr = 0;
+	?>
+	
+    dataLayer.push({
+        'transactionId': '<?php echo $incrementId?>',
+        'transactionAffiliation': '',
+        'transactionTotal': <?php echo $gtotal?>,
+        'transactionTax': <?php echo $taxAmount?>,
+        'transactionShipping': <?php echo $shippingVal?>,
+        'transactionProducts': [
+         <?php foreach($orderItems as $item): ?>
+             <?php $intCtr++;?>
+             <?php if($item->getParentItemId()) continue;?>
+                {
+                'sku': '<?php echo $item->getSku(); ?>',
+                'name': '<?php echo $item->getName(); ?>',
+                'category': '',
+                'price': <?php echo $item->getBasePrice(); ?>,
+                'quantity': <?php echo $item->getQtyOrdered(); ?>
+              <?php if ($intCtr == count($orderItems)):?>
+                }]
+              <?php else:?>
+                },
+              <?php endif;?>
+          <?php endforeach;?>
+    });
+</script>
+
