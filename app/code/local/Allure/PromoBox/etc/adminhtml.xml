@@ -11,7 +11,7 @@
                         <children>
                             <config>
                                 <children>
-                                    <promobox translate="title" module="promo box">
+                                    <promobox translate="title" module="promobox">
                                         <title>Promo Box</title>
                                     </promobox>
                                 </children>
