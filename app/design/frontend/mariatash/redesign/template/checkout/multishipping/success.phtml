@@ -127,9 +127,9 @@
 
 <script type="text/javascript">
 	window.dataLayer = window.dataLayer || [];
-    <?php foreach ($_orderIds as $_orderId): ?>
+    <?php foreach ($_orderIds as $orderId=>$incrementId): ?>
     <?php
-        $order = Mage::getModel('sales/order')->load($_orderId); 
+    $order = Mage::getModel('sales/order')->load($orderId); 
 	    $incrementId = $order->getIncrementId();   //the id of the order
 	    $gtotal = $order->getBaseGrandTotal();  //grand total of the order 
 	    $shippingVal = $order->getBaseShippingAmount();
