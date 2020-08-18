@@ -171,7 +171,7 @@ switch ($country) {
 		$contacts = array ("conseil" => "Have a question?","conseil2" => "Contact us!",
 						"noms" => "Millesima Team",
 						"telephone" => array(array ("label" => "+1 212-639-9463", "href" => "+1 212-639-9463")),
-						"ouverture" => "Our wine team is available Monday through Saturday 11am to 8pm.",
+						"ouverture" => "Our wine team is available Monday through Saturday 11am to 7pm.",
 						"emails" => array("info@millesima.com"),
                         "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_usa.jpg"),
                         "alt" =>"Contact us"
