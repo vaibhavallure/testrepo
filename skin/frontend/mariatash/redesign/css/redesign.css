@@ -5167,3 +5167,13 @@ a.product-video-link:hover div.product-video-play-icon {
 .success-page-text-link-style{
 	text-decoration: underline;
 }
+
+.piercing-cat-nav-menu .common-option-div
+{
+	text-align: center;
+}
+
+.piercing-cat-nav-menu .piercing-cat-div
+{
+	float: left;
+}

@@ -43,6 +43,64 @@ if($this->isthumbnailCat($pc->getName())){
             <div class="row piercing-inner">
                 <div class="col-lg-12 menu-common-section">
                     <div class="row">
+                    	<?php if(strtolower($pc->getName()) == "piercing"): //T1?>
+                    	<div class="col-12 piercing-cat-nav-menu">
+                            <div class="col-6 piercing-cat-div">
+                                <?php
+
+                                $withoutChildrenCategory=array();
+                                $withChildrenCategory=array();
+
+                                foreach ($this->getChildCategories($pc->getId()) as $child) {
+                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
+                                        continue;
+
+                                    if ($this->isJwRightSectionCat($this->__($child->getName()))) {
+                                        $childRightSection[] = $child;
+                                        continue;
+                                    }
+
+
+
+                                    if(strtolower($pc->getName()) == "jewelry"):
+
+                                        $child = Mage::getModel('catalog/category')->load($child->getId());
+
+                                    if($child->hasChildren() || $child->getSetVirtualChild())
+                                        $withChildrenCategory[]=$child;
+                                    else
+                                        $withoutChildrenCategory[]= $child;
+
+                                    else:
+                                        $withChildrenCategory[]=$child;
+
+                                    endif;
+                                    } ?>
+
+                                <?php foreach ($withChildrenCategory as $child):
+                                    $child = Mage::getModel('catalog/category')->load($child->getId());
+                                    ?>
+                                <div class="common-option-div" id="c-<?= $child->getId() ?>">
+                                    <div class="menu-head jwl-head text-uppercase">
+                                    
+                                    	<?php 
+                                    	$requestPath = trim($child->getRequestPath());
+                                    	if(isset($customUrlArr[$requestPath])){
+                                    	    $requestPath = $customUrlArr[$requestPath];
+                                    	}
+                                    	?>
+                                        <a href="<?= (!$child->hasChildren())? "/".$requestPath : "#" ?>"><?= $this->__($child->getName()); ?></a>
+                                        
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+
+                            </div>
+                            <div class="col-6 piercing-cat-div">
+                            	<img width="30%" src="<?php echo $this->getCatThumbnail($pc->getId()) ?>">
+                            </div>
+                    </div>
+                    	<?php else: //T1?>
                         <div class="col-12 left-section">
                             <div class="row inner-box">
                                 <?php
@@ -174,6 +232,7 @@ if($this->isthumbnailCat($pc->getName())){
 
                             </div>
                     </div>
+                    <?php endif; //T1?>
                     <?php if (false) :?>
                     <div class="col-lg-5 col-12 text-uppercase right-section">
                         <div class="row">
