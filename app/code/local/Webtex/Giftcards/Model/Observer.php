@@ -363,7 +363,7 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
         if (in_array($order->getState(), array('complete'))) {
             $cards = Mage::getModel('giftcards/giftcards')->getCollection()
                 ->addFieldToFilter('order_id', $order->getId())
-                ->addFieldToFilter('mail_delivery_option',2);  //adding checkup Deliver Immediately
+                ->addFieldToFilter('mail_delivery_option',array("in",array(1,2)));  //adding checkup Deliver Immediately
             foreach ($cards as $card) {
               if($card->getCardStatus() == 0) {
                 $card->setCardStatus(1)->save();
