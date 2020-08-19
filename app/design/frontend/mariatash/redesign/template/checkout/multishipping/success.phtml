@@ -139,7 +139,7 @@
 	    $itemscnt = count($orderItems);
 	?>
     dataLayer.push({
-    	'mt_transaction':'<?php echo $incrementId?>',
+    	'event': 'mt_transaction',
         'transactionId': '<?php echo $incrementId?>',
         'transactionAffiliation': '',
         'transactionTotal': <?php echo $gtotal?>,
