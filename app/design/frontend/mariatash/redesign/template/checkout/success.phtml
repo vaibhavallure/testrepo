@@ -145,6 +145,7 @@
 	?>
 	
     dataLayer.push({
+        'mt_transaction':'<?php echo $incrementId?>',
         'transactionId': '<?php echo $incrementId?>',
         'transactionAffiliation': '',
         'transactionTotal': <?php echo $gtotal?>,
