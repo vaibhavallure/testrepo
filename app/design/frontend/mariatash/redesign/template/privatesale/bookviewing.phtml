@@ -1,0 +1,238 @@
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
+<style>
+    .bookviewingpopup
+    {
+        position: fixed;
+        top: -20px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 99999;
+        opacity: 0;
+        -webkit-transition: opacity 400ms ease-in;
+        -moz-transition: opacity 400ms ease-in;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+        background: rgba(0,0,0,0.4);
+    }
+    .bookviewingpopup .pop-up-cover {
+        width: 460px;
+        background: #fff;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        max-height: calc(100vh - 10px);
+        overflow-y: auto;
+        border-radius: 0;
+    }
+    .bookviewingpopup .pop-title h1 {
+        clear: both;
+        margin-top: 20px;
+        margin-bottom: 14px;
+        width: 100%;
+        text-align: center;
+        letter-spacing: 0;
+    }
+    .bookviewingpopup .input-form {
+        margin-bottom: 15px;
+    }
+    .bookviewingpopup .modal-body {
+        padding: 0 20px;
+    }
+    .bookviewingpopup .input-form{
+        width: 100%;
+    }
+    .bookviewingpopup input,select{
+        width: 100%;
+    }
+    .bookviewingpopup .modal-header {
+        padding: 0 10px;
+    }
+    .bookviewingpopup p{
+        text-align: justify;
+    }
+    .bookviewingpopup .intl-tel-input .selected-flag .iti-flag {
+        top: 1px;
+        left: 14px;
+    }
+    .bookviewingpopup .intl-tel-input .selected-flag .iti-arrow {
+        top: 15px;
+    }
+    .bookviewingpopup .pop-up-button-set {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div id="openModal" class="bookviewingpopup">
+    <div class="pop-up-cover">
+        <form class="form-bookviewing" method="post" id="popup-bookviewing-form">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <img class="d-lg-block d-md-block d-none" src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="x">
+                    <img class="d-block d-lg-none d-md-none" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-grey.png'); ?>" alt="x">
+                </a>
+                <h1><?php echo $this->__("Book A Viewing")?></h1>
+            </div>
+            <div class="modal-body">
+                <p class="para-normal">Thank you for your interest in the Maria Tash Fall/Winter 2020 Collection.
+                    As a valued VIP, we'd like to set up a private viewing appointment at your nearest store location.
+                    Please provide your information below and India Megan will be in touch directly to arrange.</p>
+
+                <div class="input-set">
+                    <div id="reg_msg_div">
+                        <span id="register-msg"></span>
+                    </div>
+                    <div class="input-form">
+                        <input id="bookviewing-name" placeholder="Name*" type="text" name='name' class="ele_width required-entry"/>
+                    </div>
+                    <div class="input-form">
+                        <input id="bookviewing-address" placeholder="Address*" type="text" name='address' class="ele_width required-entry"/>
+                    </div>
+                    <div class="input-form">
+                        <input id="bookviewing-city" placeholder="City*" type="text" name='city' class="ele_width required-entry "/>
+                    </div>
+                    <div class="input-form">
+                        <input id="bookviewing-state" placeholder="State*" type="text" name='state' class="ele_width required-entry "/>
+                    </div>
+                    <?php
+                    $countryList=Mage::getModel('directory/country')->getResourceCollection()->loadByStore()->toOptionArray(true);
+
+                    ?>
+                    <div class="input-form">
+                        <select id="bookviewing-country" type="text" name='country' class="ele_width required-entry"/>
+                        <?php
+                        foreach ($countryList as $country)
+                        {
+                            if(!$country['value'])
+                                continue;
+
+                            $selected="";
+
+                            if("US"==$country['value'])
+                                $selected="selected";
+
+                            ?>
+                            <option <?= $selected ?> value="<?= $country['label']?>"><?= $country['label']?></option>
+                        <?php }
+                        ?>
+                        </select>
+                    </div>
+
+                    <div class="input-form">
+                        <input id="bookviewing-email" placeholder="Email*" type="text" name='email' class="ele_width required-entry validate-email"/>
+                    </div>
+                    <div class="input-form">
+                        <input  id="phonenumber1" placeholder="Phone Number*" type="text" name='phone' class="ele_width"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                  <span id="popup_loader_bookviewing" class="please-wait-popup-register" style="display: none;">
+                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading" title="Loading" class="v-middle"></span>
+            </div>
+            <div class="pop-link modal-footer">
+                <div class="pop-up-button-set row">
+                    <div class="submit-login col">
+                        <button type="button" id="sumbitbookaviewing" class="button dark-button pop-up-button"><?php echo $this->__("Submit")?></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    jQuery(document).ready(function () {
+
+    jQuery("#bookviewing").on("click",function () {
+        jQuery(".bookviewingpopup").css({"opacity": "1", "pointer-events": "auto","z-index":"9999"});
+        jQuery(".bookviewingpopup").removeClass("d-none");
+        unScrollBody();
+    });
+    jQuery("#openModal .close").on("click",function () {
+        jQuery(".bookviewingpopup").css({"opacity":"0","pointer-events":"none"});
+        jQuery(".bookviewingpopup").addClass("d-none");
+        scrollBody();
+    });
+
+
+        var intil=window.intlTelInput(document.querySelector("#phonenumber1"), {
+            initialCountry: jQuery("#default_country_phone").val(),
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
+            utilsScript: "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js"
+        });
+
+        // on blur: validate
+        jQuery("#phonenumber1").on('keyup', function() {
+            var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+            var id=jQuery(this).attr("id");
+            jQuery("#"+id+"_message").remove();
+            if(jQuery.trim(jQuery(this).val())) {
+                if (intil.isValidNumber()) {
+
+                    var str=jQuery(this).attr("value");
+                    if(str.replace(/[^+]/g, "").length==1)
+                        jQuery(this).removeClass("invalid_telp");
+                    else {
+                        jQuery(this).addClass("invalid_telp");
+                        errorMessage = '<div id="' + id + '_message" class="validation-advice" ">Invalid number</div>';
+                        jQuery(this).after(errorMessage);
+                    }
+
+
+                } else {
+                    var errorCode = intil.getValidationError();
+                    var errorMessage = errorMap[errorCode];
+
+                    if(!errorMessage)
+                        errorMessage="Invalid number";
+
+                    jQuery(this).addClass("invalid_telp");
+                    errorMessage = '<div id="' + id + '_message" class="validation-advice" >' + errorMessage + '</div>';
+                    jQuery(this).after(errorMessage);
+                }
+            }
+        });
+
+    });
+
+    var BookViewingUrlAjax = '<?php echo Mage::getBaseUrl('web').'privatesale/BookViewing/register';?>';
+
+    jQuery("#sumbitbookaviewing").on('click',function() {
+        var myForm = new VarienForm('popup-bookviewing-form', false);
+        console.log("onclick");
+        jQuery("#phonenumber1").keyup();
+        if (myForm.validator.validate()) {
+
+            var requestData = jQuery('#popup-bookviewing-form').serialize();
+
+            jQuery.ajax({
+                url : BookViewingUrlAjax,
+                dataType : 'json',
+                type : 'POST',
+                data: requestData,
+                beforeSend: function() { jQuery('#popup_loader_bookviewing').show(); jQuery("#sumbitbookaviewing").hide();},
+                complete: function() { jQuery('#popup_loader_bookviewing').hide(); jQuery("#sumbitbookaviewing").show()},
+                success : function(data) {
+                    if (data.success) {
+
+                    }
+                }
+            });
+
+
+        }
+    });
+
+
+
+
+</script>
