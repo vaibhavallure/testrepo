@@ -175,8 +175,9 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             $productData['visibility'] = $topProduct ? Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH : Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE;
         }
 
-        if(empty($entity['internal_id']) || Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_STATUSES))
-        {
+        if (empty($entity['internal_id'])) {
+            $productData['status'] = Mage_Catalog_Model_Product_Status::STATUS_DISABLED;
+        } elseif(Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_STATUSES)) {
             if(strtolower($entity['ecomerce']) == strtolower('EC Offer'))
             {
                 $productData['status'] = Mage_Catalog_Model_Product_Status::STATUS_ENABLED;
