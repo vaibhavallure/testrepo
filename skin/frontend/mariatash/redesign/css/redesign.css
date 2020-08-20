@@ -5170,10 +5170,18 @@ a.product-video-link:hover div.product-video-play-icon {
 
 .piercing-cat-nav-menu .common-option-div
 {
-	text-align: center;
+	text-align: left;
 }
 
 .piercing-cat-nav-menu .piercing-cat-div
 {
 	float: left;
+}
+
+.piercing-cat-nav-menu .piercing-cat-div:first-child {
+	display: flex;
+	justify-content: flex-end;
+}
+.piercing-cat-nav-menu .piercing-option {
+	padding-right: 20px;
 }

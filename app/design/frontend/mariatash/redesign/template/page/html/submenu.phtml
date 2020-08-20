@@ -46,6 +46,7 @@ if($this->isthumbnailCat($pc->getName())){
                     	<?php if(strtolower($pc->getName()) == "piercing"): //T1?>
                     	<div class="col-12 piercing-cat-nav-menu">
                             <div class="col-6 piercing-cat-div">
+                            	<div class="piercing-option">
                                 <?php
 
                                 $withoutChildrenCategory=array();
@@ -94,7 +95,7 @@ if($this->isthumbnailCat($pc->getName())){
                                     </div>
                                 </div>
                                 <?php endforeach; ?>
-
+								</div>
                             </div>
                             <div class="col-6 piercing-cat-div">
                             	<img width="30%" src="<?php echo $this->getCatThumbnail($pc->getId()) ?>">
