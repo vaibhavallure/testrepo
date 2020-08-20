@@ -2,7 +2,13 @@
 class Allure_PrivateSale_Helper_Bookviewing extends Mage_Core_Helper_Abstract
 {
     public function isEnabled(){
-        return Mage::getStoreConfig("privatesale/module/book_viewing_enabled");
+        return Mage::getStoreConfig("privatesale/bookviewing/book_viewing_enabled");
+    }
+    public function getTemplateId(){
+        return Mage::getStoreConfig("privatesale/bookviewing/email_temp_code");
+    }
+    public function getEmailReceiver(){
+        return Mage::getStoreConfig("privatesale/bookviewing/receiver");
     }
 
     private function getDataHelper()
@@ -38,16 +44,15 @@ class Allure_PrivateSale_Helper_Bookviewing extends Mage_Core_Helper_Abstract
 
     private function validateCategory()
     {
-        $product = Mage::registry('current_product');
-        $id = $product->getId();
-        $_product = Mage::getModel('catalog/product')->load($id);
-        $categoryIds = array_values($_product->getCategoryIds());
-        if (in_array($this->getDataHelper()->getCategory(),$categoryIds)) {
-            return true;
+        if(Mage::registry('current_product')) {
+            $product = Mage::registry('current_product');
+            $id = $product->getId();
+            $_product = Mage::getModel('catalog/product')->load($id);
+            $categoryIds = array_values($_product->getCategoryIds());
+            if (in_array($this->getDataHelper()->getCategory(), $categoryIds)) {
+                return true;
+            }
         }
-
         return false;
     }
-
-
 }

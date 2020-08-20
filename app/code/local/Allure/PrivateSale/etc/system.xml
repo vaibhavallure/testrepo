@@ -45,15 +45,6 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                     </hide_category>
-                    <book_viewing_enabled translate="label">
-                        <label>Book A Viewing Enabled</label>
-                        <frontend_type>select</frontend_type>
-                        <source_model>adminhtml/system_config_source_yesno</source_model>
-                        <sort_order>1</sort_order>
-                        <show_in_default>1</show_in_default>
-                        <show_in_website>1</show_in_website>
-                        <show_in_store>1</show_in_store>
-                    </book_viewing_enabled>
                 </fields>
                 </module>
                 <credential translate="label">
@@ -82,6 +73,42 @@
                         </password>
                     </fields>
                 </credential>
+                <bookviewing translate="label">
+                    <label>Book a viewing setting</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <book_viewing_enabled translate="label">
+                            <label>Book A Viewing Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </book_viewing_enabled>
+                        <email_temp_code translate="label">
+                            <label>Email Template Code</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>80</sort_order>
+                        </email_temp_code>
+                        <receiver translate="label">
+                            <label>Receiver Emails</label>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>80</sort_order>
+                        </receiver>
+                    </fields>
+                </bookviewing>
             </groups>
         </privatesale>
     </sections>

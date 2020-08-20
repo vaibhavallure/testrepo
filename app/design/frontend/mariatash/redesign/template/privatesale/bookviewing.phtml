@@ -87,7 +87,7 @@
                         <span id="register-msg"></span>
                     </div>
                     <div class="input-form">
-                        <input id="bookviewing-name" placeholder="Name*" type="text" name='name' class="ele_width required-entry"/>
+                        <input id="bookviewing-name" placeholder="Name*" type="text" name='applicant_name' class="ele_width required-entry"/>
                     </div>
                     <div class="input-form">
                         <input id="bookviewing-address" placeholder="Address*" type="text" name='address' class="ele_width required-entry"/>
@@ -148,16 +148,16 @@
 
     jQuery(document).ready(function () {
 
-    jQuery("#bookviewing").on("click",function () {
-        jQuery(".bookviewingpopup").css({"opacity": "1", "pointer-events": "auto","z-index":"9999"});
-        jQuery(".bookviewingpopup").removeClass("d-none");
-        unScrollBody();
-    });
-    jQuery("#openModal .close").on("click",function () {
-        jQuery(".bookviewingpopup").css({"opacity":"0","pointer-events":"none"});
-        jQuery(".bookviewingpopup").addClass("d-none");
-        scrollBody();
-    });
+        jQuery("#bookviewing").on("click",function () {
+            jQuery(".bookviewingpopup").css({"opacity": "1", "pointer-events": "auto","z-index":"9999"});
+            jQuery(".bookviewingpopup").removeClass("d-none");
+            unScrollBody();
+        });
+        jQuery("#openModal .close").on("click",function () {
+            jQuery(".bookviewingpopup").css({"opacity":"0","pointer-events":"none"});
+            jQuery(".bookviewingpopup").addClass("d-none");
+            scrollBody();
+        });
 
 
         var intil=window.intlTelInput(document.querySelector("#phonenumber1"), {
@@ -210,7 +210,7 @@
         var myForm = new VarienForm('popup-bookviewing-form', false);
         console.log("onclick");
         jQuery("#phonenumber1").keyup();
-        if (myForm.validator.validate()) {
+        if (myForm.validator.validate() && !jQuery("#phonenumber1").hasClass("invalid_telp")) {
 
             var requestData = jQuery('#popup-bookviewing-form').serialize();
 
@@ -223,7 +223,13 @@
                 complete: function() { jQuery('#popup_loader_bookviewing').hide(); jQuery("#sumbitbookaviewing").show()},
                 success : function(data) {
                     if (data.success) {
-
+                        jQuery("#popup-bookviewing-form input").val("");
+                        jQuery(".bookviewingpopup").css({"opacity":"0","pointer-events":"none"});
+                        jQuery(".bookviewingpopup").addClass("d-none");
+                        scrollBody();
+                        alert("Thank You!");
+                    }else{
+                        alert("Something went wrong please try again.");
                     }
                 }
             });
