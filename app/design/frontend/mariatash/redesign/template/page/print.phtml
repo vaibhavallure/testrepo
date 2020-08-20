@@ -38,6 +38,11 @@
 <?php echo $this->getChildHtml('head') ?>
 </head>
 <body class="page-print<?php echo $this->getBodyClass()?$this->getBodyClass():'' ?>">
+
+<?php if(Mage::helper('core')->isModuleEnabled("Allure_Gtm")):?>
+<?php echo Mage::helper("allure_gtm")->getBodyScript();?>
+<?php endif;?>
+
 <div>
     <div class="print-head print-padding-left">
         <img src="<?php echo $this->getPrintLogoUrl() ? $this->getPrintLogoUrl() : $this->getSkinUrl('images/redesign/maria-logo-bk.png') ?>" class="logo" alt="Maria Tash" />

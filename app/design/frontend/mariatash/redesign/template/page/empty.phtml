@@ -38,6 +38,12 @@
     <?php echo $this->getChildHtml('head') ?>
 </head>
 <body class="page-empty <?php echo $this->getBodyClass()?$this->getBodyClass():'' ?>">
+
+<?php if(Mage::helper('core')->isModuleEnabled("Allure_Gtm")):?>
+<?php echo Mage::helper("allure_gtm")->getBodyScript();?>
+<?php endif;?>
+
+
     <div>
         <?php echo $this->getChildHtml('after_body_start') ?>
         <?php echo $this->getChildHtml('global_messages') ?>

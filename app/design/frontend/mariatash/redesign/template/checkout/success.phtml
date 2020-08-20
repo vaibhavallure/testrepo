@@ -98,7 +98,7 @@
 
 <?php endif;?>
 
-
+<?php if(false):?>
 <?php
     //$order = Mage::getModel('sales/order')->load($orderId); 
     $order_id = $order->getIncrementId();   //the id of the order
@@ -130,5 +130,43 @@
 <?php endforeach;?> 
 	ga('ecommerce:send');
 </script>
+<?php endif;?>
 
+<script type="text/javascript">
+	window.dataLayer = window.dataLayer || [];
+    <?php
+	    $incrementId = $order->getIncrementId();   //the id of the order
+	    $gtotal = $order->getBaseGrandTotal();  //grand total of the order 
+	    $shippingVal = $order->getBaseShippingAmount();
+	    $taxAmount = $order->getBaseTaxAmount();
+	    $orderItems = $order->getAllVisibleItems();
+	    $intCtr = 0;
+	    $itemscnt = count($orderItems);
+	?>
+	
+    dataLayer.push({
+    	'event': 'mt_transaction',
+        'transactionId': '<?php echo $incrementId?>',
+        'transactionAffiliation': '',
+        'transactionTotal': <?php echo $gtotal?>,
+        'transactionTax': <?php echo $taxAmount?>,
+        'transactionShipping': <?php echo $shippingVal?>,
+        'transactionProducts': [
+         <?php foreach($orderItems as $item): ?>
+             <?php $intCtr++;?>
+             <?php if($item->getParentItemId()) continue;?>
+                {
+                'sku': '<?php echo $item->getSku(); ?>',
+                'name': '<?php echo $item->getName(); ?>',
+                'category': '',
+                'price': <?php echo $item->getBasePrice(); ?>,
+                'quantity': <?php echo $item->getQtyOrdered(); ?>
+              <?php if ($intCtr == $itemscnt):?>
+                }]
+              <?php else:?>
+                },
+              <?php endif;?>
+          <?php endforeach;?>
+    });
+</script>
 
