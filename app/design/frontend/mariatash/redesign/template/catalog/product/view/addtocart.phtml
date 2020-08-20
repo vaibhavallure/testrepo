@@ -168,7 +168,7 @@
         <?php endif; ?>
 
 		<?php  echo $this->getChildHtml('ApplePayButtonProduct') ?>
-		
+
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
         <div class="col-6 float-left add-to-bag">
           <div class="row">
@@ -179,6 +179,9 @@
         </div>
       </div>
         <?php  echo $this->getChildHtml('addto') ?>
+
+        <!--book viewing button added-->
+        <?= Mage::helper('privatesale/bookviewing')->getBookAViewingButton()?>
     </div>
 <?php endif; ?>
 <?php if(!$_product->isConfigurable()) { ?>
