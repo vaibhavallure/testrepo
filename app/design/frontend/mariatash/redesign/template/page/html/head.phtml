@@ -289,6 +289,10 @@ foreach ($metaCollection as $meta){
     <link rel="stylesheet" type="text/css" href="<?php echo $this->getUrl(); ?>skin/frontend/mt/default/css/IE8_styles.css" media="all">
 <![endif]-->
 
+<?php if(Mage::helper('core')->isModuleEnabled("Allure_Gtm")):?>
+<?php echo Mage::helper("allure_gtm")->getHeadScript();?>
+<?php endif;?>
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', initServiceWorker, false);
     function initServiceWorker() {

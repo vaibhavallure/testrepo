@@ -38,6 +38,12 @@
 <?php echo $this->getChildHtml('head') ?>
 </head>
 <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+
+<?php if(Mage::helper('core')->isModuleEnabled("Allure_Gtm")):?>
+<?php echo Mage::helper("allure_gtm")->getBodyScript();?>
+<?php endif;?>
+
+
 <?php echo $this->getChildHtml('after_body_start') ?>
 <div class="wrapper">
     <?php echo $this->getChildHtml('global_notices') ?>
