@@ -97,8 +97,12 @@ if($this->isthumbnailCat($pc->getName())){
                                 <?php endforeach; ?>
 								</div>
                             </div>
-                            <div class="col-6 piercing-cat-div">
-                            	<img width="30%" src="<?php echo $this->getCatThumbnail($pc->getId()) ?>">
+                            <div class="col-6 piercing-cat-div p-0">
+                                <a href="/jewelry/shop-by-piercing.html"><img src="<?php echo $this->getCatThumbnail($pc->getId()) ?>">
+                                <div class="image-text text-center" >
+                                    <h6 class="text-uppercase text-white"><?= $this->__("SHOP BY PIERCING")?></h6>
+                                </div>
+                                </a>
                             </div>
                     </div>
                     	<?php else: //T1?>

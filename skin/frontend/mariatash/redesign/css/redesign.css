@@ -5185,3 +5185,17 @@ a.product-video-link:hover div.product-video-play-icon {
 .piercing-cat-nav-menu .piercing-option {
 	padding-right: 20px;
 }
+.piercing-cat-div a img {
+	width: 30%;
+}
+.piercing-cat-div div.image-text{
+	width: 30%;
+}
+@media (max-width: 992px) {
+	.piercing-cat-div a img {
+		width: 90%;
+	}
+	.piercing-cat-div div.image-text{
+		width: 90%;
+	}
+}
