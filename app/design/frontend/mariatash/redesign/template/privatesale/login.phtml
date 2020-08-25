@@ -6,31 +6,42 @@
     .messages .error-msg{
         display: none;
     }
+    .privateLogin .modal-body {
+        padding: 0 45px;
+    }
+    @media only screen and (min-width: 767px) {
+        .privateLogin .eye-image {
+            right: 55px;
+        }
+    }
 </style>
 <div class="privateLogin">
     <div>
         <form class="form-signin" action="<?= "/privatesale/login/verify" ?>" method="post" id="popup-login-form">
-            <div class="pop-title modal-header">
-                <h1><?php echo $this->__("Login To Private Sale")?></h1>
-            </div>
-            <div class="body modal-body">
+<!--            <div class="pop-title modal-header">-->
+<!--                <h1>--><?php //// echo $this->__("Login To Private Sale")?><!--</h1>-->
+<!--                </div>-->
+            <div class="body modal-body mt-5">
+                <p class="text-center para-normal">Welcome to the private viewing of the Fall/Winter 2020 Collection.
+                   <br> Enter details below to gain exclusive access.</p>
+
                 <div id="private_login_msg_div">
                     <span class="invalid-login" id="private-login-msg"></span>
                 </div>
                 <div class="form-group input-form">
                     <!-- <label class="popup-login-lbl" for="email"><em>*</em> <//?php echo $this->__("Email Address")?></label> -->
-                    <input type="text" name='username' placeholder="Private sale username*" required class="ele_width required-entry"/>
+                    <input type="text" name='username' placeholder="Log In*" required class="ele_width required-entry"/>
                 </div>
                 <div class="form-group input-form">
                     <!-- <label class="popup-login-lbl" for="password"><em>*</em> <//?php echo $this->__("Password")?></label> -->
-                    <input  type="password" name="password" placeholder="Private sale password*" required class="ele_width required-entry consistent-password"/>
+                    <input  type="password" name="password" placeholder="password*" required class="ele_width required-entry consistent-password"/>
                     <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
                     <div class="">
                         <img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
                         <img class="eye-image show-hide-on-click close-eye" src="<?php echo $this->getSkinUrl("images/eye-c.png")?>" alt="">
                     </div>
                 </div>
-                <div class="submit-login text-right position-relative">
+                <div class="submit-login text-center position-relative">
                     <button type="submit" id="signin-btn-popup" class="button dark-button pop-up-button"><?php echo $this->__("LogIn")?></button>
                 </div>
             </div>
