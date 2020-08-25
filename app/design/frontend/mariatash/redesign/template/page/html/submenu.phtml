@@ -80,14 +80,14 @@ if($this->isthumbnailCat($pc->getName())){
 
                                     <div class="common-option-div" >
                                         <div class="menu-head jwl-head text-uppercase">
-                                            <strong><?= $pc->getName() ?></strong>
+                                            <span><?= $pc->getName() ?></span>
                                         </div>
                                     </div>
                                 <?php foreach ($withChildrenCategory as $child):
                                     $child = Mage::getModel('catalog/category')->load($child->getId());
                                     ?>
                                 <div class="common-option-div" id="c-<?= $child->getId() ?>">
-                                    <div class="menu-head jwl-head text-uppercase">
+                                    <div class="">
                                     	<?php 
                                     	$requestPath = trim($child->getRequestPath());
                                     	if(isset($customUrlArr[$requestPath])){
