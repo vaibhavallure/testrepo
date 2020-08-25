@@ -45,7 +45,7 @@ if($this->isthumbnailCat($pc->getName())){
                     <div class="row">
                     	<?php if(strtolower($pc->getName()) == "piercing"): //T1?>
                     	<div class="col-12 piercing-cat-nav-menu">
-                            <div class="col-5 piercing-cat-div">
+                            <div class="col-6 piercing-cat-div">
                             	<div class="piercing-option">
                                 <?php
 
@@ -101,7 +101,7 @@ if($this->isthumbnailCat($pc->getName())){
                                 <?php endforeach; ?>
 								</div>
                             </div>
-                            <div class="col-6 piercing-cat-div p-0  offset-1">
+                            <div class="col-6 piercing-cat-div p-0">
                                 <a href="/jewelry/shop-by-piercing.html"><img src="<?php echo $this->getCatThumbnail($pc->getId()) ?>">
                                 <div class="image-text text-center" >
                                     <h6 class="text-uppercase text-white"><?= $this->__("SHOP BY PIERCING")?></h6>
