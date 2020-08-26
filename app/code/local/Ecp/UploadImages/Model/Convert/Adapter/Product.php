@@ -181,7 +181,7 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
 
                 /*-----code added by allure to clear image cache----*/
                 $fileName=pathinfo($imageRenamedFile)['basename'];
-                $this->clearImageCache($fileName);
+//                $this->clearImageCache($fileName);
                 /*allure code ended -------------------------------*/
 
 
