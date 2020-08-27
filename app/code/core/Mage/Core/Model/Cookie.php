@@ -38,6 +38,7 @@ class Mage_Core_Model_Cookie
     const XML_PATH_COOKIE_PATH      = 'web/cookie/cookie_path';
     const XML_PATH_COOKIE_LIFETIME  = 'web/cookie/cookie_lifetime';
     const XML_PATH_COOKIE_HTTPONLY  = 'web/cookie/cookie_httponly';
+    const XML_PATH_COOKIE_SECURE    = 'web/cookie/cookie_secure';
 
     protected $_lifetime;
 
@@ -177,15 +178,19 @@ class Mage_Core_Model_Cookie
 
     /**
      * Is https secure request
-     * Use secure on adminhtml only
+     * Use secure everywhere where baseurl allows it
      *
      * @return bool
      */
     public function isSecure()
     {
+        if (Mage::getStoreConfigFlag(self::XML_PATH_COOKIE_SECURE)) {
+            return true;
+        }
         if ($this->getStore()->isAdmin()) {
             return $this->_getRequest()->isSecure();
         }
+
         return false;
     }
 

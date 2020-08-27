@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-15>Set session cookies secure</MO-15>
+        </patches>
+    </mage-one>
+</config>
