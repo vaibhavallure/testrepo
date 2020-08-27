@@ -28,7 +28,7 @@
 <config>
     <modules>
         <Mage_Core>
-            <version>1.6.0.10</version>
+            <version>1.6.0.11</version>
         </Mage_Core>
     </modules>
     <global>
@@ -89,6 +89,12 @@
                     <email_recipients>
                         <table>core_email_queue_recipients</table>
                     </email_recipients>
+                    <uniquesession_customer_session>
+                        <table>uniquesession_customer_session</table>
+                    </uniquesession_customer_session>
+                    <uniquesession_admin_user_session>
+                        <table>uniquesession_admin_user_session</table>
+                    </uniquesession_admin_user_session>
                     <file_storage><table>core_file_storage</table></file_storage>
                     <directory_storage><table>core_directory_storage</table></directory_storage>
                 </entities>

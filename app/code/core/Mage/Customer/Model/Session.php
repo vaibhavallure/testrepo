@@ -72,13 +72,13 @@ class Mage_Customer_Model_Session extends Mage_Core_Model_Session_Abstract
         }
 
         $this->init($namespace);
-        Mage::dispatchEvent('customer_session_init', array('customer_session'=>$this));
+        Mage::dispatchEvent('customer_session_init', array('customer_session' => $this));
     }
 
     /**
      * Set customer object and setting customer id in session
      *
-     * @param   Mage_Customer_Model_Customer $customer
+     * @param Mage_Customer_Model_Customer $customer
      * @return  Mage_Customer_Model_Session
      */
     public function setCustomer(Mage_Customer_Model_Customer $customer)
@@ -201,8 +201,8 @@ class Mage_Customer_Model_Session extends Mage_Core_Model_Session_Abstract
     /**
      * Customer authorization
      *
-     * @param   string $username
-     * @param   string $password
+     * @param string $username
+     * @param string $password
      * @return  bool
      */
     public function login($username, $password)
@@ -222,15 +222,16 @@ class Mage_Customer_Model_Session extends Mage_Core_Model_Session_Abstract
     {
         $this->setCustomer($customer);
         $this->renewSession();
+        $this->saveUniqueSessionId();
         Mage::getSingleton('core/session')->renewFormKey();
-        Mage::dispatchEvent('customer_login', array('customer'=>$customer));
+        Mage::dispatchEvent('customer_login', array('customer' => $customer));
         return $this;
     }
 
     /**
      * Authorization customer by identifier
      *
-     * @param   int $customerId
+     * @param int $customerId
      * @return  bool
      */
     public function loginById($customerId)
@@ -251,7 +252,7 @@ class Mage_Customer_Model_Session extends Mage_Core_Model_Session_Abstract
     public function logout()
     {
         if ($this->isLoggedIn()) {
-            Mage::dispatchEvent('customer_logout', array('customer' => $this->getCustomer()) );
+            Mage::dispatchEvent('customer_logout', array('customer' => $this->getCustomer()));
             $this->_logout();
         }
         return $this;
@@ -260,8 +261,8 @@ class Mage_Customer_Model_Session extends Mage_Core_Model_Session_Abstract
     /**
      * Authenticate controller action by login customer
      *
-     * @param   Mage_Core_Controller_Varien_Action $action
-     * @param   bool $loginUrl
+     * @param Mage_Core_Controller_Varien_Action $action
+     * @param bool $loginUrl
      * @return  bool
      */
     public function authenticate(Mage_Core_Controller_Varien_Action $action, $loginUrl = null)
@@ -346,4 +347,55 @@ class Mage_Customer_Model_Session extends Mage_Core_Model_Session_Abstract
 
         return $this;
     }
+
+    /**
+     * Saves the unique session id
+     *
+     * @return Mage_Customer_Model_Session
+     * @throws Exception
+     */
+    protected function saveUniqueSessionId()
+    {
+        if (Mage::getStoreConfigFlag('admin/security/use_unique_session_login_for_frontend')) {
+            /** @var Mage_Core_Model_Uniquesession_Customer_Session $customerSession */
+            $uniqueSession = Mage::getModel('core/uniquesession_customer_session')
+                ->load($this->getCustomerId(), 'customer_id');
+
+            if ($uniqueSession->isObjectNew()) {
+                $uniqueSession = Mage::getModel('core/uniquesession_customer_session');
+                $uniqueSession->setCustomerId($this->getCustomerId());
+            }
+
+            $uniqueSession->setSessionId($this->getSessionId());
+            $uniqueSession->save();
+        }
+
+        return $this;
+    }
+
+    protected function _validate()
+    {
+        $res = parent::_validate();
+
+        if (!$res) {
+            return $res;
+        }
+
+        if (Mage::getStoreConfigFlag('admin/security/use_unique_session_login_for_frontend')) {
+            if ($this->isLoggedIn()) {
+                /** @var Mage_Core_Model_Uniquesession_Customer_Session $uniqueCustomerSession */
+                $uniqueCustomerSession = Mage::getModel('core/uniquesession_customer_session')
+                    ->load($this->getSessionId(), 'session_id');
+
+                if ($uniqueCustomerSession->isObjectNew()) {
+                    /** @var Mage_Customer_Model_Customer $emtpyCustomer */
+                    $emtpyCustomer = Mage::getModel('customer/customer');
+                    $this->setCustomer($emtpyCustomer);
+                }
+            }
+        }
+
+        return true;
+    }
+
 }
