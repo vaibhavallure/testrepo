@@ -37,7 +37,7 @@
         <h1><?php echo $this->__('Login or Create an Account') ?></h1>
     </div>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
-    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" autocomplete="off">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <div class="col2-set">
             <div class="col-1 new-users">

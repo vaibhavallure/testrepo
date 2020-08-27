@@ -37,7 +37,7 @@
         <div class="login-form">
             <?php echo $this->getMessagesBlock()->toHtml() ?>
             <?php if (!$this->getHasException()): ?>
-                <form method="post" action="<?php echo $this->getPostActionUrl() ?>" id="loginForm">
+                <form method="post" action="<?php echo $this->getPostActionUrl() ?>" id="loginForm" autocomplete="off">
                     <?php echo $this->getBlockHtml('formkey'); ?>
                     <fieldset>
                         <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" />

@@ -35,7 +35,7 @@ $rejectJs = "document.location.href='{$this->getRejectUrl()}';";
 <div class="account-login">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php if (!$this->getHasException()): ?>
-        <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+        <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" autocomplete="off">
             <?php echo $this->getBlockHtml('formkey'); ?>
             <div class="col1-set">
                 <div class="col-1 registered-users">

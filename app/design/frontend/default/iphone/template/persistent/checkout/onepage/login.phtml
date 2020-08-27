@@ -36,7 +36,7 @@
     <div class="col-1">
         <h4><?php echo $this->__('Login') ?></h4>
         <?php echo $this->getMessagesBlock()->toHtml() ?>
-        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post">
+        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post" autocomplete="off">
         <fieldset>
             <?php echo $this->getBlockHtml('formkey'); ?>
             <p><?php echo $this->__('Already registered? Please log in below:') ?></p>
