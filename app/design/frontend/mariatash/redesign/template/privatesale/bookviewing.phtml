@@ -2,6 +2,45 @@
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
 <style>
+    .successmessageBV
+    {
+        position: fixed;
+        top: -20px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 99999;
+        opacity: 0;
+        -webkit-transition: opacity 400ms ease-in;
+        -moz-transition: opacity 400ms ease-in;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+
+    }
+    .successmessageBV .pop-up-cover {
+        padding: 50px;
+        width: 350px;
+        min-height: 200px;
+        background-color: #fff;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        max-height: calc(100vh - 10px);
+        overflow-y: auto;
+        border-radius: 0;
+    }
+    .successmessageBV .modal-body {
+        padding: 0px;
+    }
+    .successmessageBV .modal-body p{
+        margin-top:25px;
+    }
+
+
+
+
     .bookviewingpopup
     {
         position: fixed;
@@ -148,6 +187,21 @@
         </form>
     </div>
 </div>
+
+
+<div class="successmessageBV">
+    <div class="pop-up-cover">
+            <div class="pop-title modal-header">
+                <a href="#close" title="Close" class="close exit-large">
+                    <img class="d-lg-block d-md-block d-none" src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="x">
+                    <img class="d-block d-lg-none d-md-none" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-grey.png'); ?>" alt="x">
+                </a>
+            </div>
+            <div class="modal-body">
+                <p class="para-normal text-center">Thank you for your request.<br> We will be in touch with you shortly.</p>
+            </div>
+</div>
+</div>
 <script>
 
     jQuery(document).ready(function () {
@@ -160,6 +214,13 @@
         jQuery("#openModal .close").on("click",function () {
             jQuery(".bookviewingpopup").css({"opacity":"0","pointer-events":"none"});
             jQuery(".bookviewingpopup").addClass("d-none");
+            scrollBody();
+        });
+
+
+        jQuery(".successmessageBV .close").on("click",function () {
+            jQuery(".successmessageBV").css({"opacity":"0","pointer-events":"none"});
+            jQuery(".successmessageBV").addClass("d-none");
             scrollBody();
         });
 
@@ -231,7 +292,12 @@
                         jQuery(".bookviewingpopup").css({"opacity":"0","pointer-events":"none"});
                         jQuery(".bookviewingpopup").addClass("d-none");
                         scrollBody();
-                        alert("Thank You!");
+//                        alert("Thank you for your request. We will be in touch with you shortly.");
+
+                        jQuery(".successmessageBV").css({"opacity": "1", "pointer-events": "auto","z-index":"9999"});
+                        jQuery(".successmessageBV").removeClass("d-none");
+                        unScrollBody();
+
                     }else{
                         alert("Something went wrong please try again.");
                     }
