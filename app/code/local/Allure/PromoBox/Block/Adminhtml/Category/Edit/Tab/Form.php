@@ -119,9 +119,9 @@ function genrateRow() {
        if(!starting_row.value || starting_row.value=="undefined" || !row_gap.value || row_gap.value=="undefined")
           return;
  
-        if(parseInt(starting_row.value)<1)
+        if(parseInt(starting_row.value)<2)
         {
-        alert("Starting Row Value must be greater than zero");
+        alert("Starting Row Value must be greater than 1");
         starting_row.value="";
         return;
         }

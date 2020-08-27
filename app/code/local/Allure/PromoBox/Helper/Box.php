@@ -206,7 +206,7 @@ class Allure_PromoBox_Helper_Box extends Mage_Core_Helper_Abstract
                 $htmlBlock = $this->getBannerHtmlBlock($this->_boxes[$i]['banner_id']);
             }
         }
-        echo '<li  class="'.$class.'" style="'.$liStyle.'"><div style="'.$style.'">'.$htmlBlock.'</div></li>';
+        echo '<li  class="'.$class.'" style="'.$liStyle.'" data-position-id="'.$i.'"><div style="'.$style.'">'.$htmlBlock.'</div></li>';
     }
     private function setI($i)
     {
