@@ -92,4 +92,20 @@ class Mage_Page_Block_Html_Submenu extends Mage_Core_Block_Template
         $thumb = Mage::getModel('catalog/category')->load($cat_id)->getThumbnail();
         return Mage::getBaseUrl('media').'catalog/category/'.$thumb;
     }
+    
+    /**
+     * Get custom url array
+     * @return string[]
+     */
+    public function getCustomUrlArray()
+    {
+        $customUrlArray = array();
+        if (Mage::helper('core')->isModuleEnabled("Allure_CustomUrl")) {
+            $customUrlCollection = Mage::getModel("allure_customurl/url")->getCollection();
+            foreach ($customUrlCollection as $customUrl){
+                $customUrlArray[trim($customUrl->getCurrentUrl())] = trim($customUrl->getRequestPath());
+            }
+        }
+        return $customUrlArray;
+    }
 }
