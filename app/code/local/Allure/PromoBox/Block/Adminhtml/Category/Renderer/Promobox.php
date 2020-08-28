@@ -11,6 +11,8 @@ class Allure_PromoBox_Block_Adminhtml_Category_Renderer_Promobox extends Varien_
         if(Mage::app()->getRequest()->getParam("id"))
         {
             $boxes="";
+            if($this->getCategoryData("size")=="one_by_two")
+            $boxes.="<div style=color:red>IMPORTANT NOTE:Below rows calculated considering desktop view( 5 products per row) for smaller devices (responsive) it will be at different location as per device size</div>";
 
             foreach ($this->getPromoBoxes() as $box)
             {

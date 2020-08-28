@@ -136,6 +136,7 @@ AWAjaxCatalog.prototype = {
                     AW_AjaxCartPro.startObservers();
                 }
                 onSuccessFn();
+                promoboxResetPositions();
             },
             onFailure: function(transport) {
                 console.error('Ooops, something wrong');

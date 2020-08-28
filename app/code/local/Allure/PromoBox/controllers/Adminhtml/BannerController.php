@@ -65,7 +65,7 @@ class Allure_PromoBox_Adminhtml_BannerController extends Mage_Adminhtml_Controll
                 }
                 $data['image'] = $result['file'];
             }else{
-                if(!$this->getRequest()->getParam("id"))
+                if(!$this->getRequest()->getParam("id") && empty($data['iframe_src']))
                 {
                     Mage::getSingleton('adminhtml/session')->addError("Banner image is required");
                     Mage::getSingleton('adminhtml/session')->setBannerData($this->getRequest()->getPost());
