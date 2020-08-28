@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_CustomUrl>
+			<name>Allure - Custom Url</name>
+			<version>1.0.0</version>
+		</Allure_CustomUrl>
+	</modules>
+	<global>
+		<resources>
+			<allure_customurl_setup>
+				<setup>
+                    <module>Allure_CustomUrl</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_customurl_setup>
+		</resources>
+		<helpers>
+			<allure_customurl>
+				<class>Allure_CustomUrl_Helper</class>
+			</allure_customurl>
+		</helpers>
+		<blocks>
+			<allure_customurl>
+				<class>Allure_CustomUrl_Block</class>
+			</allure_customurl>
+		</blocks>
+		<models>
+			<allure_customurl>
+				<class>Allure_CustomUrl_Model</class>
+				<resourceModel>allure_customurl_resource</resourceModel>
+			</allure_customurl>
+			<allure_customurl_resource>
+				<class>Allure_CustomUrl_Model_Resource</class>
+				<entities>
+					<url>
+						<table>allure_custom_url</table>
+					</url>
+				</entities>
+			</allure_customurl_resource>
+		</models>
+	</global>
+	<!-- <adminhtml>
+		<layout>
+			<updates>
+				<allure_customurl>
+					<file>allure/customurl.xml</file>
+				</allure_customurl>
+			</updates>
+		</layout>
+	</adminhtml> -->
+	<admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Allure_CustomUrl before="Mage_Adminhtml">Allure_CustomUrl_Adminhtml</Allure_CustomUrl>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+  	</admin>
+</config>

@@ -1,6 +1,9 @@
 <?php
 $parentCategory = $this->getParentCategories();
 
+//custom url array
+$customUrlArr = $this->getCustomUrlArray();
+
 foreach ($parentCategory as $pc):
 if($pc->getChildrenCount()):
 $childRightSection=array();
@@ -40,6 +43,73 @@ if($this->isthumbnailCat($pc->getName())){
             <div class="row piercing-inner">
                 <div class="col-lg-12 menu-common-section">
                     <div class="row">
+                    	<?php if(strtolower($pc->getName()) == "piercing"): //T1?>
+                    	<div class="col-12 piercing-cat-nav-menu">
+                            <div class="col-6 piercing-cat-div">
+                            	<div class="piercing-option">
+                                <?php
+
+                                $withoutChildrenCategory=array();
+                                $withChildrenCategory=array();
+
+                                foreach ($this->getChildCategories($pc->getId()) as $child) {
+                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
+                                        continue;
+
+                                    if ($this->isJwRightSectionCat($this->__($child->getName()))) {
+                                        $childRightSection[] = $child;
+                                        continue;
+                                    }
+
+
+
+                                    if(strtolower($pc->getName()) == "jewelry"):
+
+                                        $child = Mage::getModel('catalog/category')->load($child->getId());
+
+                                    if($child->hasChildren() || $child->getSetVirtualChild())
+                                        $withChildrenCategory[]=$child;
+                                    else
+                                        $withoutChildrenCategory[]= $child;
+
+                                    else:
+                                        $withChildrenCategory[]=$child;
+
+                                    endif;
+                                    } ?>
+
+                                    <div class="common-option-div" >
+                                        <div class="menu-head jwl-head text-uppercase">
+                                            <span><?= $pc->getName() ?></span>
+                                        </div>
+                                    </div>
+                                <?php foreach ($withChildrenCategory as $child):
+                                    $child = Mage::getModel('catalog/category')->load($child->getId());
+                                    ?>
+                                <div class="common-option-div" id="c-<?= $child->getId() ?>">
+                                    <div class="">
+                                    	<?php 
+                                    	$requestPath = trim($child->getRequestPath());
+                                    	if(isset($customUrlArr[$requestPath])){
+                                    	    $requestPath = $customUrlArr[$requestPath];
+                                    	}
+                                    	?>
+                                        <a href="<?= (!$child->hasChildren())? "/".$requestPath : "#" ?>"><?= $this->__($child->getName()); ?></a>
+                                        
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+								</div>
+                            </div>
+                            <div class="col-6 piercing-cat-div p-0">
+                                <a href="/jewelry/shop-by-piercing.html"><img src="<?php echo $this->getCatThumbnail($pc->getId()) ?>">
+                                <div class="image-text text-center" >
+                                    <h6 class="text-uppercase text-white"><?= $this->__("SHOP BY PIERCING")?></h6>
+                                </div>
+                                </a>
+                            </div>
+                    </div>
+                    	<?php else: //T1?>
                         <div class="col-12 left-section">
                             <div class="row inner-box">
                                 <?php
@@ -119,7 +189,19 @@ if($this->isthumbnailCat($pc->getName())){
                                     ?>
                                 <div class="common-option-div" id="c-<?= $child->getId() ?>">
                                     <div class="menu-head jwl-head text-uppercase">
-                                        <span><a href="<?= (!$child->hasChildren())? "/".$child->getRequestPath() : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
+                                    
+                                    	<?php 
+                                    	$requestPath = trim($child->getRequestPath());
+                                    	if(isset($customUrlArr[$requestPath])){
+                                    	    $requestPath = $customUrlArr[$requestPath];
+                                    	}
+                                    	?>
+                                        <?php if($child->getSetVirtualChild()):?>
+                                        <span><a href="<?= (!$child->hasChildren())? "/".$requestPath : "#" ?>"><?= $this->__($child->getName()); ?></a></span>
+                                        <?php else:?>
+                                        <a href="<?= (!$child->hasChildren())? "/".$requestPath : "#" ?>"><?= $this->__($child->getName()); ?></a>
+                                        <?php endif;?>
+                                        
                                     </div>
                                     <div class="head-child">
                                         <ul class="p-0">
@@ -159,6 +241,7 @@ if($this->isthumbnailCat($pc->getName())){
 
                             </div>
                     </div>
+                    <?php endif; //T1?>
                     <?php if (false) :?>
                     <div class="col-lg-5 col-12 text-uppercase right-section">
                         <div class="row">
