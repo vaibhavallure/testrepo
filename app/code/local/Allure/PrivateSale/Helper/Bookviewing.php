@@ -18,7 +18,10 @@ class Allure_PrivateSale_Helper_Bookviewing extends Mage_Core_Helper_Abstract
 
     public function getBookAViewingButton()
     {
-        if($this->isEnabled() && $this->validateCategory())
+        $controllerName = Mage::app()->getRequest()->getControllerName();
+        $actionName = Mage::app()->getRequest()->getActionName();
+
+        if($this->isEnabled() && $this->validateCategory() && $controllerName == 'product' && $actionName == 'view')
         {
             return '
               <div class="col-12 float-left mt-2">
@@ -34,7 +37,10 @@ class Allure_PrivateSale_Helper_Bookviewing extends Mage_Core_Helper_Abstract
     }
     public function getBookAViewingForm()
     {
-        if($this->isEnabled() && $this->validateCategory())
+        $controllerName = Mage::app()->getRequest()->getControllerName();
+        $actionName = Mage::app()->getRequest()->getActionName();
+
+        if($this->isEnabled() && $this->validateCategory() && $controllerName == 'product' && $actionName == 'view')
         {
             return Mage::app()->getLayout()->createBlock('core/template')->setTemplate('privatesale/bookviewing.phtml')->toHtml();
         }
