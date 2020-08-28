@@ -62,6 +62,14 @@ class Mage_Page_Block_Html_Submenu extends Mage_Core_Block_Template
         }
             return true;
     }
+    public function isPrivateCategory($id)
+    {
+        $helper=Mage::helper('privatesale');
+        if($helper->getCategory()==$id && $helper->hidePrivateCategory() && $helper->isEnabled())
+            return true;
+
+        return false;
+    }
 
     public function jwRightSectionCat()
     {
