@@ -95,6 +95,7 @@ class Allure_CustomUrl_Adminhtml_CustomurlController extends Mage_Adminhtml_Cont
                         $rewriteCollection->addFieldToFilter("id_path",$postData["target_path"]);
                         $rewriteCollection->addFieldToFilter("request_path",$postData["request_path"]);
                         $rewriteCollection->addFieldToFilter("target_path",$postData["target_path"]);
+                        $rewriteCollection->addFieldToFilter("store_id",$postData["store_id"]);
                         $rewrite = $rewriteCollection->getFirstItem();
                     }
                     $rewrite->setStoreId($postData["store_id"]);
