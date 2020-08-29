@@ -19,4 +19,21 @@ class Allure_PrivateSale_Helper_Data extends Mage_Core_Helper_Abstract
     public function hidePrivateCategory(){
         return Mage::getStoreConfig("privatesale/module/hide_category");
     }
+    public function hideFilter(){
+        return Mage::getStoreConfig("privatesale/module/hide_filter");
+    }
+    public function filterHide()
+    {
+        $currentCategory = Mage::registry('current_category');
+
+        if($currentCategory->getId()==$this->getCategory())
+        {
+            if($this->hideFilter())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
