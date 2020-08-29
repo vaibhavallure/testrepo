@@ -1,3 +1,6 @@
+var firstColmnShifted=false;
+
+
 var promoboxResetPositions= function () {
     if((getWidth()<=1024 && getWidth()>=767) && getOrientation()=="portrait")
     {
@@ -87,6 +90,11 @@ var col4= function () {
                 jQuery(obj.prev()).insertAfter(obj);
             }
         }
+        else if(parseInt(obj.attr("data-position-id"))==4 && firstColmnShifted==false)
+            {
+                jQuery(obj.prev()).insertAfter(obj);
+                firstColmnShifted=true;
+            }
     });
 };
 
