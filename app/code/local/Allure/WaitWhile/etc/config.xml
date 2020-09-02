@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_WaitWhile>
 			<name>Allure - WaitWhile</name>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</Allure_WaitWhile>
 	</modules>
 	<global>
@@ -39,6 +39,9 @@
 					<localization>
 						<table>allure_waitwhile_localization</table>
 					</localization>
+					<resources>
+						<table>allure_waitwhile_resources</table>
+					</resources>
 				</entities>
 			</allure_waitwhile_resource>
 		</models>
