@@ -163,10 +163,11 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
             }
             
             $stores = Mage::getSingleton("allure_virtualstore/store")->getCollection();
-            $stores->addFieldToFilter(array('is_active', 'store_id'), array(
+            /* $stores->addFieldToFilter(array('is_active', 'store_id'), array(
                 array('is_active','eq' => 1),
                 array('store_id', 'in' => $this->_orderStoreArray)
-            ));
+            )); */
+            $stores->addFieldToFilter('store_id', array('in' => $this->_orderStoreArray));
             $stores->setOrder('sort_order', 'asc');
             $stores->setOrder('store_id', 'asc');
             
