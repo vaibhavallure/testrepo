@@ -1670,31 +1670,6 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
 
         $this->addSalesSourceRelations($data->getSalesSource());
 
-        //signifyd order cancel patch
-        $isCancelBySignifydOrderStatusFilterAppied = false;
-        if(!empty($order_status)) {
-            if(in_array("cancel_by_signifiyd", $order_status)){
-                $isCancelBySignifydOrderStatusFilterAppied = true;
-            }
-        }
-
-        $resource = Mage::getSingleton('core/resource');
-        $connection = $resource->getConnection('core_write');
-        if($connection->isTableExists(trim("signifyd_connect_case"))){
-            $this->getSelect()
-                ->joinLeft(
-                    array("signifyd" => "signifyd_connect_case"),
-                    "signifyd.order_increment = sales_order_table.increment_id"
-                );
-
-            if(!$isCancelBySignifydOrderStatusFilterAppied){
-                $this->getSelect()->where("( signifyd.guarantee not in('DECLINED') OR signifyd.guarantee is null )");
-            }
-        }else{
-            if(!$isCancelBySignifydOrderStatusFilterAppied){
-                $this->addFieldToFilter("status", array("nin" => array("cancel_by_signifiyd")));
-            }
-        }
 
         if ($this->filterData->getFrom()) {
             if ($checkDateForTZ) {
@@ -1783,6 +1758,33 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 $this->selectColumns($column);
                 $cond = $this->columns[$column]->getFilter()->getCondition();
                 $this->addFieldToFilter($column, $cond);
+            }
+        }
+
+
+        //signifyd order cancel patch
+        $isCancelBySignifydOrderStatusFilterAppied = false;
+        if(!empty($order_status)) {
+            if(in_array("cancel_by_signifiyd", $order_status)){
+                $isCancelBySignifydOrderStatusFilterAppied = true;
+            }
+        }
+
+        $resource = Mage::getSingleton('core/resource');
+        $connection = $resource->getConnection('core_write');
+        if($connection->isTableExists(trim("signifyd_connect_case"))){
+            $this->getSelect()
+                ->joinLeft(
+                    array("signifyd" => "signifyd_connect_case"),
+                    "signifyd.order_increment = sales_order_table.increment_id"
+                );
+
+            if(!$isCancelBySignifydOrderStatusFilterAppied){
+                $this->getSelect()->where("( signifyd.guarantee not in('DECLINED') OR signifyd.guarantee is null )");
+            }
+        }else{
+            if(!$isCancelBySignifydOrderStatusFilterAppied){
+                $this->addFieldToFilter("status", array("nin" => array("cancel_by_signifiyd")));
             }
         }
 
