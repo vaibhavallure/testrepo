@@ -179,6 +179,13 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
                 self::log('Creating Images for Product "#'.$product->getSku().'"');
                 $imageRenamedFile = $media->create($product->getSku(), $newImage);
 
+
+                /**allure code to trigger teamwork dam event*/
+                Mage::dispatchEvent('allure_teamworkdam_product_image_changed', array('product' => $product, 'image' => $newImage));
+                /**code end*/
+
+
+
                 /*-----code added by allure to clear image cache----*/
                 $fileName=pathinfo($imageRenamedFile)['basename'];
 //                $this->clearImageCache($fileName);
