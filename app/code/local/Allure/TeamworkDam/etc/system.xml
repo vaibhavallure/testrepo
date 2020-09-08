@@ -27,9 +27,28 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                     </module_enabled>
+
+                    <base_url translate="label">
+                        <label>URL</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>2</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </base_url>
+
+                    <access_token translate="label">
+                        <label>API Token</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>3</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </access_token>
                 </fields>
                 </module_status>
             </groups>
         </teamworkdam>
+
     </sections>
 </config>
