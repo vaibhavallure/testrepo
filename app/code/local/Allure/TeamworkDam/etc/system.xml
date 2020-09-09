@@ -45,6 +45,15 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                     </access_token>
+
+                    <number_of_images translate="label">
+                        <label>Number Of images sent in one process(default 100)</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>3</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </number_of_images>
                 </fields>
                 </module_status>
             </groups>

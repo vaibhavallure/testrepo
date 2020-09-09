@@ -47,7 +47,7 @@ class Allure_TeamworkDam_Model_Observer
      */
     private function log($message)
     {
-        Mage::log($message,7,"teamwork_dam.log",true);
+        Mage::log($message,7,"teamwork_dam_api.log",true);
     }
 
     /**
