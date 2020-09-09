@@ -108,6 +108,12 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                             if (in_array($order->getState(), array('complete'))) {
                                 $model->setCardStatus(1);
                                 $model->save();
+                                
+                                if(isset($data['mail_delivery_date']) && !empty($data['mail_delivery_date'])){
+                                    $deliveryDate  = strtotime($data['mail_delivery_date']);
+                                    $deliveryDate = date("Y-m-d", $deliveryDate);
+                                    $data['mail_delivery_date'] = $deliveryDate;
+                                }
 
                                 if ((($curDate == $data['mail_delivery_date']) || empty($data['mail_delivery_date'])) && $data['card_type'] != 'offline') {
                                 	$model->send();
