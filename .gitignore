@@ -1,6 +1,11 @@
+fichiers/*.png
+fichiers/archivage/Catalogage_Automatique/Emailings/**
 fichiers/emailings/**
 fichiers/segment-file/**
 smarty/templates_c/**
 /vendor/
 /.idea/**
-
+phpmyadmin/**
+bdd/**
+bin/**
+components/**
