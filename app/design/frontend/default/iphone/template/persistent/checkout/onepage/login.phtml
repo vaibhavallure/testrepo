@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_iphone
- * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -36,7 +36,7 @@
     <div class="col-1">
         <h4><?php echo $this->__('Login') ?></h4>
         <?php echo $this->getMessagesBlock()->toHtml() ?>
-        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post">
+        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post" autocomplete="off">
         <fieldset>
             <?php echo $this->getBlockHtml('formkey'); ?>
             <p><?php echo $this->__('Already registered? Please log in below:') ?></p>

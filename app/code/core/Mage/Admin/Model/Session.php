@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Admin
- * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -34,6 +34,13 @@
  */
 class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
 {
+
+    /**
+     * Session admin SID config path
+     *
+     * @const
+     */
+    const XML_PATH_ALLOW_SID_FOR_ADMIN_AREA = 'web/session/use_admin_sid';
 
     /**
      * Whether it is the first page after successfull login
@@ -107,7 +114,12 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
         $user = $this->getUser();
         if ($user) {
             $extraData = $user->getExtra();
-            if (isset($extraData['indirect_login']) && $this->getIndirectLogin()) {
+            if (
+                !is_null(Mage::app()->getRequest()->getParam('SID'))
+                && !$this->allowAdminSid()
+                || isset($extraData['indirect_login'])
+                && $this->getIndirectLogin()
+            ) {
                 $this->unsetData('user');
                 $this->setIndirectLogin(false);
             }
@@ -117,9 +129,9 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
     /**
      * Try to login user in admin
      *
-     * @param  string $username
-     * @param  string $password
-     * @param  Mage_Core_Controller_Request_Http $request
+     * @param string $username
+     * @param string $password
+     * @param Mage_Core_Controller_Request_Http $request
      * @return Mage_Admin_Model_User|null
      */
     public function login($username, $password, $request = null)
@@ -141,6 +153,8 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
                 $this->setIsFirstPageAfterLogin(true);
                 $this->setUser($user);
                 $this->setAcl(Mage::getResourceModel('admin/acl')->loadAcl());
+
+                $this->saveUniqueSessionId();
 
                 $alternativeUrl = $this->_getRequestUri($request);
                 $redirectUrl = $this->_urlPolicy->getRedirectUrl($user, $request, $alternativeUrl);
@@ -169,7 +183,7 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
     /**
      * Refresh ACL resources stored in session
      *
-     * @param  Mage_Admin_Model_User $user
+     * @param Mage_Admin_Model_User $user
      * @return Mage_Admin_Model_Session
      */
     public function refreshAcl($user = null)
@@ -196,8 +210,8 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
      * Mage::getSingleton('admin/session')->isAllowed('admin/catalog')
      * Mage::getSingleton('admin/session')->isAllowed('catalog')
      *
-     * @param   string $resource
-     * @param   string $privilege
+     * @param string $resource
+     * @param string $privilege
      * @return  boolean
      */
     public function isAllowed($resource, $privilege = null)
@@ -217,7 +231,8 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
                     if (!$acl->has($resource)) {
                         return $acl->isAllowed($user->getAclRole(), null, $privilege);
                     }
-                } catch (Exception $e) { }
+                } catch (Exception $e) {
+                }
             }
         }
         return false;
@@ -299,4 +314,64 @@ class Mage_Admin_Model_Session extends Mage_Core_Model_Session_Abstract
             $request->setParam('messageSent', true);
         }
     }
+
+    /**
+     * Check is allowed to use SID for admin area
+     *
+     * @return bool
+     */
+    protected function allowAdminSid()
+    {
+        return (bool)Mage::getStoreConfig(self::XML_PATH_ALLOW_SID_FOR_ADMIN_AREA);
+    }
+
+    /**
+     * Saves the unique session id
+     *
+     * @return Mage_Admin_Model_Session
+     * @throws Exception
+     */
+    protected function saveUniqueSessionId()
+    {
+        if (Mage::getStoreConfigFlag('admin/security/use_unique_session_login_for_backend')) {
+            /** @var Mage_Core_Model_Uniquesession_Admin_User_Session $adminSession */
+            $adminUserId = $this->getUser()->getId();
+            $uniqueSession = Mage::getModel('core/uniquesession_admin_user_session')
+                ->load($adminUserId, 'admin_user_id');
+
+            if ($uniqueSession->isObjectNew()) {
+                $uniqueSession = Mage::getModel('core/uniquesession_admin_user_session');
+                $uniqueSession->setAdminUserId($this->getUser()->getId());
+            }
+
+            $uniqueSession->setSessionId($this->getSessionId());
+            $uniqueSession->save();
+        }
+
+        return $this;
+    }
+
+    protected function _validate()
+    {
+        $res = parent::_validate();
+
+        if (!$res) {
+            return $res;
+        }
+
+        if (Mage::getStoreConfigFlag('admin/security/use_unique_session_login_for_backend')) {
+            if ($this->isLoggedIn()) {
+                /** @var Mage_Core_Model_Uniquesession_Admin_User_Session $uniqueAdminSession */
+                $uniqueAdminSession = Mage::getModel('core/uniquesession_admin_user_session')
+                    ->load($this->getSessionId(), 'session_id');
+
+                if ($uniqueAdminSession->isObjectNew()) {
+                    $this->setUser(null);
+                }
+            }
+        }
+
+        return true;
+    }
+
 }
