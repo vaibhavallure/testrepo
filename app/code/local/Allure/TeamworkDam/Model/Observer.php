@@ -25,7 +25,7 @@ class Allure_TeamworkDam_Model_Observer
             $filePath = base64_decode($file['file']['content']);
             $img64 = base64_encode(file_get_contents($filePath));
             $fileName = basename($filePath);
-
+            $fileName=str_replace("#1",$product->getTeamworkPlu(),$fileName);
             $data['product_id'] = $product->getId();
             $data['teamwork_plu'] = $product->getTeamworkPlu();
             $data['image_name'] = $fileName;
