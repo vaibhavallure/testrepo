@@ -21,14 +21,14 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
         <Mage_Core>
-            <version>1.6.0.10</version>
+            <version>1.6.0.11</version>
         </Mage_Core>
     </modules>
     <global>
@@ -89,6 +89,12 @@
                     <email_recipients>
                         <table>core_email_queue_recipients</table>
                     </email_recipients>
+                    <uniquesession_customer_session>
+                        <table>uniquesession_customer_session</table>
+                    </uniquesession_customer_session>
+                    <uniquesession_admin_user_session>
+                        <table>uniquesession_admin_user_session</table>
+                    </uniquesession_admin_user_session>
                     <file_storage><table>core_file_storage</table></file_storage>
                     <directory_storage><table>core_directory_storage</table></directory_storage>
                 </entities>
@@ -406,6 +412,7 @@
                 <cookie_httponly>1</cookie_httponly>
                 <cookie_restriction>0</cookie_restriction>
                 <cookie_restriction_lifetime>31536000</cookie_restriction_lifetime>
+                <cookie_secure>0</cookie_secure>
             </cookie>
             <session>
                 <use_remote_addr>0</use_remote_addr>
@@ -413,6 +420,7 @@
                 <use_http_x_forwarded_for>0</use_http_x_forwarded_for>
                 <use_http_user_agent>0</use_http_user_agent>
                 <use_frontend_sid>1</use_frontend_sid>
+                <use_admin_sid>0</use_admin_sid>
             </session>
             <browser_capabilities>
                 <cookies>1</cookies>

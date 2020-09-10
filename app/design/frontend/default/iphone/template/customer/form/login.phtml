@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_iphone
- * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -38,7 +38,7 @@
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php /* Extensions placeholder */ ?>
     <?php echo $this->getChildHtml('customer.form.login.extra')?>
-    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form" autocomplete="off">
         <?php echo $this->getBlockHtml('formkey') ?>
         <div class="col2-set">
             <div class="col-1 registered-users">
