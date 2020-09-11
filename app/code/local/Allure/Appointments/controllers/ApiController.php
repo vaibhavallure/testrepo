@@ -22,7 +22,8 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
         "getcustomer" => "getCustomer",
         "getappointment" => "getAppointment",
         "setcustomer" => "setCustomer",
-        "getstorelist" => "getStoreList"
+        "getstorelist" => "getStoreList",
+        "getcustomerbyname" => "getCustomerByName"
     );
     private $table = array(
         "getcustomer" => "allure_appointment_customers",
@@ -49,6 +50,10 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
         if (array_key_exists($this->getReq(), $this->api)) {
             $this->result['api'] = 'Found';
             if($this->getReq() == 'getstorelist'){
+                $this->result['success'] = true;
+                return true;
+            }
+            if($this->getReq() == 'getcustomerbyname'){
                 $this->result['success'] = true;
                 return true;
             }
@@ -109,6 +114,18 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
             $this->updateCustomer();
         }
     }
+    /*new function added to getProper customer result by name*/
+    private function getCustomerByName()
+    {
+        $filter=$this->getFilter();
+        if(!isset($filter['lastname']))
+            $filter['lastname']=$filter['firstname'];
+
+        $query = 'SELECT aps.* FROM allure_appointment_customers aps JOIN allure_piercing_appointments app ON aps.appointment_id=app.id WHERE app.store_id='.$filter["store_id"].' AND app.app_status!=4 AND ((aps.firstname like "%'.$filter['firstname'].'%" AND aps.lastname like "%'.$filter['lastname'].'%") OR (aps.firstname like "%'.$filter['firstname'].'%" OR aps.lastname like "%'.$filter['lastname'].'%"))';
+        $data = $this->read()->fetchAll($query);
+
+        $this->result['customer'] = $data;
+    }
 
     private function updateCustomer()
     {
@@ -168,7 +185,6 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
     {
         try {
             $collection = Mage::getModel(self::MODEL_CUSTOMER)->getCollection();
-
             foreach ($this->getFilter() as $filter_key => $filter_value) {
                 $collection->addFieldToFilter($filter_key, $filter_value);
             }
