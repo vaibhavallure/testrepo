@@ -121,7 +121,7 @@ class Allure_Appointments_ApiController extends Mage_Core_Controller_Front_Actio
         if(!isset($filter['lastname']))
             $filter['lastname']=$filter['firstname'];
 
-        $query = 'SELECT aps.* FROM allure_appointment_customers aps JOIN allure_piercing_appointments app ON aps.appointment_id=app.id WHERE app.store_id='.$filter["store_id"].' AND app.app_status!=4 AND ((aps.firstname like "%'.$filter['firstname'].'%" AND aps.lastname like "%'.$filter['lastname'].'%") OR (aps.firstname like "%'.$filter['firstname'].'%" OR aps.lastname like "%'.$filter['lastname'].'%"))';
+        $query = 'SELECT aps.* FROM allure_appointment_customers aps JOIN allure_piercing_appointments app ON aps.appointment_id=app.id WHERE app.store_id='.$filter["store_id"].'  AND ((aps.firstname like "%'.$filter['firstname'].'%" AND aps.lastname like "%'.$filter['lastname'].'%") OR (aps.firstname like "%'.$filter['firstname'].'%" OR aps.lastname like "%'.$filter['lastname'].'%"))';
         $data = $this->read()->fetchAll($query);
 
         $this->result['customer'] = $data;
