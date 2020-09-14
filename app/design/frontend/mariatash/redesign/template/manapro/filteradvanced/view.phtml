@@ -57,7 +57,7 @@
 
       </div>
 
-        <?php if($this->canShowOptions() && Mage::helper('privatesale')->filterHide()==false): ?>
+        <?php if($this->canShowOptions() && Mage::helper('privatesale')->filterHide()==false && $currentCategory->getHideFilter()!=true): ?>
         <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
         <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
         <div class="allure_filter">
