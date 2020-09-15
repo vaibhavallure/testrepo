@@ -30,6 +30,7 @@
 <?= Mage::helper('privatesale/bookviewing')->getBookAViewingForm()?>
 
 
+
 <div id="footer8" class="footer col-12">
  <?php echo $this->getChildHtml() ?>
  </div>
@@ -78,6 +79,11 @@ if ($curCategory = Mage::registry('current_category')) {
 <!--------------------------------------------------
 Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
 --------------------------------------------------->
+
+
+
+<?php $this->getResponse()->setHeader('Access-Control-Allow-Origin', 'https://www.googleadservices.com'); ?>
+
 <script type="text/javascript">
 /* <![CDATA[ */
 var google_conversion_id = 1004306925;
