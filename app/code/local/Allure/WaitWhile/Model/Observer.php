@@ -111,6 +111,15 @@ class Allure_WaitWhile_Model_Observer
                 return ;
             }
             
+            //get waitwhile resources
+            $waiteWhileResourcesArray = array();
+            $waitWhileResources = Mage::getModel('allure_waitwhile/resources')->getCollection();
+            $waitWhileResources->addFieldToSelect("*");
+            $waitWhileResources->addFieldToFilter("store_id", $storeId);
+            foreach ($waitWhileResources as $waitWhileResorce){
+                $waiteWhileResourcesArray[$waitWhileResorce->getWaitwhileResourceId()] = 1;
+            }
+            
             $args = array(
                 "date"=> $startTime,
                 "name"=> $appointment->getFirstname()." ".$appointment->getLastname(),
@@ -119,12 +128,16 @@ class Allure_WaitWhile_Model_Observer
                 "locationId" => $waitWhileLocaleId,
                 "email" => $appointment->getEmail(),
                 "notes" => $appointment->getSpecialNotes(),
-                "externalCustomerId" => null,
-                "externalId" => $appointmentId,
+                "externalCustomerId" => $appointmentId,
+                //"externalId" => $appointmentId,
                 "services" => $waitWhileBookingServices,
                 "phone" => $appointment->getPhone(),
                 "state" => $bookingState
             );
+            
+            if(count($waiteWhileResourcesArray) > 0){
+                $args["resources"] = $waiteWhileResourcesArray;
+            }
             
             $bookingPath = $helper::BOOKING_PATH;
             
