@@ -108,6 +108,12 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                             if (in_array($order->getState(), array('complete'))) {
                                 $model->setCardStatus(1);
                                 $model->save();
+                                
+                                if(isset($data['mail_delivery_date']) && !empty($data['mail_delivery_date'])){
+                                    $deliveryDate  = strtotime($data['mail_delivery_date']);
+                                    $deliveryDate = date("Y-m-d", $deliveryDate);
+                                    $data['mail_delivery_date'] = $deliveryDate;
+                                }
 
                                 if ((($curDate == $data['mail_delivery_date']) || empty($data['mail_delivery_date'])) && $data['card_type'] != 'offline') {
                                 	$model->send();
@@ -363,7 +369,7 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
         if (in_array($order->getState(), array('complete'))) {
             $cards = Mage::getModel('giftcards/giftcards')->getCollection()
                 ->addFieldToFilter('order_id', $order->getId())
-                ->addFieldToFilter('mail_delivery_option',2);  //adding checkup Deliver Immediately
+                ->addFieldToFilter('mail_delivery_option',array("in",array(1,2)));  //adding checkup Deliver Immediately
             foreach ($cards as $card) {
               if($card->getCardStatus() == 0) {
                 $card->setCardStatus(1)->save();
