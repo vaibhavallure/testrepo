@@ -374,7 +374,7 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
               if($card->getCardStatus() == 0) {
                 $card->setCardStatus(1)->save();
 
-                if ($card->getCardType() != 'offline') {
+                if ($card->getCardType() != 'offline' && $card->getMailDeliveryOption() == 2) {
                     $card->send();
                 }                    
               }
