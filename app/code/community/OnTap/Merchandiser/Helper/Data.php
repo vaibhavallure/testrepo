@@ -97,7 +97,7 @@ class OnTap_Merchandiser_Helper_Data extends Mage_Core_Helper_Abstract
     public function afterSaveCategory($category)
     {
         Mage::dispatchEvent('catalog_category_save_commit_after', array(
-            'data_object' => $category,     // 'category' => $category 
+            'data_object' => $category,  'category' => $category
         ));
         
         if (Mage::getStoreConfig('merchandiser/options/disable_catindex') != 1) {
