@@ -718,8 +718,6 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $ap_end= $post['appointment_end'];
         $email=$post['email'];
 
-
-
         /*validate number of guest*/
 
         $no_of_guest=4;
@@ -730,6 +728,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
         if($qty<1 || $qty>$no_of_guest)
         {
+            $this->someThingWrongLog("qty validation failed:".$email." qty:".$qty." no of guest".$no_of_guest);
             return false;
         }
 
@@ -737,6 +736,8 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         /*check store id and piercer id */
 
         if (empty($store_id) || empty($piercer_id)) {
+            $this->someThingWrongLog("error store id or piercer id empty :".$email);
+
             $this->addLog("error store id or piercer id empty ".$email,"save");
             return false;
         }
@@ -744,6 +745,8 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $piercer= Mage::getModel('appointments/piercers')->load($piercer_id);
 
         if ($piercer->getStoreId()!=$store_id) {
+            $this->someThingWrongLog("store id and piercer id does not match :".$email);
+
             $this->addLog("store id and piercer id does not match ".$email,"save");
             return false;
         }
@@ -762,18 +765,21 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         }
         /* check no of people  */
         if (empty($qty) || $qty<1 || (!empty($no_of_people) && $qty > $no_of_people)) {
+            $this->someThingWrongLog("invalid no of people qty=".$qty." ".$email);
             $this->addLog("invalid no of people qty=".$qty." ".$email,"save");
-            return false;
+           // return false;
         }
         /*-----------------------*/
 
         /*check date and time*/
 
         if(empty($ap_start) || empty($ap_end) || empty($date)) {
+            $this->someThingWrongLog("invalid no of people qty=".$qty." ".$email);
             $this->addLog("empty date or time ".$email,"save");
             return false;
         }
 
+        $this->someThingWrongLog("valid post data".$email);
         return true;
     }
 
@@ -990,5 +996,10 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
             $activeStores[$val] = ($appearsName[$key])?$appearsName[$key]:$stores[$val]->getName();
         }
         return $activeStores;
+    }
+
+    public function someThingWrongLog($string)
+    {
+        Mage::log($string,7,"some_thing_went_wrong.log",true);
     }
 }
