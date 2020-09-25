@@ -55,13 +55,17 @@
             }
         }
     </style>
-    <!-- <div id="search_autocomplete" class="search-autocomplete"></div> -->
+    <?php
+    if ($storeCode != "default") {
+    ?>
+     <div id="search_autocomplete" class="search-autocomplete"></div>
     <script type="text/javascript">
     //<![CDATA[
-//        var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php //echo Mage::getStoreConfig('ecp_searchbox/searchbox/instructional_text')?>//');
-//        searchForm.initAutocomplete('<?php //echo $this->helper('catalogsearch')->getSuggestUrl() ?>//', 'search_autocomplete');
+        var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo Mage::getStoreConfig('ecp_searchbox/searchbox/instructional_text')?>');
+        searchForm.initAutocomplete('<?php echo $this->helper('catalogsearch')->getSuggestUrl() ?>', 'search_autocomplete');
     //]]>
     </script>
+    <?php } ?>
     <script>
         jQuery(document).ready(function(){              
           if(jQuery(window).width() < 1025) {
