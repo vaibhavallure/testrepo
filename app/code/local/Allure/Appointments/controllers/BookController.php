@@ -93,6 +93,8 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
 
 
         if (!$this->helper()->validatePostData($post_data, "user")) {
+            $this->helper()->someThingWrongLog("invalid valid post data".$post_data['email']);
+
             $this->log()->addStoreWiseLog('Sorry Something Went Wrong Please Try Again! validation error please check save_appointment_customer.log for more detail', $post_data['store_id']);
             Mage::getSingleton('core/session')->setSomethingWrong("true");
             // Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");

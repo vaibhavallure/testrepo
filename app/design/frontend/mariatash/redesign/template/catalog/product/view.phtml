@@ -1007,5 +1007,22 @@ jQuery(document).ready(function(){
     </div>
 </div>
 
+<?php
+    $storeCode = Mage::app()->getStore()->getCode();
+    if ($storeCode == "default") {
+?>
+    <script type="text/javascript" src="//cdn.searchspring.net/intellisuggest/is.min.js"></script>
+
+    <script type="text/javascript">
+    try{
+        var product_code = "<?php echo $_product->getSku() ?>";
+        IntelliSuggest.init({siteId:'ed7bq3', context:'Product/' + product_code, seed:product_code});
+        IntelliSuggest.viewItem({sku:product_code});
+    } catch(err) {}
+    </script>
+<?php
+    }
+?>
+
 
 
