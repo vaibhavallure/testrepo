@@ -17,7 +17,7 @@ development:
     - rm -f media && ln -s /var/www/shared/mariatash/media media
     - rm -f var && ln -s /var/www/shared/mariatash/var var
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/app/etc/local.xml app/etc/local.xml
-    - echo 'Deployed on Development'
+    - echo 'Deployed on Development.'
     
 alpha_teamwork:
   environment: teamwork
@@ -95,6 +95,17 @@ alpha_staging:
   script:
     - mage-deploy mt-beta
     - echo 'Deployed on Bugfixes Staging'
+
+alpha_searchspring:
+  environment: searchspring
+  stage: staging
+  tags:
+    - alpha
+  only:
+    - searchSpring
+  script:
+    - mage-deploy mt-searchspring
+    - echo 'Deployed on mt srearch spring'
 
 beta:
   environment: beta

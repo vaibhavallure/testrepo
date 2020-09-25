@@ -123,7 +123,7 @@
 							</depends>
 							<sort_order>18</sort_order>
 						</proxy_headers>
-						<api_url translate="label">
+						<!--<api_url translate="label">
 							<label>API URL</label>
 							<comment>Used for option Geo APIs</comment>
 							<frontend_type>text</frontend_type>
@@ -134,7 +134,7 @@
 								<status>1</status>
 							</depends>
 							<sort_order>19</sort_order>
-						</api_url>
+						</api_url>-->
 						<curl_timeout translate="label">
 							<label>Curl Timeout</label>
 							<comment>Used for option CURLOPT_CONNECTTIMEOUT</comment>

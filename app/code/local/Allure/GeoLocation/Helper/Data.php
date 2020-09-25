@@ -37,11 +37,11 @@ class Allure_GeoLocation_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->getConfig('private_mode');
     }
-    
-    public function getAPIUrl()
+
+/*    public function getAPIUrl()
     {
         return $this->getConfig('api_url');
-    }
+    }*/
     
     public function getDebugMode()
     {
