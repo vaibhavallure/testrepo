@@ -351,3 +351,22 @@ if($login){
 }
 ?>
 
+<?php
+$storeCode = Mage::app()->getStore()->getCode();
+if ($storeCode == "default") {
+    ?>
+    <?php
+    // Create category background filter
+    $ss_cat = Mage::registry('current_category');
+    if (isset($ss_cat)) {
+        $ss_catid = $ss_cat->getId();
+    }
+    $activeCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+    $activeCurrencyRate = Mage::app()->getStore()->getCurrentCurrencyRate();
+    ?>
+
+    <!-- Searchspring Integration Script -->
+    <script src="//cdn.searchspring.net/search/v3/js/searchspring.catalog.js?ed7bq3" currencyCode="<?php echo $activeCurrencyCode; ?>" currencyRate="<?php echo $activeCurrencyRate; ?>" formkey="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>"></script>
+    <?php
+}
+?>

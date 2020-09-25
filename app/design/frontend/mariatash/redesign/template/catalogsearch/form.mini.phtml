@@ -27,10 +27,25 @@
 <div class="form-search">
     <!-- <label for="search"><//?php echo $this->__('Search') ?></label> -->
     <div id="search-input" class="position-relative" style="display:none;">
-		<form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
+    
+    <?php
+    $storeCode = Mage::app()->getStore()->getCode();
+    if ($storeCode == "default") {
+    ?>
+        	<form id="search_mini_form" action="/shop" method="get">
             <input type="search" class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php //echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
             <img class="position-absolute" width="32px" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/small-cross.png'); ?>" alt="x">
        	</form>
+    <?php
+        } else {
+    ?>
+        <form id="search_mini_form" action="<?php echo $this->helper('catalogsearch')->getResultUrl() ?>" method="get">
+            <input type="search" class="input-text" id="search" placeholder="Search" width="17px" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" name="<?php echo $this->helper('catalogsearch')->getQueryParamName() ?>" value="<?php //echo $this->helper('catalogsearch')->getEscapedQueryText() ?>"/>
+            <img class="position-absolute" width="32px" id="cross-icon" src="<?php echo $this->getSkinUrl('images/redesign/small-cross.png'); ?>" alt="x">
+       	</form>
+    <?php
+        }
+    ?>
     </div>
     <img width="17px" id="search-icon" src="<?php echo $this->getSkinUrl('images/redesign/nav-search.png'); ?>" alt="Search" title="Search">
     <style>
@@ -40,7 +55,7 @@
             }
         }
     </style>
-    <div id="search_autocomplete" class="search-autocomplete"></div>
+    <!-- <div id="search_autocomplete" class="search-autocomplete"></div> -->
     <script type="text/javascript">
     //<![CDATA[
         var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo Mage::getStoreConfig('ecp_searchbox/searchbox/instructional_text')?>');

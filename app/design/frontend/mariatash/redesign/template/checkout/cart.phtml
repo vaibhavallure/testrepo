@@ -170,3 +170,50 @@
     });
 
 </script>
+
+
+<?php
+    $storeCode = Mage::app()->getStore()->getCode();
+    if ($storeCode == "default") {
+?>
+    <?php
+    $intellisuggestCart = array();
+    try {
+        $intellisuggestSession = Mage::getSingleton('checkout/session');
+        foreach($intellisuggestSession->getQuote()->getAllItems() as $intellisuggestItem) {
+           if($intellisuggestItem->getPrice() > 0) {
+               $intellisuggestCart[] = array(
+                    'sku' => Mage::getModel('catalog/product')->load($intellisuggestItem->getProductId())->getSku(),
+                    'qty' => $intellisuggestItem->getQty(),
+                    'price' => $intellisuggestItem->getPrice()
+               );
+            }
+        }
+    } catch (Exception $e) {}
+?>
+
+<script type="text/javascript" src="//cdn.searchspring.net/intellisuggest/is.min.js"></script>
+<script type="text/javascript">
+try{
+    var ss_seeds = [];
+    <?php foreach($intellisuggestCart as $intellisuggestItem): ?>
+        ss_seeds.push("<?php echo $intellisuggestItem['sku'] ?>");
+    <?php endforeach; ?>
+
+    IntelliSuggest.init({siteId:'ed7bq3', context:'Basket/', seed:ss_seeds});
+
+    <?php foreach($intellisuggestCart as $intellisuggestItem): ?>
+        IntelliSuggest.haveItem({
+            sku: "<?php echo $intellisuggestItem['sku'] ?>",
+            qty: <?php echo $intellisuggestItem['qty'] ?>,
+            price: <?php echo $intellisuggestItem['price'] ?>
+        });
+    <?php endforeach; ?>
+
+    IntelliSuggest.inBasket();
+} catch(err) {}
+</script>
+<?php
+    }
+?>
+
