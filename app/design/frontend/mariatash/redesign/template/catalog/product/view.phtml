@@ -482,6 +482,9 @@ if ($_product->getSizeSample() == 1) {
                   <div class="row">
                     <div class="product-name col-12 pl-0">
                         <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                        <?php if(!empty($_product->getPatentMessage())):?>
+                        <p class="para-normal"><?=$_product->getPatentMessage()?></p>
+                        <?php endif;?>
                     </div>
                         <?php $category='';?>
             			          <?php if(Mage::registry('current_category')):?>
