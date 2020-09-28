@@ -101,15 +101,17 @@ class Millesima_Tinyclues{
                     $ligne = fgets($handle);
                     if ($ligne) {
                         $celule = explode(",", $ligne);
-                        $user_id = $celule[0];
-                        $pays = $celule[3];
-                        $langue = $celule[5];
-                            if ($i == 1 || !isset($listeRef[$user_id])) {
-                                //$listeRef[] = $user_id;
-                                $listeRef[$user_id] = 1;
-                                $tabSorti = array("$user_id","$pays","$langue");
-                                fwrite($f, implode(";", $tabSorti));
-                            }
+                        if(sizeof($celule) >= 6){
+                          $user_id = $celule[0];
+                          $pays = $celule[3];
+                          $langue = $celule[5];
+                              if ($i == 1 || !isset($listeRef[$user_id])) {
+                                  //$listeRef[] = $user_id;
+                                  $listeRef[$user_id] = 1;
+                                  $tabSorti = array("$user_id","$pays","$langue");
+                                  fwrite($f, implode(";", $tabSorti));
+                              }
+                        }
                     }
                 }
                 //On ferme le fichier
