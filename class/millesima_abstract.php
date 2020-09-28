@@ -613,8 +613,8 @@ class Millesima_Abstract{
             $message .='Vous pouvez créer le message.'. '<br />';
         } else if($type == 'batfr')	{
             if(!$testenvoi){
-                $recipiants[] = 'egarnaud@millesima.com, mdutoya@millesima.com, bgibier@millesima.com,pastanislas@millesima.com, vvecchione@millesima.com';
-			    $cc = 'lbassagaits@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com,cserrier@millesima.com';
+                $recipiants[] = 'egarnaud@millesima.com, mdutoya@millesima.com, bgibier@millesima.com, vvecchione@millesima.com';
+			    $cc = 'lbassagaits@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com,';
             } else {
                 $cc = '';
             }
@@ -717,6 +717,7 @@ class Millesima_Abstract{
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && array_intersect(array('Y','y'),$pays) && !$isTest){
             $tabRecipiant[] = 'srocamora@millesima.com';
+            $tabRecipiant[] = 'rmagaraggia@millesima.com';
         }
         if(($type == 'messagecreate')  && array_intersect(array('U','u'),$pays) && !$isTest){
             $tabRecipiant[] = 'hobernard@millesima.com';
@@ -739,6 +740,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'imiossec@millesima.com';
             $tabRecipiant[] = 'pastanislas@millesima.com';
             $tabRecipiant[] = 'gbernard@millesima.com';
+            $tabRecipiant[] = 'mcamion@millesima.com';
         }
 		if($type == 'messagecreate' && array_intersect(array('U','u'),$pays) && !$isTest){
             $tabRecipiant[] = 'imiossec@millesima.com';
@@ -748,7 +750,6 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'bgibier@millesima.com';
         }
         if($type == 'master' && !$isTest){
-            $tabRecipiant[] = 'pastanislas@millesima.com';
             $tabRecipiant[] = 'lbassagaits@millesima.com';
             $tabRecipiant[] = 'obaldy@millesima.com';
             $tabRecipiant[] = 'fbernard@millesima.com';
@@ -758,6 +759,8 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'bgibier@millesima.com';
             $tabRecipiant[] = 'vvecchione@millesima.com';
             $tabRecipiant[] = 'egarnaud@millesima.com';
+            $tabRecipiant[] = 'shuys@millesima.com';
+            $tabRecipiant[] = 'tarmengaud@millesima.com';
         }
 
         return $tabRecipiant;
