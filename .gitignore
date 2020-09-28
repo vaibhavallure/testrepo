@@ -1,3 +1,7 @@
+*.sql
+*.lock
+core
+*.log
 fichiers/*.png
 fichiers/archivage/Catalogage_Automatique/Emailings/**
 fichiers/emailings/**
@@ -9,3 +13,4 @@ phpmyadmin/**
 bdd/**
 bin/**
 components/**
+tinyclues/**
