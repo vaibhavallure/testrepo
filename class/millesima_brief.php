@@ -104,6 +104,9 @@ class Millesima_Brief extends Millesima_Abstract
     public function updateStatus($status,$idBrief){
         $bddClass = new Millesima_Bdd();
         $bddClass->update("UPDATE brief SET statut = (?) where id = (?)",array($status,$idBrief));
+        /*if($status == "9"){
+            $this->createPng($idBrief);
+        }*/
     }
 
     /**
@@ -471,5 +474,74 @@ class Millesima_Brief extends Millesima_Abstract
             $tradClass->saveTraduction($trad);
         }
         return $return;
+    }
+
+    /**
+     * Function to create brief png for cumulus
+     * @param integer $idBrief
+     * @return mixed
+     */
+    public function createPng($idBrief){
+        $bddClass = new Millesima_Bdd();
+        $messageClass = new Millesima_Message();
+
+        $messageIds = $bddClass->selectAll("select campaign_selligente.message_id from campaign_selligente
+              join message on message.id = campaign_selligente.message_id
+              where brief_id = ".$idBrief."
+              and campaign_selligente.statut = 'reel'");
+
+        foreach($messageIds as $messageId){
+            echo($idBrief);
+            $message = $messageClass->getMessageById($messageId['message_id']);
+            $message = $message[0];
+
+            //get Info
+            $nameMessage = $message['name'];
+            $pattern = '/(?=\d)/';
+            $array = preg_split($pattern, $nameMessage, 2);
+            $name = $array[0];
+            $code = $array[1];
+            $splitCode = explode('-',$code);
+            $store = substr($name, 0 ,2 );
+            if ($store == 'SA' || $store == 'SF'){
+                $name = str_replace('A','',$name);
+                $name = str_replace('F','',$name);
+            } else if ($store == 'SG'){
+                $name = str_replace('SG','N',$name);
+            }
+            $codePick=$name.' '.$code;
+            if (strpos($nameMessage, 'prim') !== false){
+                $year = '20'.(string) ((int) $splitCode[0] + 1);
+                $type = '1-PRIMEURS';
+            } else {
+                $year = '20'.(string) $splitCode[0];
+                $type = '2-LIVRABLES';
+            }
+            $namePng = $nameMessage.'_'.$year;
+            echo(", namePng : " . $namePng);
+            echo(", code : " . $code);
+            // die('gfdgdfgd');
+
+            //get html
+            $html = $message['html'];
+            $filename = "fichiers/tmpGeneratePng.html";
+            $handle = fopen("$filename", "w");
+            fwrite($handle,$html);
+            fclose($handle);
+
+            //set image
+            $test = shell_exec('library/phantomjs js/millesima/generateImg.js');
+            rename('fichiers/tmpGeneratePng.html.png', 'fichiers/'.$namePng.'.png');
+
+            //set Meta
+            $test = shell_exec('library/Image-ExifTool-10.96/exiftool -overwrite_original -SubjectCode='.chr(34).$codePick.chr(34).' -ModelAge='.$year.'  fichiers/'.$namePng.'.png');
+
+            //move file
+            copy("fichiers/".$namePng.".png","fichiers/archivage/Catalogage_Automatique/Emailings/".$namePng.".png");
+
+            echo "\r\n";
+            //die('fin for 2');
+        }
+
     }
 }
