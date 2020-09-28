@@ -44,7 +44,7 @@
                             <tr>
                                 <td style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:11px;padding-top:3px;padding-bottom:10px;vertical-align:middle">
                                     <a href="{$vcard}" style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:11px;padding-top:3px;padding-bottom:10px;vertical-align:middle">
-                                    To ensure that you continue to receive our emails, please add <span style="text-decoration: underline"> millesima@info.millesima.com</span>to your address book.
+                                    To ensure that you continue to receive our emails, please add <span style="text-decoration: underline"> millesima@info.millesima.com</span> to your address book.
                                     </a>
                                     <br />
                                 </td>

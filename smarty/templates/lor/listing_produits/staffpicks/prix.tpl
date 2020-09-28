@@ -2,12 +2,12 @@
 {if isset($promo) and $promo != ''}
 <tr><td align="center" valign="top" height="20">
 {if $produit->pays == 'U'}
-{* ---------------------------- 
+{* ----------------------------
 	USA (prix HT = prix TTC)
     Prix TTC barré + Prix remisé si prix remisé existe
 	Prix TTC sinon
    ----------------------------  *}
-{if $produit->prix_remise != ''}<span style="text-decoration:line-through;font-size:13px;">{$produit->devise}&nbsp;{$produit->prix_ttc}</span> 
+{if $produit->prix_remise != ''}<span style="text-decoration:line-through;font-size:13px;">{$produit->devise}&nbsp;{$produit->prix_ttc}</span>
 <span style="font-size:16px;font-weight:bold"><strong>{$produit->devise}&nbsp;{$produit->prix_remise}</strong></span><br />{else}<span style="font-size:16px;font-weight:bold"><strong>{$produit->devise}&nbsp;{$produit->prix_ttc}</strong></span><br />{/if}
 {* ------ Fin USA ------ *}
 {else}
@@ -24,7 +24,7 @@
 {elseif $type == 'livrable'}
 <tr><td align="center" valign="top" height="20">
 {if $produit->pays == 'U'}
-{* ---------------------------- 
+{* ----------------------------
 	USA
     Bouteille HT
     + phrase minimum
@@ -42,11 +42,11 @@
 {* ------ PRIX PRIMEURS ------ *}
 {elseif $type == 'primeurs' OR $isprimeur}
 <tr><td align="center" valign="top" height="20">
-{* ---------------------------- 
+{* ----------------------------
 	Allemagne, Autriche et Suisse
-    Caisse TTC 
+    Caisse TTC
    	(prix/L ttc D & O)
-    Bouteille TTC 
+    Bouteille TTC
    ----------------------------  *}
 {if $produit->pays == 'D' OR $produit->pays == 'O' OR $produit->pays == 'SA' OR $produit->pays == 'SF'}
 <span style="font-size:16px;font-weight:bold"><strong>{$produit->prix_ttc}&nbsp;{$produit->devise}</strong></span>&nbsp;<span style="font-size:10px;font-weight:bold;">{$ttc}</span><br />
@@ -56,7 +56,7 @@
 
 {* ------ Fin Allemagne, Autriche et Suisse ------ *}
 {elseif $produit->pays == 'H'}
-{* ---------------------------- 
+{* ----------------------------
 	Hong Kong
     Caisse HT (non marqué)
     Bouteille  HT (non marqué)
@@ -66,7 +66,7 @@
 <span style="color:#654337;font-size:10px;font-weight:bold;">{$produit->devise}&nbsp;{$produit->prixhtblle} {$fnpx1btlleht}</span>
 {* ------ Fin Hong Kong ------ *}
 {elseif $produit->pays == 'U'}
-{* ---------------------------- 
+{* ----------------------------
 	USA
     Bouteille HT
     + phrase minimum
@@ -74,11 +74,11 @@
 <span style="font-size:16px;font-weight:bold"><strong>{$produit->devise}&nbsp;{$produit->prix_ht}</strong></span><br />
 {* ------ Fin USA ------ *}
 {else}
-{* ---------------------------- 
+{* ----------------------------
 	Autres Pays
     Caisse HT
     Bouteille HT
-    Caisse TTC  
+    Caisse TTC
    ----------------------------  *}
 <span style="font-size:16px;font-weight:bold"><strong>{if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}&nbsp;{$produit->prix_ht}{else}{$produit->prix_ht}&nbsp;{$produit->devise}{/if}</strong></span>&nbsp;<span style="font-size:10px;font-weight:bold;">{$ht}</span><br />
 <span style="color:#654337;font-size:10px;">{if $produit->pays == 'F'}{$produit->boiscarton|replace:'Une':'La'|replace:'Un':'Le'}{else}{$produit->boiscarton}{/if} {$produit->quantite} {$produit->conditionnement|lower}</span><br />
