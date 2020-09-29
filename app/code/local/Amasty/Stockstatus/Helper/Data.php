@@ -242,8 +242,8 @@ INLINECSS;
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() >= 1){
             $status = "{$this->getInStockStatus($product)}";
         }else if($stockItem->getIsInStock() == 1 && $stockItem->getQty() <= 0){
-            if($product->getBackorderTime()){
-                $status = sprintf($this->_backorder_with_time , $product->getBackorderTime());
+            if($product->getAttributeText('custom_stock_status')){
+                $status = sprintf($this->_backorder_with_time , $product->getAttributeText('custom_stock_status'));//$product->getBackorderTime()
             }else{
                 $status = $this->_backorder_without_time;
             }
@@ -396,8 +396,9 @@ INLINECSS;
     //Allure custom stock status message
     public function getCustomStockMessage(Mage_Catalog_Model_Product $product){
         $message = "";
-        if(!is_null($product->getData('backorder_time')))
-            $message = $product->getData('backorder_time');
+        $stockMsg = $product->getAttributeText('custom_stock_status');
+        if(!is_null($stockMsg))
+            $message = $stockMsg;//$product->getData('backorder_time');
         return $message;
     }
 
