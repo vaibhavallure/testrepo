@@ -7,6 +7,8 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
     protected $_websiteCollection   = array();
     protected $_groupCollection     = array();
     protected $_storeCollection     = array();
+    protected $_orderStoreArray     = array();
+    protected $_storeArray          = array();
 
     /**
     * return virtual store array
@@ -146,5 +148,38 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
         return implode(",",$stores);
     }
 
+    /**
+     * return virtual store array
+     */
+    public function getVirtualStoresList(){
+        if(!count($this->_orderStoreArray)){
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+            $orderStoreCollection = Mage::getSingleton("sales/order")->getCollection();
+            $orderStoreCollection->addFieldToSelect("old_store_id");
+            $orderStoreCollection->addFieldToFilter("customer_id",$customer->getId());
+            $orderStoreCollection->getSelect()->group("old_store_id");
+            foreach ($orderStoreCollection as $orderStore){
+                $this->_orderStoreArray[$orderStore->getOldStoreId()] = $orderStore->getOldStoreId();
+            }
+            
+            $stores = Mage::getSingleton("allure_virtualstore/store")->getCollection();
+            /* $stores->addFieldToFilter(array('is_active', 'store_id'), array(
+                array('is_active','eq' => 1),
+                array('store_id', 'in' => $this->_orderStoreArray)
+            )); */
+            $stores->addFieldToFilter('store_id', array('in' => $this->_orderStoreArray));
+            $stores->setOrder('sort_order', 'asc');
+            $stores->setOrder('store_id', 'asc');
+            
+            foreach ($stores as $store) {
+                if ($store->getId() == 0) {
+                    continue;
+                }
+                $this->_storeArray[$store->getId()] = $store;
+            }
+        }
+        
+        return $this->_storeArray;
+    }
 
 }
