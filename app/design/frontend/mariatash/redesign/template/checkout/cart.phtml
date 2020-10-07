@@ -216,4 +216,16 @@ try{
 <?php
     }
 ?>
-
+<script type="text/javascript">
+function showCheckoutMsgPopup(){
+	<?php 
+	$minimumAmount = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())
+	->toCurrency(Mage::getStoreConfig('sales/minimum_order/amount'));
+	
+	$warning = Mage::getStoreConfig('sales/minimum_order/description')
+	? Mage::getStoreConfig('sales/minimum_order/description')
+	: Mage::helper('checkout')->__('Minimum order amount is %s', $minimumAmount);
+	?>
+	createCustomAlert('<?php echo $warning;?>');
+}
+</script>
