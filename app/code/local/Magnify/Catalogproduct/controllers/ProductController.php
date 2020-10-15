@@ -153,7 +153,8 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
                 } elseif (!$this->getResponse()->isRedirect()) {
                     /*MT-1570 redirect 404 to home page*/
                     //$this->_forward('noRoute');
-                    $this->_redirect("/");
+                    //$this->_redirect("/");
+                    $this->getResponse()->setRedirect(Mage::getUrl("/"),301);
 
                 }
             } else {
