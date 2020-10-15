@@ -132,7 +132,9 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
         $specifyOptions = $this->getRequest()->getParam('options');
         if(!empty($productId)) {
             if(!$this->isAllowedProduct($productId)){
-                $this->_redirect("/");
+//                $this->_redirect("/");
+                $this->getResponse()->setRedirect(Mage::getUrl("/"),301);
+
             }
         }
         $viewHelper = Mage::helper('catalog/product_view');
