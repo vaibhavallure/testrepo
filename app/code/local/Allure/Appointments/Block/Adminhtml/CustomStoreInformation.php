@@ -250,7 +250,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
 
 
 
-        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $opt = array("0"=>"No","1"=>"Yes");
         $releaseFormEnableOpt='';
         foreach ($opt as $key=>$name){
@@ -260,9 +260,28 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             }
             $releaseFormEnableOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
         }
-        $html .= '<label for="appointments_release_form_enable">Enable Release Form </label>';
+        $html .= '<label for="appointments_release_form_enable">Enable piercing Release Form </label>';
         $html .= '<select  class="appointment-setting-select" name="'. $this->getElement()->getName().'[release_form_enable][]'.'" style="">'.$releaseFormEnableOpt.'</select>';
         $html .= '</div>';
+
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $opt = array("0"=>"No","1"=>"Yes");
+        $releaseFormEnableOpt='';
+        foreach ($opt as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('checkup_release_form_enable/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $releaseFormEnableOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $html .= '<label for="appointments_release_form_enable">Enable checkup Release Form </label>';
+        $html .= '<select  class="appointment-setting-select" name="'. $this->getElement()->getName().'[checkup_release_form_enable][]'.'" style="">'.$releaseFormEnableOpt.'</select>';
+        $html .= '</div>';
+
+
+
 
 
 

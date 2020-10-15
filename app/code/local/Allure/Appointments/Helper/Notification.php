@@ -241,7 +241,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             if(($type != 'release') && ($type != 'release_reminder_week') && ($type != 'release_reminder_day') ) {
                 $this->sendEmail($templateId, $sender, $email, $customer_name, $emailVariables,$bcc_emails);
             }else{
-                if(($piercing > 0) && ($release_send) && ($appointmentArray['info_update'] != 1)){
+                if(($piercing > 0 || ($checkup>0 && $configData['checkup_release_form_enable'][$store_id])) && ($release_send) && ($appointmentArray['info_update'] != 1)){
                     $this->sendEmail($templateId, $sender, $email, $customer_name, $emailVariables,$bcc_emails);
                 }else{
                     $this->writeLog('Email not send for release : piercing :'.$piercing.'\n checkup : '.$checkup.'\ninfo_update :'.$appointmentArray['info_update']);
