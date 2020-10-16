@@ -132,7 +132,7 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
     }
     public function isReleaseSubmitted($flag)
     {
-        echo  ($flag) ? 'disabled title="Your release form has been submitted and is unable to be changed on line.  You may edit the form when you arrive for your appointment."': '';
+        echo  ($flag) ? 'readonly title="Your release form has been submitted and is unable to be changed on line.  You may edit the form when you arrive for your appointment."': '';
     }
     public function getStoreName($store_id=null)
     {
