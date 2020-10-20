@@ -142,6 +142,11 @@
 	    $orderItems = $order->getAllVisibleItems();
 	    $intCtr = 0;
 	    $itemscnt = count($orderItems);
+
+
+	    /*log added for google analytics*/
+	    Mage::log("event:mt_transaction transactionId:".$incrementId." transactionTotal:".$gtotal,7,"success_page_logs.log",true);
+
 	?>
 	
     dataLayer.push({
