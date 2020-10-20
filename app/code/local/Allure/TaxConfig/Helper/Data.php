@@ -62,9 +62,19 @@ class Allure_TaxConfig_Helper_Data extends Mage_Tax_Helper_Data
 
                 $request = Mage::getSingleton('tax/calculation')->getRateRequest();
 
-                if (in_array($request->getCountryId(), $countries)) {
+
+                $currentCountryId=$request->getCountryId();
+                if(!Mage::getSingleton('customer/session')->isLoggedIn()){
+                    $info = $_SERVER;
+                    if(isset($info["HTTP_WEBSCALE_COUNTRY"]) && !empty($info["HTTP_WEBSCALE_COUNTRY"])){
+                        $currentCountryId = $info["HTTP_WEBSCALE_COUNTRY"];
+                    }
+                }
+
+                if (in_array($currentCountryId, $countries)) {
                     return false;
                 }
+
             }
         }
 
