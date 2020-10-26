@@ -24,6 +24,12 @@ if ($model) {
 <?php endif; ?>
 <!--BOOKING SECTION-->
 
+<?php 
+$storeCode = Mage::app()->getRequest()->getParam('code', null);
+$isShow = true;
+if($storeCode == "dublin") $isShow = false;
+?>
+
 <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
@@ -39,7 +45,12 @@ if ($model) {
         <div class="container nopad">
             <div class="row">
                 <div class="col-12 col-lg-8" id="booking-wrapper">
-                    <div id="booking-box" class="col-12 booking-box">
+                    
+                    <?php if(!$isShow):?>
+                	<?php echo $this->getChildHtml("appointments_popup_store");?>
+               		<?php endif;?>
+                    
+                    <div id="booking-box" class="col-12 booking-box" <?php if(!$isShow): ?>style="display: none;"<?php endif;?>>
                         <?php echo $this->getChildHtml("appointments_popup_store");?>
                         <div class="col-md-12 book-title">
                             <p class="xpaces translate-popup para-bold text-uppercase"><?php echo $this->__('Book Your Appointment') ?></p>
@@ -516,7 +527,7 @@ if ($model) {
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4 booking-box " id="desktop-slot">
+                <div class="col-12 col-lg-4 booking-box " id="desktop-slot" <?php if(!$isShow): ?>style="display: none;"<?php endif;?>>
                     <div class="col-md-12">
                         <p class="xpaces translate-popup para-bold color-6 text-uppercase"><?php echo $this->__('Date and Time') ?></p>
                     </div>
