@@ -43,7 +43,16 @@ if($storeCode == "dublin") $isShow = false;
     <?php endif; ?>
     <div id="booking" class="container-fluid booking nopad appointment-container">
         <div class="container nopad">
+            
             <div class="row">
+           <?php if(!$isShow):?>
+           		<div class="col-12" id="booking-wrapper">
+               	<?php echo $this->getChildHtml("appointments_popup_store");?>
+               	</div>
+           <?php endif;?>
+           </div>
+            
+            <div class="row" <?php if(!$isShow): ?>style="display: none;"<?php endif;?>>
                 <div class="col-12 col-lg-8" id="booking-wrapper">
                     
                     <?php if(!$isShow):?>
