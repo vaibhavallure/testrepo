@@ -549,7 +549,7 @@ if($storeCode == "dublin") $isShow = false;
                     <?php endif;?>
 
                 </div>
-                <div class="information-section-mobile">
+                <div class="information-section-mobile" <?php if(!$isShow): ?>style="display: none;"<?php endif;?>>
                     <?php echo $this->getInformationBlock();?>
                 </div>
             </div>
