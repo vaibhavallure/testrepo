@@ -185,6 +185,15 @@
                             <show_in_store>1</show_in_store>
                             <comment>Set Out of Stock product message.</comment>
                         </out_of_stock>
+                        <backorder_stock translate="label comment">
+                            <label>Back Order Message</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Set backorder product message.</comment>
+                        </backorder_stock>
                     </fields>
                 </stock_messages>
                 <wishlist_settings translate="label">
