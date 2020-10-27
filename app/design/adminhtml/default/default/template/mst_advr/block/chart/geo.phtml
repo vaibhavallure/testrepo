@@ -16,7 +16,7 @@
         var formatter = new google.visualization.NumberFormat({pattern: '<?php echo $_currencyFormat ?>'});
         formatter.format(data, 1);
 
-        var options = <?php echo $this->getOptionsAsJson() ?>;
+        var options = '<?php echo json_encode($this->getSeries()) ?>';//<?php echo $this->getOptionsAsJson() ?>;
 
         var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
 
