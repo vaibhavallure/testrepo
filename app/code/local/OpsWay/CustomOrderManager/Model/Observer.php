@@ -17,13 +17,15 @@ class OpsWay_CustomOrderManager_Model_Observer {
 	    $stockQty = intval($stockItem->getQty());
 
 	    $isGiftCard = Mage::helper('amstockstatus')->isGiftcardProduct($product->getSku());
-
+	    
+	    $product = Mage::getSingleton('catalog/product')->load($productId);
+	    
 	    Mage::log('Gift Card : '.($isGiftCard ? 'YES' : 'NO'),Zend_log::DEBUG,'gift-card.log',true);
 
         if ((($stockQty <= 0 || $stockQty < $item->getQty()) && !$isGiftCard) || $qt->getOrderType() == "Multiple - Backorder") {
-
-            if ($product->getBackorderTime()) {
-	    		$item->setBackorderTime($product->getBackorderTime());
+            
+            if ($product->getAttributeText('custom_stock_status')) {
+                $item->setBackorderTime($product->getAttributeText('custom_stock_status'));//$product->getBackorderTime()
 	    	} else {
 	    		$item->setBackorderTime("backorder");
 	    	}
