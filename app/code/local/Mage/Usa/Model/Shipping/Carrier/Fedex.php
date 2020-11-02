@@ -179,9 +179,9 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
         $routeName = Mage::app()->getRequest()->getRouteName();
-        if($routeName != "adminhtml"){
+        /* if($routeName != "adminhtml"){
             return false;
-        }
+        } */
         if (!$this->getConfigFlag($this->_activeFlag)) {
             return false;
         }

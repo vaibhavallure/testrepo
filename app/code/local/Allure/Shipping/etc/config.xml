@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Shipping>
+			<name>Allure - Shipping</name>
+			<version>1.0.0</version>
+		</Allure_Shipping>
+	</modules>
+	<global>
+		<helpers>
+			<allure_shipping>
+				<class>Allure_Shipping_Helper</class>
+			</allure_shipping>
+		</helpers>
+		<blocks>
+            <allure_shipping>
+                <class>Allure_Shipping_Block</class>
+            </allure_shipping>
+        </blocks>
+		
+	</global>
+</config>
