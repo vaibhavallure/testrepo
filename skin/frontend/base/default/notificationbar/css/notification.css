@@ -17,15 +17,17 @@
 	text-align:center;
 }
 .store-notice  a{
-	border-radius: 5px;
-	padding: 3px 10px;
-	margin:5px;
-	cursor:pointer;
-	margin-right:5px;
-	padding-right:10px;
+  border-radius: 5px;
+  padding: 3px 0px;
+  /*padding: 3px 10px;*/
+  margin:5px;
+  cursor:pointer;
+  margin-right:5px;
+  padding-right:10px;
 }
 .store-notice span {
-  margin: 0 10px;
+  /*margin: 0 10px;*/
+  margin: 0 5px;
 }
 .store-notice a i{
 	padding:5px;
