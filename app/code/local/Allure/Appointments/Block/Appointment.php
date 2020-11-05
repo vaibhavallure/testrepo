@@ -267,5 +267,16 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
 
              return $no_of_guest;
     }
+    public function isStoreDisabled($store_id)
+    {
+//        $disabledStores=explode(",",Mage::getStoreConfig('appointments/disable_store_frontend/store_ids'));
+
+        $disabledStores=array(11,2,14);
+
+        if(in_array($store_id,$disabledStores))
+            return true;
+        else
+            return false;
+    }
 
 }
