@@ -14,6 +14,7 @@ if ($model) {
     $fetch_piercing_loc = $model->getPiercingLoc();
 }
 
+
 ?>
 <?php if($is_disabledPiercing):?>
 <style >
@@ -27,7 +28,7 @@ if ($model) {
 <?php 
 $storeCode = Mage::app()->getRequest()->getParam('code', null);
 $isShow = true;
-if($storeCode == "dublin") $isShow = false;
+if($this->isStoreDisabled($this->getStoreId())) $isShow = false;
 ?>
 
 <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>

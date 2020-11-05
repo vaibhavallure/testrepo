@@ -240,6 +240,24 @@
 						</covid_msg>
 					</fields>
 				</covid_setting>
+				<disable_store_frontend translate="label">
+					<label>Disable Store Frontend</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>12</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<store_ids translate="label">
+							<label>Enter comma separated store ids</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</store_ids>
+					</fields>
+				</disable_store_frontend>
 			</groups>
 		</appointments>
 	</sections>
