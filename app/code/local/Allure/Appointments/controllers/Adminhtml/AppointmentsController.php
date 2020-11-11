@@ -396,7 +396,15 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     		$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
     		if($store_id){
     			$allAppointments->addFieldToFilter('store_id',$store_id);
-    		}    		
+    		}else{
+                $date = date('Y-m-d 00:00:00', strtotime('-6 month'));
+                $allAppointments->addFieldToFilter(
+                    'appointment_start',
+                    array(
+                        'gt'=>$date
+                    )
+                );
+            }
     		$allAppointments->addFieldToFilter('app_status',array('in'=>array('1','2')));
     		
     		if($allAppointments){
