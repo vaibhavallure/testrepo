@@ -339,7 +339,7 @@ class Gene_Braintree_Model_Kount_Ens extends Mage_Core_Model_Abstract
      */
     protected function isIpInRange($ip, $range)
     {
-        if ( strpos( $range, '/' ) == false ) {
+        if ( strpos( $range, '/' ) === false ) {
             $range .= '/32';
         }
         // $range is in IP/CIDR format eg 127.0.0.1/24

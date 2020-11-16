@@ -28,7 +28,7 @@ class Gene_Braintree_Kount_EnsController extends Mage_Core_Controller_Front_Acti
         }
 
         // Retrieve the XML sent in the HTTP POST request to the ResponseHandler
-        $request = (isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : file_get_contents('php://input'));
+        $request = file_get_contents('php://input');
         if (!$request || strlen($request) == 0) {
             Mage::throwException('Invalid ENS request.');
         }

@@ -8,6 +8,16 @@
 class Gene_Braintree_Adminhtml_BraintreeController extends Mage_Adminhtml_Controller_Action
 {
     /**
+     * Check current user permission on resource and privilege
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('sales/order');
+    }
+
+    /**
      * Settlement report from Braintree
      */
     public function transactionsAction()
@@ -90,6 +100,7 @@ class Gene_Braintree_Adminhtml_BraintreeController extends Mage_Adminhtml_Contro
 
                     // Setup the various configuration variables
                     Braintree_Configuration::environment($braintreeConfig['environment']['value']);
+                    Braintree_Configuration::sslVersion(6);
 
                     // Production keys
                     if ($braintreeConfig['environment']['value'] == 'production') {

@@ -12,7 +12,6 @@ abstract class Gene_Braintree_Model_Paymentmethod_Abstract extends Mage_Payment_
      */
     const ADVANCED_FRAUD_REVIEW = 'Review';
     const ADVANCED_FRAUD_DECLINE = 'Decline';
-
     const BRAINTREE_ORIGINAL_TOKEN = 'gene_braintree_original_token';
 
     /**
@@ -128,8 +127,8 @@ abstract class Gene_Braintree_Model_Paymentmethod_Abstract extends Mage_Payment_
             // Init the environment
             $this->_getWrapper()->init($payment->getOrder()->getStoreId());
 
-            // Convert the refund amount
-            $refundAmount = $this->_getWrapper()->getCaptureAmount($payment->getOrder(), $amount);
+            // Retrieve the refund amount
+            $refundAmount = Mage::helper('gene_braintree')->formatPrice($amount);
 
             // Retrieve the transaction ID
             $transactionId = $this->_getWrapper()->getCleanTransactionId($invoice->getTransactionId());
@@ -268,124 +267,6 @@ abstract class Gene_Braintree_Model_Paymentmethod_Abstract extends Mage_Payment_
     {
         // Copy the refund transaction ID from the credit memo
         $creditmemo->setTransactionId($creditmemo->getRefundTransactionId());
-        return $this;
-    }
-
-    /**
-     * Capture the payment on the checkout page
-     *
-     * @param Varien_Object $payment
-     * @param float         $amount
-     *
-     * @return Mage_Payment_Model_Abstract
-     */
-    protected function _captureAuthorized(Varien_Object $payment, $amount)
-    {
-        // Has the payment already been authorized?
-        if ($payment->getCcTransId()) {
-            // Convert the capture amount to the correct currency
-            $captureAmount = $this->_getWrapper()->getCaptureAmount($payment->getOrder(), $amount);
-
-            // Check to see if the transaction has already been captured
-            $lastTransactionId = $payment->getLastTransId();
-            if ($lastTransactionId) {
-                try {
-                    $this->_getWrapper()->init($payment->getOrder()->getStoreId());
-                    $transaction = Braintree_Transaction::find($lastTransactionId);
-
-                    // Has the transaction already been settled? or submitted for the settlement?
-                    // Also treat settling transaction as being process. Case #828048
-                    if (isset($transaction->id) &&
-                        (
-                            $transaction->status == Braintree_Transaction::SUBMITTED_FOR_SETTLEMENT ||
-                            $transaction->status == Braintree_Transaction::SETTLED ||
-                            $transaction->status == Braintree_Transaction::SETTLING
-                        )
-                    ) {
-                        // Do the capture amounts match?
-                        if ($captureAmount == $transaction->amount) {
-                            // We can just approve the invoice
-                            $this->_updateKountStatus($payment, 'A');
-                            $payment->setStatus(self::STATUS_APPROVED);
-
-                            return $this;
-                        }
-                    }
-                } catch (Exception $e) {
-                    // Unable to load transaction, so process as below
-                }
-            }
-
-            // Has the authorization already been settled? Partial invoicing
-            if ($this->authorizationUsed($payment)) {
-                // Set the token as false
-                $token = false;
-
-                // Was the original payment created with a token?
-                if ($additionalInfoToken = $payment->getAdditionalInformation('token')) {
-                    try {
-                        // Init the environment
-                        $this->_getWrapper()->init($payment->getOrder()->getStoreId());
-
-                        // Attempt to find the token
-                        Braintree_PaymentMethod::find($additionalInfoToken);
-
-                        // Set the token if a success
-                        $token = $additionalInfoToken;
-
-                    } catch (Exception $e) {
-                        $token = false;
-                    }
-
-                }
-
-                // If we managed to find a token use that for the capture
-                if ($token) {
-                    // Stop processing the rest of the method
-                    // We pass $amount instead of $captureAmount as the authorize function contains the conversion
-                    $this->_authorize($payment, $amount, true, $token);
-                    return $this;
-
-                } else {
-                    // Attempt to clone the transaction
-                    $result = $this->_getWrapper()->init(
-                        $payment->getOrder()->getStoreId()
-                    )->cloneTransaction($lastTransactionId, $captureAmount);
-                }
-
-            } else {
-                // Init the environment
-                $result = $this->_getWrapper()->init(
-                    $payment->getOrder()->getStoreId()
-                )->submitForSettlement($payment->getCcTransId(), $captureAmount);
-
-                // Log the result
-                Gene_Braintree_Model_Debug::log(array('capture:submitForSettlement' => $result));
-            }
-
-            if ($result->success) {
-                $this->_updateKountStatus($payment, 'A');
-                $this->_processSuccessResult($payment, $result, $amount);
-            } elseif ($result->errors->deepSize() > 0) {
-                // Clean up
-                Gene_Braintree_Model_Wrapper_Braintree::cleanUp();
-
-                Mage::throwException($this->_getWrapper()->parseErrors($result->errors->deepAll()));
-            } else {
-                // Clean up
-                Gene_Braintree_Model_Wrapper_Braintree::cleanUp();
-
-                Mage::throwException(
-                    $result->transaction->processorSettlementResponseCode.':
-                    '.$result->transaction->processorSettlementResponseText
-                );
-            }
-
-        } else {
-            // Otherwise we need to do an auth & capture at once
-            $this->_authorize($payment, $amount, true);
-        }
-
         return $this;
     }
 

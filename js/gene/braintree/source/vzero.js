@@ -375,23 +375,6 @@ vZero.prototype = {
                 };
             }
 
-            // Detect if AVS is enabled, if so we need to display a postal code field
-            // Don't show the field if we've got a billing address postcode
-            /*var config = clientInstance.getConfiguration();
-            if (typeof config.gatewayConfiguration.challenges === 'object'
-                && config.gatewayConfiguration.challenges.indexOf('postal_code') !== -1
-                && !this.getBillingPostcode()
-            ) {
-                if ($$('.braintree-avs-postal-code').first() == undefined) {
-                    console.error('We\'ve detected you have AVS rules enabled, however the braintree-avs-postal-code field is not present in your Hosted Fields form. Please ensure you haven\'t overriden hostedfields.phtml and if you have please update it.');
-                } else {
-                    $$('.braintree-avs-postal-code').first().show();
-                    options.fields.postalCode = {
-                        selector: "#postal-code"
-                    };
-                }
-            }*/
-
             // Create a new instance of hosted fields
             braintree.hostedFields.create(options, function (hostedFieldsErr, hostedFieldsInstance) {
                 // Handle hosted fields errors
@@ -585,7 +568,7 @@ vZero.prototype = {
      * @param nonce
      * @param options
      */
-    hostedFieldsNonceReceived: function (nonce, options) {
+    hostedFieldsNonceReceived: function (payload, options) {
 
         if (this.shouldInvokeThreeDSecure()) {
             // Show the loading state
@@ -595,7 +578,7 @@ vZero.prototype = {
 
 
             // Verify the nonce through 3Ds
-            this.verify3dSecureNonce(nonce, {
+            this.verify3dSecureNonce(payload.nonce, {
                 onSuccess: function (response) {
                     this.updateNonce(response.nonce);
 
@@ -610,7 +593,7 @@ vZero.prototype = {
                 }.bind(this)
             });
         } else {
-            this.updateNonce(nonce);
+            this.updateNonce(payload.nonce);
 
             if (typeof options.onSuccess === 'function') {
                 options.onSuccess();
@@ -822,6 +805,41 @@ vZero.prototype = {
             }
         });
         return billing;
+    },
+
+    getShippingAddress: function () {
+        // Is there a function in the integration for this action?
+        if (typeof this.integration.getShippingAddress === 'function') {
+            return this.integration.getShippingAddress();
+        }
+
+        var shippingAddress = {};
+
+        // If not try something generic
+        if ($('co-shipping-form') !== null) {
+            if ($('co-shipping-form').tagName == 'FORM') {
+                shippingAddress = $('co-shipping-form').serialize(true);
+            } else {
+                shippingAddress = this.extractShipping($('co-shipping-form').up('form').serialize(true));
+            }
+        } else if ($('shipping:firstname') !== null) {
+            shippingAddress = this.extractShipping($('shipping:firstname').up('form').serialize(true));
+        }
+
+        if (shippingAddress) {
+            return shippingAddress;
+        }
+    },
+
+    extractShipping: function (formData) {
+        var shipping = {};
+        $H(formData).each(function (data) {
+            // Only include billing details, excluding passwords
+            if (data.key.indexOf('shipping') === 0 && data.key.indexOf('password') === -1) {
+                shipping[data.key] = data.value;
+            }
+        });
+        return shipping;
     },
 
     /**
@@ -1103,6 +1121,7 @@ vZero.prototype = {
         // Create a new instance of the threeDSecure library
         this.getClient(function (clientInstance) {
             braintree.threeDSecure.create({
+                version: 2,
                 client: clientInstance
             }, function (threeDSecureError, threeDSecureInstance) {
                 if (threeDSecureError) {
@@ -1110,9 +1129,45 @@ vZero.prototype = {
                     return;
                 }
 
+                var billingAddressDetails = this.getBillingAddress();
+                var shippingAddressDetails = this.getShippingAddress();
+
+                var billingAddress = {
+                    givenName: billingAddressDetails['billing[firstname]'],
+                    surname: billingAddressDetails['billing[lastname]'],
+                    phoneNumber: billingAddressDetails['billing[telephone]'] || '',
+                    streetAddress: typeof billingAddressDetails['billing[street][]'] !== 'undefined' ? billingAddressDetails['billing[street][]'][0] : billingAddressDetails['billing[street][0]'],
+                    extendedAddress: (typeof billingAddressDetails['billing[street][]'] !== 'undefined' ? billingAddressDetails['billing[street][]'][1] : billingAddressDetails['billing[street][1]']) || '',
+                    locality: billingAddressDetails['billing[city]'],
+                    region: billingAddressDetails['billing[region]'] || '',
+                    postalCode: billingAddressDetails['billing[postcode]'],
+                    countryCodeAlpha2: billingAddressDetails['billing[country_id]']
+                };
+
+                if (Object.keys(shippingAddressDetails).length > 0) {
+                    var additionalInformation = {
+                        shippingGivenName: shippingAddressDetails['shipping[firstname]'],
+                        shippingSurname: shippingAddressDetails['shipping[lastname]'],
+                        shippingPhone: shippingAddressDetails['shipping[telephone]'] || '',
+                        shippingAddress: {
+                            streetAddress: typeof shippingAddressDetails['shipping[street][]'] !== 'undefined' ? shippingAddressDetails['shipping[street][]'][0] : shippingAddressDetails['shipping[street][0]'],
+                            extendedAddress: (typeof shippingAddressDetails['shipping[street][]'] !== 'undefined' ? shippingAddressDetails['shipping[street][]'][1] : shippingAddressDetails['shipping[street][1]']) || '',
+                            locality: shippingAddressDetails['shipping[city]'],
+                            region: shippingAddressDetails['shipping[region]'] || '',
+                            postalCode: shippingAddressDetails['shipping[postcode]'],
+                            countryCodeAlpha2: shippingAddressDetails['shipping[country_id]']
+                        }
+                    };
+                }
+
                 var verifyOptions = {
                     amount: this.amount,
                     nonce: nonce,
+                    billingAddress: billingAddress,
+                    additionalInformation: additionalInformation || null,
+                    onLookupComplete: function (data, next) {
+                        next();
+                    },
                     addFrame: function (err, iframe) {
                         $$('#three-d-modal .bt-modal-body').first().insert(iframe);
                         $('three-d-modal').removeClassName('hidden');
@@ -1132,8 +1187,14 @@ vZero.prototype = {
                                 options.onSuccess(payload);
                             }
                         } else {
+                            // Allow the payment through if it's American Express
+                            if (this.cardType === "AE") {
+                                if (options.onSuccess) {
+                                    options.onSuccess(payload);
+                                }
+                            }
                             // Block the payment
-                            if (this.threeDSecureFailedAction == 1) {
+                            else if (this.threeDSecureFailedAction == 1) {
                                 if (options.onFailure) {
                                     options.onFailure(
                                         payload,
@@ -1240,7 +1301,7 @@ vZero.prototype = {
                 return;
             }
 
-            return this.hostedFieldsNonceReceived(payload.nonce, options);
+            return this.hostedFieldsNonceReceived(payload, options);
         }.bind(this));
     },
 

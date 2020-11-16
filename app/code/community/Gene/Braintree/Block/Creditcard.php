@@ -217,11 +217,7 @@ class Gene_Braintree_Block_Creditcard extends Mage_Payment_Block_Form_Cc
      */
     protected function getHostedDescriptor()
     {
-        if (Mage::getModel('gene_braintree/paymentmethod_creditcard')->getConfigData('form_integration') == Gene_Braintree_Model_Source_Creditcard_FormIntegration::INTEGRATION_HOSTED) {
-            return Mage::getModel('gene_braintree/paymentmethod_creditcard')->getConfigData('hostedfields_descriptor');
-        }
-
-        return false;
+        return Mage::getModel('gene_braintree/paymentmethod_creditcard')->getConfigData('hostedfields_descriptor');
     }
 
 }

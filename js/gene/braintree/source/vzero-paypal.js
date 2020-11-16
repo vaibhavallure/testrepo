@@ -17,13 +17,15 @@ vZeroPayPalButton.prototype = {
      * @param futureSingleUse When using future payments should we process the transaction as a single payment?
      * @param onlyVaultOnVault Should we only show the Vault flow if the customer has opted into saving their details?
      * @param clientTokenUrl URL to retrieve client token from
+     * @param additionalOptions Additional arguments for paypal button
      */
-    initialize: function (clientToken, storeFrontName, singleUse, locale, futureSingleUse, onlyVaultOnVault, clientTokenUrl) {
+    initialize: function (clientToken, storeFrontName, singleUse, locale, futureSingleUse, onlyVaultOnVault, clientTokenUrl, additionalOptions) {
         this.clientToken = clientToken || false;
         this.clientTokenUrl = clientTokenUrl;
         this.storeFrontName = storeFrontName;
         this.singleUse = singleUse;
         this.locale = locale;
+        this.additionalOptions = additionalOptions;
 
         // Set these to default values on initialization
         this.amount = 0.00;
@@ -94,7 +96,7 @@ vZeroPayPalButton.prototype = {
                 }, function (clientErr, clientInstance) {
                     if (clientErr) {
                         // Handle error in client creation
-                        console.log(clientErr);
+                        console.error(clientErr);
                         return;
                     }
 
@@ -137,45 +139,25 @@ vZeroPayPalButton.prototype = {
      * @param containerQuery
      * @param append
      */
-    addPayPalButton: function (options, buttonHtml, containerQuery, append) {
+    addPayPalButton: function (options, containerQuery) {
         var container;
-        buttonHtml = buttonHtml || $('braintree-paypal-button').innerHTML;
         containerQuery = containerQuery || '#paypal-container';
-        append = append || false;
 
         // Get the container element
         if (typeof containerQuery === 'string') {
-            container = $$(containerQuery).first();
+            container = $$(containerQuery);
         } else {
             container = containerQuery;
         }
 
         // Verify the container is present on the page
         if (!container) {
-            console.warn('Unable to locate container ' + containerQuery + ' for PayPal button.');
+            console.error('Unable to locate container ' + containerQuery + ' for PayPal button.');
             return false;
         }
-
-        // Insert the button element
-        if (append) {
-            container.insert(buttonHtml);
-        } else {
-            container.update(buttonHtml);
-        }
-
-        // Check the container contains a valid button element
-        if (!container.select('>button').length) {
-            console.warn('Unable to find valid <button /> element within container.');
-            return false;
-        }
-
-        // Grab the button and add a loading class
-        var button = container.select('>button').first();
-        button.addClassName('braintree-paypal-loading');
-        button.setAttribute('disabled', 'disabled');
 
         // Attach our PayPal button event to our injected button
-        this.attachPayPalButtonEvent(button, options);
+        this.attachPayPalButtonEvent(container, options);
     },
 
     /**
@@ -185,112 +167,97 @@ vZeroPayPalButton.prototype = {
      * @param options
      */
     attachPayPalButtonEvent: function (buttons, options) {
+        var __that = this;
+
         // Grab an instance of the Braintree client
         this.getClient(function (clientInstance) {
-            // Create a new instance of PayPal
-            braintree.paypal.create({
+
+            braintree.paypalCheckout.create({
                 client: clientInstance
-            }, function (paypalErr, paypalInstance) {
-                if (paypalErr) {
-                    console.error('Error creating PayPal:', paypalErr);
-                    options.onReady = false;
-                    options.paypalErr = paypalErr;
-                } else {
-                    options.paypalErr = null;
+            }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+
+                if (paypalCheckoutErr) {
+                    console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
+                    return;
                 }
 
-                // Run the onReady callback
-                if (typeof options.onReady === 'function') {
-                    options.onReady(paypalInstance);
-                }
+                var id;
+                for (var i = 0; i < buttons.length; ++i) {
+                    // Create random id for button
+                    id = 'paypal_button_'+this.getRandomQS();
+                    buttons[i].id = id;
+                    buttons[i].className += " paypalbtn-rendered";
+                    var params = {
+                            env: options.env,
+                            commit: options.commit,
+                            style: options.style,
+                            funding: {allowed: [], disallowed: []},
 
-                // Attach the PayPal button event
-                return this._attachPayPalButtonEvent(buttons, paypalInstance, options);
+                            payment: function () {
+                                if (typeof options.events.validate === 'function' && options.events.validate() === false) {
+                                    return reject(new Error('Please select the required product options.'));
+                                }
+
+                                return paypalCheckoutInstance.createPayment(options.payment);
+                            },
+                            onAuthorize: function (data, actions) {
+                                return paypalCheckoutInstance.tokenizePayment(data)
+                                    .then(options.events.onAuthorize);
+                            },
+                            onCancel: function () {
+                                if (typeof options.events.onCancel === 'function') {
+                                    options.events.onCancel();
+                                }
+                            },
+                            onError: function (err) {
+                                if (typeof options.events.onError === 'function') {
+                                    options.events.onError();
+                                }
+                            }
+                        };
+
+                    // Build up funding object to prevent paypal.Button.render referencing our inital object
+                    if (options.funding.allowed.indexOf('credit') >= 0) {
+                        params.funding.allowed.push(paypal.FUNDING.CREDIT);
+                    } else if(options.funding.disallowed.indexOf('credit') >= 0) {
+                        params.funding.disallowed.push(paypal.FUNDING.CREDIT);
+                    }
+                    if (options.funding.allowed.indexOf('card') >= 0) {
+                        params.funding.allowed.push(paypal.FUNDING.CARD);
+                    } else if(options.funding.disallowed.indexOf('card') >= 0) {
+                        params.funding.disallowed.push(paypal.FUNDING.CARD);
+                    }
+                    if (options.funding.allowed.indexOf('elv') >= 0) {
+                        params.funding.allowed.push(paypal.FUNDING.ELV);
+                    } else if(options.funding.disallowed.indexOf('elv') >= 0) {
+                        params.funding.disallowed.push(paypal.FUNDING.ELV);
+                    }
+
+                    // Override style options if present on the button element
+                    if (buttons[i].getAttribute('data-style-layout'))
+                        params.style.layout = buttons[i].getAttribute('data-style-layout');
+                    if (buttons[i].getAttribute('data-style-size'))
+                        params.style.size = buttons[i].getAttribute('data-style-size');
+                    if (buttons[i].getAttribute('data-style-shape'))
+                        params.style.shape = buttons[i].getAttribute('data-style-shape');
+                    if (buttons[i].getAttribute('data-style-color'))
+                        params.style.color = buttons[i].getAttribute('data-style-color');
+
+                    // Call to render button
+                    __that.renderPayPalBtn(Object.assign({}, params), '#' + id);
+                }
             }.bind(this));
+
         }.bind(this));
     },
 
     /**
-     * Attach the click event to the paypal button
-     *
-     * @param buttons
-     * @param paypalInstance
-     * @param options
-     *
-     * @private
+     * Render the PayPal button
+     * @param params
+     * @param elId
      */
-    _attachPayPalButtonEvent: function (buttons, paypalInstance, options) {
-        if (buttons && paypalInstance || options.paypalErr !== null) {
-
-            // Convert the buttons to an array and handle them all at once
-            if (!Array.isArray(buttons)) {
-                buttons = [buttons];
-            }
-
-            // Handle each button
-            buttons.each(function (button) {
-                button.removeClassName('braintree-paypal-loading');
-                button.removeAttribute('disabled');
-
-                // Remove any events currently assigned to the button
-                Event.stopObserving(button, 'click');
-
-                // Observe the click event to fire the tokenization of PayPal (ie open the window)
-                Event.observe(button, 'click', function (event) {
-                    Event.stop(event);
-
-                    if (options.paypalErr !== null) {
-                        alert(Translator.translate('Paypal is not available ('  + options.paypalErr.message + '). Please try an alternative payment method.'));
-                        return;
-                    }
-
-                    if (typeof options.validate === 'function') {
-                        if (options.validate()) {
-                            // Fire the integration
-                            return this._tokenizePayPal(paypalInstance, options);
-                        }
-                    } else {
-                        // Fire the integration
-                        return this._tokenizePayPal(paypalInstance, options);
-                    }
-
-                }.bind(this));
-            }.bind(this));
-        }
-    },
-
-    /**
-     * Tokenize PayPal
-     *
-     * @param paypalInstance
-     * @param options
-     *
-     * @private
-     */
-    _tokenizePayPal: function (paypalInstance, options) {
-        var tokenizeOptions = this._buildOptions();
-        if (typeof options.tokenizeRequest === 'object') {
-            tokenizeOptions = Object.extend(tokenizeOptions, options.tokenizeRequest);
-        }
-
-        // Because tokenization opens a popup, this has to be called as a result of
-        // customer action, like clicking a button—you cannot call this at any time.
-        paypalInstance.tokenize(tokenizeOptions, function (tokenizeErr, payload) {
-            // Stop if there was an error.
-            if (tokenizeErr) {
-                if (tokenizeErr.type !== 'CUSTOMER') {
-                    console.error('Error tokenizing:', tokenizeErr);
-                }
-                return;
-            }
-
-            // If we have a success callback we're most likely using a non-default checkout
-            if (typeof options.onSuccess === 'function') {
-                options.onSuccess(payload);
-            }
-
-        }.bind(this));
-
+    renderPayPalBtn: function(params, elId) {
+        paypal.Button.render(params, elId);
     },
 
     /**
@@ -300,18 +267,21 @@ vZeroPayPalButton.prototype = {
      * @private
      */
     _buildOptions: function () {
-        var options = {
-            displayName: this.storeFrontName,
-            amount: this.amount,
-            currency: this.currency,
-            useraction: 'commit', /* The user is committing to the order on submission of PayPal */
-            flow: this._getFlow()
-        };
-
-        // Pass over the locale
-        if (this.locale) {
-            options.locale = this.locale;
-        }
+        var funding = this.additionalOptions.funding,
+            options = {
+                env: this.additionalOptions.env,
+                commit: true,
+                style: this.additionalOptions.buttonStyle,
+                payment: {
+                    flow: this._getFlow(),
+                    amount: this.amount,
+                    currency: this.currency,
+                    enableShippingAddress: false,
+                    shippingAddressEditable: false,
+                    displayName: this.storeFrontName
+                },
+                funding: funding
+            };
 
         return options;
     },
@@ -324,6 +294,8 @@ vZeroPayPalButton.prototype = {
      */
     _getFlow: function () {
         var flow;
+
+        // @todo this shouldn't force the vault flow for GUEST users
 
         // Determine the flow based on the singleUse parameter
         if (this.singleUse === true) {
@@ -364,5 +336,15 @@ vZeroPayPalButton.prototype = {
         }
 
         return {};
+    },
+
+    /**
+     * Generates a random number for PayPal button QuerySelector
+     *
+     * @returns int
+     */
+    getRandomQS: function() {
+        var num = Math.random() * (999999 - 1) + 1;
+        return Math.floor(num);
     }
 };

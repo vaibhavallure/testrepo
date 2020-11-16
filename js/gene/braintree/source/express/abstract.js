@@ -23,7 +23,6 @@ BraintreeExpressAbstract.prototype = {
         this.storeFrontName = storeFrontName;
         this.formKey = formKey;
         this.source = source;
-
         this.urls = urls;
         this.config = config || {};
 
@@ -301,42 +300,37 @@ BraintreeExpressAbstract.prototype = {
      * Ajax handler
      */
     ajaxHandler: function () {
-        var forms = this.getModal().getElementsByTagName('form'),
-            i = 0;
+        var form = document.getElementById('gene_braintree_paypal_express_pp');
 
-        if (forms.length > 0) {
-            for (i = 0; i < forms.length; i++) {
-                Element.observe(forms[i], 'submit', function (e) {
-                    Event.stop(e);
+        Element.observe(form, 'submit', function (e) {
+            Event.stop(e);
+            var formParams = $('gene_braintree_paypal_express_pp').serialize(true);
+            this.getModal().classList.add('loading');
+            this.getModal().innerHTML = '';
 
-                    this.getModal().classList.add('loading');
-                    this.getModal().innerHTML = '';
+            new Ajax.Request(e.target.getAttribute('action'), {
+                method: 'POST',
+                parameters: formParams,
 
-                    new Ajax.Request(e.target.getAttribute('action'), {
-                        method: 'POST',
-                        parameters: $(e.target).serialize(true),
+                onSuccess: function (data) {
+                    if (data.responseText == 'complete') {
+                        document.location = this.urls.successUrl;
+                        return;
+                    }
 
-                        onSuccess: function (data) {
-                            if (data.responseText == 'complete') {
-                                document.location = this.urls.successUrl;
-                                return;
-                            }
+                    this.getModal().classList.remove('loading');
+                    this.getModal().innerHTML = data.responseText;
+                    this.ajaxHandler();
+                }.bind(this),
 
-                            this.getModal().classList.remove('loading');
-                            this.getModal().innerHTML = data.responseText;
-                            this.ajaxHandler();
-                        }.bind(this),
+                onFailure: function () {
+                    this.hideModal();
+                    alert(typeof Translator === "object" ? Translator.translate("We were unable to complete the request. Please try again.") : "We were unable to complete the request. Please try again.");
+                }.bind(this)
+            });
 
-                        onFailure: function () {
-                            this.hideModal();
-                            alert(typeof Translator === "object" ? Translator.translate("We were unable to complete the request. Please try again.") : "We were unable to complete the request. Please try again.");
-                        }.bind(this)
-                    });
-
-                    return false;
-                }.bind(this));
-            }
-        }
+            return false;
+        }.bind(this));
     },
 
     /**
@@ -354,7 +348,11 @@ BraintreeExpressAbstract.prototype = {
             }
         }
 
-        return (typeof productAddToCartForm !== 'object' && typeof productAddToCartFormOld !== 'object');
+        if (typeof productAddToCartForm !== 'object' && typeof productAddToCartFormOld !== 'object') {
+            return true;
+        } else {
+            return false;
+        }
     },
 
     /**

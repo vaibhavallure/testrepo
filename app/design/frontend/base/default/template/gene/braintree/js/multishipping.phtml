@@ -13,12 +13,16 @@
          * Multi shipping doesn't have ajax states
          **/
         setLoading: function () {
-            $('payment-continue').setAttribute('disabled','disabled');
-            $('payment-continue').addClassName('loading');
+            if($('payment-continue')){
+            	$('payment-continue').setAttribute('disabled','disabled');
+            	$('payment-continue').addClassName('loading');
+            }
         },
         resetLoading: function () {
-            $('payment-continue').removeAttribute('disabled');
-            $('payment-continue').removeClassName('loading');
+        	if($('payment-continue')){
+            	$('payment-continue').removeAttribute('disabled');
+            	$('payment-continue').removeClassName('loading');
+        	}
         },
 
         /**
