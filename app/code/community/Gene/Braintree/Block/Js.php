@@ -21,9 +21,11 @@ class Gene_Braintree_Block_Js extends Gene_Braintree_Block_Assets
      */
     private $creditCardActive = null;
     private $payPalActive = null;
+    private $applepayActive;
+    private $googlepayActive;
 
     /**
-     * Return whether PayPal is active
+     * Return whether CreditCard is active
      *
      * @return bool|null
      */
@@ -48,6 +50,30 @@ class Gene_Braintree_Block_Js extends Gene_Braintree_Block_Assets
         }
 
         return $this->payPalActive;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function isApplepayActive()
+    {
+        if (null === $this->applepayActive) {
+            $this->applepayActive = Mage::getModel('gene_braintree/paymentmethod_applepay')->isAvailable();
+        }
+
+        return $this->applepayActive;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function isGooglepayActive()
+    {
+        if (null === $this->googlepayActive) {
+            $this->googlepayActive = Mage::getModel('gene_braintree/paymentmethod_googlepay')->isAvailable();
+        }
+
+        return $this->googlepayActive;
     }
 
     /**
@@ -164,8 +190,9 @@ class Gene_Braintree_Block_Js extends Gene_Braintree_Block_Assets
     protected function getSingleUse()
     {
         // We prefer to do future payments, so anything else is future
-        if (Mage::getSingleton('gene_braintree/paymentmethod_paypal')->getPaymentType() ==
-            Gene_Braintree_Model_Source_Paypal_Paymenttype::GENE_BRAINTREE_PAYPAL_SINGLE_PAYMENT
+        if ((Mage::getSingleton('gene_braintree/paymentmethod_paypal')->getPaymentType() ==
+                Gene_Braintree_Model_Source_Paypal_Paymenttype::GENE_BRAINTREE_PAYPAL_SINGLE_PAYMENT) ||
+            (!Mage::getSingleton('customer/session')->isLoggedIn())
         ) {
             return 'true';
         }
@@ -229,4 +256,86 @@ class Gene_Braintree_Block_Js extends Gene_Braintree_Block_Assets
         return '';
     }
 
+    /**
+     * Get payment Environment
+     *
+     * @return string
+     */
+    public function getEnv()
+    {
+        return Mage::getStoreConfig('payment/gene_braintree/environment');
+    }
+
+    /**
+     * Button funding options
+     * @return string
+     */
+    public function getFunding()
+    {
+        $funding = Mage::getStoreConfig('payment/gene_braintree_paypal/disabled_funding');
+        $funding = explode(",", $funding);
+        $disallowed = $allowed = array();
+
+        // Credit (only for USD currencies)
+        if (!(in_array("credit", $funding) || Mage::app()->getStore()->getCurrentCurrencyCode() != "USD")) {
+            $allowed[] = "'credit'";
+        }
+
+        // Cards
+        if (in_array("card", $funding)) {
+            $disallowed[] = "'card'";
+        }
+
+        // German ELV
+        if (in_array("elv", $funding)) {
+            $disallowed[] = "'elv'";
+        }
+
+        $return = array();//'';
+        if ($disallowed) {
+            $return[] = 'disallowed: [' . implode(",", $disallowed) . ']';
+        } else {
+            $return[] = 'disallowed: []';
+        }
+        if ($allowed) {
+            $return[] = 'allowed: [' . implode(",", $allowed) . ']';
+        } else {
+            $return[] = 'allowed: []';
+        }
+
+        if ($return) {
+            return implode(",", $return);
+        }
+        return '';
+    }
+
+    /**
+     * Get button styling configuration settings as an array
+     * @param $scope
+     * @return array
+     */
+    public function getStyleConfigArray($scope)
+    {
+        return Mage::helper('gene_braintree')->getStyleConfigArray($scope);
+    }
+
+    /**
+     * Get button styling configuration settings
+     * @param $scope
+     * @return string
+     */
+    public function getStyleConfig($scope)
+    {
+        return Mage::helper('gene_braintree')->getStyleConfig($scope);
+    }
+
+    public function getUrl($route = '', $params = array())
+    {
+        // Always force secure on getUrl calls
+        if (!isset($params['_forced_secure'])) {
+            $params['_forced_secure'] = true;
+        }
+
+        return parent::getUrl($route, $params);
+    }
 }

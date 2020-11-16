@@ -15,9 +15,15 @@ class Gene_Braintree_CheckoutController extends Mage_Core_Controller_Front_Actio
     public function clientTokenAction()
     {
         try {
+            if (Mage::app()->getRequest()->getParam('store')) {
+                $storeId = (int) Mage::app()->getRequest()->getParam('store');
+            } else {
+                $storeId = Mage::app()->getStore()->getStoreId();
+            }
+
             return $this->_returnJson(array(
                 'success' => true,
-                'client_token' => Mage::getSingleton('gene_braintree/wrapper_braintree')->init()->generateToken()
+                'client_token' => Mage::getSingleton('gene_braintree/wrapper_braintree')->init($storeId)->generateToken()
             ));
         } catch (Exception $e) {
             return $this->_returnJson(array(
@@ -237,7 +243,7 @@ class Gene_Braintree_CheckoutController extends Mage_Core_Controller_Front_Actio
     protected function _returnJson($array)
     {
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($array));
-        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setHeader('Content-Type', 'application/json', true);
 
         return $this;
     }

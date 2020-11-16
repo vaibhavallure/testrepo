@@ -264,7 +264,7 @@ class Gene_Braintree_Model_Migration extends Mage_Core_Model_Abstract
                         'entity_type_id' => $entityTypeId,
                         'attribute_id' => $attribute->getId(),
                         'entity_id' => $customer->getId(),
-                        'value' => md5($customer->getId() . '-' . $customer->getEmail())
+                        'value' => hash('sha256', $customer->getId() . '-' . $customer->getEmail())
                     );
                     ++$updatedCount;
                 }

@@ -10,7 +10,10 @@
         ['order-billing_address_postcode'],
         false,
         false,
-        '<?php echo Mage::getUrl('braintree/checkout/clientToken', array('_secure' => Mage::app()->getFrontController()->getRequest()->isSecure())); ?>'
+        '<?php echo Mage::getUrl('braintree/checkout/clientToken', array(
+            '_secure' => Mage::app()->getFrontController()->getRequest()->isSecure(),
+            'store' => Mage::getSingleton('adminhtml/session_quote')->getStore()->getStoreId()
+        )); ?>'
     );
 
     // Pass the supported card types over to the front-end

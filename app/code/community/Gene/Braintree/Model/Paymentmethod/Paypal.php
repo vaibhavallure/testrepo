@@ -31,7 +31,7 @@ class Gene_Braintree_Model_Paymentmethod_Paypal extends Gene_Braintree_Model_Pay
     protected $_canOrder = false;
     protected $_canAuthorize = true;
     protected $_canCapture = true;
-    protected $_canCapturePartial = false;
+    protected $_canCapturePartial = true; 
     protected $_canRefund = true;
     protected $_canRefundInvoicePartial = true;
     protected $_canVoid = true;
@@ -173,7 +173,12 @@ class Gene_Braintree_Model_Paymentmethod_Paypal extends Gene_Braintree_Model_Pay
      */
     public function getPaymentMethodToken()
     {
-        return $this->getInfoInstance()->getAdditionalInformation('paypal_payment_method_token');
+        $pToken = $this->getInfoInstance()->getAdditionalInformation('paypal_payment_method_token');
+        if (!empty($pToken)) {
+            return $pToken;
+        }
+
+        return $this->getInfoInstance()->getAdditionalInformation('token');
     }
 
     /**
@@ -265,6 +270,130 @@ class Gene_Braintree_Model_Paymentmethod_Paypal extends Gene_Braintree_Model_Pay
         }
 
         $this->_processSuccessResult($payment, $result, $amount);
+
+        return $this;
+    }
+
+    /**
+     * Capture the payment on the checkout page
+     *
+     * @param Varien_Object $payment
+     * @param float         $amount
+     *
+     * @return Mage_Payment_Model_Abstract
+     */
+    protected function _captureAuthorized(Varien_Object $payment, $amount)
+    {
+        // Has the payment already been authorized?
+        if ($payment->getCcTransId()) {
+            // Convert the capture amount to the correct currency
+            $captureAmount = $this->_getWrapper()->getCaptureAmount($payment->getOrder(), $amount);
+
+            // Check to see if the transaction has already been captured
+            $lastTransactionId = $payment->getLastTransId();
+            if ($lastTransactionId) {
+                try {
+                    $this->_getWrapper()->init($payment->getOrder()->getStoreId());
+                    $transaction = Braintree_Transaction::find($lastTransactionId);
+
+                    // Has the transaction already been settled? or submitted for the settlement?
+                    // Also treat settling transaction as being process. Case #828048
+                    if (isset($transaction->id) &&
+                        (
+                            $transaction->status == Braintree_Transaction::SUBMITTED_FOR_SETTLEMENT ||
+                            $transaction->status == Braintree_Transaction::SETTLED ||
+                            $transaction->status == Braintree_Transaction::SETTLING
+                        )
+                    ) {
+                        // Do the capture amounts match?
+                        if ($captureAmount == $transaction->amount) {
+                            // We can just approve the invoice
+                            $this->_updateKountStatus($payment, 'A');
+                            $payment->setStatus(self::STATUS_APPROVED);
+
+                            return $this;
+                        }
+                    }
+                } catch (Exception $e) {
+                    // Unable to load transaction, so process as below
+                }
+            }
+
+            // Has the authorization already been settled? Partial invoicing
+            if ($this->authorizationUsed($payment)
+                && !isset($transaction->partialSettlementTransactionIds)
+            ) {
+                // Set the token as false
+                $token = false;
+
+                // Was the original payment created with a token?
+                if ($additionalInfoToken = $payment->getAdditionalInformation('token')) {
+                    try {
+                        // Init the environment
+                        $this->_getWrapper()->init($payment->getOrder()->getStoreId());
+
+                        // Attempt to find the token
+                        Braintree_PaymentMethod::find($additionalInfoToken);
+
+                        // Set the token if a success
+                        $token = $additionalInfoToken;
+
+                    } catch (Exception $e) {
+                        $token = false;
+                    }
+
+                }
+
+                // If we managed to find a token use that for the capture
+                if ($token) {
+                    $result = $this->_getWrapper()->init(
+                        $payment->getOrder()->getStoreId()
+                    )->submitForPartialSettlement($payment->getCcTransId(), $captureAmount);
+                } else {
+                    // Attempt to clone the transaction
+                    $result = $this->_getWrapper()->init(
+                        $payment->getOrder()->getStoreId()
+                    )->cloneTransaction($lastTransactionId, $captureAmount);
+                }
+
+            } else {
+                // Ensure first payment isn't intended to allow for future payments (partial invoicing)
+                if ($captureAmount == $payment->getAmountAuthorized()) {
+                    $result = $this->_getWrapper()->init(
+                        $payment->getOrder()->getStoreId()
+                    )->submitForSettlement($payment->getCcTransId(), $captureAmount);
+                } else {
+                    $result = $this->_getWrapper()->init(
+                        $payment->getOrder()->getStoreId()
+                    )->submitForPartialSettlement($payment->getCcTransId(), $captureAmount);
+                }
+
+                // Log the result
+                Gene_Braintree_Model_Debug::log(array('capture:submitForSettlement' => $result));
+            }
+
+            if ($result->success) {
+                $this->_updateKountStatus($payment, 'A');
+                $this->_processSuccessResult($payment, $result, $amount);
+            } elseif ($result->errors->deepSize() > 0) {
+                // Clean up
+                Gene_Braintree_Model_Wrapper_Braintree::cleanUp();
+
+                Mage::throwException($this->_getWrapper()->parseErrors($result->errors->deepAll()));
+            } else {
+                // Clean up
+                Gene_Braintree_Model_Wrapper_Braintree::cleanUp();
+
+                Mage::throwException(
+                    $result->transaction->processorSettlementResponseCode.':
+                    '.$result->transaction->processorSettlementResponseText
+                );
+            }
+
+        } else {
+            // Otherwise we need to do an auth & capture at once
+            $this->_authorize($payment, $amount, true);
+        }
 
         return $this;
     }
@@ -366,12 +495,20 @@ class Gene_Braintree_Model_Paymentmethod_Paypal extends Gene_Braintree_Model_Pay
 
         // Set some basic things
         $payment->setStatus(self::STATUS_APPROVED)
-            ->setCcTransId($result->transaction->id)
-            ->setLastTransId($result->transaction->id)
-            ->setTransactionId($result->transaction->id)
             ->setIsTransactionClosed(0)
             ->setAmount($amount)
             ->setShouldCloseParentTransaction(false);
+
+        if ($payment->getLastTransId()) {
+            $payment->setCcTransId($payment->getLastTransId())
+                ->setTransactionId($payment->getLastTransId());
+        } else {
+            $payment->setCcTransId($result->transaction->id)
+                ->setLastTransId($result->transaction->id)
+                ->setTransactionId($result->transaction->id);
+        }
+
+        $updatedLastTransIds = $this->_getUpdatedTransactionId($payment, $result);
 
         // Set the additional information about the customers PayPal account
         $payment->setAdditionalInformation(
@@ -379,6 +516,7 @@ class Gene_Braintree_Model_Paymentmethod_Paypal extends Gene_Braintree_Model_Pay
                 'paypal_email'     => $result->transaction->paypal['payerEmail'],
                 'payment_id'       => $result->transaction->paypal['paymentId'],
                 'authorization_id' => $result->transaction->paypal['authorizationId'],
+                'last_invoice_trans_id' => $updatedLastTransIds,
             )
         );
 
@@ -404,6 +542,35 @@ class Gene_Braintree_Model_Paymentmethod_Paypal extends Gene_Braintree_Model_Pay
         }
 
         return $payment;
+    }
+
+    /**
+     * Get transaction id prefixed with incremented value
+     *
+     * @param Varien_Object $payment
+     * @param $result
+     * @return null|string
+     */
+    protected function _getUpdatedTransactionId(
+        Varien_Object $payment,
+        $result
+    ) {
+        $updatedLastTransIds = null;
+        $additionalInformation = $payment->getAdditionalInformation();
+
+        if (isset($additionalInformation['last_invoice_trans_id'])) {
+            $allLastInvoiceTransIds = explode(",", $additionalInformation['last_invoice_trans_id']);
+            $latestInvoiceTransIdKey = max(array_keys($allLastInvoiceTransIds));
+            $latestInvoiceTransId = $allLastInvoiceTransIds[$latestInvoiceTransIdKey];
+            $allLastInvoiceTransIds[] = ($latestInvoiceTransId + 1) . '-' .  $result->transaction->id;
+            $updatedLastTransIds = implode(",", $allLastInvoiceTransIds);
+            return $updatedLastTransIds;
+        }
+
+        $updatedLastTransIds++;
+        $updatedLastTransIds = $updatedLastTransIds . '-' . $result->transaction->id;
+
+        return $updatedLastTransIds;
     }
 
 }

@@ -27,4 +27,18 @@ class Gene_Braintree_Block_Express_Button extends Gene_Braintree_Block_Express_A
 
         return '';
     }
+
+    /**
+     * @return string
+     */
+    public function getButtonLocation()
+    {
+        if ($this->getRequest()->getControllerName() === 'product') {
+            return 'pdp';
+        }
+        if ($this->getIsCart()) {
+            return 'cart';
+        }
+        return 'checkout';
+    }
 }

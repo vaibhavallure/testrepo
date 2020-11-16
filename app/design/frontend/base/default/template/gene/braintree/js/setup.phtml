@@ -40,25 +40,20 @@
         // Pass some data through to the PayPal integration
         var vzeroPaypal = new vZeroPayPalButton(
             false,
-            '<?php echo Mage::app()->getStore()->getFrontendName(); ?>',
+            '<?php echo addslashes(Mage::app()->getStore()->getFrontendName()); ?>',
             <?php echo $this->getSingleUse(); ?>,
             '<?php echo $this->getLocale(); ?>',
             <?php echo $this->getSingleFutureUse(); ?>,
             <?php echo $this->shouldOnlyVaultOnVault() ? $this->shouldOnlyVaultOnVault() : 'false'; ?>,
-            '<?php echo Mage::getUrl('braintree/checkout/clientToken', array('_secure' => Mage::app()->getFrontController()->getRequest()->isSecure())); ?>'
+            '<?php echo Mage::getUrl('braintree/checkout/clientToken', array('_secure' => Mage::app()->getFrontController()->getRequest()->isSecure())); ?>',
+            {
+                env: '<?php echo $this->getEnv(); ?>',
+                buttonStyle: <?php echo $this->getStyleConfig('checkout'); ?>,
+                funding: {<?php echo $this->getFunding(); ?>}
+            }
         );
         <?php endif; ?>
     }
-</script>
-
-<script type="text/html" id="braintree-paypal-button">
-    <button type="button" name="braintree-paypal-button" class="braintree-paypal-button">
-        <span>
-            <span>
-                <?php echo $this->__('Login to'); ?>
-            </span>
-        </span>
-    </button>
 </script>
 
 <div id="three-d-modal" class="hidden">

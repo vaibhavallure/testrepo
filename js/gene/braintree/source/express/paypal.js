@@ -14,7 +14,8 @@ var BraintreePayPalExpress = Class.create(BraintreeExpressAbstract, {
             this.config.locale,
             false,
             false,
-            this.urls.clientTokenUrl
+            this.urls.clientTokenUrl,
+            {}
         );
     },
 
@@ -24,22 +25,38 @@ var BraintreePayPalExpress = Class.create(BraintreeExpressAbstract, {
      * @param buttons
      */
     attachToButtons: function (buttons) {
+        var that = this;
         var options = {
-            validate: this.validateForm,
-            onSuccess: function (payload) {
-
-                var params = {
-                    paypal: JSON.stringify(payload)
-                };
-                if (typeof this.config.productId !== 'undefined') {
-                    params.product_id = this.config.productId;
-                    params.form_data = $('product_addtocart_form') ? $('product_addtocart_form').serialize() : $('pp_express_form').serialize();
+            env: that.config.env,
+            commit: false,
+            style: that.config.buttonStyle,
+            funding: that.config.funding,
+            payment: {
+                flow: 'checkout',
+                amount: that.config.total,
+                currency: that.config.currency,
+                enableShippingAddress: true,
+                shippingAddressEditable: true,
+                displayName: that.config.displayName
+            },
+            events: {
+                validate: that.validateForm,
+                onAuthorize: function (payload) {
+                    var params = {
+                        paypal: JSON.stringify(payload)
+                    };
+                    if (typeof that.config.productId !== 'undefined') {
+                        params.product_id = that.config.productId;
+                        params.form_data = $('product_addtocart_form') ? $('product_addtocart_form').serialize() : $('pp_express_form').serialize();
+                    }
+                    that.initModal(params);
+                },
+                onCancel: function() {
+                    that.hideModal();
+                },
+                onError: function() {
+                    alert(typeof Translator === "object" ? Translator.translate("We were unable to complete the request. Please try again.") : "We were unable to complete the request. Please try again.");
                 }
-
-                this.initModal(params);
-            }.bind(this),
-            tokenizeRequest: {
-                enableShippingAddress: true /* Request shipping address from customer */
             }
         };
 
