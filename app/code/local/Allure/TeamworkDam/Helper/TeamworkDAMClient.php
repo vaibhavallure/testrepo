@@ -49,7 +49,7 @@ class Allure_TeamworkDam_Helper_TeamworkDAMClient extends Mage_Core_Helper_Data
             "fileName" => $imageOb['name'],
             "mediaData" => $imageOb['data']
         );
-        
+
         // convert requestArgs to json
         if ($requestArgs != null) {
             $json_arguments = json_encode($requestArgs);
@@ -74,6 +74,6 @@ class Allure_TeamworkDam_Helper_TeamworkDAMClient extends Mage_Core_Helper_Data
     }
 
     private function log($message) {
-        Mage::log($message,7,"teamwork_dam_api.log",true);
+        Mage::log($message,7,"teamwork_dam_api_client.log",true);
     }
 }
