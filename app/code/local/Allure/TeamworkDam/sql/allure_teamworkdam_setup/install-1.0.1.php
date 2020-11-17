@@ -21,7 +21,7 @@ $table = $installer->getConnection()
     ->addColumn('image_name', Varien_Db_Ddl_Table::TYPE_VARCHAR, null, array(
         'nullable'  => false,
     ), 'image name')
-    ->addColumn('image', 'longtext', null, array(
+    ->addColumn('image', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(
         'nullable'  => false,
     ), 'Image')
     ->addColumn('created_date', Varien_Db_Ddl_Table::TYPE_DATETIME,null,array(
