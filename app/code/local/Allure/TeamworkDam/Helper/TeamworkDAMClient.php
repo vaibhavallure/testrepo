@@ -44,10 +44,12 @@ class Allure_TeamworkDam_Helper_TeamworkDAMClient extends Mage_Core_Helper_Data
         ));
 
         $requestArgs = array(
-            "posParams" => array("itemPLU" => $imageOb['plu'],"thumbnail" => false),
+            "posParams" => array("itemPLU" => $imageOb['plu'],"attributeThumbnail" => true),
+            "ecommerceParams" => array("itemPLU" => $imageOb['plu']),
             "fileName" => $imageOb['name'],
             "mediaData" => $imageOb['data']
         );
+        
         // convert requestArgs to json
         if ($requestArgs != null) {
             $json_arguments = json_encode($requestArgs);
