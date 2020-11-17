@@ -183,13 +183,13 @@ if ($storeCode == "default") {
     <?php
     $intellisuggestCart = array();
     try {
-        $intellisuggestOrder = Mage::getModel('sales/order')->load(Mage::getSingleton('checkout/session')->getLastOrderId());
-        foreach($intellisuggestOrder->getItemsCollection() as $intellisuggestItem) {
+        $intellisuggestOrder = $order;
+        foreach($intellisuggestOrder->getAllVisibleItems() as $intellisuggestItem) {
             if($intellisuggestItem->getPrice() > 0) {
                 $intellisuggestCart[] = array(
-                    'sku' => Mage::getModel('catalog/product')->load($intellisuggestItem->getProductId())->getSku(),
-                    'qty' => 1,
-                    'price' => $intellisuggestItem->getPrice()
+                    'sku' => $intellisuggestItem->getSku(),
+                    'qty' => $intellisuggestItem->getQtyOrdered(),
+                    'price' => $intellisuggestItem->getBasePrice()
                 );
             }
         }
