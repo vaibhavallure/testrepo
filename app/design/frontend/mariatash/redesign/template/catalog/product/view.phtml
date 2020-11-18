@@ -270,6 +270,17 @@ if ($_product->getSizeSample() == 1) {
                 <?php echo $html; ?>
             </div>
         <?php endforeach;?>
+
+        <!--search spring code added-->
+        <div class="row">
+            <div class="ss-complimentary-container">
+                <div class="ss-recs-wrapper">
+                    <script type="searchspring/recommend" profile="product-detail-page">
+                            seed = "<?php echo $_product->getSku() ?>";
+                        </script>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="clearer col-12"></div>
@@ -1026,6 +1037,12 @@ jQuery(document).ready(function(){
 <?php
     }
 ?>
+
+
+<!--instagram and recent view section added removed from related-->
+<div id="recent-view-ajax" class="w-100"></div>
+<?php echo $this->getChildHtml("instagram_product_post");?>
+
 
 
 
