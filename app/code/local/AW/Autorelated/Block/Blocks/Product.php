@@ -78,24 +78,24 @@ class AW_Autorelated_Block_Blocks_Product extends AW_Autorelated_Block_Blocks_Ab
                         break;
                     default:
                         /*instagram post start*/
-                        $block = $this->getLayout()->createBlock(
+                       /* $block = $this->getLayout()->createBlock(
                             'allure_instacatalog/product',
                             'instagram_product_post',
                             array('template' => 'allure/instacatalog/product/product.phtml')
                         );
-                        $this->setChild('instagram_product_post', $block);
+                        $this->setChild('instagram_product_post', $block);*/
                         /*instagram post end*/
                         
                         $this->setTemplate('aw_autorelated/blocks/product/product.phtml');
                 }
             } else {
                 /*instagram post start*/
-                $block = $this->getLayout()->createBlock(
-                    'allure_instacatalog/product',
-                    'instagram_product_post',
-                    array('template' => 'allure/instacatalog/product/product.phtml')
-                    );
-                $this->setChild('instagram_product_post', $block);
+//                $block = $this->getLayout()->createBlock(
+//                    'allure_instacatalog/product',
+//                    'instagram_product_post',
+//                    array('template' => 'allure/instacatalog/product/product.phtml')
+//                    );
+//                $this->setChild('instagram_product_post', $block);
                 /*instagram post end*/
                 
                 $this->setTemplate('aw_autorelated/blocks/product/product.phtml');

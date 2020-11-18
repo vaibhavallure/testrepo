@@ -199,7 +199,7 @@ Product view
             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/facybox.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/print.min.css</stylesheet></action>
-           
+
 			<action method="addItem">
                 <type>js</type>
                 <name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>-->
@@ -276,6 +276,10 @@ Product view
                     <block type="core/template" name="product.info.sizechart" as="product_additional_sizechart" template="ecp/product/sizechart.phtml" />
                     <action method="append"><block>product.info.options.wrapper.bottom</block></action>
                 </block>
+
+
+
+
                 <action method="unsetCallChild"><child>container1</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
                 <action method="unsetCallChild"><child>container2</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
             </block>
@@ -283,6 +287,10 @@ Product view
         <reference name="right">
             <block type="catalog/product_list_related" name="catalog.product.related" before="-" template="catalog/product/list/related.phtml"/>
         </reference>
+        <reference name="content">
+            <block type="allure_instacatalog/product" name="instagram.product.post"  as="instagram_product_post" template="allure/instacatalog/product/product.phtml"/>
+        </reference>
+
     </catalog_product_view>
     <!--
     <catalog_product_recent translate="label">
