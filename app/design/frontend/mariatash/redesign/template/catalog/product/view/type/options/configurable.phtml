@@ -89,10 +89,10 @@ if ($_product->getSizeSample() == 1) {
 
                             <!--AWS14 MT-1375 condition added-->
                             <?php if(Mage::helper("giftcards")->getEGiftCardStatus()): ?>
-                            <li data-option_value="egift"  onclick="setLoader()" class="option  li-2 "><a href="<?= $url ?>"><span class="egift-text">eGift Card</span></a></li>
+                            <li data-option_value="egift"  onclick="setLoader()" class="option  li-2 "><a href="<?= $url ?>"><span class="egift-text">Digital Gift Card</span></a></li>
                              <?php endif;?>
 
-                            <li data-option_value="storecard" class="option  li-3 active"><span>Gift Card</span></li>
+                            <li data-option_value="storecard" class="option  li-3 active"><span>In-Store (New York Only)</span></li>
                         </ul>
                     </div></div></div>
         <?php endif; ?>
