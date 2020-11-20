@@ -4520,6 +4520,9 @@ dt.post-lengthds-lbl {
 .gift-card-faq-link a{
 	text-decoration: underline;
 }
+.sg-lb{
+	font-size: 14px;
+}
 .giftcards .add-to-bag, .product-maria-tash-in-store-gift-card .add-to-bag	 {
   margin-bottom: 7px;
 }
@@ -5212,5 +5215,8 @@ a.product-video-link:hover div.product-video-play-icon {
 	}
 	.piercing-cat-div div.image-text{
 		width: 90%;
+	}
+	.sg-lb{
+		font-size: 12px;
 	}
 }

@@ -32,12 +32,12 @@
 
 <?php if((Mage::helper("allure_catalog")->isGiftCard($_product->getId()))): ?>
 
-<div class="store-card-recp">
+<div class="store-card-recp w-100">
     <div class="field input-form">
-        <input  type="text" placeholder="<?php echo $this->__('Recipient\'s Name') ?>" id="storecard-rec" name="storecard_rec" class="input-text emptycustomvalidation"/>
+        <input  type="text" style="background: transparent" placeholder="<?php echo $this->__('Recipient\'s Name') ?>" id="storecard-rec" name="storecard_rec" class="input-text emptycustomvalidation w-100"/>
     </div>
     <div class="field">
-        <textarea placeholder="<?php echo $this->__('Message') ?>" id="storecard-message" name="storecard_message" class="emptycustomvalidation" onKeyUp="maxLong(this,300)" style="width: 100%;height: 83px!important;"></textarea>
+        <textarea placeholder="<?php echo $this->__('Message') ?>" id="storecard-message" name="storecard_message" class="emptycustomvalidation" onKeyUp="maxLong(this,300)" style="width: 100%;height: 83px!important;background: transparent"></textarea>
     </div>
 </div>
 
