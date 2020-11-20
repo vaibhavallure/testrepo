@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-18>Backport for CVE-2020-9690 - Magento versions 2.3.5-p1 and earlier have an observable timing discrepancy vulnerability. Successful exploitation could lead to signature verification bypass.</MO-18>
+        </patches>
+    </mage-one>
+</config>
