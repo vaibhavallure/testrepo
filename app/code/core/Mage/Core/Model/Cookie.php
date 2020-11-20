@@ -204,9 +204,11 @@ class Mage_Core_Model_Cookie
      * @param string $domain
      * @param int|bool $secure
      * @param bool $httponly
+     * @param string $samesite
      * @return Mage_Core_Model_Cookie
+     * @throws Zend_Controller_Response_Exception
      */
-    public function set($name, $value, $period = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    public function set($name, $value, $period = null, $path = null, $domain = null, $secure = null, $httponly = null, $samesite = 'None')
     {
         /**
          * Check headers sent
@@ -240,7 +242,18 @@ class Mage_Core_Model_Cookie
             $httponly = $this->getHttponly();
         }
 
-        setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+        if (PHP_VERSION_ID < 70300) {
+            setcookie($name, $value, $expire, "$path; samesite=$samesite", $domain, $secure, $httponly);
+        } else {
+            setcookie($name, $value, [
+                'expires' => $expire,
+                'path' => $path,
+                'domain' => $domain,
+                'samesite' => $samesite,
+                'secure' => $secure,
+                'httponly' => $httponly,
+            ]);
+        }
 
         return $this;
     }
