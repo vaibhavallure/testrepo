@@ -71,6 +71,6 @@ class Mage_Core_Model_Session extends Mage_Core_Model_Session_Abstract
      */
     public function validateFormKey($formKey)
     {
-        return hash_equals($formKey, $this->getFormKey());
+        return is_string($formKey) && is_string($this->getFormKey()) && hash_equals($formKey, $this->getFormKey());
     }
 }
