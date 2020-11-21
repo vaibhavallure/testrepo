@@ -26,8 +26,17 @@
     <div id="<?php echo $this->getHtmlId() ?>" class="item-container">
         <?php endif; ?>
         <div class="item-text">
-            <?php echo $this->getColumnHtml($_item, 'name')
-       
+            <?php echo $this->getColumnHtml($_item, 'name') ?>
+          <?php
+            $data=unserialize($_item->getData('product_options'));
+            if(isset($data['info_buyRequest']['storecard_receiver']))
+            {
+                echo '<span><b>Storecard Receiver: </b>'.$data["info_buyRequest"]["storecard_receiver"].'</span><br/>';
+            }
+            if(isset($data['info_buyRequest']['storecard_message']))
+            {
+                echo '<span><b>Storecard Message: </b>'.$data["info_buyRequest"]["storecard_message"].'</span>';
+            }
             ?>
         </div>
         <?php if ($this->canDisplayContainer()): ?>

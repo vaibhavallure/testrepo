@@ -65,6 +65,14 @@ function addToShoppingCart(button, formId, relode=false) {
                 datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
 
 
+                if(jQuery("#storecard-rec").length)
+                {
+                    datos += '' + ',"storecard_receiver":"'+jQuery.trim(jQuery("#storecard-rec").val())+'"';
+                }
+                if(jQuery("#storecard-message").length)
+                {
+                    datos += '' + ',"storecard_message":"'+jQuery.trim(jQuery("#storecard-message").val())+'"';
+                }
 
                 var purchased_from = jQuery("#" + formId.id +" .puchsed-from-cat").val();
                 datos += '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';

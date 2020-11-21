@@ -4513,11 +4513,15 @@ dt.post-lengthds-lbl {
   width: 90px;
 }
 .gift-card-faq-link {
-  margin: 17px 0 40px;
+  /*margin: 17px 0 40px;*/
 	padding: 0;
+	margin: 0 0 20px;
 }
 .gift-card-faq-link a{
 	text-decoration: underline;
+}
+.sg-lb{
+	font-size: 14px;
 }
 .giftcards .add-to-bag, .product-maria-tash-in-store-gift-card .add-to-bag	 {
   margin-bottom: 7px;
@@ -4554,7 +4558,7 @@ dt.post-lengthds-lbl {
 	margin-top: 10px;
 }
 .giftcard-left-form .chooseList .label{
-	margin-right: 20%;
+	/*margin-right: 20%;*/
 }
 #advice-required-entry-date {
   padding: 0 15px;
@@ -4564,7 +4568,7 @@ dt.post-lengthds-lbl {
 	top: 43px;
 }
 .product-maria-tash-in-store-gift-card .gift-card-faq-link{
-   margin: 37px 0 40px;
+   margin: 0 0 20px;
 }
 .checkout-other-items{
 	border-top: 1px solid #d8d8d8;
@@ -5211,5 +5215,8 @@ a.product-video-link:hover div.product-video-play-icon {
 	}
 	.piercing-cat-div div.image-text{
 		width: 90%;
+	}
+	.sg-lb{
+		font-size: 12px;
 	}
 }
