@@ -145,6 +145,10 @@ Product.Config.prototype.fillSelect = function(element){
             }
         }
 
+        if(document.getElementById("storecard-rec")!==null && element.options[0].value=="") {
+            element.options[0].remove();
+        }
+
     }
 }
 

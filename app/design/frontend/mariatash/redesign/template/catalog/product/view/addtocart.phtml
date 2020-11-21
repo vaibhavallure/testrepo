@@ -24,8 +24,40 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+
+
 <div class="cart-add-div"></div>
 <?php $_product = $this->getProduct(); ?>
+
+
+<?php if((Mage::helper("allure_catalog")->isGiftCard($_product->getId()))): ?>
+
+<div class="store-card-recp w-100">
+    <div class="field input-form">
+        <input  type="text" style="background: transparent" placeholder="<?php echo $this->__('Recipient\'s Name') ?>" id="storecard-rec" name="storecard_rec" class="input-text emptycustomvalidation w-100"/>
+    </div>
+    <div class="field">
+        <textarea placeholder="<?php echo $this->__('Message') ?>" id="storecard-message" name="storecard_message" class="emptycustomvalidation" onKeyUp="maxLong(this,300)" style="width: 100%;height: 83px!important;background: transparent"></textarea>
+    </div>
+</div>
+
+    <script>
+        jQuery(documnent).ready(function () {
+/*
+            jQuery('.super-attribute-select option')
+                .filter(function() {
+                    return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
+                })
+                .remove();
+*/
+
+            jQuery('.super-attribute-select').val(513);
+        });
+
+    </script>
+
+<?php endif; ?>
+
 <!--MT-1408-->
 <?php $_labelHelper = Mage::helper('allure_category/vip');?>
 <?php $buttonTitle = $this->__($_labelHelper->getLabel($_product)); ?>
@@ -163,14 +195,11 @@
 
 
 
-        <?php if((Mage::helper("allure_catalog")->isGiftCard($_product->getId())) || $_product->getTypeId() == 'giftcards'): ?>
-            <div class="col-12 gift-card-faq-link link-button"><a target="_blank" href="maria-tash-gift-cards">Gift Card FAQ</a></div>
-        <?php endif; ?>
 
         <?php  echo $this->getChildHtml('ApplePayButtonProduct') ?>
 
         <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
-        <div class="col-6 float-left add-to-bag">
+        <div class="col-6 float-left add-to-bag <?= (Mage::helper("allure_catalog")->isGiftCard($_product->getId()))? "mt-4":""?>">
             <div class="row">
                 <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="stockvalidation input-text qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
                 <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button dark-button" onclick="productAddToCartForm.submit(this,this.form)"><?=$buttonTitle ?>
