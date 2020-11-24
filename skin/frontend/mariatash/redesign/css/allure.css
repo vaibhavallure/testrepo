@@ -650,3 +650,7 @@ width: 94%;
 .allure-amazon-connect-login .account-login .content{
     min-height: 0;
 }
+
+.catalog-product-view .ss-complimentary-container{
+    padding: 59px 0px 0px;
+}
