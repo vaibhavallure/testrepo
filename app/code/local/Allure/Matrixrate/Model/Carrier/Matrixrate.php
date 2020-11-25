@@ -41,6 +41,8 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 
     protected $international_free_shipping_over=600;
 
+    protected $domestic_ground_free_shipping_over=60;
+
     public function __construct()
     {
         parent::__construct();
@@ -141,6 +143,13 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
             $freeInternationalShipping=true;
         }
 
+
+        $freeDomesticShipping=true;
+        if ($request->getPackageValue()<=$this->domestic_ground_free_shipping_over) {
+            $freeDomesticShipping=false;
+        }
+
+
      	if (is_numeric($this->getConfigData('free_shipping_threshold')) &&
 	        $this->getConfigData('free_shipping_threshold')>0 &&
 	        $request->getPackageValue()>$this->getConfigData('free_shipping_threshold')) {
@@ -173,7 +182,8 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
 
 	   foreach ($ratearray as $rate)
 		{
-		   if (!empty($rate) && $rate['price'] >= 0) {
+
+            if (!empty($rate) && $rate['price'] >= 0) {
 			  $method = Mage::getModel('shipping/rate_result_method');
 
 			  if($isDomestic == $rate['is_international']) {
@@ -195,9 +205,16 @@ class Allure_Matrixrate_Model_Carrier_Matrixrate
                   else
                       $method->setPrice($shippingPrice);
 
-                  
 
-				$this->_result->append($method);
+                  
+                  /*free domestic shipping MT-1607*/
+                  if(!$freeDomesticShipping && (strtolower(trim($rate['shipping_name']))=="domestic ground"))
+                      $method->setPrice(10.00);
+
+
+
+
+                  $this->_result->append($method);
 			  }
 			}
 		}
