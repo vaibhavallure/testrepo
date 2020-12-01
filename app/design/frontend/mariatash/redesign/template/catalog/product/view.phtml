@@ -605,6 +605,11 @@ if ($_product->getSizeSample() == 1) {
         <div class="clearer col-12"></div>
 
     </form>
+
+        <!--searchSpring script-->
+        <?= $_product->getSearchspringScript(); ?>
+        <!--searchSpring script-->
+
     <script type="text/javascript">
 
         var SKIN_URL = '<?php echo $this->getSkinUrl() ?>';
