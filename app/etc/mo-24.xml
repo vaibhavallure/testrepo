@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-24>Avoids incorrect form keys creating an error in log. (Improvement for MO-18)</MO-24>
+        </patches>
+    </mage-one>
+</config>

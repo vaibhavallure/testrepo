@@ -898,11 +898,12 @@ abstract class Mage_Core_Controller_Varien_Action
      */
     protected function _validateFormKey()
     {
-        if (!($formKey = $this->getRequest()->getParam('form_key', null))
-            || $formKey != Mage::getSingleton('core/session')->getFormKey()) {
+        $formKey = $this->getRequest()->getParam('form_key', null);
+        if ($formKey === null) {
             return false;
         }
-        return true;
+
+        return hash_equals($formKey, Mage::getSingleton('core/session')->getFormKey());
     }
 
     /**

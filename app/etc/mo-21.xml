@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-21>Improves compatibility of 3rd party integrations by flagging cookies in Chrome as SameSite=None.</MO-21>
+        </patches>
+    </mage-one>
+</config>
