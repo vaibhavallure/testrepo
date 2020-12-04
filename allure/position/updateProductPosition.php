@@ -6,9 +6,11 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 
 
-$fileName="./Studs_Earrings_Reorder.csv";
+$fileName="./Updated-Studs-Earrings_Reorder.csv";
 
-//$fileName="./Lobe_Earrings_Reorder.csv";
+//$fileName="./Updated-Lobe-Earrings_Reorder.csv";
+
+//$fileName="./Updated-Gifts-for-Teens.csv";
 
 $lines = file($fileName);
 
