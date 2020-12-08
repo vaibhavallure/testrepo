@@ -759,6 +759,35 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<hr class="appointment-setting-hr">';
 
 
+        $html .= '<div style="text-align:center"><h3>Store Frontend settings</h3></div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+
+        $timeOptArr = array("0"=>"No","1"=>"Yes");
+        $DisableStoreFrontendOpt = $EnableOpt ='';
+        foreach ($timeOptArr as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('disable_store_frontend/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $EnableOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $DisableStoreFrontendOpt = $EnableOpt;
+        $html .= '<label for="appointments_enable_store">Disable Store In Front End</label>';
+        $html .= '<select onclick="enableStoreContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[disable_store_frontend][]'.'" style="">'.$DisableStoreFrontendOpt.'</select>';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 ">';
+        $html .= '<label for="disable frontend button">Disabled Store Frontend Button</label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[disabled_store_button][]">'.$this->_getValue('disabled_store_button/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<hr class="appointment-setting-hr">';
+
+
 
 
         /* $html .= '<div class="appointment-setting-common apt-row-1">';
