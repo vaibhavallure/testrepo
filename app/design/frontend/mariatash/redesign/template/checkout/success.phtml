@@ -176,6 +176,8 @@
 </script>
 
 
+
+
 <?php
 $storeCode = Mage::app()->getStore()->getCode();
 if ($storeCode == "default") {
@@ -183,11 +185,19 @@ if ($storeCode == "default") {
     <?php
     $intellisuggestCart = array();
     try {
-        $intellisuggestOrder = $order;
-        foreach($intellisuggestOrder->getAllVisibleItems() as $intellisuggestItem) {
+        $intellisuggestOrder = Mage::getModel('sales/order')->load(Mage::getSingleton('checkout/session')->getLastOrderId());
+        foreach($intellisuggestOrder->getItemsCollection() as $intellisuggestItem) {
             if($intellisuggestItem->getPrice() > 0) {
+                $product = Mage::getModel('catalog/product')->load($intellisuggestItem);
+                if ($product->getProductType() == 'simple') {
+                    $pItemId = $product->getParentItemId();
+                    $item = Mage::getModel('sales/order_item')->load("$pItemId");
+                    $sku = $item->getProduct()->getData('sku');
+                } else {
+                    $sku = Mage::getModel('catalog/product')->load($intellisuggestItem->getProductId())->getSku();
+                }
                 $intellisuggestCart[] = array(
-                    'sku' => $intellisuggestItem->getSku(),
+                    'sku' => $sku,
                     'qty' => $intellisuggestItem->getQtyOrdered(),
                     'price' => $intellisuggestItem->getBasePrice()
                 );
@@ -203,8 +213,8 @@ if ($storeCode == "default") {
             <?php foreach($intellisuggestCart as $intellisuggestItem): ?>
             IntelliSuggest.haveItem({
                 sku:"<?php echo $intellisuggestItem['sku'] ?>",
-                qty:"<?php echo $intellisuggestItem['qty'] ?>",
-                price:"<?php echo $intellisuggestItem['price'] ?>"
+                qty:<?php echo $intellisuggestItem['qty'] ?>,
+                price:<?php echo $intellisuggestItem['price'] ?>
             });
             <?php endforeach ?>
             IntelliSuggest.inSale();
