@@ -271,10 +271,16 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
     {
         $disabledStores=explode(",",Mage::getStoreConfig('appointments/disable_store_frontend/store_ids'));
 
-        if(in_array($store_id,$disabledStores))
+        if($this->getIsDisabledStoreFrontend($store_id))
             return true;
         else
             return false;
+    }
+    public function getIsDisabledStoreFrontend($store_id){
+        return $this->helper()->getStoreData($store_id,"disable_store_frontend");
+    }
+    public function getIsDisabledStoreButton($store_id){
+        return $this->helper()->getStoreData($store_id,"disabled_store_button");
     }
 
 }

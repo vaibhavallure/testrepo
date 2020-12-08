@@ -240,7 +240,7 @@
 						</covid_msg>
 					</fields>
 				</covid_setting>
-				<disable_store_frontend translate="label">
+				<!--<disable_store_frontend translate="label">
 					<label>Disable Store Frontend</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>12</sort_order>
@@ -257,7 +257,7 @@
 							<show_in_store>1</show_in_store>
 						</store_ids>
 					</fields>
-				</disable_store_frontend>
+				</disable_store_frontend>-->
 			</groups>
 		</appointments>
 	</sections>
