@@ -178,6 +178,9 @@
 
 
 
+
+<!-- ----------------------------------search spring ------------------------>
+
 <?php
 $storeCode = Mage::app()->getStore()->getCode();
 if ($storeCode == "default") {
@@ -209,8 +212,10 @@ if ($storeCode == "default") {
     <script type="text/javascript" src="//cdn.searchspring.net/intellisuggest/is.min.js"></script>
     <script type="text/javascript">
         try{
+            window.searchspring_rec_seeds = [];
             IntelliSuggest.init({siteId:'ed7bq3'});
             <?php foreach($intellisuggestCart as $intellisuggestItem): ?>
+            window.searchspring_rec_seeds.push("<?php echo $intellisuggestItem['sku'] ?>");
             IntelliSuggest.haveItem({
                 sku:"<?php echo $intellisuggestItem['sku'] ?>",
                 qty:<?php echo $intellisuggestItem['qty'] ?>,
@@ -223,3 +228,12 @@ if ($storeCode == "default") {
     <?php
 }
 ?>
+<div class="cart-mt container row mx-auto">
+    <div class="ss-complimentary-container">
+        <div class="ss-recs-wrapper">
+            <script type="searchspring/recommend" profile="order-success-page">
+                seed = window.searchspring_rec_seeds;
+            </script>
+        </div>
+    </div>
+</div>
