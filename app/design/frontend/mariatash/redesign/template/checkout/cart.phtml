@@ -34,7 +34,7 @@
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <?php $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();?>
-<?php 
+<?php
     $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
     $isWholesaleCustomer = ($customerGroupId == 2) ? true : false;
 ?>
@@ -125,7 +125,7 @@
 			window.location.href = hrefUrl;
 		}
 	}
-	
+
     function plusMinus(elementId,plus){
     	blockCheckoutUi();
         var qty = parseInt(jQuery(elementId).val()) + plus ;
@@ -218,12 +218,12 @@ try{
 ?>
 <script type="text/javascript">
 function showCheckoutMsgPopup(){
-	<?php 
+	<?php
 	$minOrderAmt = Mage::getStoreConfig('sales/minimum_order/amount');
     $minOrderAmt = ($minOrderAmt) ? $minOrderAmt : 0;
     $minimumAmount = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())
         ->toCurrency($minOrderAmt);
-	
+
 	$warning = Mage::getStoreConfig('sales/minimum_order/description')
 	? Mage::getStoreConfig('sales/minimum_order/description')
 	: Mage::helper('checkout')->__('Minimum order amount is %s', $minimumAmount);
@@ -231,3 +231,14 @@ function showCheckoutMsgPopup(){
 	createCustomAlert('<?php echo $warning;?>');
 }
 </script>
+
+
+<div class="cart-mt container row mx-auto">
+    <div class="ss-complimentary-container">
+        <div class="ss-recs-wrapper">
+            <script type="searchspring/recommend" profile="shopping-bag">
+                seed = (IntelliSuggest && IntelliSuggest.seed)? IntelliSuggest.seed : "";
+            </script>
+        </div>
+    </div>
+</div>
