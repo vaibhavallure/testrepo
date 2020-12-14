@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <api2>
+        <resource_groups>
+            <doddle_returns translate="title" module="doddle_returns">
+                <title>Doddle Returns</title>
+                <sort_order>30</sort_order>
+            </doddle_returns>
+        </resource_groups>
+        <resources>
+            <product_variants translate="title" module="doddle_returns">
+                <group>doddle_returns</group>
+                <model>doddle_returns/api2_product_variants</model>
+                <title>Product Variants</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                </privileges>
+                <attributes module="api2">
+                    <entity_id>Product ID</entity_id>
+                    <image_url>Product Image URL</image_url>
+                    <stock>Product quantity in stock</stock>
+                    <is_in_stock>Stock Status</is_in_stock>
+                    <attributes>Product configurable attributes</attributes>
+                </attributes>
+                <routes>
+                    <route_product_variants>
+                        <route>/doddle_returns/product_variants/:id</route>
+                        <action_type>collection</action_type>
+                    </route_product_variants>
+                </routes>
+                <versions>1</versions>
+            </product_variants>
+        </resources>
+    </api2>
+</config>
