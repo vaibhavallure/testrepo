@@ -32,33 +32,57 @@
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/allure/alrpfm.js') ?>"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/allure/card_validate.js') ?>"></script>
 <div class="container">
-<ol class="opc" id="checkoutSteps">
-    <div class="row cart-info-message text-justify">
-        <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+    <ol class="opc" id="checkoutSteps">
+        <div class="row cart-info-message text-justify">
+            <?=$this->getLayout()->createBlock('cms/block')->setBlockId('cart_info_message')->toHtml();?>
+        </div>
+        <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
+            <?php if (!$this->getChild($_stepId)): continue; endif; $i++ ?>
+
+            <!--removed delivery_option step-->
+            <?php if($_stepId=="delivery_option") continue; ?>
+
+            <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
+                <div class="step-title checkout-step-name col-12">
+                    <span class="number"><?php echo $i ?></span>
+                    <h3 onclick="jQuery('#shipping-address-select').uniform();"><?php echo $_stepInfo['label'] ?></h3>
+                    <!-- <a href="#"><//?php echo $this->__('Edit') ?></a> -->
+                </div>
+                <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
+                    <?php echo $this->getChildHtml($_stepId) ?>
+                </div>
+            </li>
+        <?php endforeach ?>
+        <li>
+            <div class="checkout-block">
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
+            </div>
+        </li>
+    </ol>
+
+    <?php
+    /**
+     * @var Allure_MultiCheckout_Block_Checkout_Onepage_GiftItem $this
+     */
+    ?>
+    <?php $quote = $this->getQuote();?>
+    <?php $items = $quote->getAllVisibleItems();?>
+    <script>
+        var ss_seeds = [];
+        <?php foreach ($items as $_item):?>
+        ss_seeds.push("<?php echo $item['sku'] ?>");
+        <?php endforeach;?>
+    </script>
+
+    <div class="cart-mt container row mx-auto">
+        <div class="ss-complimentary-container">
+            <div class="ss-recs-wrapper">
+                <script type="searchspring/recommend" profile="order-success-page">
+                seed = ss_seeds ? ss_seeds : "";
+            </script>
+            </div>
+        </div>
     </div>
-<?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
-<?php if (!$this->getChild($_stepId)): continue; endif; $i++ ?>
-
-   <!--removed delivery_option step-->
-    <?php if($_stepId=="delivery_option") continue; ?>
-
-    <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-        <div class="step-title checkout-step-name col-12">
-            <span class="number"><?php echo $i ?></span>
-            <h3 onclick="jQuery('#shipping-address-select').uniform();"><?php echo $_stepInfo['label'] ?></h3>
-            <!-- <a href="#"><//?php echo $this->__('Edit') ?></a> -->
-        </div>
-        <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
-            <?php echo $this->getChildHtml($_stepId) ?>
-        </div>
-    </li>
-<?php endforeach ?>
-    <li>
-    	<div class="checkout-block">
-   			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('Message-MT-Checkout')->toHtml();?>
-		</div>
-    </li>
-</ol>
 
 </div>
 <script>
@@ -89,7 +113,7 @@
             jQuery('.gift-messages .control .signature_message').css('display', 'none');
         }
     });
-//<![CDATA[
+    //<![CDATA[
     var accordion = new Accordion('checkoutSteps', '.step-title', true);
     <?php if($this->getActiveStep()): ?>
     accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
@@ -101,5 +125,5 @@
         failure: '<?php echo $this->getUrl('checkout/cart') ?>',
         skinUrl: '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) ?>'}
     );
-//]]>
+    //]]>
 </script>
