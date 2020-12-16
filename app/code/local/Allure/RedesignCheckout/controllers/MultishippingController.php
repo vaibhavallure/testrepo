@@ -71,8 +71,11 @@ class Allure_RedesignCheckout_MultishippingController extends Mage_Checkout_Mult
                 $isAmazonPaymentForGeneralCustomer = true;
             }
         }
-        
-        if($customerGroupId == self::WHOLESALE_GROUP_ID || $isAmazonPaymentForGeneralCustomer){
+
+        $isMultiShippingEnabled = (bool)(int)Mage::getStoreConfig('shipping/option/checkout_multiple');
+
+
+        if($customerGroupId == self::WHOLESALE_GROUP_ID || $isAmazonPaymentForGeneralCustomer || !$isMultiShippingEnabled){
            $this->_redirect("*/onepage");
         }
             
