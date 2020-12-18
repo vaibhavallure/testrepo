@@ -49,14 +49,14 @@ function addLog($string)
 
 
 $sku3mmString="XCHFR2FP53D,XCHFR3FP75D,XCHMQ73D,XCHP64D,XCHP75D,XCHP425D,XCHMQ63D,XCHP53D,XCHFR2FP53D";
-$script3mm='<script type="searchspring/recommend" profile="wear-it-with-3-0mm">seed = ""</script>';
+$script3mm='<div class="row"><div class="ss-complimentary-container"><div class="ss-recs-wrapper"><script type="searchspring/recommend" profile="wear-it-with-3-0mm">seed = ""</script></div></div></div>';
 addLog("SKU's: ".$sku3mmString);
 setScript($sku3mmString,$script3mm);
 
 
 
 $sku1_9mmString="XCHFL45D,XCHFL55D,XCHSTAR45D,XCHSTAR55D,XCHBAD,XCHSQD,XCHTRD,XCHSCMQ4D,XCHLB11D,XCHBAR7PAD";
-$script1_9mm='<script type="searchspring/recommend" profile="wear-it-with-1-9mm">seed = ""</script>';
+$script1_9mm='<div class="row"><div class="ss-complimentary-container"><div class="ss-recs-wrapper"><script type="searchspring/recommend" profile="wear-it-with-1-9mm">seed = ""</script></div></div></div>';
 addLog("SKU's: ".$sku1_9mmString);
 setScript($sku1_9mmString,$script1_9mm);
 
@@ -64,6 +64,6 @@ setScript($sku1_9mmString,$script1_9mm);
 
 
 $sku1_4mmString="J2J1C16,J2J1C22,J2J3C76,JPE53SC31C32D,J2J1CH76,J2J2CH76,J2J2SC1C76D";
-$script1_4mm='<script type="searchspring/recommend" profile="wear-it-with">seed = ""</script>';
+$script1_4mm='<div class="row"><div class="ss-complimentary-container"><div class="ss-recs-wrapper"><script type="searchspring/recommend" profile="wear-it-with">seed = ""</script></div></div></div>';
 addLog("SKU's: ".$sku1_4mmString);
 setScript($sku1_4mmString,$script1_4mm);
