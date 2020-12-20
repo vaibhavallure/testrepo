@@ -9,7 +9,7 @@ $paymentMethod = $quote->getPayment()->getMethodInstance();
 ?>
 <script type="text/javascript">
     //<![CDATA[
-    Review.prototype.save = function() {
+    ReviewAffirm = function() {
         if (checkout.loadWaiting!=false) return;
         checkout.setLoadWaiting('review');
 
