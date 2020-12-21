@@ -7,14 +7,19 @@
     }
 
     .affirm_payment_info {
-        color: #6f6f6f;
-        font-size: 14px;
+        font-family: urw-din-xlight;
+        /*font-size: 10px;*/
+        color: rgba(41,41,41,0.90);
+        letter-spacing: 0.19px;
+        line-height: 22px;
+        width: 430px;
+        margin-left: 40px;
     }
 </style>
 <ul class="form-list affirm" id="payment_form_affirm" style="display:none;">
     <li class="form-alt">
             <div class="affirm_payment_info">
-                <p><?php echo $this->__('You will be redirected to Affirm to securely complete your purchase. Just fill out a few pieces of basic information and get a real-time decision. Checking your eligibility won\'t affect your credit score.'); ?></p>
+                <p><?php echo $this->__('You will be redirected to Affirm to securely complete your purchase. Just fill out a few pieces of basic information and get a real-time decision. Checking your eligibility won\'t affect your credit score.<br>US only.'); ?></p>
             </div>
     </li>
 </ul>
