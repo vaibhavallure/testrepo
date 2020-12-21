@@ -4160,7 +4160,7 @@ div#uniform-shipping-address-select>span{
 }
 
 /*Attributes CSS*/
-.swatch-section .input-box, #ajax-price{
+.swatch-section .input-box, .with-affirm-promo{/* #ajax-price*/
 	border-bottom: 1px solid #d8d8d8;
 }
 /* .fr_size .chooseList ul li {
