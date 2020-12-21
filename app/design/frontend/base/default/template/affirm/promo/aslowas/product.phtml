@@ -46,8 +46,17 @@ $color = $this->helper('affirm/promo_asLowAs')->asLowAsColor();
         letter-spacing: 0.19px;
         line-height: 17px;
     }
+    a.affirm-modal-trigger{
+        font-family: urw-din-xlight;
+        font-size: 10px;
+        color: rgba(41,41,41,0.90);
+        letter-spacing: 0.19px;
+        line-height: 17px;
+        text-decoration: underline;
+        text-transform: capitalize;
+    }
 </style>
-    <?php echo '<div style="margin-bottom:5px;" class="affirm-as-low-as pt-4 pl-2" id="as-low-as-refreshable" data-page-type="product" ' . (!empty($mfpValue) ? 'data-promo-id="' . $mfpValue . '"' : '') . ' data-amount="' . $this->getFinalPrice() .'" data-learnmore-show="'.$learnMore.'" data-affirm-color="'.$color.'"></div>'; ?>
+    <?php echo '<div style="margin-bottom:5px;" class="affirm-as-low-as pt-4 pl-2" id="as-low-as-refreshable" data-page-type="cart" ' . (!empty($mfpValue) ? 'data-promo-id="' . $mfpValue . '"' : '') . ' data-amount="' . $this->getFinalPrice() .'" data-learnmore-show="'.$learnMore.'" data-affirm-color="'.$color.'"></div>'; ?>
 
 <script type="text/javascript">
     if (!AFFIRM_AFFIRM.promos.getIsInitialized()) {
