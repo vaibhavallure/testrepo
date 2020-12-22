@@ -30,11 +30,15 @@
 <?php if ($this->helper('customer')->isLoggedIn()): ?>
 	<?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>
     <?php $checkoutUrl = $this->getCheckoutUrl();?>
-    <?php $quote = Mage::getSingleton("checkout/session")->getQuote();?>
+    <?php $quote = Mage::getSingleton("checkout/session")->getQuote();
+        $isMultiShippingEnabled = (bool)(int)Mage::getStoreConfig('shipping/option/checkout_multiple');
+
+
+        ?>
     <?php if($quote->isVirtual()):?>
-    <?php $checkoutUrl = $this->getCheckoutUrl();?>
+    <?php $checkoutUrl = $this->getCheckoutUrl(); ?>
     <?php else :?>
-    	 <?php if( $customerGroupId != 2):?>
+    	 <?php if( $customerGroupId != 2 && $isMultiShippingEnabled):?>
     	 	<?php if(Mage::helper('core')->isModuleEnabled("Amazon_Payments")):?>
             	<?php $_helper = Mage::helper('amazon_payments/data');?>
             	<?php if($_helper->getConfig()->isEnabled() && $_helper->isCheckoutAmazonSession() && $_helper->isEnableProductPayments()):?>
