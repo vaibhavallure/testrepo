@@ -89,6 +89,10 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             }elseif($customerGroupId == self::GUEST_GROUP_ID){
                 return $this;
             }elseif(!$this->getOnepage()->getQuote()->isVirtual()){
+
+                $isMultiShippingEnabled = (bool)(int)Mage::getStoreConfig('shipping/option/checkout_multiple');
+
+                if($isMultiShippingEnabled)
                 $this->_redirect("*/multishipping");
             }
         }
@@ -488,7 +492,9 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                     $this->loadLayout('checkout_onepage_shipment_review');
                 } else {
                     $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-                    if($customerGroupId == 2){
+                    $isMultiShippingEnabled = (bool)(int)Mage::getStoreConfig('shipping/option/checkout_multiple');
+
+                    if($customerGroupId == 2 || !$isMultiShippingEnabled){
                         $this->loadLayout('checkout_onepage_review');
                     }else{
                         $this->loadLayout('checkout_onepage_review_general_customer');
