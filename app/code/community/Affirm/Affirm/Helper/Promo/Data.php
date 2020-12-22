@@ -369,4 +369,20 @@ class Affirm_Affirm_Helper_Promo_Data extends Mage_Core_Helper_Abstract
         $date = date('Y-m-d-H-i-s') . '-' . $msecArray[1];
         return $date;
     }
+
+    /**
+     * new function added to check user
+     * */
+    public function isWholesaler()
+    {
+        if(Mage::getSingleton('customer/session')->isLoggedIn()){
+            $groupId    = Mage::getSingleton('customer/session')->getCustomerGroupId();
+            $group      = Mage::getModel('customer/group')->load($groupId);
+
+            if(strtolower($group->getCode())=="wholesale")
+                return true;
+        }
+
+        return false;
+    }
 }

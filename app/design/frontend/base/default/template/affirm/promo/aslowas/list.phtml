@@ -1,3 +1,4 @@
+<?php if(!$this->helper('affirm/promo_data')->isWholesaler()): ?>
 <?php if (!Mage::helper('affirm/promo_asLowAs')->isAsLowAsDisabledOnPLP()) : ?>
     <script type="text/javascript">
         if (!AFFIRM_AFFIRM.promos.getIsInitialized()) {
@@ -10,4 +11,5 @@
             AFFIRM_AFFIRM.promos.loadScript();
         }
     </script>
+<?php endif; ?>
 <?php endif; ?>

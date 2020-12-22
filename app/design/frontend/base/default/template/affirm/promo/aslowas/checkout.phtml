@@ -1,4 +1,6 @@
 <?php
+if(!$this->helper('affirm/promo_data')->isWholesaler()):
+
 $mfpValue = $this->getMFPValue();
 $learnMore = ($this->helper('affirm/promo_asLowas')->isVisibleLearnMore()) ? 'true' : 'false';
 $color = $this->helper('affirm/promo_asLowAs')->asLowAsColor();
@@ -36,3 +38,5 @@ $color = $this->helper('affirm/promo_asLowAs')->asLowAsColor();
         AFFIRM_AFFIRM.promos.loadScript();
     }
 </script>
+
+<?php endif; ?>
