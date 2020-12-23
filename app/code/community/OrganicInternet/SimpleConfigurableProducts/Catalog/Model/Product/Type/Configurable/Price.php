@@ -45,6 +45,15 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Product_Type_Conf
             return $product->getCalculatedFinalPrice();
         }
 */
+
+        //Start edit
+        $selectedAttributes = array();
+        if ($product->getCustomOption('attributes')) {
+            $selectedAttributes = unserialize($product->getCustomOption('attributes')->getValue());
+        }
+        //End edit
+        if (sizeof($selectedAttributes)) return $this->getSimpleProductPrice($qty, $product);
+
         $childProduct = $this->getChildProductWithLowestPrice($product, "finalPrice");
         if (!$childProduct) {
             $childProduct = $this->getChildProductWithLowestPrice($product, "finalPrice", false);
@@ -63,6 +72,31 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Product_Type_Conf
         return $fp;
     }
 
+    public function getSimpleProductPrice($qty=null, $product)
+    {
+        $cfgId = $product->getId();
+        $product->getTypeInstance(true)
+            ->setStoreFilter($product->getStore(), $product);
+        $attributes = $product->getTypeInstance(true)
+            ->getConfigurableAttributes($product);
+        $selectedAttributes = array();
+        if ($product->getCustomOption('attributes')) {
+            $selectedAttributes = unserialize($product->getCustomOption('attributes')->getValue());
+        }
+        $db = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $dbMeta = Mage::getSingleton('core/resource');
+        $sql = <<<SQL
+SELECT main_table.entity_id FROM {$dbMeta->getTableName('catalog/product')} `main_table` INNER JOIN
+{$dbMeta->getTableName('catalog/product_super_link')} `sl` ON sl.parent_id = {$cfgId}
+SQL;
+        foreach($selectedAttributes as $attributeId => $optionId) {
+            $alias = "a{$attributeId}";
+            $sql .= ' INNER JOIN ' . $dbMeta->getTableName('catalog/product') . "_int" . " $alias ON $alias.entity_id = main_table.entity_id AND $alias.attribute_id = $attributeId AND $alias.value = $optionId AND $alias.entity_id = sl.product_id";
+        }
+        $id = $db->fetchOne($sql);
+        return Mage::getModel("catalog/product")->load($id)->getFinalPrice($qty);
+    }
+    
     public function getPrice($product)
     {
         #Just return indexed_price, if it's been fetched already
