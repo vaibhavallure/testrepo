@@ -4160,7 +4160,7 @@ div#uniform-shipping-address-select>span{
 }
 
 /*Attributes CSS*/
-.swatch-section .input-box, .with-affirm-promo{/* #ajax-price*/
+.swatch-section .input-box, #ajax-price{
 	border-bottom: 1px solid #d8d8d8;
 }
 /* .fr_size .chooseList ul li {
@@ -4189,8 +4189,10 @@ div#uniform-shipping-address-select>span{
 	justify-content: flex-end;
 }
 #ajax-price {
-  margin-top: 7px;
+	margin-top: 7px;
 	padding-bottom: 11px;
+	/*for affirm promo alignment*/
+	line-height: 38px;
 }
 #ajax-price span{
 	font-size: 22px;
