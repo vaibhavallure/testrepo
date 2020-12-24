@@ -1,7 +1,7 @@
 <?php
 class Allure_CurrencyServices_Model_CurrencyLayer extends Mage_Directory_Model_Currency_Import_Abstract
 {
-    protected $_url = "http://www.apilayer.net/api/live?access_key=363399e90228285463170d369a9f6836";
+    protected $_url = "http://www.apilayer.net/api/live?access_key=f4e224b12076488cd93557953f4ff9f2";
     protected $_messages = array();
 
     protected function _convert($currencyFrom, $currencyTo, $retry = 0) {
