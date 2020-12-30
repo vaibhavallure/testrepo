@@ -74,7 +74,7 @@
         <?php endforeach;?>
     </script>
 
-    <div class="cart-mt container row mx-auto">
+    <div class="cart-mt container row mx-auto" id="ss-recom-onepage">
         <div class="ss-complimentary-container">
             <div class="ss-recs-wrapper">
                 <script type="searchspring/recommend" profile="order-success-page">
@@ -83,6 +83,13 @@
             </div>
         </div>
     </div>
+    <script>
+        jQuery(window).bind("load",function () {
+            if(jQuery(window).width() <= 768) {
+                jQuery(".sidebar").append(jQuery("#ss-recom-onepage"));
+            }
+        }
+    </script>
 
 </div>
 <script>
