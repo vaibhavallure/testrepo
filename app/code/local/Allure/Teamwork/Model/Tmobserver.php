@@ -1453,7 +1453,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 $shipment->setEmailSent(true);
 
                 $orderObj->setData('state', Mage_Sales_Model_Order::STATE_COMPLETE);
-                $orderObj->setData('status', Mage_Sales_Model_Order::STATE_COMPLETE);
+                $orderObj->setData('status', "complete_tw");
 
                 $orderObj->save();
                 if($this->isTeamworkDataTransferToSalesforce()){
