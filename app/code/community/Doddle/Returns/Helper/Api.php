@@ -189,8 +189,7 @@ class Doddle_Returns_Helper_Api extends Mage_Core_Helper_Abstract
                 sprintf(
                     'Got HTTP %s response for request: %s - %s',
                     $response->getStatus(),
-                    $http->getUri(),
-                    $response->getRawBody()
+                    $http->getUri()
                 )
             );
         }
@@ -207,14 +206,14 @@ class Doddle_Returns_Helper_Api extends Mage_Core_Helper_Abstract
     {
         try {
             $decodedResponse = Mage::helper('core')->jsonDecode(
-                $response->getRawBody(),
+                $response->getBody(),
                 Zend_Json::TYPE_ARRAY
             );
         } catch (Exception $e) {
             Mage::throwException(
                 sprintf(
-                    'Failed to decode HTTP request for request: %s - %s',
-                    $http->getUri(),
+                    'Failed to decode HTTP response: %s - %s',
+                    $response->getBody(),
                     $e->getMessage()
                 )
             );

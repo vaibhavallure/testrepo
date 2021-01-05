@@ -158,7 +158,7 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
             "externalOrderId" => $order->getIncrementId(),
             "orderType" => "EXTERNAL",
             "externalOrderData" => array(
-                "purchaseDate" => $order->getCreatedAtDate()->toString('dd-mm-Y')
+                "purchaseDate" => $order->getCreatedAtDate()->toString('dd-MM-Y')
             ),
             "customer" => array(
                 "email" => $order->getCustomerEmail(),
