@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-27>Fixes possible to bypass the validation code on widget instance layouts in order to inject malicious layout content.</MO-27>
+        </patches>
+    </mage-one>
+</config>

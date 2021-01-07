@@ -36,5 +36,6 @@
 //<![CDATA[
 Mage.Cookies.path     = '<?php echo Mage::helper('core')->jsQuoteEscape($this->getPath()) ?>';
 Mage.Cookies.domain   = '<?php echo Mage::helper('core')->jsQuoteEscape($this->getDomain()) ?>';
+Mage.Cookies.secure   = '<?php echo Mage::helper('core')->jsQuoteEscape($this->isSecure()) ?>';
 //]]>
 </script>

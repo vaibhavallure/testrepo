@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-29>Fix RCE to utilising a specific block it is possible to get PHP to include (and therefore execute) malicious PHP content.</MO-29>
+        </patches>
+    </mage-one>
+</config>

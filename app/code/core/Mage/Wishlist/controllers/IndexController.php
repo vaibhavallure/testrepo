@@ -753,11 +753,12 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
         }
 
         try {
-            $info      = unserialize($option->getValue());
+            $info = Mage::helper('core/unserializeArray')->unserialize($option->getValue());
             $filePath  = Mage::getBaseDir() . $info['quote_path'];
+            $this->validateFilePath($filePath);
             $secretKey = $this->getRequest()->getParam('key');
 
-            if ($secretKey == $info['secret_key']) {
+            if (hash_equals($secretKey, $info['secret_key'])) {
                 $this->_prepareDownloadResponse($info['title'], array(
                     'value' => $filePath,
                     'type'  => 'filename'
@@ -768,5 +769,22 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
             $this->_forward('noRoute');
         }
         exit(0);
+    }
+
+    /**
+     * make sure that the file is either in /var or in /media
+     *
+     * @param string $filePath
+     *
+     * @throws Mage_Core_Exception
+     */
+    private function validateFilePath($filePath)
+    {
+        $realFilePath  = realpath($filePath);
+        $realMediaPath = realpath(Mage::getBaseDir('media'));
+
+        if (strpos($realFilePath, $realMediaPath) !== 0) {
+            Mage::throwException('Download file must be in media/');
+        }
     }
 }
