@@ -2,6 +2,7 @@
 /downloader/cache.cfg
 /downloader/.cache
 /app/etc/local.xml
+/allure/addExchangeRate.php
 /var
 /media
 /includes/src/*
