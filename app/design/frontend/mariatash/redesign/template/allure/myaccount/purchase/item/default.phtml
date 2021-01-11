@@ -167,6 +167,13 @@ if(!$product->getId()){
    <div class="mt-purchase-btn">
        <button data-url="<?php echo $receiptUrl?>" class="light-button" onclick="openPurchaseWindow(this)">See Receipt</button>
    </div>
+
+   <?php if($_order->getCreateOrderMethod()==0):?>
+    <div class="mt-purchase-btn mt-4">
+            <button onclick="window.location.href = 'https://return.doddle.com/MARIATASH';" class="light-button">return</button>
+    </div>
+   <?php endif; ?>
+
    <?php if($product->getId()):?>
    <!--MT-1408-->
        <?php $_labelHelper = Mage::helper('allure_category/vip');?>
