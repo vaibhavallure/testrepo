@@ -579,14 +579,21 @@ class Mage_CatalogInventory_Model_Stock_Item extends Mage_Core_Model_Abstract
         }
 
         if ($this->getMaxSaleQty() && $qty > $this->getMaxSaleQty()) {
+            $message=Mage::helper('cataloginventory')->__('The maximum quantity allowed for<br/> purchase is %s.', $this->getMaxSaleQty() * 1);
             $result->setHasError(true)
                 ->setMessage(
-                    Mage::helper('cataloginventory')->__('The maximum quantity allowed for purchase is %s.', $this->getMaxSaleQty() * 1)
+                    $message
                 )
                 ->setErrorCode('qty_max')
                 ->setQuoteMessage(Mage::helper('cataloginventory')->__('Some of the products cannot be ordered in requested quantity.'))
                 ->setQuoteMessageIndex('qty');
-            return $result;
+
+            if(Mage::app()->getRequest()->getActionName() == 'add') { //addAction on quickbox and product page add to cart
+                $customerCare= Mage::getStoreConfig("cataloginventory/item_options/max_sale_error_text");
+                echo $message." ".$customerCare; exit;
+            } else {
+                return $result;
+            }
         }
 
         $result->addData($this->checkQtyIncrements($qty)->getData());

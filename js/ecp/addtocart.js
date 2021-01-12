@@ -148,7 +148,12 @@ function addToShoppingCart(button, formId, relode=false) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
             unsetLoader();
             alert(data);
-        } else {
+        }
+        if('The maximum quantity' == data.substr(0, 20)) {
+            unsetLoader();
+            alert(data);
+        }
+        else {
             jQuery('#ajax_cart_content').html(data);
             //jQuery('#just_added').slideDown(500).delay( 5000 ).slideUp( 600 );
             if(jQuery(window).width() >= 768) {
@@ -252,7 +257,12 @@ function addToShoppingCartFromQuickView(button, formId) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
             unsetLoader();
             alert(data);
-        } else {
+        }
+        if('The maximum quantity' == data.substr(0, 20)) {
+            unsetLoader();
+            alert(data);
+        }
+        else {
             unsetLoader();
             parent.jQuery("html, body").animate({
                 scrollTop: 0
