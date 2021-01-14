@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <cataloginventory translate="label" module="cataloginventory">
+            <groups>
+                <item_options translate="label comment">
+                    <fields>
+                        <max_sale_qty translate="label">
+                            <show_in_store>1</show_in_store>
+                        </max_sale_qty>
+                        <max_sale_error_text translate="label">
+                            <label>Maximum Qty Allowed in Shopping Cart Customer Care Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </max_sale_error_text>
+                    </fields>
+                </item_options>
+            </groups>
+        </cataloginventory>
+    </sections>
+</config>
