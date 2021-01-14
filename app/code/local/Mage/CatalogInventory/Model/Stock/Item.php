@@ -590,7 +590,7 @@ class Mage_CatalogInventory_Model_Stock_Item extends Mage_Core_Model_Abstract
 
             if(Mage::app()->getRequest()->getActionName() == 'add') { //addAction on quickbox and product page add to cart
                 $customerCare= Mage::getStoreConfig("cataloginventory/item_options/max_sale_error_text");
-                echo $message." ".$customerCare; exit;
+                echo "max_qty_error"." ".$customerCare; exit;
             } else {
                 return $result;
             }

@@ -149,9 +149,10 @@ function addToShoppingCart(button, formId, relode=false) {
             unsetLoader();
             alert(data);
         }
-        if('The maximum quantity' == data.substr(0, 20)) {
+        if('max_qty_error' == data.substr(0, 13)) {
+            var max_message=data.replace("max_qty_error","");
             unsetLoader();
-            alert(data);
+            alert(max_message);
         }
         else {
             jQuery('#ajax_cart_content').html(data);
@@ -258,9 +259,10 @@ function addToShoppingCartFromQuickView(button, formId) {
             unsetLoader();
             alert(data);
         }
-        if('The maximum quantity' == data.substr(0, 20)) {
+        if('max_qty_error' == data.substr(0, 13)) {
+            var max_message=data.replace("max_qty_error","");
             unsetLoader();
-            alert(data);
+            alert(max_message);
         }
         else {
             unsetLoader();
