@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-32>Fixes URL error when retrieving news from mage-one.</MO-32>
+        </patches>
+    </mage-one>
+</config>

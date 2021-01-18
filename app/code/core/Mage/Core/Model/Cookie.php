@@ -39,6 +39,7 @@ class Mage_Core_Model_Cookie
     const XML_PATH_COOKIE_LIFETIME  = 'web/cookie/cookie_lifetime';
     const XML_PATH_COOKIE_HTTPONLY  = 'web/cookie/cookie_httponly';
     const XML_PATH_COOKIE_SECURE    = 'web/cookie/cookie_secure';
+    const XML_PATH_COOKIE_SAME_SITE    = 'web/cookie/cookie_samesite';
 
     protected $_lifetime;
 
@@ -208,7 +209,7 @@ class Mage_Core_Model_Cookie
      * @return Mage_Core_Model_Cookie
      * @throws Zend_Controller_Response_Exception
      */
-    public function set($name, $value, $period = null, $path = null, $domain = null, $secure = null, $httponly = null, $samesite = 'None')
+    public function set($name, $value, $period = null, $path = null, $domain = null, $secure = null, $httponly = null, $samesite = null)
     {
         /**
          * Check headers sent
@@ -240,6 +241,10 @@ class Mage_Core_Model_Cookie
         }
         if (is_null($httponly)) {
             $httponly = $this->getHttponly();
+        }
+
+        if ($samesite === null) {
+            $samesite = Mage::getStoreConfig(self::XML_PATH_COOKIE_SAME_SITE);
         }
 
         if (PHP_VERSION_ID < 70300) {

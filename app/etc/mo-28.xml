@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-28>By manipulating custom option configuration on a product, it is possible to trick Magento into calling unserialise on arbitrary user data, after adding an item to your wishlist.</MO-28>
+        </patches>
+    </mage-one>
+</config>

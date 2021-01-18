@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-26>Includes the isSecure cookie option also for javascript cookies</MO-26>
+        </patches>
+    </mage-one>
+</config>
