@@ -1572,6 +1572,17 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </cookie_secure>
+                        <cookie_samesite translate="label comment">
+                            <label>SameSite</label>
+                            <comment><![CDATA[<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">What is SameSite?</a><br />If you have problems with redirects e.g. with your payment provider try "None"]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>core/system_config_source_sameSite</source_model>
+                            <frontend_class>validate-samesite</frontend_class>
+                            <sort_order>47</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cookie_samesite>
                         <cookie_restriction translate="label">
                             <label>Cookie Restriction Mode</label>
                             <frontend_type>select</frontend_type>

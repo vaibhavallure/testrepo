@@ -58,4 +58,14 @@ class Mage_Page_Block_Js_Cookie extends Mage_Core_Block_Template
     {
         return $this->getCookie()->getPath();
     }
+
+    /**
+     * Get configured cookie security
+     *
+     * @return string
+     */
+    public function isSecure()
+    {
+        return $this->getCookie()->isSecure() ? 'true' : 'false';
+    }
 }

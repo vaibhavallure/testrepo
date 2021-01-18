@@ -413,6 +413,7 @@
                 <cookie_restriction>0</cookie_restriction>
                 <cookie_restriction_lifetime>31536000</cookie_restriction_lifetime>
                 <cookie_secure>0</cookie_secure>
+                <cookie_samesite>Lax</cookie_samesite>
             </cookie>
             <session>
                 <use_remote_addr>0</use_remote_addr>
