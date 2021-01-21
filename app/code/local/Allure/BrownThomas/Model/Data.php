@@ -219,7 +219,7 @@ class Allure_BrownThomas_Model_Data
             $priceData[$index]['record_type'] = $this->formatString('FPCHG',5);
             $priceData[$index]['action_type'] = $this->formatString($action_type,1);
             $priceData[$index]['primary_upc'] = $this->formatString($_product->getBarcode(), 13);
-            $priceData[$index]['effective_date'] =$this->formatString(date('Ymd',$this->cron()->getCurrentDatetime()), 13);
+            $priceData[$index]['effective_date'] =$this->formatString(date('Ymd',$this->cron()->getCurrentDatetime()), 8);
             $priceData[$index]['unit_retail'] = $this->formatString(number_format((float)$_product->getDublinPrice(),2,'.',''),21,0, STR_PAD_LEFT);
             $priceData[$index]['clearance_indicator'] = $this->formatString('N',1);
             $productDetails['last_sent_date']=$_product->getUpdatedAt();
