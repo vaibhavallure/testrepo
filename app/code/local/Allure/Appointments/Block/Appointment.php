@@ -283,4 +283,11 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
         return $this->helper()->getStoreData($store_id,"disabled_store_button");
     }
 
+    public function getIsViewDetailEnabled($store_id){
+        return $this->helper()->getStoreData($store_id,"disable_view_detail");
+    }
+    public function getViewDetailUrl($store_id){
+        return $this->helper()->getStoreData($store_id,"view_detail_url");
+    }
+
 }

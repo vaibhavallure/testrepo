@@ -331,6 +331,33 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html.=  '</select>';
         $html .= '</div>';
 
+
+        /*Enable Or Disable View detail link*/
+        $DisableViewDetail = '';
+        $enableOptions = array('0'=>'No','1'=>'Yes');
+        foreach ($enableOptions as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('disable_view_detail/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $DisableViewDetail .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $html.='<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="appointments_disable_view_details">Enable View Detail Button</label>';
+        $html .= '<select  class="appointment-setting-select" name="'. $this->getElement()->getName().'[disable_view_detail][]'.'" style="">';
+        $html.= $DisableViewDetail;
+        $html.=  '</select>';
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="view_detail_url">View Detail URL </label>';
+        $html .= '<input class="appointment-setting-input" name="'
+            . $this->getElement()->getName() . '[view_detail_url][]" value="'
+            . $this->_getValue('view_detail_url/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
+        $html .= '</div>';
+
+
+
         $html .= '<hr class="appointment-setting-hr">';
         $html .= '<div style="text-align:center"><h3>SMS body for First Language</h3></div>';
 

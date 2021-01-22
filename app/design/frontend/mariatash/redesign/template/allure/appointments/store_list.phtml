@@ -21,6 +21,9 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <p class="para-lighter mb-0 store-left"><?= $this->getStoreAddress($id) ?></p>
                                         <p class="para-lighter"><?= $this->getStoreContact($id) ?></p>
+                                       <?php if($this->getIsViewDetailEnabled($id)):?>
+                                        <p><a class="link-button" href="<?=($this->getViewDetailUrl($id))? $this->getViewDetailUrl($id) :"#" ?>"><span class="align-bottom">View Details</span></a></p>
+                                        <?php endif;?>
                                     </div>
                                     <?php if($this->isStoreDisabled($id)):?>
                                     <div class="col-lg-6 col-md-6 col-12 store-right text-lg-right">
