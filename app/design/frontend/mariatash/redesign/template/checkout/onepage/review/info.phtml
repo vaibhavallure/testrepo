@@ -148,30 +148,3 @@ $shipping = $checkout->getShippingAddress();
     </script>
 </div>
 
-
-
-<div class="reviewSignupEmail d-none">
-    <div class="pop-up-cover">
-        <div class="pop-title modal-header">
-            <a href="#close" title="Close" class="close exit-large" style="z-index: 1">
-                <img class="d-lg-block d-md-block d-none" src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="x">
-                <img class="d-block d-lg-none d-md-none" src="<?php echo $this->getSkinUrl('images/redesign/exit-small-grey.png'); ?>" alt="x"> </a>
-        </div>
-        <div class="body modal-body p-0">
-            <?= $this->getLayout()->createBlock('cms/block')->setBlockId('review_signup_popup')->toHtml();?>
-        </div>
-    </div>
-</div>
-
-<script>
-    jQuery("#reviewSignupEmail-btn").on('click',function(){
-        jQuery(".reviewSignupEmail").css({"opacity":"1","pointer-events":"auto"});
-        jQuery(".reviewSignupEmail").removeClass("d-none");
-        unScrollBody();
-    });
-    jQuery(".reviewSignupEmail .close").on('click',function(){
-        jQuery(".reviewSignupEmail").css({"opacity":"0","pointer-events":"none"});
-        jQuery(".reviewSignupEmail").addClass("d-none");
-        scrollBody();
-    });
-</script>
