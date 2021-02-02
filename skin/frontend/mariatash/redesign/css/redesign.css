@@ -2296,7 +2296,7 @@ span#popup_loader_register {
 
 
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup, .popupWholesaleAlert, .popupRetailAlert {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup,.celebPopup ,.pressPopup,.checkoutPopupLoginModel, .zoomPopup, .popupWholesaleAlert, .popupRetailAlert, .reviewSignupEmail {
 	position: fixed;
 	top:-20px;
 	right: 0;
