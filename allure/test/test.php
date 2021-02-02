@@ -8,6 +8,8 @@ Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
 
+die();
+
 /*
 var_dump(json_decode(Mage::getStoreConfig("reclaim/allure/coupon_prefix")));
 
