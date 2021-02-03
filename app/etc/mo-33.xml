@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-33>Fixes secure only cookies is not set as a secure cookie correcly using js.</MO-33>
+        </patches>
+    </mage-one>
+</config>

@@ -66,6 +66,6 @@ class Mage_Page_Block_Js_Cookie extends Mage_Core_Block_Template
      */
     public function isSecure()
     {
-        return $this->getCookie()->isSecure() ? 'true' : 'false';
+        return $this->getCookie()->isSecure() ? true : false;
     }
 }
