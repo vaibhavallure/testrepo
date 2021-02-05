@@ -70,11 +70,6 @@ class Klaviyo_Reclaim_Model_KlaviyoApi
     }
 
     function listSubscriberAdd($list_id, $email,$source=null) {
-
-
-        Mage::log($source,7,"adi.log",true);
-
-        
         $params = array();
         $params['profiles'] = array();
         $profile['email'] = $email;

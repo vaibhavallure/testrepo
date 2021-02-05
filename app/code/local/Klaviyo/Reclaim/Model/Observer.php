@@ -519,31 +519,36 @@ class Klaviyo_Reclaim_Model_Observer
 
     public function CheckoutAssignNewsletter()
     {
-        $session = Mage::getSingleton('checkout/session');
-        $quote = $session->getQuote();
-
-        $post= Mage::app()->getRequest()->getPost();
-        $email= $post['billing']['email'];
-        $customerGroup=$quote->getCustomerGroupId();
+        $post = Mage::app()->getRequest()->getPost();
         $issubscribed=$post['is_subscribed_to_klaviyo'];
 
-        $list_id = Mage::helper('klaviyo_reclaim')->getSubscriptionList(Mage::app()->getStore()->getId());
 
-        if(!$customerGroup)
-            $source="guest_checkout";
-        else
-            $source="checkout";
+        if($issubscribed) {
 
+            $session = Mage::getSingleton('checkout/session');
+            $quote = $session->getQuote();
 
-        $response = Mage::getSingleton('klaviyo_reclaim/api')->listSubscriberAdd($list_id, $email,$source);
+            $email = $post['billing']['email'];
+            $customerGroup = $quote->getCustomerGroupId();
 
-        if (!is_array($response) || !isset($response['already_member'])) {
+            $list_id = Mage::helper('klaviyo_reclaim')->getSubscriptionList(Mage::app()->getStore()->getId());
 
+            if (!$customerGroup)
+                $source = "guest_checkout";
+            else
+                $source = "checkout";
+
+            $response = Mage::getSingleton('klaviyo_reclaim/api')->listSubscriberAdd($list_id, $email, $source);
+
+            Mage::log($list_id." ".$email,7,"klaviyo_updates.log",true);
+            Mage::log($response,7,"klaviyo_updates.log",true);
+
+            if (!is_array($response) || !isset($response['already_member'])) {
+            }
         }
 
         return $this;
     }
-
 
 }
 
