@@ -25,6 +25,15 @@
                     </klaviyo_subscribe_delete_observer>
                 </observers>
             </newsletter_subscriber_delete_after>
+            <controller_action_postdispatch_checkout_onepage_saveShipping>
+                <observers>
+                    <checkout_submit_all_after_handler>
+                        <type>singleton</type>
+                        <class>Klaviyo_Reclaim_Model_Observer</class>
+                        <method>CheckoutAssignNewsletter</method>
+                    </checkout_submit_all_after_handler>
+                </observers>
+            </controller_action_postdispatch_checkout_onepage_saveShipping>
         </events>
         <models>
             <klaviyo_reclaim>
