@@ -14,24 +14,24 @@
                     <label>API Credentials</label>
                     <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
-                    <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
                     <fields>
                         <key translate="label">
                             <label>API Key</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                         </key>
                         <secret translate="label">
                             <label>API Secret</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                             <comment><![CDATA[
                                 Contact Doddle support if you do not yet have these credentials.
                             ]]></comment>
@@ -42,8 +42,8 @@
                             <source_model>doddle_returns/system_config_source_apiMode</source_model>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                         </mode>
                         <url_override>
                             <label>Override API URLs</label>
@@ -51,8 +51,8 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                             <comment><![CDATA[
                                 Enable this if you need to manually update the API endpoints.
                                 Invalid configuration of these URLs can stop the Doddle module from functioning.
@@ -63,8 +63,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                             <depends>
                                 <url_override>1</url_override>
                             </depends>
@@ -74,8 +74,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                             <depends>
                                 <url_override>1</url_override>
                             </depends>
@@ -85,8 +85,8 @@
                             <frontend_model>doddle_returns/adminhtml_testApiButton</frontend_model>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                         </test>
                     </fields>
                 </api>
@@ -111,27 +111,27 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                         </company_id>
                         <batch_size translate="label">
                             <label>Order Sync Batch Size</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                         </batch_size>
                         <max_fails translate="label">
                             <label>Order Sync Max Fail Attempts</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
                             <comment><![CDATA[
                                 Number of times to retry sending orders which have failed to send to Doddle previously.
-                                Set to "0" for unlimited attempts.
+                                Set this to "0" for unlimited attempts.
                             ]]></comment>
                         </max_fails>
                     </fields>
