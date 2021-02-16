@@ -46,11 +46,6 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
     {
         $helper = $this->getHelper();
 
-        // Only process order queue if enabled
-        if ($helper->getOrderSyncEnabled() == false) {
-            return;
-        }
-
         /** @var Doddle_Returns_Model_Resource_Order_Sync_Queue_Collection $pendingOrders */
         $pendingOrders = $this->getResourceCollection()
             ->addFieldToFilter('status', self::STATUS_PENDING)
@@ -67,11 +62,6 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
     public function retryFailedOrders()
     {
         $helper = $this->getHelper();
-
-        // Only process order queue if enabled
-        if ($helper->getOrderSyncEnabled() == false) {
-            return;
-        }
 
         $maxFails = $helper->getOrderSyncMaxFails();
 
@@ -105,7 +95,13 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
         );
 
         foreach ($orderQueue as $queuedOrder) {
+            /** @var Mage_Sales_Model_Order $order */
             $order = $orderCollection->getItemById($queuedOrder->getOrderId());
+
+            // Only push order if sync store config is enabled
+            if ($this->getHelper()->getOrderSyncEnabled($order->getStoreId()) == false) {
+                continue;
+            }
 
             $orderData = $this->formatOrderForApi($order);
 
@@ -162,13 +158,14 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
             ),
             "customer" => array(
                 "email" => $order->getCustomerEmail(),
-                "mobileNumber" =>  $order->getBillingAddress()->getTelephone(),
-                "name" => array(
-                    "firstName" => $order->getCustomerFirstname(),
-                    "lastName" => $order->getCustomerLastname()
-                )
+                "name" => $this->getCustomerName($order)
             )
         );
+
+        // Add telephone number if set
+        if ($order->getBillingAddress()->getTelephone()) {
+            $orderData["customer"]["mobileNumber"] = $order->getBillingAddress()->getTelephone();
+        }
 
         // Add delivery address for physical orders only
         if (!$order->getIsVirtual()) {
@@ -225,7 +222,7 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
     {
         $formattedAddress = array(
             "town" => $shippingAddress->getCity(),
-            "postcode" => $shippingAddress->getPostcode(),
+            "postcode" => $shippingAddress->getPostcode() ? $shippingAddress->getPostcode() : "n/a",
             "country" => $shippingAddress->getCountryId()
         );
 
@@ -235,10 +232,29 @@ class Doddle_Returns_Model_Order_Sync_Queue extends Mage_Core_Model_Abstract
         }
 
         foreach ($shippingAddress->getStreet() as $index => $streetLine) {
-            $formattedAddress['line' . ($index+1)] = $streetLine;
+            if ($streetLine) {
+                $formattedAddress['line' . ($index + 1)] = $streetLine;
+            }
         }
 
         return $formattedAddress;
+    }
+
+    /**
+     * @param Mage_Sales_Model_Order $order
+     * @return array
+     */
+    protected function getCustomerName(Mage_Sales_Model_Order $order)
+    {
+        $customerName = array(
+            "firstName" => $order->getCustomerFirstname() ? $order->getCustomerFirstname() : "Guest"
+        );
+
+        if ($order->getCustomerLastname()) {
+            $customerName["lastName"] = $order->getCustomerLastname();
+        }
+
+        return $customerName;
     }
 
     /**

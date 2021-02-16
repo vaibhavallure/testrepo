@@ -189,7 +189,8 @@ class Doddle_Returns_Helper_Api extends Mage_Core_Helper_Abstract
                 sprintf(
                     'Got HTTP %s response for request: %s - %s',
                     $response->getStatus(),
-                    $http->getUri()
+                    $http->getUri(),
+                    $response->getBody()
                 )
             );
         }

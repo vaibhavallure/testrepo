@@ -60,11 +60,15 @@ class Doddle_Returns_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @param int $storeId
      * @return bool
      */
-    public function getOrderSyncEnabled()
+    public function getOrderSyncEnabled(int $storeId)
     {
-        return Mage::getStoreConfigFlag(self::XML_PATH_ORDER_SYNC_ENABLED);
+        return Mage::getStoreConfigFlag(
+            self::XML_PATH_ORDER_SYNC_ENABLED,
+            $storeId
+        );
     }
 
     /**
