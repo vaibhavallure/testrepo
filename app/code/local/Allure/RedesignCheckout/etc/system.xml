@@ -53,5 +53,24 @@
 			</groups>
 		</sales_email>
 		<!-- Multi address order email template Design add into sales email configuration end. -->
+		<checkout translate="label" module="checkout">
+			<show_in_store>1</show_in_store>
+			<groups>
+				<cart>
+				<fields>
+					<cart_message>
+						<label>Cart Message</label>
+						<frontend_type>textarea</frontend_type>
+						<sort_order>4</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>1</show_in_store>
+						<comment>Message display above the checkout button.</comment>
+					</cart_message>
+				</fields>
+				</cart>
+			</groups>
+		</checkout>
+
 	</sections>
 </config>
