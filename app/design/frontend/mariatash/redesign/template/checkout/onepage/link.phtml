@@ -30,7 +30,6 @@
 
 <?php if ($this->isPossibleOnepageCheckout()):?>
 
-    <?= Mage::getStoreConfig('checkout/cart/cart_message') ?>
 
     <?php if ($this->helper('customer')->isLoggedIn()): ?>
 	<?php $customerGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();?>

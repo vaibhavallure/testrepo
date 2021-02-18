@@ -1,3 +1,5 @@
+<?= Mage::getStoreConfig('checkout/cart/cart_message') ?>
+
 <button id="affirm-submit" type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Continue with Affirm')) ?>" class="button btn-checkout dark-button next-button float-right" onclick="placeOrder()">
     <span><span style="font-size: 12px"><?php echo $this->__('Continue with Affirm') ?></span></span>
 </button>
