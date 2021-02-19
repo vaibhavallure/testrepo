@@ -57,6 +57,12 @@
 
       </div>
 
+        <?php
+        /*MT-1677*/
+        $hideAttributesFromFilter=explode(",",$currentCategory->getChooseFilterToHide());
+        ?>
+
+
         <?php if($this->canShowOptions() && Mage::helper('privatesale')->filterHide()==false && $currentCategory->getHideFilter()!=true): ?>
         <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
         <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
@@ -65,13 +71,18 @@
             <dd class="filter-contain al-hide" >
                 <ul id="narrow-by-list" class="mb-0">
                     <?php $_filters = $this->getFilters(); $i = 0; ?>
-                    <?php foreach ($_filters as $_filter): ?>
+                    <?php foreach ($_filters as $_filter):
+                    ?>
                     <?php
                     if (!$_filter->getCode()) {
                         $_filterCode = iconv('utf-8', 'us-ascii//TRANSLIT', $_filter->getName());
                         $_filterCode = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '_', $_filterCode));
                         $_filter->setCode($_filterCode);
                     }
+
+                    /*MT-1677*/
+                    if(in_array($_filter->getCode(),$hideAttributesFromFilter))
+                        continue;
                     ?>
                     <?php if($_filter->getItemsCount() ): //&& 'price' != $_filter->getCode()?>
                     <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
