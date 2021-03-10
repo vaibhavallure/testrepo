@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <sales translate="label" module="sales">
+            <groups>
+                <minimum_order translate="label">
+                    <fields>
+                        <amount translate="label comment">
+                            <show_in_store>1</show_in_store>
+                        </amount>
+                    </fields>
+                </minimum_order>
+            </groups>
+        </sales>
+    </sections>
+</config>
