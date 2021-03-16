@@ -153,23 +153,21 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     }
                     $this->_getSession()->setCartCouponCode($couponCode);
                 } else {
+                    $message='Coupon code "%s" is not valid.';
+                    $oCoupon = Mage::getModel('salesrule/coupon')->load($couponCode, 'code');
+
+                    if($oCoupon->getRuleId()) {
+                        $oRule = Mage::getModel('salesrule/rule')->load($oCoupon->getRuleId());
+                        $message=$oRule->getCustomErrorMessage();
+                    }
+
                     if (! $isAjax) {
-
-                        $message='Coupon code "%s" is not valid.';
-
-                        $oCoupon = Mage::getModel('salesrule/coupon')->load($couponCode, 'code');
-
-                        if($oCoupon->getRuleId()) {
-                            $oRule = Mage::getModel('salesrule/rule')->load($oCoupon->getRuleId());
-                            $message=$oRule->getCustomErrorMessage();
-                        }
-
                         $this->_getSession()->addError(
                                 $this->__($message,
                                         Mage::helper('core')->htmlEscape($couponCode)));
                     } else {
                         $response['error'] = true;
-                        $response['message'] = $this->__('Coupon code "%s" is not valid.',
+                        $response['message'] = $this->__($message,
                                 Mage::helper('core')->htmlEscape($couponCode));
                     }
                 }
