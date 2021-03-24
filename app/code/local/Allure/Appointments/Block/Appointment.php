@@ -141,6 +141,13 @@ class Allure_Appointments_Block_Appointment extends Mage_Core_Block_Template{
 
         return $this->helper()->getStoreData($store_id,"appears");
     }
+    public function getStoreListName($store_id=null)
+    {
+        if(!$store_id)
+            $store_id=$this->getStoreId();
+
+        return $this->helper()->getStoreData($store_id,"list_apear") ? $this->helper()->getStoreData($store_id,"list_apear") : $this->helper()->getStoreData($store_id,"appears");
+    }
     public function getStoreAddress($store_id=null)
     {
         if(!$store_id)
