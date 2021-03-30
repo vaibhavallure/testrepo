@@ -7775,7 +7775,10 @@ div.my-account form#form-validate div.fieldset ul.form-list,
  .sales-order-history .main-container,
 .wishlist-index-share .main-container, .wishlist-index-index .main-container,
 .newsletter-manage-index .main-container,
-.sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container{
+.sendfriend-product-send .main-container ,.customer-paymentinfo-index .main-container,
+.braintree-saved-index .main-container,
+.braintree-saved-edit .main-container
+{
 	margin: 0 auto;
 	width: 960px;
 	max-width: 100%;

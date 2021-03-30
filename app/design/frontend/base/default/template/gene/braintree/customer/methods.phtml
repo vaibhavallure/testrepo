@@ -1,6 +1,15 @@
 <?php if($savedDetails = $this->getSavedDetails($this->getType())): ?>
-
-<table width="100%">
+    <style>
+        .bt-tbl td, .bt-tbl th{
+            vertical-align: middle!important;
+        }
+    </style>
+<table class="bt-tbl table table-striped" width="100%">
+    <th>
+     <td>Saved Cards</td>
+    <td>Expires</td>
+    <td>Actions</td>
+    </th>
     <?php foreach($savedDetails as $savedDetail): ?>
         <tr>
             <td width="64">
@@ -11,18 +20,22 @@
                     <span class="payment-method-card-number">
                         <?php echo $savedDetail->bin; ?>******<?php echo $savedDetail->last4; ?>
                     </span>
-                    <span class="payment-method-expiry-date">
-                        <em><?php echo $this->__('Expires:'); ?></em> <?php echo $savedDetail->expirationMonth; ?>/<?php echo $savedDetail->expirationYear; ?>
-                    </span>
+
                 <?php else: ?>
                     <span class="payment-method-paypal-email">
                         <?php echo $savedDetail->email; ?>
                     </span>
                 <?php endif; ?>
             </td>
+            <td>
+                  <span class="payment-method-expiry-date">
+                        <?php echo $savedDetail->expirationMonth; ?>/<?php echo $savedDetail->expirationYear; ?>
+                    </span>
+            </td>
             <td class="method-options align-right">
                 <?php if(isset($savedDetail->cardType)): ?>
                     <a href="<?php echo $this->getUrl('*/*/edit', array('id' => $savedDetail->token)); ?>"><?php echo $this->__('Edit'); ?></a>
+              |
                 <?php endif; ?>
                 <a href="<?php echo $this->getUrl('*/*/remove', array('id' => $savedDetail->token)); ?>" onclick="return confirm('<?php echo $this->__('Are you sure you want to remove this payment method?'); ?>');"><?php echo $this->__('Remove'); ?></a>
             </td>
