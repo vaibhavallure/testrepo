@@ -9,11 +9,14 @@
             ?>
             <tr valign="middle">
                 <td width="20">
+                    <label id="label-cc-braintree" class="radio custom-radio para-normal" for="<?php echo $savedDetail->token; ?>">
                     <?php if($this->getMethod()->is3DEnabled()): ?>
                         <input type="radio" name="payment[card_payment_method_token]" id="<?php echo $savedDetail->token; ?>" data-token="<?php echo $savedDetail->token; ?>" data-threedsecure-nonce="<?php echo $this->getMethod()->getThreeDSecureVaultNonce($savedDetail->token); ?>" value="threedsecure"<?php echo ($count == 0 ? ' checked="checked"' : ''); ?>/>
                     <?php else: ?>
                         <input type="radio" name="payment[card_payment_method_token]" id="<?php echo $savedDetail->token; ?>" value="<?php echo $savedDetail->token; ?>"<?php echo ($count == 0 ? ' checked="checked"' : ''); ?>/>
                     <?php endif; ?>
+                        <span class="radiomark"></span>
+                    </label>
                 </td>
                 <td>
                     <label for="<?php echo $savedDetail->token; ?>">
@@ -29,8 +32,13 @@
             ++$count;
         endforeach; ?>
         <tr valign="middle" class="other-row">
-            <td width="20"><input type="radio" name="payment[card_payment_method_token]" id="other-creditcard" value="other" /></td>
-            <td><label for="other-creditcard"><?php echo $this->__('New Credit Card'); ?></label></td>
+            <td width="20">
+                <label id="label-other-cc-braintree" class="radio custom-radio para-normal" for="other-creditcard">
+                <input type="radio" name="payment[card_payment_method_token]" id="other-creditcard" value="other" />
+                    <span class="radiomark"></span>
+                </label>
+            </td>
+            <td><label for="other-creditcard" class="para-normal pl-4"><?php echo $this->__('New Credit Card'); ?></label></td>
         </tr>
     </table>
 

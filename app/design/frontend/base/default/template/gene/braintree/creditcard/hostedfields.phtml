@@ -60,14 +60,15 @@ $_code = $this->getMethodCode()
                 <label for="postal-code"><?php echo $this->__('Postal Code'); ?></label>
                 <div id="postal-code" class="braintree-input-field braintree-postal-code"></div>
             </li>
-            <?php if ($this->canSaveCard()): ?>
+            <?php if ($this->canSaveCard()) : ?>
                 <li id="<?php echo $_code ?>_store_in_vault_div">
-                    <input type="checkbox" title="<?php echo $this->__('Save this card for future use') ?>"
-                           class="input-checkbox" id="<?php echo $_code ?>_store_in_vault" name="payment[save_card]"
-                           value="1"/>
-                    <label for="<?php echo $_code ?>_store_in_vault" style="float:none;"><?php echo $this->__(
-                            'Save this card for future use'
-                        ) ?></label>
+                    <label for="<?php echo $_code ?>_store_in_vault" style="display: inline-block;margin-left: 2px;" class="custom-checkbox custom-checkbox-two para-normal mt-4">
+                        <?php echo $this->__('Save card against customers account') ?>
+                        <input type="checkbox" title="<?php echo $this->__('Save card against customers account') ?>"
+                               class="input-checkbox checkbox" id="<?php echo $_code ?>_store_in_vault" name="payment[save_card]"
+                               value="1" />
+                        <span class="checkmark"></span>
+                    </label>
                 </li>
             <?php endif; ?>
         </ul>

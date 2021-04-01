@@ -151,6 +151,14 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '</div>';
 
 
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_appear_name">List Appear Name </label>';
+        $html .= '<input class="appointment-setting-input" style="" name="'
+            . $this->getElement()->getName() . '[list_apear][]" value="'
+            . $this->_getValue('list_apear/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
+        $html .= '</div>';
+
+
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $timeOptArr = array("12"=>"12 Hrs","24"=>"24 Hrs");
         $timeOpt = '';
