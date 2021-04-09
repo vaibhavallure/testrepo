@@ -70,7 +70,7 @@ class Mage_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Adminhtml_Control
                     ->getTreeJson()
             );
         } catch (Exception $e) {
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array()));
+            $this->_sendJsonResponse(array());
         }
     }
 
@@ -82,7 +82,7 @@ class Mage_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Adminhtml_Control
             $this->renderLayout();
         } catch (Exception $e) {
             $result = array('error' => true, 'message' => $e->getMessage());
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
     }
 
@@ -96,7 +96,7 @@ class Mage_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Adminhtml_Control
         } catch (Exception $e) {
             $result = array('error' => true, 'message' => $e->getMessage());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     public function deleteFolderAction()
@@ -106,7 +106,7 @@ class Mage_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Adminhtml_Control
             $this->getStorage()->deleteDirectory($path);
         } catch (Exception $e) {
             $result = array('error' => true, 'message' => $e->getMessage());
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
     }
 
@@ -137,7 +137,7 @@ class Mage_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Adminhtml_Control
             }
         } catch (Exception $e) {
             $result = array('error' => true, 'message' => $e->getMessage());
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
     }
 
@@ -154,7 +154,7 @@ class Mage_Adminhtml_Cms_Wysiwyg_ImagesController extends Mage_Adminhtml_Control
         } catch (Exception $e) {
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
 
     }
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-39>This patch allows to disable sharing of the wishlist by email to prevent spamming.</MO-39>
+        </patches>
+    </mage-one>
+</config>

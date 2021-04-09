@@ -273,7 +273,7 @@ class Mage_Adminhtml_System_Convert_ProfileController extends Mage_Adminhtml_Con
                 'savedRows' => $saved,
                 'errors'    => $errors
             );
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
     }
 
@@ -294,7 +294,7 @@ class Mage_Adminhtml_System_Convert_ProfileController extends Mage_Adminhtml_Con
                     $result['error'] = Mage::helper('adminhtml')->__('An error occurred while finishing process. Please refresh the cache');
                 }
                 $batchModel->delete();
-                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+                $this->_sendJsonResponse($result);
             }
         }
     }

@@ -56,8 +56,6 @@ class Mage_XmlConnect_OfflineCatalogController extends Mage_Core_Controller_Fron
             Mage::logException($e);
             Mage::getSingleton('core/session')->addError($this->__('Offline catalog export failed.'));
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(
-            array('result' => Mage::app()->getLayout()->getMessagesBlock()->getGroupedHtml())
-        ));
+        $this->_sendJsonResponse(array('result' => Mage::app()->getLayout()->getMessagesBlock()->getGroupedHtml()));
     }
 }
