@@ -252,15 +252,18 @@ class Mage_Adminhtml_Sales_Order_CreditmemoController extends Mage_Adminhtml_Con
                 'error'     => true,
                 'message'   => $e->getMessage()
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         } catch (Exception $e) {
             $response = array(
                 'error'     => true,
                 'message'   => $this->__('Cannot update the item\'s quantity.')
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         }
-        $this->getResponse()->setBody($response);
+
+        if (is_array($response)) {
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
+        }
     }
 
     /**
@@ -402,15 +405,18 @@ class Mage_Adminhtml_Sales_Order_CreditmemoController extends Mage_Adminhtml_Con
                 'error'     => true,
                 'message'   => $e->getMessage()
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         } catch (Exception $e) {
             $response = array(
                 'error'     => true,
                 'message'   => $this->__('Cannot add new comment.')
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         }
-        $this->getResponse()->setBody($response);
+
+        if (is_array($response)) {
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
+        }
     }
 
     /**

@@ -615,6 +615,9 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
      */
     public function shareAction()
     {
+        if (!Mage::helper('wishlist')->isSharingEnabled()) {
+            $this->addNoticeAndRedirectToWishlistIndex();
+        }
         $this->_getWishlist();
         $this->loadLayout();
         $this->_initLayoutMessages('customer/session');
@@ -629,6 +632,10 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
      */
     public function sendAction()
     {
+        if (!Mage::helper('wishlist')->isSharingEnabled()) {
+            $this->addNoticeAndRedirectToWishlistIndex();
+        }
+
         if (!$this->_validateFormKey()) {
             return $this->_redirect('*/*/');
         }
@@ -786,5 +793,15 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
         if (strpos($realFilePath, $realMediaPath) !== 0) {
             Mage::throwException('Download file must be in media/');
         }
+    }
+
+    private function addNoticeAndRedirectToWishlistIndex()
+    {
+        /** @var $session Mage_Wishlist_Model_Session */
+        $session = Mage::getSingleton('wishlist/session');
+        $session->addNotice(Mage::helper('wishlist')->__('Wishlist sharing is disabled.'));
+        $ex = new Mage_Core_Controller_Varien_Exception();
+        $ex->prepareRedirect('wishlist');
+        throw $ex;
     }
 }

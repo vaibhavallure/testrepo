@@ -148,13 +148,13 @@ class Mage_Authorizenet_Adminhtml_Authorizenet_Directpost_PaymentController
                 $result['redirect'] = Mage::getSingleton('adminhtml/url')->getUrl('*/sales_order_create/');
             }
 
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
         else {
             $result = array(
                 'error_messages' => $this->__('Please, choose payment method')
             );
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
     }
 
@@ -209,7 +209,7 @@ class Mage_Authorizenet_Adminhtml_Authorizenet_Directpost_PaymentController
     public function returnQuoteAction()
     {
         $this->_returnQuote();
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array('success' => 1)));
+        $this->_sendJsonResponse(array('success' => 1));
     }
 
     /**

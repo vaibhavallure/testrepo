@@ -56,7 +56,7 @@ class Mage_Paygate_Authorizenet_PaymentController extends Mage_Core_Controller_F
         }
 
         Mage::getSingleton('checkout/session')->getQuote()->getPayment()->save();
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**

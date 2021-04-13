@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-38>An attacker may be able to conduct XSS attacks due to misinterpretation of content by the browser.</MO-38>
+        </patches>
+    </mage-one>
+</config>

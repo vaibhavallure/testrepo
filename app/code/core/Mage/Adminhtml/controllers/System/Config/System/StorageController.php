@@ -177,8 +177,7 @@ class Mage_Adminhtml_System_Config_System_StorageController extends Mage_Adminht
         }
         $result['state'] = $state;
 
-        $result = Mage::helper('core')->jsonEncode($result);
-        Mage::app()->getResponse()->setBody($result);
+        $this->_sendJsonResponse($result);
     }
 
     /**

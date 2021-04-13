@@ -300,8 +300,7 @@ class Mage_Adminhtml_Sales_OrderController extends Mage_Adminhtml_Controller_Act
                 );
             }
             if (is_array($response)) {
-                $response = Mage::helper('core')->jsonEncode($response);
-                $this->getResponse()->setBody($response);
+                $this->_sendJsonResponse($response);
             }
         }
     }

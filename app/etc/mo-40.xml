@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-40>Backport for CVE-2021-21024 Blind SQLi from Magento 2</MO-40>
+        </patches>
+    </mage-one>
+</config>
