@@ -58,7 +58,7 @@ class Mage_Paygate_Adminhtml_Paygate_Authorizenet_PaymentController extends Mage
         }
 
         Mage::getSingleton('adminhtml/session_quote')->getQuote()->getPayment()->save();
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**

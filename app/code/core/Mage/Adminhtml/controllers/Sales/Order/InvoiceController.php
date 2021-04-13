@@ -209,15 +209,18 @@ class Mage_Adminhtml_Sales_Order_InvoiceController extends Mage_Adminhtml_Contro
                 'error'     => true,
                 'message'   => $e->getMessage()
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         } catch (Exception $e) {
             $response = array(
                 'error'     => true,
                 'message'   => $this->__('Cannot update item quantity.')
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         }
-        $this->getResponse()->setBody($response);
+
+        if (is_array($response)) {
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
+        }
     }
 
     /**
@@ -401,15 +404,18 @@ class Mage_Adminhtml_Sales_Order_InvoiceController extends Mage_Adminhtml_Contro
                 'error'     => true,
                 'message'   => $e->getMessage()
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         } catch (Exception $e) {
             $response = array(
                 'error'     => true,
                 'message'   => $this->__('Cannot add new comment.')
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         }
-        $this->getResponse()->setBody($response);
+
+        if (is_array($response)) {
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
+        }
     }
 
 

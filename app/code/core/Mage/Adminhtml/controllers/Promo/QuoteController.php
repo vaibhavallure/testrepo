@@ -432,7 +432,7 @@ class Mage_Adminhtml_Promo_QuoteController extends Mage_Adminhtml_Controller_Act
                 Mage::logException($e);
             }
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**

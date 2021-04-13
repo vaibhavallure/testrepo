@@ -81,12 +81,11 @@ class Mage_Adminhtml_Customer_System_Config_ValidatevatController extends Mage_A
             $this->getRequest()->getParam('country'), $result, $storeId
         );
 
-        $body = $coreHelper->jsonEncode(array(
+        $this->_sendJsonResponse(array(
             'valid' => $valid,
             'group' => $groupId,
             'success' => $success
         ));
-        $this->getResponse()->setBody($body);
     }
 
     /**

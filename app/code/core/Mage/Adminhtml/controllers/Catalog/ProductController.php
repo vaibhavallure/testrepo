@@ -1048,7 +1048,7 @@ class Mage_Adminhtml_Catalog_ProductController extends Mage_Adminhtml_Controller
             $result['error'] = array(
                 'message' => $this->__('HTML tags are not allowed in SKU attribute.')
             );
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
             return;
         }
 
@@ -1128,7 +1128,7 @@ class Mage_Adminhtml_Catalog_ProductController extends Mage_Adminhtml_Controller
              );
         }
 
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**

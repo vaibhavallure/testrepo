@@ -327,9 +327,10 @@ class Mage_Adminhtml_Sales_Order_ShipmentController extends Mage_Adminhtml_Contr
             );
         }
         if (is_array($response)) {
-            $response = Mage::helper('core')->jsonEncode($response);
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
         }
-        $this->getResponse()->setBody($response);
     }
 
     /**
@@ -366,9 +367,10 @@ class Mage_Adminhtml_Sales_Order_ShipmentController extends Mage_Adminhtml_Contr
             );
         }
         if (is_array($response)) {
-            $response = Mage::helper('core')->jsonEncode($response);
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
         }
-        $this->getResponse()->setBody($response);
     }
 
     /**
@@ -407,10 +409,10 @@ class Mage_Adminhtml_Sales_Order_ShipmentController extends Mage_Adminhtml_Contr
             $this->getResponse()->setBody($block->toHtml());
         } else {
             if (is_array($response)) {
-                $response = Mage::helper('core')->jsonEncode($response);
+                $this->_sendJsonResponse($response);
+            } else {
+                $this->getResponse()->setBody($response);
             }
-
-            $this->getResponse()->setBody($response);
         }
     }
 
@@ -444,15 +446,18 @@ class Mage_Adminhtml_Sales_Order_ShipmentController extends Mage_Adminhtml_Contr
                 'error'     => true,
                 'message'   => $e->getMessage()
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         } catch (Exception $e) {
             $response = array(
                 'error'     => true,
                 'message'   => $this->__('Cannot add new comment.')
             );
-            $response = Mage::helper('core')->jsonEncode($response);
         }
-        $this->getResponse()->setBody($response);
+
+        if (is_array($response)) {
+            $this->_sendJsonResponse($response);
+        } else {
+            $this->getResponse()->setBody($response);
+        }
     }
 
 

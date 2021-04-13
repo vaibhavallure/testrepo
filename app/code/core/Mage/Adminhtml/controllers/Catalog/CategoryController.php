@@ -191,9 +191,7 @@ class Mage_Adminhtml_Catalog_CategoryController extends Mage_Adminhtml_Controlle
                 'controller' => $this
             ));
 
-            $this->getResponse()->setBody(
-                Mage::helper('core')->jsonEncode($eventResponse->getData())
-            );
+            $this->_sendJsonResponse($eventResponse->getData());
 
             return;
         }
@@ -250,6 +248,7 @@ class Mage_Adminhtml_Catalog_CategoryController extends Mage_Adminhtml_Controlle
             if (!$category = $this->_initCategory()) {
                 return;
             }
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(
                 $this->getLayout()->createBlock('adminhtml/catalog_category_tree')
                     ->getTreeJson($category)
@@ -469,19 +468,23 @@ class Mage_Adminhtml_Catalog_CategoryController extends Mage_Adminhtml_Controlle
         $category = $this->_initCategory(true);
 
         $block = $this->getLayout()->createBlock('adminhtml/catalog_category_tree');
-        $root  = $block->getRoot();
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array(
-            'data' => $block->getTree(),
-            'parameters' => array(
-                'text'        => $block->buildNodeName($root),
-                'draggable'   => false,
-                'allowDrop'   => ($root->getIsVisible()) ? true : false,
-                'id'          => (int) $root->getId(),
-                'expanded'    => (int) $block->getIsWasExpanded(),
-                'store_id'    => (int) $block->getStore()->getId(),
-                'category_id' => (int) $category->getId(),
-                'root_visible'=> (int) $root->getIsVisible()
-        ))));
+        $root = $block->getRoot();
+
+        $this->_sendJsonResponse(
+            array(
+                'data' => $block->getTree(),
+                'parameters' => array(
+                    'text' => $block->buildNodeName($root),
+                    'draggable' => false,
+                    'allowDrop' => ($root->getIsVisible()) ? true : false,
+                    'id' => (int)$root->getId(),
+                    'expanded' => (int)$block->getIsWasExpanded(),
+                    'store_id' => (int)$block->getStore()->getId(),
+                    'category_id' => (int)$category->getId(),
+                    'root_visible' => (int)$root->getIsVisible()
+                )
+            )
+        );
     }
 
     /**
@@ -491,12 +494,10 @@ class Mage_Adminhtml_Catalog_CategoryController extends Mage_Adminhtml_Controlle
     {
         if ($id = (int) $this->getRequest()->getParam('id')) {
             $category = Mage::getModel('catalog/category')->load($id);
-            $this->getResponse()->setBody(
-                Mage::helper('core')->jsonEncode(array(
-                   'id' => $id,
-                   'path' => $category->getPath(),
-                ))
-            );
+            $this->_sendJsonResponse(array(
+                'id' => $id,
+                'path' => $category->getPath(),
+            ));
         }
     }
 

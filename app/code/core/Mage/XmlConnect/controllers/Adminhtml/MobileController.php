@@ -508,8 +508,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
             $response = array('error' => true, 'message' => $this->__('Theme name is not set.'));
         }
         if (is_array($response)) {
-            $response = Mage::helper('core')->jsonEncode($response);
-            $this->getResponse()->setBody($response);
+            $this->_sendJsonResponse($response);
         }
     }
 
@@ -590,8 +589,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
             $response = array('error' => true, 'message' => $this->__('Theme name is not set.'));
         }
         if (is_array($response)) {
-            $response = Mage::helper('core')->jsonEncode($response);
-            $this->getResponse()->setBody($response);
+            $this->_sendJsonResponse($response);
         }
     }
 
@@ -612,8 +610,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
             $response = array('error' => true, 'message' => $this->__('Can\'t reset theme.'));
         }
         if (is_array($response)) {
-            $response = Mage::helper('core')->jsonEncode($response);
-            $this->getResponse()->setBody($response);
+            $this->_sendJsonResponse($response);
         }
     }
 
@@ -1427,7 +1424,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
 
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**
@@ -1449,7 +1446,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
         } catch (Exception $e) {
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**
@@ -1475,7 +1472,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
         } catch (Exception $e) {
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**
@@ -1498,7 +1495,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
         } catch (Exception $e) {
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**
@@ -1520,7 +1517,7 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
             Mage::logException($e);
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**
@@ -1571,6 +1568,6 @@ class Mage_XmlConnect_Adminhtml_MobileController extends Mage_Adminhtml_Controll
             Mage::logException($e);
             $result = array('error' => $e->getMessage(), 'errorcode' => $e->getCode());
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 }

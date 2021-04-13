@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <mage-one>
+        <patches>
+            <MO-36>CVE-2021-3007: Backport of Zend_Http_Response_Stream, added certain type checking as a way to prevent exploitation.</MO-36>
+        </patches>
+    </mage-one>
+</config>

@@ -155,7 +155,7 @@ class Mage_Authorizenet_Directpost_PaymentController extends Mage_Core_Controlle
                 'error_messages' => $this->__('Please, choose payment method'),
                 'goto_section'   => 'payment'
             );
-            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+            $this->_sendJsonResponse($result);
         }
     }
 
@@ -166,7 +166,7 @@ class Mage_Authorizenet_Directpost_PaymentController extends Mage_Core_Controlle
     public function returnQuoteAction()
     {
         $this->_returnCustomerQuote();
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode(array('success' => 1)));
+        $this->_sendJsonResponse(array('success' => 1));
     }
 
     /**

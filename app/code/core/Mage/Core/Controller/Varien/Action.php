@@ -1094,4 +1094,13 @@ abstract class Mage_Core_Controller_Varien_Action
         }
         return $this;
     }
+
+    protected function _sendJsonResponse($content)
+    {
+        $content = Mage::helper('core')->jsonEncode($content);
+
+        $this->getResponse()->setHeader('X-Content-Type-Options', 'nosniff');
+        $this->getResponse()->setHeader('Content-type', 'application/json', true);
+        $this->getResponse()->setBody($content);
+    }
 }

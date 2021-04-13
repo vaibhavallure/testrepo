@@ -43,6 +43,7 @@ class Mage_Wishlist_Helper_Data extends Mage_Core_Helper_Abstract
      * Config key 'Display Out of Stock Products'
      */
     const XML_PATH_CATALOGINVENTORY_SHOW_OUT_OF_STOCK = 'cataloginventory/options/show_out_of_stock';
+    const XML_PATH_WISHLIST_EMAIL_ENABLE = 'wishlist/email/enable';
 
     /**
      * Currently logged in customer
@@ -634,5 +635,10 @@ class Mage_Wishlist_Helper_Data extends Mage_Core_Helper_Abstract
             $params[Mage_Core_Model_Url::FORM_KEY] = $this->_getSingletonModel('core/session')->getFormKey();
         }
         return $this->_getUrlStore($item)->getUrl('wishlist/index/cart', $params);
+    }
+
+    public function isSharingEnabled()
+    {
+        return Mage::getStoreConfigFlag(self::XML_PATH_WISHLIST_EMAIL_ENABLE);
     }
 }

@@ -55,7 +55,7 @@ class Mage_Centinel_Adminhtml_Centinel_IndexController extends Mage_Adminhtml_Co
             Mage::logException($e);
             $result['message'] = Mage::helper('centinel')->__('Validation failed.');
         }
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $this->_sendJsonResponse($result);
     }
 
     /**
