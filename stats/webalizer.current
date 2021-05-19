@@ -1,0 +1,428 @@
+# Webalizer V2.23-08 Incremental Data - 05/18/2021 21:43:39
+2021 5 18 21 43 39
+445 366 33 62 20 21 39395155 83 24 0
+3 1 139 14 18
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+281 214 29088020 22 63 14
+60 60 3523978 2 2 2
+0 0 0 0 0 0
+73 62 5084978 9 15 5
+31 30 1698179 3 3 3
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0
+0 0 0 0
+1 0 227 1
+0 0 0 0
+0 0 0 0
+29 29 1684829 1
+0 0 0 0
+26 24 3950628 6
+51 11 9872079 19
+199 179 15292680 31
+0 0 0 0
+0 0 0 0
+74 63 5098101 16
+0 0 0 0
+0 0 0 0
+5 3 39823 5
+0 0 0 0
+0 0 0 0
+59 56 3443665 3
+0 0 0 0
+0 0 0 0
+1 1 13123 1
+0 0 0 0
+0 0 0 0
+0
+0
+0
+366
+0
+0
+0
+0
+0
+0
+0
+1
+11
+0
+0
+0
+0
+0
+0
+0
+0
+58
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+9
+0
+0
+0
+0
+0
+# -urls- 
+/vendor/almasaeed2010/adminlte/bower_components/fastclick/lib/fastclick.js
+0 9 17179869184 233685 0 0
+/vendor/almasaeed2010/adminlte/plugins/input-mask/jquery.inputmask.js
+0 9 0 814851 0 0
+/view/traduction
+0 1 0 168847 0 0
+/vendor/almasaeed2010/adminlte/dist/css/AdminLTE.min.css
+0 9 0 823509 0 0
+/vendor/almasaeed2010/adminlte/plugins/input-mask/jquery.inputmask.extensions.js
+0 8 0 42520 0 0
+/js/millesima/fonctions.js
+0 9 0 117036 0 0
+/view/message_action
+0 1 0 1941272 0 0
+/vendor/ckeditor/ckeditor/skins/moono-lisa/editor.css
+0 3 0 153438 0 0
+/vendor/almasaeed2010/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.js
+0 8 0 110656 0 0
+/js/millesima/message.js
+0 11 0 638671 0 0
+/vendor/datatables/datatables/media/css/dataTables.bootstrap.min.css
+0 8 0 34776 0 0
+/vendor/ckeditor/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css
+0 2 0 2612 0 0
+/view/ajax/brief_info/uiosprim
+0 2 0 28 0 0
+/vendor/almasaeed2010/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js
+0 8 0 182512 0 0
+/vendor/ckeditor/ckeditor/ckeditor.js
+0 11 0 7269471 0 0
+/view/ressource
+0 2 0 900582 1 0
+/vendor/ckeditor/ckeditor/plugins/dialog/styles/dialog.css
+0 2 0 498 0 0
+/view/message
+0 3 0 852953 1 1
+/js/millesima/brief.js
+0 9 0 28998 0 0
+/emailing/
+0 1 0 13123 0 0
+/vendor/ckeditor/ckeditor/plugins/tableselection/styles/tableselection.css
+0 2 0 2290 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js
+0 9 0 309375 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js
+0 9 0 4824 0 0
+/vendor/ckeditor/ckeditor/plugins/scayt/dialogs/dialog.css
+0 2 0 838 0 0
+/vendor/datatables/datatables/media/js/dataTables.bootstrap.min.js
+0 9 0 28431 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js
+0 11 0 633083 0 0
+/vendor/fancyapps/fancybox/source/jquery.fancybox.css
+0 8 0 39512 0 0
+/vendor/ckeditor/ckeditor/contents.css
+0 2 891726393017044139 6188 0 0
+/vendor/ckeditor/ckeditor/plugins/icons_hidpi.png
+1 1 0 40404 0 0
+/css/millesima.css
+0 8 0 12792 0 0
+/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js
+0 9 0 130932 0 0
+/view/brief/create
+0 1 0 46678 0 0
+/vendor/almasaeed2010/adminlte/bower_components/jquery/dist/jquery.min.js
+0 9 0 782343 0 0
+/js/millesima/traduction.js
+0 9 0 185652 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
+0 4 0 72112 0 0
+/js/millesima/campaign.js
+0 9 0 96993 0 0
+/vendor/ckeditor/ckeditor/skins/moono-lisa/icons_hidpi.png
+1 1 0 40404 0 0
+/vendor/ckeditor/ckeditor/lang/en.js
+0 3 0 37464 0 0
+/view/campaign_stat
+0 1 0 17101 0 0
+/.well-known/acme-challenge/pMgweNqm_pO7mkt5Cs7t4IV_baKzj5d-MJy8ZyRWrVQ
+0 4 0 348 0 0
+/view/ajax/brief_info/iosliv
+0 1 0 15 0 0
+/.well-known/acme-challenge/kyK_zlm3hsv4K0cxti2cgSji75n_n-56qjKxHwslA24
+0 4 0 348 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js
+0 9 0 333405 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/css/bootstrap.css.map
+0 1 0 389287 0 0
+/vendor/ckeditor/ckeditor/styles.js
+0 3 0 16737 0 0
+/vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/css/bootstrap.css
+0 9 0 1314090 0 0
+/vendor/datatables/datatables/media/js/jquery.dataTables.min.js
+0 9 0 761823 0 0
+/.well-known/acme-challenge/5SEwu9gd8sG8SPVwfv38vueluzWBrKQorvLPUt7NGdQ
+0 4 0 348 0 0
+/
+0 33 8246704940826898019 14055111 20 1
+/vendor/almasaeed2010/adminlte/bower_components/font-awesome/fonts/fontawesome-webfont.woff2
+0 8 7885630522610513011 617280 0 0
+/.well-known/acme-challenge/fuBFqjKqwcK6JjTaIpbI1yx_G9V-GpoaCTaVW4yFDDk
+0 4 30803244233226081 348 0 0
+/vendor/almasaeed2010/adminlte/dist/css/skins/_all-skins.css
+0 8 72057594037927936 387384 0 0
+/vendor/almasaeed2010/adminlte/bower_components/Ionicons/css/ionicons.min.css
+0 9 10664868280276103985 461556 0 0
+/vendor/fancyapps/fancybox/source/jquery.fancybox.js
+0 8 7236828726449762162 390360 0 0
+/vendor/ckeditor/ckeditor/config.js
+0 3 83537 4041 0 0
+/view/brief
+0 7 0 3064406 0 0
+/vendor/ckeditor/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css
+0 2 0 762 0 0
+/view/segment
+0 1 0 499656 1 0
+/view/campaign_create
+0 1 0 16643 0 0
+/.well-known/acme-challenge/KSmffmLqwRryinxmoUsPzQBo7eLONKcU8GKqiM4nmeU
+0 4 0 348 0 0
+/view/ajax/verif_brief/
+0 3 0 87 0 0
+/vendor/almasaeed2010/adminlte/bower_components/font-awesome/css/font-awesome.min.css
+0 8 0 248000 0 0
+# End Of Table - urls
+# -sites- (monthly)
+103.152.180.12
+0 129 77 10072822 4 1620984092
+/view/message_action
+ec2-18-206-83-177.compute-1.amazonaws.com
+0 1 1 13123 1 1621255924
+/
+168.151.242.213
+0 30 30 1761989 1 1621071976
+/
+ec2-52-91-208-148.compute-1.amazonaws.com
+0 1 0 521 0 0
+-
+c10-19.tlh.ro
+0 5 3 2957656 1 1620980179
+/
+c10-91.tlh.ro
+0 5 3 2957656 1 1620979108
+/
+ec2-18-205-119-1.compute-1.amazonaws.com
+0 2 1 13644 1 1620983742
+/
+ec2-3-92-196-89.compute-1.amazonaws.com
+0 1 0 521 1 1621255776
+-
+ec2-34-221-255-206.us-west-2.compute.amazonaws.com
+0 1 1 87 0 0
+-
+ec2-3-120-130-29.eu-central-1.compute.amazonaws.com
+0 1 1 87 0 0
+-
+61-108-158-51.instances.scw.cloud
+0 1 0 227 1 1621305401
+/
+ec2-100-24-123-197.compute-1.amazonaws.com
+0 1 0 521 0 0
+-
+broadband.actcorp.in
+0 62 59 3448381 2 1621314982
+/
+ec2-54-221-27-173.compute-1.amazonaws.com
+0 1 1 13123 1 1620993874
+/
+propet.milleniervices.net
+0 5 3 2957656 1 1620979540
+/
+emailer1-103.thinins.net
+0 5 3 2957656 1 1620979757
+/
+ec2-18-116-86-117.us-east-2.compute.amazonaws.com
+0 2 2 174 0 0
+-
+c-24-0-80-234.hsd1.nj.comcast.net
+0 33 30 3292575 1 1621253552
+/view/brief
+ec2-3-19-56-43.us-east-2.compute.amazonaws.com
+0 2 2 174 0 0
+-
+ec2-54-189-22-122.us-west-2.compute.amazonaws.com
+0 2 2 174 0 0
+-
+ec2-3-122-178-200.eu-central-1.compute.amazonaws.com
+0 2 2 174 0 0
+-
+outbound1.letsencrypt.org
+0 5 5 435 0 0
+-
+ec2-3-142-122-14.us-east-2.compute.amazonaws.com
+0 1 1 87 0 0
+-
+65.155.30.101
+0 1 1 991232 1 1620978080
+/
+cpe-72-227-181-74.nyc.res.rr.com
+0 102 99 6124491 2 1621016532
+/view/traduction
+247-103-158-51.instances.scw.cloud
+0 1 1 13123 1 1621374219
+/
+ec2-3-226-243-36.compute-1.amazonaws.com
+0 1 1 13123 1 1621253506
+/
+64.137.63.60
+0 30 30 1761989 1 1621071976
+/
+ec2-54-158-75-229.compute-1.amazonaws.com
+0 1 0 521 0 0
+-
+ec2-52-39-4-59.us-west-2.compute.amazonaws.com
+0 2 2 174 0 0
+-
+c10-34.tlh.ro
+0 5 3 39823 1 1621006614
+/
+ec2-3-236-142-11.compute-1.amazonaws.com
+0 2 0 1042 0 0
+-
+ec2-18-184-114-154.eu-central-1.compute.amazonaws.com
+0 2 2 174 0 0
+-
+# End Of Table - sites (monthly)
+# -sites- (daily)
+61-108-158-51.instances.scw.cloud
+0 1 0 227 1 1621305401
+/
+broadband.actcorp.in
+0 29 29 1684829 1 1621314982
+/
+247-103-158-51.instances.scw.cloud
+0 1 1 13123 1 1621374219
+/
+# End Of Table - sites (daily)
+# -referrers- 
+http://mellisima.allurecommerce.com/vendor/almasaeed2010/adminlte/bower_components/font-awesome/css/font-awesome.min.css
+0 1
+https://mellisima.allurecommerce.com/view/brief
+0 6
+https://mellisima.allurecommerce.com/view/message_action
+0 32
+https://mellisima.allurecommerce.com/view/message
+0 15
+https://mellisima.allurecommerce.com/vendor/ckeditor/ckeditor/skins/moono-lisa/editor.css
+0 1
+https://mellisima.allurecommerce.com/view/campaign_create
+0 4
+https://mellisima.allurecommerce.com/view/campaign_stat
+0 1
+- (Direct Request)
+0 93
+https://mellisima.allurecommerce.com/vendor/almasaeed2010/adminlte/bower_components/font-awesome/css/font-awesome.min.css
+0 6
+https://mellisima.allurecommerce.com/vendor/almasaeed2010/adminlte/bower_components/bootstrap/dist/css/bootstrap.css
+0 3
+https://mellisima.allurecommerce.com/emailing/
+0 31
+https://mellisima.allurecommerce.com/emailling
+0 1
+https://mellisima.allurecommerce.com/view/campaign
+0 1
+https://mellisima.allurecommerce.com/
+0 195
+https://mellisima.allurecommerce.com/view/segment
+0 5
+https://mellisima.allurecommerce.com/view/traduction
+0 10
+https://ns536614.ip-144-217-68.net:10000/
+0 1
+https://mellisima.allurecommerce.com/view/ressource
+0 2
+https://mellisima.allurecommerce.com/view/brief/create
+0 9
+http://mellisima.allurecommerce.com/
+0 28
+# End Of Table - referrers
+# -agents- 
+Mozilla/5.0 (iPhone; CPU iPhone OS 13_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Mobile/15E148 
+0 60
+Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)
+0 20
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.71 Safari/537.36
+0 1
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36
+0 4
+Slackbot-LinkExpanding 1.0 (+https://api.slack.com/robots)
+0 4
+Mozilla/5.0 (iPhone; CPU iPhone OS 14_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1 Mobile/15E148 
+0 43
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+0 33
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
+0 59
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:58.0) Gecko/20100101 Firefox/58.0
+0 2
+Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0
+0 2
+Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+0 3
+Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 
+0 5
+Slackbot 1.0 (+https://api.slack.com/robots)
+0 6
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/604.5.6 (KHTML, like Gecko) Version/11.0.3 Safari/604.5.6
+0 1
+Mozilla/5.0 (Linux; U; Android 4.4.2; en-us; SCH-I535 Build/KOT49H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile
+0 3
+Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Sa
+0 3
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.1
+0 1
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
+0 62
+Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36
+0 1
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36
+0 1
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36
+0 129
+# End Of Table - agents
+# -search strings- 
+# End Of Table - search strings
+# -usernames- 
+# End Of Table - usernames

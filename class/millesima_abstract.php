@@ -14,7 +14,7 @@
 class Millesima_Abstract{
 
     const DOCTYPE = "<!DOCTYPE html>";
-    const DOCKER_HOST_IP = 'SRV-V-ZEND';
+    const DOCKER_HOST_IP = '54.217.7.96';
     const DOCKER_HOST_PORT = '8080';
 
 

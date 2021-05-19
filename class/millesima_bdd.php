@@ -9,10 +9,10 @@
 
 class Millesima_Bdd
 {
-    const HOST = 'millesima-emailing-mysql';
-    const USERNAME = 'emailing';
-    const PASSWORD = 'emailing';
-    const DBNAME = 'emailing';
+    const HOST = 'localhost';
+    const USERNAME = 'mellisima';
+    const PASSWORD = 'MRHUoWOvc3RBcqH';
+    const DBNAME = 'mellisima';
 
     /**
      *
