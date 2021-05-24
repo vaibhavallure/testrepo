@@ -638,7 +638,7 @@ Product.Config.prototype.updateFormProductId = function(productId){
  
     if(flag){
     	//for non parent child
-    	newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
+    	newcurrentAction = currentAction.gsub(/product\/\d+\//, 'product/' + productId + '/');
         $('product_addtocart_form').action = newcurrentAction;
         $('product_addtocart_form').product.value = productId;
     }
