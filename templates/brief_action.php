@@ -676,12 +676,12 @@ if($button == 'Modifier'){
             success: function(data)
             {
                 if(id == ''){
-                    if(name == 'iosprim' ||name == 'uiosprim'){
+                    /*if(name == 'iosprim' ||name == 'uiosprim'){
                         var year = ((new Date().getFullYear())-1).toString().substr(-2);
                         data = data.split('-');
                         var inc = data[1];
                         data = year + '-' + inc;
-                    }
+                    }*/
                     code = data;
 
                 }
