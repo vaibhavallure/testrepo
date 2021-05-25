@@ -122,7 +122,7 @@ if($button == 'Modifier'){
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="codemessage">Code (Depend du type)</label>
+                                        <label for="codemessage">Code (Depend du type) <span style="color:red;">*</span></label>
                                         <input name="code" type="text" id="code" class="form-control" value="<?php echo $code ?>" onchange="selectTypeBrief()" <?php echo (isset($brief['id']) ? 'readonly' : '') ?>>
                                     </div>
                                 </div>
@@ -140,13 +140,13 @@ if($button == 'Modifier'){
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="tracking">Tracking du message (mise à jour auto dès que le type, le theme, la categorie ou le code promo changent)</label>
+                                        <label for="tracking">Tracking du message (mise à jour auto dès que le type, le theme, la categorie ou le code promo changent) <span style="color:red;">*</span></label>
                                         <input name="tracking" type="text" id="tracking" class="form-control" value="<?php echo ((isset($brief['id'])) ? $brief['tracking'] : '')?>">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="codemessage">Pays</label>
+                                        <label for="codemessage">Pays <span style="color:red;">*</span></label>
                                         <?php
                                             $listPays = array();
                                             if (isset($brief['id']) && $brief['pays'] != '') {
@@ -182,19 +182,19 @@ if($button == 'Modifier'){
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="codemessage">Objet</label>
+                                        <label for="codemessage">Objet <span style="color:red;">*</span></label>
                                         <input type="text" name="objfr" id="objfr" value="<?php echo ((isset($brief['id'])) ? htmlspecialchars($brief['objfr']) : '')?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="tracking">Sous-objet</label>
+                                        <label for="tracking">Sous-objet <span style="color:red;">*</span></label>
                                         <input name="subobj" type="text" id="subobj" class="form-control" value="<?php echo ((isset($brief['id'])) ? htmlspecialchars($brief['subobj']) : '')?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="dateenvoi">Date d'envoi</label>
+                                        <label for="dateenvoi">Date d'envoi <span style="color:red;">*</span></label>
                                         <div class="input-group bootstrap-datepicker">
                                             <input type="text" class="form-control datepicker date" name="dateenvoi" id="dateenvoi" value=""/>
                                             <span class="input-group-addon">
@@ -218,7 +218,7 @@ if($button == 'Modifier'){
                             <div class="col-md-6">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Wording Visuel</label>
+                                        <label>Wording Visuel <span style="color:red;">*</span></label>
                                         <textarea id="wording" name="wording" class="form-control" rows="3" placeholder="Enter ..."><?php echo ((isset($brief['id'])) ? htmlspecialchars($brief['wording']) : '')?></textarea>
                                     </div>
                                 </div>
@@ -359,7 +359,7 @@ if($button == 'Modifier'){
                     <div class="box box-primary">
                         <div class="box-header">
                             <span class="radio">
-                                <h3 class="box-title">Slide</h3>
+                                <h3 class="box-title">Slide <span style="color:red;">*</span></h3>
                                 <label>
                                     <input type=radio name="slide" value="1" onClick="afficheContenu('slide')" <?php echo ((isset($brief['id']) && $brief['slide']) ? 'checked="checked"' : '')?>>
                                     oui
@@ -411,7 +411,7 @@ if($button == 'Modifier'){
                     <div class="box box-primary">
                         <div class="box-header">
                             <span class="radio">
-                                <h3 class="box-title">Descente produit - Bloc Image</h3>
+                                <h3 class="box-title">Descente produit - Bloc Image <span style="color:red;">*</span></h3>
                                 <label>
                                     <input type=radio name="blcimg" value="1" onClick="afficheContenu('blcimg')" <?php echo ((isset($brief['id']) && $brief['blcimg']) ? 'checked="checked"' : '') ?>>
                                     oui
@@ -572,7 +572,7 @@ if($button == 'Modifier'){
     function validateForm() {
         //test des champs
         var code = $("#code").val();
-
+        var wording = $("#wording").val();
         var tracking = $("#tracking").val();
         var dateenvoi = $("#dateenvoi").val();
         var objfr = $("#objfr").val();
@@ -583,6 +583,9 @@ if($button == 'Modifier'){
             return false;
         }else if(tracking == null || tracking == ""){
             showPopUp("J'ai pas de tracking, Je veux un tracking");
+            return false;
+        }else if(wording == null || wording == ""){
+            showPopUp("J'ai pas de wording, Je veux un wording");
             return false;
         }else if(dateenvoi == null || dateenvoi == ""){
             showPopUp("J'ai pas de date d'envoi, Je veux une date d'envoi");
