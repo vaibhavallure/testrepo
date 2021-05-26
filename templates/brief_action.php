@@ -579,25 +579,32 @@ if($button == 'Modifier'){
         var subobj = $("#subobj").val();
         var nbPays = $( "input[type=checkbox]:checked" ).length;
         if (code == null || code == "") {
-            showPopUp("J'ai pas de code, Je veux un code");
+            //showPopUp("J'ai pas de code, Je veux un code");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }else if(tracking == null || tracking == ""){
-            showPopUp("J'ai pas de tracking, Je veux un tracking");
+            //showPopUp("J'ai pas de tracking, Je veux un tracking");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }else if(wording == null || wording == ""){
-            showPopUp("J'ai pas de wording, Je veux un wording");
+            //showPopUp("J'ai pas de wording, Je veux un wording");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }else if(dateenvoi == null || dateenvoi == ""){
-            showPopUp("J'ai pas de date d'envoi, Je veux une date d'envoi");
+            //showPopUp("J'ai pas de date d'envoi, Je veux une date d'envoi");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }else if(objfr == null || objfr == ""){
-            showPopUp("J'ai pas d'objet fr, Je veux un objet fr");
+            //showPopUp("J'ai pas d'objet fr, Je veux un objet fr");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }else if(subobj == null || subobj == ""){
-            showPopUp("J'ai pas de sous-objet, Je veux un sous-objet");
+            //showPopUp("J'ai pas de sous-objet, Je veux un sous-objet");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }else if (nbPays == 0){
-            showPopUp("Merci de cocher au moins 1 pays");
+            //showPopUp("Merci de cocher au moins 1 pays");
+            showPopUp("Afin de valider le brief, veuillez vérifier que tous les champs obligatoires marqués par une astérique soient renseignés.");
             return false;
         }
 
