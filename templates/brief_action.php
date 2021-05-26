@@ -723,7 +723,8 @@ if($button == 'Modifier'){
 					dataType: "json",
 					success: function(data)
 					{
-						if(data.briefexist == 'true'){
+						console.log(data);
+						if(data.briefexist == 'true' && $('#form1 input#id').val() == ""){
 							showPopUp('Un brief du type ' + elmValue + ' avec le ' + code + ' existe déja' );
 						}
 					},
