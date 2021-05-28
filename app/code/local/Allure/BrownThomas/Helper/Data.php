@@ -74,7 +74,7 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
         $this->updateProducts=$this->modelData()->getUpdatedProducts();
 
         $FITEM_FUDAS_NewProduct=$this->modelData()->getFITEM_FUDAS($this->newProducts,'N');
-        $FITEM_FUDAS_UpdatedProduct=$this->modelData()->getFITEM_FUDAS($this->updateProducts,'U');
+        $FITEM_FUDAS_UpdatedProduct=$this->modelData()->getFITEM_FUDAS($this->updateProducts,'N');
 
         if(count($this->newProducts)==0)
         {
@@ -101,7 +101,7 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
         /*------------write PRICE-----------------------------*/
         $this->writeFile($this->modelData()->getPriceData($this->newProducts,'N'));
-        $this->writeFile($this->modelData()->getPriceData($this->updateProducts,'U'));
+        $this->writeFile($this->modelData()->getPriceData($this->updateProducts,'N'));
 
         $this->add_log("foundation file generated file");
 
