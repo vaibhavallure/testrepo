@@ -314,7 +314,7 @@ class Millesima_Brief extends Millesima_Abstract
      * @return mixed
      */
     public function create($data, $briefcopie = false){
-
+        
         $bddClass = new Millesima_Bdd();
         $nbChampATraduire =0;
         //fonction to concat pays and offre sup
@@ -420,18 +420,30 @@ class Millesima_Brief extends Millesima_Abstract
         $values[] = $dateBrief;
         $attributs .= ',created_at';
         $pointInterogation .= ',?)';
+    
 
-        //insert in bdd du brief
-        $requete =  "INSERT INTO brief (".$attributs.")
-                    VALUES ".$pointInterogation;
-        $result = $bddClass->insert($requete,$values);
-        if ($result == "0") {
-            //text de retour de la non création du brief
+        // check "code" is exist before insert // Gaurang
+        $cntbrief= $bddClass->selectAll("SELECT * FROM brief WHERE code = '".$data['code']."' ");
+        
+        if(count($cntbrief) > 0){
             $html = '';
-            $html .="Le brief n'a pas été créé, une erreur est survenue.";
+            $html .="Duplicating the brief. Please try again!";
             $return['html'] = $html;
             $return['id'] = '0';
             return $return;
+        } else {
+            //insert in bdd du brief
+            $requete =  "INSERT INTO brief (".$attributs.")
+                        VALUES ".$pointInterogation;
+            $result = $bddClass->insert($requete,$values);
+            if ($result == "0") {
+                //text de retour de la non création du brief
+                $html = '';
+                $html .="Le brief n'a pas été créé, une erreur est survenue.";
+                $return['html'] = $html;
+                $return['id'] = '0';
+                return $return;
+            }
         }
 
         //update config identifiant du message
