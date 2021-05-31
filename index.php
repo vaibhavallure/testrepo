@@ -87,6 +87,8 @@ $app->post('/view/ajax/ressource_info/','searchRessource');
 $app->get('/view/emailtest','getEmail');
 function getEmail(){
     echo mail("gaurang.patel@allurecommerce.com", "Email send from code", "Hello Gaurang, This email send from Code File");
+
+    echo "<br> Email sent?";
     exit;
 }
 /* Gaurang Email Test*/
