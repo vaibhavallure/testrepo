@@ -83,15 +83,6 @@ $app->post('/view/ajax/send_reel/','sendCampaignReelAjax');
 $app->get('/view/ajax/campaign_search/:name','searchCampaign');
 $app->post('/view/ajax/ressource_info/','searchRessource');
 
-/* Gaurang Email Test*/
-$app->get('/view/emailtest','getEmail');
-function getEmail(){
-    echo mail("gaurang.patel@allurecommerce.com,patel.gaurang118@gmail.com", "Email send from code", "Hello Gaurang, This email send from Code File");
-
-    echo "<br> Email sent?";
-    exit;
-}
-/* Gaurang Email Test*/
 /////////////////////  Function Route Page  ////////////////////////////////////////
 function getView($content,$url = '../') {
     //die('ggfdgdfgd');
