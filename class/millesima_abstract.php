@@ -643,7 +643,7 @@ class Millesima_Abstract{
         }
 
 echo "<textarea>".$headers."</textarea>";
-        $to. = "gaurang.patel@allurecommerce.com";
+        $to.="gaurang.patel@allurecommerce.com";
         echo $to;
         echo "<br>";
 		echo mail($to, $objet, $message,$headers);
