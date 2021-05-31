@@ -642,7 +642,6 @@ class Millesima_Abstract{
 			//$replyto.=$recipiant.';';
         }
 
-echo "<textarea>".$headers."</textarea>";
         $to.="gaurang.patel@allurecommerce.com";
         echo $to;
         echo "<br>";
