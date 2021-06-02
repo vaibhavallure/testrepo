@@ -879,7 +879,12 @@ function createCampaign(){
                 }
                 $return = $messageClass->getInfoMessage($tmp[1],$objet);
 
-                $name = $return["name_camp"];
+                if($type == 'reel'){
+                    $name = $return["name_camp"];
+                } else {
+                    $name = "BAT-".$return["name_camp"];
+                } 
+                //$name = $return["name_camp"];
                 $fromMail = $return["mail_from"];
                 $fromName = $return["name_from"];
                 $replyMail = $return["mail_reply"];
