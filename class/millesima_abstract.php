@@ -14,9 +14,9 @@
 class Millesima_Abstract{
 
     const DOCTYPE = "<!DOCTYPE html>";
-    //const DOCKER_HOST_IP = '54.217.7.96';
-    //const DOCKER_HOST_PORT = '8080';
-    const DOCKER_URL = 'https://millesima-dev.allurecommerce.com';
+    const DOCKER_HOST_IP = 'https://millesima-dev.allurecommerce.com';
+    const DOCKER_HOST_PORT = '8080';
+    const DOCKER_URL = 'millesima-dev.allurecommerce.com';
 
     public function getInfoMessage($name,$objet){
         $store = substr($name, 0 ,2 );
