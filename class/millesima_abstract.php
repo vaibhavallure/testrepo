@@ -16,7 +16,7 @@ class Millesima_Abstract{
     const DOCTYPE = "<!DOCTYPE html>";
     const DOCKER_HOST_IP = '54.217.7.96';
     const DOCKER_HOST_PORT = '8080';
-
+    const DOCKER_URL = 'https://millesima-dev.allurecommerce.com';
 
     public function getInfoMessage($name,$objet){
         $store = substr($name, 0 ,2 );
@@ -466,7 +466,7 @@ class Millesima_Abstract{
             }
             $objet = 'Création d\'un brief par l\'équipe Marketing';
             $message .=' a été créé par l\'équipe Marketing : <br />';
-            $message .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/brief/mail/'.$id.'<br />';
+            $message .= 'http://'. self::DOCKER_URL.'/view/brief/mail/'.$id.'<br />';
 			$message .= ''. '<br />';
             $message .= 'Merci de le valider à votre tour.'. '<br />';
         } else if($type == 'content'){
@@ -476,7 +476,7 @@ class Millesima_Abstract{
             }
             $objet = 'Validation marketing du brief emailing '.$codeBrief;
             $message .=' a été validé par l\'équipe Marketing :'. '<br />';
-            $message .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/brief/mail/'.$id.'<br />';
+            $message .= 'http://'. self::DOCKER_URL.'/view/brief/mail/'.$id.'<br />';
 			$message .= ''. '<br />';
             $message .= 'Merci de le valider à votre tour.'. '<br />';
         } else if($type == 'commerciaux')
@@ -490,8 +490,8 @@ class Millesima_Abstract{
 
             if(isset($brief['pays_p'])){
                 $messageP = $message;
-                $messageP .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/p-'.$id.'<br />';
-                $liens .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/p-'.$id.'<br />';
+                $messageP .= 'http://'. self::DOCKER_URL .'/view/traduction/check/p-'.$id.'<br />';
+                $liens .= 'http://'. self::DOCKER_URL.'/view/traduction/check/p-'.$id.'<br />';
                 $messageP .= '<br />';
                 $messageP .= 'Merci'. '<br />';
                 //mail('alopes@millesima.com', $objet, $messageP,$headers);
@@ -502,8 +502,8 @@ class Millesima_Abstract{
             }
             if(isset($brief['pays_g']) || isset($brief['pays_i']) ||isset($brief['pays_h']) || isset($brief['pays_sg'])){
                 $messageG = $message;
-                $messageG .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/g-'.$id.'<br />';
-                $liens .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/g-'.$id.'<br />';
+                $messageG .= 'http://'. self::DOCKER_URL .'/view/traduction/check/g-'.$id.'<br />';
+                $liens .= 'http://'. self::DOCKER_URL .'/view/traduction/check/g-'.$id.'<br />';
                 $messageG .= ''. '<br />';
                 $messageG .= 'Merci'. '<br />';
                 //mail('alopes@millesima.com', $objet, $messageG,$headers);
@@ -517,8 +517,8 @@ class Millesima_Abstract{
             if(isset($brief['pays_e']) || isset($brief['pays_y'])){
                 if(isset($brief['pays_e'])){
                     $messageE = $message;
-                    $messageE .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/e-'.$id.'<br />';
-                    $liens .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/e-'.$id.'<br />';
+                    $messageE .= 'http://'. self::DOCKER_URL .'/view/traduction/check/e-'.$id.'<br />';
+                    $liens .= 'http://'. self::DOCKER_URL .'/view/traduction/check/e-'.$id.'<br />';
                     $messageE .= ''. '<br />';
                     $messageE .= 'Merci'. '<br />';
 					//mail('alopes@millesima.com', $objet, $messageE,$headers);
@@ -529,8 +529,8 @@ class Millesima_Abstract{
                 }
                 if (isset($brief['pays_y'])){
                     $messageY = $message;
-                    $messageY .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/y-'.$id.'<br />';
-                    $liens .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/y-'.$id.'<br />';
+                    $messageY .= 'http://'. self::DOCKER_URL .'/view/traduction/check/y-'.$id.'<br />';
+                    $liens .= 'http://'. self::DOCKER_URL .'/view/traduction/check/y-'.$id.'<br />';
                     $messageY .= ''. '<br />';
                     $messageY .= 'Merci'. '<br />';
 					//mail('alopes@millesima.com', $objet, $messageY,$headers);
@@ -544,8 +544,8 @@ class Millesima_Abstract{
             }
             if(isset($brief['pays_d']) || isset($brief['pays_o']) || isset($brief['pays_sa'])){
                 $messageD = $message;
-                $messageD .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/d-'.$id.'<br />';
-                $liens .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/d-'.$id.'<br />';
+                $messageD .= 'http://'. self::DOCKER_URL .'/view/traduction/check/d-'.$id.'<br />';
+                $liens .= 'http://'. self::DOCKER_URL .'/view/traduction/check/d-'.$id.'<br />';
                 $messageD .= ''. '<br />';
                 $messageD .= 'Merci'. '<br />';
                 //mail('alopes@millesima.com', $objet, $messageD,$headers);
@@ -557,8 +557,8 @@ class Millesima_Abstract{
             }
             if(isset($brief['pays_u'])){
                 $messageU = $message;
-                $messageU .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/u-'.$id.'<br />';
-                $liens .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/u-'.$id.'<br />';
+                $messageU .= 'http://'. self::DOCKER_URL .'/view/traduction/check/u-'.$id.'<br />';
+                $liens .= 'http://'. self::DOCKER_URL .'/view/traduction/check/u-'.$id.'<br />';
                 $messageU .= ''. '<br />';
                 $messageU .= 'Merci'. '<br />';
                 //mail('alopes@millesima.com', $objet, $messageU,$headers);
@@ -580,7 +580,7 @@ class Millesima_Abstract{
             $message .='Liste des pays : '.$pays. '<br />'. '<br />';
 
             if(isset($brief['pays_g']) || isset($brief['pays_i']) || isset($brief['pays_h']) || isset($brief['pays_sg'])){
-                $message .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/g-'.$id.'<br />';
+                $message .= 'http://'. self::DOCKER_URL .'/view/traduction/check/g-'.$id.'<br />';
                 if(!$testenvoi){
                     $recipiants[] = 'pdunoyer@millesima.com';
                     $recipiants[] = 'npiro@millesima.com';
@@ -590,7 +590,7 @@ class Millesima_Abstract{
 
             }
             if(isset($brief['pays_d']) || isset($brief['pays_o']) || isset($brief['pays_sa']) || isset($brief['pays_sf'])){
-                $message .= 'http://'. self::DOCKER_HOST_IP . ':'. self::DOCKER_HOST_PORT .'/view/traduction/check/d-'.$id.'<br />';
+                $message .= 'http://'. self::DOCKER_URL .'/view/traduction/check/d-'.$id.'<br />';
                 if(!$testenvoi){
                     $recipiants[] = 'utreptow@millesima.com';
                     $recipiants[] = 'bgibier@millesima.com';
