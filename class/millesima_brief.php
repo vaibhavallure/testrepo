@@ -421,13 +421,27 @@ class Millesima_Brief extends Millesima_Abstract
         $attributs .= ',created_at';
         $pointInterogation .= ',?)';
     
-
         // check "code" is exist before insert // Gaurang
         $cntbrief= $bddClass->selectAll("SELECT * FROM brief WHERE code = '".$data['code']."' ");
         
         if(count($cntbrief) > 0){
+            if($data['typebrief'] == 'livrable_eu'){
+            $cle = 'iosliv';
+        }else if($data['typebrief'] == 'primeur_eu'){
+            $cle = 'iosprim';
+        }else if($data['typebrief'] == 'livrable_us'){
+            $cle = 'uiosliv';
+        }else if($data['typebrief'] == 'primeur_us'){
+            $cle = 'uiosprim';
+        }else if($data['typebrief'] == 'edv'){
+            $cle = 'edv';
+        }else if($data['typebrief'] == 'staff_pick'){
+            $cle = 'uiospick';
+        }else if($data['typebrief'] == 'partenaire'){
+            $cle = 'iospart';
+        }
             $html = '';
-            $html .="Duplicating the brief. Please try again!";
+            $html .="Un Brief avec un code identique <strong>".$cle.$data['code']."</strong> viens d'être créer dans l’application - veuillez vérifier les Briefs dans le calendrier ci-dessous";
             $return['html'] = $html;
             $return['id'] = '0';
             return $return;
