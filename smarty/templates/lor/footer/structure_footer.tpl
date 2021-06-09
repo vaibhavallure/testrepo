@@ -64,7 +64,7 @@
                                                                     <td style="text-align:center" class="m_pb20px">
                                                                        {if isset($numero) }
                                                                         <a href="{$numero.href}" style="color:#000000;outline:none;border:none" title="{$tabcontacts.alt}">
-                                                                            <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-phone.png" alt="Phone" width="15" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
+                                                                            <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-phone.png" alt="Phone" width="15" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
                                                                         </a>
                                                                        {/if}
                                                                     </td>
@@ -129,7 +129,7 @@
                                                                     <td style="text-align:center">
                                                                         {foreach from=$tabcontacts.emails item=email name=emails}
                                                                             <a href="mailto:{$email}" style="color:#000000;outline:none;border:none" title="{$tabcontacts.alt}">
-                                                                                <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-mail.png" alt="email" width="25" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
+                                                                                <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-mail.png" alt="email" width="25" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
                                                                             </a>
                                                                             {if not $smarty.foreach.emails.last}{/if}{/foreach}
                                                                     </td>
@@ -265,7 +265,7 @@
                                                                         <table cellpadding="0" cellspacing="0" border="0" width="44" align="center" style="margin:auto;width:44px" class="t_w44px m_w44px" role="presentation">
                                                                             <tr>
                                                                                 <td style="padding-bottom:10px;text-align:center">
-                                                                                    <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-choix.png" alt="Product" width="44" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
+                                                                                    <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-choix.png" alt="Product" width="44" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
                                                                                          class="t_w100p m_w100p" />
                                                                                 </td>
                                                                             </tr>
@@ -316,7 +316,7 @@
                                                                         <table cellpadding="0" cellspacing="0" border="0" width="75" align="center" style="margin:auto;width:75px" class="t_w75px m_w75px" role="presentation">
                                                                             <tr>
                                                                                 <td style="padding-bottom:10px;text-align:center">
-                                                                                    <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-origine.png" alt="Chais Bordeaux" width="75" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
+                                                                                    <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-origine.png" alt="Chais Bordeaux" width="75" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
                                                                                          class="t_w100p m_w100p" />
                                                                                 </td>
                                                                             </tr>
@@ -385,7 +385,7 @@
                                                                         <table cellpadding="0" cellspacing="0" border="0" width="40" align="center" style="margin:auto;width:40px" class="t_w40px m_w40px" role="presentation">
                                                                             <tr>
                                                                                 <td style="padding-bottom:10px;text-align:center">
-                                                                                    <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-conseil.png" alt="Europe Usa Asie" width="40" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
+                                                                                    <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-conseil.png" alt="Europe Usa Asie" width="40" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
                                                                                          class="t_w100p m_w100p" />
                                                                                 </td>
                                                                             </tr>
@@ -436,7 +436,7 @@
                                                                         <table cellpadding="0" cellspacing="0" border="0" width="42" align="center" style="margin:auto;width:42px" class="t_w42px m_w42px" role="presentation">
                                                                             <tr>
                                                                                 <td style="padding-bottom:10px;text-align:center">
-                                                                                    <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-livraison.png" alt="Shipping" width="42" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
+                                                                                    <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-livraison.png" alt="Shipping" width="42" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none"
                                                                                          class="t_w100p m_w100p" />
                                                                                 </td>
                                                                             </tr>
@@ -515,7 +515,7 @@
                                                     <tr>
                                                         <td style="text-align:center">
                                                             <a href="{$social.facebook}" style="color:#000000;outline:none;border:none" title="Facebook">
-                                                                <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon_facebook.png" alt="Facebook" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
+                                                                <img src="https://cdn.millesima.com/templates/00_elements_communs/icon_facebook.png" alt="Facebook" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                 />
                                                             </a>
                                                         </td>
@@ -537,7 +537,7 @@
                                                     <tr>
                                                         <td style="text-align:center">
                                                             <a href="{$social.twitter}" style="color:#000000;outline:none;border:none" title="Twitter">
-                                                                <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon_twitter.png" alt="Twitter" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
+                                                                <img src="https://cdn.millesima.com/templates/00_elements_communs/icon_twitter.png" alt="Twitter" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                 />
                                                             </a>
                                                         </td>
@@ -559,7 +559,7 @@
                                                     <tr>
                                                         <td style="text-align:center">
                                                             <a href="https://fr.linkedin.com/company/millesima-sa" style="color:#000000;outline:none;border:none" title="Linkedin">
-                                                                <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon_linkedin.png" alt="Linkedin" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
+                                                                <img src="https://cdn.millesima.com/templates/00_elements_communs/icon_linkedin.png" alt="Linkedin" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                 />
                                                             </a>
                                                         </td>
@@ -581,7 +581,7 @@
                                                     <tr>
                                                         <td style="text-align:center">
                                                             <a href="{$social.youtube}" style="color:#000000;outline:none;border:none" title="Youtube">
-                                                                <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon_youtube.png" alt="Youtube" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
+                                                                <img src="https://cdn.millesima.com/templates/00_elements_communs/icon_youtube.png" alt="Youtube" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                 />
                                                             </a>
                                                         </td>
@@ -603,7 +603,7 @@
                                                     <tr>
                                                         <td style="text-align:center">
                                                           {if isset($social.instagram) } <a href="{$social.instagram}" style="color:#000000;outline:none;border:none" title="Instagram">
-                                                                <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon_instagram.png" alt="Instagram" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
+                                                                <img src="https://cdn.millesima.com/templates/00_elements_communs/icon_instagram.png" alt="Instagram" width="37" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                 />
                                                             </a>
                                                           {/if}

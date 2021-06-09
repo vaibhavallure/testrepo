@@ -31,7 +31,7 @@
                       <tr>
                         <td style="text-align:center">
                           <a href="{$articles.$article.url}" style="color:#000000;outline:none;border:none">
-                            <img src="{if $articles.$article.artimgprim}http://cdn.millesima.com.s3.amazonaws.com/templates/articles/primeurs/article_{$articles.$article.imgnb}.jpg{else}http://cdn.millesima.com.s3.amazonaws.com/{$type_message}/{$codemessagegeneral}/article_{$articles.$article.imgnb}.jpg{/if}" alt="{$articles.$article.titre}" width="320" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none;margin-bottom:15px;" class="t_w100p m_w100p" />
+                            <img src="{if $articles.$article.artimgprim}https://cdn.millesima.com/templates/articles/primeurs/article_{$articles.$article.imgnb}.jpg{else}https://cdn.millesima.com/{$type_message}/{$codemessagegeneral}/article_{$articles.$article.imgnb}.jpg{/if}" alt="{$articles.$article.titre}" width="320" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none;margin-bottom:15px;" class="t_w100p m_w100p" />
                           </a>
                         </td>
                       </tr>
@@ -55,7 +55,7 @@
                           <!-- text / 03247acb-6172-4b26-8236-da893b14aff8 -->
                           <table cellpadding="0" cellspacing="0" border="0" width="260" align="center" style="margin:auto;width:260px" class="t_w100p m_w100p" role="presentation">
                             <tr>
-                              <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#0a0a0a;text-align:center;font-size:25px;padding-top:15px;vertical-align:middle;line-height:30px" class=""t_pr8p t_pl8p m_pr8p m_pl8p crimsontext;{if $articles.$article.titreupper}text-transform:uppercase; {/if}"">
+                              <td style="font-family:Georgia,Times,Times New Roman,serif;font-weight:normal;color:#0a0a0a;text-align:center;font-size:20px;padding-top:15px;vertical-align:middle;line-height:30px" class=""t_pr8p t_pl8p m_pr8p m_pl8p crimsontext;{if $articles.$article.titreupper}text-transform:uppercase; {/if}"">
                               {$articles.$article.titre}
                               </td>
                             </tr>

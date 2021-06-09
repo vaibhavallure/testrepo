@@ -18,7 +18,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+33(0) 557 808 808", "href" => "tel:+33557808808")),
 						"ouverture" => "Vos conseillers sont disponibles du lundi au jeudi de 9H à 18H et le vendredi de 9H à 17H au 05 57 808 808.",
 						"emails" => array("conseil@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_france.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_france.jpg"),
                         "alt" =>"Contactez-nous"
 						);
 		break;
@@ -29,7 +29,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+33(0) 557 808 808 ", "href" => "tel:+33557808808")),
 						"ouverture" => "Vos conseillers sont disponibles du lundi au jeudi de 9H à 18H et le vendredi de 9H à 17H au 05 57 808 808.",
 						"emails" => array("conseil@millesima.com"),
-                        "image" => ("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_france.jpg"),
+                        "image" => ("https://cdn.millesima.com/templates/00_elements_communs/contact_france.jpg"),
                         "alt" =>"Contactez-nous"
 						);
 		break;
@@ -40,7 +40,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+33(0) 557 808 808 ", "href" => "tel:+33557808808")),
 						"ouverture" => "Vos conseillers sont disponibles du lundi au jeudi de 9H à 18H et le vendredi de 9H à 17H au 05 57 808 808.",
 						"emails" => array("conseil@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_france.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_france.jpg"),
                         "alt" =>"Contactez-nous"
 						);
 		break;
@@ -51,7 +51,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+41 43 550 03 42", "href" => "+41435500342")),
 						"ouverture" => "Vos conseillers sont disponibles du lundi au jeudi de 9H à 17H et le vendredi de 9H à 16H.",
 						"emails" => array("contact@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_allemagne.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_allemagne.jpg"),
                         "alt" =>"Contactez-nous"
 
 						);
@@ -63,7 +63,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "00800 267 33 289<br>(kostenlos)", "href" => "tel:00800 267 33 289")),
 						"ouverture" => "Unser Team steht Ihnen von Montag bis Donnerstag 9 Uhr bis 17 Uhr und Freitags 9 Uhr bis 16 Uhr zur Verfügung!",
 						"emails" => array("kontakt@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_allemagne.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_allemagne.jpg"),
                         "alt" =>"RUFEN SIE UNS UNS AN"
 						);
 		break;
@@ -74,7 +74,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "00800 267 33 289<br>(kostenlos)", "href" => "tel:00800 267 33 289")),
 						"ouverture" => "Unser Team steht Ihnen von Montag bis Donnerstag 9 Uhr bis 17 Uhr und Freitags 9 Uhr bis 16 Uhr zur Verfügung!",
 						"emails" => array("kontakt@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_allemagne.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_allemagne.jpg"),
                         "alt" =>"RUFEN SIE UNS UNS AN"
 						);
 		break;
@@ -85,7 +85,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+41 43 550 03 42", "href" => "+41435500342")),
 						"ouverture" => "Unser Team steht Ihnen von Montag bis Donnerstag 9 Uhr bis 17 Uhr und Freitags 9 Uhr bis 16 Uhr zur Verfügung!",
 						"emails" => array("kontakt@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_allemagne.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_allemagne.jpg"),
                         "alt" =>"RUFEN SIE UNS UNS AN"
 						);
 		break;
@@ -93,10 +93,10 @@ switch ($country) {
 	case "G" :
 		$contacts = array ("conseil" => "Have a question?","conseil2" => "Contact us!",
 						"noms" => "",
-						"telephone" => array(array ("label" => "+44 (0) 2080891875", "href" => "tel:+442080891875")),
+						"telephone" => array(array ("label" => "+442080891875", "href" => "tel:+442080891875")),
 						"ouverture" => "Our advisors are available from Monday to Friday from 8am to 4pm.",
 						"emails" => array("customercare@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_anglais.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_anglais.jpg"),
                         "alt" =>"Contact us"
 						);
 		break;
@@ -104,10 +104,10 @@ switch ($country) {
 	case "I" :
 		$contacts = array ("conseil" => "Have a question?","conseil2" => "Contact us!",
 						"noms" => "",
-						"telephone" => array(array ("label" => "+1 800 55 3393", "href" => "tel:+1 800 55 3393")),
+						"telephone" => array(array ("label" => "1800553393", "href" => "tel:1800553393")),
 						"ouverture" => "Our advisors are available from Monday to Friday from 8am to 4pm.",
 						"emails" => array("customercare@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_anglais.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_anglais.jpg"),
                         "alt" =>"Contact us"
 						);
 		break;
@@ -118,7 +118,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+85258010939", "href" => "tel:+85258010939")),
 						"ouverture" => "Our advisors are available from Monday to Friday from 3pm to 11pm.",
 						"emails" => array("customercare@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_anglais.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_anglais.jpg"),
                         "alt" =>"Contact us"
 						);
 		break;
@@ -126,10 +126,10 @@ switch ($country) {
 	case "SG" :
 		$contacts = array ("conseil" => "Have a question?","conseil2" => "Contact us!",
 						"noms" => "",
-						"telephone" => array(array ("label" => "+65 3159 1767", "href" => "tel:+85258010939")),
+						"telephone" => array(array ("label" => "+6531591767", "href" => "tel:+6531591767")),
 						"ouverture" => "Our advisors are available from Monday to Friday from 3pm to 11pm.",
 						"emails" => array("customercare@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_anglais.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_anglais.jpg"),
                         "alt" =>"Contact us"
 						);
 		break;
@@ -140,7 +140,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+33557808810", "href" => "tel:+33557808810")),
 						"ouverture" => "La tua consulente, Stéphanie Rocamora, è disponibile dal lunedì al giovedì dalle 9 alle 18 e il venerdì dalle 9 alle 17, al numero +33 557 808 810.",
 						"emails" => array("srocamora@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_espagne.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_espagne.jpg"),
                         "alt" =>"CONTATTACI"
 						);
 		break;
@@ -151,7 +151,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "00 33 557 808 810", "href" => "tel:+33557808810")),
 						"ouverture" => "Los consejeros están disponibles del lunes hasta el jueves desde 8h30 hasta 17h30 y el viernes desde 8h30 hasta 16h30 en el 00 33 557 808 810",
 						"emails" => array("srocamora@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_espagne.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_espagne.jpg"),
                         "alt" =>"CONTACTE CON NOSOTROS"
 						);
 		break;
@@ -162,7 +162,7 @@ switch ($country) {
 						"telephone" => array(array ("label" => "+33(0) 557 808 846", "href" => "tel:+33557808846")),
 						"ouverture" => "Conselhos personalizados da segunda a terça-feira, através do +33(0)557 808 846",
 						"emails" => array("lantunes@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_portugal.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_portugal.jpg"),
                         "alt" =>"CONTACTE-NOS"
 						);
 		break;
@@ -171,9 +171,9 @@ switch ($country) {
 		$contacts = array ("conseil" => "Have a question?","conseil2" => "Contact us!",
 						"noms" => "Millesima Team",
 						"telephone" => array(array ("label" => "+1 212-639-9463", "href" => "+1 212-639-9463")),
-						"ouverture" => "Our wine team is available Monday through Saturday 11am to 7pm.",
+						"ouverture" => "Our wine team is available Monday through Saturday 10am to 8pm.",
 						"emails" => array("info@millesima.com"),
-                        "image" =>("http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/contact_usa.jpg"),
+                        "image" =>("https://cdn.millesima.com/templates/00_elements_communs/contact_usa.jpg"),
                         "alt" =>"Contact us"
 						);
 		break;

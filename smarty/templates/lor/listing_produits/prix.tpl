@@ -1,5 +1,5 @@
 {* ------ PRIX PROMO LIVRABLES ------ *}
-{if isset($promo) and $promo != '' and $promo != '1165' and $promo != '1234' and $promo != '125' and $promo != '5' and $promo != '1147'}
+{if isset($promo) and $promo != '' and $promo != '1165' and $promo != '1234' and $promo != '5' and $promo != '1147'}
 <tr><td style="font-family:Arial,Helvetica,sans-serif;color:#000000;text-align:center;font-size:16px;vertical-align:middle;margin-top: 10px;">
 {if $produit->pays == 'U'}
 {* ---------------------------- 
@@ -10,12 +10,12 @@
 {if $produit->prix_remise != ''}<span style="text-decoration: line-through; font-size: 12px;">{$produit->devise}&nbsp;{$produit->prix_ttc}</span>
     <span style="font-weight: bold">{$produit->devise}&nbsp;{$produit->prix_remise}</span>{if substr_count($codemessagegeneral, "uiospick") == 0}<br />
     <span style="font-size:12px">{$produit->quantite} {$produit->conditionnement}</span>{/if}{else}
-    <span style="text-decoration: line-through; font-size: 12px;">{$produit->devise}&nbsp;{$produit->prix_ttc}</strong></span>{if substr_count($codemessagegeneral, "uiospick") == 0}<br />
+    <span style="text-decoration: line-through; font-size: 12px;"><strong>{$produit->devise}&nbsp;{$produit->prix_ttc}</strong></span>{if substr_count($codemessagegeneral, "uiospick") == 0}<br />
     <span style="font-size:12px">{$produit->quantite} {$produit->conditionnement}</span>{/if}{/if}
 {* ------ Fin USA ------ *}
 {else}
     <span style="text-decoration: line-through; font-size: 12px;">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_ttc}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ttc}{/if}</span>&nbsp;
-    <span style="font-weight: bold">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_promo}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_promo}{/if}</strong></span>&nbsp;{if $produit->pays != 'H' && $produit->pays != 'SG' && $produit->pays != 'SF' && $produit->pays != 'SA'}
+    <span style="font-weight: bold"><strong>{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_promo}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_promo}{/if}</strong></span>&nbsp;{if $produit->pays != 'H' && $produit->pays != 'SG' && $produit->pays != 'SF' && $produit->pays != 'SA'}
     <span style="font-size:12px">{$ttc}</span>{/if}<br />
 {if $produit->pays == 'D' OR $produit->pays == 'O'}
     <span style="color:#000000; font-size:11px;">({if $produit->pays == 'D'}{$produit->prixlitrettc}{$produit->devise}{else}{$produit->devise}{$produit->prixlitrettc}{/if}/L)</span><br />{/if}
@@ -38,7 +38,7 @@
     <span style="font-size:12px">{$produit->quantite} {$produit->conditionnement}</span>
 {* ------ Fin USA ------ *}
 {else}
-    <span style="font-weight: bold">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P'}{$produit->prix_ttc}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ttc}{/if}</span>&nbsp;{if $produit->pays != 'H' && $produit->pays != 'SG' && $produit->pays != 'SF' && $produit->pays != 'SA'}
+    <span style="font-weight: bold">{if $produit->pays =='F' OR $produit->pays == 'B' OR $produit->pays == 'L' OR $produit->pays == 'D' OR $produit->pays == 'E' OR $produit->pays == 'P' OR $produit->pays == 'Y' OR $produit->pays == 'O'}{$produit->prix_ttc}&nbsp;{$produit->devise}{else}{$produit->devise}&nbsp;{$produit->prix_ttc}{/if}</span>&nbsp;{if $produit->pays != 'H' && $produit->pays != 'SG' && $produit->pays != 'SF' && $produit->pays != 'SA'}
     <span style="font-size:12px">{$ttc}</span>{/if}&nbsp;<br />
 {if $produit->pays == 'D' OR $produit->pays == 'O'}
     <span style="color:#000000; font-size:11px;">({if $produit->pays == 'D'}{$produit->prixlitrettc}{$produit->devise}{else}{$produit->devise}{$produit->prixlitrettc}{/if}/L)</span><br />{/if}
