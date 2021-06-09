@@ -448,7 +448,10 @@ class Millesima_Brief extends Millesima_Abstract
         } else {
             //insert in bdd du brief
             echo $requete =  "INSERT INTO brief (".$attributs.")
-                        VALUES ".$pointInterogation; exit;
+                        VALUES ".$pointInterogation;
+            echo "<br>";
+            print_r($values);
+            exit;
             $result = $bddClass->insert($requete,$values);
             if ($result == "0") {
                 //text de retour de la non création du brief
