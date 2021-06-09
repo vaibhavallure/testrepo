@@ -485,6 +485,28 @@ if($button == 'Modifier'){
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6" id="idprimeur" <?php echo ((!isset($brief['id']) || !$brief['primeur_year']) ? 'style="display:none;"' : '') ?>>
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <span class="radio">
+                                <h3 class="box-title">Millesime</h3>
+
+                                <?php
+                                //echo "<pre>"; print_r($brief); echo "</pre>"; 
+
+                               	?>
+                                <label>
+                                    <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-1 year'));?>" onClick="selectTypeBrief();" <?php echo ((!isset($brief['id']) || !$brief['primeur_year']) ? 'checked' : ($brief['primeur_year']==date('y', strtotime('-1 year')))?'checked':'') ?>>
+                                    <?php echo date('Y', strtotime('-1 year'));?>
+                                </label>
+                                <label>
+                                    <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-2 year'));?>" onClick="selectTypeBrief();" <?php if(isset($brief['primeur_year'])) {echo ($brief['primeur_year'] == date('y', strtotime('-2 year')) )?'checked':'';} ?>>      
+                                    <?php echo date('Y', strtotime('-2 year'));?>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <?php if($button=='Envoyer'): ?>
@@ -679,6 +701,11 @@ if($button == 'Modifier'){
         }else if(elmValue == 'partenaire'){
             name = 'iospart';
         }
+        if(elmValue == 'primeur_eu' || elmValue == 'primeur_us'){
+            $('#idprimeur').show();
+        } else {
+            $('#idprimeur').hide();
+        }
         $.ajax({
             url: '/view/ajax/brief_info/'+name+'&'+yearenvoi,
             type: 'GET',
@@ -686,12 +713,17 @@ if($button == 'Modifier'){
             success: function(data)
             {
                 if(id == ''){
-                    /*if(name == 'iosprim' ||name == 'uiosprim'){
-                        var year = ((new Date().getFullYear())-1).toString().substr(-2);
+                    if(name == 'iosprim' ||name == 'uiosprim'){
+                    	
+                    	if($('input[name="primeur_year"]:checked').val()){
+                    		year = $('input[name="primeur_year"]:checked').val();
+                    	}
+                        //var year = ((new Date().getFullYear())-1).toString().substr(-2);
+                        
                         data = data.split('-');
                         var inc = data[1];
                         data = year + '-' + inc;
-                    }*/
+                    }
                     code = data;
 
                 }
@@ -723,7 +755,6 @@ if($button == 'Modifier'){
 					dataType: "json",
 					success: function(data)
 					{
-						console.log(data);
 						if(data.briefexist == 'true' && $('#form1 input#id').val() == ""){
 							showPopUp('Un brief du type ' + elmValue + ' avec le ' + code + ' existe déja' );
 						}
