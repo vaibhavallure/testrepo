@@ -10,13 +10,13 @@
  * @copyright     millesimaTeam
  * @licence       millesimaLicence
  */
-
+define( 'DOCKER_URL_CONST', $_SERVER['HTTP_HOST'] );
 class Millesima_Abstract{
 
     const DOCTYPE = "<!DOCTYPE html>";
-    const DOCKER_HOST_IP = 'https://millesima-dev.allurecommerce.com';
+    const DOCKER_HOST_IP = '54.217.7.96';
     const DOCKER_HOST_PORT = '8080';
-    const DOCKER_URL = 'millesima-dev.allurecommerce.com';
+    const DOCKER_URL = DOCKER_URL_CONST;
 
     public function getInfoMessage($name,$objet){
         $store = substr($name, 0 ,2 );

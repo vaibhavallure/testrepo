@@ -529,7 +529,7 @@ function getCode($typebrief){
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="codecouleur">Couleur du thème</label>
-                                            <input type="text" size="7" id="codecouleur" name="codecouleur" placeholder="#" value="#7e0f17" class="form-control">
+                                            <input type="text" size="7" id="codecouleur" name="codecouleur" placeholder="#" value="#7d121c" class="form-control">
                                             <p class="help-block">utilisée pour le thème et la validité<br />rouge par défaut : #a60d0d - couleur primeurs : #806031</p>
                                         </div>
                                     </div>

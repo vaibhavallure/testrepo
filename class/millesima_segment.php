@@ -245,20 +245,17 @@ class Millesima_Segment extends Millesima_Abstract
         if (ssh2_auth_password($connect, $login, $password)) {
             $myFile = self::REPOSITORY_SEGMENT."/".$nameSegment.'/'.$nomFile.'.csv';
             //$retour_ftp = ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
-			error_log ('Send file  : '.$myFile.' to '.$dossier_destination.$nomFile."\n");
             $sftp = ssh2_sftp($connect);
-            ssh2_sftp_unlink($sftp,$dossier_destination.$nomFile.".csv");
-			ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 777);
-			try {
-				$stat_ftp = ssh2_sftp_stat($sftp, $dossier_destination.$nomFile.'.csv');
-			}
-			catch(Exception $e) {
-				error_log ('Exception reçue : '.$dossier_destination.$nomFile. $e->getMessage()."\n");
-				copy($myFile,self::REPOSITORY_SEGMENT.'/toBeTransfer/'.$nomFile.'.csv');
-
-			}
             
-            return true;
+			$stream = fopen("ssh2.sftp://".$sftp.$dossier_destination.$nomFile.".csv", 'w');
+            $data_to_send = file_get_contents($myFile);
+            $send = fwrite($stream, $data_to_send);
+            fclose($stream);
+			
+			$stat_ftp = ssh2_sftp_stat($sftp, $dossier_destination.$nomFile.'.csv');
+            if($stat_ftp['size'] > 0 ){
+               $return = true;
+            }
         } else {
             $retour_ftp = "Connexion impossible en tant que ".$login."<br>";
             $return = false;
