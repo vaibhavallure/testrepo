@@ -10,9 +10,9 @@
 class Millesima_Bdd
 {
     const HOST = 'localhost';
-    const USERNAME = 'mellisima';
-    const PASSWORD = 'MRHUoWOvc3RBcqH';
-    const DBNAME = 'mellisima';
+    const USERNAME = 'millesima-dev';
+    const PASSWORD = 'FjjKAy0mlEYnS6L';
+    const DBNAME = 'millesima_dev';
 
     /**
      *
