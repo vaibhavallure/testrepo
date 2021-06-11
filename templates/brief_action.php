@@ -496,11 +496,11 @@ if($button == 'Modifier'){
 
                                	?>
                                 <label>
-                                    <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-1 year'));?>" onClick="selectTypeBrief();" <?php echo ((!isset($brief['id']) || !$brief['primeur_year']) ? 'checked' : ($brief['primeur_year']==date('y', strtotime('-1 year')))?'checked':'') ?>>
+                                    <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-1 year'));?>" onClick="selectTypeBrief();" <?php echo ((!isset($brief['id']) || !$brief['primeur_year']) ? 'checked' : ($brief['primeur_year']==date('y', strtotime('-1 year')))?'checked':'disabled');?>>
                                     <?php echo date('Y', strtotime('-1 year'));?>
                                 </label>
                                 <label>
-                                    <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-2 year'));?>" onClick="selectTypeBrief();" <?php if(isset($brief['primeur_year'])) {echo ($brief['primeur_year'] == date('y', strtotime('-2 year')) )?'checked':'';} ?>>      
+                                    <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-2 year'));?>" onClick="selectTypeBrief();" <?php if(isset($brief['primeur_year'])) {echo ($brief['primeur_year'] == date('y', strtotime('-2 year')) )?'checked':'disabled';} ?>>      
                                     <?php echo date('Y', strtotime('-2 year'));?>
                                 </label>
                             </span>
