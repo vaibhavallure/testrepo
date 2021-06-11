@@ -490,11 +490,6 @@ if($button == 'Modifier'){
                         <div class="box-header">
                             <span class="radio">
                                 <h3 class="box-title">Millesime</h3>
-
-                                <?php
-                                //echo "<pre>"; print_r($brief); echo "</pre>"; 
-
-                               	?>
                                 <label>
                                     <input type=radio name="primeur_year" value="<?php echo date('y', strtotime('-1 year'));?>" onClick="selectTypeBrief();" <?php echo ((!isset($brief['id']) || !$brief['primeur_year']) ? 'checked' : ($brief['primeur_year']==date('y', strtotime('-1 year')))?'checked':'disabled');?>>
                                     <?php echo date('Y', strtotime('-1 year'));?>
