@@ -698,199 +698,270 @@ class Millesima_Message_Template extends Millesima_Abstract
         $bddClass = new Millesima_Bdd();
         $data = $bddClass->selectAll("SELECT * FROM baseok WHERE ".$type." = '".$idtoload."' AND Lettre_pays = '".$country."'");
         if (is_array($data) && isset($data[0])) {
-        $data = $data[0];
+            $data = $data[0];
 
-        $article = new Article;
+            $article = new Article;
 
-        //preparation obj
-        $article->pays=$data["Lettre_pays"];
-        $article->refpick=$data["Code_article"];
-        $article->sku=$data["sku"];
+            /*set variable for the currency format*/
+        switch($data["Lettre_pays"]){
+            case 'F':
+            case 'B':
+            case 'L':
+            case 'D':
+            case 'O':
+            case 'Y':
+            case 'E':
+            case 'P':
+                $currency_code = 'GER';
+                break;
+            case 'H':
+                $currency_code = 'HKD';
+                break;
+            case 'SA':
+            case 'SF':
+                $currency_code = 'CHF';
+                break;
+            case 'SG':
+                $currency_code = 'SGD';
+                break;
+            case 'I':
+                $currency_code = 'IE';
+                break;
+            case 'G':
+                $currency_code = 'GBP';
+                break;
+            case 'U':
+                $currency_code = 'USD';
+                break;
+            default:
+                $currency_code = 'GER';
+                break;
+        }
 
-        // utile pour les noms images produits dans les listings
-        $ref = explode('/', $data["sku"]);
-        $article->shortref=strtoupper($ref[0]);
-        $article->shortmill = $ref[1];
-        $article->leformatorig=strtoupper($ref[2]);
+            //preparation obj
+            $article->pays=$data["Lettre_pays"];
+            $article->refpick=$data["Code_article"];
+            $article->sku=$data["sku"];
 
-		$expl=explode('&lt;br/&gt;', $data["Libelle_Internet"]);
-		/* --- Rajout d'une valeur formatée du libellé internet --- */
-		if (isset($expl[1])){
-			$article->libelle_internet=utf8_encode($expl[0]." ".$expl[1]);
-			$article->libelle_internet_html=utf8_encode("<strong>".$expl[0]."</strong><br />".$expl[1]);
-		}else{
-			$article->libelle_internet=utf8_encode($expl[0]);
-			$article->libelle_internet_html=utf8_encode("<strong>".$expl[0]."</strong>");
-		}
-		
-        $article->millesime=$data["Millesime"];
-        $article->classement=utf8_encode($data["Libelle_Classement"]);
-        $article->cru=utf8_encode($data["Libelle_Cru"]);
-        $article->marque=utf8_encode($data["Libelle_Marque"]);
-        $article->appellation=utf8_encode($data["Libelle_appellation"]);
-        $article->region=utf8_encode($data["Libelle_region"]);
-        $article->typedevin=$data["Libelle_Typeproduit"];
-        $article->couleur=$data["Libelle_couleur"];
-        $article->LibelleCouleur=utf8_encode($data["Libelle_couleur"]); // DOUBLON ! VERIFIER LEQUEL EST UTILISE
-        $article->idcouleur=$data["Code_Couleur"];
-        $article->primeur=$data["_1Prim0Liv"];
-        $article->image=$data["Image"];
-        $article->url_image_full=$data["URL_Image_Full"];
-        $article->url_image_thumb=$data["URL_Image_Thumb"];
-        $article->quantite=$data["quantite"];
-        $article->boiscarton=$data["BoisCarton"];
+            // utile pour les noms images produits dans les listings
+            $ref = explode('/', $data["sku"]);
+            $article->shortref=strtoupper($ref[0]);
+            $article->shortmill = $ref[1];
+            $article->leformatorig=strtoupper($ref[2]);
 
-            if($article->quantite == 1) {
-                $article->boiscarton = '';
-            }
-            else{
-                if($article->pays == 'F' || $article->pays == 'B' || $article->pays == 'L' || $article->pays == 'SF' ){
-                    $article->boiscarton = str_replace('Une', '', $article->boiscarton);
-                    $article->boiscarton = str_replace('Un', '', $article->boiscarton);
-                    $article->boiscarton = str_replace('carton', 'Carton', $article->boiscarton);
-                    $article->boiscarton = str_replace('caisse', 'Caisse', $article->boiscarton);
+    		$expl=explode('&lt;br/&gt;', $data["Libelle_Internet"]);
+    		/* --- Rajout d'une valeur formatée du libellé internet --- */
+    		if (isset($expl[1])){
+    			$article->libelle_internet=utf8_encode($expl[0]." ".$expl[1]);
+    			$article->libelle_internet_html=utf8_encode("<strong>".$expl[0]."</strong><br />".$expl[1]);
+    		}else{
+    			$article->libelle_internet=utf8_encode($expl[0]);
+    			$article->libelle_internet_html=utf8_encode("<strong>".$expl[0]."</strong>");
+    		}
+    		
+            $article->millesime=$data["Millesime"];
+            $article->classement=utf8_encode($data["Libelle_Classement"]);
+            $article->cru=utf8_encode($data["Libelle_Cru"]);
+            $article->marque=utf8_encode($data["Libelle_Marque"]);
+            $article->appellation=utf8_encode($data["Libelle_appellation"]);
+            $article->region=utf8_encode($data["Libelle_region"]);
+            $article->typedevin=$data["Libelle_Typeproduit"];
+            $article->couleur=$data["Libelle_couleur"];
+            $article->LibelleCouleur=utf8_encode($data["Libelle_couleur"]); // DOUBLON ! VERIFIER LEQUEL EST UTILISE
+            $article->idcouleur=$data["Code_Couleur"];
+            $article->primeur=$data["_1Prim0Liv"];
+            $article->image=$data["Image"];
+            $article->url_image_full=$data["URL_Image_Full"];
+            $article->url_image_thumb=$data["URL_Image_Thumb"];
+            $article->quantite=$data["quantite"];
+            $article->boiscarton=$data["BoisCarton"];
+
+                if($article->quantite == 1) {
+                    $article->boiscarton = '';
                 }
-                if($article->pays == 'Y'){
-                    $article->boiscarton = str_replace('Una', '', $article->boiscarton);
-                    $article->boiscarton = str_replace('Un', '', $article->boiscarton);
-                    $article->boiscarton = str_replace('cassa', 'Cassa', $article->boiscarton);
-                    $article->boiscarton = str_replace('cartone', 'Cartone', $article->boiscarton);
+                else{
+                    if($article->pays == 'F' || $article->pays == 'B' || $article->pays == 'L' || $article->pays == 'SF' ){
+                        $article->boiscarton = str_replace('Une', '', $article->boiscarton);
+                        $article->boiscarton = str_replace('Un', '', $article->boiscarton);
+                        $article->boiscarton = str_replace('carton', 'Carton', $article->boiscarton);
+                        $article->boiscarton = str_replace('caisse', 'Caisse', $article->boiscarton);
+                    }
+                    if($article->pays == 'Y'){
+                        $article->boiscarton = str_replace('Una', '', $article->boiscarton);
+                        $article->boiscarton = str_replace('Un', '', $article->boiscarton);
+                        $article->boiscarton = str_replace('cassa', 'Cassa', $article->boiscarton);
+                        $article->boiscarton = str_replace('cartone', 'Cartone', $article->boiscarton);
+                    }
+                    if($article->pays == 'P'){
+                        $article->boiscarton = str_replace('cartao', 'cart&atilde;o', $article->boiscarton);
+                    }
+
+                    if($article->pays == 'E'){
+                        $article->boiscarton = str_replace('Una', '', $article->boiscarton);
+                        $article->boiscarton = str_replace('caja', 'Caja', $article->boiscarton);
+                    }
                 }
-                if($article->pays == 'P'){
-                    $article->boiscarton = str_replace('cartao', 'cart&atilde;o', $article->boiscarton);
+
+            $article->conditionnementpluriel=utf8_encode($data["Libelle_Cond_pluriel"]);
+            $article->conditionnementsingulier=utf8_encode($data["Libelle_Cond_singulier"]);
+            if($article->quantite == 1){
+                $article->conditionnement = $article->conditionnementsingulier;
+            }else{
+                $article->conditionnement = $article->conditionnementpluriel;
+            }
+
+            if($article->pays != 'D' && $article->pays != 'O' && $article->pays != 'SA' ){
+                    $article->conditionnement = strtolower($article->conditionnement);
+             }
+
+            $article->Packaging=$this->encodeVar(utf8_encode($data["Packaging"]));
+            $article->refcond=substr($data["Code_article"],10,2);
+
+            $article->ordrecat=$data["Classement_cata"];
+            $article->ordreapp=$data["Classement_Appellation"];
+
+            // Traitement de l'encepagement pour les produits USA
+            if($article->pays == 'U'){
+                $article->encepagement=explode("/", $data["encepagement"]);
+                $article->encepagement_principal=$article->encepagement[0];
+            }
+
+            // recuperation de l'url produit
+            $article->url_produit=$data["URL_IBM"];
+
+            $article->codedevise=$data["Code_Devise"];
+            $article->prix_ht=$this->formatcurrency(str_replace(',', '.', $data["prix_ht"]), $currency_code);
+            $article->prix_ttc=$this->formatcurrency(str_replace(',', '.', $data["prix_ttc"]), $currency_code);
+            $article->prix_remise=$this->formatcurrency(str_replace(',', '.', $data["prix_remise"]), $currency_code);
+            if($article->quantite != 0){
+                $article->prixhtblle=$this->formatcurrency(str_replace(',', '.', $data["prix_ht"])/$article->quantite, $currency_code);
+                $article->prixttcblle=$this->formatcurrency(str_replace(',', '.', $data["prix_ttc"])/$article->quantite, $currency_code);
+                if ($article->prix_remise != ''){
+                    $article->prixremblle=$this->formatcurrency(str_replace(',', '.', $data["prix_remise"])/$article->quantite, $currency_code);
+                }
+                // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
+                // et que la division soit juste ! Sinon, légères différences de décimales (19,92 au lieu de 19,95)...
+            }
+            $article->prixlitrettc=$this->formatcurrency(str_replace(',', '.', $data["Prix_au_Litre"]), $currency_code); // Prix au litre en TTC ! Ne plus calculer avec la tva
+
+            $article->code_promo=$data["code_promo"];
+            $article->type_promo=$data["type_promo"]; // Libelle de la promo si connu
+
+            if($article->primeur){
+                // Arrondi du prix ttc indicatif en primeur pour certains pays
+                switch($article->pays){
+                    case 'F':
+                    case 'B':
+                    case 'L':
+                    case 'G':
+                    case 'I':
+                    case 'Y':
+                    case 'E':
+                    case 'P':
+                    $article->prix_ttc=$this->formatcurrency(str_replace(',', '.', $article->prix_ttc),$currency_code);
+                    //$article->prix_ttc=number_format(ceil(str_replace(',', '.', $article->prix_ttc)),2, ',', '');
+                        // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
+                        // et que l'arrondi soit juste !
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if($article->pays == 'U' OR $article->pays == 'G' OR $article->pays == 'I' OR $article->pays == 'H'  OR $article->pays == 'SG'){ // Une fois les prix calculés, on reformate au format anglais pour tous les pays anglophones (décimales séparées par des points)
+                $article->prix_ht = $article->prix_ht;
+                $article->prix_ttc = $article->prix_ttc;
+                $article->prixhtblle = $article->prixhtblle;
+                $article->prixttcblle = $article->prixttcblle;
+                $article->prixlitrettc = $article->prixlitrettc;
+                $article->prix_remise = $article->prix_remise;
+            }
+
+            /**
+             * On calcule la propri�t� devise pour avoir un sigle car elle n'est pas stock�e en base
+             */
+            switch ($data["Code_Devise"]) {
+                case 3 : $article->devise="&euro;";break;
+                case 5 : $article->devise="CHF";break;
+                case 8 : $article->devise="&pound;";break;
+                case 11 : $article->devise="\$";break;
+                case 15 : $article->devise="HK\$";break;
+                case 16 : $article->devise="SGD";break;
+                default : $article->devise="&euro;";break;
+            };
+
+
+            if($article->code_promo != ''){
+                switch ($article->code_promo) {
+                    case "1" /* 1+1=3 */ :
+                        $article->prix_promo = ((double)$data["prix_ttc"] * 2)/3 ;
+                        break;
+                    case "2" /* 1+1=3 */ :
+                       $article->prix_promo = ( (double)$data["prix_ttc"] * 2)/3 ;
+                       // $article->prix_promo = $article->prix_ttc ;
+                        break;
+                    case "127" /* La 2e caisse à -50% */ :
+                        $article->prix_promo = ((double)$data["prix_ttc"] + (double)$data["prix_ttc"]/2)/2 ;
+                        break;
+                    case "123" /* La 2e caisse à 40% */ :
+                        $article->prix_promo = ((double)$data["prix_ttc"] + ((double)$data["prix_ttc"] - (double)$data["prix_ttc"]*40/100))/2 ;
+                        break;
+                    case "702" /* Prix légers */:
+                    case "703" /* Champagnes à prix légers */:
+                    case "704" /* Rosés à prix légers */:
+                    case "709" /* Instant Millésima */:
+    				case "705" /* Up to 20% off on 2010 */:
+                        $article->prix_promo = $article->prix_remise;
+                        break;
+                    default:
+                        $article->prix_promo = $article->prix_remise;
+                        break;
+
                 }
 
-                if($article->pays == 'E'){
-                    $article->boiscarton = str_replace('Una', '', $article->boiscarton);
-                    $article->boiscarton = str_replace('caja', 'Caja', $article->boiscarton);
+                if(isset($article->prix_promo)){
+                    $article->prix_promo = round($article->prix_promo, 2, PHP_ROUND_HALF_EVEN);
+                    $article->prix_promo = $this->formatcurrency($article->prix_promo, $currency_code);
                 }
-            }
-
-        $article->conditionnementpluriel=utf8_encode($data["Libelle_Cond_pluriel"]);
-        $article->conditionnementsingulier=utf8_encode($data["Libelle_Cond_singulier"]);
-        if($article->quantite == 1){
-            $article->conditionnement = $article->conditionnementsingulier;
-        }else{
-            $article->conditionnement = $article->conditionnementpluriel;
-        }
-
-        if($article->pays != 'D' && $article->pays != 'O' && $article->pays != 'SA' ){
-                $article->conditionnement = strtolower($article->conditionnement);
-         }
-
-        $article->Packaging=$this->encodeVar(utf8_encode($data["Packaging"]));
-        $article->refcond=substr($data["Code_article"],10,2);
-
-        $article->ordrecat=$data["Classement_cata"];
-        $article->ordreapp=$data["Classement_Appellation"];
-
-        // Traitement de l'encepagement pour les produits USA
-        if($article->pays == 'U'){
-            $article->encepagement=explode("/", $data["encepagement"]);
-            $article->encepagement_principal=$article->encepagement[0];
-        }
-
-        // recuperation de l'url produit
-        $article->url_produit=$data["URL_IBM"];
-
-        $article->codedevise=$data["Code_Devise"];
-        $article->prix_ht=$data["prix_ht"];
-        $article->prix_ttc=$data["prix_ttc"];
-        $article->prix_remise=$data["prix_remise"];
-        if($article->quantite != 0){
-            $article->prixhtblle=number_format(str_replace(',', '.', $article->prix_ht)/$article->quantite, 2, ',', ' ');
-            $article->prixttcblle=number_format(str_replace(',', '.', $article->prix_ttc)/$article->quantite, 2, ',', ' ');
-            if ($article->prix_remise != ''){
-				$article->prixremblle=number_format(str_replace(',', '.', $article->prix_remise)/$article->quantite, 2, ',', ' ');
-			}
-            // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
-            // et que la division soit juste ! Sinon, légères différences de décimales (19,92 au lieu de 19,95)...
-        }
-        $article->prixlitrettc=$data["Prix_au_Litre"]; // Prix au litre en TTC ! Ne plus calculer avec la tva
-
-        $article->code_promo=$data["code_promo"];
-        $article->type_promo=$data["type_promo"]; // Libelle de la promo si connu
-
-        if($article->primeur){
-            // Arrondi du prix ttc indicatif en primeur pour certains pays
-            switch($article->pays){
-                case 'F':
-                case 'B':
-                case 'L':
-                case 'G':
-                case 'I':
-                case 'Y':
-                case 'E':
-                case 'P':
-                $article->prix_ttc=number_format(ceil(str_replace(',', '.', $article->prix_ttc)),2, ',', '');
-                    // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
-                    // et que l'arrondi soit juste !
-                    break;
-                default:
-                    break;
-            }
-        }
-        if($article->pays == 'U' OR $article->pays == 'G' OR $article->pays == 'I' OR $article->pays == 'H'  OR $article->pays == 'SG'){ // Une fois les prix calculés, on reformate au format anglais pour tous les pays anglophones (décimales séparées par des points)
-            $article->prix_ht=str_replace(',', '.',$article->prix_ht);
-            $article->prix_ttc=str_replace(',', '.',$article->prix_ttc);
-            $article->prixhtblle=str_replace(',', '.',$article->prixhtblle);
-            $article->prixttcblle=str_replace(',', '.',$article->prixttcblle);
-            $article->prixlitrettc=str_replace(',', '.',$article->prixlitrettc);
-            $article->prix_remise=str_replace(',', '.',$article->prix_remise);
-        }
-
-        /**
-         * On calcule la propri�t� devise pour avoir un sigle car elle n'est pas stock�e en base
-         */
-        switch ($data["Code_Devise"]) {
-            case 3 : $article->devise="&euro;";break;
-            case 5 : $article->devise="CHF";break;
-            case 8 : $article->devise="&pound;";break;
-            case 11 : $article->devise="\$";break;
-            case 15 : $article->devise="HK\$";break;
-            case 16 : $article->devise="SGD";break;
-            default : $article->devise="&euro;";break;
-        };
-
-
-        if($article->code_promo != ''){
-            switch ($article->code_promo) {
-                case "1" /* 1+1=3 */ :
-                    $article->prix_promo = ((double)$article->prix_ttc * 2)/3 ;
-                    break;
-                case "2" /* 1+1=3 */ :
-                   $article->prix_promo = ( (double)$article->prix_ttc * 2)/3 ;
-                   // $article->prix_promo = $article->prix_ttc ;
-                    break;
-                case "127" /* La 2e caisse à -50% */ :
-                    $article->prix_promo = ((double)$article->prix_ttc + (double)$article->prix_ttc/2)/2 ;
-                    break;
-                case "123" /* La 2e caisse à 40% */ :
-                    $article->prix_promo = ((double)$article->prix_ttc + ((double)$article->prix_ttc - (double)$article->prix_ttc*40/100))/2 ;
-                    break;
-                case "702" /* Prix légers */:
-                case "703" /* Champagnes à prix légers */:
-                case "704" /* Rosés à prix légers */:
-                case "709" /* Instant Millésima */:
-				case "705" /* Up to 20% off on 2010 */:
-                    $article->prix_promo = $article->prix_remise;
-                    break;
-                default:
-                    $article->prix_promo = $article->prix_remise;
-                    break;
 
             }
-
-            if(isset($article->prix_promo)){
-                $article->prix_promo = round($article->prix_promo, 2, PHP_ROUND_HALF_EVEN);
-                $article->prix_promo = number_format($article->prix_promo, 2, ',', '');
-            }
-
-        }
-            return $article;
-    } else {
+                return $article;
+        } else {
             $article = false;
             return $article;
         }
+    }
+
+
+    /*Currency Format Functions */
+    public function formatcurrency($floatcurr, $curr = 'USD')
+    {
+        if($floatcurr!=""){
+            $currencies = array(
+                'GER' => array(' &euro;',2,',',' ',1),        //  DE (Germany), AT (Austria), FR (France), BE (Belgium), LU (Luxembourg), IT (Italy), PT (Portugal), ES (Spain)
+                'HKD' => array('HK$',2,'.',',',0),          //  Hong Kong Dollar
+                'CHF' => array(' CHF',2,',','\'',1),         //  Swiss Franc
+                'SGD' => array('S$',2,'.',',',0),          //  Singapore Dollar
+                'IE' => array('&euro;',2,'.',',',0),          //  Ireland
+                'GBP' => array('&pound;',2,'.',',',0),          //  Pound Sterling
+                'USD' => array('$',2,'.',',',0),          //  US Dollar
+            );
+        
+            
+            $number = number_format($floatcurr,$currencies[$curr][1],$currencies[$curr][2],$currencies[$curr][3]);
+
+            //adding the symbol in the back
+            if ($currencies[$curr][0] === NULL)
+                $number.= ' '.$curr;
+            elseif ($currencies[$curr][4]===1)
+                $number.= $currencies[$curr][0];
+            //normally in front
+            else
+                $number = $currencies[$curr][0].$number;
+
+            return $number;    
+        } else {
+            return $floatcurr;
+        }
+        
     }
 }
