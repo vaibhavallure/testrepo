@@ -1,4 +1,4 @@
-<td style="font-size:11px;" width="40%"><strong>{$produit->libelle_internet|replace:'&lt;br/&gt;':'<br />'}</strong>{if $produit->classement != ""}<span style="color:#333333;font-style:italic;"> /&nbsp;{$produit->classement}</span>{/if}</td><td style="font-size:11px;" width="15px"><img src="http://cdn.millesima.com.s3.amazonaws.com/templates/pdf_primeur/{$produit->quantite}.png" border="0" width="15" height="15" alt="{$produit->quantite}"/></td>
+<td style="font-size:11px;" width="40%"><strong>{$produit->libelle_internet|replace:'&lt;br/&gt;':'<br />'}</strong>{if $produit->classement != ""}<span style="color:#333333;font-style:italic;"> /&nbsp;{$produit->classement}</span>{/if}</td><td style="font-size:11px;" width="15px"><img src="https://cdn.millesima.com/templates/pdf_primeur/{$produit->quantite}.png" border="0" width="15" height="15" alt="{$produit->quantite}"/></td>
 <td valign="bottom"><div style="border-bottom:1px dotted #000000;margin-bottom:4px;"></div></td>
 {* ---------------------------- 
 	Allemagne, Autriche et Suisse

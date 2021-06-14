@@ -19,7 +19,7 @@
                                                   <tbody>
                                                     <tr>
                                                       <td width="25"></td>
-                                                      <td width="240" valign="top" class="box1"><a href="{$articles.$article.url}" target="_blank"><img style="display:block;" src="{if $articles.$article.artimgprim}http://cdn.millesima.com.s3.amazonaws.com/templates/articles/primeurs/article_{$articles.$article.imgnb}.jpg{else}http://cdn.millesima.com.s3.amazonaws.com/{$type_message}/{$codemessagegeneral}/article_{$articles.$article.imgnb}.jpg{/if}" width="240" height="204" alt="{$articles.$article.titre}" border="0" class="img1"></a></td>
+                                                      <td width="240" valign="top" class="box1"><a href="{$articles.$article.url}" target="_blank"><img style="display:block;" src="{if $articles.$article.artimgprim}https://cdn.millesima.com/templates/articles/primeurs/article_{$articles.$article.imgnb}.jpg{else}https://cdn.millesima.com/{$type_message}/{$codemessagegeneral}/article_{$articles.$article.imgnb}.jpg{/if}" width="240" height="204" alt="{$articles.$article.titre}" border="0" class="img1"></a></td>
                                                       <td width="20" class="cache2"></td>
                                                       <td valign="top" class="box2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                           <tbody>

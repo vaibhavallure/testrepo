@@ -20,7 +20,7 @@
                             {elseif $bdunq_url != ''}
                         <a href="{$bdunq_url}" style="color:#000000;outline:none;border:none">
                             {/if}
-                            <img src="http://cdn.millesima.com.s3.amazonaws.com/{$type_message}/{$codemessagegeneral}/bandeau{if $exception}{$country}{else}{$langue}{/if}.{$bdunq_extension}"  alt="{$objet_alt_title}" title="{$objet_alt_title}" width="640" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
+                            <img src="https://cdn.millesima.com/{$type_message}/{$codemessagegeneral}/bandeau{if $exception}{$country}{else}{$langue}{/if}.{$bdunq_extension}"  alt="{$objet_alt_title}" title="{$objet_alt_title}" width="640" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p" />
                            {if isset($lstprmodesc) or $bdunq_url != ''}
                         </a>
                          {/if}

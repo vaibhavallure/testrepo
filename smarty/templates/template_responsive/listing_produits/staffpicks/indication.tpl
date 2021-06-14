@@ -1,5 +1,5 @@
 {if isset($promo) and $promo != ''}
-<tr><td height="32" align="center" valign="middle" style="background-color:#654337;color:#FFFFFF;text-align:center;background-image:url(http://cdn.millesima.com.s3.amazonaws.com/templates/listing/picto-promo.png);background-position:center;">
+<tr><td height="32" align="center" valign="middle" style="background-color:#654337;color:#FFFFFF;text-align:center;background-image:url(https://cdn.millesima.com/templates/listing/picto-promo.png);background-position:center;">
 {$promos.$promo.libelle}
 </td></tr>
 <tr><td height="7" style="font-size:5px;">&nbsp;</td></tr>

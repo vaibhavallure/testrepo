@@ -10,11 +10,11 @@
 
 //echo "Ajout du header du message<br />";
 
-$url="http://cdn.millesima.com.s3.amazonaws.com/ios/".$codemessage."/".$country.$codemessage.".html";
+$url="https://cdn.millesima.com/ios/".$codemessage."/".$country.$codemessage.".html";
 
 $vsligne="~PROBE(0)~";
-$vssmartphone="http://cdn.millesima.com.s3.amazonaws.com/ios/".$codemessage."/M".$country.$codemessage.".html";
-$vcard="http://cdn.millesima.com.s3.amazonaws.com/templates/vcard/MillesimaSA.vcf";
+$vssmartphone="https://cdn.millesima.com/ios/".$codemessage."/M".$country.$codemessage.".html";
+$vcard="https://cdn.millesima.com/templates/vcard/MillesimaSA.vcf";
 
 
 $oSmarty->assign('vsligne', $vsligne);

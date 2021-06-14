@@ -1,5 +1,5 @@
 <table width="650" border="0" cellspacing="0" cellpadding="0" align="center"><tr>
-<td><a href="{$bandeauxArray.$bd.url}"><img src="http://cdn.millesima.com.s3.amazonaws.com/templates/listing/staffpicks/bandeauU.jpg" border="0" width="650" height="150" alt="Our selection of the month" title="Our selection of the month" style="display:block;" /></a></td></tr>
+<td><a href="{$bandeauxArray.$bd.url}"><img src="https://cdn.millesima.com/templates/listing/staffpicks/bandeauU.jpg" border="0" width="650" height="150" alt="Our selection of the month" title="Our selection of the month" style="display:block;" /></a></td></tr>
 <tr><td>&nbsp;</td></tr></table>
 {foreach from=$liste_produits item=produit name=mesprod}
 {if $smarty.foreach.mesprod.first}<table width="650"><tr><td height="7" style="font-size:5px;" colspan="3">&nbsp;</td></tr><tr>{/if}

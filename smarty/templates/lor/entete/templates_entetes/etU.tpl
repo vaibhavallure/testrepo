@@ -112,7 +112,7 @@
                                                             <table cellpadding="0" cellspacing="0" border="0" width="20" align="center" style="margin:auto;width:20px" class="t_w20px m_w20px" role="presentation">
                                                                 <tr>
                                                                     <td style="text-align:center">
-                                                                        <img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-user.png" alt="" width="20" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
+                                                                        <img src="https://cdn.millesima.com/templates/00_elements_communs/icon-user.png" alt="" width="20" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#000000;line-height:13px;display:block;border:none" class="t_w100p m_w100p"
                                                                         />
                                                                     </td>
                                                                 </tr>

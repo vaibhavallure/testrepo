@@ -15,9 +15,9 @@
             	<td>
                 <table border="0" cellspacing="0" cellpadding="0" align="center" style="font-size:12px;">
                 	<tr>
-						<td><img src="http://cdn.millesima.com.s3.amazonaws.com/templates/contact/contactF.jpg" height="124" width="92" alt="H&eacute;l&egrave;ne et Ariane"/></td>
+						<td><img src="https://cdn.millesima.com/templates/contact/contactF.jpg" height="124" width="92" alt="H&eacute;l&egrave;ne et Ariane"/></td>
 						<td width="15"></td>
-						<td style="background-color:#202125;color:#FFFFFF;"><img src="http://cdn.millesima.com.s3.amazonaws.com/templates/contact/picto-contact.jpg" alt="contact" width="36" height="124" style="vertical-align:middle;"/></td>
+						<td style="background-color:#202125;color:#FFFFFF;"><img src="https://cdn.millesima.com/templates/contact/picto-contact.jpg" alt="contact" width="36" height="124" style="vertical-align:middle;"/></td>
                         <td class="contact" style="background-color:#202125;color:#FFFFFF;">
                         	<span class="tel" style="font-size:16px;font-weight:bold;">00 800 267 33 289</span><br />
                             Du lundi au vendredi de<br />

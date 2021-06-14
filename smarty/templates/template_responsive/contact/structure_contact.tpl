@@ -16,7 +16,7 @@
                                                               <td bgcolor="#9a9999"><table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#9a9999">
                                                                   
                                                                     <tr>
-                                                                      <td width="75" bgcolor="#9a9999"><img style="display:block;" src="http://cdn.millesima.com.s3.amazonaws.com/test/new-emailing/img/icon-tel.jpg" width="75" height="60" alt="" border="0"></td>
+                                                                      <td width="75" bgcolor="#9a9999"><img style="display:block;" src="https://cdn.millesima.com/test/new-emailing/img/icon-tel.jpg" width="75" height="60" alt="" border="0"></td>
                                                                       <td style="font-family:Arial, Helvetica, sans-serif, Trebuchet MS; color:#fff; text-align: left;" bgcolor="#9a9999">{foreach from=$tabcontacts.telephone item=numero name=numeros}{if $smarty.foreach.numeros.first}<a href="tel:{$numero.href}" style="font-size:{if $country == 'P'}20px{else}23px{/if};font-weight:bold;color:#FFFFFF !important;text-decoration:none;"><span class="tel" style="font-size:{if $country == 'P'}20px{else}23px{/if};font-weight:bold;color:#FFFFFF !important;">{$numero.label}</span></a>{else}<a href="tel:{$numero.href}" style="font-size:12px;color:#FFFFFF !important;text-decoration:none;"><span style="font-size:12px;color:#FFFFFF !important;">{$numero.label}</span></a>{/if}
                                                                          {if not $smarty.foreach.numeros.last}<br />{/if}{/foreach}<br /><span style="font-size:{if $country == 'P'}12px{else}14px{/if}; text-align:left;">{$tabcontacts.ouverture}</span></td>
                                                                     </tr>
@@ -30,7 +30,7 @@
                                                               <td bgcolor="#9a9999"><table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#9a9999">
                                                                   
                                                                     <tr>
-                                                                      <td width="75" bgcolor="#9a9999"><img style="display:block;" src="http://cdn.millesima.com.s3.amazonaws.com/test/new-emailing/img/icon-mail.jpg" width="75" height="60" alt="" border="0"></td>
+                                                                      <td width="75" bgcolor="#9a9999"><img style="display:block;" src="https://cdn.millesima.com/test/new-emailing/img/icon-mail.jpg" width="75" height="60" alt="" border="0"></td>
                                                                       <td bgcolor="#9a9999" style="font-family:Arial, Helvetica, sans-serif, Trebuchet MS; font-size:14px; line-height:22px; color:#fff; text-align: left;">{foreach from=$tabcontacts.emails item=email name=emails}<a href="mailto:{$email}" style="color:#FFFFFF !important; "><span style="color:#FFFFFF">{$email}</span></a>{if not $smarty.foreach.emails.last}<br />{/if}{/foreach}</td>
                                                                     </tr>
                                                                   

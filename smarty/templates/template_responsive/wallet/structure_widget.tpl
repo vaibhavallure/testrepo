@@ -14,7 +14,7 @@
 <tbody><tr>
 <td style="padding-top:20px;padding-bottom:20px;text-align:center">
 <a href="{$wallet.link}" style="color:#000000;outline:none;border:none" title="{$wallet.title}">
-<img src="http://cdn.millesima.com.s3.amazonaws.com/templates/00_elements_communs/icon-wallet.png" alt="Wallet" width="55" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p">
+<img src="https://cdn.millesima.com/templates/00_elements_communs/icon-wallet.png" alt="Wallet" width="55" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:13px;display:block;border:none" class="t_w100p m_w100p">
 </a>
 </td>
 </tr>
