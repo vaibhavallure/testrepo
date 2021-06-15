@@ -924,7 +924,6 @@ class Millesima_Message_Template extends Millesima_Abstract
                 }
 
             }
-            $article->prixhtblle = "hi";
                 return $article;
         } else {
             $article = false;
