@@ -649,7 +649,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             }
         }
 
-
+        exit;
 
 
 		// affichage des liens vers les HTMl par groupement de pays de validation
@@ -924,6 +924,9 @@ class Millesima_Message_Template extends Millesima_Abstract
                 }
 
             }
+            echo "<pre>";
+            print_r($article);
+            echo "</pre>";
                 return $article;
         } else {
             $article = false;
