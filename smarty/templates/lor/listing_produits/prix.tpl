@@ -104,7 +104,7 @@
     Bouteille HT
     Caisse TTC  
    ----------------------------  *}
-    <span style="font-weight: bold">{$produit->prix_ht} price</span>
+    <span style="font-weight: bold">{$produit->prix_ht}</span>
     &nbsp;<span style="font-size:12px">{$ht}</span><br />
     <span style="font-size:11px">{if $produit->pays == 'F'}{$produit->boiscarton}{else}{$produit->boiscarton}{/if} {$produit->quantite} {if $produit->pays == 'E' }{$produit->conditionnement|replace:' (':'<br />('}{else}{$produit->conditionnement}{/if}</span><br />
     <span style="font-size:11px">{$produit->prixhtblle}{$fnpx1btlleht}<br />{$produit->prix_ttc}{$fnpxcaissettc}</span><br />
