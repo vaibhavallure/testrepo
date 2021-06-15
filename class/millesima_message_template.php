@@ -921,15 +921,14 @@ class Millesima_Message_Template extends Millesima_Abstract
                     $article->prix_promo = round($article->prix_promo, 2, PHP_ROUND_HALF_EVEN);
                     $article->prix_promo = $this->formatcurrency($article->prix_promo, $currency_code);
                 }
-
-                $article->prix_ht = $this->formatcurrency($article->prix_ht, $currency_code);
-                $article->prix_ttc = $this->formatcurrency($article->prix_ttc, $currency_code);
-                $article->prixhtblle = $this->formatcurrency($article->prixhtblle, $currency_code);
-                $article->prixttcblle = $this->formatcurrency($article->prixttcblle, $currency_code);
-                $article->prixlitrettc = $this->formatcurrency($article->prixlitrettc, $currency_code);
-                $article->prix_remise = $this->formatcurrency($article->prix_remise, $currency_code);
-
             }
+            $article->prix_ht = $this->formatcurrency($article->prix_ht, $currency_code);
+            $article->prix_ttc = $this->formatcurrency($article->prix_ttc, $currency_code);
+            $article->prixhtblle = $this->formatcurrency($article->prixhtblle, $currency_code);
+            $article->prixttcblle = $this->formatcurrency($article->prixttcblle, $currency_code);
+            $article->prixlitrettc = $this->formatcurrency($article->prixlitrettc, $currency_code);
+            $article->prix_remise = $this->formatcurrency($article->prix_remise, $currency_code);
+                
             echo "<pre>";
             print_r($article);
             echo "</pre>";
