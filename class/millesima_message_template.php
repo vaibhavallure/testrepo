@@ -834,15 +834,15 @@ class Millesima_Message_Template extends Millesima_Abstract
             $article->prix_ttc=$data["prix_ttc"];
             $article->prix_remise=$data["prix_remise"];
             if($article->quantite != 0){
-                $article->prixhtblle=str_replace(',', '.', $article->prix_ht)/$article->quantite;
-                $article->prixttcblle=str_replace(',', '.', $article->prix_ttc)/$article->quantite;
+                //$article->prixhtblle=str_replace(',', '.', $article->prix_ht)/$article->quantite;
+                //$article->prixttcblle=str_replace(',', '.', $article->prix_ttc)/$article->quantite;
                 if ($article->prix_remise != ''){
-                    $article->prixremblle=str_replace(',', '.', $article->prix_remise)/$article->quantite;
+                    //$article->prixremblle=str_replace(',', '.', $article->prix_remise)/$article->quantite;
                 }
                 // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
                 // et que la division soit juste ! Sinon, légères différences de décimales (19,92 au lieu de 19,95)...
             }
-            $article->prixlitrettc=$data["Prix_au_Litre"]; // Prix au litre en TTC ! Ne plus calculer avec la tva
+            //$article->prixlitrettc=$data["Prix_au_Litre"]; // Prix au litre en TTC ! Ne plus calculer avec la tva
 
             $article->code_promo=$data["code_promo"];
             $article->type_promo=$data["type_promo"]; // Libelle de la promo si connu
@@ -858,7 +858,7 @@ class Millesima_Message_Template extends Millesima_Abstract
                     case 'Y':
                     case 'E':
                     case 'P':
-                    $article->prix_ttc=ceil(str_replace(',', '.', $article->prix_ttc));
+                    //$article->prix_ttc=ceil(str_replace(',', '.', $article->prix_ttc));
                         // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
                         // et que l'arrondi soit juste !
                         break;
