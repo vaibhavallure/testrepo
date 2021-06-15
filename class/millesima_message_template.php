@@ -649,7 +649,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             }
         }
 
-        exit;
+
 
 
 		// affichage des liens vers les HTMl par groupement de pays de validation
@@ -828,21 +828,21 @@ class Millesima_Message_Template extends Millesima_Abstract
 
             // recuperation de l'url produit
             $article->url_produit=$data["URL_IBM"];
-print_r($article); exit;
+
             $article->codedevise=$data["Code_Devise"];
-            $article->prix_ht=$data["prix_ht"];
-            $article->prix_ttc=$data["prix_ttc"];
-            $article->prix_remise=$data["prix_remise"];
+            $article->prix_ht=$this->formatcurrency(str_replace(',', '.', $data["prix_ht"]), $currency_code);
+            $article->prix_ttc=$this->formatcurrency(str_replace(',', '.', $data["prix_ttc"]), $currency_code);
+            $article->prix_remise=$this->formatcurrency(str_replace(',', '.', $data["prix_remise"]), $currency_code);
             if($article->quantite != 0){
-                $article->prixhtblle=str_replace(',', '.', $article->prix_ht)/$article->quantite;
-                $article->prixttcblle=str_replace(',', '.', $article->prix_ttc)/$article->quantite;
+                $article->prixhtblle=$this->formatcurrency(str_replace(',', '.', $data["prix_ht"])/$article->quantite, $currency_code);
+                $article->prixttcblle=$this->formatcurrency(str_replace(',', '.', $data["prix_ttc"])/$article->quantite, $currency_code);
                 if ($article->prix_remise != ''){
-                    $article->prixremblle=str_replace(',', '.', $article->prix_remise)/$article->quantite;
+                    $article->prixremblle=$this->formatcurrency(str_replace(',', '.', $data["prix_remise"])/$article->quantite, $currency_code);
                 }
                 // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
                 // et que la division soit juste ! Sinon, légères différences de décimales (19,92 au lieu de 19,95)...
             }
-            $article->prixlitrettc=$data["Prix_au_Litre"]; // Prix au litre en TTC ! Ne plus calculer avec la tva
+            $article->prixlitrettc=$this->formatcurrency(str_replace(',', '.', $data["Prix_au_Litre"]), $currency_code); // Prix au litre en TTC ! Ne plus calculer avec la tva
 
             $article->code_promo=$data["code_promo"];
             $article->type_promo=$data["type_promo"]; // Libelle de la promo si connu
@@ -858,7 +858,8 @@ print_r($article); exit;
                     case 'Y':
                     case 'E':
                     case 'P':
-                    $article->prix_ttc=ceil(str_replace(',', '.', $article->prix_ttc));
+                    $article->prix_ttc=$this->formatcurrency(str_replace(',', '.', $article->prix_ttc),$currency_code);
+                    //$article->prix_ttc=number_format(ceil(str_replace(',', '.', $article->prix_ttc)),2, ',', '');
                         // str_replace pour mettre la chaine de caractère au format float, pour qu'elle soit bien converti
                         // et que l'arrondi soit juste !
                         break;
@@ -867,12 +868,12 @@ print_r($article); exit;
                 }
             }
             if($article->pays == 'U' OR $article->pays == 'G' OR $article->pays == 'I' OR $article->pays == 'H'  OR $article->pays == 'SG'){ // Une fois les prix calculés, on reformate au format anglais pour tous les pays anglophones (décimales séparées par des points)
-                $article->prix_ht=str_replace(',', '.',$article->prix_ht);
-                $article->prix_ttc=str_replace(',', '.',$article->prix_ttc);
-                $article->prixhtblle=str_replace(',', '.',$article->prixhtblle);
-                $article->prixttcblle=str_replace(',', '.',$article->prixttcblle);
-                $article->prixlitrettc=str_replace(',', '.',$article->prixlitrettc);
-                $article->prix_remise=str_replace(',', '.',$article->prix_remise);
+                $article->prix_ht = $article->prix_ht;
+                $article->prix_ttc = $article->prix_ttc;
+                $article->prixhtblle = $article->prixhtblle;
+                $article->prixttcblle = $article->prixttcblle;
+                $article->prixlitrettc = $article->prixlitrettc;
+                $article->prix_remise = $article->prix_remise;
             }
 
             /**
@@ -921,18 +922,8 @@ print_r($article); exit;
                     $article->prix_promo = round($article->prix_promo, 2, PHP_ROUND_HALF_EVEN);
                     $article->prix_promo = $this->formatcurrency($article->prix_promo, $currency_code);
                 }
+
             }
-
-            $article->prix_ht = $this->formatcurrency(str_replace(',', '.',$article->prix_ht), $currency_code);
-            $article->prix_ttc = $this->formatcurrency(str_replace(',', '.',$article->prix_ttc), $currency_code);
-            $article->prixhtblle = $this->formatcurrency(str_replace(',', '.',$article->prixhtblle), $currency_code);
-            $article->prixttcblle = $this->formatcurrency(str_replace(',', '.',$article->prixttcblle), $currency_code);
-            $article->prixlitrettc = $this->formatcurrency(str_replace(',', '.',$article->prixlitrettc), $currency_code);
-            $article->prix_remise = $this->formatcurrency(str_replace(',', '.',$article->prix_remise), $currency_code);
-
-            echo "<pre>";
-            print_r($article);
-            echo "</pre>";
                 return $article;
         } else {
             $article = false;
@@ -944,7 +935,7 @@ print_r($article); exit;
     /*Currency Format Functions */
     public function formatcurrency($floatcurr, $curr = 'USD')
     {
-        if(is_numeric($floatcurr)){
+        if($floatcurr!=""){
             $currencies = array(
                 'GER' => array(' &euro;',2,',',' ',1),        //  DE (Germany), AT (Austria), FR (France), BE (Belgium), LU (Luxembourg), IT (Italy), PT (Portugal), ES (Spain)
                 'HKD' => array('HK$',2,'.',',',0),          //  Hong Kong Dollar
