@@ -944,7 +944,7 @@ class Millesima_Message_Template extends Millesima_Abstract
     /*Currency Format Functions */
     public function formatcurrency($floatcurr, $curr = 'USD')
     {
-        if($floatcurr!=""){
+        if(is_numeric($floatcurr)){
             $currencies = array(
                 'GER' => array(' &euro;',2,',',' ',1),        //  DE (Germany), AT (Austria), FR (France), BE (Belgium), LU (Luxembourg), IT (Italy), PT (Portugal), ES (Spain)
                 'HKD' => array('HK$',2,'.',',',0),          //  Hong Kong Dollar
