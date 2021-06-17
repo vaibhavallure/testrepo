@@ -12,10 +12,10 @@ pipeline {
             when { branch 'allure-dev1' }
                 steps {
                     sh 'php --version'
-                    git remote add sync git@github.com:vaibhavallure/testrepo.git
-                    git checkout allure-dev3
-             	    git pull    
-             	    git push sync allure-dev3
+                    sh 'git remote add sync git@github.com:vaibhavallure/testrepo.git'
+                    sh 'git checkout allure-dev3'
+             	    sh 'git pull'
+             	    sh 'git push sync allure-dev3'
                 }
         }
 
