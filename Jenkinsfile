@@ -11,11 +11,7 @@ pipeline {
         stage('publish') {
             when { branch 'allure-dev1' }
                 steps {
-                    sh 'php --version'
-                    //sh 'git remote add sync git@github.com:vaibhavallure/testrepo.git'
-                    //sh 'git checkout allure-dev1'
-             	    sh 'git pull'
-             	    sh 'git push sync allure-dev1'
+		    sh '/root/scripts/millesima-publish.sh'
                 }
         }
 
