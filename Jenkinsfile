@@ -8,7 +8,7 @@ pipeline {
                 sh '/root/scripts/millesima-deploy.sh millesima-dev php72'
             }
         }
-        stage('build') {
+        stage('publish') {
             when { branch 'allure-dev1' }
                 steps {
                     sh 'php --version'
