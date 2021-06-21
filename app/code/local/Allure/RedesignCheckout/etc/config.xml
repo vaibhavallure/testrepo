@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_RedesignCheckout>
 			<name>Allure - Redesign Checkout</name>
-			<version>1.0.3</version>
+			<version>1.0.4</version>
 		</Allure_RedesignCheckout>
 	</modules>
 	<global>
@@ -181,5 +181,16 @@
 				</allure_redesigncheckout>
 			</updates>
 		</layout>
+		<events>
+			<adminhtml_block_salesrule_actions_prepareform>
+				<observers>
+					<allure_custofield>
+						<type>model</type>
+						<class>allure_redesigncheckout/observer</class>
+						<method>adminhtmlBlockSalesruleActionsPrepareform</method>
+					</allure_custofield>
+				</observers>
+			</adminhtml_block_salesrule_actions_prepareform>
+		</events>
 	</adminhtml>
 </config>
