@@ -158,7 +158,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
 
                     if($oCoupon->getRuleId()) {
                         $oRule = Mage::getModel('salesrule/rule')->load($oCoupon->getRuleId());
-                        $message=$oRule->getCustomErrorMessage();
+                        $message=($oRule->getCustomErrorMessage())? $oRule->getCustomErrorMessage() : $message;
                     }
 
                     if (! $isAjax) {
