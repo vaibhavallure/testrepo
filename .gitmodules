@@ -2,3 +2,7 @@
 	path = digital-release
 	url = ../release-form.git
 	branch = production
+[submodule "release-form"]
+	path = release-form
+	url = https://ahammed58@bitbucket.org/allurecom/release-form.git
+	branch = production
