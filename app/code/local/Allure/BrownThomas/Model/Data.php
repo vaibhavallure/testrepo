@@ -44,7 +44,7 @@ class Allure_BrownThomas_Model_Data
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
             $data[$product_id]['record_type'] = 'FITEM';
             $data[$product_id]['action_type'] = $action_type;
-            $data[$product_id]['UPC'] = $this->formatString($_product->getBarcode(), 13);
+            $data[$product_id]['UPC'] = $this->formatString($this->getBarcode($_product), 13);
             $data[$product_id]['UPC_TYPE'] = 'EAN13';
             $formatedSKU = $this->formatSKU($_product->getSKU());
             $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
@@ -74,7 +74,7 @@ class Allure_BrownThomas_Model_Data
             /*---------------------------------fudas data----------------------------------------------*/
             $dataFudas[$product_id]['record_type'] = 'FUDAS';
             $dataFudas[$product_id]['action_type'] = $action_type;
-            $dataFudas[$product_id]['UPC'] = $this->formatString($_product->getBarcode(), 13);
+            $dataFudas[$product_id]['UPC'] = $this->formatString($this->getBarcode($_product), 13);
             $dataFudas[$product_id]['UDA_name'] = $this->formatString('web_enabled_uda', 16);
             $dataFudas[$product_id]['UDA_value'] = $this->formatString(1, 250);
 
@@ -93,7 +93,7 @@ class Allure_BrownThomas_Model_Data
         foreach ($collection as $products) {
             $product_id=$products->getProductId();
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
-            $data[$product_id]['BARCODE'] = $_product->getBarcode();
+            $data[$product_id]['BARCODE'] = $this->getBarcode($_product);
             $data[$product_id]['supplier'] = self::SUPPLIER;
             $data[$product_id]['Concession_Name'] = "VENUS BY MARIA TASH LIMITED";
             $data[$product_id]['Business_Type'] = "CONCESSION";
@@ -165,7 +165,7 @@ class Allure_BrownThomas_Model_Data
 
             $formatedSKU = strtolower(preg_replace("/[^a-zA-Z0-9 ]+/", "", $_product->getSKU()));
 //            $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
-            $data[$product_id]['Barcode'] = $this->formatString($_product->getBarcode(), 13);
+            $data[$product_id]['Barcode'] = $this->formatString($this->getBarcode($_product), 13);
             $data[$product_id]['department'] = self::DEPARTMENT;
             $data[$product_id]['brand'] = 'Maria Tash';
 //            $data[$product_id]['VPN'] = $this->formatString($formatedSKU, 30);
@@ -218,7 +218,7 @@ class Allure_BrownThomas_Model_Data
             $_product = Mage::getSingleton("catalog/product")->load($product);
             $priceData[$index]['record_type'] = $this->formatString('FPCHG',5);
             $priceData[$index]['action_type'] = $this->formatString($action_type,1);
-            $priceData[$index]['primary_upc'] = $this->formatString($_product->getBarcode(), 13);
+            $priceData[$index]['primary_upc'] = $this->formatString($this->getBarcode($_product), 13);
             $priceData[$index]['effective_date'] =$this->formatString(date('Ymd',$this->cron()->getCurrentDatetime()), 8);
             $priceData[$index]['unit_retail'] = $this->formatString(number_format((float)$_product->getDublinPrice(),2,'.',''),21,0, STR_PAD_LEFT);
             $priceData[$index]['clearance_indicator'] = $this->formatString('N',1);
@@ -311,6 +311,18 @@ class Allure_BrownThomas_Model_Data
             $this->add_log("Exception=>".$e->getMessage());
         }
 
+    }
+
+    public function getBarcode($_product)
+    {
+        $_product->setBrownthomasBarcode(null);
+
+        $product = Mage::getSingleton("catalog/product")->load($_product->getId());
+
+        if($product->getBrownthomasBarcode()) {
+            return $product->getBrownthomasBarcode();
+        }
+        return $product->getBarcode();
     }
 
 
