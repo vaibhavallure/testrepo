@@ -69,27 +69,34 @@ foreach($attributes as $attribute){
     <caption class="product-attribute-name">Specifications</caption>
 <?php
 
+$gemstoneWeight=Mage::helper("allure_catalog")->getChildGemstone($this->getProduct());
 foreach($attributes as $attribute){
+
+if ($attribute->getData('attribute_code') == "stone_weight_classification" && ($gemstoneWeight)) {
+   echo $gemstoneWeight;
+   continue;
+}
+
     $_helper = $this->helper('catalog/output');
-    if($attribute->getData('is_visible_on_front')){
+    if ($attribute->getData('is_visible_on_front')) {
         $attrCode = $attribute->getData('attribute_id');
-        if($attrCode){
+        if ($attrCode) {
             $product = $this->getProduct();
             $attribute = $product->getResource()->getAttribute($attrCode);
             if ($attribute) {
-                    $content = $attribute->getFrontend()->getValue($product);
-                    if(!empty($content) && (strcasecmp($content, 'yes')!=0 && strcasecmp($content, 'no')!=0)){
-                        //aws02 - start
-                        $attrLabel = strtolower($attribute->getData('store_label'));
-                        $visibility = ("width" != trim($attrLabel)) ? true : false;
-                        //aws02 - end
-                        if($visibility){
-                            echo '<tr style="display:'.$visibility.'">
-                                        <th class="info-text-two">' . $attribute->getData('store_label') . '</th>
+                $content = $attribute->getFrontend()->getValue($product);
+                if (!empty($content) && (strcasecmp($content, 'yes') != 0 && strcasecmp($content, 'no') != 0)) {
+                    //aws02 - start
+                    $attrLabel = strtolower($attribute->getData('store_label'));
+                    $visibility = ("width" != trim($attrLabel)) ? true : false;
+                    //aws02 - end
+                    if ($visibility) {
+                        echo '<tr style="display:' . $visibility . '">
+                                        <th class="info-text-two">why ' . $attribute->getData('store_label') . '</th>
                                         <td class="para-normal">' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
                                       </tr>';
-                        }
                     }
+                }
             }
         }
     }
