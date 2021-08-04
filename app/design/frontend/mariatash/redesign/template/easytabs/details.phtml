@@ -92,7 +92,7 @@ if ($attribute->getData('attribute_code') == "stone_weight_classification" && ($
                     //aws02 - end
                     if ($visibility) {
                         echo '<tr style="display:' . $visibility . '">
-                                        <th class="info-text-two">why ' . $attribute->getData('store_label') . '</th>
+                                        <th class="info-text-two">' . $attribute->getData('store_label') . '</th>
                                         <td class="para-normal">' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
                                       </tr>';
                     }
