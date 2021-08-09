@@ -22,11 +22,9 @@
                     <span class="invalid-login" id="login-msg"></span>
                 </div>
                 <div class="form-group input-form">
-                    <!-- <label class="popup-login-lbl" for="email"><em>*</em> <//?php echo $this->__("Email Address")?></label> -->
                     <input id='username-login' type="text" name='login[username]' placeholder="Email*" class="ele_width required-entry validate-email"/>
                 </div>
                 <div class="form-group input-form">
-                    <!-- <label class="popup-login-lbl" for="password"><em>*</em> <//?php echo $this->__("Password")?></label> -->
                     <input id="passwd-login" type="password" name="login[password]" placeholder="Password*" class="ele_width required-entry consistent-password"/>
                     <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
                     <div class="">
