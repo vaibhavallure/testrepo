@@ -13,7 +13,6 @@
 	<?php endif; ?>
 	<?php if( $this->haveStoredCards() ): ?>
 		<li>
-			<!-- <label for="<//?php echo $this->getMethodCode(); ?>_payment_id"><//?php echo $this->__('Pay with credit card on file'); ?></label> -->
 			<div class="input-box">
 				<select name="payment[card_id]" id="<?php echo $this->getMethodCode(); ?>_card_id" class="<?php echo $this->getMethodCode(); ?>_require required-entry select-type-one"  onchange="changeCard('<?php echo $this->getMethodCode(); ?>');"  >
 					<option value=""><?php echo $this->__('Saved Cards'); ?></option>
@@ -27,7 +26,6 @@
 		<?php if( $this->getMethod()->getAdvancedConfigData('require_ccv') ): ?>
 			<li>
 				<div class="input-box">
-					<!-- <a href="#" onclick="toggleToolTip(this);" class="cvv-what-is-this"><//?php echo $this->__('What is this?') ?></a> -->
 					<input placeholder="CVV*" type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="cvv-input input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value=""  maxlength="4" />
 
 				</div>
