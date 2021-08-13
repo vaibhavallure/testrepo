@@ -123,4 +123,49 @@ class Allure_Catalog_Helper_Data extends Mage_Core_Helper_Abstract
         return $optionsText;
         
     }
+
+    public function getChildGemstone($parentProduct)
+    {
+        $_children = $parentProduct->getTypeInstance()->getUsedProducts($parentProduct);
+        $gemstoneWeight="";
+        foreach ($_children as $child) {
+
+
+          $childAttrs = $child->getAttributes();
+            foreach ($childAttrs as $childAttr) {
+
+                $attrCode = $childAttr->getData('attribute_id');
+
+              if ($childAttr->getData('attribute_code') == "stone_weight_classification") {
+
+                  if ($childAttr->getData('is_visible_on_front')) {
+                        $attrCode = $childAttr->getData('attribute_id');
+                        if ($attrCode) {
+                            $attribute = $child->getResource()->getAttribute($attrCode);
+                            if ($attribute) {
+                                $content = $attribute->getFrontend()->getValue($child);
+                                if (!empty($content) && (strcasecmp($content, 'yes') != 0 && strcasecmp($content, 'no') != 0)) {
+                                    //aws02 - start
+                                    $attrLabel = strtolower($attribute->getData('store_label'));
+                                    $visibility = ("width" != trim($attrLabel)) ? true : false;
+                                    //aws02 - end
+                                    if ($visibility) {
+                                        $gemstoneWeight= '<tr style="display:' . $visibility . '">
+                                        <th class="info-text-two">' . $attribute->getData('store_label') . '</th>
+                                        <td class="para-normal">' . Mage::helper('catalog/output')->productAttribute($child, $content, $attrCode) . '</td>
+                                      </tr>';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                  break;
+                }
+            }
+
+            if($gemstoneWeight)
+                 break;
+        }
+        return $gemstoneWeight;
+    }
 }
