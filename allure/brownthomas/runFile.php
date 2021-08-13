@@ -4,7 +4,11 @@ require_once('../../app/Mage.php');
 umask(0);
 Mage::app();
 
-Mage::helper("brownthomas/cron")->generateBrownthomasFiles();
+$file=Mage::helper("brownthomas/data")->generateStockFile();
+
+
+//Mage::helper("brownthomas/cron")->generateBrownthomasFiles();
+//Mage::helper("brownthomas/data")->createFile("test.txt");
 die();
 
 if(isset($_GET['stk']))
