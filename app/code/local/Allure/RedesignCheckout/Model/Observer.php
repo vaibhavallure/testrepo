@@ -117,5 +117,20 @@ class Allure_RedesignCheckout_Model_Observer extends Varien_Object
         }
         return $this;
     }
+
+
+
+    public function adminhtmlBlockSalesruleActionsPrepareform($observer)
+    {
+
+        $fieldset = $observer->getForm()->getElement('action_fieldset');
+        $fieldset->addField('custom_error_message', 'text', array(
+            'name' => 'custom_error_message',
+            'label' => 'Custom Error Message',
+            'title' => 'Custom Error Message',
+            'note' => 'Custom Error Message',
+        ));
+    }
+
 }
 

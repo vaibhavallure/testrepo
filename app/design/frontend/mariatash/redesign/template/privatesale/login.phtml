@@ -19,8 +19,7 @@
     <div>
         <form class="form-signin" action="<?= "/privatesale/login/verify" ?>" method="post" id="popup-login-form">
              <div class="body modal-body mt-5">
-                <p class="text-center para-normal">Welcome to the private viewing of the Fall/Winter 2020 Collection.
-                   <br> Enter details below to gain exclusive access.</p>
+                <?= $this->getHead() ?>
 
                 <div id="private_login_msg_div">
                     <span class="invalid-login" id="private-login-msg"></span>
